@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>Forcing Domain Admins to use AGPM (but not really) | Ask the Directory Services Team</title>
+
+	<meta name="description" content="Microsoft&#039;s official enterprise support blog for AD DS and more">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Feed" href="https://blogs.technet.microsoft.com/askds/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/askds/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Forcing Domain Admins to use AGPM (but not really) Comments Feed" href="https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Forcing Domain Admins to use AGPM (but not really)" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Forcing Domain Admins to use AGPM (but not really)" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/" />
+<meta name="twitter:description" content="" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/social-counts.min.js?ver=4.1.5'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/askds/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/askds/?p=1748' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.entry-content blockquote {
+    border: 0;
+    padding: 0 0 0 0px;
+    margin: 0 0 15px 20px;
+}
+.entry-content blockquote p {
+    font-size: 14px;
+    line-height: 1.5;
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="single single-post postid-1748 single-format-standard msdn-2188 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.technet.microsoft.com/server-management">Server &amp; Management Blogs</a> > Ask the Directory Services Team</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.technet.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-server-and-management-blogs-main-menu-container"><ul id="menu-server-and-management-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-33"><a href="#">All About Windows Server</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113"><a href="https://blogs.technet.microsoft.com/windowsserver/">Windows Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="https://blogs.technet.microsoft.com/sbs/">Windows Server Essentials</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="https://blogs.technet.microsoft.com/askperf/">Ask the Performance Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="https://blogs.technet.microsoft.com/askpfeplat/">Ask Premier Field Engineering (PFE) Platforms</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-652"><a href="https://blogs.technet.microsoft.com/askcore/">Ask the Core Team</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Cloud Platform Blogs</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-223"><a href="https://blogs.technet.microsoft.com/server-cloud/">Server &amp; Cloud</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-661"><a href="https://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-214"><a href="https://blogs.technet.microsoft.com/privatecloud/">Building Clouds</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-204"><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson &#8211; In the Cloud</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Datacenter Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-233"><a href="https://blogs.technet.microsoft.com/systemcenter/">Hybrid Cloud IT Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-653"><a href="https://blogs.technet.microsoft.com/msoms/">Operations Management Suite (OMS)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.technet.microsoft.com/scvmm/">System Center Virtual Machine Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-253"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="https://blogs.technet.microsoft.com/momteam/">System Center Operations Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-283"><a href="https://blogs.technet.microsoft.com/orchestrator/">System Center Orchestrator</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Client Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-293"><a href="https://blogs.technet.microsoft.com/configurationmgr/">System Center Configuration Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-303"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-313"><a href="https://blogs.technet.microsoft.com/mmpc/">Malware Protection Center</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-323"><a href="https://blogs.technet.microsoft.com/microsoftintune/">Microsoft Intune</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-333"><a href="https://blogs.technet.microsoft.com/sus/">Server Update Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-343"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Virtualization, VDI &amp; Remote Desktop</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-353"><a href="https://blogs.technet.microsoft.com/virtualization/">Virtualization Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-363"><a href="http://blogs.msdn.microsoft.com/virtual_pc_guy/">Ben Armstrong&#8217;s Virtualization</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-364"><a href="https://blogs.technet.microsoft.com/josebda/tag/hyper-v/">Jose Barreto on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-374"><a href="http://blogs.msdn.microsoft.com/rds/">Remote Desktop Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-394"><a href="https://blogs.technet.microsoft.com/askcore/tag/hyper-v/">Ask the Core Team on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">File &amp; Storage &amp; High Availability</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-404"><a href="https://blogs.technet.microsoft.com/filecab/">File &amp; Storage</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="https://blogs.technet.microsoft.com/josebda/">Jose Barreto</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-414"><a href="https://blogs.technet.microsoft.com/askcore/tag/failover-cluster/">Ask the Core Team on Failover Cluster</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="http://blogs.msdn.microsoft.com/clustering/">Clustering &amp; High Availability</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Windows Server Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-433"><a href="http://blogs.msdn.microsoft.com/powershell/">PowerShell</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-443"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/">Hey Scripting Guy (PowerShell)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="https://blogs.technet.microsoft.com/networking/">Networking</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-103"><a href="#">Identity, Access &amp; Security</a>
+<ul class="sub-menu">
+	<li id="menu-item-666" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666"><a href="https://blogs.technet.microsoft.com/datacentersecurity/">Datacenter and Private Cloud Security</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.technet.microsoft.com/askds/">Ask Directory Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="https://blogs.technet.microsoft.com/ad/">Active Directory</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-493"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+					</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.technet.microsoft.com/askds">Ask the Directory Services Team</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description">Microsoft&#039;s official enterprise support blog for AD DS and more </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+									</div>
+
+			</div>
+
+			
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Feed" href="https://blogs.technet.microsoft.com/askds/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/askds/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Forcing Domain Admins to use AGPM (but not really) Comments Feed" href="https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Forcing Domain Admins to use AGPM (but not really)" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Forcing Domain Admins to use AGPM (but not really)" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/" />
+<meta name="twitter:description" content="" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/askds/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/askds/?p=1748' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.entry-content blockquote {
+    border: 0;
+    padding: 0 0 0 0px;
+    margin: 0 0 15px 20px;
+}
+.entry-content blockquote p {
+    font-size: 14px;
+    line-height: 1.5;
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+				
+				<article id="post-1748" class="post-1748 post type-post status-publish format-standard hentry category-uncategorized tag-agpm tag-gpmc tag-group-policy tag-sean-wright">
+	<header class="entry-header">
+		<h1 class="entry-title">Forcing Domain Admins to use AGPM (but not really)</h1>
+		<div class="rating-wrap">
+		<div id="star-rating-1748" class="wds-ratings" data-rating="0" data-userrating="0" data-postid="1748">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>	</header><!-- .entry-header -->
+
+	<div class="entry-meta row">
+		<div class="post-info">
+			<span class="posted-on"><time class="entry-date published" datetime="2011-06-21T13:06:47+00:00">June 21, 2011</time><time class="updated" datetime="2015-06-26T00:01:30+00:00">June 26, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="87aaefad29f94e3cbba2dc5a79e16ee2" href="https://social.technet.microsoft.com/profile/NedPyle+%5BMSFT%5D">NedPyle [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/#comments">1 Comments</a>		</div>
+
+		<div class="row">
+			<div class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/", "text": "Forcing Domain Admins to use AGPM (but not really)"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/", "text": "Forcing Domain Admins to use AGPM (but not really)"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.technet.microsoft.com/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/", "text": "Forcing Domain Admins to use AGPM (but not really)"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</div><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+	</div><!-- .entry-meta -->
+
+	
+	<div class="entry-content">
+		<p>Hi folks, <a href="http://blogs.technet.com/b/askds/archive/tags/sean+wright/">Sean Wright</a> here for my final post. So, you have AGPM installed, but your Domain Admins continue using GPMC to create, delete, and modify Group Policy. You’ve asked nicely, but that hasn’t had much effect. Now you want to make your point, and prevent your Domain Admins from managing Group Policy the wrong way. You decide to deny Domain Administrators the rights to modify Group Policy Objects (GPOs) through any means save the <a href="http://technet.microsoft.com/en-us/library/ee382452.aspx">AGPM</a> console. It may seem like a good idea, but let me explain how your time is better spent elsewhere.</p>
+<p>First, let’s cover the concept of a domain administrator. The domain admin is the most trusted and unrestricted user account in the domain. The domain admin can do anything in the domain and can give themselves permissions that make anything possible. The domain admin is the &quot;Domain Overlord&quot; if you will. Go ahead, laugh maniacally now, I’ll wait.</p>
+<p>The very notion that you want to <u>deny</u> something to a Domain Admin is a foreign concept. You don’t deny <u>them</u> anything. They deny rights to others. Windows and Active Directory are built upon this fundamental concept, which brings us to our next section.</p>
+<p><b>Why you’re wasting your time:</b></p>
+<p>Active Directory is tailored to Domain Admins being all-powerful. No matter what you do to restrict their rights, they can simply change it back at will. You can make it difficult, which might discourage them… but a determined admin can undo anything you change.</p>
+<p>You now have a new admin on the team, and during his troubleshooting “Random Group Policy Problem #5”, they receive an access denied error when managing policy through GPMC. They should be using AGPM, and the fact that they are unaware of this is a whole other issue. Most admins take access denied errors as a bad thing&#8211; after all, they are an admin; so, they may start <i>fixing</i> the environment by changing permissions.</p>
+<p><em>If you contact Microsoft Support for a Group Policy related issue, we will likely return the permissions to defaults before proceeding with troubleshooting. We do not recommend this scenario, because you can&#8217;t prevent a domain administrator from being an domain administrator, and your efforts can be so easily undone.</em></p>
+<p>If you modify permissions on policy folders within SYSVOL, you’re going to trigger replication for every file and folder that is changed. In large environments with many policies, that can be a significant network traffic surge.</p>
+<p>Most importantly, <b>Microsoft has not tested this scenario</b>, so you may introduce unforeseen problems to your environment by attempting it.</p>
+<p><b>What you should do instead:</b></p>
+<p>The advice I give to every customer who force domain admins into AGPM is <b>Education</b>. You can’t prevent a domain admin from doing something if they are determined. If you can’t trust your domain admins to do the right thing, and do it the right way, then they should not be a domain admins. That said, I suggest educating administrators by teaching them about AGPM and its benefits. Explain why they should only use AGPM manage policy, and you will likely see them consciously decide to go the extra mile to do things the correct way.</p>
+<p>Recently, I had a customer insist AGPM was incomplete, because it did not have this restrictive functionality built-in. The developers did not intend for AGPM to restrict admins. It was designed to provide benefits that make troubleshooting and administration of policy more manageable.</p>
+<p>If you’re still reading, and are determined to try this in spite of my recommendations against it:</p>
+<h4>Editing existing Group Policy object</h4>
+<p>During installation, in an effort to make things easier, some customers simply add the AGPM service account to the Domain Administrators group. Since we’re about to prevent domain admins from accessing production GPOs, you’ll want to read over the <a href="http://blogs.technet.com/b/askds/archive/2008/12/16/agpm-least-privilege-scenario.aspx">AGPM Least Privilege scenario</a> and make sure you have successfully implemented this before you proceed.</p>
+<blockquote><p>1. We’ll need to remove any Administrative users or groups from the “Group Policy Creator Owners” group. You can do this through <b>Active Directory Users and Computers</b>.</p>
+<p>2. If it’s not already there, make sure you add the AGPM service account to ”Group Policy Creator Owners”</p>
+<p>3. Open the Group Policy Management Console (<b>GPMC.msc</b>) and find the Group Policy Objects container. The Delegation tab shows a list of users/groups that have the ability to create new GPOs in the domain. You can try to remove Domain Admins from this location, but alas, it won’t let you.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/7652.image_5B12D74A.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/7652.image_5F00_5B12D74A.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/2553.image_thumb_336C5B20.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/2553.image_5F00_thumb_5F00_336C5B20.png" width="246" height="149" /></a></p>
+<p>Note: This is a safety feature, designed to prevent you from accidentally removing all rights to create GPOs.</p>
+<p>What you can do, is prevent your domain admins from editing the existing GPOs.</p>
+<p>4. Within GPMC, expand the Group Policy Objects container and find the <b>Default Domain Controllers</b> Policy.</p>
+<p>5. Select the Default Domain Controllers GPO and go to the Delegation tab.</p>
+<p>6. Remove the <b>Domain Administrators</b> and <b>Enterprise Administrators</b> groups from the delegation list.</p>
+<p>7. Make sure the list contains <b>SYSTEM</b> with full control, and <b>ENTERPRISE DOMAIN CONTROLLERS</b> and the <b>Authenticated Users</b> entries with Read permissions (at least).</p>
+<p>8. Repeat steps 5 through 7 for every GPO currently in your environment.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/3652.image_59CE3E6B.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/3652.image_5F00_59CE3E6B.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/2553.image_thumb_471944B4.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/2553.image_5F00_thumb_5F00_471944B4.png" width="541" height="183" /></a></p>
+<p>This makes your existing GPOs resistant (but not immune) to your administrator’s editorial charms.</p>
+<p>9. Next, open GPMC with your AGPM Administrator account and go to the AGPM console.</p>
+<p>10. Click on the Production Delegation tab and remove <b>Domain Administrators</b> and <b>Enterprise Administrators</b> from this location. This tab within the AGPM console determines the permissions AGPM assigns to controlled GPOs when they are deployed to production using AGPM. Making this change prevents all of the hard work you just did in the section above from going to waste.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/4201.image_1F72C88A.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/4201.image_5F00_1F72C88A.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/4520.image_thumb_6CA2C215.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/4520.image_5F00_thumb_5F00_6CA2C215.png" width="547" height="151" /></a></p>
+</blockquote>
+<p>Don’t worry that the list isn’t complete. We need to add <b>Authenticated Users</b> and the <b>AGPM service account</b> to production GPOs.</p>
+<h4>Control Group Policy object links</h4>
+<p>So far, we’ve removed the domain admin’s ability to edit existing GPOs, but they can still create new GPOs and link new and existing GPOs to OUs. In order to prevent these actions, we need to explicitly deny specific rights related to Group Policy.</p>
+<blockquote><p>1. Open GPMC and click on the domain node that contains the name of your domain.</p>
+<p>2. Click <b>Delegation</b> and click <b>Advanced</b>.</p>
+<p>3. On the domain’s security dialog box, click <b>Advanced</b> to open the <b>Advanced Security Settings</b> dialog.</p>
+<p>4. Click <b>Add</b> button to add a new entry.</p>
+<p>5. Type <i>Domain Admins</i> and then click <b>Check Names. </b>Click <b>OK</b> to show the <b>Permission Entry</b> dialog.</p>
+<p>6. Click <b>Properties.</b></p>
+<p>7. Select the Deny check box next to the permissions<b> Write gPLink</b> and<b> Write gPOptions</b>.</p>
+<p>8. Click <b>OK</b> on all dialogs until you return to GPMC.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/2477.image_,75A6.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/2477.image_5F00_2C0075A6.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/1300.image_thumb_6EFC4413.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/1300.image_5F00_thumb_5F00_6EFC4413.png" width="362" height="444" /></a></p>
+<p>9. Check the permissions by right-clicking the node with the name of the domain. Notice the menu items Create a GPO in this domain, and Link it here… ; Link an Existing GPO… ; and Block Inheritance are unavailable. Additionally, the menu items Enforced and Link Enabled are unavailable on existing GPO links.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/3146.image_0DD2B7F2.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/3146.image_5F00_0DD2B7F2.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/1300.image_thumb_7B1DBE3A.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/1300.image_5F00_thumb_5F00_7B1DBE3A.png" width="422" height="209" /></a></p>
+<p>10. You will need to repeat steps 1-9 for every OU in your domain. This change is also needed for any newly created OUs. It might seem easier to set these deny permissions at the domain level and let inheritance propagate the settings down to existing and new OUs, it doesn’t work. When an OU is created in Active Directory, permissions are explicitly defined at the OU level. When you set an explicit deny permission at the domain level, inheritance applies an implicit deny at the OU level. An explicit deny wins over an explicit allow; however, an explicit allow wins over an <a href="http://technet.microsoft.com/en-us/library/cc736316(WS.10).aspx">implicit deny</a>.</p>
+<p><b>Note:</b> There is also an option to change the default permissions applied to new OUs as they are <a href="http://support.microsoft.com/kb/265399">created</a>. This option modifies the schema, so use caution when modifying any value in the schema. The defaultSecurityDescriptor attribute is in SDDL format, so I recommend you configure one OU with the correct security settings and copy the value. This prevents having to manually set the permissions as new OUs are created in the future.</p>
+</blockquote>
+<h4>No new GPOs for You</h4>
+<p>So far, we removed the domain admin’s right to edit existing GPOs, and their rights to link new GPOs to existing OUs in the domain. Also, we removed their right to edit the GPOptions such as link and enforced states. The last step is to prevent a domain admin from creating new GPOs in the domain’s Group Policy Objects container.</p>
+<blockquote><p>1. Open <b>ADSIEdit.msc. </b>Right-click the <b>ADSI Edit</b> node in the navigation pane and then click <b>Connect to…</b></p>
+<p>2. Configure the <b>Connections Settings</b> dialog similar to the following image. Click <b>OK</b>.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/3146.image_53774210.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/3146.image_5F00_53774210.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/3051.image_thumb_2BD0C5E6.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/3051.image_5F00_thumb_5F00_2BD0C5E6.png" width="388" height="383" /></a></p>
+<p>3. In the navigation pane, expand the <b>Default naming context</b> until you find the following container: <b>CN=Policies,CN=System,DC=<i>domain</i>,DC=<i>com</i></b>.</p>
+<p>4. Right-click <b>CN=Policies</b> and then click <b>Properties</b>.Click the <b>Security</b> tab.</p>
+<p>5. Click <b>Advanced</b> to open the <b>Advanced Security Settings</b> dialog. Add an entry for <b>Domain Admins</b>,and deny the permission to create or delete groupPolicyContainer objects.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/7356.image_191BCC2F.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/7356.image_5F00_191BCC2F.png"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/2465.image_thumb_58797FBF.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/2465.image_5F00_thumb_5F00_58797FBF.png" width="371" height="474" /></a></p>
+</blockquote>
+<p>This last step makes <b>Create</b> menu item unavailable within GPMC when creating a new Group Policy Objects. The <b>Delete</b> menu item remains available for GPOs; however, attempting a delete results with an access denied error.</p>
+<h4>An Imperfect Solution:</h4>
+<p>Many aspects of this scenario require periodic administrative attention that certainly increases management costs.. In addition, domain admins can undo this partially or in total. This can increases the difficultly that comes with troubleshooting.</p>
+<p>Group Policy was designed to be managed by domain administrators. Attempting to hack a solution can cause its fair share of administrative burden (even when it’s working correctly). Why? Because any domain admin can undo the solution with relative ease, making it a monumental waste of time and provides a false sense of security. Since Microsoft does not recommend this scenario, we advise everyone to use AGPM as a beneficial tool and educate your staff. When they are familiar with it, and have it as readily available as GPMC, they will be more likely to do the right thing by using the AGPM to manage GPOs.</p>
+<p>And the real solution? Have some consequences when admins choose not to use AGPM. That will straighten people out in a hurry. If your domain admin can&#8217;t follow simples rules, like use AGPM, the imagine what other dangers lurk behind your back.</p>
+<p>Sean &quot;Don&#8217;t Taz Me Bro&quot; Wright</p>
+<p><em>[Editor’s note: this was Sean’s last post – he left us for greener pastures last week. Good luck man, I hope you can get a chuckle out of your new colleagues with your famous photoshopping </em><em>– Ned]</em></p>
+				<div class="back-to-top-wrap"><a href="#top-link" class="back-to-top">Back to<br>top</a></div>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+				
+			
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="msdn_bing_social_search-5" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=Ask%2Bthe%2BDirectory%2BServices%2BTeam&rq=site%3Ahttp%3A%2F%2Fblogs.technet.com%2Fb%2Faskds" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="text-3" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Top Server &amp; Tools Blogs</h2>			<div class="textwidget"><div class="widget-rss-link">
+	<a href="http://sxp.microsoft.com/feeds/3.0/ServerTools/ServerToolsTopPosts" target="_blank"><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png" /></a></div>
+
+<ul class="widget-link-list">
+    <li><a href="http://weblogs.asp.net/scottgu">ScottGu's Blog</a></li>
+    <li><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson&rsquo;s "In the Cloud" Blog</a></li>
+    <li><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry's Blog</a></li>
+    <li><a href="https://blogs.msdn.microsoft.com/stevengu/">Steve "Guggs" Guggenheimer's Blog</a></li>
+</ul></div>
+		</aside><aside id="msdn-sharing-3" class="widget msdn-sharing"><h2 class="widget-title color-highlight-bg">Share This Post</h2><div class='social-share-icons-wrap'><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-facebook facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2011%2F06%2F21%2Fforcing-domain-admins-to-use-agpm-but-not-really%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-twitter twitter" href="https://twitter.com/intent/tweet/?text=Forcing+Domain+Admins+to+use+AGPM+%28but+not+really%29&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2011%2F06%2F21%2Fforcing-domain-admins-to-use-agpm-but-not-really%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-linkedin linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2011%2F06%2F21%2Fforcing-domain-admins-to-use-agpm-but-not-really%2F&title=Forcing+Domain+Admins+to+use+AGPM+%28but+not+really%29&source=https://blogs.technet.microsoft.com/askds">Share</a><a onclick="" class="social-sharing social-sharing-email email" href="mailto:?subject=Forcing Domain Admins to use AGPM (but not really)&body=Forcing Domain Admins to use AGPM (but not really) https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2011%2F06%2F21%2Fforcing-domain-admins-to-use-agpm-but-not-really%2F">Share</a><a onclick="" class="social-sharing social-sharing-rss rss" href="https://blogs.technet.microsoft.com/askds/feed/">Share</a></div></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title color-highlight-bg">Recent Posts</h2>		<ul>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/04/14/are-your-dcs-too-busy-to-be-monitored-ad-data-collector-set-solutions-for-long-report-compile-times-or-report-data-deletion/">Are your DCs too busy to be monitored?: AD Data Collector Set solutions for long report compile times or report data deletion</a>
+							<span class="post-date">April 14, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/03/09/previewing-server-2016-tp4-temporary-group-memberships/">Previewing Server 2016 TP4: Temporary Group Memberships</a>
+							<span class="post-date">March 9, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/01/11/does-your-logon-hang-after-a-password-change-on-win-8-1-2012-r2win10/">Does your logon hang after a password change on win 8.1 /2012 R2/win10?</a>
+							<span class="post-date">January 11, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2015/12/08/speaking-in-ciphers-and-other-enigmatic-tonguesupdate/">Speaking in Ciphers and other Enigmatic tongues&hellip;update!</a>
+							<span class="post-date">December 8, 2015</span>
+						</li>
+				</ul>
+		</aside><aside id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.technet.microsoft.com/askds/tag/adfs/' class='tag-link-4' title='15 topics' style='font-size: 9pt;'>ADFS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ad-lds/' class='tag-link-37' title='16 topics' style='font-size: 9.2954545454545pt;'>AD LDS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ad-replication/' class='tag-link-35' title='28 topics' style='font-size: 11.560606060606pt;'>AD Replication</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/audit/' class='tag-link-177' title='21 topics' style='font-size: 10.378787878788pt;'>audit</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/authentication/' class='tag-link-55' title='34 topics' style='font-size: 12.348484848485pt;'>Authentication</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/authorization/' class='tag-link-57' title='30 topics' style='font-size: 11.856060606061pt;'>Authorization</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/certificates/' class='tag-link-73' title='48 topics' style='font-size: 13.825757575758pt;'>Certificates</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsn/' class='tag-link-33' title='45 topics' style='font-size: 13.530303030303pt;'>DFSN</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr/' class='tag-link-9' title='128 topics' style='font-size: 17.962121212121pt;'>DFSR</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-debug-logging/' class='tag-link-84' title='29 topics' style='font-size: 11.757575757576pt;'>DFSR Debug Logging</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-migration-or-upgrade/' class='tag-link-92' title='16 topics' style='font-size: 9.2954545454545pt;'>DFSR Migration or Upgrade</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-performance/' class='tag-link-81' title='27 topics' style='font-size: 11.462121212121pt;'>DFSR Performance</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/disaster-recovery/' class='tag-link-26' title='22 topics' style='font-size: 10.575757575758pt;'>Disaster Recovery</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dns/' class='tag-link-95' title='17 topics' style='font-size: 9.5909090909091pt;'>DNS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/frs/' class='tag-link-108' title='21 topics' style='font-size: 10.378787878788pt;'>FRS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/group-policy/' class='tag-link-30' title='70 topics' style='font-size: 15.401515151515pt;'>group policy</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/group-policy-preferences/' class='tag-link-91' title='22 topics' style='font-size: 10.575757575758pt;'>Group Policy Preferences</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/infrastructure/' class='tag-link-69' title='74 topics' style='font-size: 15.69696969697pt;'>infrastructure</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/jonathan-stephens/' class='tag-link-42' title='26 topics' style='font-size: 11.265151515152pt;'>Jonathan Stephens</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/kb-articles/' class='tag-link-74' title='104 topics' style='font-size: 17.075757575758pt;'>KB Articles</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/kerberos/' class='tag-link-19' title='39 topics' style='font-size: 12.939393939394pt;'>Kerberos</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ldap/' class='tag-link-20' title='19 topics' style='font-size: 9.9848484848485pt;'>LDAP</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/mail-sack/' class='tag-link-49' title='60 topics' style='font-size: 14.810606060606pt;'>Mail Sack</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/mike-stephens/' class='tag-link-43' title='44 topics' style='font-size: 13.431818181818pt;'>Mike Stephens</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ned-pyle/' class='tag-link-10' title='328 topics' style='font-size: 22pt;'>Ned Pyle</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/network/' class='tag-link-104' title='39 topics' style='font-size: 12.939393939394pt;'>network</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/other-blogs/' class='tag-link-40' title='93 topics' style='font-size: 16.583333333333pt;'>Other Blogs</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/passwords/' class='tag-link-39' title='18 topics' style='font-size: 9.7878787878788pt;'>Passwords</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/pki/' class='tag-link-6' title='49 topics' style='font-size: 13.924242424242pt;'>PKI</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/powershell/' class='tag-link-47' title='29 topics' style='font-size: 11.757575757576pt;'>PowerShell</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/profiles/' class='tag-link-13' title='17 topics' style='font-size: 9.5909090909091pt;'>Profiles</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/rob-greene/' class='tag-link-75' title='29 topics' style='font-size: 11.757575757576pt;'>Rob Greene</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/security/' class='tag-link-7' title='58 topics' style='font-size: 14.613636363636pt;'>Security</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/silly-rabbit/' class='tag-link-32' title='88 topics' style='font-size: 16.386363636364pt;'>Silly Rabbit</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/sysvol/' class='tag-link-38' title='15 topics' style='font-size: 9pt;'>SYSVOL</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt/' class='tag-link-48' title='73 topics' style='font-size: 15.598484848485pt;'>USMT</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt-behaviors/' class='tag-link-53' title='26 topics' style='font-size: 11.265151515152pt;'>USMT Behaviors</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt-component-manifest-reference/' class='tag-link-160' title='20 topics' style='font-size: 10.181818181818pt;'>USMT Component Manifest Reference</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-7/' class='tag-link-14' title='46 topics' style='font-size: 13.628787878788pt;'>Windows 7</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-8/' class='tag-link-15' title='25 topics' style='font-size: 11.068181818182pt;'>Windows 8</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2008/' class='tag-link-134' title='45 topics' style='font-size: 13.530303030303pt;'>Windows Server 2008</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2008-r2/' class='tag-link-21' title='65 topics' style='font-size: 15.106060606061pt;'>Windows Server 2008 R2</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2012/' class='tag-link-23' title='19 topics' style='font-size: 9.9848484848485pt;'>windows server 2012</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-vista/' class='tag-link-159' title='51 topics' style='font-size: 14.121212121212pt;'>Windows Vista</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-xp/' class='tag-link-96' title='25 topics' style='font-size: 11.068181818182pt;'>Windows XP</a></div>
+</aside><aside id="msdn-archive-widget-3" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.technet.microsoft.com/askds/2016/04/'>April 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/03/'>March 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/01/'>January 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/12/'>December 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/11/'>November 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/'>All of 2016</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/'>All of 2015</a>&nbsp;(10)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2014/'>All of 2014</a>&nbsp;(9)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2013/'>All of 2013</a>&nbsp;(18)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2012/'>All of 2012</a>&nbsp;(62)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2011/'>All of 2011</a>&nbsp;(132)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2010/'>All of 2010</a>&nbsp;(150)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2009/'>All of 2009</a>&nbsp;(215)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2008/'>All of 2008</a>&nbsp;(122)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2007/'>All of 2007</a>&nbsp;(19)</li>
+</aside>
+	</div><!-- #secondary -->
+
+	<div id="tag-wrap"><h2 class="color-highlight-bg">Tags</h2><ul class="tag-list"><li><a href="https://blogs.technet.microsoft.com/askds/tag/agpm/">AGPM</a></li><li><a href="https://blogs.technet.microsoft.com/askds/tag/gpmc/">gpmc</a></li><li><a href="https://blogs.technet.microsoft.com/askds/tag/group-policy/">group policy</a></li><li><a href="https://blogs.technet.microsoft.com/askds/tag/sean-wright/">Sean Wright</a></li></ul></div>
+	
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+			</div>
+			
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-2717" class="comment byuser comment-author-alexander-trofimov even thread-even depth-1">
+			<article id="div-comment-2717" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2011-06-21T21:42:24+00:00">
+							5 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/f4ee2b4a0d60d75af23cb4ab21c9979e?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Alexander Trofimov</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hmmm&#8230; I have an ideal solution <img src="https://blogs.technet.microsoft.com/askds/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley" /> Just tell them the truth: every time when someone deploys settings from AGPM, the settings which were done directly will be just overwritten <img src="https://blogs.technet.microsoft.com/askds/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley" /> </p>
+<p>Works like charm =)</p>
+<p>Audit helps too, I guess&#8230;</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+				<p class="no-comments">Comments are closed.</p>
+	
+</div><!-- #comments -->
+
+
+	
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-15303" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15303"><a href="http://technet.microsoft.com/en-US/cc300389.aspx">Terms of Use</a></li>
+<li id="menu-item-15313" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15313"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-15323" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15323"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/' );
+			$.cookie( 'aadsso-redirect', '/askds/2011/06/21/forcing-domain-admins-to-use-agpm-but-not-really/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='2188' post-id='1748'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.technet.microsoft.com/askds/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":"1"};
+var msdnparent = {"is_search":"","is_singular":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

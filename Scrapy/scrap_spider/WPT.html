@@ -1,0 +1,381 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<title>Website Parse Template</title>
+
+<style type="text/css">
+.code{ background:#f8f8ec; padding:10px 50px 10px 50px;}
+.code em{margin-left:20px;}
+.line{ background:#e5b8b7;}
+</style>
+<link rel="stylesheet" type="text/css" href=
+"http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM">
+</head>
+<body>
+<div class="head">
+<p><a href="http://www.w3.org/"><img height="48" width="72" alt=
+"W3C" src="http://www.w3.org/Icons/w3c_home"></a> <a href=
+"http://www.w3.org/Submission/"><img height="48" width="211" src=
+"http://www.w3.org/Icons/member_subm" alt=
+"W3C Member Submission"></a></p>
+<h1><a id="title" name="title">Website Parse Template</a></h1>
+<h2><a id="SW" name="SW">W3C Member Submission 21 March
+2009</a></h2>
+<dl>
+<dt>This version:</dt>
+<dd><a href=
+"http://www.w3.org/Submission/2009/SUBM-WPT-20090321/">http://www.w3.org/Submission/2009/SUBM-WPT-20090321/</a></dd>
+<dt>Latest version:</dt>
+<dd><a href=
+"http://www.w3.org/Submission/WPT/">http://www.w3.org/Submission/WPT/</a></dd>
+<dt>Authors:</dt>
+<dd>Armen Manukyan (OMFICA.org)<br>
+Avet Manukyan (OMFICA.org)<br>
+Arthur Mayilyan (OMFICA.org)<br>
+Alexander Sayadyan (OMFICA.org)<br></dd>
+</dl>
+<p class="copyright">Copyright &copy; 2009 OMFICA.org.<br>
+This document is available under the <a href=
+"http://www.w3.org/Consortium/Legal/copyright-documents">W3C
+Document License</a>. See the <a href=
+"http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C
+Intellectual Rights Notice and Legal Disclaimers</a> for additional
+information.</p>
+</div>
+<hr>
+<h2><a id="abstract" name="abstract"></a>Abstract</h2>
+<p>Existing web crawling technologies assume content extraction
+directly from web pages without basing on keywords declared in HTML
+codes. The key reason is that web publishers usually define
+keywords different from the actual content. The same situation is
+with deployment of RDF, because there is no guarantee for web
+crawlers that the information included in RDF file fully
+corresponds to actual content. Moreover, RDF description prepared
+for specific web page provides information about the content and
+does not include any information about content allocation on that
+web page.</p>
+<p>To escape the mismatch problems described above, web crawlers
+are forced to check RDF compliance with structured content for each
+targeted web page which is associated with the lack information on
+web page structured content. Website Parse Template facilitates
+solution of this problem by providing web page HTML structure
+description for a single or group of similarly structured pages.
+Website Parse Template (WPT) allows web publishers to define
+references to specific HTML elements together with web page content
+description represented in any supported format including RDF.</p>
+<h2><a name="status" id="status">Status of this Document</a></h2>
+<p><em>This section describes the status of this document at the
+time of its publication. Other documents may supersede this
+document. A list of current W3C publications can be found in the
+<a href="http://www.w3.org/TR/">W3C technical reports index</a> at
+http://www.w3.org/TR/.</em></p>
+<p>By publishing this document, W3C acknowledges that the <a href=
+"http://www.w3.org/Submission/2009/02/">Submitting Members</a> have
+made a formal Submission request to W3C for discussion. Publication
+of this document by W3C indicates no endorsement of its content by
+W3C, nor that W3C has, is, or will be allocating any resources to
+the issues addressed by it. This document is not the product of a
+chartered W3C group, but is published as potential input to the
+<a href="http://www.w3.org/2005/10/Process-20051014/">W3C
+Process</a>. <a href=
+"http://www.w3.org/Submission/2009/02/Comment">A W3C Team
+Comment</a> has been published in conjunction with this Member
+Submission. Publication of acknowledged Member Submissions at the
+W3C site is one of the benefits of <a href=
+"http://www.w3.org/Consortium/join">W3C Membership</a>. Please
+consult the requirements associated with Member Submissions of
+<a href=
+"http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">
+section 3.3 of the W3C Patent Policy</a>. Please consult the
+complete <a href="http://www.w3.org/Submission">list of
+acknowledged W3C Member Submissions</a>.</p>
+<h2><a id="contents" name="contents"></a>Table of Contents</h2>
+<ol class="listStyle">
+<li>1. <a href="#introduction">Introduction</a></li>
+<li>2. <a href="#wpt_sections">WPT Sections</a></li>
+<li style="list-style: none">
+<ol class="listStyle">
+<li>2.1. <a href="#templates">Templates</a></li>
+<li>2.2. <a href="#urls_section">URLs section</a></li>
+<li>2.3. <a href="#wpt_ontology">WPT Ontology</a></li>
+</ol>
+</li>
+</ol>
+<hr>
+<h2><a id="introduction" name="introduction"></a>1.
+Introduction</h2>
+<p>Website Parse Template (WPT) is an XML based open format which
+provides web crawlers with additional proper information on web
+page HTML structure and content. WPT is compatible with XML
+schemas, such as RDF and OWL.</p>
+<p>Website Parse Template uses XML tags of Open Web vocabulary
+which is being declared as an XML namespace:
+xmlns:ow="http://www.omfica.org/schemas/ow/0.9".</p>
+Website Parse Template begins with opening &lt;ow:wpt&gt; tag and
+ends with closing &lt;/ow:wpt&gt; tag. Single Website Parse
+Template is referred to the same host, while single host may have
+several Website Parse Templates describing its HTML structure. It
+is required to specify host name the Website Parse Template is for
+and declare the namespace within &lt;ow:wpt&gt; tag (see example
+below).
+<p>Example 1. Website Parse Template frame</p>
+<div class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;ow:wpt xmlns:ow="http://www.omfica.org/schemas/ow/0.9"<br>
+<div style="margin-left:60px;">
+ow:host="http://www.example.com"&gt;</div>
+<br>
+. . . . . . . . . . . . . . . . . . .<br>
+&lt;/ow:wpt&gt;</div>
+<p>Website Parse Template consists of the following sections:</p>
+<ul>
+<li><b>Templates</b> is a mandatory section, which contains web
+pages' HTML structure and content description.</li>
+<li><b>URLs</b> is an optional section, which links URL Patterns
+for groups of web pages to specified Templates.</li>
+<li><b>Ontology</b> is an optional section which defines concepts
+and relations used in website.</li>
+</ul>
+<h2><a id="wpt_sections" name="wpt_sections"></a>2. WPT
+Sections</h2>
+<h4><a id="templates" name="templates"></a>2.1. Templates</h4>
+<p>Templates section describes web page's HTML structure by making
+references to corresponding HTML elements of specific web page.</p>
+<p>Template starts with opening &lt;ow:template&gt; tag and ends
+with closing &lt;/ow:template&gt; tag. It is required to specify
+unique template name within &lt;ow:template&gt; tag and define URL
+which complies with specific template.</p>
+<p>Template consists of blocks corresponding to each structural
+element of specific web page. Each template must contain at least
+one block. Block makes reference to appropriate HTML element
+through one or any combination of following reference methods:
+TagID, XPath and Pattern. Each block must start with opening
+&lt;ow:block&gt; tag and correspondingly ends with closing
+&lt;/ow:block&gt; tag. It is required to indicate specific HTML
+element reference(s) within block's opening tag.</p>
+<p>Example 2. Block reference methods</p>
+<div class="code">&lt;ow:template ow:name="Template Example"
+ow:url="http://www.example.com/index.php"&gt;<br>
+<div style="margin-left:70px;">. . . . . . . . . . . . . . .<br>
+&lt;ow:block ow:tagid="ex1" ow:xpath="/html/body/div/div"
+ow:pattern="content (object[[a-z]*])"&gt;<br>
+. . . . . . . . . . . . . . . <em>//content description</em><br>
+&lt;/ow:block&gt;<br>
+&lt;ow:block ow:tagid="ex2"&gt;<br>
+. . . . . . . . . . . . . . . <em>//content description</em><br>
+&lt;/ow:block&gt;<br>
+&lt;ow:block ow:xpath="/html/body/div/div/table/tr[1]/td"&gt;<br>
+. . . . . . . . . . . . . . . <em>//content description</em><br>
+&lt;/ow:block&gt;<br>
+. . . . . . . . . . . . . . .<br></div>
+&lt;/ow:template&gt;</div>
+<p>Each block contains specific HTML element's content description
+represented solely or within another block. Embedded blocks are
+used to describe specific HTML element ("parent block") which
+includes one or more elements ("child block").</p>
+<p>Example 3. Embedded blocks</p>
+<div class="code">&lt;ow:template ow:name="Template Example"
+ow:url="http://www.example.com/index.php"&gt;<br>
+<div style="margin-left:30px;">. . . . . . . . . . . . . . .<br>
+&lt;ow:block ow:xpath="/html/body/div/div"&gt;<br>
+<div style="margin-left:30px;">&lt;ow:block
+ow:xpath="/html/body/div/div/table/tbody/tr[1]/td"&gt;<br>
+. . . . . . . . . . . . . . . <em>//content description</em><br>
+&lt;/ow:block&gt;<br></div>
+&lt;/ow:block&gt;<br>
+. . . . . . . . . . . . . . .</div>
+&lt;/ow:template&gt;</div>
+<p>Content description can be provided using concepts defined in
+Ontology section or any supported format/language: RDF, CWL, etc.
+It is required to declare namespaces of used XML schema(s) within
+&lt;ow:wpt&gt; tag and ontology name within &lt;ow:template&gt;
+tag.</p>
+<p>Example 4. Content description instances</p>
+<div class="code">&lt;ow:wpt
+xmlns:ow="http://www.omfica.org/schemas/ow/0.9"<br>
+<div style="margin-left:60px;">
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"<br>
+ow:host="http://www.example.com"&gt;</div>
+<div style="margin-left:40px;">. . . . . . . . . . . . . . . .<br>
+&lt;ow:template ow:name="Template Example"
+ow:url="http://www.example.com/index.php"<br>
+<span style=
+"margin-left:97px;">ow:ontology="ontology_example"&gt;</span><br>
+<div style="margin-left:20px;">. . . . . . . . . . . . . . .<br>
+//Content description using defined concepts<br>
+&lt;ow:block ow:tagid="ex1" ow:xpath="/html/body/div/div"
+ow:pattern="Wellcome (user.name[[A-Za-z]*])"&gt;<br>
+<span style="margin-left:75px;">ontology_concept</span><br>
+&lt;/ow:block&gt;<br>
+//Content description using RDF syntax<br>
+&lt;ow:block ow:tagid="ex2"&gt;<br>
+<div style="margin-left:75px;">&lt;rdf:Description
+rdf:about="http://www.example.com/index.php"&gt;<br>
+&nbsp;&nbsp;&nbsp;. . . . . . . . . . . . . . .<br>
+&lt;/rdf:Description&gt;</div>
+&lt;/ow:block&gt;<br>
+//Content description using CWL.unl<br>
+&lt;ow:block ow:xpath="/html/body/div/div/table/tr[1]/td"&gt;<br>
+<div style="margin-left:75px;">{cwl.unl}<br>
+. . . . . . . . . . . . . . .<br>
+{/cwl.unl}</div>
+&lt;/ow:block&gt;<br>
+. . . . . . . . . . . . . . .</div>
+&lt;/ow:template&gt;<br>
+. . . . . . . . . . . . . . . .</div>
+&lt;/ow:wpt&gt;</div>
+<p>If the web page contains listed or structured repeatable content
+it can be represented as a single entry by specifying block type as
+repeatable. For example, if specific HTML element repeats several
+times as a list it can be described as a single repeatable block
+instead of specifying blocks for each listed element. In most cases
+repeatable blocks are child blocks embedded within parent block -
+another HTML element.</p>
+<p>Example 5. Repeatable content representation</p>
+<div class="code">&lt;ow:template ow:name="Template Example"
+ow:url="http://www.example.com/index.php"&gt;<br>
+<div style="margin-left:30px;">. . . . . . . . . . . . . . .<br>
+&lt;ow:block ow:xpath="/html/body/div/table/tbody/tr/td[2]"
+ow:type="repeatable"&gt;<br>
+<span style="margin-left:30px;">. . . . . . . . . . . . . . .
+<em>//content description</em></span><br>
+&lt;/ow:block&gt;<br>
+&lt;ow:block ow:xpath="/html/body/div/div"&gt;<br>
+<div style="margin-left:30px;">&lt;ow:block
+ow:xpath="/html/body/div/div/table/tbody/tr[1]/td"
+ow:type="repeatable"&gt;<br>
+<span style="margin-left:30px;">. . . . . . . . . . . . . . .
+<em>//content description</em></span><br>
+&lt;/ow:block&gt;</div>
+&lt;/ow:block&gt;<br>
+. . . . . . . . . . . . . . .</div>
+&lt;/ow:template&gt;</div>
+<p>For Patterns' definition WPT uses Regular Expressions which
+identify HTML markup or textual content segments of specific web
+page. WPT defines the following scheme for regexp patterns:
+(object[regexp pattern]), where "object" specifies concept
+describing specific textual segment. Object must be declared in
+Ontology section.</p>
+<p>Example 6. Pattern references</p>
+<div class="code">&lt;ow:template ow:name="Template Example"
+ow:url="http://www.example.com/index.php"<br>
+<span style=
+"margin-left:97px;">ow:ontology="ontology_example"&gt;</span><br>
+<div style="margin-left:30px;">. . . . . . . . . . . . . . .
+&lt;ow:block ow:pattern="&lt;td bgcolor=\"FFFFFF\"
+class=\"small\"&gt;&lt;a href=\"/ar-(artist.id[[0-9]*])---<br>
+(artist.name[[A-Za-z]*])\"
+class=\"small\"&gt;&lt;b&gt;(artist.name[[A-Za-z]*])"
+ow:type="repeatable"&gt;<br>
+. . . . . . . . . . . . . . . <em>//content description</em><br>
+&lt;/ow:block&gt;<br>
+&lt;ow:block ow:pattern="The Best Music Blogs on the Web"&gt;<br>
+. . . . . . . . . . . . . . . <em>//content description</em><br>
+&lt;/ow:block&gt;<br>
+&lt;ow:block ow:pattern="Wellcome (member.name[[A-Za-z0-9]*])! Your
+member ID is (member.id[[0-9]*]). &gt;<br>
+. . . . . . . . . . . . . . . <em>//content description</em><br>
+&lt;/ow:block&gt;<br>
+. . . . . . . . . . . . . . .</div>
+&lt;/ow:template&gt;</div>
+<p>Single template may describe single web page or a group of
+similarly structured web pages. In the examples above template
+refers to a single web page (e.g.
+ow:url="http://www.example.com/index.php"). In case of describing
+group of similarly structured web pages via single template it is
+necessary to define URL pattern covering all of those pages (e.g.
+ow:url="http://www.example.com/(page.name[[a-z]*]).php).</p>
+<p>Example 7. Template for a Single Artist Page on Yahoo! Music</p>
+<div class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;ow:wpt xmlns:ow="http://www.omfica.org/schemas/ow/0.9"<br>
+<div style="margin-left:60px;">
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"<br>
+ow:host="http://music.yahoo.com"&gt;</div>
+<div style="margin-left:30px;">. . . . . . . . . . . . . . . .<br>
+&lt;ow:template ow:name="Artist Page on Yahoo! Music"<br>
+<div style="margin-left:97px;">ow:url="<span class=
+"line">http://music.yahoo.com/ar-(artist.id[[0-9]*])---(artist.name[[A-Z,a-z,-,0-9]*])</span>"<br>
+ow:ontology="general"&gt;</div>
+<div style="margin-left:30px;">&lt;ow:block
+ow:tagid=="yent-uhdr"&gt;Menu&lt;/ow:block&gt;<br>
+&lt;ow:block
+ow:xpath="/html/body/div[2]/div/div/div[3]/div/a/span"&gt;Logo&lt;/ow:block&gt;<br>
+&lt;ow:block
+ow:xpath="/html/body/div/div"&gt;Advertisement&lt;/ow:block&gt;<br>
+&lt;ow:block
+ow:xpath="/html/body/div[3]/table/tbody/tr/td[2]/div/h1"&gt;artist.name&lt;/ow:block&gt;<br>
+&lt;ow:block
+ow:tagid="art_img"&gt;artist.image&lt;/ow:block&gt;<br>
+&lt;ow:block
+ow:tagid="biography"&gt;artist.bio&lt;/ow:block&gt;<br>
+&lt;ow:block
+ow:xpath="/html/body/div[3]/table/tbody/tr/td[2]/table/tbody/tr[22]"&gt;artist.album&lt;/ow:block&gt;<br>
+&lt;ow:block
+ow:xpath="/html/body/div[3]/table/tbody/tr/td[2]/table/tbody/tr[10]"&gt;artist.track&lt;/ow:block&gt;<br>
+&lt;ow:block
+ow:xpath="/html/body/div[3]/table/tbody/tr/td[2]/table/tbody/tr[13]"&gt;artist.video&lt;/ow:block&gt;</div>
+&lt;/ow:template&gt;<br>
+. . . . . . . . . . . . . . . .</div>
+&lt;/ow:wpt&gt;</div>
+<p>See visual representation of Website Parse Template in the
+figure 1 below.</p>
+<p>Figure 1. WPT visual representation</p>
+<img src="images/wpt2.gif" alt="WPT visual representation">
+<h4><a id="urls_section" name="urls_section"></a>2.2. URLs
+section</h4>
+<p>This section defines the URLs/URL patterns of web pages
+described in Templates section. This section is mandatory if the
+templates do not define URLs/URL patterns of web pages.</p>
+<p>In accordance with Templates section this section also may
+consist of several blocks/units. Either of those blocks starts with
+&lt;ow:urls&gt; tag and ends with &lt;/ow:urls&gt; tag.</p>
+<p>Example 8. URL patterns</p>
+<div class="code">&lt;ow:urls ow:name="Artist page on Yahoo! Music"
+ow:template="Artist page on Yahoo! Music"&gt;<br>
+<div style="margin-left:20px;">
+&lt;ow:url&gt;http://music.yahoo.com/ar-8206256---Amy-Winehouse&lt;/ow:url&gt;<br>
+&lt;ow:url&gt;http://music.yahoo.com/ar-([artist.id[0-9]*])---(artist.name[[A-Za-z0-9-]*])&lt;/ow:url&gt;</div>
+&lt;/urls&gt;</div>
+<p>As a URL block's name can be chosen any string, but for the
+template it is necessary to indicate specific template name
+described in previous section.</p>
+<p>RegExp specifications are used for URL patterns descriptions.
+The URL pattern provided in Example 8 also includes the represented
+real URL. The concepts necessary for URL pattern definition (such
+as "id" and "name") are to be defined in Ontology section.</p>
+<h4><a id="wpt_ontology" name="wpt_ontology"></a>2.3. WPT
+Ontology</h4>
+<p>Ontology section contains enumeration and definition of all
+concepts used in website. Listed concepts must be enclosed between
+&lt;ow:ontology&gt; and &lt;/ow:ontology&gt; tags. It is required
+to specify the ontology name (any rational string) within
+&lt;ow:ontology&gt; tag. WPT allows using of either OWL or WPT
+Ontology language for concepts definition. The main difference
+between those languages is that WPT Ontology language provides
+simplified syntax for concepts and relations definition.</p>
+<p>Example 9. "artist" concept definition using WPT Ontology
+language</p>
+<div class="code">&lt;ow:ontology ow:name="general"&gt;<br>
+<div style="margin-left:30px;">&lt;ow:concept ow:name="artist"&gt;
+<div style="margin-left:30px;">
+&lt;ow:inherit&gt;person&lt;/ow:inherit&gt;<br>
+&lt;ow:has&gt;name&lt;/ow:has&gt;<br>
+&lt;ow:has&gt;album&lt;/ow:has&gt;<br>
+&lt;ow:has&gt;track&lt;/ow:has&gt;<br>
+&lt;ow:has&gt;image&lt;/ow:has&gt;<br>
+&lt;ow:has&gt;bio&lt;/ow:has&gt;<br>
+&lt;ow:has&gt;video&lt;/ow:has&gt;<br>
+&lt;ow:has&gt;id&lt;/ow:has&gt;</div>
+&lt;/ow:concept&gt;<br>
+&lt;ow:concept&gt;logo&lt;/ow:concept&gt;<br>
+&lt;ow:concept&gt;menu&lt;/ow:concept&gt;<br>
+&lt;ow:concept&gt;advertisement&lt;/ow:concept&gt;</div>
+&lt;/ow:ontology&gt;</div>
+<p>Each concept definition starts with &lt;ow:concept&gt; tag and
+ends with &lt;/ow:concept&gt; tag. &lt;ow:inherit&gt; tag shows
+inheritance relations and &lt;ow:has&gt; tag shows attributable
+relations between two concepts. Either of defined concepts has
+default attribute - object identifier (id) to be used by web
+crawlers to co-ordinate the same object's attributes used in
+different pages of the same website.</p>
+</body>
+</html>

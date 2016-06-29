@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="A user forwarded me a particular annoying bit of spam the other day that I realised is going to be quite hard to combat.">
+<title>Hotmail and Google docs being abused for spam | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Hotmail and Google docs being abused for spam">
+<meta property="og:description" content="A user forwarded me a particular annoying bit of spam the other day that I realised is going to be quite hard to combat.">
+<meta property="og:url" content="https://blog.fastmail.com/2009/08/07/hotmail-and-google-docs-being-abused-for-spam/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2009/08/07/hotmail-and-google-docs-being-abused-for-spam/">
+<meta name="twitter:title" content="Hotmail and Google docs being abused for spam">
+<meta name="twitter:description" content="A user forwarded me a particular annoying bit of spam the other day that I realised is going to be quite hard to combat.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2009/08/07/hotmail-and-google-docs-being-abused-for-spam/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2009/08/07/hotmail-and-google-docs-being-abused-for-spam/'>Hotmail and Google docs being abused for spam</a></h1>
+<p class="blog-author">Rob Mueller &ndash;  6 August 2009</p>
+<p>A user forwarded me a particular annoying bit of spam the other day that
+I realised is going to be quite hard to combat.</p>
+
+<ol>
+<li><p>The email was sent from a Hotmail account. Clearly the spammers have
+broken the Hotmail CAPTCHA process (again), and thus are signing up
+10,000’s or more accounts to send their spam. The main issue is that
+it means there’s no easy “source IP” to test against RBLs for
+blocking or scoring purposes. Hotmail does add a “X-Originating-IP”
+header, but that’s non-standard and for the cases I’ve seen, the IPs
+are not on any known black lists.</p>
+
+<p>This actually seems quite an effective process for spammers. Using
+new spambot compromised machines to only send via reputable services
+like Hotmail, Yahoo, etc. Basically I believe most RBLs are built
+using systems that only check against the original incoming SMTP
+connection (either at the SMTP stage, or via some feedback process
+that later scans back through the Received headers). They generally
+don't look at custom headers like "X-Originating-IP". So even if
+spam checking software does check that header, not much RBL building
+software will, so as long as the spammer can keep those IPs so
+they're only used for sending via other "trusted" services, the IPs
+will probably stay off RBLs for a long time.</p>
+
+<p>Given the constant battle Hotmail, Yahoo, Gmail, etc have stopping
+mass signups, CAPTCHAs days seem numbered. Already in some cases,
+Google have started requiring <a href="http://mail.google.com/support/bin/answer.py?hl=en&amp;answer=114129">SMS verification for new gmail
+accounts</a>,
+I expect this trend to spread to other services and companies over
+time as the CAPTCHA systems employed to try and stop abuse appear to
+be less and less effective every day.</p></li>
+<li><p>The email contained a bunch of random text. Also not unusual, but it
+makes any content analysis basically impossible</p></li>
+<li>The email contained a link to a public Google Docs page. Again,
+clearly spammers have broken the Google CAPTCHA process to signup
+masses of Google Docs accounts and fill with their spam landing
+pages. Again this means that URIBLs are ineffective against these
+types of emails because they can’t go and block Google Docs domains.</li>
+</ol>
+
+<p>The net result was that the emails in question contained very little
+information to block against. Some composite rules could be created (eg
+from a Hotmail account, with a Google Docs link in it), but they’re
+clearly far too broad and likely to result in many false positives.</p>
+
+<p>At the moment, the main things we can do about this are:</p>
+
+<ol>
+<li>Report the emails as spam to providers like Spamcop and others. This
+should both end up reflecting badly on the services that are being
+abused, but should also encourage improvements to make sure they do
+look for X-Originating-IP headers and the like to help build IP RBLs</li>
+<li>Report the Google Docs pages as abuse. I’d hope Google have good
+internal systems to handle this, so that if a bunch of pages are
+reported as abuse, they can track down similar pages and disable
+them and the associated signups as well</li>
+</ol>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2009/08/07/thunderbird-3-beta-3-includes-native-imap-compress-support/">Thunderbird 3 beta 3 includes native IMAP COMPRESS support</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2009/08/07/two-factor-sms-authentication-now-easier-for-businessesfamilies/">Two-factor (SMS) authentication now easier for businesses/families</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

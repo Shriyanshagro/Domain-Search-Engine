@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>ADAMSync 101 | Ask the Directory Services Team</title>
+
+	<meta name="description" content="Microsoft&#039;s official enterprise support blog for AD DS and more">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Feed" href="https://blogs.technet.microsoft.com/askds/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/askds/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; ADAMSync 101 Comments Feed" href="https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="ADAMSync 101" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="ADAMSync 101" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/" />
+<meta name="twitter:description" content="" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/social-counts.min.js?ver=4.1.5'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/askds/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/askds/?p=155' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.entry-content blockquote {
+    border: 0;
+    padding: 0 0 0 0px;
+    margin: 0 0 15px 20px;
+}
+.entry-content blockquote p {
+    font-size: 14px;
+    line-height: 1.5;
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="single single-post postid-155 single-format-standard msdn-2188 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.technet.microsoft.com/server-management">Server &amp; Management Blogs</a> > Ask the Directory Services Team</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.technet.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-server-and-management-blogs-main-menu-container"><ul id="menu-server-and-management-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-33"><a href="#">All About Windows Server</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113"><a href="https://blogs.technet.microsoft.com/windowsserver/">Windows Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="https://blogs.technet.microsoft.com/sbs/">Windows Server Essentials</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="https://blogs.technet.microsoft.com/askperf/">Ask the Performance Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="https://blogs.technet.microsoft.com/askpfeplat/">Ask Premier Field Engineering (PFE) Platforms</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-652"><a href="https://blogs.technet.microsoft.com/askcore/">Ask the Core Team</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Cloud Platform Blogs</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-223"><a href="https://blogs.technet.microsoft.com/server-cloud/">Server &amp; Cloud</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-661"><a href="https://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-214"><a href="https://blogs.technet.microsoft.com/privatecloud/">Building Clouds</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-204"><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson &#8211; In the Cloud</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Datacenter Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-233"><a href="https://blogs.technet.microsoft.com/systemcenter/">Hybrid Cloud IT Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-653"><a href="https://blogs.technet.microsoft.com/msoms/">Operations Management Suite (OMS)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.technet.microsoft.com/scvmm/">System Center Virtual Machine Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-253"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="https://blogs.technet.microsoft.com/momteam/">System Center Operations Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-283"><a href="https://blogs.technet.microsoft.com/orchestrator/">System Center Orchestrator</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Client Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-293"><a href="https://blogs.technet.microsoft.com/configurationmgr/">System Center Configuration Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-303"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-313"><a href="https://blogs.technet.microsoft.com/mmpc/">Malware Protection Center</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-323"><a href="https://blogs.technet.microsoft.com/microsoftintune/">Microsoft Intune</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-333"><a href="https://blogs.technet.microsoft.com/sus/">Server Update Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-343"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Virtualization, VDI &amp; Remote Desktop</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-353"><a href="https://blogs.technet.microsoft.com/virtualization/">Virtualization Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-363"><a href="http://blogs.msdn.microsoft.com/virtual_pc_guy/">Ben Armstrong&#8217;s Virtualization</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-364"><a href="https://blogs.technet.microsoft.com/josebda/tag/hyper-v/">Jose Barreto on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-374"><a href="http://blogs.msdn.microsoft.com/rds/">Remote Desktop Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-394"><a href="https://blogs.technet.microsoft.com/askcore/tag/hyper-v/">Ask the Core Team on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">File &amp; Storage &amp; High Availability</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-404"><a href="https://blogs.technet.microsoft.com/filecab/">File &amp; Storage</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="https://blogs.technet.microsoft.com/josebda/">Jose Barreto</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-414"><a href="https://blogs.technet.microsoft.com/askcore/tag/failover-cluster/">Ask the Core Team on Failover Cluster</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="http://blogs.msdn.microsoft.com/clustering/">Clustering &amp; High Availability</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Windows Server Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-433"><a href="http://blogs.msdn.microsoft.com/powershell/">PowerShell</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-443"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/">Hey Scripting Guy (PowerShell)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="https://blogs.technet.microsoft.com/networking/">Networking</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-103"><a href="#">Identity, Access &amp; Security</a>
+<ul class="sub-menu">
+	<li id="menu-item-666" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666"><a href="https://blogs.technet.microsoft.com/datacentersecurity/">Datacenter and Private Cloud Security</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.technet.microsoft.com/askds/">Ask Directory Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="https://blogs.technet.microsoft.com/ad/">Active Directory</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-493"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+					</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.technet.microsoft.com/askds">Ask the Directory Services Team</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description">Microsoft&#039;s official enterprise support blog for AD DS and more </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+									</div>
+
+			</div>
+
+			
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Feed" href="https://blogs.technet.microsoft.com/askds/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/askds/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; ADAMSync 101 Comments Feed" href="https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="ADAMSync 101" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="ADAMSync 101" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/" />
+<meta name="twitter:description" content="" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/askds/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/askds/?p=155' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.entry-content blockquote {
+    border: 0;
+    padding: 0 0 0 0px;
+    margin: 0 0 15px 20px;
+}
+.entry-content blockquote p {
+    font-size: 14px;
+    line-height: 1.5;
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+				
+				<article id="post-155" class="post-155 post type-post status-publish format-standard hentry category-uncategorized tag-ad-lds tag-kim-nichols">
+	<header class="entry-header">
+		<h1 class="entry-title">ADAMSync 101</h1>
+		<div class="rating-wrap">
+		<div id="star-rating-155" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="155">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>	</header><!-- .entry-header -->
+
+	<div class="entry-meta row">
+		<div class="post-info">
+			<span class="posted-on"><time class="entry-date published" datetime="2012-11-12T14:04:00+00:00">November 12, 2012</time><time class="updated" datetime="2015-06-25T23:40:50+00:00">June 25, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="35b1c3b8a9334d2db476dcc17870dd7f" href="https://social.technet.microsoft.com/profile/Jonathan+Stephens%2C+MSFT">Jonathan Stephens, MSFT</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/#comments">5 Comments</a>		</div>
+
+		<div class="row">
+			<div class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/", "text": "ADAMSync 101"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/", "text": "ADAMSync 101"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.technet.microsoft.com/askds/2012/11/12/adamsync-101/", "text": "ADAMSync 101"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</div><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+	</div><!-- .entry-meta -->
+
+	
+	<div class="entry-content">
+		<p>Hi Everyone, <a href="http://blogs.technet.com/b/askds/archive/tags/kim+nichols/">Kim Nichols</a> here again, and this time I have an introduction to ADAMSync. I take a lot of cases on ADAM and AD LDS and have seen a number of problems arise from less than optimally configured ADAMSync XML files. There are many sources of information on ADAM/AD LDS and ADAMSync (I&#8217;ll include links at the end), but I still receive lots of questions and cases on configuring ADAM/AD LDS for ADAMSync.</p>
+<p>We&#8217;ll start at the beginning and talk about what ADAM/AD LDS is, what ADAMSync is and then finally how you can get AD LDS and ADAMSync working in your environment.</p>
+<h2>What is ADAM/AD LDS?</h2>
+<p>ADAM (Active Directory Application Mode) is the 2003 name for AD LDS (Active Directory Lightweight Directory Services). AD LDS is, as the name describes, a lightweight version of Active Directory. It gives you the capabilities of a multi-master LDAP directory that supports replication without some of the extraneous features of an Active Directory domain controller (domains and forests, Kerberos, trusts, etc.). AD LDS is used in situations where you need an LDAP directory but don&#8217;t want the administration overhead of AD. Usually it&#8217;s used with web applications or SQL databases for authentication. Its schema can also be fully customized without impacting the AD schema.</p>
+<p>AD LDS uses the concept of instances, similar to that of instances in SQL. What this means is one AD LDS server can run multiple AD LDS instances (databases). This is another differentiator from Active Directory: a domain controller can only be a domain controller for one domain. In AD LDS, each instance runs on a different set of ports. The default instance of AD LDS listens on 389 (similar to AD).</p>
+<p>Here&#8217;s some more information on AD LDS if you&#8217;re new to it:</p>
+<ul>
+<li><a href="http://technet.microsoft.com/en-us/library/cc732019.aspx">AD LDS Installed Help</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/cc770639(WS.10).aspx">Active Directory Lightweight Directory Services (AD LDS) Getting Started Step-by-Step Guide</a></li>
+<li><a href="http://technet.microsoft.com/en-us/library/cc754361(WS.10).aspx">Active Directory Lightweight Directory Services Overview</a></li>
+<li><a href="http://technet.microsoft.com/en-us/library/cc725665(WS.10).aspx">AD LDS Backup and Restore Step-by-Step Guide</a></li>
+<li><a href="http://technet.microsoft.com/en-us/library/cc816635(WS.10).aspx">Active Directory Lightweight Directory Services Operations Guide</a></li>
+</ul>
+<h2>What is ADAMSync?</h2>
+<p>In many scenarios, you may want to store user data in AD LDS that you can&#8217;t or don&#8217;t want to store in AD. Your application will point to the AD LDS instance for this data, but you probably don&#8217;t want to manually create all of these users in AD LDS when they already exist in AD. If you have Forefront Identity Manager (FIM), you can use it to synchronize the users from AD into AD LDS and then manually populate the AD LDS specific attributes through LDP, ADSIEdit, or a custom or 3rd party application. If you don&#8217;t have FIM, however, you can use ADAMSync to synchronize data from your Active Directory to AD LDS.</p>
+<p>It is important to remember that ADAMSync DOES NOT synchronize user passwords! If you want the AD LDS user account to use the same password as the AD user, then userproxy transformation is what you need. (That&#8217;s a topic for another day, though. I&#8217;ll include links at the end for userproxy.)</p>
+<p>ADAMSync uses an XML file that defines which data will synchronize from AD to AD LDS. The XML file includes the AD partition from which to synchronize, the object types (classes or categories), and attributes to synchronize. This file is loaded into the AD LDS database and used during ADAMSync synchronization. Every time you make changes to the XML file, you must reload the XML file into the database.</p>
+<p>In order for ADAMSync to work:</p>
+<ol>
+<li>The <strong>MS-AdamSyncMetadata.LDF</strong> file must be imported into the schema of the AD LDS instance prior to attempting to install the XML file. This LDF creates the classes and attributes for storing the ADAMSync.xml file.</li>
+<li>The schema of the AD LDS instance must already contain all of the object classes and attributes that you will be syncing from AD to AD LDS. In other words, you can&#8217;t sync a user object from AD to AD LDS unless the AD LDS schema contains the User class and all of the attributes that you specify in the ADAMSync XML (we&#8217;ll talk more about this next). There is a <a href="http://technet.microsoft.com/en-us/magazine/2009.04.schema.aspx?pr=blog">blog post</a> on using ADSchemaAnalyzer to compare the AD schema to the AD LDS schema and export the differences to an LDF file that can be imported into AD LDS.</li>
+<li>
+<div>Unless you plan on modifying the schema of the AD LDS instance, your instance should be named DC=&lt;partition name&gt;, DC=&lt;com or local or whatever&gt; and not CN=&lt;partition name&gt;. Unfortunately, the example in the AD LDS setup wizard uses CN= for the partition name.&nbsp; If you are going to be using ADAMSync, you should disregard that example and use DC= instead.&nbsp; The reason behind this change is that the default schema does not allow an organizationalUnit (OU) object to have a parent object of the Container (CN) class. Since you will be synchronizing OUs from AD to AD LDS and they will need to be child objects of your application partition head, you will run into problems if your application partition is named CN=.</div>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/2055.111212_2204_ADAMSync1011.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/2055.111212_5F00_2204_5F00_ADAMSync1011.png" alt="" /></p>
+<p>Obviously, this limitation is something you can change in the AD LDS schema, but simply naming your partition with <strong>DC=</strong> name component will eliminate the need to make such a change. In addition, you won&#8217;t have to remember that you made a change to the schema in the future.</p>
+</li>
+</ol>
+<p>The best advice I can give regarding ADAMSync is to keep it as simple as possible to start off with. The goal should be to get a basic XML file that you know will work, gradually add attributes to it, and troubleshoot issues one at a time. If you try to do too much (too wide of object filter or too many attributes) in the XML from the beginning, you will likely run into multiple issues and not know where to begin in troubleshooting.</p>
+<p><a href="http://en.wikipedia.org/wiki/KISS_principle"><strong>KEEP IT SIMPLE!!!</strong></a></p>
+<h2>MS-AdamSyncConf.xml</h2>
+<p>Let&#8217;s take a look at the default XML file that Microsoft provides and go through some recommendations to make it more efficient and less prone to issues. The file is named MS-AdamSyncConf.XML and is typically located in the %windir%\ADAM directory.</p>
+<p style="background: #d9d9d9;"><span style="font-family: Lucida Console; font-size: 10pt;">&lt;?xml version=&#8221;1.0&#8243;?&gt;<br />&lt;doc&gt;<br /> &lt;configuration&gt;<br /> &lt;description&gt;sample Adamsync configuration file&lt;/description&gt;<br /> &lt;security-mode&gt;object&lt;/security-mode&gt;<br /> &lt;source-ad-name&gt;fabrikam.com&lt;/source-ad-name&gt; &lt;&#8212;&#8212; 1<br /> &lt;source-ad-partition&gt;dc=fabrikam,dc=com&lt;/source-ad-partition&gt; &lt;&#8212;&#8212; 2<br /> &lt;source-ad-account&gt;&lt;/source-ad-account&gt; &lt;&#8212;&#8212; 3<br /> &lt;account-domain&gt;&lt;/account-domain&gt; &lt;&#8212;&#8212; 4<br /> &lt;target-dn&gt;dc=fabrikam,dc=com&lt;/target-dn&gt; &lt;&#8212;&#8212; 5<br /> &lt;query&gt;<br /> &lt;base-dn&gt;dc=fabrikam,dc=com&lt;/base-dn&gt; &lt;&#8212;&#8212; 6<br /> &lt;object-filter&gt;(objectClass=*)&lt;/object-filter&gt; &lt;&#8212;&#8212; 7<br /> &lt;attributes&gt; &lt;&#8212;&#8212; 8<br /> &lt;include&gt;&lt;/include&gt;<br /> &lt;exclude&gt;extensionName&lt;/exclude&gt;<br /> &lt;exclude&gt;displayNamePrintable&lt;/exclude&gt;<br /> &lt;exclude&gt;flags&lt;/exclude<br /> &lt;exclude&gt;isPrivelegeHolder&lt;/exclude&gt;<br /> &lt;exclude&gt;msCom-UserLink&lt;/exclude&gt;<br /> &lt;exclude&gt;msCom-PartitionSetLink&lt;/exclude&gt;<br /> &lt;exclude&gt;reports&lt;/exclude&gt;<br /> &lt;exclude&gt;serviceprincipalname&lt;/exclude&gt;<br /> &lt;exclude&gt;accountExpires&lt;/exclude&gt;<br /> &lt;exclude&gt;adminCount&lt;/exclude&gt;<br /> &lt;exclude&gt;primarygroupid&lt;/exclude&gt;<br /> &lt;exclude&gt;userAccountControl&lt;/exclude&gt;<br /> &lt;exclude&gt;codePage&lt;/exclude&gt;<br /> &lt;exclude&gt;countryCode&lt;/exclude&gt;<br /> &lt;exclude&gt;logonhours&lt;/exclude&gt;<br /> &lt;exclude&gt;lockoutTime&lt;/exclude&gt;<br /> &lt;/attributes&gt;<br /> &lt;/query&gt;<br /> &lt;schedule&gt;<br /> &lt;aging&gt;<br /> &lt;frequency&gt;0&lt;/frequency&gt;<br /> &lt;num-objects&gt;0&lt;/num-objects&gt;<br /> &lt;/aging&gt;<br /> &lt;schtasks-cmd&gt;&lt;/schtasks-cmd&gt;<br /> &lt;/schedule&gt; &lt;&#8212;&#8212; 9<br /> &lt;/configuration&gt;<br /> &lt;synchronizer-state&gt;<br /> &lt;dirsync-cookie&gt;&lt;/dirsync-cookie&gt;<br /> &lt;status&gt;&lt;/status&gt;<br /> &lt;authoritative-adam-instance&gt;&lt;/authoritative-adam-instance&gt;<br /> &lt;configuration-file-guid&gt;&lt;/configuration-file-guid&gt;<br /> &lt;last-sync-attempt-time&gt;&lt;/last-sync-attempt-time&gt;<br /> &lt;last-sync-success-time&gt;&lt;/last-sync-success-time&gt;<br /> &lt;last-sync-error-time&gt;&lt;/last-sync-error-time&gt;<br /> &lt;last-sync-error-string&gt;&lt;/last-sync-error-string&gt;<br /> &lt;consecutive-sync-failures&gt;&lt;/consecutive-sync-failures&gt;<br /> &lt;user-credentials&gt;&lt;/user-credentials&gt;<br /> &lt;runs-since-last-object-update&gt;&lt;/runs-since-last-object-update&gt;<br /> &lt;runs-since-last-full-sync&gt;&lt;/runs-since-last-full-sync&gt;<br /> &lt;/synchronizer-state&gt;<br />&lt;/doc&gt; </span></p>
+<p>Let&#8217;s go through the default XML file by number and talk about what each section does, why the defaults are what they are, and what I typically recommend when working with customers.</p>
+<ol>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;source-ad-name&gt;fabrikam.com&lt;/source-ad-name&gt;</span>&nbsp;</div>
+<p>Replace fabrikam.com with the FQDN of the domain/forest that will be your synchronization source</p>
+</li>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;source-ad-partition&gt;dc=fabrikam,dc=com&lt;/source-ad-partition&gt;</span>&nbsp;</div>
+<p>Replace dc=fabrikam,dc=com with the DN of the AD partition that will be the source for the synchronization</p>
+</li>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;source-ad-account&gt;&lt;/source-ad-account&gt;</span>&nbsp;</div>
+<p>Contains the account that will be used to authenticate to the source forest/domain. If left empty, the credentials of the logged on user will be used</p>
+</li>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;account-domain&gt;&lt;/account-domain&gt;</span>&nbsp;</div>
+<p>Contains the domain name to use for authentication to the source domain/forest. This element combined with &lt;source-ad-account&gt; make up the domain\username that will be used to authenticate to the source domain/forest. If left empty, the domain of the logged on user will be used.</p>
+</li>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;"> &lt;target-dn&gt;dc=fabrikam,dc=com&lt;/target-dn&gt;</span></div>
+<p>Replace dc=fabrikam,dc=com with the DN of the AD LDS partition you will be synchronizing to.</p>
+<p><strong>NOTE:</strong> In 2003 ADAM, you were able to specify a sub-ou or container of the of the ADAM partition, for instance OU=accounts,dc=fabrikam,dc=com. This is not possible in 2008+ AD LDS. You must specify the head of the partition, dc=fabrikam,dc=com. This is publicly documented <a href="http://technet.microsoft.com/en-us/library/cc794836(WS.10).aspx">here</a>.</p>
+</li>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;base-dn&gt;dc=fabrikam,dc=com&lt;/base-dn&gt;</span></div>
+<p>Replace dc=fabrikam,dc=com with the base DN of the container in AD that you want to synchronize objects from.</p>
+<p><strong>NOTE:</strong> You can specify multiple base DNs in the XML file, but it is important to note that due to the way the dirsync engine works the entire directory will still be scanned during synchronization. This can lead to unexpectedly long synchronization times and output in the adamsync.log file that is confusing. The short of this this is that even though you are limiting where to synchronize objects from, it doesn&#8217;t reduce your synchronization time and you will see entries in the adamsync.log file that indicate objects being processed but not written. This can make it appear as though ADAMSync is not working correctly if your directory is large but you are syncing is a small percentage of the directory. Also, the log will grow and grow, but it may take a long time for objects to begin to appear in AD LDS. This is because the entire directory is being enumerated, but only a portion is being synchronized.</p>
+</li>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;object-filter&gt;(objectClass=*)&lt;/object-filter&gt;</span></div>
+<p>The object filter determines which objects will be synchronized from AD to AD LDS. While objectClass=* will get you everything, do you really want or need EVERYTHING? Consider the amount of data you will be syncing and the security implications of having everything duplicated in AD LDS. If you only care about user objects, then don&#8217;t sync computers and groups.</p>
+<p>The filter that I generally recommend as a starting point is:</p>
+<p><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">(&amp;#124;(objectCategory=Person)(objectCategory=OrganizationalUnit))</span></p>
+<p>Rather than <em>objectClass=User</em>, I recommend <em>objectCategory=Person</em>. But, why, you ask? I&#8217;ll tell you <img src="https://blogs.technet.microsoft.com/askds/wp-includes/images/smilies/icon_smile.gif" alt=":-)" class="wp-smiley" /> If you&#8217;ve ever looked that the class of a computer object, you&#8217;ll notice that it contains an objectClass of user.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/2330.111212_2204_ADAMSync1012.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/2330.111212_5F00_2204_5F00_ADAMSync1012.png" alt="" /></p>
+<p>What this means to ADAMSync is that if I specify an object filter of <em>objectClass=user</em>, ADAMSync will synchronize <strong>users</strong> and <strong>computers</strong> (and <strong>contact</strong> objects and anything else that inherits from the User class). However, if I use <em>objectCategory=Person</em>, I only get actual user objects. Pretty neat, eh?</p>
+<p>So, what does this <strong>&amp;#124;</strong> mean and why include <em>objectCategory=OrganizationalUnit</em>? The literal <strong>&amp;#124;</strong> is the XML representation of the <strong>|</strong> (pipe) character which represents a logical OR. True, I&#8217;ve seen customers just use the <strong>|</strong> character in the XML file and not have issues, but I always use the XML rather than the <strong>|</strong> just to be certain that it gets translated properly when loaded into the AD LDS instance. If you need to use an AND rather than an OR, the XML for <strong>&amp;</strong> is <strong>&amp;amp;</strong>. </p>
+<p>You need <em>objectCategory=OrganizationalUnit</em> so that objects that are moved within AD get synchronized properly to AD LDS. If you don&#8217;t specify this, the OUs that contain objects within scope of the object filter will be created on the initial creation of the object in AD LDS. But, if that object is ever MOVED in the source AD, ADAMSync won&#8217;t be able to synchronize that object to the new location. Moving an object changes the full DN of the object. Since we aren&#8217;t syncing the OUs the object just &#8220;disappears&#8221; from an ADAMSync perspective and never gets updated/moved.</p>
+<p> If you need groups to be synchronized as well you can add <em>(objectclass=group)</em> inside the outer parentheses and groups will also be synced.</p>
+<p><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">(&amp;#124;(objectCategory=Person)(objectCategory=OrganizationalUnit)(objectClass=Group))<br /></span></p>
+</li>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;attributes&gt;</span></div>
+<p>The attributes section is where you define which attributes to synchronize for the object types defined in the &lt;object-filter&gt;.</p>
+<p>You can either use the &lt;include&gt;&lt;/include&gt; or &lt;exclude&gt;&lt;/exclude&gt; tabs, but you cannot use both.</p>
+<p>The default XML file provided by Microsoft takes the high ground and uses the &lt;exclude&gt;&lt;/exclude&gt; tags which really means include all attributes except the ones that are explicitly defined within the &lt;exclude&gt;&lt;/exclude&gt; element. While this approach guarantees that you don&#8217;t miss anything important, it can also lead to a lot of headaches in troubleshooting.</p>
+<p>If you&#8217;ve ever looked at an AD user account in ADSIEdit (especially in an environment with Exchange), you&#8217;ll notice there are hundreds of attributes defined. Keeping to my earlier advice of &#8220;keep it simple&#8221;, every attribute you sync adds to the complexity.</p>
+<p>When you use the &lt;exclude&gt;&lt;/exclude&gt; tags you don&#8217;t know what you are syncing; you only know what you are not syncing. If your application isn&#8217;t going to use the attribute then there is no reason to copy that data to AD LDS. Additionally, there are some attributes and classes that just won&#8217;t sync due to how the dirsync engine works. I&#8217;ll include the list as I know it at the end of the article. Every environment is different in terms of which schema updates have been made and which attributes are being used. Also, as I mentioned earlier, if your AD LDS schema does not contain the object classes and attributes that you have defined in your ADAMSync XML file you&#8217;re your synchronization will die in a big blazing ball of flame.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/5483.111212_2204_ADAMSync1013.jpg" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/5483.111212_5F00_2204_5F00_ADAMSync1013.jpg" alt="" /> <br /><span style="font-size: 8pt;"><strong>Whoosh!!<br /></strong></span><br />A typical attributes section to start out with is something like this: </p>
+<p style="background: #d9d9d9;"><span style="font-family: Lucida Console; font-size: 10pt;">&lt;include&gt;objectSID&lt;/include&gt; &lt;&#8212;&#8211; only needed for userproxy<br />&lt;include&gt;userPrincipalName&lt;/include&gt; &lt;&#8212;&#8211; must be unique in AD LDS instance<br />&lt;include&gt;displayName&lt;/include&gt;<br />&lt;include&gt;givenName&lt;/include&gt;<br />&lt;include&gt;sn&lt;/include&gt;<br />&lt;include&gt;physicalDeliveryOfficeName&lt;/include&gt;<br />&lt;include&gt;telephoneNumber&lt;/include&gt;<br />&lt;include&gt;mail&lt;/include&gt;<br />&lt;include&gt;title&lt;/include&gt;<br />&lt;include&gt;department&lt;/include&gt;<br />&lt;include&gt;manager&lt;/include&gt;<br />&lt;include&gt;mobile&lt;/include&gt;<br />&lt;include&gt;ipPhone&lt;/include&gt;<br />&lt;exclude&gt;&lt;/exclude&gt;</span></p>
+<p>Initially, you may even want to remove userPrincipalName, just to verify that you can get a sync to complete successfully. Synchronization issues caused by the userPrincipalName attribute are among the most common ADAMSync issues I see. Active Directory allows multiple accounts to have the same userPrincipalName, but <strong>ADAMSync will not sync an object if it has the same userPrincipalName of an object that already exists in the AD LDS database.</strong> </p>
+<p>If you want to be a superhero and find duplicate UPNs in your AD before you attempt ADAMSync, here&#8217;s a nifty csvde command that will generate a comma-delimited file that you can run through Excel&#8217;s &#8220;Highlight duplicates&#8221; formatting options (or a script if you are a SUPER-SUPERHERO) to find the duplicates.</p>
+<p><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">csvde -f upn.csv -s localhost:389 -p subtree -d &#8220;DC=fabrikam,DC=com&#8221; -r &#8220;(objectClass=user)&#8221; -l sAMAccountName,userPrincipalName<br /></span><br />Remember, you are targeting your AD with this command, so the localhost:389 implies that the command is being run on the DC. You&#8217;ll need to replace &#8220;DC=fabrikam, DC=com&#8221; with your AD domain&#8217;s DN.</p>
+</li>
+<li>
+<div><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;/schedule&gt;</span></div>
+<p>After &lt;/schedule&gt; is where you would insert the elements to do user proxy transformation. In the References section, I&#8217;ve included links that explain the purpose and configuration of userproxy. The short version is that you can use this section of code to create userproxy objects rather than AD LDS user class objects. Userproxy objects are a special class of user that links back to an Active Directory domain account to allow the AD LDS user to utilize the password of their corresponding user account in AD. It is NOT a way to logon on to AD from an external network. It is a way to allow an application that utilizes AD LDS as its LDAP directory to authenticate a user via the same password they have in AD. Communication between AD and AD LDS is required for this to work and the application that is requesting the authentication does not receive a Kerberos ticket for the user. </p>
+<p>Here is an example of what you would put after &lt;/schedule&gt; and before &lt;/configuration&gt;</p>
+<p><span style="font-family: Lucida Console; font-size: 10pt; background-color: #d9d9d9;">&lt;user-proxy&gt;<br /> &lt;source-object-class&gt;user&lt;/source-object-class&gt;<br /> &lt;target-object-class&gt;userProxyFull&lt;/target-object-class&gt;<br />&lt;/user-proxy&gt;</span></p>
+</li>
+</ol>
+<h2>Installing the XML file</h2>
+<p>OK! That was fun, wasn&#8217;t it? Now that we have an XML file, how do we use it? This is covered in a lot of different materials, but the short version is we have to install it into the AD LDS instance. To install the file, run the following command from the ADAM installation directory (%windir%\ADAM):</p>
+<p style="background: #d9d9d9;"><span style="font-family: Lucida Console; font-size: 10pt;">Adamsync /install localhost:389 CustomAdamsync.xml </span></p>
+<p>The command above assumes you are running it on the AD LDS server, that the instance is running on port 389 and that the XML file is located in the path of the adamsync command.</p>
+<p>What does this do exactly, you ask? The adamsync install command copies the XML file contents into the configurationFile attribute on the AD LDS application partition head. You can view the attribute by connecting to the application partition via LDP or through ADSIEdit. This is a handy thing to know. You can use this to verify for certain exactly what is configured in the instance. Often there are several versions of the XML file in the ADAM directory and it can be difficult to know which one is being used. Checking the configurationFile attribute will tell you exactly what is configured. It won&#8217;t tell you which XML file was used, but at least you will know the configuration.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/2018.111212_2204_ADAMSync1014.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/2018.111212_5F00_2204_5F00_ADAMSync1014.png" alt="" /></p>
+<p>The implication of this is that anytime you update the XML file you must reinstall it using the <strong>adamsync /install</strong> command otherwise the version in the instance is not updated. I&#8217;ve made this mistake a number of times during troubleshooting!</p>
+<h2>Synchronizing with AD</h2>
+<p>Finally, we are ready to synchronize! Running the synchronization is the &#8220;easy&#8221; part assuming we&#8217;ve created a valid XML file, our AD LDS schema has all the necessary classes and attributes, and the source AD data is without issue (duplicate UPN is an example of a known issue).</p>
+<p>From the ADAM directory (typically %windir%\ADAM), run the following command:</p>
+<p style="background: #d9d9d9;"><span style="font-family: Lucida Console; font-size: 10pt;">Adamsync /sync localhost:389 &#8220;DC=fabrikam,DC=com&#8221; /log adamsync.log </span></p>
+<p>Again, we&#8217;re assuming you are running the command on the AD LDS server and that the instance is running on port 389. The DN referenced in the command is the DN of your AD LDS application partition. /log is very important (you can name the log anything you want). You will need this log if there are any issues during the synchronization. The log will tell you which object failed and give you a <span style="text-decoration: line-through;">cryptic</span> &#8220;detailed&#8221; reason as to why. Below is an example of an error due to a duplicate UPN. This is one of the easier ones to understand.</p>
+<p style="background: #d9d9d9;"><span style="font-family: Lucida Console; font-size: 10pt;">====================================================<br />Processing Entry: Page 67, Frame 1, Entry 64, Count 1, USN 0 <br />Processing source entry &lt;guid=fe36238b9dd27a45b96304ea820c82d8&gt; <br />Processing in-scope entry fe36238b9dd27a45b96304ea820c82d8.</p>
+<p>Adding target object CN=BillyJoeBob,OU=User Accounts,dc=fabrikam,dc=com. Adding attributes: sourceobjectguid, objectClass, sn, description, givenName, instanceType, displayName, department, sAMAccountName, userPrincipalName, Ldap error occurred. ldap_add_sW: Attribute Or Value Exists. Extended Info: 0000217B: AtrErr: DSID-03050758, #1: <br />0: 0000217B: DSID-03050758, problem 1006 (ATT_OR_VALUE_EXISTS), data 0, Att 90290 (userPrincipalName)</p>
+<p>. Ldap error occurred. ldap_add_sW: Attribute Or Value Exists. Extended Info: 0000217B: AtrErr: DSID-03050758, #1: <br />0: 0000217B: DSID-03050758, problem 1006 (ATT_OR_VALUE_EXISTS), data 0, Att 90290 (userPrincipalName)<br />=============================================== </span></p>
+<p>During the sync, if you are syncing from the Active Directory domain head rather than an OU or container, your objects should begin showing up in the AD LDS instance almost immediately. The objects don&#8217;t synchronize in any order that makes sense to the human brain, so don&#8217;t worry if objects are appearing in a random order. There is no progress bar or indication of how the sync is going other than fact that the log file is growing. When the sync completes you will be returned to the command prompt and your log file will stop growing.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/58/02/metablogapi/6131.111212_2204_ADAMSync1015.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-58-02-metablogapi/6131.111212_5F00_2204_5F00_ADAMSync1015.png" alt="" /></p>
+<h2>Did it work?</h2>
+<p>As you can see there is nothing on the command line nor are there any events in any Windows event log that indicate that the synchronization was successful. In this context, successful means completed without errors and all objects in scope, as defined in the XML file, were synchronized. The only way to determine if the synchronization was successful is to check the log file. This highlights the importance of generating the log. Additionally, it&#8217;s a good idea to keep a reasonable number of past logs so if the sync starts failing at some point you can determine approximately when it started occurring. Management likes to know things like this.</p>
+<p>Since you&#8217;ll probably be automating the synchronization (easy to do with a scheduled task) and not running it manually, it&#8217;s a good idea to set up a reminder to periodically check the logs for issues. If you&#8217;ve never looked at a log before, it can be a little intimidating if there are a lot of objects being synchronized. The important thing to know is that if the sync was successful, the bottom of the log will contain a section similar to the one below:</p>
+<p style="background: #d9d9d9;"><span style="font-family: Lucida Console; font-size: 10pt;">Updating the configuration file DirSync cookie with a new value.</p>
+<p>Beginning processing of deferred dn references.<br />Finished processing of deferred dn references.</p>
+<p>Finished (successful) synchronization run.<br />Number of entries processed via dirSync: 16<br />Number of entries processed via ldap: 0<br />Processing took 4 seconds (0, 0).<br />Number of object additions: 3<br />Number of object modifications: 13<br />Number of object deletions: 0<br />Number of object renames: 2<br />Number of references processed / dropped: 0, 0<br />Maximum number of attributes seen on a single object: 9<br />Maximum number of values retrieved via range syntax: 0</p>
+<p>Beginning aging run.<br />Aging requested every 0 runs. We last aged 2 runs ago.<br />Saving Configuration File on DC=instance1,DC=local<br />Saved configuration file.</span></p>
+<p>If your log just stops without a section similar to the one above, then the last entry will indicate an error similar to the one above for the duplicate UPN.</p>
+<h2>Conclusion and other References</h2>
+<p>That covers the basics of setting up ADAMSync! I hope this information makes the process more straight forward and gives you some tips for getting it to work the first time! The most important point I can make is to start very simple with the XML file and get something to work. You can always add more attributes to the file later, but if you start from broken it can be difficult to troubleshoot. Also, I highly recommend using &lt;include&gt; over &lt;exclude&gt; when specifying attributes to synchronize. This may be more work for your application team since they will have to know what their application requires, but it will make setting up the XML file and getting a successful synchronization much easier!</p>
+<h3>ADAMSync excluded objects</h3>
+<p>As I mentioned earlier, there are some attributes, classes and object types that ADAMSync will not synchronize. The items listed below are hard-coded not to sync. There is no way around this using ADAMSync. If you need any of these items to sync, then you will need to use LDIFDE exports, FIM, or some other method to synchronize them from AD to AD LDS. The scenarios where you would require any of these items are very limited and some of them are dealt with within ADAMSync by converting the attribute to a new attribute name (objectGUID to sourceObjectGUID).</p>
+<h4>Attributes</h4>
+<p>cn, currentValue, dBCSPwd, fSMORoleOwner, initialAuthIncoming, initialAuthOutgoing, isCriticalSystemObject, isDeleted, lastLogonTimeStamp, lmPwdHistory, msDS-ExecuteScriptPassword, ntPwdHistory, nTSecurityDescriptor, objectCategory, objectSid (except when being converted to proxy), parentGUID, priorValue, pwdLastSet, sAMAccountType, sIDHistory, supplementalCredentials, supplementalCredentials, systemFlags, trustAuthIncoming, trustAuthOutgoing, unicodePwd, whenChanged</p>
+<h4>Classes</h4>
+<p>crossRef, secret, trustedDomain, foreignSecurityPrincipal, rIDSet, rIDManager</p>
+<h4>Other</h4>
+<p>Naming Context heads, deleted objects, empty attributes, attributes we do not have permissions to read, objectGUIDs (gets transferred to sourceObjectGUID), objects with del-mangeled distinguished names (DEL:\)</p>
+<h3>Additional Goodies</h3>
+<h4>ADAMSync</h4>
+<ul style="margin-left: 54pt;">
+<li><a href="http://technet.microsoft.com/en-us/library/cc794836(WS.10).aspx">Synchronize with Active Directory Domain Services</a></li>
+<li><a href="http://blogs.technet.com-b-askds-archive-2009-01-20-determine-applied-schema-extensions-with-ad-ds-lds-schema-analyzer.aspx">Determine Applied Schema Extensions with AD DS/LDS Schema Analyzer</a></li>
+<li><a href="http://technet.microsoft.com/en-us/library/cc783683(WS.10).aspx">ADAMSync Configuration File XML Reference</a></li>
+<li><a href="http://technet.microsoft.com/en-us/magazine/2008.12.proxy.aspx?pr=blog">Active Directory Understanding Proxy Authentication in AD LDS</a></li>
+<li><a href="http://blogs.technet.com/b/efleis/archive/2005/09/23/adamsync-can-also-transform-users-in-to-proxy-users.aspx">ADAMSync can also transform users in to proxy users</a></li>
+</ul>
+<h4>AD LDS Replication</h4>
+<ul style="margin-left: 54pt;">
+<li><a href="http://technet.microsoft.com/en-us/library/cc731246(WS.10).aspx">AD LDS Replication Step-by-Step Guide</a></li>
+<li><a href="http://blogs.technet.com/b/askds/archive/2009/12/02/link-pairs-and-configuring-bridgeheads-in-adam-AD%20LDS.aspx">Link-Pairs and Configuring Bridgeheads in ADAM-AD</a></li>
+</ul>
+<h4>Misc Blogs</h4>
+<ul style="margin-left: 54pt;">
+<li><a href="http://blogs.technet.com/b/askds/archive/2010/09/27/ad-lds-schema-files-demystified.aspx">AD LDS Schema Files</a></li>
+<li><a href="http://blogs.technet.com-b/askds/archive/2009/10/27/how-to-decommission-an-adam-AD%20LDS-server-and-add-additional-servers.aspx">How to Decommission an AD LDS server and add Additional Servers</a></li>
+<li><a href="http://blogs.technet.com/b/idaguys/archive/2009/06/19/overiview-of-authentication-in-ad-lds.aspx">Overview of authentication mechanisms in AD LDS</a></li>
+<li><a href="http://blogs.technet.com/b/askds/archive/2009/04/02/one-stop-audit-shop-for-adam-and-AD%20LDS.aspx">One stop Audit shop for ADAM and AD LDS</a></li>
+<li><a href="http://blogs.technet.com/b/askds/archive/2008/09/18/service-connection-points-scps-and-adam-ad-lds.aspx">Service Connection Points (SCPs) and ADAM-AD LDS</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/aa772124(v=vs.85).aspx">Directory Services API Element Differences (Windows)</a></li>
+<li><a href="http://blogs.technet.com/b/askds/archive/2009/09/14/windows-2008-r2-managing-ad-lds-using-the-ad-powershell-module.aspx">Windows 2008 R2 Managing AD LDS using the AD PowerShell Module</a></li>
+</ul>
+<p>GOOD LUCK and ENJOY!</p>
+<p>Kim &#8220;Sync or swim&#8221; Nichols</p>
+				<div class="back-to-top-wrap"><a href="#top-link" class="back-to-top">Back to<br>top</a></div>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+				
+			
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="msdn_bing_social_search-5" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=Ask%2Bthe%2BDirectory%2BServices%2BTeam&rq=site%3Ahttp%3A%2F%2Fblogs.technet.com%2Fb%2Faskds" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="text-3" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Top Server &amp; Tools Blogs</h2>			<div class="textwidget"><div class="widget-rss-link">
+	<a href="http://sxp.microsoft.com/feeds/3.0/ServerTools/ServerToolsTopPosts" target="_blank"><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png" /></a></div>
+
+<ul class="widget-link-list">
+    <li><a href="http://weblogs.asp.net/scottgu">ScottGu's Blog</a></li>
+    <li><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson&rsquo;s "In the Cloud" Blog</a></li>
+    <li><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry's Blog</a></li>
+    <li><a href="https://blogs.msdn.microsoft.com/stevengu/">Steve "Guggs" Guggenheimer's Blog</a></li>
+</ul></div>
+		</aside><aside id="msdn-sharing-3" class="widget msdn-sharing"><h2 class="widget-title color-highlight-bg">Share This Post</h2><div class='social-share-icons-wrap'><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-facebook facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2012%2F11%2F12%2Fadamsync-101%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-twitter twitter" href="https://twitter.com/intent/tweet/?text=ADAMSync+101&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2012%2F11%2F12%2Fadamsync-101%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-linkedin linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2012%2F11%2F12%2Fadamsync-101%2F&title=ADAMSync+101&source=https://blogs.technet.microsoft.com/askds">Share</a><a onclick="" class="social-sharing social-sharing-email email" href="mailto:?subject=ADAMSync 101&body=ADAMSync 101 https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2012%2F11%2F12%2Fadamsync-101%2F">Share</a><a onclick="" class="social-sharing social-sharing-rss rss" href="https://blogs.technet.microsoft.com/askds/feed/">Share</a></div></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title color-highlight-bg">Recent Posts</h2>		<ul>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/04/14/are-your-dcs-too-busy-to-be-monitored-ad-data-collector-set-solutions-for-long-report-compile-times-or-report-data-deletion/">Are your DCs too busy to be monitored?: AD Data Collector Set solutions for long report compile times or report data deletion</a>
+							<span class="post-date">April 14, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/03/09/previewing-server-2016-tp4-temporary-group-memberships/">Previewing Server 2016 TP4: Temporary Group Memberships</a>
+							<span class="post-date">March 9, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/01/11/does-your-logon-hang-after-a-password-change-on-win-8-1-2012-r2win10/">Does your logon hang after a password change on win 8.1 /2012 R2/win10?</a>
+							<span class="post-date">January 11, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2015/12/08/speaking-in-ciphers-and-other-enigmatic-tonguesupdate/">Speaking in Ciphers and other Enigmatic tongues&hellip;update!</a>
+							<span class="post-date">December 8, 2015</span>
+						</li>
+				</ul>
+		</aside><aside id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.technet.microsoft.com/askds/tag/adfs/' class='tag-link-4' title='15 topics' style='font-size: 9pt;'>ADFS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ad-lds/' class='tag-link-37' title='16 topics' style='font-size: 9.2954545454545pt;'>AD LDS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ad-replication/' class='tag-link-35' title='28 topics' style='font-size: 11.560606060606pt;'>AD Replication</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/audit/' class='tag-link-177' title='21 topics' style='font-size: 10.378787878788pt;'>audit</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/authentication/' class='tag-link-55' title='34 topics' style='font-size: 12.348484848485pt;'>Authentication</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/authorization/' class='tag-link-57' title='30 topics' style='font-size: 11.856060606061pt;'>Authorization</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/certificates/' class='tag-link-73' title='48 topics' style='font-size: 13.825757575758pt;'>Certificates</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsn/' class='tag-link-33' title='45 topics' style='font-size: 13.530303030303pt;'>DFSN</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr/' class='tag-link-9' title='128 topics' style='font-size: 17.962121212121pt;'>DFSR</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-debug-logging/' class='tag-link-84' title='29 topics' style='font-size: 11.757575757576pt;'>DFSR Debug Logging</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-migration-or-upgrade/' class='tag-link-92' title='16 topics' style='font-size: 9.2954545454545pt;'>DFSR Migration or Upgrade</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-performance/' class='tag-link-81' title='27 topics' style='font-size: 11.462121212121pt;'>DFSR Performance</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/disaster-recovery/' class='tag-link-26' title='22 topics' style='font-size: 10.575757575758pt;'>Disaster Recovery</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dns/' class='tag-link-95' title='17 topics' style='font-size: 9.5909090909091pt;'>DNS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/frs/' class='tag-link-108' title='21 topics' style='font-size: 10.378787878788pt;'>FRS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/group-policy/' class='tag-link-30' title='70 topics' style='font-size: 15.401515151515pt;'>group policy</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/group-policy-preferences/' class='tag-link-91' title='22 topics' style='font-size: 10.575757575758pt;'>Group Policy Preferences</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/infrastructure/' class='tag-link-69' title='74 topics' style='font-size: 15.69696969697pt;'>infrastructure</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/jonathan-stephens/' class='tag-link-42' title='26 topics' style='font-size: 11.265151515152pt;'>Jonathan Stephens</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/kb-articles/' class='tag-link-74' title='104 topics' style='font-size: 17.075757575758pt;'>KB Articles</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/kerberos/' class='tag-link-19' title='39 topics' style='font-size: 12.939393939394pt;'>Kerberos</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ldap/' class='tag-link-20' title='19 topics' style='font-size: 9.9848484848485pt;'>LDAP</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/mail-sack/' class='tag-link-49' title='60 topics' style='font-size: 14.810606060606pt;'>Mail Sack</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/mike-stephens/' class='tag-link-43' title='44 topics' style='font-size: 13.431818181818pt;'>Mike Stephens</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ned-pyle/' class='tag-link-10' title='328 topics' style='font-size: 22pt;'>Ned Pyle</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/network/' class='tag-link-104' title='39 topics' style='font-size: 12.939393939394pt;'>network</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/other-blogs/' class='tag-link-40' title='93 topics' style='font-size: 16.583333333333pt;'>Other Blogs</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/passwords/' class='tag-link-39' title='18 topics' style='font-size: 9.7878787878788pt;'>Passwords</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/pki/' class='tag-link-6' title='49 topics' style='font-size: 13.924242424242pt;'>PKI</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/powershell/' class='tag-link-47' title='29 topics' style='font-size: 11.757575757576pt;'>PowerShell</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/profiles/' class='tag-link-13' title='17 topics' style='font-size: 9.5909090909091pt;'>Profiles</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/rob-greene/' class='tag-link-75' title='29 topics' style='font-size: 11.757575757576pt;'>Rob Greene</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/security/' class='tag-link-7' title='58 topics' style='font-size: 14.613636363636pt;'>Security</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/silly-rabbit/' class='tag-link-32' title='88 topics' style='font-size: 16.386363636364pt;'>Silly Rabbit</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/sysvol/' class='tag-link-38' title='15 topics' style='font-size: 9pt;'>SYSVOL</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt/' class='tag-link-48' title='73 topics' style='font-size: 15.598484848485pt;'>USMT</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt-behaviors/' class='tag-link-53' title='26 topics' style='font-size: 11.265151515152pt;'>USMT Behaviors</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt-component-manifest-reference/' class='tag-link-160' title='20 topics' style='font-size: 10.181818181818pt;'>USMT Component Manifest Reference</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-7/' class='tag-link-14' title='46 topics' style='font-size: 13.628787878788pt;'>Windows 7</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-8/' class='tag-link-15' title='25 topics' style='font-size: 11.068181818182pt;'>Windows 8</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2008/' class='tag-link-134' title='45 topics' style='font-size: 13.530303030303pt;'>Windows Server 2008</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2008-r2/' class='tag-link-21' title='65 topics' style='font-size: 15.106060606061pt;'>Windows Server 2008 R2</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2012/' class='tag-link-23' title='19 topics' style='font-size: 9.9848484848485pt;'>windows server 2012</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-vista/' class='tag-link-159' title='51 topics' style='font-size: 14.121212121212pt;'>Windows Vista</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-xp/' class='tag-link-96' title='25 topics' style='font-size: 11.068181818182pt;'>Windows XP</a></div>
+</aside><aside id="msdn-archive-widget-3" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.technet.microsoft.com/askds/2016/04/'>April 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/03/'>March 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/01/'>January 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/12/'>December 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/11/'>November 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/'>All of 2016</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/'>All of 2015</a>&nbsp;(10)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2014/'>All of 2014</a>&nbsp;(9)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2013/'>All of 2013</a>&nbsp;(18)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2012/'>All of 2012</a>&nbsp;(62)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2011/'>All of 2011</a>&nbsp;(132)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2010/'>All of 2010</a>&nbsp;(150)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2009/'>All of 2009</a>&nbsp;(215)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2008/'>All of 2008</a>&nbsp;(122)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2007/'>All of 2007</a>&nbsp;(19)</li>
+</aside>
+	</div><!-- #secondary -->
+
+	<div id="tag-wrap"><h2 class="color-highlight-bg">Tags</h2><ul class="tag-list"><li><a href="https://blogs.technet.microsoft.com/askds/tag/ad-lds/">AD LDS</a></li><li><a href="https://blogs.technet.microsoft.com/askds/tag/kim-nichols/">Kim Nichols</a></li></ul></div>
+	
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+			</div>
+			
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-1461" class="comment byuser comment-author-mike-kline even thread-even depth-1">
+			<article id="div-comment-1461" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2012-11-13T17:44:58+00:00">
+							3 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/30e6f474a8488d2ec4e569737dfcbeec?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Mike Kline</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Excellent article Kim, when I was reading this and saw &quot;(&#124;(objectCategory=Person)(objectCategory=OrganizationalUnit))&quot; &nbsp;I was wondering why you used the OU there&#8230;.then you answered that question.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-2806" class="comment byuser comment-author-purduegrad98live-com odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-2806" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2012-11-19T20:17:34+00:00">
+							3 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/c76d3f1de8bc82fb8b3882f451967090?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">purduegrad98@live.com</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks, Mike! &nbsp;Glad that the post was helpful! &nbsp;</p>
+<p>The object filter is one of the more common issues we run into. &nbsp;It&#39;s not intuitive that you need to add OU, especially due to the fact that without it OUs still get synced. &nbsp;Another one that trips people up is syncing group memberships. &nbsp;You have to add objectclass=group to the object filter, but you also have to add both member and memberof attributes to your attribute list since these are back-linked attributes.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-2699" class="comment byuser comment-author-jon-macycerner-com even thread-even depth-1">
+			<article id="div-comment-2699" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2012-12-06T12:53:18+00:00">
+							3 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/f49261d09b61398f3a024328a82d70ea?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">jon.macy@cerner.com</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hey Kim</p>
+<p>When syncing multiple AD DS instances to a single LDS instance, what is the best way to handle the multiple configuration XML files required?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-3008" class="comment byuser comment-author-purduegradoutlook-com odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-3008" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2013-01-10T19:12:05+00:00">
+							3 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/f4d57988b1e242cb871ed9ff1622b246?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">purduegrad@outlook.com</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Sorry for the delayed response, Jon. &nbsp;In most cases, I see people setup 2 scheduled tasks. &nbsp;One for each XML they need to run. &nbsp;In each task, they run the ADAMSync /install and the ADAMSync /sync commands. &nbsp;If you know how long it takes to sync, just set up the tasks on intervals giving each sync enough time to finish before running the next.</p>
+<p>Hope this helps!</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-2529" class="comment byuser comment-author-lefle-ac-uk even thread-even depth-1">
+			<article id="div-comment-2529" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2013-02-08T00:24:00+00:00">
+							3 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/ca34bb76eda4ebb4e1891726dfbf5585?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">lef@le.ac.uk</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>You might also find my AdamSync Common problems blog post:</p>
+<p> <a rel="nofollow" target="_new" href="http://adamsync.wordpress.com/2012/05/15/adamsync-common-problems/" rel="nofollow">adamsync.wordpress.com/&#8230;/adamsync-common-problems</a></p>
+<p>useful.</p>
+<p>It&#39;s great to see Microsoft continuing to support ADAMsync!</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+				<p class="no-comments">Comments are closed.</p>
+	
+</div><!-- #comments -->
+
+
+	
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-15303" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15303"><a href="http://technet.microsoft.com/en-US/cc300389.aspx">Terms of Use</a></li>
+<li id="menu-item-15313" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15313"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-15323" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15323"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/askds/2012/11/12/adamsync-101/' );
+			$.cookie( 'aadsso-redirect', '/askds/2012/11/12/adamsync-101/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='2188' post-id='155'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.technet.microsoft.com/askds/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":"1"};
+var msdnparent = {"is_search":"","is_singular":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

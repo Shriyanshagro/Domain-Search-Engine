@@ -1,0 +1,1696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Web Services Metadata Exchange 1.1 (WS-MetadataExchange)</title>
+<style type='text/css'>
+ table { width: 100%; }
+ th, td { border: 1px solid black; padding: 0.5ex; }
+ th { text-align: left; }
+ div.body th { text-align: left; background: #ccc; }
+ pre { background: #ccc; padding: 1ex;}
+ dl.properties dt { font-family: monospace; font-weight: normal;}
+ dl.definitions dt { font-weight: normal;}
+ div.toc ul { list-style-type: none; }
+ p.caption, caption { text-align: left; font-weight: bold; }
+ div.graph, div.graph p.caption { text-align: center}
+ .c1 { color: #a52a2a; }
+ .c2 { color: red }
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM" />
+</head>
+
+<body>
+
+<div class="head">
+<p>
+<a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"/></a>
+<a href="http://www.w3.org/Submission/"><img height="48" width="211" src="http://www.w3.org/Icons/member_subm" alt="W3C Member Submission"/></a>
+</p>
+<h1>Web Services Metadata Exchange 1.1 (WS-MetadataExchange)</h1>
+<h2 id="W3C-doctype">W3C Member Submission 13 August 2008</h2>
+<dl>
+<dt>This version:</dt>
+<dd><a href="http://www.w3.org/Submission/2008/SUBM-WS-MetadataExchange-20080813/">http://www.w3.org/Submission/2008/SUBM-WS-MetadataExchange-20080813/</a>
+</dd>
+<dt>Latest version:</dt>
+<dd><a href="http://www.w3.org/Submission/WS-MetadataExchange/">http://www.w3.org/Submission/WS-MetadataExchange/</a></dd>
+</dl>
+<dl>
+<dt>Authors:</dt>
+<dd>Keith Ballinger, Microsoft</dd>
+<dd>Bobby Bissett, Sun Microsystems, Inc.</dd>
+<dd>Don Box, Microsoft</dd>
+<dd>Francisco Curbera (Editor), IBM</dd>
+  <dd>Don Ferguson, IBM (no longer affiliated with IBM)</dd>
+  <dd>Steve Graham, IBM (no longer affiliated with IBM)</dd>
+<dd>Canyang Kevin Liu, SAP</dd>
+<dd>Frank Leymann, IBM</dd>
+<dd>Brad Lovering, Microsoft</dd>
+<dd>Raymond McCollum, Microsoft</dd>
+<dd>Anthony Nadalin, IBM</dd>
+<dd>Savas Parastatidis (Editor), Microsoft</dd>
+<dd>Claus von Riegen, SAP</dd>
+<dd>Jeffrey Schlimmer (Editor), Microsoft</dd>
+<dd>John Shewchuk, Microsoft</dd>
+<dd>Bill Smith, Sun Microsystems, Inc.</dd>
+<dd>Greg Truty, IBM</dd>
+<dd>Asir Vedamuthu, Microsoft</dd>
+  <dd>Sanjiva Weerawarana, IBM (no longer affiliated with IBM)</dd>
+<dd>Kirk Wilson, CA</dd>
+<dd>Prasad Yendluri, Software AG</dd>
+</dl>
+
+<p class="copyright">Copyright © 2004-2008 <a
+href="http://www.ca.com/">CA</a>, <a
+href="http://www.ibm.com/">International Business Machines
+Corporation</a>, <a href="http://www.microsoft.com/">Microsoft
+Corporation, Inc.</a>, <a href="http://www.sap.com/">SAP AG</a>, <a
+href="http://www.sun.com/">Sun Microsystems, Inc.</a>, and <a
+  href="http://www.webmethods.com/">Software AG</a>. All rights reserved.
+This document is available under the <a
+href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C
+Document License</a>. See the <a
+href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C
+Intellectual Rights Notice and Legal Disclaimers</a> for additional
+information.</p>
+
+<hr/>
+</div>
+
+
+<h2 id="abstract">Abstract</h2>
+<p>This specification defines how metadata
+associated with a Web service endpoint can be represented as
+[<a href="#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>] resources, how metadata can
+be embedded in [<a href="#WSAddressing2004"><span class="Internetlink">WS-Addressing 2004</span></a>, 
+<a href="#WSAddressing10Core">
+<span class="Internetlink">WS-Addressing
+1.0 Core</span></a>] endpoint references, and how metadata could be
+retrieved from a Web service endpoint.</p>
+<h2 id="status">Status of this document</h2>
+
+<p><em>This section describes the status of this document at the time of its publication. 
+Other documents may supersede this document. A list of current W3C publications can 
+be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+
+<p>This WS-MetadataExchange Specification is a public draft release and is provided for review and evaluation only. The
+Authors hope to solicit your contributions and suggestions in the near future. The Authors make no warrantees or
+representations regarding the specifications in any manner whatsoever.</p>
+
+<p>By publishing this document, W3C acknowledges that the
+<a href="http://www.w3.org/Submission/2008/06/">Submitting Members</a>
+have made a formal Submission request to W3C for
+discussion. Publication of this document by W3C indicates no
+endorsement of its content by W3C, nor that W3C has, is, or will be
+allocating any resources to the issues addressed by it. This document
+is not the product of a chartered W3C group, but is published as
+    potential input to the <a href="http://www.w3.org/Consortium/Process">W3C
+Process</a>. A <a href="http://www.w3.org/Submission/2008/06/Comment">W3C Team
+Comment</a> has been published in conjunction with this Member
+Submission. Publication of acknowledged Member Submissions at the W3C
+site is one of the benefits of <a
+    href="http://www.w3.org/Consortium/Prospectus/Joining">W3C Membership</a>. Please
+consult the requirements associated with Member Submissions of <a
+    href="http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">section
+3.3 of the W3C Patent Policy</a>. Please consult the complete <a
+    href="http://www.w3.org/Submission">list of acknowledged W3C Member
+Submissions</a>.</p>
+
+<div class="toc">
+<h2 id="toc">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">1.Introduction</a>
+
+	<ul>
+	<li><a href="#requirements">1.1 Requirements</a></li>
+	<li><a href="#example">1.2 Example</a></li>
+	</ul></li>
+
+<li><a href="#notation">2.Notation</a>
+
+	<ul>
+	<li><a href="#xml-namespaces">2.1 XML Namespaces</a></li>
+	<li><a href="#notational-conventions">2.2 Notational Conventions</a></li>
+	<li><a href="#compliance">2.3 Compliance</a></li>
+	</ul></li>
+
+<li><a href="#metadata-resources">3.Metadata Resources</a></li>
+<li><a href="#web-services-metadata">4.Web Services Metadata</a></li>
+<li><a href="#retrieving-metadata">5.Retrieving Metadata</a>
+
+	<ul>
+	<li><a href="#ws-transfer-get">5.1 WS-Transfer Get</a></li>
+	<li><a href="#get-metadata">5.2 Get Metadata</a></li>
+	</ul></li>
+
+<li><a href="#metadata-in-epr">6.Metadata in Endpoint References</a></li>
+<li><a href="#bootstrapping-metadata-retrieval">7.Bootstrapping Metadata Retrieval</a></li>
+<li><a href="#acknowledgements">9.Acknowledgements</a></li>
+<li><a href="#references">10.References</a></li>
+<li><a href="#appendix-I">Appendix I - XML Schema</a></li>
+<li><a href="#appendix-II">Appendix II - WSDL</a></li>
+</ul>
+</div>
+
+<div class="body">
+<h2 id="composable-architecture">Composable Architecture</h2>
+<p>The Web services specifications (WS-*) are
+designed to be composed with each other to provide a rich set of
+tools for the Web services environment. This specification
+specifically relies on other Web services specifications to provide
+secure, reliable, and/or transacted message delivery and to express
+Web service metadata.</p>
+
+<h2 id="introduction">1. Introduction</h2>
+<p>Web services use metadata to describe what
+other endpoints need to know to interact with them. Specifically,
+WS-Policy [<a href="#WS-Policy"><span class=
+"Internetlink">WS-Policy</span></a>] describes the capabilities,
+requirements, and general characteristics of Web services; WSDL
+[<a href="#WSDL11"><span class="Internetlink">WSDL
+1.1</span></a>] describes abstract message operations, concrete
+network protocols, and endpoint addresses used by Web services; XML
+Schema [<a href="#XMLSchema-1"><span class="Internetlink">XML
+Schema Part 1</span></a>, <a href="#XMLSchema-2"><span class=
+"Internetlink">Part 2</span></a>] describes the structure and
+contents of XML-based messages received by and sent by Web
+services.</p>
+<p>To bootstrap communication with Web services
+this specification defines how metadata can be treated as [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+resources for retrieval purposes, how metadata can be embedded in
+Web service endpoint references, and how Web service endpoints can
+optionally support a request-response interaction for the retrieval
+of metadata. When the type of metadata sought is clearly known,
+e.g., [<a href="#WS-Policy"><span class=
+"Internetlink">WS-Policy</span></a>], a requester may indicate that
+only that type should be returned; where additional types of
+metadata are being used, or are expected, or when a requester needs
+to retrieve all of the metadata relevant to subsequent interactions
+with an endpoint, a requester may indicate that all available
+metadata, regardless of their types, are expected.</p>
+<p>The mechanisms defined herein are intended for
+the retrieval of metadata (i.e., Web service description
+information) only. They are not intended to provide a general
+purpose query or retrieval mechanism for other types of data
+associated with a Web service, such as state data, properties and
+attribute values, etc.&nbsp;</p>
+<h2 id="requirements">1.1 Requirements</h2>
+<p>This specification intends to meet the
+following requirements:&nbsp;</p>
+<ul>
+<li>
+Define an encapsulation format for
+metadata.
+</li>
+<li>
+Treat the metadata about a Web service endpoint
+as [<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] resources.
+</li>
+<li>
+Define an optional bootstrap mechanism for
+metadata-driven [<a href="#XMLSchema-1"><span class=
+"Internetlink">XML Schema</span></a>, <a href=
+"#WSDL11"><span class="Internetlink">WSDL</span></a>, and
+<a href="#WS-Policy"><span class=
+"Internetlink">WS-Policy</span></a>] message exchange.
+</li>
+<li>
+Support future versions of known metadata
+formats.
+</li>
+<li>
+Allow new metadata formats to be added.
+</li>
+<li>
+Leverage other Web service specifications for
+secure, reliable, transacted message delivery.
+</li>
+<li>
+Support both SOAP 1.1 [<a href=
+"#SOAP11"><span class="Internetlink">SOAP 1.1</span></a>] and
+SOAP 1.2 [<a href="#SOAP12"><span class="Internetlink">SOAP
+1.2</span></a>] Envelopes.
+</li>
+<li>
+Enable description in WSDL 1.1 [<a href=
+"#WSDL11"><span class="Internetlink">WSDL 1.1</span></a>] of the
+optional request-response interaction.
+</li>
+</ul>
+<h2 id="example">1.2 Example</h2>
+<p>Table 1 illustrates a sample [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+Get request for a resource's representation.</p>
+
+    <p class="Caption"><b>Table 1: Sample Get request message.</b></p>
+
+<pre>(01)	&lt;s11:Envelope
+(02)	    xmlns:s11='http://schemas.xmlsoap.org/soap/envelope/'
+(03)		  xmlns:wsa10='http://www.w3.org/2005/08/addressing'&gt;
+(04)	  &lt;s11:Header&gt;
+(05)	    &lt;wsa10:Action&gt;
+(06)	      http://schemas.xmlsoap.org/ws/2004/09/transfer/Get
+(07)	    &lt;/wsa10:Action&gt;
+(08)	    &lt;wsa10:To&gt;http://services.example.org/stockquote/metadata&lt;/wsa10:To&gt;
+(09)	    &lt;wsa10:ReplyTo&gt;
+(10)	      &lt;wsa10:Address&gt;http://client.example.org&lt;/wsa10:Address&gt;
+(11)	    &lt;/wsa10:ReplyTo&gt;
+(12)	    &lt;wsa10:MessageID&gt;
+(13)	      urn:uuid:1cec121a-82fe-41da-87e1-3b23f254f128
+(14)	    &lt;/wsa10:MessageID&gt;
+(15)	  &lt;/s11:Header&gt;
+(16)	  &lt;s11:Body /&gt;
+(17)	&lt;/s11:Envelope&gt;</pre>
+
+
+
+<p>The sample request message of Table 1 is a [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+request for the retrieval of a resource's representation. In this
+case, the requested representation is the WS-Metadata Exchange
+Metadata element about a Web service endpoint. The fact that the
+resource's representation is a mex:Metadata element may be known to
+the requestor but is not explicitly encoded in the request
+message</p>
+<p>Table 2 illustrates a sample response to the request of Table 1.</p>
+<p class="P12"><b>Table 2: Sample response message with metadata.</b></p>
+
+
+
+<pre>(01)	&lt;s11:Envelope
+(02)	    xmlns:s11='http://schemas.xmlsoap.org/soap/envelope/'
+(03)	    xmlns:wsa10='http://www.w3.org/2005/08/addressing'
+(04)	    xmlns:mex='http://schemas.xmlsoap.org/ws/2004/09/mex'
+(05)	    xmlns:wsp='http://schemas.xmlsoap.org/ws/2004/09/policy'
+(06)	    xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'&gt;
+(07)	  &lt;s11:Header&gt;
+(08)	    &lt;wsa10:Action&gt;
+(09)	      http://schemas.xmlsoap.org/ws/2004/09/transfer/GetResponse
+(10)	    &lt;/wsa10:Action&gt;
+(11)	    &lt;wsa10:To&gt;http://client.example.org&lt;/wsa10:To&gt;
+(12)	    &lt;wsa10:RelatesTo&gt;
+(13)	      urn:uuid:1cec121a-82fe-41da-87e1-3b23f254f128
+(14)	    &lt;/wsa10:RelatesTo&gt;
+(15)	  &lt;/s11:Header&gt;
+(16)	  &lt;s11:Body&gt;
+(17)	    &lt;mex:Metadata&gt;
+(18)	      &lt;mex:MetadataSection Dialect='http://schemas.xmlsoap.org/wsdl/'&gt;
+(19)	        &lt;wsdl:definitions
+(20)	            name='StockQuote'
+(21)	            targetNamespace='http://services.example.org/stockquote'
+(22)	            xmlns:tns='http://services.example.org/stockquote'
+(23)	            xmlns:msgs='http://services.example.org/stockquote/schemas'
+(24)	            xmlns:wsoap='http://schemas.xmlsoap.org/wsdl/soap/'
+(25)	            xmlns:xs='http://www.w3.org/2001/XMLSchema'&gt;
+(26)	          &lt;wsdl:import
+(27)	              namespace='http://services.example.org/stockquote'
+(28)	              location='http://services.example.org/stockquote/schemas' /&gt;
+(29)	          &lt;wsdl:portType name='StockQuotePortType'&gt;
+(30)	            &lt;wsdl:operation name='GetLastTradePrice'&gt;
+(31)	              &lt;wsdl:input message='msgs:GetLastTradePriceInput'
+(32)	                          name='GetLastTradePriceInput'/&gt;
+(33)	              &lt;wsdl:output message='msgs:GetLastTradePriceOutput'
+(34)	                           name='GetLastTradePriceOutput'/&gt;
+(35)	            &lt;/wsdl:operation&gt;
+(36)	          &lt;/wsdl:portType&gt;
+(37)	          &lt;wsdl:binding name='StockQuoteBinding'
+(38)	                type='tns:StockQuotePortType'&gt;
+(39)	            &lt;wsp:PolicyReference
+(40)	                URI='http://services.example.org/stockquote/policy' /&gt;
+(41)	            &lt;wsoap:binding style='document'
+(42)	                transport='http://schemas.xmlsoap.org/soap/http'/&gt;
+(43)	            &lt;wsdl:operation name='GetLastTradePrice'&gt;
+(44)	              &lt;wsoap:operation soapAction='http://services.example.org/stockquote/GetLastTradePrice' /&gt;
+(45)	              &lt;wsdl:input name='GetLastTradePriceInput'&gt;
+(46)	                &lt;wsoap:body use='literal'/&gt;
+(47)	              &lt;/wsdl:input&gt;
+(48)	              &lt;wsdl:output name='GetLastTradePriceOutput'&gt;
+(49)	                &lt;wsoap:body use='literal'/&gt;
+(50)	              &lt;/wsdl:output&gt;
+(51)	            &lt;/wsdl:operation&gt;
+(52)	          &lt;/wsdl:binding&gt;
+(53)	          &lt;wsdl:service name='StockQuoteService'&gt;
+(54)	            &lt;wsdl:port name='StockQuotePort'
+(55)	                       binding='tns:StockQuoteBinding' &gt;
+(56)	              &lt;wsoap:address
+(57)	                  location='http://services.example.org/stockquote' /&gt;
+(58)	            &lt;/wsdl:port&gt;
+(59)	          &lt;/wsdl:service&gt;
+(60)	        &lt;/wsdl:definitions&gt;
+(61)	      &lt;/mex:MetadataSection&gt;
+(62)	      &lt;mex:MetadataSection
+(63)	          Dialect='http://www.w3.org/2001/XMLSchema'
+(64)	          Identifier='http://services.example.org/stockquote/schemas'&gt;
+(65)	        &lt;mex:Location&gt;
+(66)	          http://services.example.org/stockquote/schemas
+(67)	        &lt;/mex:Location&gt;
+(68)	      &lt;/mex:MetadataSection&gt;
+(69)	      &lt;mex:MetadataSection
+(70)	          Dialect='http://schemas.xmlsoap.org/ws/2004/09/policy'
+(71)	          Identifier='http://services.example.org/stockquote/policy'&gt;
+(72)	        &lt;mex:MetadataReference&gt;
+(73)	          &lt;wsa10:Address&gt;
+(74)	            http://services.example.org/stockquote/policy
+(75)	          &lt;/wsa10:Address&gt;
+(76)	        &lt;/mex:MetadataReference&gt;
+(77)	      &lt;/mex:MetadataSection&gt;
+(78)	    &lt;/mex:Metadata&gt;
+(79)	  &lt;/s11:Body&gt;
+(80)	&lt;/s11:Envelope&gt;</pre>
+
+
+<p>The message of Table 2 is a [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+response message to the request of Table 1. The content of the [Body]
+(lines 16-79) is a mex:Metadata element with metadata about the Web
+service endpoint (lines 17-78). The mex:Metadata contains three
+Metadata Sections. The first Metadata Section (lines 18-61)
+contains the WSDL [<a href="#WSDL11"><span class=
+"Internetlink">WSDL</span></a>] of the Web service endpoint. The
+second Metadata Section (lines 62-68) contains the location of the
+XML Schemas [<a href="#XMLSchema-1"><span class="Internetlink">XML
+Schema Part 1</span></a>, <a href="#XMLSchema-2"><span class=
+"Internetlink">Part 2</span></a>] used by the WSDL document. The
+schemas can be retrieved through an HTTP GET request at the
+identified URL (lines 65-67). The third Metadata Section (lines
+69-77) contains the WS-Addressing [<a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>] endpoint reference (lines 72-75) of a
+WS-Transfer [<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] resource the representation
+of which is a WS-Policy [<a href="#WS-Policy"><span class=
+"Internetlink">WS-Policy</span></a>] document as indicated by the
+Dialect attribute (line 70). The WS-Policy document is the same as
+the one indicated in the WSDL document (lines 39-40).</p>
+<p>While the WS-Policy of the Web service endpoint
+could be retrieved using a WS-Transfer GET request directed to the
+endpoint identified by the mex:MetadataReference element in lines
+72-76 of Table 2, some endpoints may choose to support explicit request
+for metadata. Table 3 illustrates a sample Get Metadata request for the
+WS-Policy [<a href="#WS-Policy"><span class=
+"Internetlink">WS-Policy</span></a>].</p>
+<p class="P12"><b>Table 3: Sample Get Metadata request message</b></p>
+
+
+<pre>(01)	&lt;s11:Envelope
+(02)	    xmlns:s11='http://schemas.xmlsoap.org/soap/envelope/'
+(03)	    xmlns:wsa10='http://www.w3.org/2005/08/addressing'
+(04)	    xmlns:mex='http://schemas.xmlsoap.org/ws/2004/09/mex' &gt;
+(05)	  &lt;s11:Header&gt;
+(06)	    &lt;wsa10:To&gt;http://services.example.org/stockquote&lt;/wsa10:To&gt;
+(07)	    &lt;wsa10:Action&gt;
+(08)	      http://schemas.xmlsoap.org/ws/2004/09/mex/GetMetadata/Request
+(09)	    &lt;/wsa10:Action&gt;
+(10)	    &lt;wsa10:MessageID&gt;
+(11)	      urn:uuid:73d7edfc-5c3c-49b9-ba46-2480caee43e9
+(12)	    &lt;/wsa10:MessageID&gt;
+(13)	    &lt;wsa10:ReplyTo&gt;
+(14)	      &lt;wsa10:Address&gt;http://client.example.org&lt;/wsa10:Address&gt;
+(15)	    &lt;/wsa10:ReplyTo&gt;
+(16)	  &lt;/s11:Header&gt;
+(17)	  &lt;s11:Body&gt;
+(18)	    &lt;mex:GetMetadata&gt;
+(19)	      &lt;mex:Dialect&gt;http://schemas.xmlsoap.org/ws/2004/09/policy&lt;/mex:Dialect&gt;
+(20)	      &lt;mex:Identifier&gt;
+(21)	        http://services.example.org/stockquote/policy
+(22)	      &lt;/mex:Identifier&gt;
+(23)	    &lt;/mex:GetMetadata&gt;
+(24)	  &lt;/s11:Body&gt;
+(25)	&lt;/s11:Envelope&gt;</pre>
+
+
+
+<p>Lines 7-9 in Table 3 indicate this is a Get Metadata
+request. As lines 18-22 indicate, this request is for the policy of
+the Web service endpoint (line 6).</p>
+<p>Table 4 lists a sample response to the request in Table 3.</p>
+<p class="P12"><b>Table 4: Sample Get Metadata response message</b></p>
+
+<pre>(01)	&lt;s11:Envelope
+(02)	    xmlns:s11='http://schemas.xmlsoap.org/soap/envelope/'
+(03)	    xmlns:wsa10='http://www.w3.org/2005/08/addressing'
+(04)	    xmlns:wsp='http://schemas.xmlsoap.org/ws/2004/09/policy'
+(05)	    xmlns:mex='http://schemas.xmlsoap.org/ws/2004/09/mex'&gt;
+(06)	  &lt;s11:Header&gt;
+(07)	    &lt;wsa10:To&gt;http://client.example.org&lt;/wsa10:To&gt;
+(08)	    &lt;wsa10:Action&gt;
+(09)	      http://schemas.xmlsoap.org/ws/2004/09/mex/GetMetadata/Response
+(10)	    &lt;/wsa10:Action&gt;
+(11)	    &lt;wsa10:RelatesTo&gt;
+(12)	      urn:uuid:73d7edfc-5c3c-49b9-ba46-2480caee43e9
+(13)	    &lt;/wsa10:RelatesTo&gt;
+(14)	  &lt;/s11:Header&gt;
+(15)	  &lt;s11:Body&gt;
+(16)	    &lt;mex:Metadata&gt;
+(17)	      &lt;mex:MetadataSection
+(18)	          Dialect='http://schemas.xmlsoap.org/ws/2004/09/policy'
+(19)	          Identifier='http://services.example.org/stockquote/policy'&gt;
+(20)	        &lt;wsp:Policy&gt;
+(21)	          &lt;wsp:ExactlyOne&gt;
+(22)	            &lt;!-- Policy alternatives --&gt;
+(23)	          &lt;/wsp:ExactlyOne&gt;
+(24)	        &lt;/wsp:Policy&gt;
+(25)	      &lt;/mex:MetadataSection&gt;
+(26)	    &lt;/mex:Metadata&gt;
+(27)	  &lt;/s11:Body&gt;
+(28)	&lt;/s11:Envelope&gt;</pre>
+
+<p>Lines 8-10 in Table 4 indicate this message is a
+response to a Get Metadata request, and lines 11-13 indicate that
+it is a response to the request in Table 3. Lines 16-26 contain a single
+Metadata Section (lines 17-25); line 18 indicates that the metadata
+in this section is of type, or dialect, WS-Policy while line 19
+identifies a specific policy document. Line 22 would have contained
+the policy expressions for the Web service endpoint to which the
+Get Metadata request of Table 3 was directed.</p>
+<h2 id="notation">2. Notation</h2>
+<h2 id="xml-namespaces">2.1 XML Namespaces</h2>
+<p>The XML namespace URI that MUST be used by
+implementations of this specification is: &nbsp;</p>
+<p class="Code">http://schemas.xmlsoap.org/ws/2004/09/mex&nbsp;</p>
+<p>Table 5 lists XML namespaces that are used in this
+specification. The choice of any namespace prefix is arbitrary and
+not semantically significant.</p>
+<div class="c12">
+<table id="Table5" cellpadding="0" style="border-collapse: collapse">
+<caption><b>Table 5: Prefixes and XML namespaces used in this specification</b></caption>
+<thead><tr>
+<th>Prefix</th>
+<th>XML Namespace</th>
+<th>Specification(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+s&nbsp;
+</td>
+<td>
+(Either SOAP 1.1 or 1.2)&nbsp;
+</td>
+<td>
+(Either SOAP 1.1 or 1.2)&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+s11&nbsp;
+</td>
+<td>
+<a href=
+"http://schemas.xmlsoap.org/soap/envelope/"><span class=
+"Internetlink">http://schemas.xmlsoap.org/soap/envelope/</span></a>
+</td>
+<td>
+SOAP 1.1 [<a href="#SOAP11"><span class=
+"Internetlink">SOAP 1.1</span></a>]
+</td>
+</tr>
+<tr>
+<td>
+s12&nbsp;
+</td>
+<td>
+<a href=
+"http://www.w3.org/2003/05/soap-envelope"><span class=
+"Internetlink">http://www.w3.org/2003/05/soap-envelope</span></a>
+</td>
+<td>
+SOAP 1.2 [<a href="#SOAP12"><span class=
+"Internetlink">SOAP 1.2</span></a>]
+</td>
+</tr>
+<tr>
+<td>
+wsa04&nbsp;
+</td>
+<td>
+<a href=
+"http://schemas.xmlsoap.org/ws/2004/08/addressing"><span class=
+"Internetlink">http://schemas.xmlsoap.org/ws/2004/08/addressing</span></a>
+</td>
+<td>
+WS-Addressing 2004 [<a href=
+"#WSAddressing2004"><span class="Internetlink">WS-Addressing
+2004</span></a>]
+</td>
+</tr>
+<tr>
+<td>
+wsa10&nbsp;
+</td>
+<td>
+<a href=
+"http://www.w3.org/2005/08/addressing"><span class=
+"Internetlink">http://www.w3.org/2005/08/addressing</span></a>
+</td>
+<td>
+WS-Addressing 1.0 Core [<a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>]
+</td>
+</tr>
+<tr>
+<td>
+wsdl&nbsp;
+</td>
+<td>
+<a href=
+"http://schemas.xmlsoap.org/wsdl/"><span class=
+"Internetlink">http://schemas.xmlsoap.org/wsdl/</span></a>
+</td>
+<td>
+WSDL [<a href="#WSDL11"><span class=
+"Internetlink">WSDL 1.1</span></a>]
+</td>
+</tr>
+<tr>
+<td>
+wsp&nbsp;
+</td>
+<td>
+<a href=
+"http://schemas.xmlsoap.org/ws/2004/09/policy"><span class=
+"Internetlink">http://schemas.xmlsoap.org/ws/2004/09/policy</span></a>
+</td>
+<td>
+WS-Policy [<a href="#WS-Policy"><span class=
+"Internetlink">WS-Policy</span></a>]
+</td>
+</tr>
+<tr>
+<td>
+mex&nbsp;
+</td>
+<td>
+<a href=
+"http://schemas.xmlsoap.org/ws/2004/09/mex"><span class=
+"Internetlink">http://schemas.xmlsoap.org/ws/2004/09/mex</span></a>
+</td>
+<td>
+This specification&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+xs&nbsp;
+</td>
+<td>
+<a href=
+"http://www.w3.org/2001/XMLSchema"><span class=
+"Internetlink">http://www.w3.org/2001/XMLSchema</span></a>
+</td>
+<td>
+XML Schema [<a href="#XMLSchema-1"><span class=
+"Internetlink">Part 1</span></a>, <a href=
+"#XMLSchema-2"><span class="Internetlink">2</span></a>]
+</td>
+</tr>
+<tr>
+<td>
+wxf&nbsp;
+</td>
+<td>
+<a href=
+"http://schemas.xmlsoap.org/ws/2004/09/transfer"><span class=
+"Internetlink">http://schemas.xmlsoap.org/ws/2004/09/transfer</span></a>
+</td>
+<td>
+WS-Transfer [<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="notational-conventions">2.2 Notational Conventions</h2>
+<p>The keywords "MUST", "MUST NOT", "REQUIRED",
+"SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
+and "OPTIONAL" in this document are to be interpreted as described
+in RFC 2119 [<a href="#RFC2119"><span class="Internetlink">RFC
+2119</span></a>].</p>
+<p>This specification uses the following syntax to
+define outlines for messages: &nbsp;</p>
+<ul class="c6">
+<li class="P8 c5">
+The syntax appears as an XML instance, but values
+in italics indicate data types instead of literal values.&nbsp;
+</li>
+<li class="P8 c5">
+Characters are appended to elements and attributes
+to indicate cardinality:&nbsp;
+<ul class="c6">
+<li class="P8 c5">
+"?" (0 or 1)&nbsp;
+</li>
+<li class="P8 c5">
+"*" (0 or more)&nbsp;
+</li>
+<li class="P8 c5">
+"+" (1 or more)&nbsp;
+</li>
+</ul>
+</li>
+<li class="P8 c5">
+The character "|" is used to indicate a choice
+between alternatives.&nbsp;
+</li>
+<li class="P8 c5">
+The characters "(" and ")" are used to indicate
+that contained items are to be treated as a group with respect to
+cardinality or choice.&nbsp;
+</li>
+<li class="P8 c5">
+The characters "[" and "]" are used to call out
+references and property names.
+</li>
+<li class="P8 c5">
+Ellipses (i.e., "...") indicate points of
+extensibility. Additional children and/or attributes MAY be added
+at the indicated extension points but MUST NOT contradict the
+semantics of the parent and/or owner, respectively. By default, if
+a receiver does not recognize an extension, the receiver SHOULD
+ignore the extension; exceptions to this processing rule, if any,
+are clearly indicated below.&nbsp;
+</li>
+<li class="P8 c5">
+XML namespace prefixes (see Table 5) are used to indicate
+the namespace of the element being defined.
+</li>
+</ul>
+<p>In addition to Message Information Header
+properties [<a href="#WSAddressing2004"><span class=
+"Internetlink">WS-Addressing 2004</span></a>] and Message
+Addressing Properties [<a href="#WSAddressing10Core"><span class=
+"Internetlink">WS-Addressing 1.0 Core</span></a>], this
+specification uses the following properties to define messages:</p>
+    <dl>
+        <dt>[Headers]</dt>
+        <dd>Unordered message headers.</dd>
+        <dt>[Body]</dt>
+        <dd>A message body.</dd>
+    </dl>
+
+<p>These properties bind to a SOAP 1.1 Envelope
+[<a href="#SOAP11"><span class="Internetlink">SOAP
+1.1</span></a>] as follows:</p>
+
+<pre>&lt;s11:Envelope&gt;
+  &lt;s11:Header&gt;<b>[Headers]</b> ... &lt;/s11:Header&gt;
+  &lt;s11:Body&gt;<b>[Body]</b>&lt;/s11:Body&gt;
+&lt;/s11:Envelope&gt;</pre>
+
+<p>These properties bind to a SOAP 1.2 Envelope
+[<a href="#SOAP12"><span class="Internetlink">SOAP
+1.2</span></a>] as follows:</p>
+
+<pre>&lt;s12:Envelope&gt;
+  &lt;s12:Header&gt;<b>[Headers]</b> ... &lt;/s12:Header&gt;
+  &lt;s12:Body&gt;<b>[Body]</b>&lt;/s12:Body&gt;
+&lt;/s12:Envelope&gt;</pre>
+
+
+<h2 id="compliance">2.3 Compliance</h2>
+<p>An implementation is not compliant with this
+specification if it fails to satisfy one or more of the MUST or
+REQUIRED level requirements defined herein. A SOAP Node MUST NOT
+use the XML namespace identifier for this specification (listed in
+<a href="#xml-namespaces"><span class=
+"Internetlink">Section 2.2</span></a>) within XML documents, SOAP
+Envelopes, and [<a href="#WSAddressing2004"><span class=
+"Internetlink">WS-Addressing 2004</span></a>, <a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>] endpoint references unless it is compliant
+with this specification.</p>
+<p>Support for the GetMetadata operation by a Web
+service is optional. If metadata about a Web service endpoint is
+referenced by a Metadata Reference, which is a [<a href=
+"#WSAddressing2004"><span class="Internetlink">WS-Addressing
+2004</span></a>, <a href="#WSAddressing10Core">&nbsp;</a><a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>] endpoint reference, then the Metadata
+Reference MUST refer to a [<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] resource. The referred
+resource MAY also support other resource management and access
+specifications (e.g. HTTP, WS-ResourceFramework).</p>
+<p>Normative text within this specification takes
+precedence over outlines, which in turn take precedence over the
+XML Schema [<a href="#XMLSchema-1"><span class="Internetlink">XML
+Schema Part 1</span></a>, <a href="#XMLSchema-2"><span class=
+"Internetlink">Part 2</span></a>] and WSDL [<a href=
+"#WSDL11"><span class="Internetlink">WSDL 1.1</span></a>]
+descriptions (if any), which in turn take precedence over
+examples.</p>
+<h2 id="metadata-resources">3. Metadata Resources</h2>
+<p>A resource is a Web service that is addressable
+by an endpoint reference [<a href=
+"#WSAddressing2004"><span class="Internetlink">WS-Addressing
+2004</span></a>, <a href="#WSAddressing10Core">&nbsp;</a><a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>] and can be represented by an XML Infoset. The
+resource's representation can be retrieved using the Get operation
+defined in [<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>].</p>
+<p>When the representation of a resource is
+mex:Metadata, as defined in Section 4, or any other document format
+(e.g. [<a href="#XMLSchema-1"><span class="Internetlink">XML
+Schema Part 1</span></a>, <a href="#XMLSchema-2"><span class=
+"Internetlink">Part 2</span></a>], [<a href=
+"#WSDL11"><span class="Internetlink">WSDL</span></a>], [<a href=
+"#WS-Policy"><span class="Internetlink">WS-Policy</span></a>]) for
+which a mex:MetadataSection/@Dialect has been defined, then the
+resource is referred as 'metadata resource'. The representation of
+a metadata resource MAY be retrieved and/or updated as any other
+[<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] resource. Specifically, the
+representation of a metadata resource MUST be retrievable through a
+[<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] Get operation.</p>
+<p>A Web service endpoint MAY have one or more
+associated metadata resources. A Web service endpoint MAY also
+support direct retrieval of metadata by requesters using a
+GetMetadata operation directed to the Web service endpoint itself,
+as described in Section 5.2.&nbsp;</p>
+<p>A metadata resource MAY support other
+operations defined by [<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>], such as Put (e.g. to allow
+update of non-static metadata by authorized agents), or other
+resource management and access specifications (e.g. HTTP,
+WS-ResourceFramework).</p>
+<h2 id="web-services-metadata">4. Web Services Metadata</h2>
+<p>The Web service Metadata element is a
+collection of metadata units such as [<a href=
+"#WSDL11"><span class="Internetlink">WSDL</span></a>]
+definitions, XML Schema [<a href="#XMLSchema-1"><span class=
+"Internetlink">XML Schema Part 1</span></a>, <a href=
+"#XMLSchema-2"><span class="Internetlink">Part 2</span></a>]
+documents, [<a href="#WS-Policy"><span class=
+"Internetlink">WS-Policy</span></a>] expressions, etc. Each unit
+corresponds to metadata for a given scope, domain, or namespace.
+The collection of units is represented by a Metadata element, and
+units within the collection are represented by Metadata Section
+elements.</p>
+<p>To facilitate processing, Metadata Sections are
+tagged with a @Dialect and (optionally) @Identifier of the metadata
+unit. To ensure scalability, a unit of metadata may be included
+in-line within its Metadata Section or may be included by
+reference, either an endpoint reference [<a href=
+"#WSAddressing2004"><span class="Internetlink">WS-Addressing
+2004</span></a>, <a href="#WSAddressing10Core">&nbsp;</a><a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>] (Metadata Reference) or a URL (Location).</p>
+<p>The outline for the Metadata element
+is:&nbsp;</p>
+
+<pre>&lt;mex:Metadata &hellip;&gt;
+  &lt;mex:MetadataSection Dialect="xs:anyURI"
+                      (Identifier="xs:anyURI")? &hellip;&gt;
+  (
+    &lt;mex:MetadataReference &hellip;&gt;
+      endpoint-reference
+    &lt;/mex:MetadataReference&gt;
+    |
+    &lt;mex:Location&gt;xs:anyURI&lt;/mex:Location&gt;
+    |
+    DialectSpecificElement
+  )
+  &lt;/mex:MetadataSection&gt;*
+  &hellip;
+&lt;/mex:Metadata&gt;</pre>
+
+<p>The following describes additional constraints
+on the outline listed above:&nbsp;</p>
+<dl>
+<dt>/mex:Metadata&nbsp;</dt>
+<dd>This contains one Metadata Section child for
+each distinct unit of metadata. When there is a large amount of
+metadata, the [children] SHOULD contain Metadata References or
+Locations instead of the actual information.&nbsp;</dd>
+<dt>/mex:Metadata/mex:MetadataSection</dt>
+<dd>This represents a single unit of metadata
+(e.g., a WSDL definitions, an XML Schema document) for a given
+scope, domain, or namespace. A Metadata Section contains exactly
+one child element, either the embedded XML for the metadata unit,
+an endpoint reference to a Metadata Resource for the metadata unit,
+or a URL to metadata unit.&nbsp;</dd>
+<dt>
+/mex:Metadata/mex:MetadataSection/@Dialect&nbsp;</dt>
+<dd>This indicates the format and version of the
+metadata unit contained in this Metadata Section (e.g., WSDL
+version 1.1). Dialect is an absolute URI. This value should be
+compared directly, as a case-sensitive string, with no attempt to
+unescape or to otherwise canonicalize it.<br />
+This specification defines the following values for Dialect; other
+specifications should define values for Dialect for their metadata
+format(s).</dd>
+</dl>
+<div class="c12">
+<table id="Table2" cellpadding="0" style="border-collapse: collapse">
+<thead><tr>
+<th>Dialect URI</th>
+<th>Metadata Format</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+http://www.w3.org/2001/XMLSchema &nbsp;
+</td>
+<td class="Table2B2 c14">
+<span class="T6">xs:schema [</span><a href=
+"#XMLSchema-1"><span class="Internetlink T6">XML Schema Part
+1</span></a><span class="T6">]</span>
+</td>
+</tr>
+<tr>
+<td>
+http://schemas.xmlsoap.org/wsdl/ &nbsp;
+</td>
+<td class="Table2B2 c14">
+<span class="T6">wsdl:definitions [</span><a href=
+"#WSDL11"><span class="Internetlink T6">WSDL
+1.1</span></a><span class="T6">]</span>
+</td>
+</tr>
+<tr>
+<td>
+http://schemas.xmlsoap.org/ws/2004/09/policy
+&nbsp;
+</td>
+<td class="Table2B2 c14">
+<span class="T6">wsp:Policy [</span><a href=
+"#WS-Policy"><span class=
+"Internetlink T6">WS-Policy</span></a><span class="T6">]</span>
+</td>
+</tr>
+<tr>
+<td>
+<span class=
+"T6">http://schemas.xmlsoap.org/ws/2004/09/policy/attachment</span>
+</td>
+<td class="Table2B2 c14">
+<span class="T6">wsp:PolicyAttachment
+[</span><a href="#WS-PolicyAttachment"><span class=
+"Internetlink T6">WS-PolicyAttachment</span></a><span class=
+"T6">]</span>
+</td>
+</tr>
+<tr>
+<td>
+http://schemas.xmlsoap.org/ws/2004/09/mex &nbsp;
+</td>
+<td class="Table2B2 c14">
+mex:Metadata [This specification]&nbsp;
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="Definition">If there is more than one metadata unit with
+the same Dialect, e.g., more than one XML Schema document,
+including them all, one per Metadata Section, is explicitly
+encouraged.&nbsp;</p>
+<dl>
+<dt>/mex:Metadata/mex:MetadataSection/@Dialect
+="http://schemas.xmlsoap.org/ws/2004/09/mex"&nbsp;</dt>
+<dd>This value indicates the type of the metadata
+contained within the Metadata Section. When used in conjunction
+with Metadata Reference or Location, this allows the inclusion of
+metadata by reference.&nbsp;</dd>
+<dt>
+/mex:Metadata/mex:MetadataSection/@Identifier&nbsp;</dt>
+<dd>This indicates the Identifier for the
+metadata unit in this Metadata Section. Identifier is an absolute
+URI. This value should be compared directly, as a case-sensitive
+string, with no attempt to unescape or to otherwise canonicalize
+it. If omitted, there is no implied value.&nbsp;</dd>
+<dd>The interpretation of Identifier is
+Dialect-specific. While the Dialect attribute indicates the
+metadata format and version of the metadata in the Metadata
+Section, the Identifier attribute MAY be used to identify a
+Metadata Section or to just differentiate between Metadata Sections
+containing the same type of metadata. The value of the Identifier
+MAY be the same as the value of one of the attributes or elements
+of the metadata in the Metadata Section (if the metadata is
+included by value) or in the representation of a metadata resource
+(if the metadata is include by reference through Metadata Reference
+or Location). A metadata publisher MAY choose any value for the
+Identifier. The values of Identifier attributes in multiple
+Metadata Section elements in the same Metadata element MAY be the
+same. For well-known metadata formats, it is RECOMMENDED that the
+value of the Identifier comes from the metadata when that is
+possible, as the table below shows.&nbsp;</dd>
+</dl>
+<div class="c12">
+<table id="Table3" cellpadding="0" style="border-collapse: collapse">
+
+<thead><tr>
+<th>Dialect URI</th>
+<th>@Identifier value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+Dialect URI&nbsp;
+</td>
+<td>
+@Identifier value
+</td>
+</tr>
+<tr>
+<td>
+http://www.w3.org/2001/XMLSchema &nbsp;
+</td>
+<td>
+xs:schema/@targetNamespace&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+http://schemas.xmlsoap.org/wsdl/ &nbsp;
+</td>
+<td>
+wsdl:definitions/@targetNamespace&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+http://schemas.xmlsoap.org/ws/2004/09/policy
+&nbsp;
+</td>
+<td>
+wsp:Policy/@Name&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+
+http://schemas.xmlsoap.org/ws/2004/09/policy/attachment &nbsp;
+</td>
+<td>
+Not defined&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+http://schemas.xmlsoap.org/ws/2004/09/mex &nbsp;
+</td>
+<td>
+Not defined&nbsp;
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="Definition">If there is more than one metadata section
+with the same identifier, e.g., more than one XML Schema in the
+same target namespace, including them all, one per metadata
+section, is explicitly encouraged.&nbsp;</p>
+
+<dl>
+<dt>
+/mex:Metadata/mex:MetadataSection/mex:MetadataReference&nbsp;</dt>
+<dd>This is an endpoint reference to a metadata
+resource and is of type EndpointReferenceType as defined by
+[<a href="#WSAddressing2004"><span class=
+"Internetlink">WS-Addressing 2004</span></a>,] or
+EndpointReferenceType as defined by [<a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>]. The resource MUST support the GET operation
+[<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] to allow the retrieval of
+the metadata unit for the Metadata Section's Dialect and Identifier
+(if any). When this element is present, it MUST have no element
+siblings.</dd>
+<dt>
+/mex:Metadata/mex:MetadataSection/mex:Location&nbsp;</dt>
+<dd>This contains a URL to metadata, and the
+metadata MUST be retrievable from that URL using the primary access
+mechanism for the scheme of the URL. For example, for an HTTP URL,
+the metadata MUST be retrievable by sending an HTTP GET request to
+the URL. When this element is present, it MUST have no element
+siblings.&nbsp;</dd>
+<dt>
+/mex:Metadata/mex:MetadataSection/<span class=
+"T5">DialectSpecificElement</span></dt>
+<dd>When any element other than Metadata
+Reference or Location is present, the element is to be interpreted
+as the representation of the metadata unit associated with the
+Metadata Section's Dialect and Identifier.&nbsp;</dd>
+</dl>
+
+<h2 id="retrieving-metadata">5. Retrieving Metadata</h2>
+<h2 id="ws-transfer-get">5.1 WS-Transfer Get</h2>
+<p>To retrieve the representation of a metadata
+resource, a requester MAY send a WS-Transfer [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+Get request message to the metadata resource's endpoint. The
+WS-Transfer Get request fetches a one-time snapshot of the
+metadata. The metadata associated with a service endpoint may be
+available as multiple metadata resources. As a result, the metadata
+returned by the Get request to a metadata resource's endpoint may
+be limited to a particular metadata type (@Dialect) and identifier
+(@Identifier).</p>
+<p>The representation of a metadata resource MAY
+be a mex:Metadata element or any other document format (e.g.
+[<a href="#XMLSchema-1"><span class="Internetlink">XML Schema Part
+1</span></a>, <a href="#XMLSchema-2"><span class=
+"Internetlink">Part 2</span></a>], [<a href=
+"#WSDL11"><span class="Internetlink">WSDL</span></a>], [<a href=
+"#WS-Policy"><span class="Internetlink">WS-Policy</span></a>]) for
+which a mex:MetadataSection/@Dialect has been defined.</p>
+<h2 id="get-metadata">5.2 Get Metadata</h2>
+<p>When the metadata for an endpoint is not
+available or is unknown and there is no information on how to
+retrieve it (e.g. an endpoint reference to a [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+resource representing the metadata), a requester MAY send a Get
+Metadata request message to that endpoint to retrieve its metadata.
+A service endpoint MAY support the Get Metadata request. Observe
+that, in the case where a service endpoint is also a [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+resource, the [<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] Get operation allows
+requesters to retrieve the resource representation associated with
+that endpoint (i.e. the "data"), while the GetMetadata operation
+can be used to retrieve that endpoint's metadata. The normative
+outline for a Get Metadata request is:</p>
+
+<pre><b>[action]</b>
+  http://schemas.xmlsoap.org/ws/2004/09/mex/GetMetadata/Request
+
+<b>[Body]</b>
+  &lt;mex:GetMetadata &hellip;&gt;
+    (&lt;mex:Dialect&gt;xs:anyURI&lt;/mex:Dialect&gt;
+      (&lt;mex:Identifier&gt;xs:anyURI&lt;/mex:Identifier&gt;)?
+    )?
+  &lt;/mex:GetMetadata&gt;</pre>
+
+<p>The following describes additional, normative
+constraints on the outline listed above:&nbsp;</p>
+<dl>
+<dt>[Body]/mex:GetMetadata/mex:Dialect&nbsp;</dt>
+<dd>When this element is present, the response
+MUST include only Metadata Sections with the indicated dialect; if
+the receiver does not have any Metadata Sections of the indicated
+dialect, the response MUST include zero Metadata Sections. When
+this element is not present, there is no implied value and so the
+response may include Metadata Sections with any dialect.&nbsp;</dd>
+<dt>
+[Body]/mex:GetMetadata/mex:Identifier&nbsp;</dt>
+<dd>When this element is present, the response
+MUST include only Metadata Sections with the indicated identifier;
+if the receiver does not have any Metadata Sections of the
+indicated identifier, the response MUST include zero Metadata
+Sections. When this element is not present, the implied value is
+any identifier. This element MUST NOT be present unless
+./mex:Dialect is present. If multiple Metadata Sections have the
+indicated Dialect and Identifier then all of them MUST be
+returned.&nbsp;</dd>
+</dl>
+<p>Other message information headers defined by
+WS-Addressing [<a href="#WSAddressing2004"><span class=
+"Internetlink">WS-Addressing 2004</span></a>, <a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>] MAY be included in the request and response
+messages, according to the usage and semantics defined in
+WS-Addressing.</p>
+<p>An endpoint MAY respond with a fault message
+using the standard fault codes defined in WS-Addressing [<a href=
+"#WSAddressing2004"><span class="Internetlink">WS-Addressing
+2004</span></a>, <a href="#WSAddressing10Core"><span class=
+"Internetlink">WS-Addressing 1.0 Core</span></a>] (e.g.,
+wsa04:ActionNotSupported).</p>
+<p>If an endpoint accepts a Get Metadata request,
+it MUST reply with a Get Metadata response message. The normative
+outline for a Get Metadata response is:&nbsp;</p>
+
+<pre><b>[action]</b>
+  http://schemas.xmlsoap.org/ws/2004/09/mex/GetMetadata/Response
+
+<b>[Body]</b>
+    &lt;mex:Metadata &hellip;&gt;
+    &hellip;
+    &lt;/mex:Metadata&gt;</pre>
+
+<p>The following describes additional, normative
+constraints on the outline listed above:&nbsp;</p>
+<dl>
+<dt>[Body]/mex:Metadata&nbsp;</dt>
+<dd>The body of the response message MUST contain
+one mex:Metadata element as defined in Section 4 of this
+specification.&nbsp;</dd></dl>
+<h2 id="metadata-in-epr">6. Metadata in Endpoint
+References</h2>
+<p>Section 5 describes two mechanisms that allow
+requesters to retrieve ("pull metadata") Web services metadata from
+an endpoint (GetMetadata) or a metadata resource (WS-Transfer Get).
+&nbsp;</p>
+<p>In addition to these mechanisms, the issuer of
+a service endpoint reference MAY include Web services metadata for
+that service inside the endpoint reference itself. This mechanism
+("push metadata") simplifies the bootstrapping of the service
+interaction on the requester side by avoiding additional calls to
+retrieve (pull) the Web service metadata for the service endpoint.
+&nbsp;</p>
+<p>Embedding a mex:Metadata element inside an
+endpoint reference allows the issuer of the endpoint reference to
+include metadata by value or by reference, according to the options
+described in Section 4. The outline of a [<a href=
+"#WSAddressing2004"><span class="Internetlink">WS-Addressing
+2004</span></a>] endpoint reference which includes Web services
+metadata is as follows:</p>
+
+<pre>&lt;wsa04:EndpointReference&gt;
+    &lt;wsa04:Address&gt;xs:anyURI&lt;/wsa04:Address&gt;
+    &lt;wsa04:ReferenceProperties&gt;&hellip;&lt;/wsa04:ReferenceProperties&gt; ?
+    &lt;wsa04:ReferenceParameters&gt;&hellip;&lt;/wsa04:ReferenceParameters&gt; ?
+    &lt;wsa04:PortType&gt;xs:QName&lt;/wsa04:PortType&gt; ?
+    &lt;wsa04:ServiceName PortName="xs:NCName"?&gt;xs:QName&lt;/wsa04:ServiceName&gt; ?
+    &lt;wsp:Policy&gt;&hellip;&lt;/wsp:Policy&gt;*
+    &lt;mex:Metadata&gt;&hellip;&lt;/mex:Metadata&gt;?
+    &hellip;
+&lt;/wsa04:EndpointReference&gt;</pre>
+
+<dl>
+<dt>
+/wsa04:EndpointReference/mex:Metadata&nbsp;</dt>
+<dd>A unique mex:Metadata element appearing as a
+direct child of the endpoint reference element.&nbsp;</dd></dl>
+<p class="DefinedTerm">The outline of a [<a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing 1.0
+Core</span></a>] endpoint reference which includes Web services
+metadata is as follows:</p>
+
+
+<pre>&lt;wsa10:EndpointReference&gt;
+    &lt;wsa10:Address&gt;xs:anyURI&lt;/wsa10:Address&gt;
+    &lt;wsa10:ReferenceParameters&gt;&hellip;&lt;/wsa10:ReferenceParameters&gt; ?
+    &lt;wsa10:Metadata&gt;
+        &lt;mex:Metadata&gt;&hellip;&lt;/mex:Metadata&gt;?
+        &hellip;
+    &lt;/wsa10:Metadata&gt; ?
+    &hellip;
+&lt;/wsa10:EndpointReference&gt;</pre>
+
+<dl>
+<dt>
+/wsa10:EndpointReference/wsa10:Metadata/mex:Metadata&nbsp;</dt>
+<dd>A unique mex:Metadata element appearing as a
+direct child of the wsa10:Metadata endpoint reference
+element.&nbsp;</dd></dl>
+<p>In the example of Table 6, a [<a href=
+"#WSAddressing10Core"><span class="Internetlink">WS-Addressing
+1.0 Core</span></a>] endpoint reference contains WSDL metadata by
+value that identifies the binding used to access the service
+endpoint:</p>
+<p class="P12"><b>Table 6. Endpoint reference with embedded WSDL
+metadata</b></p>
+
+
+<pre>(01)	&lt;wsa10:EndpointReference
+(02)	    xmlns:wsa10='http://www.w3.org/2005/08/addressing'&gt;
+(03)	  &lt;wsa10:Address&gt;http://services.example.org/stockquote&lt;/wsa10:Address&gt;
+(04)	  &lt;wsa10:Metadata&gt;
+(05)	    &lt;mex:Metadata xmlns:mex='http://schemas.xmlsoap.org/ws/2004/09/mex'&gt;
+(06)	      &lt;mex:MetadataSection Dialect='http://schemas.xmlsoap.org/wsdl/'&gt;
+(07)	        &lt;wsdl:definitions
+(08)	            name='StockQuote'
+(09)	            targetNamespace='http://services.example.org/stockquote'
+(10)	            xmlns:tns='http://services.example.org/stockquote'
+(11)	            xmlns:wsoap='http://schemas.xmlsoap.org/wsdl/soap/'
+(12)	            xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+(13)	            xmlns:wsp='http://schemas.xmlsoap.org/ws/2004/09/policy'
+(14)	            xmlns:msgs='http://services.example.org/stockquote/schemas
+(15)	            xmlns:xs='http://www.w3.org/2001/XMLSchema'&gt;
+(16)	          &lt;wsdl:import
+(17)	              namespace='http://services.example.org/stockquote'
+(18)	              location='http://services.example.org/stockquote/schemas' /&gt;
+(19)	          &lt;wsdl:portType name='StockQuotePortType'&gt;
+(20)	            &lt;wsdl:operation name='GetLastTradePrice'&gt;
+(21)	              &lt;wsdl:input message='msgs:GetLastTradePriceInput'
+(22)	                          name='GetLastTradePriceInput'/&gt;
+(23)	              &lt;wsdl:output message='msgs:GetLastTradePriceOutput'
+(24)	                           name='GetLastTradePriceOutput'/&gt;
+(25)	            &lt;/wsdl:operation&gt;
+(26)	          &lt;/wsdl:portType&gt;
+(27)	          &lt;wsdl:binding name='StockQuoteBinding'
+(28)	                type='tns:StockQuotePortType'&gt;
+(29)	            &lt;wsp:PolicyReference
+(30)	                URI='http://services.example.org/stockquote/policy' /&gt;
+(31)	            &lt;wsoap:binding style='document'
+(32)	                         transport='http://schemas.xmlsoap.org/soap/http'/&gt;
+(33)	            &lt;wsdl:operation name='GetLastTradePrice'&gt;
+(34)	              &lt;wsoap:operation soapAction='http://services.example.org/stockquote/GetLastTradePrice' /&gt;
+(35)	              &lt;wsdl:input name='GetLastTradePriceInput'&gt;
+(36)	                &lt;wsoap:body use='literal'/&gt;
+(37)	              &lt;/wsdl:input&gt;
+(38)	              &lt;wsdl:output name='GetLastTradePriceOutput'&gt;
+(39)	                &lt;wsoap:body use='literal'/&gt;
+(40)	              &lt;/wsdl:output&gt;
+(41)	            &lt;/wsdl:operation&gt;
+(42)	          &lt;/wsdl:binding&gt;
+(43)	          &lt;wsdl:service name='StockQuoteService'&gt;
+(44)	            &lt;wsdl:port name='StockQuotePort'
+(45)	                       binding='tns:StockQuoteBinding' &gt;
+(46)	              &lt;wsoap:address
+(47)	                       location='http://services.example.org/stockquote' /&gt;
+(48)	            &lt;/wsdl:port&gt;
+(49)	          &lt;/wsdl:service&gt;
+(50)	        &lt;/wsdl:definitions&gt;
+(51)	      &lt;/mex:MetadataSection&gt;
+(52)	      &lt;mex:MetadataSection
+(53)	          Dialect='http://www.w3.org/2001/XMLSchema'
+(54)	          Identifier='http://services.example.org/stockquote/schemas'&gt;
+(55)	        &lt;mex:MetadataReference&gt;
+(56)	          &lt;wsa10:Address&gt;
+(57)	            http://services.example.org/stockquote/schemas
+(58)	          &lt;/wsa10:Address&gt;
+(59)	        &lt;/mex:MetadataReference&gt;
+(60)	      &lt;/mex:MetadataSection&gt;
+(61)	    &lt;/mex:Metadata&gt;
+(62)	  &lt;/wsa10:Metadata&gt;
+(63)	&lt;/wsa10:EndpointReference&gt;</pre>
+
+
+<p>Lines 4-62 in Table 6 show the way a Metadata element
+can be embedded in the endpoint reference of a service. The
+Metadata element contains two Metadata Sections. In the first one
+(lines 6-51) the WSDL of the Web service endpoint is included 'by
+value'. In the second Metadata Section (lines 52-60) an endpoint
+reference to a metadata resource is shown. The representation of
+the metadata resource is an XML Schema as hinted by the Dialect
+attribute (line 53) and is distinguished from other XML Schemas for
+that Web service endpoint by the value of Identifier attribute
+(line 54) which in this case happens to be the same as the value of
+the targetNamespace attribute of the XML Schema. The [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+Get operation can be used to retrieve the referred XML Schema.
+Since no metadata is available about the metadata resource, it is
+assumed that binding-related information was communicated
+out-of-band (e.g. an application domain-specific specification has
+defined a binding for that domain) so that the requester could send
+a [<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] Get request to the metadata
+resource's endpoint, as defined in Section 7.</p>
+<p class="Caption"><b>Table 7. Endpoint reference with embedded
+metadata about the Metadata Reference</b></p>
+
+<pre>(01)	&lt;wsa10:EndpointReference
+(02)	    xmlns:wsa10='http://www.w3.org/2005/08/addressing'&gt;
+(03)	  &lt;wsa10:Address&gt;http://services.example.org/stockquote&lt;/wsa10:Address&gt;
+(04)	  &lt;wsa10:Metadata&gt;
+(05)	    &lt;mex:Metadata xmlns:mex='http://schemas.xmlsoap.org/ws/2004/09/mex'&gt;
+(06)	      &lt;mex:MetadataSection
+(07)	          Dialect='http://schemas.xmlsoap.org/ws/2004/09/mex'&gt;
+(08)	        &lt;mex:MetadataReference&gt;
+(09)	          &lt;wsa10:Address&gt;
+(10)	            http://services.example.org/stockquote/metadata
+(11)	          &lt;/wsa10:Address&gt;
+(12)	          &lt;wsa10:Metadata&gt;
+(13)	            &lt;mex:Metadata&gt;
+(14)	              &lt;mex:MetadataSection
+(15)	                Dialect='http://schemas.xmlsoap.org/wsdl/'&gt;
+(16)	                &lt;!—Reference to WS-Transfer WSDL wxf:Resource portType
+(17)	                   plus binding --&gt;
+(18)	              &lt;/mex:MetadataSection&gt;
+(19)	            &lt;/mex:Metadata&gt;
+(20)	          &lt;/wsa10:Metadata&gt;
+(21)	        &lt;/mex:MetadataReference&gt;
+(22)	      &lt;/mex:MetadataSection&gt;
+(23)	    &lt;/mex:Metadata&gt;
+(24)	  &lt;/wsa10:Metadata&gt;
+(25)	&lt;/wsa10:EndpointReference&gt;</pre>
+
+<p>Table 7 shows an example of a Web service endpoint
+reference in which the Metadata element contains a single Metadata
+Reference element to a metadata resource (lines 8-21) the
+representation of which is mex:Metadata as hinted by the value of
+the Dialect attribute (line 7). The Metadata Reference contains a
+Metadata element (lines 13-19) which contains the necessary
+metadata for interacting with the metadata resource through
+[<a href="#WS-Transfer"><span class=
+"Internetlink">WS-Transfer</span></a>] operations. Since the
+Metadata Reference is an endpoint reference to a [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+resource, the embedded metadata includes the [<a href=
+"#WS-Transfer"><span class="Internetlink">WS-Transfer</span></a>]
+WSDL portType and the necessary binding information for
+communicating with that resource.</p>
+<h2 id="bootstrapping-metadata-retrieval">7. Bootstrapping Metadata
+Retrieval</h2>
+<p>This specification provides several mechanisms
+to aid service endpoints and service requesters in bootstrapping
+the interaction. In particular, the mechanisms described in Section
+6 allow issuers of endpoint references to include sufficient
+protocol binding information to allow requesters to issue a Get
+request against a metadata resource, or a GetMetadata request
+against a service endpoint, in order to retrieve all the
+information needed to use the service. &nbsp;</p>
+<p>When that information is not available,
+however, requesters must rely on contextual or out-of-band
+information in order to choose the protocol binding most
+appropriate to use in retrieving Web service metadata. Furthermore,
+specific protocol bindings for metadata retrieval may be defined by
+communities within the context of particular application
+domains.&nbsp;</p>
+<h2 id="security">8. Security</h2>
+<p>It is strongly RECOMMENDED that the
+communication between Web services be secured using the mechanisms
+described in WS-Security [<a href="#WS-Security"><span class=
+"Internetlink">WS-Security</span></a>]. In order to properly secure
+messages, the body and all relevant headers need to be included in
+the signature. Specifically, any standard messaging headers, such
+as those from WS-Addressing [<a href=
+"#WSAddressing2004"><span class="Internetlink">WS-Addressing
+2004</span></a>, <a href="#WSAddressing10Core"><span class=
+"Internetlink">WS-Addressing 1.0 Core</span></a>], need to be
+signed with the body in order to "bind" the two together.</p>
+<p>Different security mechanisms may be desired
+depending on the frequency of messages. For example, for infrequent
+messages, public key technologies may be adequate for integrity and
+confidentiality. However, for high-frequency events, it may be more
+performant to establish a security context for the events using the
+mechanisms described in WS-Trust [<a href="#WS-Trust"><span class=
+"Internetlink">WS-Trust</span></a>] and WS-SecureConversation
+[<a href="#WS-SecureConversation"><span class=
+"Internetlink">WS-SecureConversation</span></a>]. It should be
+noted that if a shared secret is used it is RECOMMENDED that
+derived keys be used to strengthen the secret as described in
+WS-SecureConversation.</p>
+<p>Requests for metadata that are not available to
+anonymous parties are strongly RECOMMENDED to require usage of
+WS-Security so that the requester can be authenticated and
+authorized to access the indicated metadata. Similarly, integrity
+and confidentiality SHOULD be used whenever metadata has restricted
+access.&nbsp;</p>
+<p>Recipients of metadata are RECOMMENDED to
+validate the signature to authenticate and verify the integrity of
+the data. Specifically, recipients SHOULD verify that the sender
+has the right to "speak" for the metadata. This is important
+because some metadata, such as schemas, have embedded target URIs
+that might be outside the scope of the sender.&nbsp;</p>
+<p>Additionally, some metadata formats, such as
+policies [<a href="#WS-Policy"><span class=
+"Internetlink T2">WS-Policy</span></a>], may have embedded security
+semantics. These SHOULD be verified using the same considerations
+outlined in this section.</p>
+<p>The following list summarizes common classes of
+attacks that apply to this protocol and identifies the mechanism to
+prevent/mitigate the attacks:&nbsp;</p>
+<ul class="c6">
+<li class="P24 c5">
+<p class="P24 c4"><span class="T4"><b>Message alteration</b></span> -
+Alteration is prevented by including signatures of the message
+information using WS-Security.</p>
+</li>
+<li class="P24 c5">
+<p class="P24 c4"><span class="T4"><b>Message disclosure</b></span> -
+Confidentiality is preserved by encrypting sensitive data using
+WS-Security.</p>
+</li>
+<li class="P24 c5">
+<p class="P24 c4"><span class="T4"><b>Key integrity</b></span> - Key
+integrity is maintained by using the strongest algorithms possible
+(by comparing secured policies - see WS-Policy [<a href=
+"#WS-Policy"><span class="Internetlink">WS-Policy</span></a>] and
+WS-SecurityPolicy [<a href="#WS-SecurityPolicy"><span class=
+"Internetlink">WS-SecurityPolicy</span></a>]).</p>
+</li>
+<li class="P24 c5">
+<p class="P24 c4"><span class="T4"><b>Authentication</b></span> -
+Authentication is established using the mechanisms described in
+WS-Security and WS-Trust. Each message is authenticated using the
+mechanisms described in WS-Security.</p>
+</li>
+<li class="P24 c5">
+<p class="P24 c4"><span class="T4"><b>Accountability</b></span> -
+Accountability is a function of the type of and strength of the key
+and algorithms being used. In many cases, a strong symmetric key
+provides sufficient accountability. However, in some environments,
+strong PKI signatures are required.</p>
+</li>
+<li class="P24 c5">
+<p class="P24 c4"><span class="T4"><b>Availability</b></span> - Metadata
+services are subject to a variety of availability attacks such as
+application-level denial of service. It is recommended that the
+mechanisms described in WS-Security be considered as mitigations
+for some forms of attacks. Other attacks, such as network-level
+denial of service are harder to avoid. Note that both of these
+classes of attack are outside the scope of this specification.</p>
+</li>
+</ul>
+<ul class="c6">
+<li class="P25 c5">
+<p class="P25 c4"><span class="T4"><b>Replay</b></span> - Messages may be
+replayed for a variety of reasons. To detect and eliminate this
+attack, mechanisms should be used to identify replayed messages
+such as the timestamp/nonce outlined in WS-Security. Alternatively,
+and optionally, other technologies, such as sequencing, can also be
+used to prevent replay of application messages.</p>
+</li>
+</ul>
+<h2 id="acknowledgements">9. Acknowledgements</h2>
+<p>This specification has been developed as a
+result of joint work with many individuals and teams, including:
+Luis Felipe Cabrera (formerly Microsoft), Erik Christensen
+(Microsoft), Srinivas Davanum (formerly CA), Doug
+Davis (IBM), Timm Falter (SAP), Jeffrey Frey (IBM), Omri Gazitt
+(Microsoft), Alan Geller (formerly Microsoft), Martin Gudgin
+(Microsoft), Maryann Hondo (IBM), Chris Kaler (Microsoft), Dave
+Langworthy (Microsoft), Andrew Layman (Microsoft), Steve Millet
+(Microsoft), Henrik Frystyk Nielsen (Microsoft), Mark Nottingham
+(formerly BEA Systems), Sanjay Patil (SAP), Vladimir Savchenko
+(SAP), Igor Sedukhin (formerly CA), Ramesh
+Seshadri (Microsoft), Chris Sharp (IBM), Eugene Sindambiwe (SAP),
+Tony Storey (IBM), Marvin Theimer (Microsoft), Sara Wong
+(Microsoft), Ümit Yalçinalp (SAP), Alexander Zubev (SAP).&nbsp;</p>
+<h2 id="references">10. References</h2>
+<dl>
+<dt id="RFC2119">[RFC 2119]</dt>
+<dd>S. Bradner, "Key words for use in RFCs to
+Indicate Requirement Levels," RFC 2119, Harvard University, March
+1997. (See <a href=
+"http://www.ietf.org/rfc/rfc2119.txt"><span class=
+"Internetlink">http://www.ietf.org/rfc/rfc2119.txt</span></a>.)</dd>
+<dt id="SOAP11">[SOAP 1.1]</dt>
+<dd>D. Box, et al, "Simple Object Access Protocol
+(SOAP) 1.1," May 2000. (See <a href=
+"http://www.w3.org/TR/2000/NOTE-SOAP-20000508/"><span class=
+"Internetlink">http://www.w3.org/TR/2000/NOTE-SOAP-20000508/</span></a>.)</dd>
+<dt id="SOAP12">[SOAP 1.2]</dt>
+<dd>M. Gudgin, et al, "SOAP Version 1.2 Part 1:
+Messaging Framework," June 2003. (See <a href=
+"http://www.w3.org/TR/2003/REC-soap12-part1-20030624/"><span class=
+"Internetlink">http://www.w3.org/TR/2003/REC-soap12-part1-20030624/</span></a>.)</dd>
+<dt id="WSAddressing2004">[WS-Addressing 2004]</dt>
+<dd>D. Box, et al, "Web Services Addressing
+(WS-Addressing)," August 2004. (See <a href=
+"http://www.w3.org/Submission/2004/SUBM-ws-addressing-20040810/"><span class="Internetlink">
+http://www.w3.org/Submission/2004/SUBM-ws-addressing-20040810/</span></a>.)</dd>
+<dt id="WSAddressing10Core"><span class="T4">[</span><span class=
+"T4">WS-Addressing 1.0 Core</span><span class="T4">]</span></dt>
+<dd>M. Gudgin, M. Hadley, T. Rogers (editors),
+"Web Services Addressing 1.0 - Core" (Proposed Recommendation),
+March 2006. (See <a href=
+"http://www.w3.org/TR/2006/PR-ws-addr-core-20060321/"><span class=
+"Internetlink">http://www.w3.org/TR/2006/PR-ws-addr-core-20060321/</span></a>).</dd>
+<dt id="WS-Policy">[WS-Policy]</dt>
+<dd>S. Bajaj, et al, "Web Services Policy
+Framework (WS-Policy)," March 2006. (See <a href=
+"http://www.w3.org/Submission/2006/SUBM-WS-Policy-20060425/"><span class="Internetlink">
+http://www.w3.org/Submission/2006/SUBM-WS-Policy-20060425/</span></a>.)</dd>
+<dt id="WS-PolicyAttachment">[<span class=
+"T4">WS-PolicyAttachment</span>]</dt>
+<dd>S. Bajaj, et al, "Web Services Policy
+Attachment (WS-PolicyAttachment)," March 2006. (See <a href=
+"http://www.w3.org/Submission/2006/SUBM-WS-PolicyAttachment-20060425/">
+<span class=
+"Internetlink">http://www.w3.org/Submission/2006/SUBM-WS-PolicyAttachment-20060425/</span></a>.)</dd>
+<dt id="WS-SecureConversation">[WS-SecureConversation]</dt>
+<dd>S. Anderson, et al, "Web Services Secure
+Conversation Language (WS-SecureConversation)," February 2005. (See
+<a href=
+"http://www.oasis-open.org/committees/download.php/17364"><span class="Internetlink">
+http://www.oasis-open.org/committees/download.php/17364</span></a>.)</dd>
+<dt id="WS-Security">[WS-Security]</dt>
+<dd>A. Nadalin, et al, "Web Services Security:
+SOAP Message Security 1.0 (WS-Security 2004)," March 2004. (See
+<a href=
+"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0.pdf">
+<span class=
+"Internetlink">http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0.pdf</span></a>.)</dd>
+<dt id="WS-SecurityPolicy">[WS-SecurityPolicy]</dt>
+<dd>G. Della-Libera, et al, "Web Services
+Security Policy Language (WS-SecurityPolicy)," July 2005. (See
+<a href=
+"http://www.oasis-open.org/committees/download.php/16569/"><span class="Internetlink">
+http://www.oasis-open.org/committees/download.php/16569/</span></a>.)</dd>
+<dt id="WS-Transfer">[WS-Transfer]</dt>
+<dd>J. Alexander, et al, "Web Services Transfer
+(WS-Transfer)," September 2004. (See <a href=
+"http://www.w3.org/Submission/2006/SUBM-WS-Transfer-20060315/"><span class="Internetlink">
+http://www.w3.org/Submission/2006/SUBM-WS-Transfer-20060315/</span></a>.)</dd>
+<dt id="WS-Trust">[WS-Trust]</dt>
+<dd>S. Anderson, et al, "Web Services Trust
+Language (WS-Trust)," February 2005. &nbsp;</dd>
+<dd>(See <a href=
+"http://www.oasis-open.org/committees/download.php/17364"><span class="Internetlink">
+http://www.oasis-open.org/committees/download.php/17364</span></a>.)</dd>
+<dt id="WSDL11">[WSDL 1.1]</dt>
+<dd>E. Christensen, et al, "Web Services
+Description Language (WSDL) 1.1," March 2001. (See <a href=
+"http://www.w3.org/TR/2001/NOTE-wsdl-20010315"><span class=
+"Internetlink">http://www.w3.org/TR/2001/NOTE-wsdl-20010315</span></a>.)</dd>
+<dt id="XMLSchema-1">[XML Schema, Part 1]</dt>
+<dd>H. Thompson, et al, "XML Schema Part 1:
+Structures," October 2004. (See <a href=
+"http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/"><span class=
+"Internetlink">http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/</span></a>.)</dd>
+<dt id="XMLSchema-2">[XML Schema, Part 2]</dt>
+<dd>P. Biron, et al, "XML Schema Part 2:
+Datatypes," October 2004. (See <a href=
+"http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/"><span class=
+"Internetlink">http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/</span></a>.)</dd>
+</dl>
+<h2 id="appendix-I">Appendix I - XML Schema</h2>
+<p>A normative copy of the XML Schema [<a href=
+"#XMLSchema-1"><span class="Internetlink">XML Schema Part
+1</span></a>, <a href="#XMLSchema-2"><span class=
+"Internetlink">Part 2</span></a>] description for this
+specification may be retrieved from the following address:.</p>
+<p class="Code"><a href=
+"http://schemas.xmlsoap.org/ws/2004/09/mex/MetadataExchange.xsd"><span class="Internetlink">
+http://schemas.xmlsoap.org/ws/2004/09/mex/MetadataExchange.xsd</span></a></p>
+<p>A non-normative copy of the XML Schema
+description is listed below for convenience.&nbsp;</p>
+
+<pre>&lt;xs:schema
+    targetNamespace='http://schemas.xmlsoap.org/ws/2004/09/mex'
+    xmlns:tns='http://schemas.xmlsoap.org/ws/2004/09/mex'
+    xmlns:wsa10='http://www.w3.org/2005/08/addressing'
+    xmlns:wsa04='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+    xmlns:xs='http://www.w3.org/2001/XMLSchema'
+    elementFormDefault='qualified'
+    blockDefault='#all' &gt;
+
+  &lt;!-- Get Metadata request --&gt;
+  &lt;xs:element name='GetMetadata' &gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element ref='tns:Dialect' minOccurs='0' /&gt;
+        &lt;xs:element ref='tns:Identifier' minOccurs='0' /&gt;
+      &lt;/xs:sequence&gt;
+      &lt;xs:anyAttribute namespace='##other' processContents='lax' /&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+
+  &lt;xs:element name='Dialect' type='xs:anyURI' /&gt;
+  &lt;xs:element name='Identifier' type='xs:anyURI' /&gt;
+
+  &lt;!-- Get Metadata response --&gt;
+  &lt;xs:element name='Metadata' &gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element ref='tns:MetadataSection'
+                    minOccurs='0'
+                    maxOccurs='unbounded' /&gt;
+        &lt;xs:any namespace='##other' processContents='lax'
+                minOccurs='0'
+                maxOccurs='unbounded' /&gt;
+      &lt;/xs:sequence&gt;
+      &lt;xs:anyAttribute namespace='##other' processContents='lax' /&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+
+  &lt;xs:element name='MetadataSection' &gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:choice&gt;
+        &lt;xs:any namespace='##other' processContents='lax' /&gt;
+        &lt;xs:element ref='tns:MetadataReference' /&gt;
+        &lt;xs:element ref='tns:Location' /&gt;
+      &lt;/xs:choice&gt;
+      &lt;xs:attribute name='Dialect' type='xs:anyURI' use='required' /&gt;
+      &lt;xs:attribute name='Identifier' type='xs:anyURI' /&gt;
+      &lt;xs:anyAttribute namespace='##other' processContents='lax' /&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+
+  &lt;!--
+       Ideally, the type of the MetadataReference would have been
+       the union of wsa04:EndpointReferenceType and
+       wsa10:EndpointReferenceType but unfortunately xs:union only
+       works for simple types. As a result, we have to define
+       the mex:MetadataReference using xs:any.
+  --&gt;
+
+  &lt;xs:element name='MetadataReference'&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:any minOccurs='1' maxOccurs='unbounded'
+                processContents='lax' namespace='##other' /&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+  &lt;xs:element name='Location'
+              type='xs:anyURI' /&gt;
+&lt;/xs:schema&gt;
+</pre>
+
+<h2 id="appendix-II">Appendix II - WSDL</h2>
+<p>A normative copy of the WSDL [<a href=
+"#WSDL11"><span class="Internetlink">WSDL 1.1</span></a>]
+description for this specification can be retrieved from the
+following address:</p>
+<p class="Code"><a href=
+"http://schemas.xmlsoap.org/ws/2004/09/mex/metadataexchange.wsdl"><span class="Internetlink">
+http://schemas.xmlsoap.org/ws/2004/09/mex/metadataexchange.wsdl</span></a></p>
+<p>A non-normative copy of the WSDL description is
+listed below for convenience.&nbsp;</p>
+
+<pre>&lt;wsdl:definitions
+    targetNamespace='http://schemas.xmlsoap.org/ws/2004/09/mex'
+    xmlns:tns='http://schemas.xmlsoap.org/ws/2004/09/mex'
+    xmlns:wsa10='http://www.w3.org/2005/08/addressing'
+    xmlns:wsa04='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+    xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+    xmlns:xs='http://www.w3.org/2001/XMLSchema' &gt;
+
+  &lt;wsdl:types&gt;
+    &lt;xs:schema
+        targetNamespace='http://schemas.xmlsoap.org/ws/2004/09/mex' &gt;
+      &lt;xs:include schemaLocation='metadataexchange.xsd' /&gt;
+    &lt;/xs:schema&gt;
+  &lt;/wsdl:types&gt;
+
+  &lt;wsdl:message name='GetMetadataMsg' &gt;
+    &lt;wsdl:part name='body' element='tns:GetMetadata' /&gt;
+  &lt;/wsdl:message&gt;
+  &lt;wsdl:message name='GetMetadataResponseMsg' &gt;
+    &lt;wsdl:part name='body' element='tns:Metadata' /&gt;
+  &lt;/wsdl:message&gt;
+  &lt;wsdl:portType name='MetadataExchange' &gt;
+    &lt;wsdl:operation name='GetMetadata' &gt;
+      &lt;wsdl:input
+       message='tns:GetMetadataMsg'
+       wsa10:Action=
+        'http://schemas.xmlsoap.org/ws/2004/09/mex/GetMetadata/Request'
+       wsa04:Action=
+        'http://schemas.xmlsoap.org/ws/2004/09/mex/GetMetadata/Request' /&gt;
+      &lt;wsdl:output
+       message='tns:GetMetadataResponseMsg'
+       wsa10:Action=
+        'http://schemas.xmlsoap.org/ws/2004/09/mex/GetMetadata/Response'
+       wsa04:Action=
+        'http://schemas.xmlsoap.org/ws/2004/09/mex/GetMetadata/Response'/&gt;
+    &lt;/wsdl:operation&gt;
+  &lt;/wsdl:portType&gt;
+
+&lt;/wsdl:definitions&gt;</pre>
+
+</div>
+</body>
+</html>

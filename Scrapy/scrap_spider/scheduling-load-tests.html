@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="pingback" href="https://blogs.msdn.microsoft.com/charles_sterling/xmlrpc.php">
+		<!--[if lt IE 9]>
+	<script src="https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft/js/html5.js"></script>
+	<![endif]-->
+	<title>Scheduling Load Tests | Ozzie Rules Blogging </title>
+<link rel="alternate" type="application/rss+xml" title="Ozzie Rules Blogging  &raquo; Scheduling Load Tests Comments Feed" href="https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/feed/" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds-ratings-css'  href='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/plugins/wds-ratings/wds-ratings.css?ver=4.1.5' type='text/css' media='all' />
+<link rel='stylesheet' id='microsoft-parent-style-css'  href='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft/style.css?ver=04152016' type='text/css' media='all' />
+<link rel='stylesheet' id='microsoft-child-style-css'  href='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft-msdn/style.css?ver=04152016' type='text/css' media='all' />
+<script type='text/javascript' src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft/js/single.js?ver=04152016'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft/js/social-counts.js?ver=04152016'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/charles_sterling/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/charles_sterling/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/' />
+<link rel='shortlink' href='https://blogs.msdn.microsoft.com/charles_sterling/?p=12551' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+						</style><!-- End Custom CSS -->
+			    <link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft-msdn/images/favicon-msdn.png">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Scheduling Load Tests" />
+<meta property="og:url" content="https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/" />
+<meta property="og:site_name" content="Ozzie Rules Blogging " />
+<meta property="og:description" content="(Blogging here this week we have a blogging embargo on the ALM Blog-will republish as soon as it is lifted) &#160; After publishing the post Load Testing from different geographies with Cloud-based load testing&#160;I have have had a couple of people ask how do you schedule Load Tests.&#160; Depending on what type of load testing..." />
+<meta property="og:image" content="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/6712.image_thumb_01363681.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Scheduling Load Tests" />
+<meta name="twitter:url" content="https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/" />
+<meta name="twitter:description" content="(Blogging here this week we have a blogging embargo on the ALM Blog-will republish as soon as it is lifted) &#160; After publishing the post Load Testing from different geographies with Cloud-based load testing&#160;I have have had a couple of people ask how do you schedule Load Tests.&#160; Depending on what type of load testing..." />
+<meta name="twitter:image" content="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/6712.image_thumb_01363681.png" />
+</head>
+
+<body class="single single-post postid-12551 single-format-standard">
+<div id="page" class="site container-fluid">
+
+	<header id="site-header" class="site-header row" role="banner">
+		<div id="site-header-global-wrapper" class="site-header-global-wrapper">
+			<div id="site-header-global" class="site-header-global">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#site-profile-menu">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div id="site-logo" class="col-sm-5 row navbar-header">
+					<div id="header-microsoft-logo">
+						<a id="home-link" href="https://www.microsoft.com/">
+							<img id="header-microsoft-logo-svg" src="https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft/images/ms-logo-gray.svg">
+							<span id="brand">
+								<span id="brand-separator">|</span>
+								<span id="brand-name"></span>
+							</span>
+						</a>
+					</div>
+				</div>
+				<div id="site-header-global-right" class="col-sm-7">
+					<div id="site-profile-menu" class="navbar-collapse collapse">
+						<div id="search-form-wrapper">
+														<form id="search-form" role="search" action="https://social.msdn.microsoft.com/search/en-US" home-url="https://blogs.msdn.microsoft.com/charles_sterling" autocomplete="off">
+								<div class="input-group">
+																			<input name="rq" value="site:blogs.msdn.microsoft.com/charles_sterling" type="hidden">
+										<input name="rn" value="charles_sterling" type="hidden">
+																		<input type="text" class="form-control" placeholder="Search" name="query" id="srch-term">
+									<div class="input-group-btn">
+										<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+									</div>
+								</div>
+							</form>
+							<div id="search-option">
+								<div class="search-filter" id="search-filter-site">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									<span class="search-text">Search MSDN</span>
+								</div>
+								<div class="search-filter" id="search-filter-all-blogs">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									<span class="search-text">Search all blogs</span>
+								</div>
+																	<div class="search-filter selected" id="search-filter-this-blog">
+										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										<span class="search-text">Search this blog</span>
+									</div>
+															</div>
+						</div>
+						<div id="me-control">
+															<a href="https://blogs.msdn.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a>
+													</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<div id="site-header-blog-wrapper" class="site-header-blog-wrapper ms-blog-header clear-both">
+			<div id="site-header-blog" class="site-header-blog">
+				<nav class="navbar navbar-inverse">
+					<div id="blog-logo-area" class="navbar-header">
+						<div id="blog-logo" data-toggle="collapse" data-target="#blog-menu">
+														<div id="blog-logo-text">
+				<h1 class="site-title ms-blog-title">
+					<a href="https://blogs.msdn.microsoft.com/charles_sterling" class="for-desktop">
+						Ozzie Rules Blogging 					</a>
+					<a href="https://blogs.msdn.microsoft.com/charles_sterling" class="for-mobile">
+						Ozzie Rules Blogging 					</a>
+				</h1>
+				<p class="site-description ms-blog-description">Charles Sterling</p>
+			</div>
+									</div>
+					</div>
+									</nav>
+			</div>
+		</div>
+		<div id="site-header-image-wrapper" class="ms-blog-banner">
+			<div id="site-header-image">
+											</div>
+		</div>
+	</header>
+
+	<div id="site-content" class="site-content row">
+
+	<div id="primary" class="content-area col-sm-9">
+		<div id="single-content" class="div-content">
+
+			
+				
+<article id="post-12551" class="post-12551 post type-post status-publish format-standard hentry category-uncategorized">
+
+	<header class="entry-header single">
+		<h1 class="entry-title">Scheduling Load Tests</h1>		<div class="rating-wrap">
+		<div id="star-rating-12551" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="12551">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		<div class="clear-both"></div>
+		<div class="entry-meta">
+			<span class="posted-on"><span class="screen-reader-text"> </span><a href="https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/" rel="bookmark"><time class="entry-date published updated" datetime="2015-11-14T15:38:00+00:00">November 14, 2015</time></a></span><span class="byline">By <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="" href="https://blogs.msdn.microsoft.com/charles_sterling/author/charles-sterling/">Charles Sterling</a></span></span><span class="comments-link"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><a href="https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/#respond" title="Comment on Scheduling Load Tests">0</a></span>				<span class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/", "text": "Scheduling Load Tests"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/", "text": "Scheduling Load Tests"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.msdn.microsoft.com/charles_sterling/2015/11/14/scheduling-load-tests/", "text": "Scheduling Load Tests"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</span><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+		<hr>
+	</header><!-- .entry-header -->
+
+	<div class="entry-content single">
+		<p>(Blogging here this week we have a blogging embargo on the ALM Blog-will republish as soon as it is lifted)</p>
+<p>&#160;</p>
+<p>After publishing the post <strong><a href="http://blogs.msdn.com/b/visualstudioalm/archive/2015/09/14/load-testing-from-different-geographies-with-cloud-based-load-testing.aspx">Load Testing from different geographies with Cloud-based load testing</a>&#160;</strong>I have have had a couple of people ask how do you schedule Load Tests.&#160; </p>
+<p>Depending on what type of load testing you are doing there are two ways to do this.&#160; </p>
+<ol>
+<li>For on-premises Load Test you will need to use the Command line (see directions for doing this at the bottom of this post) </li>
+<li>For Cloud Load Testing we make this simple with the new Build System </li>
+</ol>
+<h2>Scheduling a Cloud Load Test </h2>
+<p>The new Build System in Visual Studio Team Services makes scheduling cloud-based Load Tests a piece of cake.</p>
+<p>The new build system in Visual Studio Online as a scheduling engine also has the added benefit of being able to connect your load test into an entire workflow and able to kick off release pipelines with approvals and end to end reporting.&#160;&#160; To get started: </p>
+<p>1.&#160; <strong>Create a new Build</strong></p>
+<p>Navigate to the Build hub and create a new build</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/7713.image_1EA8878D.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/7713.image_5F00_1EA8878D.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/6712.image_thumb_01363681.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/6712.image_5F00_thumb_5F00_01363681.png" width="524" height="320" /></a></p>
+<p>In the Build templates select empty…as we will only need the Load Test Tasks</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/7382.image_0F087C7C.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/7382.image_5F00_0F087C7C.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/1524.image_thumb_6EED6FBE.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/1524.image_5F00_thumb_5F00_6EED6FBE.png" width="506" height="443" /></a></p>
+<p> 2.&#160; <strong>Create a Service End Point</strong></p>
+<p> Cloud-based Load Testing runs from a remote agent and must have access and “know” which VSO Account to publish the results back to. This is done through Service Endpoints. To create a Service Endpoint for Load Test you must go to control panel add a Generic service set to the VSO Account you want the load test to run from. </p>
+<p><strong>REMEMBER THIS REQUIRES A PAT OR ALTERNATE CREDENTIALS. </strong></p>
+<p>I always seem to forget this!&#160; Directions for setting alternate credentials and creating a PAT can be found here: </p>
+<p><a title="http://roadtoalm.com/2015/07/22/using-personal-access-tokens-to-access-visual-studio-online/" href="http://roadtoalm.com/2015/07/22/using-personal-access-tokens-to-access-visual-studio-online/">http://roadtoalm.com/2015/07/22/using-personal-access-tokens-to-access-visual-studio-online/</a></p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/3005.image_0E4593EC.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/3005.image_5F00_0E4593EC.png"><img title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/5153.image_thumb_00071AFC.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/5153.image_5F00_thumb_5F00_00071AFC.png" width="604" height="429" /></a></p>
+<p>&#160;</p>
+<p>3.&#160; <strong>Setup the Load Test Tasks</strong></p>
+<p>Add both the Quick Load Test Task and Load Test Task</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/2133.image_4ED26301.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/2133.image_5F00_4ED26301.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/3603.image_thumb_00CA038C.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/3603.image_5F00_thumb_5F00_00CA038C.png" width="545" height="403" /></a></p>
+<p>For the Quick Web Performance Test simply up the parameters for your quick performance test: </p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/6406.image_1DE59EFD.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/6406.image_5F00_1DE59EFD.png"><img title="image" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/8053.image_thumb_72A107F5.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/8053.image_5F00_thumb_5F00_72A107F5.png" width="619" height="352" /></a></p>
+<p>For the regular Load Test Task you will have to create a Load Test Using Visual Studio Enterprise and Check it in to the repo we are building</p>
+<p>Note the Testing settings file is typically in the root of the SLN. </p>
+<p><img title="image" alt="image" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/6646.image_thumb_05B612E6.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/6646.image_5F00_thumb_5F00_05B612E6.png" /></p>
+<p>3.&#160; <strong>Scheduling the Build</strong> </p>
+<p>Under the triggers tab of the build definition select Triggers and select the “Scheduled” option.&#160; </p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/0042.image_75A07941.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/0042.image_5F00_75A07941.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/6735.image_thumb_0E9C4987.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/6735.image_5F00_thumb_5F00_0E9C4987.png" width="592" height="452" /></a></p>
+<p>&#160;</p>
+<p>&#160;</p>
+<h2>Scheduling an on-premises Load Test&#160; </h2>
+<p>Sean Lumley’s post below will show you how to run a web test or load test from the command-line instead of from within Visual Studio. </p>
+<p>That post and the use of the Windows Task Scheduler</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/3034.image_7C5382C4.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/3034.image_5F00_7C5382C4.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="image" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/43/11/metablogapi/3443.image_thumb_5C387607.png" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-43-11-metablogapi/3443.image_5F00_thumb_5F00_5C387607.png" width="436" height="360" /></a></p>
+<p>&#160;</p>
+<p>Most of the time you will want to run you web or load test from within visual studio, but you can run them from a command-line. Maybe you have a set of 5 web tests that you want to run once a day. You could configure a scheduled task to run a batch file which contained ran the 5 web tests. The command line executable that is used to run tests is called mstest.exe and is installed when you install either VS Team Suite or VS Team Test SKU. Here is a MSDN help link for mstest: <a href="http://msdn.microsoft.com/en-us/library/ms182486.aspx">http://msdn.microsoft.com/en-us/library/ms182486.aspx</a></p>
+<p>The easiest way to get started with mstest is to start a visual studio command prompt. Go to Start Menu -&gt; All programs -&gt; Microsoft Visual Studio v9.0 -&gt; Visual Studio Tools -&gt; Visual Studio 9.0 Command Prompt. This will launch a command window which has mstest.exe in its path. So type mstest /? This will show each of the available options. Let’s run through a few options of how to run tests.</p>
+<p>1) <b>Running a single WebTest</b></p>
+<p>First let’s run a simple web test. To do this, we just need to specify the /TestContainer argument. A .webtest file or .loadtest file is considered a test container in the same way that a dll which contains unit tests is a test container. So if we have a web test called WebTest1.webtest, you would use the following command to run the web test:</p>
+<p><b>mstest /TestContainer:WebTest1.webtest</b></p>
+<p>This will produce output similar to the following:</p>
+<p><b>Loading WebTest1.webtest&#8230;</b></p>
+<p><b>Starting execution&#8230;</b></p>
+<p><b>Results Top Level Tests      <br />&#8212;&#8212;- &#8212;&#8212;&#8212;&#8212;&#8212;       <br />Passed webtest1.webtest</b></p>
+<p><b>1/1 test(s) Passed</b></p>
+<p><b>Summary      <br />&#8212;&#8212;-       <br />Test Run Completed.</b></p>
+<p><b>Passed 1      <br />&#8212;&#8212;&#8212;       <br />Total 1</b></p>
+<p><b>Results file: C:\Documents and Settings\slumley\My Documents\Visual Studio 10\Projects\TestProject3\TestProject3\TestResults\slumley_SLUMLEYTCM 2008-12-22 13_38_14.trx</b></p>
+<p><b>2) </b><b>Running Multiple WebTests</b></p>
+<p>Now let’s execute 2 web tests from one call to mstest. You can specify multiple test container arguments on one command-line. So say we wanted to execute WebTest1.webtest and WebTest2.webtest. You would use the following command-line:</p>
+<p><b></b></p>
+<p><b>mstest /TestContainer:WebTest1.webtest /TestContainer:WebTest2.webtest</b></p>
+<p>This will produce output similar to the following:</p>
+<p><b>Loading WebTest1.webtest&#8230;</b></p>
+<p><b>Loading WebTest2.webtest&#8230;</b></p>
+<p><b>Starting execution&#8230;</b></p>
+<p><b></b></p>
+<p><b>Results Top Level Tests</b></p>
+<p><b>&#8212;&#8212;- &#8212;&#8212;&#8212;&#8212;&#8212;</b></p>
+<p><b>Passed webtest1.webtest</b></p>
+<p><b>Passed webtest2.webtest</b></p>
+<p><b>2/2 test(s) Passed</b></p>
+<p><b></b></p>
+<p><b>Summary</b></p>
+<p><b>&#8212;&#8212;-</b></p>
+<p><b>Test Run Completed.</b></p>
+<p><b>Passed 2</b></p>
+<p><b>&#8212;&#8212;&#8212;</b></p>
+<p><b>Total 2</b></p>
+<p><b>Results file: C:\Documents and Settings\slumley\My Documents\Visual Studio 10\P</b></p>
+<p><b>rojects\TestProject3\TestProject3\TestResults\slumley_SLUMLEYTCM 2008-12-22 13_4</b></p>
+<p><b>3_04.trx</b></p>
+<p><b>3) </b><b>Specifying deployment items</b></p>
+<p>One of the big differences with running from the command line is that you are not within a visual studio project. When you run a web test from within Visual Studio, we will try to determine what needs to be deployed with the web test in order for it to run. For example, maybe you have written a custom validation rule or a extraction rule. When you run the test from within visual studio, we will look at the references of the test project and try to figure out what needs to be deployed.</p>
+<p>When you are running from the command-line, you will need to be very explicit about what you deploy. So if you have a dll that needs to be deployed for a test to run, you will need to inform mstest. The way you do this is by specifying /runconfig parameter. One of the sections of a run config is deployment items. Use visual studio to create a run config. Then to run a test with a runconfig, you would have a command-line similar to the following:</p>
+<p><b>Mstest /TestContainer:WebTest1.webtest /RunConfig:NewRunConfig.testrunconfig</b></p>
+<p><b>4) </b><b>Executing a test on a controller/agent setup</b></p>
+<p>When in VS, to run a web or load test on a controller/agent setup you need to use a test run configuration. You would open the run config, specify to run the test remotely and specify a controller name. It works the same way from the command-line. You will need to create a run config that has the correct settings. Then you run it the same way as you do when specifying deployment items:</p>
+<p><b>Mstest /TestContainer:WebTest1.webtest /RunConfig:NewRunConfig.testrunconfig</b></p>
+<p><b>5) </b><b>Running a coded web test</b></p>
+<p>Running a coded web test is similar to running a unit test. You will set the /testcontainer argument to the dll which contains the coded test.</p>
+<p><b>mstest /TestContainer:TestProject1.dll</b></p>
+<p><b></b></p>
+<p>One thing you will notice when running a test this way, is that mstest will execute all of the tests within the dll.</p>
+<p><b>6) </b><b>Executing a specific coded test in a dll</b></p>
+<p>So if you want to execute just one test within a dll, you would need to use the /test argument. For example, to run WebTest1Coded, you would use the following command line:</p>
+<p><b>mstest /TestContainer:TestProject1.dll /Test:WebTest1Coded</b></p>
+<p><b></b></p>
+<p>If you wanted to execute 2 tests, you can specify multiple /Test arguments. For example:</p>
+<p><b></b></p>
+<p><b>mstest /TestContainer:TestProject1.dll /Test:WebTest1Coded /Test:WebTest2Coded</b></p>
+<p><b></b></p>
+<p><b>7) </b><b>Executing a load test</b></p>
+<p>This is the same as executing a web test except you need to specify the .loadtest file</p>
+<p><b>mstest /TestContainer:LoadTest1.loadtest</b></p>
+<p>When the test completes, you can either open the trx file to get to the load test results or you can use the manage load test results dialog form within VS. Here is a blog on that: <a href="http://blogs.msdn.com/slumley/pages/managing-load-test-results.aspx">http://blogs.msdn.com/slumley/pages/managing-load-test-results.aspx</a></p>
+<p><b>8) </b><b>Specifying the results file name</b></p>
+<p>You will notice that the results file(trx file) gets a unique name which contains user, machine and a timestamp. If you want to specify the name of the results file and where it is generated, you can use the /resultsfile parameter. For example, to create a results file called MyResults.trx and have it saved to c:\results, I would do the following:</p>
+<p><b>mstest /TestContainer:WebTest1.webtest /resultsfile:c:\results\MyResults.trx</b></p>
+<p><b></b></p>
+<p>Hopefully this post shows you how to make use of the mstest tool.</p>
+	</div><!-- .entry-content -->
+
+
+	<footer class="entry-footer single">
+				<hr>
+	</footer><!-- .entry-footer -->
+
+</article><!-- #post-## -->
+
+			
+		</div><!-- #single-content -->
+
+		
+<div id="comments" class="comments-area">
+	<div class="comments-title">
+		Comments (0)	</div>
+
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow" id="cancel-comment-reply-link" href="/charles_sterling/2015/11/14/scheduling-load-tests/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="https://blogs.msdn.microsoft.com/charles_sterling/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="4" aria-required="true"></textarea></p>												<p class="form-submit">
+							<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='12551' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="a1806891be" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="16"/></p>					</form>
+							</div><!-- #respond -->
+			
+	
+	
+</div><!-- .comments-area -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="sidebar col-sm-3">
+
+					<div id="sidebar-widget-area" class="sidebar-widget-area" role="complementary">
+					<aside id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title">Popular Tags</h2><div class="tagcloud"><a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/vsts/' class='tag-link-93' title='85 topics' style='font-size: 14px;'>VSTS</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/pages/' class='tag-link-183' title='56 topics' style='font-size: 14px;'>Pages</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/fishing/' class='tag-link-3' title='35 topics' style='font-size: 14px;'>Fishing</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/vsts10/' class='tag-link-83' title='34 topics' style='font-size: 14px;'>vsts10</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/tsbt-dev/' class='tag-link-123' title='28 topics' style='font-size: 14px;'>tsbt-dev</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/tsbt-tfs/' class='tag-link-113' title='27 topics' style='font-size: 14px;'>tsbt-tfs</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/vsts2010/' class='tag-link-73' title='21 topics' style='font-size: 14px;'>vsts2010</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/teched/' class='tag-link-173' title='20 topics' style='font-size: 14px;'>TechEd</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/tsbt-arch/' class='tag-link-133' title='15 topics' style='font-size: 14px;'>tsbt-arch</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/windows-presentation-foundation/' class='tag-link-193' title='11 topics' style='font-size: 14px;'>Windows Presentation Foundation</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/vsts-featured-resources/' class='tag-link-143' title='9 topics' style='font-size: 14px;'>VSTS Featured Resources</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/smartclient/' class='tag-link-223' title='9 topics' style='font-size: 14px;'>Smartclient</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/smart-clients/' class='tag-link-253' title='7 topics' style='font-size: 14px;'>Smart Clients</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/smartclient-editorial/' class='tag-link-233' title='6 topics' style='font-size: 14px;'>Smartclient Editorial</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/perth/' class='tag-link-203' title='4 topics' style='font-size: 14px;'>Perth</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/webdev-editorial/' class='tag-link-243' title='4 topics' style='font-size: 14px;'>Webdev editorial</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/vs2010faq/' class='tag-link-103' title='3 topics' style='font-size: 14px;'>VS2010FAQ</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/webdevelopment/' class='tag-link-213' title='3 topics' style='font-size: 14px;'>Webdevelopment</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/microsoft-test-manager/' class='tag-link-23' title='1 topic' style='font-size: 14px;'>Microsoft Test Manager</a>
+<a href='https://blogs.msdn.microsoft.com/charles_sterling/tag/visual-studio/' class='tag-link-13' title='1 topic' style='font-size: 14px;'>Visual Studio</a></div>
+</aside><aside id="msdn-archive-widget-2" class="widget msdn-archive-widget"><h2 class="widget-title">Archives</h2>	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2015/11/'>November 2015</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2015/10/'>October 2015</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2015/09/'>September 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2015/07/'>July 2015</a>&nbsp;(4)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2015/06/'>June 2015</a>&nbsp;(6)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2015/'>All of 2015</a>&nbsp;(17)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2014/'>All of 2014</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2013/'>All of 2013</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2012/'>All of 2012</a>&nbsp;(20)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2011/'>All of 2011</a>&nbsp;(16)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2010/'>All of 2010</a>&nbsp;(33)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2009/'>All of 2009</a>&nbsp;(81)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2008/'>All of 2008</a>&nbsp;(237)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2007/'>All of 2007</a>&nbsp;(175)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2006/'>All of 2006</a>&nbsp;(251)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2005/'>All of 2005</a>&nbsp;(173)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/charles_sterling/2004/'>All of 2004</a>&nbsp;(4)</li>
+</aside>				</div>
+			
+</div><!-- #secondary -->
+</div><!-- .site-content -->
+
+<footer id="site-footer" class="site-footer row" role="contentinfo">
+	<div id="site-info" class="site-info">
+		<div id="footer-text" class="col-sm-4 col-sm-offset-6">
+			<span>
+				<a href="https://msdn.microsoft.com/dn529288">Privacy & Cookies</a>
+			</span>
+			<span>
+				<a href="https://msdn.microsoft.com/cc300389">Terms of Use</a>
+			</span>
+			<span>
+				<a href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx">Trademarks</a>
+			</span>
+		</div>
+		<div id="footer-far" class="col-sm-2">
+			<div id="footer-microsoft-logo">
+				<a href="https://www.microsoft.com">
+					<img id="footer-microsoft-logo-svg" src="https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft/images/ms-logo-white-text.svg">
+				</a>
+			</div>
+			<div id="copyright">
+				© 2016 Microsoft
+			</div>
+		</div>
+	</div><!-- .site-info -->
+</footer><!-- .site-footer -->
+
+</div><!-- .site -->
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/charles_sterling/2015/11/14/scheduling-load-tests/' );
+			$.cookie( 'aadsso-redirect', '/charles_sterling/2015/11/14/scheduling-load-tests/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='69063' post-id='12551'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.msdn.microsoft.com/charles_sterling/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script><script type='text/javascript' src='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/plugins/akismet/_inc/form.js?ver=3.1.5'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/charles_sterling\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/charles_sterling\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://code.jquery.com/jquery-migrate-1.3.0.min.js'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft/js/theme-merged.js?ver=04152016'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/charles_sterling/wp-content/themes/microsoft/js/vendor/jquery.cookie.js?ver=11092015'></script>
+
+</body>
+</html>

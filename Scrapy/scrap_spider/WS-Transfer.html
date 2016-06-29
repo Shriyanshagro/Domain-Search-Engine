@@ -1,0 +1,1400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Web Services Transfer (WS-Transfer)</title>
+  <style type="text/css" xml:space="preserve">
+/*<![CDATA[*/
+ table { border-collapse: collapse; width: 100%; }
+ th, td { border: 1px solid black; padding: 0.5ex; }
+ th { text-align: left; } 
+ thead th { background: #ccc; } 
+ pre { background: #ccc; padding: 1ex;}
+ dl.properties dt { font-family: monospace; font-weight: normal;}
+ dl.definitions dt { font-weight: normal;}
+ div.toc ul { list-style-type: none; }
+ p.caption, caption { text-align: left; font-weight: bold; }
+/*]]>
+*/</style>
+  <style type="text/css" xml:space="preserve">
+/*<![CDATA[*/
+ ul.tidy-1 {list-style-type: disc;}
+/*]]>
+*/</style>
+  <link rel="stylesheet" type="text/css"
+  href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM" />
+</head>
+
+<body>
+
+<div class="head">
+<p><a href="http://www.w3.org/"><img alt="W3C" height="48"
+src="http://www.w3.org/Icons/w3c_home" width="72" /></a> <a
+href="http://www.w3.org/Submission/"><img height="48" width="211"
+src="http://www.w3.org/Icons/member_subm" alt="W3C Member Submission"
+/></a></p>
+
+<h1 id="title">Web Services Transfer (WS-Transfer)</h1>
+
+<h2 id="W3C-doctype">W3C Member Submission 27 September 2006</h2>
+<dl>
+  <dt>This version:</dt>
+    <dd><a
+      href="http://www.w3.org/Submission/2006/SUBM-WS-Transfer-20060927/">http://www.w3.org/Submission/2006/SUBM-WS-Transfer-20060927/</a></dd>
+  <dt>Latest version:</dt>
+    <dd><a
+      href="http://www.w3.org/Submission/WS-Transfer/">http://www.w3.org/Submission/WS-Transfer/</a></dd>
+  <dt>Previous version:</dt>
+    <dd><a
+      href="http://www.w3.org/Submission/2006/SUBM-WS-Transfer-20060315/">http://www.w3.org/Submission/2006/SUBM-WS-Transfer-20060315/</a></dd>
+</dl>
+<dl>
+  <dt>Authors:</dt>
+    <dd>Jan Alexander, Systinet</dd>
+    <dd>Don Box, Microsoft</dd>
+    <dd>Luis Felipe Cabrera, Microsoft</dd>
+    <dd>Dave Chappell, Sonic Software</dd>
+    <dd>Glen Daniels, Sonic Software</dd>
+    <dd>Radovan Janecek, Systinet</dd>
+    <dd>Chris Kaler, Microsoft</dd>
+    <dd>Brad Lovering, Microsoft</dd>
+    <dd>Raymond McCollum, Microsoft</dd>
+    <dd>David Orchard, BEA</dd>
+    <dd>Savas Parastatidis, Microsoft</dd>
+    <dd>Jeffrey Schlimmer, Microsoft</dd>
+    <dd>Igor Sedukhin, CA</dd>
+    <dd>John Shewchuk, Microsoft</dd>
+</dl>
+
+<p class="copyright">Copyright © 2004-2006 <a href="http://www.bea.com/">BEA
+Systems Inc.</a>, <a href="http://www.ca.com/">CA</a>, <a
+href="http://www.microsoft.com/">Microsoft Corporation, Inc.</a>, <a
+href="http://www.sonicsoftware.com/">Sonic Software</a>, and <a
+href="http://www.systinet.com/">Systinet, A Mercury Division</a> . All rights
+reserved. This document is available under the <a
+href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document
+License</a>. See the <a
+href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C
+Intellectual Rights Notice and Legal Disclaimers</a> for additional
+information.</p>
+<hr />
+</div>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>This specification describes a general SOAP-based protocol for accessing
+XML representations of Web service-based resources.</p>
+
+<h2 id="status">Status of this document</h2>
+
+<p><em>This section describes the status of this document at the time of its
+publication. Other documents may supersede this document. A list of current
+W3C publications and the latest revision of this technical report can be
+found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a>
+at <a href="http://www.w3.org/TR/">http://www.w3.org/TR/</a>.</em></p>
+
+<p>WS-Transfer and related specifications are provided as-is and for review
+and evaluation only. BEA Systems, CA, Microsoft, Sonic
+Software, and Systinet, A Mercury Division  make no warrantees or
+representations regarding the specifications in any manner whatsoever. </p>
+
+<p>By publishing this document, W3C acknowledges that the <a
+href="http://www.w3.org/Submission/2006/04/">Submitting Members</a> have made
+a formal Submission request to W3C for discussion. Publication of this
+document by W3C indicates no endorsement of its content by W3C, nor that W3C
+has, is, or will be allocating any resources to the issues addressed by it.
+This document is not the product of a chartered W3C group, but is published
+as potential input to the <a href="http://www.w3.org/Consortium/Process">W3C
+Process</a>. A <a href="http://www.w3.org/Submission/2006/04/Comment">W3C
+Team Comment</a> has been published in conjunction with this Member
+Submission. Publication of acknowledged Member Submissions at the W3C site is
+one of the benefits of <a
+href="http://www.w3.org/Consortium/Prospectus/Joining">W3C Membership</a>.
+Please consult the requirements associated with Member Submissions of <a
+href="http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">section
+3.3 of the W3C Patent Policy</a>. Please consult the complete <a
+href="http://www.w3.org/Submission">list of acknowledged W3C Member
+Submissions</a>.</p>
+
+
+<div class="toc">
+<h2 id="toc">Table of Contents</h2>
+
+<ul>
+  <li><a href="#Introduction">1. Introduction</a>
+    <ul>
+      <li><a href="#Requirements">1.1 Requirements</a></li>
+    </ul>
+  </li>
+  <li><a href="#Notations_and_Terminology">2. Notations and Terminology</a>
+    <ul>
+      <li><a href="#Notational_Conventions">2.1 Notational
+      Conventions</a></li>
+      <li><a href="#XML_Namespaces">2.2 XML Namespaces</a></li>
+      <li><a href="#Terminology">2.3 Terminology</a></li>
+      <li><a href="#Compliance">2.4 Compliance</a></li>
+    </ul>
+  </li>
+  <li><a href="#Resource_Operations">3. Resource Operations</a>
+    <ul>
+      <li><a href="#Get">3.1 Get</a></li>
+      <li><a href="#Put">3.2 Put</a></li>
+      <li><a href="#Delete">3.3 Delete</a></li>
+    </ul>
+  </li>
+  <li><a href="#Resource_Factory_Operations">4. Resource Factory
+    Operations</a>
+    <ul>
+      <li><a href="#Create">4.1 Create</a></li>
+    </ul>
+  </li>
+  <li><a href="#Faults">5. Faults</a>
+    <ul>
+      <li><a href="#InvalidRepresentation">5.1 InvalidRepresentation</a></li>
+    </ul>
+  </li>
+  <li><a href="#Security_Considerations">6. Security Considerations</a></li>
+  <li><a href="#Acknowledgements">7. Acknowledgements</a></li>
+  <li><a href="#References">8. References</a></li>
+  <li><a href="#Appendix_I__E2_80_93_XSD">Appendix I — XSD</a></li>
+  <li><a href="#Appendix_II__E2_80_93_WSDL">Appendix II — WSDL</a></li>
+</ul>
+</div>
+
+<h2 id="Introduction">1. Introduction</h2>
+
+<p>This specification defines a mechanism for acquiring XML-based
+representations of entities using the Web service infrastructure. It defines
+two types of entities: </p>
+<ul>
+  <li>Resources, which are entities addressable by an endpoint reference that
+    provide an XML representation</li>
+  <li>Resource factories, which are Web services that can create a new
+    resource from an XML representation</li>
+</ul>
+
+<p>Specifically, it defines two operations for sending and receiving the
+representation of a given resource and two operations for creating and
+deleting a resource and its corresponding representation. </p>
+
+<p>It should be noted that the state maintenance of a resource is at most
+subject to the "best efforts" of the hosting server. When a client receives
+the server's acceptance of a request to create or update a resource, it can
+reasonably expect that the resource now exists at the confirmed location and
+with the confirmed representation, but this is not a guarantee, even in the
+absence of any third parties. The server may change the representation of a
+resource, may remove a resource entirely, or may bring back a resource that
+was deleted. </p>
+
+<p>For instance, the server may store resource state information on a disk
+drive. If that drive crashes and the server recovers state information from a
+backup tape, changes that occurred after the backup was made will be
+lost. </p>
+
+<p>A server may have other operational processes that change resource state
+information. A server may run a background process that examines resources
+for objectionable content and deletes any such resources it finds. A server
+may purge resources that have not been accessed for some period of time. A
+server may apply storage quotas that cause it to occasionally purge
+resources. </p>
+
+<p>In essence, the confirmation by a service of having processed a request to
+create, modify, or delete a resource implies a commitment only at the instant
+that the confirmation was generated. While the usual case should be that
+resources are long-lived and stable, there are no guarantees, and clients
+should code defensively. </p>
+
+<p>There is no requirement for uniformity in resource representations between
+the messages defined in this specification.   For example, the
+representations required by Create or Put may differ from the representation
+returned by Get, depending on the semantic requirements of the service.  
+Additionally, there is no requirement that the resource content is fixed for
+any given endpoint reference.    The resource content may vary based on
+environmental factors, such as the security context, time of day,
+configuration, or the dynamic state of the service. </p>
+
+<p>As per the SOAP processing model, other specifications may define SOAP
+headers which may be optionally added to request messages to require the
+transfer of subsets or the application of transformations of the resource
+associated with the endpoint reference.  When the Action URIs defined by
+this specification are used, such extension specifications must also allow
+the basic processing models defined herein. </p>
+
+<h3 id="Requirements">1.1 Requirements</h3>
+
+<p>This specification intends to meet the following requirements: </p>
+<ul>
+  <li>Provide a SOAP-based protocol for managing resources and their
+    representations.</li>
+  <li>Minimize additional mechanism beyond the current Web Services
+    architecture.</li>
+</ul>
+
+<h2 id="Notations_and_Terminology">2. Notations and Terminology</h2>
+
+<p>This section specifies the notations, namespaces, and terminology used in
+this specification. </p>
+
+<h3 id="Notational_Conventions">2.1 Notational Conventions</h3>
+
+<p>The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document
+are to be interpreted as described in RFC 2119 [<a href="#RFC2119">RFC
+2119</a>].</p>
+
+<p>This specification uses the following syntax to define normative outlines
+for messages: </p>
+<ul>
+  <li>The syntax appears as an XML instance, but values in italics indicate
+    data types instead of values.</li>
+  <li>Characters are appended to elements and attributes to indicate
+    cardinality:
+    <ul class="tidy-1">
+      <li>"?" (0 or 1)</li>
+      <li>"*" (0 or more)</li>
+      <li>"+" (1 or more)</li>
+    </ul>
+  </li>
+  <li>The character "|" is used to indicate a choice between
+  alternatives.</li>
+  <li>The characters "[" and "]" are used to indicate that contained items
+    are to be treated as a group with respect to cardinality or choice.</li>
+  <li>An ellipsis (i.e. "…") indicates a point of extensibility that allows
+    other child or attribute content. Additional children and/or attributes
+    MAY be added at the indicated extension points but MUST NOT contradict
+    the semantics of the parent and/or owner, respectively. If a receiver
+    does not recognize an extension, the receiver SHOULD ignore it.</li>
+  <li>XML namespace prefixes (see <a href="#Table1">table 1</a>) are used to
+    indicate the namespace of the element being defined.</li>
+</ul>
+
+<h3 id="XML_Namespaces">2.2 XML Namespaces</h3>
+
+<p>The XML namespace URI that MUST be used by implementations of this
+specification is: </p>
+<pre xml:space="preserve"><a href="http://schemas.xmlsoap.org/ws/2004/09/transfer">http://schemas.xmlsoap.org/ws/2004/09/transfer</a></pre>
+
+<p>Table 1 lists XML namespaces that are used in this specification. The
+choice of any namespace prefix is arbitrary and not semantically
+significant. </p>
+
+<div>
+
+<table id="Table1">
+  <caption>Table 1: Prefixes and XML namespaces used in this
+  specification</caption>
+  <thead>
+    <tr>
+      <th>Prefix</th>
+      <th>XML Namespace</th>
+      <th>Specification(s)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>wxf</td>
+      <td><a
+        href="http://schemas.xmlsoap.org/ws/2004/09/transfer">http://schemas.xmlsoap.org/ws/2004/09/transfer</a></td>
+      <td>This specification </td>
+    </tr>
+    <tr>
+      <td>s11</td>
+      <td><a
+        href="http://schemas.xmlsoap.org/soap/envelope/">http://schemas.xmlsoap.org/soap/envelope/</a></td>
+      <td>SOAP 1.1 [<a href="#SOAP11">SOAP 1.1</a>]</td>
+    </tr>
+    <tr>
+      <td>s12</td>
+      <td><a
+        href="http://www.w3.org/2003/05/soap-envelope">http://www.w3.org/2003/05/soap-envelope</a></td>
+      <td>SOAP 1.2 [<a href="#SOAP12">SOAP 1.2</a>]</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td>Either of s11 or s12</td>
+      <td>SOAP</td>
+    </tr>
+    <tr>
+      <td>wsa</td>
+      <td>Either of wsa1 or wsa2</td>
+      <td>WS-Addressing</td>
+    </tr>
+    <tr>
+      <td>xs</td>
+      <td><a
+        href="http://www.w3.org/2001/XMLSchema">http://www.w3.org/2001/XMLSchema</a></td>
+      <td>XML Schema [<a href="#XMLSchema1">Part 1</a>, <a
+        href="#XMLSchema2">2</a>]</td>
+    </tr>
+    <tr>
+      <td>wsdl</td>
+      <td><a
+        href="http://schemas.xmlsoap.org/wsdl">http://schemas.xmlsoap.org/wsdl</a></td>
+      <td>WSDL/1.1 [<a href="#WSDL11">WSDL 1.1</a>]</td>
+    </tr>
+    <tr>
+      <td>wsa1</td>
+      <td><a
+        href="http://schemas.xmlsoap.org/ws/2004/08/addressing">http://schemas.xmlsoap.org/ws/2004/08/addressing</a></td>
+      <td>WS-Addressing Submission [<a href="#WSAddressing">WS-Addressing
+        Submission</a>]</td>
+    </tr>
+    <tr>
+      <td>wsa2</td>
+      <td><a
+        href="http://www.w3.org/2005/08/addressing/">http://www.w3.org/2005/08/addressing/</a></td>
+      <td>WS-Addressing 1.0 Core [<a href="#WSAddressing1">WS-Addressing
+        1.0</a>] and [<a href="#WSAddressing1SOAP">WS-Addressing 1.0
+      SOAP</a>]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="Terminology">2.3 Terminology</h3>
+<dl>
+  <dt>Resource  </dt>
+    <dd>A Web service that is addressable by an endpoint reference as defined
+      in WS-Addressing and that can be represented by an XML Infoset using
+      the Get and Put operations defined in this specification </dd>
+  <dt>Resource factory  </dt>
+    <dd>A Web service that is capable of creating new resources using the
+      Create operation defined in this specification </dd>
+</dl>
+
+<h3 id="Compliance">2.4 Compliance</h3>
+
+<p>An implementation is not compliant with this specification if it fails to
+satisfy one or more of the MUST or REQUIRED level requirements defined
+herein. A SOAP Node MUST NOT use the XML namespace identifier for this
+specification (listed in <a href="#XML_Namespaces">Section 2.2</a>) within
+SOAP envelopes unless it is compliant with this specification.</p>
+
+<p>Specifically, a compliant SOAP Node that implements a resource MUST
+provide the Get operation as defined in this specification, and MAY provide
+the Put and Delete operations. </p>
+
+<p>Normative text within this specification takes precedence over normative
+outlines, which in turn takes precedence over the XML Schema and WSDL
+descriptions. </p>
+
+<p>Conformant implementations may support either or both of [<a
+href="#WSAddressing">WS-Addressing Submission</a>] or [<a
+href="#WSAddressing1">WS-Addressing 1.0</a>].   In any given
+request-response message exchange, the responses generated by the service
+server MUST use the same WS-Addressing namespace binding that was used in the
+request.</p>
+
+<h2 id="Resource_Operations">3. Resource Operations</h2>
+
+<h3 id="Get">3.1 Get</h3>
+
+<p>This specification defines one Web service operation (Get) for fetching a
+one-time snapshot of the representation of a resource. </p>
+
+<p>The Get request message MUST be of the following form: </p>
+<pre xml:space="preserve">&lt;s:Envelope …&gt;  
+  &lt;s:Header …&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Get
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;<em>xs:anyURI</em>&lt;/wsa:MessageID&gt;
+    &lt;wsa:To&gt;<em>xs:anyURI</em>&lt;/wsa:To&gt;
+    …
+  &lt;/s:Header&gt;
+  &lt;s:Body ...&gt; 
+     ...
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;  </pre>
+
+<p>The following describes additional, normative constraints on the outline
+listed above: </p>
+<dl>
+  <dt><code>/s:Envelope/s:Header/wsa:Action</code></dt>
+    <dd><p>This required element MUST contain the value
+      <code>http://schemas.xmlsoap.org/ws/2004/09/transfer/Get</code>. If a
+      SOAP Action URI is also present in the underlying transport, its value
+      MUST convey the same value. </p>
+    </dd>
+</dl>
+
+<p>A Get request MUST be targeted at the resource whose representation is
+desired as described in <a href="#Notations_and_Terminology">Section 2</a> of
+this specification.</p>
+
+<p>There are no body blocks defined by default for a Get Request.   As per
+the SOAP processing model, other specifications may introduce various types
+of extensions to the semantics of this message which are enabled through
+headers tagged with <code>s:mustUnderstand="true"</code>.   Such extensions
+may define how resource or subsets of it are to be retrieved or transformed
+prior to retrieval.   Specifications which define such extensions MUST
+allow processing the basic Get request message without those
+extensions.    Since the response may not be sent to the original sender,
+extension specifications should consider adding a corresponding SOAP header
+value in the response to signal to the receiver that the extension is being
+used.</p>
+
+<p>Implementations may respond with a fault message using the standard fault
+codes defined in WS-Addressing (e.g., wsa:ActionNotSupported). Other
+components of the outline above are not further constrained by this
+specification. </p>
+
+<p>If the resource accepts a Get request, it MUST reply with a response of
+the following form: </p>
+<pre xml:space="preserve">&lt;s:Envelope …&gt;  
+  &lt;s:Header …&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/GetResponse
+    &lt;/wsa:Action&gt;
+    &lt;wsa:RelatesTo&gt;<em>xs:anyURI</em>&lt;/wsa:RelatesTo&gt;
+    &lt;wsa:To&gt;<em>xs:anyURI</em>&lt;/wsa:To&gt;
+    …
+  &lt;/s:Header&gt;
+  &lt;s:Body …&gt;
+    <em>xs:any</em>
+<em>     ...</em>
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;  </pre>
+
+<p>The following describes additional, normative constraints on the outline
+listed above: </p>
+<dl>
+  <dt><code>/s:Envelope/s:Header/wsa:Action</code></dt>
+    <dd><p>This required element MUST contain the value
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/GetResponse. If a SOAP
+      Action URI is also present in the underlying transport, its value MUST
+      convey the same value. </p>
+    </dd>
+  <dt><code>/s:Envelope/s:Body/child::*[position()=1]</code></dt>
+    <dd><p>The representation itself MUST be the initial child element of the
+      SOAP:Body element of the response message.   The presence of
+      subsequent child elements is service-specific and MAY be controlled by
+      the presence or extension-specific SOAP headers in the original
+      request. </p>
+    </dd>
+</dl>
+
+<p>Other components of the outline above are not further constrained by this
+specification. </p>
+
+<p>The following shows a sample SOAP envelope containing a Get request: </p>
+<pre xml:space="preserve">&lt;s:Envelope  
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:xxx="http://fabrikam123.example.com/resource-model" &gt;
+  &lt;s:Header&gt;
+    &lt;wsa:ReplyTo&gt;
+      &lt;wsa:Address&gt;
+        soap://www.fabrikam123.example.org/pullport
+      &lt;/wsa:Address&gt;
+    &lt;/wsa:ReplyTo&gt;
+    &lt;wsa:To&gt;soap://www.example.org/repository&lt;/wsa:To&gt;
+    &lt;xxx:CustomerID&gt;732199&lt;/xxx:CustomerID&gt;
+    &lt;xxx:Region&gt;EMEA&lt;/xxx:Region&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Get
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;
+      uuid:00000000-0000-0000-C000-000000000046
+    &lt;/wsa:MessageID&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body/&gt;
+&lt;/s:Envelope&gt;  </pre>
+
+<p>The following shows the corresponding response message: </p>
+<pre xml:space="preserve">&lt;s:Envelope  
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:xxx="http://fabrikam123.example.com/resource-model" &gt;
+  &lt;s:Header&gt;
+    &lt;wsa:To&gt;soap://www.fabrikam123.example.org/pullport&lt;/wsa:Address&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/GetResponse
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;
+      uuid:0000010e-0000-0000-C000-000000000046
+    &lt;/wsa:MessageID&gt;
+    &lt;wsa:RelatesTo&gt;
+      uuid:00000000-0000-0000-C000-000000000046
+    &lt;/wsa:RelatesTo&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;xxx:Customer&gt;
+      &lt;xxx:first&gt;Roy&lt;/xxx:first&gt;&lt;xxx:last&gt;Hill&lt;/xxx:last&gt;
+      &lt;xxx:address&gt;123 Main Street&lt;/xxx:address&gt;
+      &lt;xxx:city&gt;Manhattan Beach&lt;/xxx:city&gt;
+      &lt;xxx:state&gt;CA&lt;/xxx:state&gt;
+      &lt;xxx:zip&gt;90266&lt;/xxx:zip&gt;
+    &lt;/xxx:Customer&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;  </pre>
+
+<p>In this example, the representation of the resource is the following XML
+element: </p>
+<pre xml:space="preserve">  &lt;xxx:Customer&gt;
+    &lt;xxx:first&gt;Roy&lt;/xxx:first&gt;&lt;xxx:last&gt;Hill&lt;/xxx:last&gt;
+    &lt;xxx:address&gt;123 Main Street&lt;/xxx:address&gt;
+    &lt;xxx:city&gt;Manhattan Beach&lt;/xxx:city&gt;
+    &lt;xxx:state&gt;CA&lt;/xxx:state&gt;
+    &lt;xxx:zip&gt;90266&lt;/xxx:zip&gt;
+  &lt;/xxx:Customer&gt;</pre>
+
+<h3 id="Put">3.2 Put</h3>
+
+<p>This specification defines one Web service operation (Put) for updating a
+resource by providing a replacement representation. A resource MAY accept
+updates that provide different XML representations than that returned by the
+resource; in such a case, the semantics of the update operation is defined by
+the resource. </p>
+
+<p>The Put request message MUST be of the following form: </p>
+<pre xml:space="preserve">&lt;s:Envelope …&gt;  
+  &lt;s:Header …&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Put
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;<em>xs:anyURI</em>&lt;/wsa:MessageID&gt;
+    &lt;wsa:To&gt;<em>xs:anyURI</em>&lt;/wsa:To&gt;
+    …
+  &lt;/s:Header&gt;
+  &lt;s:Body…&gt;
+    <em>xs:any</em>
+<em>    ...</em>
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;  </pre>
+
+<p>The following describes additional, normative constraints on the outline
+listed above: </p>
+<dl>
+  <dt><code>/s:Envelope/s:Header/wsa:Action</code></dt>
+    <dd><p>This required element MUST contain the value
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Put. If a SOAP Action
+      URI is also present in the underlying transport, its value MUST convey
+      the same value. </p>
+    </dd>
+  <dt><code>/s:Envelope/s:Body/child::*[position()=1]</code></dt>
+    <dd><p>The representation to be used for the update MUST be the initial
+      child element of the s:Body element of the request message. All other
+      children SHOULD be ignored by the service. </p>
+    </dd>
+</dl>
+
+<p>A Put request MUST be targeted at the resource whose representation is
+desired to be replaced, as described in <a
+href="#Notations_and_Terminology">Section 2</a> of this specification.   As
+per the SOAP processing model, other specifications MAY introduce various
+types of extensions to this message which are enabled through headers tagged
+with <code>s:mustUnderstand="true"</code>.   Such extensions may require
+that a full or partial update should be accomplished using symbolic,
+instruction-based, or other methodologies.</p>
+
+<p>Extension specifications MAY also define extensions to the original Put
+request, enabled by OPTIONAL SOAP headers, which control the nature of the
+response, as discussed in remarks on the PutResponse below.    </p>
+
+<p>Specifications which define any of these extensions MUST allow processing
+the Put message without such extensions.  </p>
+
+<p>In addition to the standard fault codes defined in WS-Addressing,
+implementations MAY use the fault code wxf:InvalidRepresentation if the
+presented representation is invalid for the target resource.   See Section
+5.    Other components of the outline above are not further constrained by
+this specification. </p>
+
+<p>A successful Put operation updates the current representation associated
+with the targeted resource. </p>
+
+<p>If the resource accepts a Put request and performs the requested update,
+it MUST reply with a response of the following form: </p>
+<pre xml:space="preserve">&lt;s:Envelope …&gt;  
+  &lt;s:Header …&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/PutResponse
+    &lt;/wsa:Action&gt;
+    &lt;wsa:RelatesTo&gt;<em>xs:anyURI</em>&lt;/wsa:RelatesTo&gt;
+    &lt;wsa:To&gt;<em>xs:anyURI</em>&lt;/wsa:To&gt;
+    …
+  &lt;/s:Header&gt;
+  &lt;s:Body …&gt;
+    <em>xs:any ?</em>
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;  </pre>
+<dl>
+  <dt><code>/s:Envelope/s:Header/wsa:Action</code></dt>
+    <dd><p>This required element MUST contain the value
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/PutResponse. If a SOAP
+      Action URI is also present in the underlying transport, its value MUST
+      convey the same value. </p>
+    </dd>
+  <dt><code>/s:Envelope/s:Body/child::*[position()=1]</code></dt>
+    <dd><p>By default, a service MUST return the current representation of
+      the resource as the initial child of the s:Body element if the updated
+      representation differs from the representation sent in the Put request
+      message.  The presence of additional child elements which contain
+      other information pertaining to the update is service-specific.</p>
+    </dd>
+    <dd><p>As an optimization and as a service to the requester, the s:Body
+      element of the response message SHOULD be empty if the updated
+      representation does not differ from the representation sent in the Put
+      request message; that is, if the service accepted the new
+      representation verbatim.</p>
+    </dd>
+    <dd><p>Such a response (an empty s:Body) implies that the update request
+      was successful in its entirety (assuming no intervening mutating
+      operations are performed). A service MAY return the current
+      representation of the resource as the initial child of the s:Body
+      element even in this case, however. <br />
+      <br />
+      Extension specifications MAY define extensions to the original Put
+      request, enabled by OPTIONAL header values, which specifically control
+      the presence, absence, or format of the updated representation or other
+      child elements in the PutResponse in order to optimize the response. 
+      In the absence of such headers, the behavior MUST be as described
+      above.   Specifications which define any of these extensions MUST
+      allow processing the Put message without such extensions.   Since the
+      response may not be sent to the original sender, extension
+      specifications should consider adding a corresponding SOAP header value
+      in the response to signal to the receiver that the extension is being
+      used.</p>
+    </dd>
+</dl>
+
+<p>Other components of the outline above are not further constrained by this
+specification. </p>
+
+<p>The following shows a sample SOAP envelope containing a Put request: </p>
+<pre xml:space="preserve">&lt;s:Envelope  
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:xxx="http://fabrikam123.example.com/resource-model" &gt;
+  &lt;s:Header&gt;
+    &lt;wsa:ReplyTo&gt;
+      &lt;wsa:Address&gt;
+        soap://www.fabrikam123.example.org/sender
+      &lt;/wsa:Address&gt;
+    &lt;/wsa:ReplyTo&gt;
+    &lt;wsa:To&gt;soap://www.example.org/pushport&lt;/wsa:To&gt;
+    &lt;xxx:CustomerID&gt;732199&lt;/xxx:CustomerID&gt;
+    &lt;xxx:Region&gt;EMEA&lt;/xxx:Region&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Put
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;
+      uuid:00000000-0000-0000-C000-000000000047
+    &lt;/wsa:MessageID&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;xxx:Customer&gt;
+      &lt;xxx:first&gt;Roy&lt;/xxx:first&gt;&lt;xxx:last&gt;Hill&lt;/xxx:last&gt;
+      &lt;xxx:address&gt;321 Main Street&lt;/xxx:address&gt;
+      &lt;xxx:city&gt;Manhattan Beach&lt;/xxx:city&gt;
+      &lt;xxx:state&gt;CA&lt;/xxx:state&gt;
+      &lt;xxx:zip&gt;90266&lt;/xxx:zip&gt;
+    &lt;/xxx:Customer&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt; </pre>
+
+<p>The following shows the corresponding response message indicating
+success: </p>
+<pre xml:space="preserve">&lt;s:Envelope  
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:xxx="http://fabrikam123.example.com/resource-model" &gt;
+  &lt;s:Header&gt;
+    &lt;wsa:To&gt;soap://www.fabrikam123.example.org/sender&lt;/wsa:Address&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/PutResponse
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;
+      uuid:0000010e-0000-0000-C000-000000000047
+    &lt;/wsa:MessageID&gt;
+    &lt;wsa:RelatesTo&gt;
+      uuid:00000000-0000-0000-C000-000000000047
+    &lt;/wsa:RelatesTo&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body/&gt;
+&lt;/s:Envelope&gt; </pre>
+
+<h3 id="Delete">3.3 Delete</h3>
+
+<p>This specification defines one Web service operation (Delete) for deleting
+a resource in its entirety.</p>
+
+<p>Extension specifications MAY define extensions to the Delete request,
+enabled by OPTIONAL header values, which specifically control preconditions
+for the Delete to succeed and which may control the nature or format of the
+response.    Since the response may not be sent to the original sender,
+extension specifications should consider adding a corresponding SOAP header
+value in the response to signal to the receiver that the extension is being
+used. </p>
+
+<p>The Delete request message MUST be of the following form: </p>
+<pre xml:space="preserve">&lt;s:Envelope …&gt;  
+  &lt;s:Header …&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Delete
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;<em>xs:anyURI</em>&lt;/wsa:MessageID&gt;
+    &lt;wsa:To&gt;<em>xs:anyURI</em>&lt;/wsa:To&gt;
+    …
+  &lt;/s:Header&gt;
+  &lt;s:Body … /&gt;
+&lt;/s:Envelope&gt;  </pre>
+
+<p>The following describes additional, normative constraints on the outline
+listed above: </p>
+<dl>
+  <dt><code>/s:Envelope/s:Header/wsa:Action</code></dt>
+    <dd><p>This required element MUST contain the value
+      <code>http://schemas.xmlsoap.org/ws/2004/09/transfer/Delete</code>. If
+      a SOAP Action URI is also present in the underlying transport, its
+      value MUST convey the same value. </p>
+    </dd>
+</dl>
+
+<p>A Delete request MUST be targeted at the resource to be deleted as
+described in <a href="#Notations_and_Terminology">Section 2</a> of this
+specification.</p>
+
+<p>There are no body blocks defined for a Delete Request. </p>
+
+<p>Implementations may respond with a fault message using the standard fault
+codes defined in WS-Addressing (e.g., <code>wsa:ActionNotSupported</code>).
+Other components of the outline above are not further constrained by this
+specification.</p>
+
+<p>A successful Delete operation invalidates the current representation
+associated with the targeted resource. </p>
+
+<p>If the resource accepts a Delete request, it MUST reply with a response of
+the following form: </p>
+<pre xml:space="preserve">&lt;s:Envelope …&gt;  
+  &lt;s:Header …&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/DeleteResponse
+    &lt;/wsa:Action&gt;
+    &lt;wsa:RelatesTo&gt;<em>xs:anyURI</em>&lt;/wsa:RelatesTo&gt;
+    &lt;wsa:To&gt;<em>xs:anyURI</em>&lt;/wsa:To&gt;
+    …
+  &lt;/s:Header&gt;
+  &lt;s:Body …&gt; 
+    ... 
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;  </pre>
+<dl>
+  <dt><code>/s:Envelope/s:Header/wsa:Action</code></dt>
+    <dd><p>This required element MUST contain the value
+      <code>http://schemas.xmlsoap.org/ws/2004/09/transfer/DeleteResponse</code>.
+      If a SOAP Action URI is also present in the underlying transport, its
+      value MUST convey the same value. </p>
+    </dd>
+</dl>
+
+<p>By default, there are no s:Body blocks defined for a Delete response.  
+Specifications which define extensions for use in the original Delete request
+which control the format of the response MUST allow processing the Delete
+message without such extensions. </p>
+
+<p>Other components of the outline above are not further constrained by this
+specification. </p>
+
+<p>The following shows a sample SOAP envelope containing a Delete
+request: </p>
+<pre xml:space="preserve">&lt;s:Envelope  
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:xxx="http://fabrikam123.example.com/resource-model" &gt;
+  &lt;s:Header&gt;
+    &lt;wsa:ReplyTo&gt;
+      &lt;wsa:Address&gt;
+        soap://www.fabrikam123.example.org/sender
+      &lt;/wsa:Address&gt;
+    &lt;/wsa:ReplyTo&gt;
+    &lt;wsa:To&gt;soap://www.example.org/pushport&lt;/wsa:To&gt;
+    &lt;xxx:CustomerID&gt;732199&lt;/xxx:CustomerID&gt;
+    &lt;xxx:Region&gt;EMEA&lt;/xxx:Region&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Delete
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;
+      uuid:00000000-0000-0000-C000-000000000049
+    &lt;/wsa:MessageID&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body/&gt;
+&lt;/s:Envelope&gt; </pre>
+
+<p>The following shows the corresponding response message indicating
+success: </p>
+<pre xml:space="preserve">&lt;s:Envelope  
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:xxx="http://fabrikam123.example.com/resource-model" &gt;
+  &lt;s:Header&gt;
+    &lt;wsa:To&gt;soap://www.fabrikam123.example.org/sender&lt;/wsa:Address&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/DeleteResponse
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;
+      uuid:0000010e-0000-0000-C000-000000000049
+    &lt;/wsa:MessageID&gt;
+    &lt;wsa:RelatesTo&gt;
+      uuid:00000000-0000-0000-C000-000000000049
+    &lt;/wsa:RelatesTo&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body/&gt;
+&lt;/s:Envelope&gt; </pre>
+
+<h2 id="Resource_Factory_Operations">4. Resource Factory Operations</h2>
+
+<h3 id="Create">4.1 Create</h3>
+
+<p>This specification defines one Web service operation (Create) for creating
+a resource and providing its initial representation.   In some cases, the
+initial representation MAY constitute the representation of a logical
+constructor for the resource and may thus differ structurally from the
+representation returned by Get or the one required by Put.  This is because
+the parameterization requirement for creating a resource is often distinct
+from the steady-state representation of the resource.    Implementations
+should provide metadata which describes the use of the representation and how
+it relates to the resource which is created, but such mechanisms are beyond
+the scope of this specification.  The resource factory that receives a
+Create request will allocate a new resource that is initialized from the
+presented representation. The new resource will be assigned a
+service-determined endpoint reference that is returned in the response
+message. </p>
+
+<p>The Create request message MUST be of the following form: </p>
+<pre xml:space="preserve">&lt;s:Envelope …&gt;  
+  &lt;s:Header …&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Create
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;<em>xs:anyURI</em>&lt;/wsa:MessageID&gt;
+    &lt;wsa:To&gt;<em>xs:anyURI</em>&lt;/wsa:To&gt;
+    …
+  &lt;/s:Header&gt;
+  &lt;s:Body …&gt;
+    <em>xs:any</em>
+<em>    ...</em>
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;  </pre>
+
+<p>The following describes additional, normative constraints on the outline
+listed above: </p>
+<dl>
+  <dt><code>/s:Envelope/s:Header/wsa:Action</code></dt>
+    <dd><p>This required element MUST contain the value
+      <code>http://schemas.xmlsoap.org/ws/2004/09/transfer/Create</code>. If
+      a SOAP Action URI is also present in the underlying transport, its
+      value MUST convey the same value. </p>
+    </dd>
+  <dt><code>/s:Envelope/s:Body/child::*[position()=1]</code></dt>
+    <dd><p>The first child element of the s:Body element MUST NOT be
+      omitted.  The contents of this element are service-specific, and MAY
+      contain the literal initial resource representation, a representation
+      of the constructor for the resource, or other instructions for creating
+      the resource.  All other children SHOULD be ignored by the service.
+       </p>
+    </dd>
+</dl>
+
+<p>Extensions specifications MAY also define extensions to the original
+Create request, enabled by OPTIONAL SOAP headers, which constrain the nature
+of the response, as discussed in remarks on the CreateResponse
+below.  Similarly, they may require headers which control the
+interpretation of the s:Body as part of the resource creation process.  
+ </p>
+
+<p>Such specifications MUST also allow processing the Create message without
+such extensions.  </p>
+
+<p>A Create request MUST be targeted at a resource factory capable of
+creating the desired new resource. This factory is distinct from the resource
+being created (which by definition does not exist prior to the successful
+processing of the Create request message). </p>
+
+<p>In addition to the standard fault codes defined in WS-Addressing,
+implementations MAY use the fault code wfx:InvalidRepresentation if the
+presented representation is invalid for the target resource.   See Section
+5. </p>
+
+<p>Other components of the outline above are not further constrained by this
+specification. </p>
+
+<p>If the resource factory accepts a Create request, it MUST reply with a
+response of the following form: </p>
+<pre xml:space="preserve">&lt;s:Envelope …&gt;  
+  &lt;s:Header …&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/CreateResponse
+    &lt;/wsa:Action&gt;
+    &lt;wsa:RelatesTo&gt;<em>xs:anyURI</em>&lt;/wsa:RelatesTo&gt;
+    &lt;wsa:To&gt;<em>xs:anyURI</em>&lt;/wsa:To&gt;
+    …
+  &lt;/s:Header&gt;
+  &lt;s:Body …&gt;
+    &lt;wxf:ResourceCreated&gt;<em>endpoint-reference</em>&lt;/wxf:ResourceCreated&gt;
+    <em>xs:any ?</em>
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;  </pre>
+<dl>
+  <dt><code>/s:Envelope/s:Header/wsa:Action</code></dt>
+    <dd><p>This required element MUST contain the value
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/CreateResponse. If a
+      SOAP Action URI is also present in the underlying transport, its value
+      MUST convey the same value. </p>
+    </dd>
+  <dt><code>/s:Envelope/s:Body/wxf:ResourceCreated</code></dt>
+    <dd><p>This required element MUST contain a resource reference for the
+      newly created resource. This resource reference, represented as an
+      endpoint reference as defined in WS-Addressing, MUST identify the
+      resource for future Get, Put, and Delete operations. </p>
+    </dd>
+  <dt><code>/s:Envelope/s:Body/child::*[position()=2]</code></dt>
+    <dd><p>By default, a service MUST return the current representation of
+      the new resource as the second child of the s:Body element if the
+      created representation logically differs from the representation sent
+      in the Create request message.   That is, the initial representation
+      is returned if one or more values present in Create message was
+      specifically overridden with a different value during resource
+      creation.   If default values are used to complete a resource
+      creation which were not present in the Create message, then this does
+      not constitute a logical difference.  The presence of additional child
+      elements which contain other information pertaining to the result of
+      the Create operation is service-specific.  </p>
+    </dd>
+    <dd><p>As an optimization and as a service to the requestor, the s:Body
+      element of the response message SHOULD be empty, other than the
+      ResourceCreated element, if the created representation does not
+      logically differ from the representation sent in the Create request
+      message; that is, if the service accepted the new representation or
+      creation instructions verbatim. Such a response indicates that the
+      request was completely successful (assuming no intervening mutating
+      operations are performed). A service MAY return the current
+      representation of the resource as the initial child of the s:Body
+      element even in this case, however.</p>
+    </dd>
+    <dd><p>Extension specifications MAY define extensions to the original
+      Create request, enabled by  OPTIONAL header values, which specifically
+      control the presence, absence, or format of the initial representation
+      or other child elements in the CreateResponse.   These headers MAY
+      override the default behavior if they are marked with
+      <code>s:mustUnderstand="true"</code>. In the absence of such OPTIONAL
+      headers, the behavior MUST be as described in the previous
+      paragraphs.   Since the response may not be sent to the original
+      sender, extension specifications should consider adding a corresponding
+      SOAP header value in the response to signal to the receiver that the
+      extension is being used.</p>
+    </dd>
+</dl>
+
+<p>Other components of the outline above are not further constrained by this
+specification. </p>
+
+<p>The following shows a sample SOAP envelope containing a Create
+request: </p>
+<pre xml:space="preserve">&lt;s:Envelope  
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:xxx="http://fabrikam123.example.com/resource-model" &gt;
+  &lt;s:Header&gt;
+    &lt;wsa:ReplyTo&gt;
+      &lt;wsa:Address&gt;
+        soap://www.fabrikam123.example.org/sender
+      &lt;/wsa:Address&gt;
+    &lt;/wsa:ReplyTo&gt;
+    &lt;wsa:To&gt;soap://www.example.org/pushport/CustomerSpace&lt;/wsa:To&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/Create
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;
+      uuid:00000000-0000-0000-C000-000000000048
+    &lt;/wsa:MessageID&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;xxx:Customer&gt;
+      &lt;xxx:first&gt;Roy&lt;/xxx:first&gt;&lt;xxx:last&gt;Hill&lt;/xxx:last&gt;
+      &lt;xxx:address&gt;123 Main Street&lt;/xxx:address&gt;
+      &lt;xxx:city&gt;Manhattan Beach&lt;/xxx:city&gt;
+      &lt;xxx:state&gt;CA&lt;/xxx:state&gt;
+      &lt;xxx:zip&gt;90266&lt;/xxx:zip&gt;
+    &lt;/xxx:Customer&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt; </pre>
+
+<p>The following shows the corresponding response message indicating
+success: </p>
+<pre xml:space="preserve">&lt;s:Envelope  
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:wxf="http://schemas.xmlsoap.org/ws/2004/09/transfer" 
+    xmlns:xxx="http://fabrikam123.example.com/resource-model" &gt;
+  &lt;s:Header&gt;
+    &lt;wsa:To&gt;soap://www.fabrikam123.example.org/sender&lt;/wsa:Address&gt;
+    &lt;wsa:Action&gt;
+      http://schemas.xmlsoap.org/ws/2004/09/transfer/CreateResponse
+    &lt;/wsa:Action&gt;
+    &lt;wsa:MessageID&gt;
+      uuid:0000010e-0000-0000-C000-000000000048
+    &lt;/wsa:MessageID&gt;
+    &lt;wsa:RelatesTo&gt;
+      uuid:00000000-0000-0000-C000-000000000048
+    &lt;/wsa:RelatesTo&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;wxf:ResourceCreated&gt;
+      &lt;wsa:Address&gt;soap://www.example.org/pushport&lt;/wsa:Address&gt;
+      &lt;wsa:ReferenceParameters&gt;
+        &lt;xxx:CustomerID&gt;732199&lt;/xxx:CustomerID&gt;
+        &lt;xxx:Region&gt;EMEA&lt;/xxx:Region&gt;
+      &lt;/wsa:ReferenceParameters&gt;
+    &lt;/wxf:ResourceCreated&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt; </pre>
+
+<h2 id="Faults">5. Faults</h2>
+
+<p>All fault messages defined in this specification MUST be sent according to
+the rules and usage described in [<a href="#WSAddressing1SOAP">WS-Addressing
+1.0 - SOAP Binding</a>] Section 6 for encoding SOAP 1.1 and SOAP 1.2 faults.
+The [action] property below SHOULD be used for faults defined in this
+specification:</p>
+<pre xml:space="preserve"><a href="http://schemas.xmlsoap.org/ws/2004/09/transfer/fault">http://schemas.xmlsoap.org/ws/2004/09/transfer/fault</a></pre>
+
+<h3 id="InvalidRepresentation">5.1 InvalidRepresentation</h3>
+
+<p>This fault is returned when an incorrect representation is sent in a
+wxf:Put or wxf:Create message.  </p>
+
+<div>
+
+<table id="Table2">
+  <tbody>
+    <tr>
+      <th>[Code]</th>
+      <td>s:Sender</td>
+    </tr>
+    <tr>
+      <th>[Subcode]</th>
+      <td>wxf:InvalidRepresentation</td>
+    </tr>
+    <tr>
+      <th>[Reason]</th>
+      <td>The supplied representation is invalid</td>
+    </tr>
+    <tr>
+      <th>[Detail]</th>
+      <td>none</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="Security_Considerations">6. Security Considerations</h2>
+
+<p>It is strongly recommended that the communication between services be
+secured using the mechanisms described in [<a
+href="#WSSecurity">WS-Security</a>].</p>
+
+<p>In order to properly secure messages, the body (even if empty) and all
+relevant headers need to be included in the signature. Specifically, the
+WS-Addressing header blocks, WS-Security timestamp, and any header blocks
+resulting from a <code>&lt;wsa:ReferenceParameters&gt;</code> in references
+need to be signed along with the body in order to "bind" them together and
+prevent certain types of attacks.</p>
+
+<p>If a requestor is issuing multiple messages to a resource reference, then
+it is recommended that a security context be established using the mechanisms
+described in WS-Trust and WS-SecureConversation. It is further recommended
+that if shared secrets are used, message-specific derived keys also be used
+to protect the secret from crypto attacks. </p>
+
+<p>The access control semantics of resource references is out-of-scope of
+this specification and are specific to each resource reference. Similarly,
+any protection mechanisms on resource references independent of transfer
+(e.g. embedded signatures and encryption) are also out-of-scope. </p>
+
+<p>It is recommended that the security considerations of WS-Security also be
+considered. </p>
+
+<p>While a comprehensive listing of attacks is not feasible, the following
+list summarizes common classes of attacks that apply to this protocol and
+identifies the mechanism(s) to prevent/mitigate the attacks. </p>
+<ul>
+  <li><strong>Replay</strong> — Messages, or portions of messages, can be
+    replayed in an attempt to gain access or disrupt services. Freshness
+    checks such as timestamps, digests, and sequences can be used to detect
+    duplicate messages.</li>
+  <li><strong>Invalid tokens</strong> — There are a number of token attacks
+    including certificate authorities, false signatures, and PKI attacks.
+    Care should be taken to ensure each token is valid (usage window, digest,
+    signing authority, revocation, …), and that the appropriate delegation
+    policies are in compliance.</li>
+  <li><strong>Man-in-the-middle</strong> — The message exchanges in this
+    specification could be subject to man-in-the-middle attacks so care
+    should be taken to reduce possibilities here such as establishing a
+    secure channel and verifying that the security tokens user represent
+    identities authorized to speak for, or on behalf of, the desired resource
+    reference.</li>
+  <li><strong>Message alteration</strong> — Alteration is prevented by
+    including signatures of the message information using WS-Security. Care
+    should be taken to review message part references to ensure they haven't
+    been forged (e.g. ID duplication).</li>
+  <li><strong>Message disclosure</strong> — Confidentiality is preserved by
+    encrypting sensitive data using WS-Security.</li>
+  <li><strong>Key integrity</strong> — Key integrity is maintained by using
+    the strongest algorithms possible (by comparing secured policies — see
+    [<a href="#wspolicy">WS-Policy</a>] and [<a
+    href="#WSSecurityPolicy">WS-SecurityPolicy</a>]) and by using derived
+    keys ([<a href="#WSSecureConversation">WS-SecureConversation</a>]).</li>
+  <li><strong>Authentication</strong> — Authentication is established using
+    the mechanisms described in WS-Security and WS-Trust. Each message is
+    authenticated using the mechanisms described in WS-Security.</li>
+  <li><strong>Accountability</strong> — Accountability is a function of the
+    type of and string of the key and algorithms being used. In many cases, a
+    strong symmetric key provides sufficient accountability. However, in some
+    environments, strong PKI signatures are required.</li>
+  <li><strong>Availability</strong> — All reliable messaging services are
+    subject to a variety of availability attacks. Replay detection is a
+    common attack and it is recommended that this be addressed by the
+    mechanisms described in WS-Security. Other attacks, such as network-level
+    denial of service attacks are harder to avoid and are outside the scope
+    of this specification. That said, care should be taken to ensure that
+    minimal state is saved prior to any authenticating sequences.</li>
+</ul>
+
+<h2 id="Acknowledgements">7. Acknowledgements</h2>
+
+<p>This specification has been developed as a result of joint work with many
+individuals and teams, including: </p>
+<ul>
+  <li>Erik Christensen, Microsoft</li>
+  <li>Doug Davis, IBM</li>
+  <li>Henrik Frystyk Nielsen, Microsoft</li>
+  <li>Omri Gazitt, Microsoft</li>
+  <li>Kirill Gavrylyuk, Microsoft</li>
+  <li>Alan Geller</li>
+  <li>Martin Gudgin, Microsoft</li>
+  <li>Andrew Layman, Microsoft</li>
+  <li>Steve Millet, Microsoft</li>
+  <li>Bryan Murray, Hewlett-Packard</li>
+  <li>Brian Reistad, Microsoft</li>
+  <li>Ian Robinson, IBM</li>
+  <li>Vijay Tewari, Intel</li>
+  <li>Marvin Theimer, Microsoft</li>
+  <li>William Vambenepe, Hewlett-Packard</li>
+</ul>
+
+<h2 id="References">8. References</h2>
+<dl>
+  <dt><a name="RFC2119" id="RFC2119">[RFC 2119]</a></dt>
+    <dd>S. Bradner, "Key words for use in RFCs to Indicate Requirement
+      Levels," RFC 2119, March 1997. (See <a
+      href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a>.)</dd>
+  <dt><a name="SOAP11" id="SOAP11">[SOAP 1.1]</a></dt>
+    <dd>D. Box, et al, "Simple Object Access Protocol (SOAP) 1.1," May 2000.
+      (See <a
+      href="http://www.w3.org/TR/2000/NOTE-SOAP-20000508/">http://www.w3.org/TR/2000/NOTE-SOAP-20000508/</a>.)</dd>
+  <dt><a name="SOAP12" id="SOAP12">[SOAP 1.2]</a></dt>
+    <dd>M. Gudgin, et al, "SOAP Version 1.2 Part 1: Messaging Framework,"
+      June 2003. (See <a
+      href="http://www.w3.org/TR/2003/REC-soap12-part1-20030624/">http://www.w3.org/TR/2003/REC-soap12-part1-20030624/</a>.)</dd>
+  <dt><a name="WSAddressing" id="WSAddressing">[WS-Addressing
+  Submission]</a></dt>
+    <dd>D. Box, et al, "Web Services Addressing (WS-Addressing)," August
+      2004. (See <a
+      href="http://www.w3.org/Submission/2004/SUBM-ws-addressing-20040810/">http://www.w3.org/Submission/2004/SUBM-ws-addressing-20040810/</a>.)</dd>
+  <dt><a name="WSAddressing1" id="WSAddressing1">[WS-Addressing 1.0 -
+  Core]</a></dt>
+    <dd>M. Gudgin, et al, "Web Services Addressing 1.0 - Core," May 2006.
+      (See <a
+      href="http://www.w3.org/TR/2006/REC-ws-addr-core-20060509">http://www.w3.org/TR/2006/REC-ws-addr-core-20060509</a>)</dd>
+  <dt><a name="WSAddressing1SOAP" id="WSAddressing1SOAP">[WS-Addressing 1.0 -
+  SOAP Binding]</a></dt>
+    <dd>M. Gudgin, et al, "Web Services Addressing 1.0 - SOAP Binding," May
+      2006. (See <a
+      href="http://www.w3.org/TR/2006/REC-ws-addr-soap-20060509/">http://www.w3.org/TR/2006/REC-ws-addr-soap-20060509/</a>)</dd>
+  <dt><a name="wspolicy" id="wspolicy">[WS-Policy]</a></dt>
+    <dd>S. Bajaj, et al, "Web Services Policy Framework (WS-Policy),"
+      September 2004. (See <a
+      href="http://schemas.xmlsoap.org/ws/2004/09/policy">http://schemas.xmlsoap.org/ws/2004/09/policy</a>.)</dd>
+  <dt><a name="WSSecureConversation"
+  id="WSSecureConversation">[WS-SecureConversation]</a></dt>
+    <dd>S. Anderson, et al, "Web Services Secure Conversation Language
+      (WS-SecureConversation)," February 2005. (See <a
+      href="http://schemas.xmlsoap.org/ws/2005/02/sc">http://schemas.xmlsoap.org/ws/2005/02/sc</a>.)</dd>
+  <dt><a name="WSSecurity" id="WSSecurity">[WS-Security]</a></dt>
+    <dd>A. Nadalin, et al, "Web Services Security: SOAP Message Security
+      1.0," March 2004. (See <a
+      href="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0.pdf">http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0.pdf</a>.)</dd>
+  <dt><a name="WSSecurityPolicy"
+  id="WSSecurityPolicy">[WS-SecurityPolicy]</a></dt>
+    <dd>G. Della-Libera, et al, "Web Services Security Policy Language
+      (WS-SecurityPolicy), Version 1.1," July 2005. (See <a
+      href="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">http://schemas.xmlsoap.org/ws/2005/07/securitypolicy</a>.)</dd>
+  <dt><a name="WSDL11" id="WSDL11">[WSDL 1.1]</a></dt>
+    <dd>E. Christensen, et al, "Web Services Description Language (WSDL)
+      1.1," March 2001. (See <a
+      href="http://www.w3.org/TR/2001/NOTE-wsdl-20010315">http://www.w3.org/TR/2001/NOTE-wsdl-20010315</a>.)</dd>
+  <dt><a name="XMLInfoset" id="XMLInfoset">[XML Infoset]</a></dt>
+    <dd>J. Cowan, et al, "XML Information Set," February 2004. (See <a
+      href="http://www.w3.org/TR/2004/REC-xml-infoset-20040204/">http://www.w3.org/TR/2004/REC-xml-infoset-20040204/</a>.)</dd>
+  <dt><a name="XMLSchema1" id="XMLSchema1">[XML Schema, Part 1]</a></dt>
+    <dd>H. Thompson, et al, "XML Schema Part 1: Structures," October 2004.
+      (See <a
+      href="http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/">http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/</a>.)</dd>
+  <dt><a name="XMLSchema2" id="XMLSchema2">[XML Schema, Part 2]</a></dt>
+    <dd>P. Biron, et al, "XML Schema Part 2: Datatypes," October 2004. (See
+      <a
+      href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/</a>.)</dd>
+</dl>
+
+<h2 id="Appendix_I__E2_80_93_XSD">Appendix I — XSD</h2>
+
+<p>A normative copy of the XML Schema [<a href="#XMLSchema1">XML Schema Part
+1</a>, <a href="#XMLSchema2">Part 2</a>] for this specification may be
+retrieved by resolving the XML namespace URI for this specification (listed
+in <a href="#XML_Namespaces">Section 2.2 XML Namespaces</a>).</p>
+
+<p>A non-normative copy of the XML schema is listed below for
+convenience. </p>
+<pre xml:space="preserve">&lt;xs:schema 
+  targetNamespace="<a href="http://schemas.xmlsoap.org/ws/2004/09/transfer">http://schemas.xmlsoap.org/ws/2004/09/transfer</a>"
+  xmlns:tns="<a href="http://schemas.xmlsoap.org/ws/2004/09/transfer">http://schemas.xmlsoap.org/ws/2004/09/transfer</a>"
+  xmlns:xs="<a href="http://www.w3.org/2001/XMLSchema">http://www.w3.org/2001/XMLSchema</a>"
+  xmlns:wsa04="<a href="http://schemas.xmlsoap.org/ws/2004/08/addressing">http://schemas.xmlsoap.org/ws/2004/08/addressing</a>"
+  xmlns:wsa10="<a href="http://www.w3.org/2005/08/addressing">http://www.w3.org/2005/08/addressing</a>"
+  elementFormDefault="qualified"
+  blockDefault="#all" &gt;
+ 
+  &lt;xs:import
+    namespace="<a href="http://schemas.xmlsoap.org/ws/2004/08/addressing">http://schemas.xmlsoap.org/ws/2004/08/addressing</a>"
+    schemaLocation="http://schemas.xmlsoap.org/ws/2004/08/addressing/addressing.xsd" /&gt;
+ 
+  &lt;xs:import
+    namespace="<a href="http://www.w3.org/2005/08/addressing">http://www.w3.org/2005/08/addressing</a>"
+    schemaLocation="http://www.w3.org/2006/03/addressing/ws-addr.xsd" /&gt;
+ 
+  &lt;xs:complexType name="AnyXmlType" &gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:any namespace="##other" processContents="lax" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+ 
+  &lt;xs:complexType name="AnyXmlOptionalType" &gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:any minOccurs="0" namespace="##other" processContents="lax" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+ 
+&lt;!-- 
+The type of the ResourceCreated is effectively 
+the union of wsa04:EndpointReferenceType and 
+wsa10:EndpointReferenceType. Unfortunately, xs:union only 
+works for simple types. As a result, we have to define 
+the element in an unvalidated way to accommodate either 
+addressing type. 
+--&gt; 
+ 
+  &lt;xs:element name="ResourceCreated"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:any minOccurs='1' maxOccurs='unbounded' processContents='skip' namespace='##other' /&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+ 
+  &lt;xs:complexType name="CreateResponseType" &gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element ref="tns:ResourceCreated" /&gt;
+      &lt;xs:any minOccurs="0" namespace="##other" processContents="lax" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+ 
+&lt;/xs:schema&gt; </pre>
+
+<h2 id="Appendix_II__E2_80_93_WSDL">Appendix II — WSDL</h2>
+
+<p>A normative copy of the WSDL [<a href="#WSDL11">WSDL 1.1</a>] description
+for this specification may be retrieved from the following address:</p>
+<pre xml:space="preserve"><a href="http://schemas.xmlsoap.org/ws/2004/09/transfer/transfer.wsdl">http://schemas.xmlsoap.org/ws/2004/09/transfer/transfer.wsdl</a></pre>
+
+<p>A non-normative copy of the WSDL description is listed below for
+convenience. </p>
+<pre xml:space="preserve">&lt;wsdl:definitions 
+    targetNamespace="http://schemas.xmlsoap.org/ws/2004/09/transfer" 
+    xmlns:tns="http://schemas.xmlsoap.org/ws/2004/09/transfer" 
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+ 
+  &lt;wsdl:types&gt;
+    &lt;xs:schema&gt;
+      &lt;xs:import 
+        namespace="http://schemas.xmlsoap.org/ws/2004/09/transfer"
+        schemaLocation="http://schemas.xmlsoap.org/ws/2004/09/transfer/transfer.xsd"
+        /&gt;
+    &lt;/xs:schema&gt;
+  &lt;/wsdl:types&gt;
+ 
+  &lt;wsdl:message name="EmptyMessage"/&gt;
+  &lt;wsdl:message name="AnyXmlMessage"&gt;
+    &lt;wsdl:part name="Body" type="tns:AnyXmlType"/&gt;
+  &lt;/wsdl:message&gt;
+  &lt;wsdl:message name="OptionalXmlMessage"&gt;
+    &lt;wsdl:part name="Body" type="tns:AnyXmlOptionalType"/&gt;
+  &lt;/wsdl:message&gt;
+  &lt;wsdl:message name="CreateResponseMessage"&gt;
+    &lt;wsdl:part name="Body" type="tns:CreateResponseType"/&gt;
+  &lt;/wsdl:message&gt;
+ 
+  &lt;wsdl:portType name="Resource"&gt;
+    &lt;wsdl:documentation&gt;
+      This port type defines a resource that may be read, 
+      written, and deleted.
+    &lt;/wsdl:documentation&gt;
+    &lt;wsdl:operation name="Get"&gt;
+      &lt;wsdl:input 
+        message="tns:OptionalXmlMessage"
+        wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/Get"/&gt;
+      &lt;wsdl:output 
+        message="tns:AnyXmlMessage"
+        wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/GetResponse" /&gt;
+    &lt;/wsdl:operation&gt;
+    &lt;wsdl:operation name="Put"&gt;
+      &lt;wsdl:input 
+        message="tns:AnyXmlMessage"
+        wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/Put" /&gt;
+      &lt;wsdl:output 
+        message="tns:OptionalXmlMessage"
+        wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/PutResponse" /&gt;
+    &lt;/wsdl:operation&gt;
+    &lt;wsdl:operation name="Delete"&gt;
+      &lt;wsdl:input 
+        message="tns:EmptyMessage"
+        wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/Delete" /&gt;
+      &lt;wsdl:output 
+        message="tns:OptionalXmlMessage"
+        wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/DeleteResponse" /&gt;
+    &lt;/wsdl:operation&gt;
+  &lt;/wsdl:portType&gt;
+ 
+  &lt;wsdl:portType name="ResourceFactory"&gt;
+    &lt;wsdl:documentation&gt;
+      This port type defines a Web service that can create new 
+      resources.
+    &lt;/wsdl:documentation&gt;
+    &lt;wsdl:operation name="Create"&gt;
+      &lt;wsdl:input 
+        message="tns:AnyXmlMessage"
+        wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/Create" /&gt;
+      &lt;wsdl:output 
+        message="tns:CreateResponseMessage"
+        wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/CreateResponse" /&gt;
+    &lt;/wsdl:operation&gt;
+  &lt;/wsdl:portType&gt;
+&lt;/wsdl:definitions&gt; </pre>
+</body>
+</html>

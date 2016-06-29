@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/QAPage">
+<head>
+
+<title>sql server - Inserting multiple rows in a single SQL query? - Stack Overflow</title>
+    <link rel="shortcut icon" href="//cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src" href="//cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com"/>
+    <meta property="og:type" content="website" />    
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="http://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded&a" />
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="Inserting multiple rows in a single SQL query?" />
+    <meta name="twitter:description" property="og:description" itemprop="description" content="I have multiple set of data to insert at once, say 4 rows. My table has three columns: Person, Id and Office.
+
+INSERT INTO MyTable VALUES (&quot;John&quot;, 123, &quot;Lloyds Office&quot;);
+INSERT INTO MyTable VALUES " />
+    <meta property="og:url" content="http://stackoverflow.com/questions/452859/inserting-multiple-rows-in-a-single-sql-query"/>
+    <link rel="canonical" href="http://stackoverflow.com/questions/452859/inserting-multiple-rows-in-a-single-sql-query" />
+
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//cdn.sstatic.net/Js/stub.en.js?v=547d6ef0a2b2"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.sstatic.net/Sites/stackoverflow/all.css?v=fa9dc9346d8c">
+
+            <meta name="twitter:app:country" content="US" />
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:iphone" content="871299723" />
+            <meta name="twitter:app:url:iphone" content="se-zaphod://stackoverflow.com/questions/452859/inserting-multiple-rows-in-a-single-sql-query" />
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:ipad" content="871299723" />
+            <meta name="twitter:app:url:ipad" content="se-zaphod://stackoverflow.com/questions/452859/inserting-multiple-rows-in-a-single-sql-query" />
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://stackoverflow.com/questions/452859/inserting-multiple-rows-in-a-single-sql-query">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                    
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.initSnippetRenderer();
+                    });
+                    
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:6,shownCommentCount:5,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:452859});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('1', '452859');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","serverTime":1462483732,"routeName":"Questions/Show","styleCode":true,"enableUserHovercards":true,"snippets":{"enabled":true,"domain":"stacksnippets.net"},"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"id":1,"enableSocialMediaInSharePopup":true},"user":{"fkey":"a13af72b54e2677d414be5d78af7b54f","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"8aed2ce2a6d6","js/moderator.en.js":"c03231fe5b71","js/full-anon.en.js":"9fec08f4a58f","js/full.en.js":"1110056cfd6f","js/wmd.en.js":"2ca30b0296e2","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"e6f0e5e9e0cc","js/help.en.js":"c8004cc0095d","js/tageditor.en.js":"9c6df10dabc4","js/tageditornew.en.js":"347247692997","js/inline-tag-editing.en.js":"943c7090ea55","js/revisions.en.js":"2faaeaae2529","js/review.en.js":"a377ed440f19","js/tagsuggestions.en.js":"b278f9a0b23b","js/post-validation.en.js":"736d4bad187d","js/explore-qlist.en.js":"e71f14781288","js/events.en.js":"889adbe9ddc4","js/keyboard-shortcuts.en.js":"68cd1278bc11","js/external-editor.en.js":"692898ad9a5b","js/external-editor.en.js":"692898ad9a5b","js/snippet-javascript.en.js":"9ebbcd127425","js/snippet-javascript-codemirror.en.js":"5a662ef07414"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+</head>
+<body class="question-page new-topbar">
+    <noscript><div id="noscript-padding"></div></noscript>
+    
+        <script>(function () { var old = $.fn.contents; $.fn.contents = function () { try { return old.apply(this, arguments); } catch (e) { return $([]); } } })()</script>
+        <iframe id="adzerk-user-match" width="0" height="0" frameborder="0" scrolling="no" onload="window.AUMIframeDone=true"
+                src="https://ssum-sec.casalemedia.com/usermatch?s=183712&amp;cb=https%3A%2F%2Fengine.adzerk.net%2Fudb%2F22%2Fsync%2Fi.gif%3FpartnerId%3D1%26userId%3D"
+                style="display: none;" marginheight="0" marginwidth="0"></iframe>
+
+
+
+
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="//stackoverflow.com">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+                    <a href="http://chat.stackoverflow.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:6 })"
+>chat</a>
+            </div>
+
+
+
+
+    <a href="//stackoverflow.com"
+       class="current-site-link site-link js-gps-track"
+       data-id="1"
+       data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.stackoverflow.com"
+       class="site-link js-gps-track"
+       data-id="552"
+       data-gps-track="
+            site.switch({ target_site:552, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link js-gps-track"
+                       href="//careers.stackoverflow.com?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=multicollider"
+                            data-gps-track="site_switcher.click({ item_type:9 })"
+>
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Stack Overflow Careers
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f452859%2finserting-multiple-rows-in-a-single-sql-query" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:10 })"
+>Sign up</a> or <a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f452859%2finserting-multiple-rows-in-a-single-sql-query" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:11 })"
+>log in</a> to customize your list.
+            </div>
+    </div>
+    <div class="header">
+        <h3><a href="//stackexchange.com/sites">more stack exchange communities</a></h3>
+        <a href="http://blog.stackoverflow.com" class="fr">company blog</a>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+
+            <a href="//stackexchange.com"
+               class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track"
+               data-gps-track="site_switcher.show"
+               title="A list of all 155 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+
+    <a href="#"
+       class="topbar-icon icon-inbox yes-hover js-inbox-button"
+       title="Recent inbox messages">
+        <span class="hidden-text">Inbox</span>
+        <span class="unread-count" style="display:none"></span>
+    </a>
+    <a href="#"
+       class="topbar-icon icon-achievements yes-hover js-achievements-button "
+       data-unread-class=""
+       title="Recent achievements: reputation, badges, and privileges earned">
+        <span class="hidden-text">Reputation and Badges</span>
+        <span class="unread-count" style="display:none">
+            
+        </span>
+    </a>
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                    <a href="https://stackoverflow.com/users/signup?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f452859%2finserting-multiple-rows-in-a-single-sql-query" class="login-link">sign up</a>
+                                <a href="https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f452859%2finserting-multiple-rows-in-a-single-sql-query" class="login-link">log in</a>
+
+                        <a href="/tour">tour</a>
+                            <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="//meta.stackoverflow.com" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="http://stackoverflow.com/company/about" class="js-gps-track" data-gps-track="help_popup.click({ item_type:6 })">
+                        About Us
+                        <span class="item-summary">
+                            Learn more about Stack Overflow the company
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://business.stackoverflow.com/?ref=topbar_help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:7 })">
+                        Business
+                        <span class="item-summary">
+                            Learn more about hiring developers or posting ads with us
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+                    </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="Search Q&amp;A" value="" tabindex="1" autocomplete="off" maxlength="240" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="/" >
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="/questions">Questions</a></li>
+                            <li><a id="nav-jobs" href="/jobs">Jobs</a></li>
+                        <li><a id="nav-tags" href="/tags">Tags</a></li>
+                        <li><a id="nav-users" href="/users">Users</a></li>
+                        <li><a id="nav-badges" href="/help/badges">Badges</a></li>
+                                            </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion"  href="/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content" class="snippet-hidden">
+            
+
+<div itemscope itemtype="http://schema.org/Question">
+    <link itemprop="image" href="//cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+
+<div id="herobox">
+    <div id="hero-content">
+            <div id="close"><a title="click to minimize">_</a></div>
+        <div id="blurb">
+            Stack Overflow is a community of 4.7 million programmers, just like you, helping each other.
+            <br/>
+                <br/>Join them; it only takes a minute:<br/>
+            <br/>
+            <a href="/users/signup?ssrc=hero&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f452859%2finserting-multiple-rows-in-a-single-sql-query" id="tell-me-more" class="button">Sign up</a>
+        </div>
+        <div id="desc">
+            <b>Join the Stack Overflow community to:</b>
+            <ol id="hiw">
+                <li id="q">Ask programming questions
+                </li>
+                <li id="an">Answer and help your peers
+                </li>
+                <li id="b">Get recognized for your expertise
+                </li>
+            </ol>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <script>
+        StackExchange.ready(function () {
+
+            var location = 0;
+            if ($("body").hasClass("questions-page")) {
+                location = 1;;
+            } else if ($("body").hasClass("question-page")) {
+                location = 1;;
+            } else if ($("body").hasClass("faq-page")) {
+                location = 5;;
+            } else if ($("body").hasClass("home-page")) {
+                location = 3;;
+            }
+
+            $('#tell-me-more').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+                });
+            });
+            $('#herobox #close').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: "minimize", location: location }, true);
+                });
+                $.cookie("hero", "mini", { path: "/", expires: 365 });
+                $.ajax({
+                    url: "/hero-mini",
+                    success: function (data) {
+                        $("#herobox").fadeOut("fast", function () {
+                            $("#herobox").replaceWith(data);
+                            $("#herobox-mini").fadeIn("fast");
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+
+    </script>
+</div>
+			<div id="question-header">
+                <h1 itemprop="name"><a href="/questions/452859/inserting-multiple-rows-in-a-single-sql-query" class="question-hyperlink">Inserting multiple rows in a single SQL query? [duplicate]</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="452859"  id="question">
+
+    <script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk265578604",4).setZone(43); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk265578604">
+            </div>    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="452859">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">732</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="#">favorite</a>
+        <div class="favoritecount"><b>121</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<div class="question-status question-originals-of-duplicate">
+    <p>This question already has an answer here:</p>
+    <ul>
+        <li>
+            <a href="/questions/2624713/how-do-i-insert-multiple-rows-without-repeating-the-insert-into-dbo-blah-part" dir="ltr">How do I insert multiple rows WITHOUT repeating the &ldquo;INSERT INTO dbo.Blah&rdquo; part of the statement?</a>
+                <span class="question-originals-answer-count">
+                    13 answers
+                </span>
+        </li>
+    </ul>
+</div>
+<p>I have multiple set of data to insert at once, say 4 rows. My table has three columns: <code>Person</code>, <code>Id</code> and <code>Office</code>.</p>
+
+<pre><code>INSERT INTO MyTable VALUES ("John", 123, "Lloyds Office");
+INSERT INTO MyTable VALUES ("Jane", 124, "Lloyds Office");
+INSERT INTO MyTable VALUES ("Billy", 125, "London Office");
+INSERT INTO MyTable VALUES ("Miranda", 126, "Bristol Office");
+</code></pre>
+
+<p>Can I insert all 4 rows in a single SQL statement?</p>
+    </div>
+    <div class="post-taglist">
+        <a href="/questions/tagged/sql" class="post-tag" title="show questions tagged &#39;sql&#39;" rel="tag">sql</a> <a href="/questions/tagged/sql-server" class="post-tag" title="show questions tagged &#39;sql-server&#39;" rel="tag">sql-server</a> <a href="/questions/tagged/tsql" class="post-tag" title="show questions tagged &#39;tsql&#39;" rel="tag">tsql</a> <a href="/questions/tagged/insert" class="post-tag" title="show questions tagged &#39;insert&#39;" rel="tag">insert</a> 
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/q/452859" title="short permalink to this question" class="short-link" id="link-post-452859">share</a><span class="lsep">|</span><a href="/posts/452859/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/452859/revisions" title="show all edits to this post">edited <span title="2015-10-01 11:03:57Z" class="relativetime">Oct 1 '15 at 11:03</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/497040/emanuele-greco"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/a4cd899a200454a61c11f7376eca4a68?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/497040/emanuele-greco">Emanuele Greco</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">8,423</span><span title="3 gold badges"><span class="badge1"></span><span class="badgecount">3</span></span><span title="32 silver badges"><span class="badge2"></span><span class="badgecount">32</span></span><span title="54 bronze badges"><span class="badge3"></span><span class="badgecount">54</span></span>
+        </div>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2009-01-17 05:55:54Z" class="relativetime">Jan 17 '09 at 5:55</span>
+    </div>
+    <div class="user-gravatar32">
+        <span class="anonymous-gravatar"></span>
+    </div>
+    <div class="user-details">
+        rits
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</div>
+</td>
+        </tr>
+                    <tr>
+            <td class="special-status" colspan="2">
+                <div class="question-status">
+        <h2>                    <b>marked</b> as duplicate by <a href="/users/16587/george-stocker">George Stocker</a><span class="mod-flair" title="moderator">&#9830;</span> <span dir="ltr"><span title="2013-08-22 14:30:30Z" class="relativetime">Aug 22 '13 at 14:30</span></span>
+</h2>
+        <p>This question has been asked before and already has an answer. If those answers do not fully address your question, please <a href="/questions/ask">ask a new question</a>.</p>
+    </div>
+            </td>
+        </tr>
+    
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-452859" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="1"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-26993674" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy"><b>Moderator Note</b>: Please take all discussion about the merits of this question to <a href="http://meta.stackexchange.com/questions/194313/why-was-inserting-multiple-rows-in-a-single-sql-query-closed">this meta post</a>.</span>
+                    &ndash;&nbsp;<a href="/users/16587/george-stocker"
+                       title="38,122 reputation"
+                       class="comment-user">George Stocker<span class="mod-flair" title="moderator">&#9830;</span></a>
+                <span class="comment-date" dir="ltr"><span title="2013-08-22 13:39:20Z" class="relativetime-clean">Aug 22 '13 at 13:39</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-37796002" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">For oracle sql see <a href="http://stackoverflow.com/a/93724/1452172">stackoverflow.com/a/93724/1452172</a></span>
+                    &ndash;&nbsp;<a href="/users/1452172/ono2012"
+                       title="1,879 reputation"
+                       class="comment-user">ono2012</a>
+                <span class="comment-date" dir="ltr"><span title="2014-06-26 11:20:34Z" class="relativetime-clean">Jun 26 '14 at 11:20</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-40554506" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">use add.batch dude</span>
+                    &ndash;&nbsp;<a href="/users/4052814/swt"
+                       title="43 reputation"
+                       class="comment-user">SwT</a>
+                <span class="comment-date" dir="ltr"><span title="2014-09-18 09:57:27Z" class="relativetime-clean">Sep 18 '14 at 9:57</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-45975330" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">To insert multiple record in one line you can try this also Example: insert into tablename (col1 ,col2) select uid,uname from usertable;</span>
+                    &ndash;&nbsp;<a href="/users/1297813/thebackbencher"
+                       title="126 reputation"
+                       class="comment-user">TheBackBencher</a>
+                <span class="comment-date" dir="ltr"><span title="2015-03-04 12:35:27Z" class="relativetime-clean">Mar 4 '15 at 12:35</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-46206872" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">13</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">why has this been marked as a duplicate to a later question? That makes little sense.</span>
+                    &ndash;&nbsp;<a href="/users/16076/mitch-wheat"
+                       title="206,395 reputation"
+                       class="comment-user">Mitch Wheat</a>
+                <span class="comment-date" dir="ltr"><span title="2015-03-11 03:29:40Z" class="relativetime-clean">Mar 11 '15 at 3:29</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-452859" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>1</b> more comment</a>
+        </div>         
+    </td>
+</tr>        </table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								4 Answers
+                                <span style="display:none;" itemprop="answerCount">4</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="/questions/452859/inserting-multiple-rows-in-a-single-sql-query?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active">
+            active</a>
+        <a href="/questions/452859/inserting-multiple-rows-in-a-single-sql-query?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest">
+            oldest</a>
+        <a class="youarehere" href="/questions/452859/inserting-multiple-rows-in-a-single-sql-query?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes">
+            votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="452934"></a>
+<div id="answer-452934" class="answer" data-answerid="452934"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="452934">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">977</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>In SQL Server 2008 you can insert multiple rows using a single SQL INSERT statement.</p>
+
+<pre><code>INSERT INTO MyTable ( Column1, Column2 ) VALUES
+( Value1, Value2 ), ( Value1, Value2 )
+</code></pre>
+
+<p>For reference to this have a look at MOC Course 2778A - Writing SQL Queries in SQL Server 2008.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/452934" title="short permalink to this answer" class="short-link" id="link-post-452934">share</a><span class="lsep">|</span><a href="/posts/452934/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/452934/revisions" title="show all edits to this post">edited <span title="2016-03-13 15:06:33Z" class="relativetime">Mar 13 at 15:06</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/169545/michel-gokan"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/055c47019b27276a208db0417b700157?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/169545/michel-gokan">Michel Gokan</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">2,148</span><span title="11 silver badges"><span class="badge2"></span><span class="badgecount">11</span></span><span title="33 bronze badges"><span class="badge3"></span><span class="badgecount">33</span></span>
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2009-01-17 07:14:14Z" class="relativetime">Jan 17 '09 at 7:14</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/146270/binarymisfit"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/d3eab8ee69d374c150510ced730cd6f6?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/146270/binarymisfit">BinaryMisfit</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 12,125" dir="ltr">12.1k</span><span title="2 gold badges"><span class="badge1"></span><span class="badgecount">2</span></span><span title="28 silver badges"><span class="badge2"></span><span class="badgecount">28</span></span><span title="42 bronze badges"><span class="badge3"></span><span class="badgecount">42</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-452934" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="3"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-22032805" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="supernova">156</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">And please note that the maximum number of rows in one insert statement is 1000.</span>
+                    &ndash;&nbsp;<a href="/users/1271313/cryss"
+                       title="1,761 reputation"
+                       class="comment-user">cryss</a>
+                <span class="comment-date" dir="ltr"><span title="2013-03-21 13:39:29Z" class="relativetime-clean">Mar 21 '13 at 13:39</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-30982821" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="supernova">74</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">That should be phrased &quot;the maximum number of rows in one <code>VALUES</code> clause is 1000&quot;.  It&#39;s not the <code>INSERT</code> statement that is limited to 1000 rows.</span>
+                    &ndash;&nbsp;<a href="/users/1155057/anon"
+                       title="5,806 reputation"
+                       class="comment-user">Anon</a>
+                <span class="comment-date" dir="ltr"><span title="2013-12-19 17:58:48Z" class="relativetime-clean">Dec 19 '13 at 17:58</span></span>
+                    <span class="edited-yes" title="this comment was edited 2 times"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-35609543" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">9</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">I know this question and answer are old, but I like to mention that there is a functional difference between using the method mentioned in the question and in this answer. The first executes triggers X amount of times with 1 record in the inserted table. The second executes triggers 1 time with x amount of records in the inserted table. Making the second method the best choice for performance assuming you made your triggers work correctly with batch inserts.</span>
+                    &ndash;&nbsp;<a href="/users/2074825/edwin-stoteler"
+                       title="840 reputation"
+                       class="comment-user">Edwin Stoteler</a>
+                <span class="comment-date" dir="ltr"><span title="2014-04-24 12:07:40Z" class="relativetime-clean">Apr 24 '14 at 12:07</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-35753197" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">4</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">This doesn&#39;t work with SQL Server 2005, see <a href="http://stackoverflow.com/questions/2624713/how-do-i-insert-multiple-rows-without-repeating-the-insert-into-dbo-blah-part" title="how do i insert multiple rows without repeating the insert into dbo blah part">stackoverflow.com/questions/2624713/&hellip;</a></span>
+                    &ndash;&nbsp;<a href="/users/774828/pkr298"
+                       title="650 reputation"
+                       class="comment-user">pkr298</a>
+                <span class="comment-date" dir="ltr"><span title="2014-04-28 16:40:54Z" class="relativetime-clean">Apr 28 '14 at 16:40</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-56088181" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@ahnbizcad Semicolons in T-sql are USUALLY optional, but they are reported to be required in the future. You should get yourself in the habit of using them to terminate each statement--your code will look nicer too IMO.</span>
+                    &ndash;&nbsp;<a href="/users/152891/nreilingh"
+                       title="345 reputation"
+                       class="comment-user">NReilingh</a>
+                <span class="comment-date" dir="ltr"><span title="2015-12-09 03:51:21Z" class="relativetime-clean">Dec 9 '15 at 3:51</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-452934" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>3</b> more comments</a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk84399775",4).setZone(44); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk84399775">
+            </div>
+  
+<a name="452882"></a>
+<div id="answer-452882" class="answer" data-answerid="452882"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="452882">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">353</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>If you are inserting into a single table, you can write your query like this (maybe only in MySQL):</p>
+
+<pre><code>insert into table1 (First,Last) values ('Fred','Smith'),
+  ('John','Smith'),
+  ('Michael','Smith'),
+  ('Robert','Smith');
+</code></pre>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/452882" title="short permalink to this answer" class="short-link" id="link-post-452882">share</a><span class="lsep">|</span><a href="/posts/452882/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/452882/revisions" title="show all edits to this post">edited <span title="2013-08-22 14:06:56Z" class="relativetime">Aug 22 '13 at 14:06</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/387076/gilles"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/cFyP6.jpg?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/387076/gilles">Gilles</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 52,176" dir="ltr">52.2k</span><span title="13 gold badges"><span class="badge1"></span><span class="badgecount">13</span></span><span title="108 silver badges"><span class="badge2"></span><span class="badgecount">108</span></span><span title="167 bronze badges"><span class="badge3"></span><span class="badgecount">167</span></span>
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2009-01-17 06:10:26Z" class="relativetime">Jan 17 '09 at 6:10</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/28835/too-much-php"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/34a7a029578b79cf4afa596ad4e3e72b?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/28835/too-much-php">too much php</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 39,128" dir="ltr">39.1k</span><span title="25 gold badges"><span class="badge1"></span><span class="badgecount">25</span></span><span title="99 silver badges"><span class="badge2"></span><span class="badgecount">99</span></span><span title="122 bronze badges"><span class="badge3"></span><span class="badgecount">122</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-452882" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-12514575" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="supernova">34</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">As of SQL Server 2008, this will work if you replace the double quotes with single ones.</span>
+                    &ndash;&nbsp;<a href="/users/316194/valentino-vranken"
+                       title="2,942 reputation"
+                       class="comment-user">Valentino Vranken</a>
+                <span class="comment-date" dir="ltr"><span title="2012-03-22 13:37:41Z" class="relativetime-clean">Mar 22 '12 at 13:37</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-29693228" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">4</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Also works with postgres v9.0</span>
+                    &ndash;&nbsp;<a href="/users/1827600/suspectus"
+                       title="7,154 reputation"
+                       class="comment-user">suspectus</a>
+                <span class="comment-date" dir="ltr"><span title="2013-11-13 10:19:24Z" class="relativetime-clean">Nov 13 '13 at 10:19</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-30585340" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">3</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">And with SQLite</span>
+                    &ndash;&nbsp;<a href="/users/1118475/micha%c5%82-k"
+                       title="4,736 reputation"
+                       class="comment-user">Michał K</a>
+                <span class="comment-date" dir="ltr"><span title="2013-12-09 10:13:07Z" class="relativetime-clean">Dec 9 '13 at 10:13</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-32886378" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">3</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Only SQLite 3.7.11 onwards. If you cannot guarantee that, use the UNION method shown here: <a href="http://stackoverflow.com/a/5009740/841830">stackoverflow.com/a/5009740/841830</a></span>
+                    &ndash;&nbsp;<a href="/users/841830/darren-cook"
+                       title="9,714 reputation"
+                       class="comment-user">Darren Cook</a>
+                <span class="comment-date" dir="ltr"><span title="2014-02-13 01:12:58Z" class="relativetime-clean">Feb 13 '14 at 1:12</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-53471538" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">is there any limit on values? like if i have many records then how to deal with this situaton?</span>
+                    &ndash;&nbsp;<a href="/users/2571464/muneem-habib"
+                       title="256 reputation"
+                       class="comment-user">Muneem Habib</a>
+                <span class="comment-date" dir="ltr"><span title="2015-09-28 07:32:37Z" class="relativetime-clean">Sep 28 '15 at 7:32</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-452882" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="452892"></a>
+<div id="answer-452892" class="answer" data-answerid="452892"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="452892">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">58</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p><strong>NOTE:</strong> This answer is for SQL 2005. For SQL 2008 and later, there are much better methods as seen in the other answers.</p>
+
+<p>You can use <a href="http://blog.sqlauthority.com/2007/06/08/sql-server-insert-multiple-records-using-one-insert-statement-use-of-union-all/">INSERT with SELECT UNION ALL</a>:</p>
+
+<pre><code>INSERT INTO MyTable  (FirstCol, SecondCol)
+    SELECT  'First' ,1
+    UNION ALL
+SELECT  'Second' ,2
+    UNION ALL
+SELECT  'Third' ,3
+...
+</code></pre>
+
+<p>Only for small datasets though, which should be fine for your 4 records.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/452892" title="short permalink to this answer" class="short-link" id="link-post-452892">share</a><span class="lsep">|</span><a href="/posts/452892/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/452892/revisions" title="show all edits to this post">edited <span title="2015-01-19 01:12:40Z" class="relativetime">Jan 19 '15 at 1:12</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2009-01-17 06:16:23Z" class="relativetime">Jan 17 '09 at 6:16</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/40161/davgarcia"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/189ecc4a300281dfea56c485692d928d?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/40161/davgarcia">DavGarcia</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 10,959" dir="ltr">11k</span><span title="6 gold badges"><span class="badge1"></span><span class="badgecount">6</span></span><span title="36 silver badges"><span class="badge2"></span><span class="badgecount">36</span></span><span title="83 bronze badges"><span class="badge3"></span><span class="badgecount">83</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-452892" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-452892" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="705678"></a>
+<div id="answer-705678" class="answer" data-answerid="705678"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="705678">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">37</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p><code>INSERT</code> statements that use <code>VALUES</code> syntax can insert multiple rows. To do this, include multiple lists of column values, each enclosed within parentheses and separated by commas. </p>
+
+<p><strong>Example:</strong></p>
+
+<pre><code>INSERT INTO tbl_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9);
+</code></pre>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/705678" title="short permalink to this answer" class="short-link" id="link-post-705678">share</a><span class="lsep">|</span><a href="/posts/705678/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/705678/revisions" title="show all edits to this post">edited <span title="2011-07-29 11:00:19Z" class="relativetime">Jul 29 '11 at 11:00</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/785207/sparkup"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/2K0BB.png?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/785207/sparkup">Sparkup</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">2,645</span><span title="2 gold badges"><span class="badge1"></span><span class="badgecount">2</span></span><span title="20 silver badges"><span class="badge2"></span><span class="badgecount">20</span></span><span title="40 bronze badges"><span class="badge3"></span><span class="badgecount">40</span></span>
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2009-04-01 14:07:24Z" class="relativetime">Apr 1 '09 at 14:07</span>
+    </div>
+    <div class="user-gravatar32">
+        <span class="anonymous-gravatar"></span>
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-705678" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-37534241" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">+=1; SelectDistinct nailed it =D</span>
+                    &ndash;&nbsp;<a href="/users/780130/daveh"
+                       title="620 reputation"
+                       class="comment-user">DaveH</a>
+                <span class="comment-date" dir="ltr"><span title="2014-06-18 16:05:51Z" class="relativetime-clean">Jun 18 '14 at 16:05</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-42251544" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="supernova">38</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">The poor guy deleted his profile after feedback from @SelectDistinct. Go easy on the newbies!</span>
+                    &ndash;&nbsp;<a href="/users/107409/contango"
+                       title="18,555 reputation"
+                       class="comment-user">Contango</a>
+                <span class="comment-date" dir="ltr"><span title="2014-11-10 12:49:38Z" class="relativetime-clean">Nov 10 '14 at 12:49</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-705678" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+				
+
+
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2009-01-17 05:55:54Z"><b>7 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>1128927 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="?lastactivity" class="lastactivity-link" title="2016-03-13 15:06:33Z">1 month ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </table>
+			    </div>
+			<div class="module community-bulletin" data-tracker="cb=1">
+    <div class="related">
+                <div class="bulletin-title">
+                    Blog
+                </div>
+                <hr />
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <a href="http://blog.stackoverflow.com/2016/05/welcoming-stack-overflows-new-cmo-adrianna-burrows/" class="question-hyperlink">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>                </a>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://blog.stackoverflow.com/2016/05/welcoming-stack-overflows-new-cmo-adrianna-burrows/" class="question-hyperlink">Welcoming Stack Overflow’s New CMO – Adrianna Burrows</a>
+                </div>
+                <br class="cbt" />
+            </div>
+    </div>
+</div>			
+			<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk920586342",[5,17,2221]).setZone(45); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk920586342">
+            </div>
+        <div id="hireme">
+            <script>
+;"use strict";(function(n){function it(n,i,r){var u=t.createElement("script"),e="onreadystatechange",o="onload",f="readyState",s=!1;u.async=!0;u.src=n;typeof i=="function"&&(u[o]=u[e]=function(){s||u[f]&&u[f]!=="loaded"&&u[f]!=="complete"||(s=!0,typeof i=="function"&&i(u),u[o]=u[e]=null,r&&u.parentNode.removeChild(u))});ft.appendChild(u)}function rt(n){var i=t.createElement("link");i.type="text/css";i.rel="stylesheet";i.href=n;et.appendChild(i)}function ct(){var n=i.StackExchange,t="options",r="user";return n&&n[t]&&n[t][r]&&n[t][r].accountId}function lt(n){var t,i;return n=ot(f.hash?f.hash.substr(1):"",n||{}),t=n.ac||n.accountId||ct(),t&&(n.ac=t),n.tags||(i=tt(),i.length>0&&(n.tags=i.join(";"))),n.host=f.host.replace(/\.internal$/,""),n}function at(n,t,i,u){var c=h(n);if(c===null)return function(){};var e=null,f=null,l=r(),a=function a(){g(c)?(s(e),u(!1,r()-l)):f=o(a,t)};return f=o(a,t),i!==undefined&&(e=o(function(){s(f);u(!0,r()-l)},i)),function(){s(f);s(e)}}function vt(n){var u=f.hash.indexOf("large=1")!==-1,e=y(),o=u||!e||n,s=o?1:2,h=a(["hireme","clc-sb"],v),t=[s+"="+h],r=a(["careers1","clc-tlb"],v),i;return r&&t.push("5="+r),i=a(["careers3","clc-mlb"],v),i&&t.push("6="+i),t.join("&")}function ut(n,t){var e=!!h("#careersadsdoublehigh"),s=k({},u,{zones:u.zones||vt(e)}),f=lt(s),o;n&&(f.azt=1);t&&(f.lw=t);typeof i.innerWidth=="number"&&(f.bw=i.innerWidth);b&&(f.ver=b);o=p()-(e+0);o>0&&(f.az="1");var c=st(f,["zones","ip","ac","eng","prov","tags","theme","at","remote","seed","lw","azt","sysadmin","bw","nocpm","jobview","cpview","ver","host","cp","az"]),a=w+"?"+c;l=r();it(a)}function yt(n){function h(){f.forEach(rt);e.forEach(function(n){return pt(n,t[n],s,o)});typeof i.clc_after_load=="function"&&i.clc_after_load()}var t=n.cr,u=n.h,f=n.st,e=Object.keys(t),o=l?r()-l:0,s="//"+u+"/ct";h()}function pt(n,t,i,r){var s=t.cl,c=t.cn,f=t.an,l=t.tr,o=(s||[]).join(" "),u=h("#"+n);u&&(o&&(u.className+=" "+o),u.innerHTML=c.replace("&pt=0","&pt="+(r||0)),u.onmousedown=function(n){for(var t=n.target,r,o,s;t.tagName!=="A"&&t!==u;)t=t.parentNode;t!==u&&(r=[],f&&r.push("an="+f),o=[].filter.call(t.attributes,function(n){return/^data-/.test(n.name)}),o.length>0&&o.forEach(function(n){var t=n.name.replace(/^data-/,"");r.push(e(t)+"="+e(n.value))}),r.push("tr="+l),s="",r.length>0&&(s="?"+r.join("&")),t.href=i+s)})}function wt(n){var i=t.createElement("a");return i.href=n,i.host}function bt(){var i,n;y()?(n=at("#sidebar "+c,20,i,ut),o(function(){var r=h(c),i;g(r)||(r.parentNode.removeChild(r),typeof n=="function"&&n(),i=t.createElement("img"),i.src="//"+wt(w)+"/to.gif",i.style.display="none",t.body.appendChild(i))},2e3)):ut()}var w=n.u,u=n.o,b=n.c,y,p;u=u||{};var k=Object.assign||function(n){for(var i,r,t=1;t<arguments.length;t++){i=arguments[t];for(r in i)Object.prototype.hasOwnProperty.call(i,r)&&(n[r]=i[r])}return n},i=window,f=i.location,e=i.encodeURIComponent,d=i.decodeURIComponent,t=i.document,ft=t.body,et=t.getElementsByTagName("head")[0],o=i.setTimeout,s=i.clearTimeout,c="[id^=adzerk].everyonelovesstackoverflow",l=0,r=function(){return(new Date).getTime()},ot=function(n,t){return n.split(/\&/g).reduce(function(n,t){var i=t.split("=");return n[d(i[0])]=d(i[1]),n},t||{})},st=function(n,t){return Object.keys(n).filter(function(n){return t.indexOf(n)!==-1}).map(function(t){return e(t)+"="+e(n[t])}).join("&")},g=function(n){return n.innerHTML.replace(/\s+$/g,"")},nt=t.querySelectorAll.bind(t),h=t.querySelector.bind(t),ht=t.getElementById.bind(t),a=function(n,t){return n.filter(t)[0]},tt=function(){return[].map.call(nt(".post-taglist .post-tag"),function(n){return n.textContent})},v=function(n){return!!ht(n)};y=function(){return p()>0};p=function(){return nt(c).length};i.clc=k(window.clc||{},{init:yt,load:bt,ls:it,as:rt,tags:tt})}).call(null, {"c":"955d59b","u":"//clc.stackoverflow.com/p.js"});"use strict";var allowedHosts=["stackoverflow.com","serverfault.com"];(allowedHosts[0]==="*"||allowedHosts.indexOf(location.hostname)!==-1)&&window.clc.load();            </script>
+        </div>
+			  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="/q/2624713" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted large">227</div>
+	</a>
+	<a href="/questions/2624713/how-do-i-insert-multiple-rows-without-repeating-the-insert-into-dbo-blah-part" class="question-hyperlink">How do I insert multiple rows WITHOUT repeating the &ldquo;INSERT INTO dbo.Blah&rdquo; part of the statement?</a>
+</div><div class="spacer">
+	<a href="/q/16384690" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">-2</div>
+	</a>
+	<a href="/questions/16384690/multiple-insert-queries-turned-into-one-single-query" class="question-hyperlink">Multiple INSERT queries turned into one single query</a>
+</div><div class="spacer">
+	<a href="/q/17098522" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/17098522/is-it-possible-to-insert-the-same-values-at-once-mysql" class="question-hyperlink">Is it possible to insert the same values at once (Mysql)?</a>
+</div><div class="spacer">
+	<a href="/q/23165036" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">2</div>
+	</a>
+	<a href="/questions/23165036/i-have-an-incorrect-syntax-error" class="question-hyperlink">I have an incorrect syntax error</a>
+</div><div class="spacer">
+	<a href="/q/29529861" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">-1</div>
+	</a>
+	<a href="/questions/29529861/i-have-multiple-set-of-data-to-insert-at-once-can-i-insert-multiple-rows-in-a-s" class="question-hyperlink">I have multiple set of data to insert at once, can i insert multiple rows in a single SQL statement</a>
+</div><div class="spacer">
+	<a href="/q/34390864" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">2</div>
+	</a>
+	<a href="/questions/34390864/how-to-insert-data-in-a-batch" class="question-hyperlink">How to insert data in a batch?</a>
+</div><div class="spacer">
+	<a href="/q/1609637" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted large">350</div>
+	</a>
+	<a href="/questions/1609637/is-it-possible-to-insert-multiple-rows-at-a-time-in-an-sqlite-database" class="question-hyperlink">Is it possible to insert multiple rows at a time in an SQLite database?</a>
+</div><div class="spacer">
+	<a href="/q/39576" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">97</div>
+	</a>
+	<a href="/questions/39576/best-way-to-do-multi-row-insert-in-oracle" class="question-hyperlink">Best way to do multi-row insert in Oracle?</a>
+</div><div class="spacer">
+	<a href="/q/11801911" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">8</div>
+	</a>
+	<a href="/questions/11801911/insert-multiple-rows-into-single-column" class="question-hyperlink">Insert multiple rows into single column</a>
+</div><div class="spacer">
+	<a href="/q/18004033" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">5</div>
+	</a>
+	<a href="/questions/18004033/insert-multiple-rows-into-temp-table-with-sql-server-2012" class="question-hyperlink">Insert Multiple Rows Into Temp Table With SQL Server 2012</a>
+</div>					<div class="spacer more">
+				<a href="/questions/linked/452859">see more linked questions…</a>
+			</div>
+	</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer">
+<a href="/q/18932" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">745
+    </div>
+</a><a href="/questions/18932/how-can-i-remove-duplicate-rows" class="question-hyperlink">How can I remove duplicate rows?</a>
+</div>
+<div class="spacer">
+<a href="/q/42648" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">540
+    </div>
+</a><a href="/questions/42648/best-way-to-get-identity-of-inserted-row" class="question-hyperlink">Best way to get identity of inserted row?</a>
+</div>
+<div class="spacer">
+<a href="/q/63447" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">724
+    </div>
+</a><a href="/questions/63447/how-to-perform-an-if-then-in-an-sql-select" class="question-hyperlink">How to perform an IF&hellip;THEN in an SQL SELECT?</a>
+</div>
+<div class="spacer">
+<a href="/q/113045" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">753
+    </div>
+</a><a href="/questions/113045/how-to-return-the-date-part-only-from-a-sql-server-datetime-datatype" class="question-hyperlink">How to return the date part only from a SQL Server datetime datatype</a>
+</div>
+<div class="spacer">
+<a href="/q/406294" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">730
+    </div>
+</a><a href="/questions/406294/left-join-and-left-outer-join-in-sql-server" class="question-hyperlink">LEFT JOIN and LEFT OUTER JOIN in SQL Server</a>
+</div>
+<div class="spacer">
+<a href="/q/653714" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes large">928
+    </div>
+</a><a href="/questions/653714/insert-results-of-a-stored-procedure-into-a-temporary-table" class="question-hyperlink">Insert results of a stored procedure into a temporary table</a>
+</div>
+<div class="spacer">
+<a href="/q/1176352" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">80
+    </div>
+</a><a href="/questions/1176352/pdo-prepared-inserts-multiple-rows-in-single-query" class="question-hyperlink">PDO Prepared Inserts multiple rows in single query</a>
+</div>
+<div class="spacer">
+<a href="/q/1293330" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">591
+    </div>
+</a><a href="/questions/1293330/how-can-i-do-an-update-statement-with-join-in-sql" class="question-hyperlink">How can I do an UPDATE statement with JOIN in SQL?</a>
+</div>
+<div class="spacer">
+<a href="/q/2334712" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted extra-large">1814
+    </div>
+</a><a href="/questions/2334712/update-from-select-using-sql-server" class="question-hyperlink">UPDATE from SELECT using SQL Server</a>
+</div>
+<div class="spacer">
+<a href="/q/2624713" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">227
+    </div>
+</a><a href="/questions/2624713/how-do-i-insert-multiple-rows-without-repeating-the-insert-into-dbo-blah-part" class="question-hyperlink">How do I insert multiple rows WITHOUT repeating the &ldquo;INSERT INTO dbo.Blah&rdquo; part of the statement?</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="//stackexchange.com/questions?tab=hot" 
+           class="js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-diy" title="Home Improvement Stack Exchange"></div><a href="http://diy.stackexchange.com/questions/90007/how-do-i-install-this-lamp-on-my-ceiling" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:73 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do I install this lamp on my ceiling?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="http://security.stackexchange.com/questions/122417/can-malware-bridge-external-storage-hw-power-off-switches" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can malware bridge external storage HW power-off switches?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-electronics" title="Electrical Engineering Stack Exchange"></div><a href="http://electronics.stackexchange.com/questions/232493/whats-the-purpose-of-crossing-over-in-the-middle-of-a-toroid-winding" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:135 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What&#39;s the purpose of crossing over in the middle of a toroid winding?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-codereview" title="Code Review Stack Exchange"></div><a href="http://codereview.stackexchange.com/questions/127587/checking-if-string-has-unique-values" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:196 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Checking if String has unique values
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="http://rpg.stackexchange.com/questions/79752/sutra-of-tranquil-thoughts-unclear-how-much-xp" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Sutra of Tranquil thoughts, unclear how much XP
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/1769475/how-to-debug-math" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to debug math?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-sqa" title="Software Quality Assurance &amp; Testing Stack Exchange"></div><a href="http://sqa.stackexchange.com/questions/18459/what-constitutes-testing-is-simply-running-the-code-during-development-testi" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:244 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What constitutes &#39;Testing&#39;? Is simply running the code during development &#39;Testing&#39;?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/1773192/how-to-prove-that-a-very-large-number-is-not-prime" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to prove that a very large number is not prime
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ux" title="User Experience Stack Exchange"></div><a href="http://ux.stackexchange.com/questions/93699/why-dont-air-travel-booking-sites-use-the-shopping-cart-ui-concept" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:102 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why don&#39;t air travel booking sites use the &quot;shopping cart&quot; UI concept?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-networkengineering" title="Network Engineering Stack Exchange"></div><a href="http://networkengineering.stackexchange.com/questions/30187/why-are-some-routing-protocols-sent-to-the-host-sub-interface-and-others-to-the" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:496 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why are some routing protocols sent to the Host sub-interface and others to the CEF-Exception sub-interface?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="http://security.stackexchange.com/questions/122380/why-i-am-getting-facebook-login-pop-up-for-every-site" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why I am getting Facebook login pop up for every site?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/307795/how-to-create-nonbreaking-arbitrary-length-snakes-for-full-width-justification" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to create nonbreaking arbitrary length snakes for full-width justification?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-skeptics" title="Skeptics Stack Exchange"></div><a href="http://skeptics.stackexchange.com/questions/32763/is-leicester-city-winning-the-english-football-premiership-the-most-improbable-s" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:212 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is Leicester City winning the English Football premiership the most improbable single event in betting history?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/66476/how-to-answer-uncertain-question-during-meeting" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to answer uncertain question during meeting
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/66364/my-boss-frequently-calls-me-outside-work-hours-how-should-i-deal-with-it" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    My boss frequently calls me outside work hours. How should I deal with it?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="http://rpg.stackexchange.com/questions/79737/does-the-same-fighting-style-stack-with-itself" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Does the same fighting style stack with itself?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-cooking" title="Seasoned Advice"></div><a href="http://cooking.stackexchange.com/questions/68792/at-what-step-is-the-difference-made-between-a-quesadilla-and-burrito" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:49 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    At what step is the difference made between a quesadilla and burrito?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/31993/spaced-out-and-obfuscated-afterwards-phone-number-abbreviation-heredity-unit-po" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Spaced Out and Obfuscated: Afterwards Phone Number Abbreviation Heredity Unit Portion
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="http://rpg.stackexchange.com/questions/79691/aside-from-flavor-is-there-any-benefit-to-a-monk-striking-multiple-targets" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Aside from flavor, is there any benefit to a Monk striking multiple targets?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mathoverflow" title="MathOverflow"></div><a href="http://mathoverflow.net/questions/237987/is-it-possible-to-have-a-research-career-while-checking-the-proof-of-every-theor" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:504 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it possible to have a research career while checking the proof of every theorem that you cite?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mechanics" title="Motor Vehicle Maintenance &amp; Repair Stack Exchange"></div><a href="http://mechanics.stackexchange.com/questions/29392/how-can-an-oil-plug-just-fall-out-after-three-months-and-3-000-miles-and-the-car" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:224 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can an oil plug just fall out after three months and 3,000 miles and the car has just 35,000 miles on it, 2014 Ford Escape
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-parenting" title="Parenting Stack Exchange"></div><a href="http://parenting.stackexchange.com/questions/24829/my-son-is-being-hit-by-a-friend-and-we-need-to-discuss-the-situation-with-his-m" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:228 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    My son is being hit by a friend, and we need to discuss the situation with his mom
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/40949/whats-the-smallest-change-to-physics-required-to-allow-magic" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What&#39;s the smallest change to physics required to allow magic?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="http://physics.stackexchange.com/questions/253944/if-we-threw-a-baseball-from-the-iss-could-we-deorbit-the-ball" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    If we threw a baseball from the ISS, could we deorbit the ball?
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+		<script>
+StackExchange.ready(function(){$.get('/posts/452859/ivc/2f4e');});
+</script>
+<noscript>
+    <div><img src="/posts/452859/ivc/2f4e" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang">lang-sql</div></div>
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                    <a href="http://stackoverflow.com/company/about">about us</a>
+                        <a href="/tour">tour</a>
+                    <a href="/help">help</a>
+                    <a href="http://blog.stackoverflow.com?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com">chat</a>
+                    <a href="http://data.stackexchange.com">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackoverflow.com/company/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tr>
+            <th colspan=3>
+                Technology
+            </th>
+            <th >
+                Life / Arts
+            </th>
+            <th >
+                Culture / Recreation
+            </th>
+            <th >
+                Science
+            </th>
+            <th >
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="//stackoverflow.com" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="//serverfault.com" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="//superuser.com" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="//webapps.stackexchange.com" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="//askubuntu.com" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="//webmasters.stackexchange.com" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="//gamedev.stackexchange.com" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="//tex.stackexchange.com" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//programmers.stackexchange.com" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="//unix.stackexchange.com" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                        <li><a href="//apple.stackexchange.com" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="//wordpress.stackexchange.com" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="//gis.stackexchange.com" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="//electronics.stackexchange.com" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="//android.stackexchange.com" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="//security.stackexchange.com" title="information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//dba.stackexchange.com" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="//drupal.stackexchange.com" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="//sharepoint.stackexchange.com" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="//ux.stackexchange.com" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="//mathematica.stackexchange.com" title="users of Mathematica">Mathematica</a></li>
+                        <li><a href="//salesforce.stackexchange.com" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                        <li><a href="//expressionengine.stackexchange.com" title="administrators, end users, developers and designers for ExpressionEngine&#174; CMS">ExpressionEngine&#174; Answers</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (13)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//photo.stackexchange.com" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="//scifi.stackexchange.com" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="//graphicdesign.stackexchange.com" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="//movies.stackexchange.com" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                        <li><a href="//cooking.stackexchange.com" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="//diy.stackexchange.com" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="//money.stackexchange.com" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="//academia.stackexchange.com" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (9)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//english.stackexchange.com" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="//skeptics.stackexchange.com" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="//judaism.stackexchange.com" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="//travel.stackexchange.com" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="//christianity.stackexchange.com" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="//gaming.stackexchange.com" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="//bicycles.stackexchange.com" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="//rpg.stackexchange.com" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//math.stackexchange.com" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="//stats.stackexchange.com" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="//cstheory.stackexchange.com" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="//physics.stackexchange.com" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="//mathoverflow.net" title="professional mathematicians">MathOverflow</a></li>
+                        <li><a href="//chemistry.stackexchange.com" title="scientists, academics, teachers and students">Chemistry</a></li>
+                        <li><a href="//biology.stackexchange.com" title="biology researchers, academics, and students">Biology</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (5)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//stackapps.com" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="//meta.stackexchange.com" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="//area51.stackexchange.com" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="//careers.stackoverflow.com">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</table>
+                </div>
+            </div>
+            <div id="copyright">
+                site design / logo &#169; 2016 Stack Exchange Inc; user contributions licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2016.5.5.3548
+            </div>
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Stack Overflow works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    
+    
+        
+        ados.run.push(function () {
+                setTimeout(function () { $("#adzerk-user-match").remove(); }, window.AUMIframeDone ? 0 : 2000);
+                ados_setKeywords('sql,sql-server,tsql,insert');; ados_load();
+        });   
+        
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-1');
+                        ga('set', 'dimension2', '|sql|sql-server|tsql|insert|');         ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>
+        
+    
+    </body>
+</html>

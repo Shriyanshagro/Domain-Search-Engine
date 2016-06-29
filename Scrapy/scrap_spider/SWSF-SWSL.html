@@ -1,0 +1,5089 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Semantic Web Services Language (SWSL)</title>
+    <link rel="stylesheet" type="text/css"
+	  href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM.css"/>
+  </head>
+  <body>
+    <div class="head">
+      <div class="head">
+  <p>
+  <a href="http://www.w3.org/"><img height="48" alt="W3C"
+     src="http://www.w3.org/Icons/w3c_home" width="72" /></a> 
+  <a href="http://www.w3.org/Submission/">
+     <img height="48" alt="W3C Member Submission" 
+     src="http://www.w3.org/Icons/member_subm" width="211" /></a> 
+  </p>
+
+	<h1 id="mainTitle">Semantic Web Services Language (SWSL)</h1>
+        <h2><a name="SW">W3C Member Submission 9 September 2005</a></h2>
+
+	<dl>
+          <dt>This version:</dt>
+          <dd><a href="http://www.w3.org/Submission/2005/SUBM-SWSF-SWSL-20050909/">http://www.w3.org/Submission/2005/SUBM-SWSF-SWSL-20050909/</a></dd>
+
+          <dt>Latest version:</dt>
+          <dd><a href="http://www.w3.org/Submission/SWSF-SWSL/">http://www.w3.org/Submission/SWSF-SWSL/</a></dd>
+
+	  <dt>Authors:</dt>
+	  <dd>
+	    Steve Battle (Hewlett Packard) <br/>
+	    Abraham Bernstein (University of Zurich)<br/>
+	    Harold Boley (National Research Council of Canada)<br/>
+	    Benjamin Grosof (Massachusetts Institute of Technology) <br/>
+	    Michael Gruninger (NIST)<br/>
+	    Richard Hull (Bell Labs Research, Lucent Technologies) <br/>
+	    Michael Kifer (State University of New York at Stony Brook) <br/>
+	    David Martin (SRI International) <br/>
+	    Sheila McIlraith (University of Toronto) <br/>
+	    Deborah McGuinness (Stanford University) <br/>
+	    Jianwen Su (University of California, Santa Barbara) <br/>
+	    Said Tabet (The RuleML Initiative) <br/>
+	  </dd>
+	</dl>
+	<!-- copyright -->
+	<p class="copyright">Copyright &copy; 2005 retained by the authors.
+	  All Rights Reserved.<br/>
+This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document License</a>. 
+See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notices and Disclaimers</a> for additional information.
+	  </p>
+	<hr title="Separator for header"/>
+      </div>
+      <h2><a id="abstract" name="abstract">Abstract</a></h2>
+      <p>
+	This document defines the Semantic Web Services Language
+	(SWSL), which is used to specify the Semantic Web Services Ontology
+	(SWSO) as well as
+	individual Web services. The language consists of two parts:
+	SWSL-FOL, a full first-order logic language, and SWSL-Rules, as
+	rule-based language.  SWSL-FOL is primarily used for formal
+	specification of the ontology and is intended to provide
+	interoperability with other first-order based process models and
+	service ontologies.  In contrast, SWSL-Rules is designed to be an
+	actual language for service specification.
+      </p>
+      <h2><a id="status" name="status"></a>Status of this document</h2>
+      <div class="status">
+<p>This document is part of a member submission, offered by 
+National Institute of Standards and Technology (NIST),
+National Research Council of Canada,
+SRI International,
+Stanford University,
+Toshiba Corporation,
+and
+University of Southampton
+on behalf of themselves and the authors.
+</p>
+        <p>This is one of <a href="/Submission/2005/SUBM-SWSF-20050909/#roadmap">four documents</a>
+      that make up the submission.  
+      These documents define the Semantic Web Services Framework (SWSF).
+      This submission has been prepared by the <a
+      href="http://www.daml.org/services/swsl/">Semantic Web Services
+      Language Committee</a> of the <a
+      href="http://www.swsi.org">Semantic Web Services Initiative</a>.
+        </p>
+<p>
+The W3C Team Comment discusses this submission
+in the context of W3C activities.
+Public comment on this document is invited on the mailing list
+<a href="mailto:public-sws-ig@w3.org">public-sws-ig@w3.org</a> 
+(<a href="http://lists.w3.org/Archives/Public/public-sws-ig/">public archive</a>).
+Announcements and current information may also be available on the <a
+href="http://www.daml.org/services/swsl/">SWSL Committee Web site</a>.
+</p>
+
+<p>By publishing this document, W3C acknowledges that 
+National Institute of Standards and Technology (NIST),
+National Research Council of Canada,
+SRI International,
+Stanford University,
+Toshiba Corporation,
+and
+University of Southampton
+have made a formal submission to W3C for discussion. Publication of
+this document by W3C indicates no endorsement of its content by W3C,
+nor that W3C has, is, or will be allocating any resources to the
+issues addressed by it. This document is not the product of a
+chartered W3C group, but is published as potential input to the <a
+href="http://www.w3.org/2004/02/Process-20040205/">W3C
+Process</a>. Publication of acknowledged Member Submissions at the W3C
+site is one of the benefits of <a
+href="http://www.w3.org/Consortium/Prospectus/Joining">W3C
+Membership</a>. Please consult the requirements associated with Member
+Submissions of <a
+href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-submissions">section
+3.3 of the W3C Patent Policy</a>. Please consult the complete <a
+href="http://www.w3.org/Submission/">list of acknowledged W3C Member
+Submissions</a>.</p>
+      </div>
+
+      <hr/>
+      <h2><a id="contents" name="contents">Table of contents</a></h2>
+      <p class="toc">
+	1 <a href="#sec-swsl-intro"> Introduction</a>
+	<br/>
+
+	2 <a href="#sec-language"> The Language</a>
+	<br/>
+	&nbsp;&nbsp;2.1 <a href="#swsl-rules-overview">
+	  Overview of SWSL-Rules and SWSL-FOL
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.2 <a href="#swsl-rules-basic-defs">
+	  Basic Definitions
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.3 <a href="#swsl-rules-horn">
+	  Horn Rules
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.4 <a href="#swsl-rules-mon-lt">
+	  The Monotonic Lloyd-Topor Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.5 <a href="#swsl-rules-naf">
+	  The NAF Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.6 <a href="#swsl-rules-nonmon-lt">
+	  The Nonmonotonic Lloyd-Topor Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.7 <a href="#swsl-rules-courteous">
+	  The Courteous Rules Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.8 <a href="#swsl-rules-hilog">
+	  The HiLog Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.9 <a href="#equality-layer">
+	  The Equality Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.10 <a href="#swsl-rules-frames">
+	  The Frames Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.11 <a href="#swsl-rules-reification">
+	  Reification
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.12 <a href="#swsl-skolemization">
+	  Skolemization in SWSL-Rules
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.13 <a href="#swsl-datatypes">
+	  SWSL-Rules and XML Schema Data Types
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.16 <a href="#swsl-rules-semantics">
+	  Semantics of SWSL-Rules
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.15 <a href="#swsl-fol">
+	  SWSL-FOL: The First-order Subset of SWSL
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.16 <a href="#swsl-fol-semantics">
+	  Semantics of SWSL-FOL
+	</a>
+	<br/>
+	&nbsp;&nbsp;2.17 <a href="#swsl-future">
+	  Future Extensions
+	</a>
+	<br/>
+
+	3 <a href="#sec-bridge"> Combining SWSL-Rules and SWSL-FOL</a>
+	<br/>
+
+	4 <a href="#sec-markup"> Serialization of SWSL in RuleML</a>
+	<br/>
+	&nbsp;&nbsp; 4.1 <a href="#ruleml-hilog">
+	  Serialization of the HiLog Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp; 4.2 <a href="#ruleml-eq">
+	  Serialization of Explicit Equality
+	</a>
+	<br/>
+	&nbsp;&nbsp; 4.3 <a href="#ruleml-frames">
+	  Serialization of the Frames Layer
+	</a>
+	<br/>
+	&nbsp;&nbsp; 4.4 <a href="#ruleml-reification">
+	  Serialization of Reification
+	</a>
+	<br/>
+	&nbsp;&nbsp; 4.5 <a href="#ruleml-fol">
+	  Serialization of SWSL-FOL
+	</a>
+	<br/>
+
+	5 <a href="#sec-glossary"> Glossary</a>
+	<br/>
+	6 <a href="#sec-references"> References</a>
+      </p>
+
+      <br/>
+
+      <hr/>
+
+      <h1><a id="sec-swsl-intro" name="sec-swsl-intro">1
+      Introduction</a></h1>
+          <p>
+       This document is part of the technical report of the Semantic Web
+      Services Language (SWSL) Committee of the Semantic Web Services
+      Initiative (SWSI). 
+      The overall structure of the report is described in the document titled
+      <a href="/Submission/2005/SUBM-SWSF-20050909/">Semantic Web Services Framework
+      Overview.</a> 
+    </p>
+    <p>
+       SWSL is a logic-based language for specifying formal characterizations
+	of Web service concepts and descriptions of individual services.  It
+	includes two sublanguages: SWSL-FOL -- a full first-order logic
+	language, which is used to specify the service ontology (SWSO), and
+	SWSL-Rules -- a rule-based sublanguage, which can be used both as a
+	specification and an implementation language.  As a language, SWSL is
+	domain-independent and <em>does not</em> include any constructs
+	specific to services. Those constructs are defined by the Semantic Web
+	Service Ontology, which appears in a <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/">separate
+	document.</a>
+    </p>
+    <p>
+      SWSL-Rules includes a novel combination of features that
+      hitherto have not been present in a single system. However,
+      almost all of the
+      features of SWSL-Rules have been implemented in either FLORA-2
+      [<cite><a
+      href="#flora-manual">Yang04</a></cite>],
+      SweetRules
+      [<cite><a
+      href="#Grosof2004b">Grosof2004b</a></cite>], or the commercial 
+      Ontobroker [<cite><a href="#ontoprise">Ontobroker</a></cite>]
+      system.
+      Extensive feedback collected from the users of these systems has been
+      incorporated in the design of the corresponding features in SWSL-Rules.
+    </p>
+    <p>
+       In contrast to SWSL-Rules, we do not envision the need
+       for a full first-order
+       reasoner based on SWSL-FOL. Instead, SWSL-FOL is
+       intended largely as a specification language for SWSO, and specialized
+       reasoners will be used to reason with the service ontology.
+       In addition, SWSL-FOL will serve as a common platform to support
+       semantic interoperability among the different first-order based
+       service ontologies, such as OWL-S
+       [<cite><a href="#OWL-S-white-paper">OWL-S 1.1</a></cite>].
+    </p>
+    
+<p>
+  <em><b>Relationship between SWSL-FOL and SWSL-Rules.</b></em>
+  SWSL includes two separate sublanguages, because we believe that
+  different tasks associated with Semantic Web services are better served by
+  different knowledge representation formalisms.
+</p>
+<p>
+  SWSL-Rules is a rule-based language with non-monotonic semantics. Such
+  languages are better suited for tasks that have programming flavor and
+  that naturally rely on default
+  information and inheritance. These tasks include service discovery,
+  contracting, policy specification, and others. In addition, rule-based
+  languages are quite common both in the industry and research, and many
+  people are more comfortable using them even for tasks that may not require
+  defaults, such as service profile specification.
+  Applications of SWSL and of the ontology built using SWSL are discussed in
+  the <a href="/Submission/2005/SUBM-SWSF-Applications-20050909/">Application Scenarios</a> document.
+</p>
+<p>
+  In contrast, first-order logic is found more suitable for specifying process
+  ontologies. One of the most prominent examples that uses this approach is PSL
+  [<cite><a href="#PSL1-Gruninger">Gruninger03a</a></cite>]. SWSL-FOL was
+  developed to satisfy this need.  Unfortunately, first-order and nonmonotonic
+  semantics cannot be used together in the same language, so SWSL provides a
+  "bridge" between the two sublanguages by describing how one can work in
+  either sublanguage and use specifications written in the other sublanguage.
+  This bridge is described in section titled
+  <a href="#sec-bridge">Combining SWSL-Rules and SWSL-FOL</a>.
+</p>
+<p>
+  The basic idea is as follows. First, as shown in Figure 2.2, both sublanguages
+  share a common and useful core where they coincide both syntactically and
+  semantically. Second, section <a href="#sec-bridge">Combining SWSL-Rules and
+  SWSL-FOL</a> describes a methodology for translating SWSL-FOL
+  specifications into SWSL-Rules with "minimal loss." This means that
+  inferences made using the translated specification are sound with respect to
+  the original SWSL-FOL specification, and the "lost" inferences (i.e.,
+  formulas that are derivable from the original but not from the translated
+  specification) are, in some sense, minimized.
+  This approach was used in translating the axioms of PSL Core and PSL
+  Outer Core into SWSL-Rules in section
+  <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/appendices/psl-swsl.html">PSL in SWSL-FOL and SWSL-Rules</a>.
+</p>
+<p>
+   <em><b>The layered structure of SWSL.</b></em>  Both SWSL-Rules and SWSL-FOL
+   are presented as <em>layered</em> languages.  Unlike OWL, the layers are not
+   organized based on the expressive power and computational
+   complexity. Instead, each layer includes a number of new concepts that
+   enhance the <em>modeling power</em> of the language.  This is done in order
+   to make it easier to learn the language and to help understand the
+   relationship between the different features.  Furthermore, most layers that
+   extend the core of the language (either SWSL-Rules or SWSL-FOL)
+   are <em>independent</em> from each other -- they can be implemented all at
+   once or in any partial combination. This can provide certain guidance to
+   vendors who might be interested only in a particular subset of the features.
+</p>
+<p>
+   <em><b>Complexity.</b></em>  The layers of SWSL are not
+   organized around the complexity. In fact, except for the equality layer,
+   which boosts the complexity, all layers have the same complexity and
+   decidability properties.  For SWSL-Rules, the most important reasoning task
+   is <em>query answering</em>.  The general problem of query answering is
+   known to be only semi-decidable. However, there are large classes of
+   problems that are decidable in polynomial time. The best-known, and perhaps
+   the most useful, subclass consists of rules that do not use function
+   symbols.  However, many decidable classes of rules <em>with</em> function
+   symbols are also known
+   [<cite><a href="#lindenstraus97">Lindenstrauss97</a></cite>].
+</p>
+
+
+      <hr/>
+
+      <h1><a id="sec-language" name="sec-language">2 The Language</a></h1>
+      <h2>
+  <a name="swsl-rules-overview">
+    2.1 Overview of SWSL-Rules and SWSL-FOL
+  </a>
+</h2>
+
+<p>
+  As mentioned in the introduction,
+  SWSL consists of two separate sublanguages, which have layered structure.
+  This section gives an overview of these layers.
+  
+</p>
+<p>
+  <em><b>The SWSL-Rules language</b></em>
+  is designed to provide support for a variety of
+  tasks that range from service profile specification to service discovery,
+  contracting, policy specification, and so on.  The language is layered to
+  make it easier to learn and to simplify the use of its various parts for
+  specialized tasks that do not require the full expressive power of
+  SWSL-Rules.  The layers
+  of SWSL-Rules are shown in Figure 2.1.
+</p> 
+<div class="figure">
+  <img src="images/swsl-rules.jpg" alt="SWSL-Rules Layers" width="600" />
+  <p>Figure 2.1: The Layered Structure of SWSL-Rules</p>
+</div>
+
+<p>
+  The core of the language consists of the pure <em>Horn</em> subset of
+  SWSL-Rules.  The <em>monotonic Lloyd-Topor</em> (Mon LT) extension
+  [<cite><a href="#Lloyd87">Lloyd87</a></cite>] of the core permits
+  disjunctions in the rule body and conjunction and implication in the rule
+  head. <em>NAF</em> is an extension that allows negation in the rule body,
+  which is interpreted as negation-as-failure. More specifically, negation
+  is interpreted using the so called <em>well-founded semantics</em>
+  [<cite><a href="#well-founded">VanGelder91</a></cite>].  The
+  <em>nonmonotonic Lloyd-Topor</em> extension (Nonmon LT) further permits
+  quantifiers and implication in the rule body.  The <em>Courteous
+    rules</em> [<cite><a href="#Grosof99a">Grosof99a</a></cite>] extension
+  introduces two new features: restricted classical negation and
+  prioritized rules.
+  <em>HiLog</em> and <em>Frames</em> extend the language with a different
+  kind of ideas. HiLog [<cite><a href="#hilog">Chen93</a></cite>] enables
+  high degree of meta-programming by allowing variables to range over
+  predicate symbols, function symbols, and even formulas. Despite these
+  second-order features, the semantics of HiLog remains first-order and
+  tractable. It has been argued [<cite><a href="#hilog">Chen93</a></cite>]
+  that this semantics is more appropriate for many common tasks in
+  knowledge representation than the classical second-order
+  semantics. The <em>Frames</em> layer of SWSL-Rules introduces the most
+  common object-oriented features, such as the frame syntax, types, and
+  inheritance. The syntax and semantics of this extension is inspired by
+  F-logic [<cite><a href="#f-logic">Kifer95</a></cite>] and the followup
+  works [<cite><a href="#Frohn94">Frohn94</a></cite>,
+  <cite><a href="#well-founded-inheritance">Yang02</a></cite>,
+  <cite><a href="#reification">Yang03</a></cite>].
+  Finally, the <em>Reification</em> layer provides a mechanism for making
+  objects out of a large class of SWSL-Rules  formulas, which puts
+  such formulas into the domain of discourse and allows reasoning about them.
+</p> 
+<p>
+   All of the above layers have been implemented in one system or another and
+   have been found highly valuable in knowledge representation. For instance,
+   FLORA-2 [<cite><a
+      href="#flora-manual">Yang04</a></cite>] includes all layers except Courteous rules and Nonmonotonic
+   Lloyd-Topor. SweetRules [<cite><a
+      href="#Grosof2004b">Grosof2004b</a></cite>] supports Courteous extensions,
+   and Ontobroker [<cite><a href="#ontoprise">Ontobroker</a></cite>] supports
+   Nonmonotonic Lloyd-Topor and frames.
+</p>
+<p>
+  Four points should be noted about the layering structure of
+  SWSL-Rules.
+</p>
+<ol>  
+  <li>  
+     The lines in Figure 2.1 represent inclusion dependencies among layers.
+     For instance, Nonmonotonic LT layer includes both NAF and Monotonic LT.
+     Reification includes HiLog and Frames, Courteous includes NAF, etc.
+  </li>
+  <li>
+    The different branches of Figure 2.1 are orthogonal and they <em>all</em>
+    can be combined. For instance, the Frames and HiLog layers can be combined
+    with the Courteous and Nonmon LT layers. Likewise, the equality layer can
+    be combined with any other layer. Thus, SWSL-Rules is a unified
+    language that combines all the layers into a coherent and powerful
+    knowledge representation language.
+  </li>
+  <li>
+    Second, the Lloyd-Topor extensions and the Courteous rules extensions
+    endow SWSL-Rules with all the normal first-order
+    connectives. Therefore,
+    <em>syntactically</em> SWSL-Rules contains all the
+    connectives of the full first-order logic, which provides a bridge to
+    SWSL-FOL.
+    However, <em>semantically</em> the two sublanguages of SWSL are
+    incompatible. Their semantics agree only over a relatively small, but
+    useful subset of Horn rules. <a href="#sec-bridge">Section 5</a>
+    discusses how the two sublanguages can be used together.
+  </li>
+  <li>
+    SWSL-Rules distinguishes between connectives with the classical first-order
+    semantics and connectives that have nonmonotonic semantics. For instance,
+    it uses two different forms of negation&mdash;<code>naf</code>, for
+    negation-as-failure, and <code>neg</code>, for classical negation.
+    Likewise, it distinguishes between the classical
+    implication, <code>&lt;==</code>  and
+    <code>==&gt;</code>, and the if-then connective <code>:-</code> used
+    for rules.
+  </li>
+</ol>
+
+<p>
+  <em><b>SWSL-FOL</b></em>
+  is used to specify the dynamic properties of services, namely,
+  the processes that they are intended to carry out. SWSL-FOL also has
+  layered structure, which is depicted in Figure 2.2.
+</p>
+<div class="figure">
+  <img src="images/swsl-fol.jpg" alt="SWSL-FOL Layers" width="600"/>
+  <p>Figure 2.2: The Layers of SWSL-FOL and Their Relationship to SWSL-Rules</p>
+</div>
+
+<p>
+  The bottom of Figure 2.2 shows those layers of SWSL-Rules that have
+  monotonic semantics and therefore can be extended to full first-order
+  logic. Above each layer of SWSL-Rules, the figure shows corresponding
+  SWSL-FOL extension.  The most basic extension is <em>SWSL-FOL</em>.  The
+  other three layers,
+  <em>SWSL-FOL+Equality</em>,  <em>SWSL-FOL+HiLog</em>,
+  and <em>SWSL-FOL+Frames</em> extend <em>SWSL-FOL</em> both syntactically and
+  semantically. Some of these extensions can be further combined into more
+  powerful FOL languages. We discuss these issues in Section
+  <a href="#swsl-fol">SWSL-FOL: The First-order Subset of SWSL</a>.
+</p>
+
+
+<h2>
+  <a name="swsl-rules-basic-defs">
+    2.2 Basic Definitions
+  </a>
+</h2>
+<p>
+  In this section we define the basic syntactic components that are common
+  to all layers of SWSL-Rules. Additional syntax will be added as more
+  layers are introduced.
+</p>
+<p>
+  A <em>constant</em> is either a <em>numeric value</em>, a <em>symbol</em>,
+  a <em>string</em>, or a <em>URI</em>.
+</p> 
+<ul>
+  <li>
+    A <em><b>numeric value</b></em> is either an integer, a decimal,
+    or a floating point
+    number. For instance, <code>123</code>,
+    <code>34.9</code>, <code>45e-11</code>. See <a href="#swsl-datatypes">
+      the section on SWSL data types</a> for more details  
+    on the relationship between SWSL data types and 
+    <a
+       href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built-in-primitive-datatypes">the
+      primitive data types in XML Schema</a>.
+  </li>
+  <li> A <b><em>symbol</em></b> is a string of characters enclosed between a pair of
+    single quotes. For instance, <code>'abc#$%'</code>. Single quotes that are
+    part of a symbol are escaped with the backslash. For instance, the
+    symbol <code>a'bc''d</code> 
+    is represented as <code>'a\'bc\'\'d'</code>. The backslash is escaped with
+    another backslash.  Symbols that consist
+    exclusively of alphanumeric characters and the underscore (<code>_</code>)
+    and begin with a letter or an underscore do not need to be quoted.
+  </li>
+  <li>
+    <b><em>Strings</em></b> are sequences of characters that are enclosed between a
+    pair of double quote symbols, e.g., <code>"ab'%#cd"</code>. A double quote
+    symbol that
+    occurs in a string must be escaped with the backslash. For instance, the
+    string <code>ab"cd"""gf</code>  
+    is represented as <code>"ab\"cd\"\"\"gf"</code>.
+  </li>
+  <li>
+    A <b><em>SWSL-URI</em></b> can come either in the form of
+    a <em>full URI</em> or in the abbreviated form of an
+    <a href="#gl-sqname"><em>sQName</em></a>.
+
+    <p>
+      A <b><em>full URI</em></b> is a sequence of characters that has the form of
+      a URI, as specified by IETF, and is enclosed between <code>_"</code>
+      and <code>"</code>.      
+      For instance, <code>_"http://w3.org/"</code>.
+    </p>
+    <p>
+      An <b><em>sQName</em></b> has the
+      form <em>prefix</em>#<em>local-name</em>.  Here <i>prefix</i> is an
+      alphanumeric symbol that is defined to be a shortcut for a URI as
+      specified below; <i>local-name</i> is a string that must be acceptable as a
+      path component in a URI. If <em>local-name</em> contains non-alphanumeric
+      symbols, it must be enclosed in double quotes: e.g., "ab%20".  An sQName
+      is treated as a macro that expands into a full URI by concatenating
+      the expansion of <em>prefix</em> (the URI represented by the prefix) with
+      <em>local-name</em>. For the rationale behind the use of sQName see the
+      <a href="#gl-sqname">entry for sQName in the Glossary</a>.
+    </p>
+  </li>
+</ul>
+<p>
+  A <b><em>prefix declaration</em></b> is a statement of the form
+</p>
+<div class="exampleInner">  
+  &nbsp; &nbsp; &nbsp;
+  <code>prefix <em>prefix-name</em> = "<em>URI</em>".</code>
+</div>
+<p>
+  The prefix can then be used instead of the URI in sQNames. For instance,
+  if we define
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <code>prefix w3 = "http://www.w3.org/TR/".</code>
+</div>
+<p>
+  then the SWSL-URI <code>_"http://www.w3.org/TR/xquery/"</code> is considered
+  to be equivalent to <code>w3#"TR/xquery/"</code>
+</p> 
+<p>
+  A <b><em>variable</em></b> is an alphanumeric symbol (plus the underscore), which
+  is prefixed with the <code>?</code>-sign. Examples: <code>?_</code>, 
+  <code>?abc23</code>. 
+</p>
+
+<p>
+  A <b><em>first-order term</em></b>   is either a constant, a variable, or an
+  expression of the form <code>t(t<sub>1</sub>,...,t<sub>n</sub>)</code>,
+  where <code>t</code> is a constant
+  and <code>t<sub>1</sub>,...,t<sub>n</sub></code> are
+  first-order terms.  Here the constant <code>t</code> is said to be used as a
+  <b>function symbol</b> and <code>t<sub>1</sub>,...,t<sub>n</sub></code> are
+  used as <b>arguments</b>.   
+  Variable-free terms are also called <b><em>ground</em></b>.  
+</p> 
+<p>
+  Following Prolog, we also introduce special notation for lists:
+  <code>[t<sub>1</sub>,...,t<sub>n</sub>]</code> and
+  <code>[t<sub>1</sub>,...,t<sub>n</sub>|rest]</code>, where 
+  <code>t<sub>1</sub>,...,t<sub>n</sub></code> and <code>rest</code> are
+  first-order terms. The first form shows all the elements of the list
+  explicitly and the latter shows explicitly only a prefix of the list and uses
+  the first-order term <code>rest</code> to represent the tail. 
+  We should note that, like in Prolog, this is just a convenient shorthand
+  notation. Lists are nothing but first-order terms that are representable with
+  function symbols. For instance, if <code>cons</code> denotes a function symbol
+  that prepends a term to the head of a list then <code>[a,b,c]</code> is
+  represented as first-order term <code>cons(a,cons(b,c))</code>.   
+</p>
+<p>
+  A <b><em>first-order atomic formula</em></b>   has the same form as
+  first-order terms
+  except that a variable cannot be a first-order atomic formula.
+  We do not distinguish predicates as a separate class of constants, as this is
+  usually not necessary, since first-order atomic formulas
+  can be distinguished from first-order terms by the context in which they
+  appear.
+</p> 
+<p>
+  As many other rule-based languages, SWSL-Rules has a
+  special <b><em>unification operator</em></b>, denoted <code>=</code>.
+  The semantics of the unification operator is fixed and therefore
+  it <em>cannot</em> appear in a rule head.
+  An atomic formula of the form
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <em>term<sub>1</sub></em> <code>=</code> <em>term<sub>2</sub></em>
+</div>
+<p>
+  where both terms are ground, is true if and only if the two terms are
+  identical. If <em>term<sub>1</sub></em> and <em>term<sub>2</sub></em>
+  have variables, then an occurrence of the above formula in a rule body is
+  interpreted as a test of whether a substitution exists that can make the
+  two terms identical.  The <code>=</code> predicate is related to the
+  equality predicate <code>:=:</code> introduced by
+  the <a href="#equality-layer">Equality Layer</a>, which is discussed
+  later.
+</p>
+<p>
+  To test that two terms <em>do not</em> unify SWSL-Rules uses the
+  <em><b>disunification</b></em> operator <code>!=</code>. For ground
+  terms, <em>term<sub>1</sub></em> <code>!=</code> <em>term<sub>2</sub></em>
+  iff the two terms are not identical. For non-ground terms, this is
+  true if the two terms do not unify.
+</p>
+<p>
+  A <b><em>conjunctive formula</em></b> is either an atomic formula or a formula of
+  the form
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <em>atomic formula</em> &nbsp; <code>and</code> &nbsp; <em>conjunctive formula</em> 
+</div>
+<p>
+  where <code>and</code> is a conjunction connective. 
+  Here and henceforth in similar definitions, italicized words will be
+  meta-symbols that denote classes of syntactic entities.
+  For instance, <em>atomic formula</em> above   means ``any
+  atomic formula.''
+  An <b><em>and/or formula</em></b>  is either a conjunctive formula or a
+  formula of either of the forms
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <em>conjunctive formula</em> &nbsp; <code>or</code> &nbsp; <em>and/or formula</em> 
+  <br/>
+  &nbsp; &nbsp; &nbsp;
+  <em>and/or formula</em> &nbsp; <code>and</code> &nbsp; <em>and/or formula</em> 
+</div>
+<p>
+   In other words, an and/or formula can be an arbitrary Boolean combination of
+   atomic formulas that involves the connectives <code>and</code>
+   and <code>or</code>.  
+</p>
+
+<p>
+  <em><b>Comments</b></em>. SWSL-Rules has two kinds of comments: single line
+  comments and multiline comments. The syntax is the same as in Java.
+  A <b><em>single-line comment</em></b> is any text that starts with
+  a <code>//</code> and continues to the end of the current
+  line. If <code>//</code> starts within a string ("...") or a symbol ('...')
+  then these characters are considered to be part of the string or the symbol,
+  and in this case they do not start a comment.  A <b><em>multiline
+      comment</em></b> begins with <code>/*</code> and end with a
+  matching <code>*/</code>. The combination <code>/*</code> does not start a
+  comment if it appears inside a string or a symbol. The <code>/*</code>
+  - <code>*/</code> pairs can be nested and a nested occurrence
+  of <code>*/</code> does not close the comment. For instance, in
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <code>/* start /* foobar */ end */</code>
+</div>
+<p>
+  only the second <code>*/</code> closes the comment.
+</p>
+
+<h2>
+  <a name="swsl-rules-horn">
+    2.3 Horn Rules
+  </a>
+</h2>
+<p>
+  A <em><b>Horn rule</b></em> has the form
+</p> 
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <code><em>head</em>   :- <em>body</em>.</code>   
+</div>
+<p>
+  where <em>head</em> is an atomic formula and <em>body</em> is a
+  conjunctive formula.  
+</p>
+<p>
+  A <b><em>Horn query</em></b>   is of the form
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <code>?- <em>query</em>.</code>  
+</div>
+<p>
+  where <em>query</em> is a conjunctive formula. 
+</p> 
+<p> 
+  Rules can be recursive, i.e., the predicate in the head of a rule
+  can occur (with the same arity) in the body of the rule; or they can be
+  mutually recursive, i.e., a head predicate can depend on itself through a
+  sequence of rules.
+</p> 
+<p>
+  All variables in a rule are
+  considered <em>implicitly</em> quantified with <code>&forall;</code>
+  outside of the rule, i.e., <code>&forall;?X,?Y,...(<em>head</em>
+    :- <em>body</em>)</code>. A variable that occurs in the body of a rule but
+  not its head can be equivalently considered as being
+  implicitly existentially quantified in the body. For instance, 
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    &forall;?X,?Y ( p(?X) :- q(?X,?Y) )
+  </code>
+</div>
+<p>
+  is equivalent to
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    &forall;?X ( p(?X) :-  &exist;?Y q(?X,?Y) )
+  </code>
+</div>
+<p>
+  Sets of Horn rules have the nice property that their semantics can be
+  characterized in three different and independent ways: through the regular
+  first-order entailment, as a minimal model (which in this case happens to be
+  the intersection of all Herbrand models of the rule set) and as a least
+  fixpoint of the immediate consequence operator corresponding to the rule set
+  [<cite><a href="#Lloyd87">Lloyd87</a></cite>].
+</p> 
+
+<h2>
+  <a name="swsl-rules-mon-lt">
+    2.4 The Monotonic Lloyd-Topor Layer
+  </a>
+</h2>
+
+<p>
+  This layer extends the Horn layer with three kinds of syntactic sugar:
+</p>
+<ol>
+  <li>
+    Disjunction in the rule body
+  </li>
+  <li>  
+    Conjunction in the rule head
+  </li>
+  <li>
+    It introduces the new symbols of classical implication and allows their use
+    in the rule head.
+  </li>
+</ol>
+<p>
+  A <b><em>classical implication</em></b>   is a statement of either of the following
+  forms:  
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <code><em>formula<sub>1</sub></em> ==&gt; <em>formula<sub>2</sub></em></code>   
+  <br/>
+  &nbsp; &nbsp; &nbsp;
+  <code><em>formula<sub>1</sub></em> &lt;== <em>formula<sub>2</sub></em></code>   
+</div>
+<p>
+  The <b><em>Lloyd-Topor implication</em></b> (abbr., LT implication) is a
+  special case of the classical implication where the formula in the head is a
+  conjunction of atomic formulas and the formula in the body can contain both
+  conjunctions and disjunctions of atomic formulas.
+</p> 
+<p>
+  A <b><em>classical bi-implication</em></b> is a statement of the
+  form 
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <code><em>formula<sub>1</sub></em> &lt;==&gt; <em>formula<sub>2</sub></em></code>   
+</div>
+<p>
+  The <b><em>Lloyd-Topor bi-implication</em></b> (abbr., LT bi-implication) is a
+  special case of the classical bi-implication where both formulas are
+  conjunctions of atomic formulas.
+</p>
+<p>
+  The monotonic LT layer extends Horn rules in the following way. A rule still
+  has the form
+</p>
+<div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+  <code><em>head</em> :- <em>body</em>.</code>   
+</div>
+<p>
+  but <em>head</em> can now be a conjunction of atomic formulas and/or LT
+  implications (including bi-implications) and <em>body</em> can consist of
+  atomic formulas combined in arbitrary ways using the <code>and</code> and
+  the <code>or</code> connectives.
+</p> 
+
+<p>
+  This extension is considered a syntactic sugar, since semantically any
+  set of extended rules reduces to another set of pure Horn rules as follows:
+</p>
+<ul>  
+  <li>
+    <code><em>head</em>  :- <em>body<sub>1</sub></em> or <em>body<sub>2</sub></em>.</code>
+    <p>
+      reduces to
+    </p>
+    <div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+      <code><em>head</em>  :- <em>body<sub>1</sub></em>.</code>
+      <br/>
+  &nbsp; &nbsp; &nbsp;
+      <code><em>head</em>  :- <em>body<sub>2</sub></em>.</code>
+    </div>
+  </li>
+  <li>
+    <code><em>head<sub>1</sub></em> and <em>head<sub>2</sub></em> :- <em>body</em>.</code>
+    <p>
+      reduces to
+    </p>
+    <div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+      <code><em>head<sub>1</sub></em> :- <em>body</em>.</code>
+      <br/>
+  &nbsp; &nbsp; &nbsp;
+      <code><em>head<sub>2</sub></em> :- <em>body</em>.</code>
+    </div>
+  </li>
+  <li>
+    <code>(<em>head<sub>1</sub></em> &lt;== <em>head<sub>2</sub></em>) :- <em>body</em>.</code>
+    <p>
+      reduces to
+    </p>
+    <div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+      <code><em>head<sub>1</sub></em>  :- <em>head<sub>2</sub></em> and <em>body</em>.</code>
+    </div>
+  </li>
+  <li>
+    <code>(<em>head<sub>1</sub></em>  ==&gt; <em>head<sub>2</sub></em>) :- <em>body</em>.</code>
+    <p>
+      reduces to
+    </p>
+    <div class="exampleInner">
+  &nbsp; &nbsp; &nbsp;
+      <code><em>head<sub>2</sub></em>  :- <em>head<sub>1</sub></em> and <em>body</em>.</code>
+    </div>
+  </li>
+</ul>
+<p>
+  Complex formulas in the head are broken down using the last three
+  reductions.
+  Rule bodies that contain both disjunctions and conjunctions are first
+  converted into disjunctive normal form and then are broken down using the
+  first reduction rule.
+</p> 
+
+
+<h2>
+  <a name="swsl-rules-naf">
+    2.5 The NAF Layer
+  </a>
+</h2>
+
+<p>
+  The NAF layer add the negation-as-failure symbol, <code>naf</code>. 
+  For instance,
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    p(?X,?Y) :- q(?X,?Z) and naf r(?Z,?Y).
+  </code>
+</div>
+<p>
+  In SWSL-Rules we adopt the <b><em>well-founded semantics</em></b>
+  [<cite><a href="#well-founded">VanGelder91</a></cite>] as a
+  way to interpret negation as failure. This semantics has good computational
+  properties when no first-order terms of arity greater than 0 are involved, and
+  the well-founded model is always defined and is unique. This model is
+  three-valued, so some facts may have the ``unknown'' truth value.
+</p>
+
+<p>
+  We should note one important convention regarding the treatment of variables
+ that occur under the scope of <code>naf</code> and that do not occur anywhere
+ outside of <code>naf</code> in the same rule. The well-founded semantics was
+ defined only for ground atoms and the interpretation of unbound variables was
+ left open. Therefore, if <code>Z</code> does not occur elsewhere in the rule
+ then the meaning of 
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    ... :- ... and  naf r(?X) and ...
+  </code>
+</div>
+<p>
+ can be defined as
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    ... :- ... and &exist; X (naf r(?X)) and ...
+  </code>
+</div>
+<p>
+ or as
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    ... :- ... and &forall; X (naf r(?X)) and ...
+  </code>
+</div>
+
+<p>
+ In practice, the second interpretation is preferred, and this is
+ also a convention used in SWSL-Rules.
+</p>
+
+<h2>
+  <a name="swsl-rules-nonmon-lt">
+    2.6 The Nonmonotonic Lloyd-Topor Layer
+  </a>
+</h2>
+
+<p>
+  This layer introduces explicit bounded quantifiers (both <code>exist</code>
+  and <code>forall</code>), classical implication
+  symbols, <code>&lt;==</code> and <code>==&gt;</code>, and the
+  bi-implication symbol <code>&lt;==&gt;</code> in the rule body.  This essentially
+  permits arbitrary first-order-looking formulas in the body of SWSL-rules. We
+  say "first-order-looking" because it should be kept in mind that the
+  semantics of SWSL-Rules is <em>not</em> first-order and, for example,
+  classical implication <code>A &lt;== B</code> is interpreted in a
+  non-classical way: as <code>(A or naf B)</code> rather than <code>(A or neg
+  B)</code> (where <code>neg</code> denotes classical negation).
+</p>
+<p>
+  Recall that without explicit quantification, all variables in a rule are
+  considered <em>implicitly</em> quantified with <code>forall</code>
+  outside of the rule, i.e., <code>forall ?X,?Y,...(<em>head</em>
+    :- <em>body</em>)</code>. A variable that occurs in the body of a rule but
+  not its head can be equivalently considered as being
+  implicitly existentially quantified in the body. For instance, 
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    forall ?X,?Y ( p(?X) :- q(?X,?Y) )
+  </code>
+</div>
+<p>
+  is equivalent to
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    forall ?X ( p(?X) :-  exist ?Y q(?X,?Y) )
+  </code>
+</div>
+<p>
+  In the scope of the <code>naf</code> operator, unbound variables have
+  a different interpretation under negation as failure. For instance,
+  if <code>?X</code> is bound and <code>?Y</code> is unbound then  
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    p(?X) :- naf q(?X,?Y)
+  </code>
+</div>
+<p>
+  is actually supposed to mean
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    forall ?X ( p(?X) :-  naf exist ?Y q(?X,?Y) )
+  </code>
+</div>
+<p>
+  If we allow explicit universal quantification in the rule bodies then 
+  implicit existential quantification is not enough and explicit existential
+  quantifier is needed. This is because <code>forall</code>
+  and <code>exist</code> do not
+  commute and so, for example, <code>forall ?X exist ?Y</code> and
+  <code>exist ?Y forall ?X</code> mean different things. If only implicit
+  existential quantification were available, it would not be possible to
+  differentiate between the above two forms.
+</p>
+<p>
+  Formally, the Nonmonotonic Lloyd-Topor layer permits the following kinds of
+  rules. The rule <em><b>heads</b></em> are the same as in the monotonic LT extension. The rule
+  <em><b>bodies</b></em> are defined as follows.
+</p>
+<ul>  
+  <li>
+    Any atomic formula is a legal rule body
+  </li>
+  <li>  
+    If <em>f</em> and <em>g</em> are legal rule bodies then so are
+    <ul>
+      <li>
+	&nbsp; <em>f</em> <code>and</code> <em>g</em>
+      </li>
+      <li>
+	&nbsp; <em>f</em> <code>or</code> <em>g</em>
+      </li>
+      <li>
+	&nbsp; <code>naf</code> <em>f</em>  
+      </li>
+      <li>     
+	&nbsp; <em>f</em> <code>==&gt;</code> <em>g</em>
+      </li>
+      <li>     
+	&nbsp; <em>f</em> <code>&lt;==</code> <em>g</em>
+      </li>
+      <li>     
+	&nbsp; <em>f</em> <code>&lt;==&gt;</code> <em>g</em>
+      </li>
+    </ul>
+  </li>
+  <li>
+    If <em>f</em> is a legal rule body then  
+    so is
+    <ul>
+      <li>
+	&nbsp; <code>exist ?X<sub>1</sub>,...,?X<sub>n</sub>(<em>f</em>)</code>  
+      </li>
+    </ul>
+    where <code>?X<sub>1</sub></code>, ..., <code>?X<sub>n</sub></code> are variables that occur
+    <i>positively</i> (defined below) in <em>f</em>.
+  </li>
+  <li>
+    If <em>g<sub>1</sub></em>, <em>g<sub>2</sub></em> are legal rule bodies then
+    <ul>
+      <li>
+	&nbsp; <code>forall
+	  ?X<sub>1</sub>,...,?X<sub>n</sub>(</code><em>g<sub>1</sub></em> <code>==&gt;</code> <em>g<sub>2</sub></em><code>)</code>
+      </li>
+      <li>
+	&nbsp; <code>forall
+	  ?X<sub>1</sub>,...,?X<sub>n</sub>(</code><em>g<sub>2</sub></em> <code>&lt;==</code> <em>g<sub>1</sub></em><code>)</code>
+      </li>
+    </ul>
+    are legal rule bodies provided that <code>?X<sub>1</sub></code>,
+    ..., <code>?X<sub>n</sub></code> occur <i>positively</i> in <em>g<sub>1</sub></em>
+  </li>
+</ul>
+<p>
+ <em><b>Positive occurrence</b></em> of a free variable in a formula is defined
+ as follows:
+</p>
+<ul> 
+  <li>
+     Any variable occurs positively in an atomic formula
+  </li>
+<li>  
+   A free variable occurs positively in <em>f</em> <code>and</code> <em>g</em>
+   iff it occurs positively in either <em>f</em> or <em>g</em>.
+</li>
+<li>
+   A free variable occurs positively in <em>f</em> <code>or</code> <em>g</em>
+   iff it occurs positively in both <em>f</em> and <em>g</em>.
+</li>
+<li>
+   A free variable occurs positively
+   in <em>f</em> <code>==&gt;</code> <em>g</em> iff it occurs positively
+   in <em>g</em>. Similarly for <em>f</em> <code>&lt;==</code> <em>g</em>,
+   except that now the variable must occur positively in <em>f</em>.
+   Since <em>f</em> <code>&lt;==&gt;</code> <em>g</em> is a conjunction of two
+   clauses, the definition of positive occurrence follows from the previous
+   cases: the variable must occur positively in <em>f</em> or <em>g</em>.
+</li>
+<li>
+   A free variable occurs positively in <code>exist
+   ?X<sub>1</sub>,...,?X<sub>n</sub>(<em>f</em>)</code> or
+   <code>forall ?X<sub>1</sub>,...,?X<sub>n</sub>(<em>f</em>)</code> iff it
+   occurs positively in <em>f</em>. 
+</li>
+</ul>
+<p>
+  The semantics of Lloyd-Topor extensions is defined via a transformation into
+  the NAF layer as shown below. The theory behind this transformation is
+  described in [<cite><a href="#Lloyd87">Lloyd87</a></cite>].
+</p>
+<p>
+ <em><b>Lloyd-Topor transformation</b></em>: The transformation is designed to
+ eliminate the extended forms that may occur in the bodies of
+ the rules compared to the NAF layer. These extended forms involve the various
+ types of implication and the explicit quantifiers. Note that the rules, below,
+ must be applied top-down, that is, to the conjuncts that appear directly in
+ the rule body. For instance, if the rule body looks like
+</p>
+<div class="exampleInner">
+    &nbsp; &nbsp; &nbsp;
+  ... <code>:-</code> ... <code>and</code>  <code>((forall X exist Y (foo(Y,Y) ==&gt; bar(X,Z)))
+  &lt;== foobar(Z))</code> <code>and</code> ...
+</div>
+<p>
+ then one should first apply the rule for <code>&lt;==</code>, then the
+ rules for <code>forall</code> should be applied to the result, and finally the
+ rules for <code>exist</code>.  
+</p>
+ 
+<ul> 
+  <li>
+    <p>
+    Let the rule be of the form
+    </p>
+    <div class="exampleInner">
+      &nbsp; &nbsp; &nbsp;
+      <em>head</em> <code>:-</code>   
+         <i>body<sub>1</sub></i> <code>and</code> (<em>f</em> ==&gt; <em>g</em>)
+	  <code>and</code> <i>body<sub>2</sub></i>.
+    </div>
+     <p>
+       Then the LT transformation replaces it with the following pair of rules:
+     </p>
+     <div class="exampleInner">
+      &nbsp; &nbsp; &nbsp;
+       <em>head</em> <code>:-</code>   
+          <i>body<sub>1</sub></i> <code>and</code>    <code>naf</code> <em>f</em> 
+	  <code>and</code>   <i>body<sub>2</sub></i>.
+      <br/>
+      &nbsp; &nbsp; &nbsp;
+       <em>head</em> <code>:-</code>  
+          <i>body<sub>1</sub></i> <code>and</code>    <em>g</em>
+	  <code>and</code>   <i>body<sub>2</sub></i>.
+     </div>
+     <p>
+       The transformations for <tt>&lt;==</tt> and <tt>&lt;==&gt;</tt> are similar.
+     </p>
+  </li>
+  <li>  
+    <p>
+      Let the rule be
+    </p>
+    <div class="exampleInner">
+    &nbsp; &nbsp; &nbsp;
+    <em>head</em> <code>:-</code>   
+          <i>body<sub>1</sub></i> <code>and</code> 
+	  <code>forall
+	    ?X<sub>1</sub>,...,?X<sub>n</sub>(</code><em>g<sub>1</sub></em> <code>==&gt;</code> <em>g<sub>2</sub></em><code>)</code>  
+	  <code>and</code> <i>body<sub>2</sub></i>.
+    </div>
+      where <code>?X<sub>1</sub>,...,?X<sub>n</sub></code> are free variables
+      that occur positively in <em>g<sub>1</sub></em>.
+     <p>
+       The LT transformation replaces this rule with the following pair of
+       rules, where
+       <code>q(?X'<sub>1</sub>,...,?X'<sub>n</sub>)</code> is a <em>new</em>
+       predicate of arity <code>n</code>
+       and <code>?X'<sub>1</sub>,...,?X'<sub>n</sub></code> are new variables:   
+     </p>
+     <div class="exampleInner">
+    &nbsp; &nbsp; &nbsp;
+       <em>head</em> <code>:-</code>   
+          <i>body<sub>1</sub></i> <code>and</code> 
+	  <code>naf</code> 
+	  <code>q(?X'<sub>1</sub>,...,?X'<sub>n</sub>)</code>
+	  <code>and</code>   <i>body<sub>2</sub></i>
+      <br/>
+    &nbsp; &nbsp; &nbsp;
+       <code>q(?X<sub>1</sub>,...,?X<sub>n</sub>)</code> <code>:-</code> 
+          <em>g<sub>1</sub></em> <code>and</code> <code>naf</code> <em>g<sub>2</sub></em>.    
+     </div>
+     <p>
+       The transformation for <tt>&lt;==</tt> is similar. 
+     </p>
+  </li>
+  <li>  
+    <p>
+    Let the rule be
+    </p>
+    <div class="exampleInner">
+    &nbsp; &nbsp; &nbsp;
+    <em>head</em> <code>:-</code>   
+          <i>body<sub>1</sub></i> <code>and</code> 
+	  <code>exist
+	    ?X<sub>1</sub>,...,?X<sub>n</sub>(</code><em>f</em><code>)</code>  
+	  <code>and</code> <i>body<sub>2</sub></i>.
+     </div>
+     <p>
+      where <code>?X<sub>1</sub>,...,?X<sub>n</sub></code> are free variables
+      that occur positively in <em>f</em>.
+      </p>
+     <p>
+       The LT transformation replaces this rule with the following:
+     </p>
+     <div class="exampleInner">
+       &nbsp; &nbsp; &nbsp;
+       <em>head</em> <code>:-</code>   
+          <i>body<sub>1</sub></i> <code>and</code> 
+	  <em>f</em> 
+	  <code>and</code>   <i>body<sub>2</sub></i>
+      </div>
+      <p>
+	That is, explicit existential quantification can be replaced in this
+	case with implicit quantification.
+      </p>
+  </li>
+</ul>
+<p>
+ The above transformations are inspired by (but are not derived from, due to a
+ significant difference between <code>naf</code> and <code>neg</code>!) the
+ classical tautologies <code>(<em>f</em> ==&gt; <em>g</em>) &lt;==&gt;
+ (neg <em>f</em> or <em>g</em>)</code> &nbsp; and &nbsp; <code>forall X (f) &lt;==&gt;
+ neg exist neg X (f)</code>, and by the fact mentioned in
+ section <a href="#swsl-rules-naf">The NAF Layer</a> that <code>naf
+ p(X)</code>, when <code>X</code> does not occur anywhere else in the rule, is
+ interpreted as <code>forall X (naf p(X))</code>.
+</p>
+
+
+<h2>
+  <a name="swsl-rules-courteous">
+    2.7 The Courteous Rules Layer
+  </a>
+</h2>
+
+    <p>
+      The courteous layer introduces <em>prioritized conflict handling</em>.  
+      Four new features are introduced into the syntax:  
+    </p>
+    <ul>
+      <li> <em><b>rule labels</b></em>, which declare names 
+	used for prioritization between rules; 
+      </li>
+      <li> <em><b>classical negation</b></em>  of atoms;
+      </li>
+      <li> a syntactically reserved 
+	<em><b>prioritization predicate</b></em>,
+	which is used to specify the prioritization
+	ordering between rules;
+      </li>
+      <li> mutual exclusion (<b><em>mutex</em></b>) statements,
+	which specify the scope of what constitutes conflict.
+      </li>
+    </ul>
+    <p>
+      The theory behind the courteous logic programs is described in 
+      [<cite><a href="#Grosof2004a">Grosof2004a</a></cite>, 
+      <cite><a href="#Grosof99a">Grosof99a</a></cite>].
+    </p>
+    <p> The courteous layer builds upon the <a href="#swsl-rules-naf">NAF layer
+      of SWSL.</a>
+    </p>  
+    <p>
+      <b><em>Rule Labels</em></b>: Each rule has an optional label, which is
+      used for specifying prioritization in conjunction with the
+      prioritization predicate (below).  The syntactic form of a rule label is
+      a term enclosed by a pair of braces: { ... }.  Thus, a <em><b>labeled
+      rule</b></em> has the following form:    
+    </p>
+    <div class="exampleInner">
+      <code>
+	{<em>label</em>}   <em>head</em>   :- <em>body</em>.
+      </code>   
+    </div>
+    <p>
+      A <em>label</em> is a term, which may have variables.  If
+      so, these variables are interpreted as having the same scope as the
+      implicitly quantified variables appearing in the rule expression.  E.g.,
+      in the rule
+    </p>
+    <div class="exampleInner">
+      <code>{specialoffer(?X)}   
+        pricediscount(?X,tenpercent) :- loyalcustomer(?X).</code>
+    </div>
+    <p>
+      the label <code>specialoffer(?X)</code> names the instance of the 
+      rule corresponding to the instance <code>?X</code>.  
+      However, the label term may not itself be a variable, so
+      the following is illegal syntax:   
+    </p>
+    <div class="exampleInner">
+      <code>{?X}   
+        pricediscount(?X,tenpercent) :- loyalcustomer(?X).</code>
+    </div>
+    <p>
+      In general, labels are not unique; two or more rules (or instances of rules)
+      may have the same label
+      term.  However, often it is convenient to specify rule labels uniquely
+      within a particular given rulebase.  
+    </p>
+    <p>
+      <em><b>Classical Negation</b></em>: The classical negation
+      connective, <code>neg</code>, is permitted to appear within the head
+      and/or the body of a rule.  Its scope is restricted to be an atomic
+      formula, however.  Thus classical negation is restricted to appearing
+      within a classical literal. For example:
+    </p>
+    <div class="exampleInner">
+      <code>
+	neg boy(?X) :- humanchild(?X) and neg male(?X). 
+	<br/>
+	{t14(?X,?Y)} 
+        p(?X,?Y) :- q(?X,?Y) and naf neg r(?X,?Y).  
+      </code>
+    </div>
+    <p>
+      However, the following example is illegal syntax because <code>neg</code>
+      negates a non-atomic formula.
+    </p>
+    <div class="exampleInner">
+      <code>
+	u(?X) :- t(?X) and neg naf s(?X).  
+      </code>
+    </div>
+<p>
+Note that the classical negation connective (<code>neg</code>) is also used in
+SWSL-FOL, the first-order subset of SWSL-Language.  However, the semantics of
+classical negation in Courteous LP (and thus SWSL-Rules) is somewhat weaker
+than in FOL (and thus SWSL-FOL).
+</p> 
+<p>
+  <em><b>Prioritization Predicate</b></em>:  
+  The prioritization predicate 
+  <code>_"http://www.ruleml.org/spec/vocab/#overrides"</code>
+  specifies the prioritization ordering
+  between rule labels, and thus between the rules labeled by those rule labels.
+  The name of the prioritization predicate is syntactically reserved.
+  In this document we will use the following prefix declaration
+  </p>
+<div class="exampleInner">
+  <code>
+    prefix r = "http://www.ruleml.org/spec/vocab/#"
+  </code>
+</div>
+<p>
+   and abbreviate the prioritization predicate using the sQName
+   <code>r#overrides</code>.
+   In the future, we might adopt a different prefix, such as
+   <code>"http://www.swsi.org/swsl/reserved/#"</code>.
+</p>
+<p>
+  A statement <code>r#overrides(label1,label2)</code> indicates that the first
+  argument, <code>label1</code>, has higher priority than the second argument,
+  <code>label2</code>.  For example,
+  consider the following rulebase RBC1:  
+</p>
+<div class="exampleInner">
+  <code>
+    {rep} neg pacifist(?X) :- republican(?X).
+    <br/>
+    {qua} pacifist(?X) :- quaker(?X).    
+    <br/>
+    {pri1} r#overrides(rep,qua).
+  </code>
+</div>
+<p>
+  Here, the prioritization atom <code>r#overrides(rep,qua)</code>  
+  specifies that <code>rep</code> has higher priority than <code>qua</code>.
+  Continuing that example, suppose the rulebase RBC1 also includes the
+  facts:
+</p>
+<div class="exampleInner">
+  <code>
+    {fac1} republican(nixon).
+    <br/>
+    {fac2} quaker(nixon).
+  </code>
+</div>
+<p>
+  Then, under the courteous semantics, the literal
+  <code>neg pacifist(nixon)</code> is entailed as a conclusion, and the literal
+  <code>pacifist(nixon)</code> is <em>not</em> entailed as a conclusion, 
+  because the 
+  rule labeled <code>rep</code> has higher priority than the rule labeled
+  <code>qua</code>.  
+</p>
+<p>
+  The prioritization predicate <code>r#overrides</code>, while its name is
+  syntactically reserved, is otherwise an ordinary predicate -- it can appear
+  freely in rules in the head and/or body.  This is useful for reasoning about
+  the prioritization ordering.
+</p>
+
+<p>
+  <em><b>Mutual exclusion (mutex) statements</b></em>: The scope of what
+  constitutes conflict is specified by mutual exclusion (mutex) statements,
+  which are part of the rule base and can be viewed as a kind of integrity
+  constraint.  Each such statement says that it is contradictory for a
+  particular pair of literals (known as the "opposers") to be inferred, if an
+  optional condition (known as the "given") holds true.  The courteous LP
+  semantics enforce that the set of sanctioned conclusions respects (i.e., is
+  consistent with) all the mutexes within the given rulebase.  Common uses for
+  mutexes include specifying that two unary predicates are disjoint, or
+  that a relation is functional; examples of these uses are given
+  below.
+</p>
+<p>
+  A mutex without a given condition has the following syntactic form:
+</p>
+<div class="exampleInner">
+  <code>
+    !- lit1 and lit2 . 
+  </code>
+</div>
+<p>
+  where <code>lit1</code> and <code>lit2</code> are classical literals.  
+  Intuitively, this statement means that it is a contradiction to derive both
+  <code>lit1</code> and <code>lit2</code>.  
+  For example:
+</p>
+<div class="exampleInner">
+  <code>
+    !- pricediscount(?CUST,fivepercent) and pricediscount(?CUST,tenpercent). 
+  </code>
+</div>
+<p>
+  says that it is a contradiction to conclude that the discount offered
+  to the same customer <code>?CUST</code> is both <code>fivepercent</code> and 
+  <code>tenpercent</code>.  As another example,
+</p>
+<div class="exampleInner">
+  <code>
+    !- lion(?X) and elephant(?X).
+  </code>
+</div>
+<p>
+  specifies that it is a contradiction to conclude that 
+  the same individual is both a lion and an elephant.
+</p>
+<p>
+  A mutex with a <em>condition</em> has the following syntactic form:
+</p>
+<div class="exampleInner">
+  <code>
+    !- lit1 and lit2 | <em>condition</em> . 
+  </code>
+</div>
+<p>
+  Here
+  <code><em>condition</em></code> is syntactically similar to a rule body, 
+  and <code>lit1</code> and <code>lit2</code> are classical literals.  
+  The symbol "<code>|</code>" is a language keyword, which separates the
+  oposing literals from the condition. For example:
+</p>
+<div class="exampleInner">
+  <code>
+    !- pricediscount(?CUST,?Y) and pricediscount(?CUST,?Z) 
+    | ?Y != ?Z. 
+  </code>
+</div>
+<p>
+  says that it is a contradiction to conclude that the discount offered
+  to the same customer, <code>?CUST</code>, is both <code>?Y</code> and 
+  <code>?Z</code> <em>if</em> <code>?Y</code> and <code>?Z</code> are distinct
+  values.  This means that the relation
+  <code>pricediscount</code> is functional.  
+</p>
+<p>
+  Courteous LP also assumes that there is an implicit mutex between
+  each atom <code><em>A</em></code> and its classical negation 
+  <code>neg <em>A</em></code>.  This implicit mutex is also known as 
+  a "classical" mutex.
+</p>
+<!--
+    *** This has already been said in the intro to SWSL ***
+<p>
+  <b>Tractable Computational Complexity:</b>
+  Adding the courteous feature to normal LP under the well founded semantics
+  (i.e., adding the courteous layer to the the NAF layer of SWSL) 
+  does not change the qualitative worst-case complexity
+  of the knowledge representation.  In particular, courteous LP is 
+  tractable (polynomial-time) under the Datalog VB restriction.
+  Here, Datalog means no logical functions of non-zero arity, and 
+  VB means that 
+  there is at most a constant (bounded) number of logical variables per rule.  
+</p>
+-->
+<!--
+    *** Implementations have already been mentioned in the intro ***
+<p>
+  <b>Commercial and Open Source Implementations Available: </b>
+  Courteous LP's have been available in a commercially released rule system 
+  (IBM CommonRules) and used in commercial applications since 1999.
+  The SweetRules V2.0 open source Java toolkit released in Dec. 2004 
+  [<cite><a href="#Grosof2004b">Grosof2004b</a></cite>] 
+  implements 
+  the courteous feature as an extension to several popular rule systems, 
+  including Jess and XSB as well as CommonRules.   
+</p>
+-->
+
+
+
+
+<h2>
+  <a name="swsl-rules-hilog">
+    2.8 The HiLog Layer
+  </a>
+</h2>
+<p>
+  HiLog [<cite><a href="#hilog">Chen93</a></cite>] extends the first-order
+  syntax with higher-order features.  In particular, it allows variables to
+  range over function symbols, predicate symbols, and even atomic
+  formulas. These features are useful for supporting reification and in cases
+  when an agent needs to explore the structure of an unknown piece of
+  knowledge.  HiLog further supports parameterized predicates, which are useful
+  for generic definitions (illustrated below).
+</p>
+
+<ul>
+  <li>
+    <b><em>HiLog term</em></b> (abbr., H-term): A HiLog term is either a
+    first-order term or an expression of the following
+    form: <code>t(t<sub>1</sub>,...,t<sub>n</sub>)</code>, where
+    <code>t</code>, <code>t<sub>1</sub>, ..., t<sub>n</sub></code> are
+    HiLog terms.
+  </li>
+</ul>
+<p>
+  This definition may seem quite similar to the definition of complex
+  first-order terms, but, in fact, it defines a vastly larger set of
+  expressions. In first-order terms, <code>t</code> must be a constant, while in
+  HiLog it can be any HiLog term. In particular, it can be a variable or even
+  another first-order term. For instance, the following are legal HiLog terms:
+</p>
+<ul> 
+  <li>
+    <em>Regular first-order terms</em>:  
+    &nbsp;
+    <code>c, f(a,?X), ?X</code>
+  </li>
+  <li>
+    <em>Variables over function symbols</em>:  
+    &nbsp;
+    <code>?X(a,?Y), ?X(a,?Y(?X))</code>
+  </li>
+  <li>
+    <em>Parameterized function symbols</em>:  
+    &nbsp;
+    <code>f(?X,a)(b,?X(c)), ?Z(?X,a)(b,?X(?Y)(d)), ?Z(f)(g,a)(p,?X)</code>
+  </li>
+</ul>
+<p>
+  We will see soon how such terms can be useful in knowledge representation.
+</p>
+
+<ul>
+  <li>
+    <b><em>HiLog atomic formula</em></b>: Any HiLog term is also a HiLog
+    atomic formula.
+  </li>
+</ul>
+<p>
+  Thus, expressions like <code>?X(a,?Y(?X))</code> are atomic
+  formulas and thus can have truth values (when the variables are
+  instantiated or quantified). What is less obvious is that
+  <code>?X</code> is also an atomic formula.  What all this means is that
+  atomic formulas are automatically reified and can be passed around by binding
+  them to variables and evaluated. For instance, the following HiLog query
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    ?- q(?X) and ?X.
+    <br/> 
+  &nbsp; &nbsp; &nbsp;
+    p(a).
+    <br/> 
+  &nbsp; &nbsp; &nbsp;
+    q(p(a)).
+  </code>
+</div>
+<p>
+  succeeds with the above database and <code>?X</code> gets bound
+  to <code>p(a)</code>.
+</p>
+<p>
+  Another interesting example of a HiLog rule is
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    call(?X) :- ?X.
+  </code>
+</div>
+<p>
+  This can be viewed as a logical definition of the
+  meta-predicate <code>call/1</code> in Prolog.  Such a definition does not make
+  sense in first-order logic (and is, in fact, illegal), but it is legal in HiLog
+  and provides the expected semantics for <code>call/1</code>. 
+</p>
+<p>
+  We will now illustrate one use of the <i>parameterized</i> predicates of the
+  form <code>p(...)(...)</code>. The example shows a pair of rules that defines
+  a generic transitive closure of a binary predicate.
+  Depending on the actual predicate passed in as a parameter, we can get
+  different transitive closures.
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    closure(?P)(?X,?Y) :- ?P(?X,?Y).
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    closure(?P)(?X,?Y) :- ?P(?X,?Z) and closure(?P)(?Z,?Y).
+  </code>
+</div>
+<p>
+  For instance, for the <code>parent</code>
+  predicate, <code>closure(parent)</code> is defined by the above rules to be
+  the ancestor relation; for the <code>edge</code> relation that represents
+  edges in a graph, <code>closure(edge)</code> will become the transitive
+  closure of the graph.
+</p>
+
+<h2>
+  <a name="equality-layer">
+    2.9 The Equality Layer
+  </a>
+</h2>
+
+<p>
+  This layer introduces the full <b><em>equality
+      predicate</em></b>, <code>:=:</code>.
+  The equality predicate obeys the usual
+  congruence axioms for equality. In particular, it is transitive,
+  symmetric, reflexive, and the logical entailment relation is invariant
+  with respect to the substitution of equals by equals.  For instance, if
+  we are told that <code>bob :=: father(tom)</code> (<code>bob</code> is
+  the same individual as the one denoted by the
+  term <code>father(tom)</code>) then if <code>p(bob)</code> is known to be
+  true then we should be able to derive
+  <code>p(father(tom))</code>.  If we are also told that <code>bob
+    :=: uncle(mary)</code>  is true then we can derive <code>father(tom):=:
+    uncle(mary)</code>.
+</p>
+<!--
+    <p>
+      Disequality has different meaning in the head of a rule and in its
+      body. In the
+      head, <em>term<sub>1</sub></em> <code>!:=:</code>
+      <em>term<sub>2</sub></em>
+      means <code>neg</code>(<em>term<sub>1</sub></em> <code>:=:</code>
+      <em>term<sub>2</sub></em>),
+      while in the body it
+      means <code>naf</code>(<em>term<sub>1</sub></em> <code>:=:</code>
+      <em>term<sub>2</sub></em>).
+    </p>
+    -->
+
+<p>
+  Equality in a Semantic Web language is important to be able to state that
+  two different identifiers represent the same resource. For that reason,
+  equality was part of OWL [<cite><a href="#owl-ref">OWL
+      Reference</a></cite>].  Although equality drastically increases the
+  computational complexity, some forms of equality, such as ground
+  equality, can be handled efficiently in a rule-based language.
+</p>
+
+<p>
+  The equality predicate <code>:=:</code> is different from the unification
+  operator <code>=</code> in several respects.  First, for variable free
+  terms, <em>term<sub>1</sub></em> <code>=</code> <em>term<sub>2</sub></em>
+  if and only if the two terms are identical. In contrast, as we have just
+  seen, two distinct terms can be equal with respect
+  to <code>:=:</code>. Since <code>:=:</code> is reflective, it follows
+  that the interpretation of <code>:=:</code> always contains the
+  interpretation of <code>=</code>.  Second, the unification
+  operator <code>=</code> cannot appear in a rule head, while the equality
+  predicate <code>:=:</code> can. When <code>:=:</code> occurs in the rule
+  head (or as a fact), it is an assertion (maybe conditional) that two
+  terms are equal. For instance, given the above definitions,
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    p(1,2).
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    p(2,3).
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    f(a,?X):=:g(?Y,b) :- p(?X,?Y).
+  </code>  
+</div>
+<p>
+  entails the following equalities between distinct
+  terms: <code>f(a,1):=:g(2,b)</code> and
+  <code>f(a,2):=:g(3,b)</code>.
+</p>
+<p>
+  When <em>term<sub>1</sub></em> <code>:=:</code> <em>term<sub>2</sub></em> occurs
+  in the body of a rule and <em>term<sub>1</sub></em>
+  and <em>term<sub>2</sub></em> have variables, this predicate is interpreted as
+  a test that there is a substitution that makes the two terms equal with
+  respect to <code>:=:</code> (note: equal, not identical!).  For instance,
+  in the query
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    q(1).
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    q(2).
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    q(3).
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    ?- f(a,?X):=:g(?Y,b) and q(?Y).
+  </code>  
+</div>
+<p>
+  one answer substitution is <code>?X/1,?Y/2</code> and the other is
+  <code>?X/2,?Y/3</code>.
+</p>
+
+<h2>
+  <a name="swsl-rules-frames">
+    2.10 The Frames Layer
+  </a>
+</h2>
+<p>
+  The Frames layer introduces object-oriented syntax modeled after F-logic
+  [<cite><a href="#f-logic">Kifer95</a></cite>] and its subsequent enhancements
+  [<cite><a href="#well-founded-inheritance">Yang02</a></cite>,
+  <cite><a href="#reification">Yang03</a></cite>].
+  The main syntactic additions of this layer include
+</p>
+<ul>  
+  <li>
+    Frame syntax. Frames are called <em>molecules</em> here (following the
+    F-logic terminology).
+  </li>
+  <li>  
+    Path expressions.
+  </li>
+  <li>
+    Notation for class membership and subclasses.
+  </li>
+  <li>
+    Notation for type specification, which is given by <em>signature
+      molecules</em>.  
+  </li>
+</ul>
+<p>
+  The object-oriented extensions introduced by the Frames layer are orthogonal to
+  the other layers described so far and can be combined with them within the
+  SWSL-Rules language.
+</p>
+<p>
+  As in most object-oriented languages,
+  the three main concepts in the Frames layer of SWSL-Rules are <em>objects</em>,
+  <em>classes</em>, and <em>methods</em>. (We are borrowing from the
+  object-oriented terminology here rather than AI terminology, so we are refer
+  to <em>methods</em> rather than <em>slots</em>.)  Any class is also an object,
+  and the same expression can denote an object or a class represented by this
+  object in different contexts.
+</p>
+<p>
+  A <em><b>method</b></em> is a function that takes arguments and executes in
+  the context of a particular object. When invoked, a method returns a result
+  and can possibly alter the state of the knowledge base.  A method that does
+  not take arguments and does not change the knowledge base is called
+  an <em><b>attribute</b></em>.  An object is represented by its <em>object
+    Id</em>, the values of its attributes, and by the definitions of its methods.
+  Method and attribute names are represented as objects, so one can reason
+  about them in the same language.
+</p>
+<p>
+  An <em><b>object Id</b></em> is syntactically represented by a ground
+  term. Terms that do have variables are viewed as templates for collections of
+  object Ids&mdash;one Id per ground instantiation of all the variables in
+  the term.  By <em>term</em> we mean any expression that can bind a
+  variable. What constitutes a legal term depends on the layer. In the basic
+  case, by term we mean just a first-order term. If the Frames layer is combined
+  with HiLog, then terms are meant to be HiLog terms. Later, when we introduce
+  reification,
+  <em>reification terms</em> will also be considered.
+</p>
+<p>
+  <b>Molecules</b>. Molecules play the role of atomic formulas. We first
+  describe atomic molecules and then introduce complex molecules.  Although both
+  atomic and complex molecules play the role of atomic formulas, complex
+  molecules
+  are <i>not</i> indivisible. This is why they are called molecules and not
+  atoms. Molecules come in several different forms:
+</p>
+<ul> 
+  <li>
+    <b>Value molecule</b>.
+    If <code>t</code>, <code>m</code>, <code>v</code>  are terms then <code>t[m
+      -&gt; v]</code>  is a value molecule.
+    <p>
+      Here <code>t</code> denotes an object, <code>m</code> denotes
+      a <b><em>method invocation</em></b> in the scope of the
+      object <code>t</code>, and <code>v</code>  denotes a value that
+      belongs to a set returned by
+      this invocation.  We call <code>m</code> ``a
+      method invocation'' because if
+      <code>m = s(t<sub>1</sub>,...,t<sub>n</sub>)</code>, i.e., has
+      arguments, then
+      <code>t[s(t<sub>1</sub>,...,t<sub>n</sub>) -&gt; v]</code> is
+      interpreted as an invocation of method <code>s</code> on
+      arguments <code>t<sub>1</sub>,...,t<sub>n</sub></code> in the context of
+      the object
+      <code>t</code>, which returns a set of values that
+      contains <code>v</code>.
+    </p>
+    <p>
+      The syntax <code>t[m -&gt; {v<sub>1</sub>,...,v<sub>k</sub>}]</code> is
+      also supported; it means that if <code>m</code> is invoked in the
+      context of the object <code>t</code> then it returns a set that
+      contains <code>v<sub>1</sub>,...,v<sub>k</sub></code>.  Thus,
+      semantically, such a term is equivalent to a conjunction of <code>t[m
+	-&gt; v<sub>1</sub>]</code>, ..., <code>t[m -&gt;
+	v<sub>k</sub>]</code>, so the expressions <code>t[m -&gt;
+	{v<sub>1</sub>,...,v<sub>k</sub>}]</code> is just a syntactic sugar.
+    </p>
+  </li>
+  <li>
+    <b>Boolean valued molecule</b>.  These molecules have the form
+    <code>t[m]</code> where <code>t</code> and <code>m</code> are
+    terms.
+    <p>
+      Boolean molecules are useful to specify things like
+      <code>mary[female]</code>. The same could be alternatively written as
+      <code>mary[female -&gt; true]</code>, but this is less natural.
+    </p>
+  </li>
+  <li>
+    <b>Class membership molecule</b>.  If <code>t</code> and <code>s</code>
+    are terms then <code>t:s</code> is a membership molecule.
+    <p>
+      If <code>t</code> and <code>s</code> are variable free, then such a
+      molecule states that the object <code>t</code> is a member of
+      class <code>s</code>. If these terms contain variables, then such a
+      molecule can be viewed as many class membership
+      statements, one per ground instantiation of the variables.
+    </p>
+  </li>
+  <li>
+    <b>Subclass molecule</b>: If <code>t</code> and <code>s</code> are terms
+    then <code>t::s</code> is a subclass molecule.
+    <p>
+      If <code>t</code> and <code>s</code> are variable free, then such a
+      molecule states that the object <code>t</code> is a subclass
+      of <code>s</code>. As in the case of class membership molecules,
+      subclass molecules that have variables can be viewed as statements about
+      many subclass relationships.
+    </p>
+  </li>
+  <li>
+    <b>Signature molecule</b>:
+    If <code>t</code>, <code>m</code>, <code>v</code> are terms then <code>t[m
+      =&gt; v]</code> is a signature molecule.
+    <p>
+      If <code>t</code>, <code>m</code>, and <code>v</code> are variable-free
+      terms then the informal meaning of the above signature molecule is
+      that <code>t</code> represents a class, which has a method
+      invocation <code>m</code> which returns a set of objects of
+      type <code>v</code>  (i.e., each object in the set belongs to
+      class <code>v</code>).
+      If these terms are non-ground then the signature represents a collection
+      of statements&mdash;one statement per ground instantiation of the terms.
+    </p>
+    <p>
+      When <code>m</code> itself has arguments, for instance <code>m =
+	s(t<sub>1</sub>,...,t<sub>n</sub>)</code>, then the arguments are
+      interpreted
+      as types. Thus, <code>t[s(t<sub>1</sub>,...,t<sub>n</sub>) =&gt;
+	v]</code> states that when the <code>n</code>-ary method <code>s</code>
+      is invoked on object of class <code>t</code> with
+      arguments that belong to
+      classes <code>t<sub>1</sub></code>,
+      <code>...,</code> <code>t<sub>n</sub></code>, the
+      method returns a set of objects of class <code>v</code>.
+    </p>
+  </li>
+  <li>
+    <b>Boolean signature molecules</b>: A Boolean signature molecule has the
+    form <code>t[m=&gt;]</code>. Its purpose is to provide type
+    information for Boolean valued molecules.  Namely, if
+    <code>m=s(t<sub>1</sub>,...,t<sub>n</sub>)</code>, then when the method
+    <code>s</code> is 
+    invoked on an object of class <code>t</code>, the method arguments must
+    belong to classes <code>t<sub>1</sub></code>,
+    <code>...,</code> <code>t<sub>n</sub></code>. 
+  </li>
+  <li>  
+    <p>
+      <b>Cardinality constraints</b>:  Signature molecules can have associated
+      cardinality constraints. Such molecules have the form
+    </p>
+    <div class="exampleInner">
+      <code>
+  &nbsp; &nbsp; &nbsp;
+	t[s(t<sub>1</sub>,...,t<sub>n</sub>) {<em>min</em> : <em>max</em>}
+	=&gt; v]
+      </code>
+    </div>
+    <p>
+      where <em>min</em> and <em>max</em> are non-negative integers such that
+      <em>min &le; max</em>. <em>Max</em> can also be <code>*</code>, which
+      means positive infinity.
+    </p>
+    <p>
+      Such a signature states not only that the invocation
+      of the method <code>s</code> with arguments of type
+      <code>t<sub>1</sub>,...,t<sub>n</sub></code> on an object of
+      class <code>t</code> returns objects of class <code>v</code>, but also that
+      the number of such objects in the result is no less than <em>min</em> and
+      no more than <em>max</em>.     
+    </p>
+    <p>
+       The semantics of constraints in SWSL-Rules is similar to constraints in
+       databases and is <em>unlike</em> the cardinality restrictions 
+       in OWL [<cite><a href="#owl-ref">OWL Reference</a></cite>].
+       For instance, if a cardinality constraint says that an attribute should
+       have at least two values and the rule base derives only one then the
+       constraint is <em>violated</em>. In contrast, OWL would <em>infer</em>
+       that there is another, yet unknown, value.
+       Likewise, if a cardinality constraint says that the number of elements
+       is at most three while the rule base derives four unequal elements then
+       the constraint is, again, violated. This should be compared to the OWL
+       semantics, which will infer that <em>some</em> pair of derived values
+       in fact consists of equal elements. 
+    </p>
+  </li>
+</ul>
+
+<p>
+  <b>Signatures and type checking</b>: Signatures are assertions about the
+  expected types of the method arguments and method results. They typically do
+  not have direct effect on the inference (unless signatures appear in rule
+  bodies). The signature information is optional.
+</p>
+<p>
+  The semantics of signatures is defined as follows. First, the intended model
+  of the knowledge base is computed (which in SWSL-Rules is taken to be the
+  well-founded model). Then, if typing needs to be checked, we must verify that
+  this intended model is well-typed. A <b><em>well-typed</em></b> model is one
+  where the value molecules conform to their signatures. For the precise
+  definition of well-typed models see
+  [<cite><a href="#f-logic">Kifer95</a></cite>].  (There
+  can be several different notions of well-typed models. For instance, one for
+  semi-structured data and another for completely structured data.)
+</p>
+<p>
+  A type-checker can be written in SWSL-Rules using just a few rules. Such a
+  type checker is a query, which returns "No", if the model is well-typed and a
+  counterexample otherwise.  In particular, type-checking has the same
+  complexity as querying. An example of such type checker  can be found in the
+  FLORA-2 manual [<cite><a href="#flora-manual">Yang04</a></cite>].
+</p>
+<p>
+  It is important to be aware of the fact that the semantics of the
+  cardinality constraints in signature molecules
+  is inspired by database theory and practice
+  and it is <em>different</em> from the semantics of such constraints in OWL
+  [<cite><a href="#owl-ref">OWL Reference</a></cite>]. In SWSL-Rules, cardinality constraints are restrictions on the
+  intended models of the knowledge base, but they are not part of the axioms
+  of the
+  knowledge base. Therefore, the intended models of the knowledge base
+  are determined without taking the cardinality constraints into the account.
+  Intended models that do not satisfy these restrictions are
+  discarded. In contrast, in OWL cardinality constraints are represented as
+  logical statements in the knowledge base  and all models are computed by
+  taking the constraints into the account. Therefore, in OWL it is not
+  possible to talk about knowledge base updates that violate constraints.
+  For instance, the following signature <code>married[spouse {1:1} =&gt;
+    married]</code> states that every married person has exactly one spouse.  
+  If <code>john:married</code> is true but there is no information about
+  John's spouse then OWL will assume that <code>john</code> has some unknown
+  spouse, while SWSL-Rules will reject the knowledge base as inconsistent.
+  If, instead, we know that <code>john[spouse -&gt; mary]</code> and
+  <code>john[spouse -&gt; sally]</code> then OWL will conclude that
+  <code>mary</code> and <code>sally</code> are the same object, while
+  SWSL-Rules will again rule the knowledge base to be inconsistent (because,
+  in the absence of the information to the contrary &mdash; for example, if
+  no <code>:=:</code>-statements have been given &mdash; <code>mary</code>
+  and <code>sally</code> will be deemed to be distinct objects).
+</p>
+<p>  
+  <b>Inheritance in SWSL-Rules</b>: Inheritance is an optional feature, which
+  is expressed by means of the syntactic features described below. In
+  SWSL-Rules, methods and attributes can be inheritable and non-inheritable.
+  Non-inheritable methods/attributes correspond to class methods in Java, while
+  inheritable methods and attributes correspond to instance methods.
+</p>
+<p>
+  The value- and signature-molecules considered so far
+  involve <em>non-inheritable</em> attributes and methods. Inheritable methods
+  are defined using the <code>*-&gt;</code> and <code>*=&gt;</code> arrow
+  types, i.e., 
+  <code>t[m *-&gt; v]</code> and <code>t[m *=&gt; v]</code>.  For Boolean
+  methods we use
+  <code>t[*m]</code>  and <code>t[m*=&gt;]</code>. 
+</p>
+<p>
+  Signatures obey the laws of <em><b>monotonic inheritance</b></em>, which are
+  as follows:
+</p>
+<ul> 
+  <li>
+    <code>
+      t:s and s[m *=&gt; v]  entails  t[m *=&gt; v]
+    </code>
+  </li>
+  <li>
+    <code>
+      t::s and s[m *=&gt; v]  entails  t[m =&gt; v]
+    </code>
+  </li>
+</ul>
+<p>
+  These laws state that type declarations for inheritable methods are inherited
+  to subclasses in an inheritable form, i.e., they can be further inherited.
+  However, to the <i>members</i> of a class such declarations are inherited in a
+  non-inheritable form. Thus, inheritance of signatures is propagated through
+  subclasses, but stops once it hits class members.
+</p>
+<p>
+  Inheritance of value molecules is more involved.  This type of
+  inheritance is <b><em>nonmonotonic</em></b> and it can be overridden if the
+  same method or attribute is defined for a more specific class. More precisely,
+</p>
+<ul> 
+  <li>
+    <code>
+      t:s and s[m *-&gt; v]  entails  t[m *-&gt; v]
+      &nbsp;
+      unless overridden or in conflict
+    </code>
+  </li>
+  <li>
+    <code>
+      t::s and s[m *-&gt; v]  entails  t[m -&gt; v]
+      &nbsp;
+      unless overridden or in conflict
+    </code>
+  </li>
+</ul>
+<p>
+  Similarly to signatures, value molecules are inherited to subclasses in the
+  inheritable form and to members of the classes in the non-inheritable form.
+  However, the key difference is the phrase "unless overridden or in conflict."
+  Intuitively, this means that if, for example, there is a class <code>w</code>
+  in-between <code>t</code> and <code>s</code> such that the inheritable method
+  <code>m</code> is defined there then the inheritance from <code>s</code> is
+  blocked and <code>m</code>  should be inherited from <code>w</code> instead.
+  Another situation when inheritance might be blocked arises due to multiple
+  inheritance conflicts. For instance, if <code>t</code> is a subclass of both
+  <code>s</code> and <code>u</code>, and if both <code>s</code>
+  and <code>u</code> define the method <code>m</code>, then inheritance
+  of <code>m</code> does not take place at all (either from <code>s</code> or
+  from <code>u</code>; this policy can be modified by specifying appropriate
+  rules, however).  The precise model-theoretic semantics of inheritance with
+  overriding is based on an extended form of the Well-Founded Semantics.
+  Details can be found in
+  [<cite><a href="#well-founded-inheritance">Yang02</a></cite>].
+</p>
+<p>
+  Note that signature inheritance is not subject to overriding, so <i>every</i>
+  inheritable molecule is inherited to subclasses and class instances.  If
+  multiple molecules are inherited to a class member or a subclass, then all of
+  them are considered to be true.
+</p>
+<p>
+  Inheritance of Boolean methods is similar to the inheritance of methods and
+  attributes that return non-Boolean values. Namely,
+</p>
+<ul> 
+  <li>
+    <code>
+      t:s and s[m*=&gt;]  entails  t[m*=&gt;]
+    </code>
+  </li>
+  <li>
+    <code>
+      t::s and s[m*=&gt;]  entails  t[m =&gt;]
+    </code>
+  </li>
+  <li>
+    <code>
+      t:s and s[*m]  entails  t[*m]
+      &nbsp;
+      unless overridden
+    </code>
+  </li>
+  <li>
+    <code>
+      t::s and s[*m]  entails  t[m]
+      &nbsp;
+      unless overridden
+    </code>
+  </li>
+</ul>
+
+<p>
+  <b>Complex molecules</b>:   SWSL-Rules molecules can be combined into complex
+  molecules in two ways:
+</p>
+<ul> 
+  <li>
+    By grouping.
+  </li>
+  <li>  
+    By nesting.
+  </li>
+</ul>
+<p>
+  <em><b>Grouping</b></em> applies to molecules that describe the same
+  object. For instance,
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m1 -&gt; v1] and t[m2 =&gt; v2] and t[m3 {6:9} =&gt; v3] and t[m4 -&gt; v4]
+  </code>
+</div>
+<p>
+  is, by definition, equivalent to
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m1 -&gt; v1 and m2 =&gt; v2 and m3 {6:9} =&gt; v3 and m4 -&gt; v4]
+  </code>
+</div>
+<p>
+  Molecules connected by the <code>or</code> connective can also be combined
+  using the usual precedence rules:
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m1 -&gt; v1] and t[m2 =&gt; v2] or t[m3 {6:9} =&gt; v3] and t[m4 -&gt; v4]
+  </code>
+</div>
+<p>
+  becomes
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m1 -&gt; v1 and m2 =&gt; v2 or m3 {6:9} =&gt; v3 and m4 -&gt; v4]
+  </code>
+</div>
+<p>
+   The <code>and</code> connective inside a complex molecule can also be
+   replaced with a comma, for brevity. For example,
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m1 -&gt; v1, m2 =&gt; v2]
+  </code>
+</div>
+<p>
+  <em><b>Nesting</b></em> applies to molecules in the following ``chaining''
+  situation, which is a common idiom in object-oriented databases:
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m -&gt; v] and v[q -&gt; r]
+  </code>
+</div>
+<p>
+  is by definition equivalent to
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m -&gt; v[q -&gt; r]]
+  </code>
+</div>
+<p>
+  Nesting can also be used to combine membership and subclass molecules
+  with value and signature molecules in the following situations:
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t:s and t[m -&gt; v]
+  </code>
+  <br/>
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t::s and t[m -&gt; v]
+  </code>
+</div>
+<p>
+  are equivalent to
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m -&gt; v]:s
+  </code>
+  <br/>
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[m -&gt; v]::s
+  </code>
+</div>
+<p>
+  respectively.
+</p>
+<p>
+  Molecules can also be <b><em>nested inside predicates</em></b> and terms with
+  a semantics similar to nesting inside other molecules. For instance,
+  <code>p[a-&gt;c]</code> is considered to be equivalent to     
+  <code>p(a) and a[b-&gt;c]</code>. Deep nesting and, in fact, nesting in any
+  part of another molecule or predicate is also allowed. Thus, the
+  formulas
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    p(f(q,a[b -&gt; c]),foo)
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt;  foo(e[f -&gt; g])]
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    a[foo(b[c -&gt; d])  -&gt;  e]
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    a[foo[b -&gt; c]  -&gt;  e]
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; c](q,r)
+  </code>
+</div>
+<p>
+  are considered to be equivalent to
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    p(f(q,a),foo) and a[b -&gt; c]
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; foo(e)] and e[f -&gt; g]
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    a[foo(b) -&gt; e] and b[c -&gt; d]
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    a[foo  -&gt;  e] and foo[b -&gt; c]
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; c] and a(q,r)
+  </code>
+</div>
+<p>
+  respectively. Note that molecule nesting leads to a completely
+  <em><b>compositional syntax</b></em>, which in our case
+  means that molecules are allowed in any place where terms are allowed.
+  (Not all of these nestings might look particularly natural, e.g., <code>a[b
+    -&gt; c](q,r)</code> or <code>p(a[b -&gt; c](?X))</code>, but there is no
+  good reason to reject these nestings and thus complicate the syntax either.)
+</p>
+<p>
+  <b>Path expressions</b>:  
+  Path expressions are useful shorthands that are widely used
+  in object-oriented and Web languages. In a logic-based
+  language, a path expression sometimes allows writing formulas
+  more concisely by eliminating multiple nested molecules and
+  explicit variables. SWSL-Rules defines path expressions only as replacements
+  for value molecules, since this is where this shorthand is most useful in
+  practice.
+</p>
+<p>
+  A <b><em>path expression</em></b> has the form
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t.t<sub>1</sub>.t<sub>2</sub>. ... .t<sub>n</sub>
+  </code>
+</div>
+<p>
+  or
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t!t<sub>1</sub>!t<sub>2</sub>! ... !t<sub>n</sub>
+  </code>
+</div>
+<p>
+  The former corresponds to non-inheritable molecules and the latter to
+  inheritable ones. In fact, "." and "!" can be mixed within the same path
+  expression.
+</p>
+<p>
+  A path expression can occur anywhere where a term is allowed to occur.  For
+  instance, <code>a[b -&gt; c.d]</code>, <code>a.b.c[e -&gt;
+    d]</code>, <code>p(a.b)</code>, and <code>X=a.b</code> are all legal
+  formulas. The semantics of path expressions in the body of a rule and in its
+  head are similar, but slightly different. This difference is
+  explained next.
+</p>
+<p>
+  In the <em>body</em> of a rule, an occurrence of the first path
+  expression above is treated as follows. The conjunction
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[t<sub>1</sub> -&gt; ?Var<sub>1</sub>] and
+    ?Var<sub>1</sub>[t<sub>2</sub> -&gt; ?Var<sub>2</sub>] and ... and
+    ?Var<sub>n-1</sub>[t<sub>n</sub> -&gt; ?Var<sub>n</sub>]
+  </code>
+</div>
+<p>
+  is added to the body and the occurrence of the path expression is replaced with
+  the variable ?Var<sub>n</sub>. In this conjunction, the variables
+  <code>?Var<sub>1</sub></code>, ..., <code>?Var<sub>n</sub></code>
+  are <em>new</em> and are used to represent intermediate values. 
+  The second path expression is treated similarly, except that the conjunction
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    t[t<sub>1</sub> *-&gt; ?Var<sub>1</sub>] and
+    ?Var<sub>1</sub>[t<sub>2</sub> *-&gt; ?Var<sub>2</sub>] and ... and
+    ?Var<sub>n-1</sub>[t<sub>n</sub> *-&gt; ?Var<sub>n</sub>]
+  </code>
+</div>
+<p>
+  is used. For instance, <code>mary.father.mother = sally</code> in a rule body
+  is replaced with
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    mary[father -&gt; ?F] and ?F[mother -&gt; ?M] and ?M = sally
+  </code>
+</div>
+<p>
+  In the <em>head</em> of a rule, the semantics of path expressions is reduced
+  to the case of a body occurrence as follows.. If a path
+  expression, <code>&rho;</code>, 
+  occurs in the head of a rule, it is replaced with a new
+  variable, <code>?V</code>, and the predicate <code>?V=&rho;</code> is
+  conjoined to the body of the rule. For instance,
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    p(a.b) :- body.
+  </code>
+</div>
+<p>
+  is understood as
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    p(?V) :- body and ?V=a.b.
+  </code>
+</div>
+<p>
+  Note that since molecules can appear wherever terms can, path expressions of
+  the form <code>a.b[c -&gt; d].e.f[g -&gt; h].k</code> are permitted.
+  They are conceptually similar to XPath expressions with 
+  predicates that control the selection of intermediate nodes in XML documents.
+  Formally, such a path expression will be replaced with the
+  variable <code>?V</code> and will result in the addition of the following
+  conjunction:
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; ?X[c -&gt; d]] and ?X[e -&gt; ?Y] and
+    ?Y[f -&gt; ?Z[g -&gt; h]] and ?Z[k -&gt; ?V]
+  </code>
+</div>
+<p>
+  It is instructive to compare SWSL-Rules path expressions with
+  XPath. SWSL-Rules path expressions were originally proposed for F-logic
+  [<cite><a href="#f-logic">Kifer95</a></cite>] several years before XPath. The
+  purpose was to extend the familiar notation in object-oriented programming
+  languages and to adapt it to a logic-based language.  It is easy to see that
+  the ``*'' idiom of XPath can be captured with the use of a variable. For
+  instance, <code>b/*/c</code> applied to object <code>e</code> is expressed
+  as <code>e.b.?X.c</code>.  The ``..'' idiom of XPath is also easy to
+  express. For instance, <code>a//Submission/2005/b/c</code> applied to object <code>d</code>
+  is expressed as <code>?_[?_ -&gt; d.a].b.c</code>.  On the other hand, there
+  is no counterpart for the <code>//</code> idiom of XPath. The reason is that
+  this idiom is not well-defined when there are cycles in the data (for
+  instance, <code>a[b -&gt; a]</code>). However, recursive descent into the
+  object graph can be defined via recursive rules.
+</p>
+
+
+<h2>
+  <a name="swsl-rules-reification">
+    2.11 Reification
+  </a>
+</h2>
+
+<p>
+  The <b><em>reification layer</em></b> allows SWSL-Rules to treat certain kinds
+  of formulas as terms and therefore to manipulate them, pass them as
+  parameters, and perform various kinds of reasoning with them.  In fact, the
+  HiLog layer already allows certain formulas to be reified.  Indeed, since any
+  HiLog term is also a HiLog atomic formula, such atomic formulas are already
+  reifiable. However, the reification layer goes several steps further by
+  supporting reification of arbitrary rule or formula that can occur in the rule
+  head or rule body. (Provided that it does not contain explicit
+  quantifiers -- see below.)
+</p>
+<p>
+  Formally, if <em>F</em> is a formula that has the syntactic form of a rule
+  head, a rule body, or of a rule then <em>F</em> is also considered to be a
+  term.  This means that such a formula can be used wherever a term can occur.
+</p>
+<p>
+  Note that a reified formula represents an objectification of the
+  corresponding formulas. This is useful for specifying
+  ontologies where objects represent theories that can be true in some
+  worlds, but are not true in the present world (and thus those theories
+  cannot be asserted in the present world). Examples include the
+  effects of actions: effects of an action might be true in the world that will
+  result after the execution of an action, but they are not necessarily true now.
+</p>
+<p>
+  In general, reification of formulas can lead to logical paradoxes
+  [<cite><a href="#perlis85">Perlis85</a></cite>].  The form of reification
+  used in SWSL-Rules does not cause paradoxes, but other unpleasantries can
+  occur. For instance, the presences of a truth axiom (<tt><b>true</b>(?X)
+  &lt;--&gt; ?X</tt>) can render innocently looking rule-bases inconsistent.
+  However, as shown in [<cite><a href="#reification">Yang03</a></cite>], the
+  form of reification in SWSL-Rules does not cause paradoxes as long as
+</p>
+<ul> 
+  <li>
+    rule heads do not contain classical negation; and
+  </li>
+  <li> a rule head cannot be a variable, i.e., as long as the rules of the form
+    &nbsp;<code>?X :- body</code>&nbsp; (which are legal in HiLog) are
+    disallowed.
+  </li>
+</ul>
+<p>
+  We therefore adopt the above restrictions for all layers of SWSL-Rules (but
+  not for SWSL-FOL).
+</p>
+<p>
+  As presented above, reification introduces syntactic ambiguity, which arises
+  due to the nesting conventions for molecules. For instance,
+  consider the following molecule:
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; t]
+  </code>
+</div>
+<p>
+  Suppose that <code>t</code> is a reification of another
+  molecule, <code>c[d -&gt; e]</code>. Since we have earlier said that
+  any formula suitable to appear in the rule body can also be viewed as a
+  term, we can expand the above formula into
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; c[d -&gt; e]]
+  </code>
+</div>
+<p>
+  But this is ambiguous, since earlier we defined the above as a
+  commonly used object-oriented idiom, a syntactic sugar for
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; c] and c[d -&gt; e]
+  </code>
+</div>
+<p>
+  Similarly, if we want to write something like <code>t[b -&gt; c]</code>  
+  where <code>t</code>  is a reification of <code>f[g -&gt; h]</code>   then we
+  cannot write <code>f[g -&gt; h][b -&gt; c]</code>   
+  because this nested molecule is a syntactic sugar for <code>f[g -&gt; h]
+    and f[b -&gt; c]</code>.  
+  To resolve this ambiguity, we introduce the reification
+  operator, <code>${...}</code>,  whose only role is to tell the parser that
+  a particular occurrence of a nested molecule is to be treated as
+  a term that represents a reified formula rather than
+  as syntactic sugar for the object-oriented idiom.
+</p>
+<p>
+  Note that the explicit reification operator is not required for HiLog
+  predicates because there is no ambiguity. For instance, we do not need to
+  write <code>${p(?X)}</code> below (although it <em>is</em> permitted and
+  is considered the same as <code>p(?X)</code>): 
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; p(?X)] 
+  </code>
+</div>
+<p>
+  This is because <code>a[b -&gt; p(?X)]</code> does <em>not</em> mean
+  &nbsp; <code>a[b -&gt; p(?X)] and p(?X)</code>, since the sugar is used
+  only for nested molecules.
+</p>
+  
+<p>
+  In contrast, explicit reification is needed below, if we want to reify 
+  <code>p(?X[foo -&gt; bar])</code>:  
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; p(?X[foo -&gt; bar])] 
+  </code>
+</div>
+<p>
+  Otherwise <code>p(?X[foo -&gt; bar])</code> would be treated as syntactic
+  sugar for sugar for
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; p(?X)] and ?X[foo -&gt; bar]
+  </code>
+</div>
+<p>
+  Therefore, to reify <code>p(?X[foo -&gt; bar])</code> in the above
+  molecule one must write this instead:
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    a[b -&gt; ${p(?X[foo -&gt; bar])}] 
+  </code>
+</div>
+<p>
+  <b>Example</b>. Reification in SWSL-Rules is very powerful and yet it doesn't
+  add to the complexity of the language. The following fragment of a knowledge
+  base models an agent who believes in the modus ponens rule:
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    john[believes -&gt; ${p(a)}].
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    john[believes -&gt; ${p(?X) ==&gt; q(?X)}].
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    
+    // modus ponens
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    john[believes -&gt; ?A] :-
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+    john[believes  -&gt; ${?B ==&gt; ?A}] and john[believes  -&gt; ?B].
+  </code>
+</div>
+<p>
+  Since the agent believes in <code>p(a)</code> and in the modus ponens
+  rule, it can infer <code>q(a)</code>. Note that in the above we did not
+  need explicit reification of <code>p(a)</code>, since no ambiguity can
+  arise. However, we used the explicit reification anyway, for clarity.
+</p>
+
+<p>
+  <b>Syntactic rules.</b> Currently SWSL-Rules does not permit explicit
+  quantifiers under the scope of the reification operator, because the semantics
+  for reification given in [<cite><a href="#reification">Yang03</a></cite>,
+  <cite><a href="#serv-disc-tr">Kifer04</a></cite>] does
+  not cover this case. So not every formula can be reified.
+  More specifically, the formulas that are allowed under the scope of the
+  reification operator are:
+</p>
+<ul>   
+  <li>
+    The formulas that are allowed in the rule head or quantifier-free formulas
+    in the rule body.
+  </li>
+  <li>  
+    Quantifier-free rules.
+  </li>
+</ul>
+<p>
+  The implication of these restrictions is that every term that represents a
+  reification of a SWSL-Rules formula has only free variables, which can be
+  bound outside of the term. Each such term can therefore be viewed as a
+  (possibly infinite) set of reifications
+  of the ground instances of that formula.
+</p>
+
+<h2>
+  <a name="swsl-skolemization">
+    2.12 Skolemization in SWSL-Rules
+  </a>
+</h2>
+<p>
+  It is often necessary to specify existential information in the head of a rule
+  or in a fact. Due to the limitations of the logic programming paradigm, which
+  trades the expressive power for executional efficiency, such information
+  cannot be specified directly. However, existential variables in the rule heads
+  can be <em>approximated</em> through the technique known as Skolemization  
+  [<cite><a href="#chang-lee73">Chang73</a></cite>].
+  The idea of Skolemization is that in a formula of the form
+  <code>&forall; Y<sub>1</sub>...Y<sub>n</sub>&exist; X ...</code> &phi;
+  the existential variable <code>X</code>  can be removed and replaced
+  everywhere in &phi; with the function
+  term <code>f(Y<sub>1</sub>...Y<sub>n</sub>)</code>, where <code>f</code> is a
+  <em>new</em> function symbol that does not occur anywhere else in the
+  specification.   The rationale for such a substitution is that,
+  for any query, the original rule
+  base is unsatisfiable if and only if the transformed rule base is
+  unsatisfiable
+  [<cite><a href="#chang-lee73">Chang73</a></cite>].
+  This implies that the query to the original rule base can be answered if and
+  only if it can be answered when posed against the Skolemized rule base.
+  However, from the point of view of logical entailment, the Skolemized 
+  rule base is stronger than the original one, and this is why we say that
+  Skolemization only <em>approximates</em> existential quantification, but is
+  not equivalent to it.
+</p>
+<p>
+   Skolemization is defined for formulas in <em>prenex normal form</em>, i.e.,
+   formulas where all the quantifiers are collected in a prefix to the formula
+   and apply to the entire formula. A formula that is not in the prenex normal
+   form can be converted to one in the prenex normal form by a series of
+   equivalence transformations
+   [<cite><a href="#chang-lee73">Chang73</a></cite>].
+</p>
+<p>
+  SWSL-Rules supports Skolemization by providing special constants
+  <code>_#</code> and <code>_#1</code>, <code>_#2</code>, <code>_#3</code>,
+  and so on. As with other constants in SWSL, these symbols can be used 
+  both in argument positions and in the position of a
+  function. For instance, <code>_#(a,_#,_#2(c,_#2))</code> is a legal function term.
+</p>
+<p>
+  Each occurrence of the symbol <code>_#</code> denotes a new
+  constant. Generation of such a constant is the responsibility of the
+  SWSL-Rules compiler. For instance, in <code>_#(a,_#,_#2(c,_#2))</code>,
+  the two occurrences of <code>_#</code> denote two different constants
+  that do not appear anywhere else. In the first case, the constant is in
+  the position of a function symbol.  The numbered Skolem constants, such
+  as <code>_#2</code> in our example, also denote a new constant that does
+  not occur anywhere else in the rule base. However, the different
+  occurrences of the same numbered symbol in <em>the same rule</em> denote
+  the <em>same</em> new constant.  Thus, in the above example the two
+  occurrences of <code>_#2</code> denote the same new symbol.  Here is a
+  more complete example:
+</p>
+<div class="exampleInner">
+  <code>
+  &nbsp; &nbsp; &nbsp;
+    holds(a,_#1) and between(1,_#1,5).
+    <br/>
+  &nbsp; &nbsp; &nbsp;
+    between(minusInf, _#(?Y), ?Y) &nbsp; :-&nbsp; timepoint(?Y) ?Y !=
+    minusInf.
+  </code>
+</div>
+<p>
+  In the first line, the two occurrences of <code>_#1</code> denote the
+  same new Skolem constant, since they occur in the scope of the same
+  rule. In the second line, the occurrence of <code>_#</code> denotes a new
+  Skolem function symbol. Since we used <code>_#</code> here, this symbol
+  is distinct from any other constant.  Note, however, that even if we
+  used <code>_#1</code> in the second rule, that symbol would have denoted
+  a distinct new function symbol, since it occurs in a separate rule and
+  there is no other occurrence of <code>_#1</code> in that rule.
+</p>
+<p>
+  The Skolem constants in SWSL-Rules are in some ways analogous to the blank
+  nodes in RDF. However, they have the semantics suitable for a rule-based
+  language and it has been argued in
+  [<cite><a href="#reification">Yang03</a></cite>] that the Skolem
+  semantics is superior to RDF, which relies on existential
+  variables in the rule heads [<cite><a href="#rdf-mt">Hayes04</a></cite>].
+</p>
+
+
+<h2>
+  <a name="swsl-datatypes">
+    2.13 SWSL-Rules and XML Schema Data Types
+  </a>
+</h2>
+
+<p>
+  SWSL-Rules supports the <a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built-in-primitive-datatypes">primitive
+    XML Schema data types</a>. However, since
+  SWSL-Rules is quite different from XML, it adapts the lexical representation
+  for XML data types to the form that is more suitable for a logic-based
+  language. The translation from the XML lexical representation of primitive
+  data types to SWSL-Rules is straightforward.
+</p>
+<p>
+  The general rule is that each primitive value is represented by a function
+  term whose functor symbol is the name of the primitive data type prefixed with
+  an underscore (<code>_</code>). The arguments of the term represent the various
+  components of the primitive data type. For
+  instance, <code>_string("abc")</code>, <code>_date(2005,7,18)</code>,
+  <code>_decimal(123.56)</code>, <code>_integer(321)</code>,
+  <code>_float(23e5)</code>, and so on.
+</p>
+<p>
+  The string, decimal, integer, and float data types have a shorthand notation
+  (some of which had been seen before). Thus, <code>_string("abc")</code> is
+  abbreviated to <code>"abc"</code>, <code>_decimal(123.56)</code>
+  to <code>123.56</code>, <code>_integer(321)</code> to <code>321</code>,
+  and <code>_float(23e5)</code> to <code>23e5</code>.  
+</p>
+<p>
+  Other primitive data types are represented using a similar notation. For
+  instance, the duration of 1 year, 2 months, 3 days, 10 hours, and 30 minutes
+  is represented as <code>_duration(1,2,3,10,30,0)</code> where the first
+  argument of <code>_duration</code> represents years and the last seconds. The
+  same negative duration is represented
+  as <code>-_duration(1,2,3,10,30,0)</code>.
+  For another example, the
+  values of the <tt>dateTime</tt> type are represented as
+  <code>_dateTime(2005,10,29,15,55,40)</code>. 
+</p>
+<p>
+  It is often necessary to exchange values of primitive data types
+  between applications. Since the internal representations of the data types
+  vary from language to language, <b><em>serialization</em></b> into a commonly
+  agreed representation has been used for this purpose. SWSL-Rules supports
+  serialization of primitive data types via the built-in
+  predicate <code>_serialize</code>. It takes three arguments: a SWSL-Rules
+  value of a SWSL-Rules data type, a URI that denotes the target of
+  serialization, and a result, which is a string that contains the serialized
+  value. Currently, the only target
+  is <code>http://www.w3.org/2001/XMLSchema</code>, which refers to XML Schema
+  1.0. Other targets will be added as necessary (for example, for XML
+  Schema 1.1 when it is released).  Example:
+  <code>_serialize(_date(2005,1,1),_"http://www.w3.org/2001/XMLSchema",?Result)</code>
+  binds <code>?Result</code> to <code>"2005-01-01"</code>. 
+</p>
+<p>
+  The predicate <code>_serialize</code> is intended to work both ways: for
+  serialization and deserialization. Deserialization occurs when the last
+  argument is bound to a string representation of a data type and the first
+  argument is unbound. For instance,
+  <code>_serialize(?Result,_"http://www.w3.org/2001/XMLSchema","2005-01-01")</code>
+  binds <code>?Result</code> to  <code>_date(2005,1,1)</code>. 
+</p>
+
+<h2>
+  <a name="swsl-rules-semantics">
+    2.14 Semantics of SWSL-Rules
+  </a>
+</h2>
+<p>
+   A single point of reference for the model-theoretic semantics of
+   SWSL-Rules will be given in a separate document. Here we will
+   only give an overview and point to the papers where the semantics of the
+   different layers were defined separately.
+</p>
+<p>
+   First, we note that the semantics of the Lloyd-Topor leyers -- both
+   monotonic and nonmonotonic -- is transformational and was given in
+   Sections  <a href="#swsl-rules-mon-lt">2.4</a> and
+   <a href="#swsl-rules-nonmon-lt">2.6</a>.
+   Similarly, the Courteous layer is defined transformationally and is
+   described in [<cite><a href="#Grosof2004a">Grosof2004a</a></cite>].
+</p>
+<p>
+  The model theory of NAF is given by the well-founded semantics as described
+   in [<cite><a href="#well-founded">VanGelder91</a></cite>].
+   The model theory behind HiLog is described in
+   [<cite><a href="#hilog">Chen93</a></cite>] and F-logic is described in
+   [<cite><a href="#f-logic">Kifer95</a></cite>]. The semantics of inheritance
+   that is used in SWSL-Rules is defined in 
+   [<cite><a href="#well-founded-inheritance">Yang02</a></cite>].
+   The model theory of reification is given in
+   [<cite><a href="#reification">Yang03</a></cite>] and was further extended to
+   reification of rules in [<cite><a href="#serv-disc-tr">Kifer04</a></cite>].
+</p>
+<p>
+   The semantics of the Equality layer is based on the standard semantics (for
+   instance, [<cite><a href="#chang-lee73">Chang73</a></cite>]) but is modified
+   by the <b><em>unique name assumption</em></b>, which states that
+   syntactically distinct terms are unequal.  This modification is described in
+   [<cite><a href="#f-logic">Kifer95</a></cite>], and we summarize it here.
+   First, without equality, SWSL-Rules makes the unique name assumption.  With
+   equality, the unique name assumption is modified to say that terms that
+   cannot be proved equal with respect to <code>:=:</code> are assumed to be
+   unequal. In other words, SWSL-Rules makes a closed world assumption about
+   explicit equality.
+</p>
+<p>
+   Other than that, the semantics of <code>:=:</code> is standard. The
+   interpretation of this predicate is assumed to be an equivalence relation
+   with <b><em>congruence properties</em></b>.  A layman's term for this
+   is "substitution of equals by equals." This means that if, for
+   example,
+   <code>t:=:s</code> is derived for some terms <code>t</code>
+   and <code>s</code> then, for any formula &phi;, it is true if and only if
+   &psi; is true, where &psi; is obtained from &phi; by replacing some
+   occurrences of <code>t</code> with <code>s</code>.  
+</p>
+<p>
+   Overall, the semantics of SWSL-Rules has nonmonotonic flavor even without
+   NAF and its extension layers. This is manifested by the use of the unique
+   name assumption (modified appropriately in the presence of equality) and the
+   treatment of constraints. To explain the semantics of constraints, we first
+   need to explain the idea of <b><em>canonic models</em></b>.    
+</p>
+<p>
+   In classical logic, all models of a set of formulas are created equal and
+   are given equal consideration. Nonmonotonic logics, on the other hand,
+   carefully define a subset of models, which are declared to
+   be <b><em>canonical</em></b> and logical entailment is considered only with
+   respect to this subset of models. Normally, the canonical models are
+   so-called <em><b>minimal models</b></em>, but not all minimal models are
+   canonical.    
+</p>
+<p>
+   Any rule set that does not use the features of the NAF layer and its
+   extensions is known to have a unique minimal model, which is also its
+   canonical model. This is an extension of the well-known fact for Horn
+   clauses in classical logic programming
+   [<cite><a href="#Lloyd87">Lloyd87</a></cite>]. With NAF, a rule set may have
+   multiple incomparable minimal models, and it is well-known that not all of
+   these models appropriately capture the intended meaning of rules. However,
+   it turns out that one such model can be distinguished, and it is called the
+   <b><em>well-founded model</em></b>
+   [<cite><a href="#well-founded">VanGelder91</a></cite>].  A formula is
+   considered to be true according to the SWSL-Rules semantics if and only if
+   it is true in that one single model, and the formula is false if and only if 
+   it is false in that model.
+</p>
+<p>
+   Now, in the presence of constraints, the semantics of SWSL-Rules is defined
+   as follows. Given a rulebase, first its canonical model is determined. In
+   this process, all constraints are <em>ignored</em>. Next, the constraints
+   are checked in the canonical model. If <em>all</em> of them are true, the
+   rulebase is said to be consistent. If at least one constraint is false in
+   the canonical model, the constraint is said to be violated and the rulebase
+   is said to be inconsistent.  
+</p>
+
+
+<h2>
+  <a name="swsl-fol">
+    2.15 SWSL-FOL: The First-order Subset of SWSL
+  </a>
+</h2>
+
+<p>
+  The SWSL language includes all the connectives used in first-order logic and,
+  therefore, syntactically first-order logic is a subset  of SWSL.
+  When the semantics of first-order connectives differs from their
+  nonmonotonic interpretation, new nonmonotonic connectives are
+  introduced. For instance, first-order negation, <code>neg</code>, has a
+  nonmonotonic counterpart <code>naf</code> and first-order implications
+  <code>&lt;==</code> 
+  and <code>==&gt;</code>  have a nonmonotonic counterpart <code>:-</code>.
+</p> 
+<p>
+  It follows from the above that SWSL-Rules and SWSL-FOL share
+  significant portions of their syntax. In particular, every connective
+  used in SWSL-FOL can also be used in SWSL-Rules.  However, not every
+  first-order formula in SWSL-FOL is a rule and the rules in SWSL-Rules are
+  not first-order formulas (because of "<code>:-</code>").  Therefore,
+  neither SWSL-FOL is a subset of SWSL-Rules nor the other way
+  around. Furthermore, even though the classical connectives
+  <code>neg</code> and <code>==&gt;</code>/<code>&lt;==</code> can
+  occur in SWSL-Rules, they are embedded into an overall nonmonotonic
+  language and their semantics cannot be said to be exactly first-order.
+</p> 
+<p> 
+  Formally, <em><b>SWSL-FOL</b></em>  consists of the following formulas:
+</p>
+<ul>  
+  <li>
+    First-order atomic formulas
+  </li>
+  <li> If &phi; and &psi; are SWSL-FOL formulas then so are &nbsp;
+    &phi; <code>and</code> &psi;, &nbsp; &phi; <code>or</code> &psi;, &nbsp;
+    <code>neg</code> &phi;, &nbsp; &phi; <code>==&gt;</code> &psi;, &nbsp;
+    &phi; <code>&lt;==</code> &psi;, &nbsp; and &nbsp; &phi; <code>&lt;==&gt;</code>
+    &psi;.
+  </li>
+  <li> If &phi; is a SWSL-FOL formula and <code>X</code> is a variable, then
+    the following are also SWSL-FOL formulas: &nbsp; <code>exist ?X</code>
+    (&phi;) &nbsp; and &nbsp; <code>forall ?X</code> (&phi;). &nbsp; SWSL-FOL
+    allows to combine quantifiers of the same sort, so &nbsp; <code>exist
+    ?X,?Y</code> (&phi;) &nbsp; is the same as &nbsp;
+    <code>exist ?X exist ?Y</code> (&phi;).
+  </li>
+</ul>
+<p>
+  As in the case of SWSL-Rules, we will ise the period (".")
+  to designate the end of a SWSL-FOL formula.
+</p>
+<p>
+  SWSL defines three extensions of SWSL-FOL. The first extension adds
+  the equality operator, <code>:=:</code>, the second incorporates the
+  object-oriented syntax from the Frames layer of SWSL-Rules, the third does
+  the same for the HiLog layer.
+</p>
+<p>
+  Formally, <b><em>SWSL-FOL+Equality</em></b> has the same syntax as SWSL-FOL,
+  but, in addition, the following atomic formulas are allowed:
+</p>
+<ul> 
+  <li>
+    <em>term</em> :=: <em>term</em>  
+  </li>
+</ul>
+<p>
+  <b><em>SWSL-FOL+Frames</em></b>  has the same syntax as SWSL-FOL except that,
+  in addition, the following is allowed:
+</p>
+<ul>  
+  <li>
+    SWSL-Rules molecules, as defined in the Frames layer
+    are valid SWSL-FOL formulas.
+  </li>
+  <li>
+    The path expressions defined of the SWSL-Rules Frames syntax are not used
+    in SWSL-FOL. In SWSL-Rules, path expressions are interpreted differently in
+    the rule head and body. Since SWSL-FOL does not distinguish the head of a
+    rule from its body, the path expression syntax is not well-defined in this
+    context.
+  </li>
+</ul>
+<p>
+  <em><b>SWSL-FOL+HiLog</b></em>  extends SWSL-FOL by allowing HiLog terms and
+  HiLog atomic formulas instead of first-order terms and first-order atomic
+  formulas.
+</p> 
+<p>
+  Each of these extensions is not only a syntactic extension of SWSL-FOL but
+  also a semantic extension. This means that if &phi; and &psi; are formulas
+  in SWSL-FOL
+  then &phi; <code>|=</code> &psi;   in SWSL-FOL if and only if the
+  same holds in SWSL-FOL+Equality, SWSL-FOL+Frames, and SWSL-FOL+HiLog.
+  We will say that SWSL-FOL+Equality, SWSL-FOL+Frames, and SWSL-FOL+HiLog are
+  <b><em>conservative semantic extensions</em></b>     of SWSL-FOL.
+</p>
+
+<p>
+  SWSL-FOL+HiLog and SWSL-FOL+Frames can be combined both syntactically and
+  semantically. The resulting language is a conservative semantic extension of
+  both SWSL-FOL+HiLog and SWSL-FOL+Frames. Similarly, SWSL-FOL+Equality and
+  SWSL-FOL+Frames can be combined and the resulting language is a conservative
+  extension of both. Interestingly, combining SWSL-FOL+Equality with
+  SWSL-FOL+HiLog leads to a conservative extension of
+  SWSL-FOL+HiLog, but <em>not</em> of SWSL-FOL+Equality! 
+  More precisely, if &phi; and &psi; are formulas in SWSL-FOL+Equality
+  and &phi; <code>|=</code> &psi; then the same holds in
+  SWSL-FOL+HiLog. However, there are formulas such that &phi; <code>|=</code>
+    &psi;  holds in SWSL-FOL+HiLog but not in SWSL-FOL+Equality
+  [<cite><a href="#hilog">Chen93</a></cite>].
+</p>
+
+
+<h2>
+  <a name="swsl-fol-semantics">
+    2.16 Semantics of SWSL-FOL
+  </a>
+</h2>
+
+<p>
+   The semantics of the first-order sublanguage of SWSL is based on the
+   standard first-order model theory and is monotonic. The only new elements
+   here are the higher-order extension that is based on HiLog
+   [<cite><a href="#hilog">Chen93</a></cite>]  and the frame-based extension
+   based on F-logic [<cite><a href="#f-logic">Kifer95</a></cite>].  The
+   respective references provide a complete model theory for these extensions,
+   which extends the standard model theory for first-order logic.
+</p>
+
+
+<h2>
+  <a name="swsl-future">
+    2.17 Future Extensions
+  </a>
+</h2>
+
+<p>
+ To enhance the power of the SWSL-Rules language,
+ a number of extensions are being planned, as described below.
+</p>
+
+<ul>
+  <li>  
+     <p>
+        <b>If-then-else</b>. The <code>if <em>test</em>
+        then <em>test1</em></code> is sometimes more convenient and familiar
+        than the <code>==&gt;</code> operator. More important, however, is the
+        fact that the more complete idiom, <code>if <em>test</em>
+        then <em>test1</em> <b>else</b> <em>test2</em></code>, is known to be
+        very useful and common in rule-based languages. Although
+        the <code>else</code>-part can be expressed with negation as failure,
+        this is not natural and most well-developed languages support
+        the <em>if-then-else</em> idiom directly.  This idiom may be added to
+        SWSL-Rules later.
+     </p>
+  </li>
+  <li>
+    <p>
+      <b>Aggregate operators</b>. Aggregate operators, such as sum, average, etc.,
+      are important database operations. XML languages such as XPath, XSLT, and
+      XQuery all have support for aggregation. Of these, only XQuery permits
+      aggregation over general set comprehension.  A future extension of
+      SWSL-Rules will allow aggregation in the style of FLORA-2, which supports
+      explicit set comprehension and nested aggregation. The general syntax of
+      such aggregation is:
+    </p>
+    <div class="exampleInner">
+      <code>
+  &nbsp; &nbsp; &nbsp;
+	?Result = <em>aggregate</em>{?Var [<em>GroupingVarList</em>] | <em>Query</em> }
+      </code>
+    </div>
+    <p>
+      where <em>aggregate</em> can
+      be <code>max</code>, <code>min</code>, <code>avg</code>, <code>count</code>,
+      <code>sum</code>, <code>collectset</code>, <code>collectbag</code>.  The
+      last two aggregates return lists of the instantiations
+      of <code>?Var</code> that satisfy <em>Query</em> without the duplicates
+      (<code>collectset</code>) and with possible duplicates
+      (<code>collectbag</code>).
+    </p>
+
+    <p>
+      The grouping variables provide the functionality similar to <code>GROUP
+	BY</code> of SQL. They have the effect that the aggregation produces one list
+      of results per every instantiation of the variables
+      in <em>GroupingVarList</em> for which <em>Query</em> has a solution.  The
+      variable <code>?Result</code> gets successively bound to each such list (one
+      list at a time).
+    </p> 
+  </li>
+  <li>
+    <p>
+      <b>Constraints.</b>  Constraints play a very important role in database
+      and knowledge base applications. As a future extension, SWSL-Rules will
+      have database-style constraints. Database constraints are different in
+      nature from restrictions used in Description Logic. Whereas restrictions
+      in Description Logic are part of the same logical theory as the rest of
+      the statements and are used to <em>derive</em> new statements,
+      constraints in databases are not used to derive new information.
+      Instead, they serve as tests of correctness for the canonical models of
+      the knowledge base.  In this framework, canonical models (e.g., the
+      well-founded model
+      [<cite><a href="#well-founded">VanGelder91</a></cite>]) are first
+      computed without taking constraints into account. These models are then
+      checked against the constraints. The models that do not satisfy the
+      constraints are discarded. In the case of the well-founded semantics,
+      which always yields a single model, testing satisfaction of the
+      constraints validates whether the knowledge base is in a consistent
+      state.
+    </p>
+  </li>
+  <li>
+    <p>
+      <b>Procedural attachments, state changes &agrave; la
+	Transaction Logic, situated logic programs</b>.  A <em><b>procedural
+	attachment</b></em> is a predicate or a method that is implemented by
+	an external procedure (e.g., in Java or Python). Such a procedure can
+	have a side effect on the real world (e.g., sending an email or
+	activating a device) or it can receive information from the outside
+	world. First formalizations of these ideas in the context of database
+	and rule based languages appeared in
+	[<cite><a href="#Maier81">Maier81</a></cite>,
+      <cite><a href="#ldl-vldb89">Chimenti89</a></cite>].
+      These ideas were recently explored in
+      [<cite><a href="#Grosof2004a">Grosof2004a</a></cite>] in the context of
+      e-commerce. Transaction Logic
+      [<cite><a href="#Bonner98">Bonner98</a></cite>] provides a 
+      seamless integration of these concept into the logic.
+    </p>
+
+    <p>
+      An attached procedure can be specified by a link statement, which
+      associates a predicate or a method with an external program.
+      The exact details of the syntax have not been
+      finalized, but the following is a possibility:
+    </p>
+    <div class="exampleInner">
+      <code>
+  &nbsp; &nbsp; &nbsp;
+	attachment relation/Arity  <em>name-of-java-procedure</em>(integer,string,...)
+      </code>
+    </div>
+    <p>
+      This syntax can be generalized to include object-oriented methods.
+    </p>
+    <p>
+      Another necessary extension involves <em>update primitives</em> -
+      primitives for changing the underlying state of the knowledge.
+      These primitives can add or delete facts, and even add or delete rules.
+      A declarative account of such update operations in the context of a
+      rule-based language is given by Transaction Logic
+      [<cite><a href="#Bonner98">Bonner98</a></cite>]. This logic also can also
+      be used to represent triggers (also known as ECA rules)
+      [<cite><a href="#Bonner98">Bonner93</a></cite>].
+    </p>
+  </li>
+  <li>
+    <p>
+      <b>Predicates with named arguments</b>.  
+      For predicates with <i>ordered</i> arguments,
+      named attributes are essentially supported by the current syntax.
+      For instance, if -&gt; is viewed as an infix binary function symbol, then
+      <code>p(foo -&gt; 1, bar -&gt; 2)</code> is a valid term in SWSL-Rules.
+      Predicates with <i>unordered</i> arguments can make unification exponential
+      and are unlikely to be supported in the future.
+    </p>
+  </li>
+  <li>
+    <p>
+      <b>The "rest"-variables</b>.  
+      The ``rest'' notation &agrave; la SCL can be useful in metaprogramming.
+      A rest-variable binds to a list of variables or terms and it always occurs
+      as the last variable of a term. During unification with another term,
+      such a variable binds to a list of arguments of that term beginning with
+      argument corresponding to the variable till the rest of the term (whence the
+      name of such variables).
+      For instance, in the following term, <tt>?R</tt> is a rest-variable:
+    </p>
+    <div class="exampleInner">
+      <code>
+  &nbsp; &nbsp; &nbsp;
+	p(?X,?Y | ?R)
+      </code>
+    </div>
+    <p>
+      If this term is unified
+      with <code>p(?Z,f,?Z,q)</code>, then <tt>?X</tt> binds
+      to <code>?Z</code>, <code>?Y</code> to <code>f</code>, and <code>?R</code>
+      to the list <code>[?Z,q]</code>.   
+    </p>
+  </li>
+  <li>
+    <b>Non-ground identity relation</b>, <tt>==</tt>. This predicate is true
+    if the arguments are identical up to variable renaming. This predicate is
+    not declarative but can be very useful, as demonstrated by the extensive
+    practice of logic programming.
+  </li>
+</ul>
+
+
+      <hr/>
+      <h1><a id="sec-bridge" name="sec-bridge">
+	3 Combining SWSL-Rules and SWSL-FOL
+	</a>
+      </h1>
+          <p>
+      SWSL includes two fundamentally distinct 
+      knowledge representation languages:
+    </p>
+    <ol>
+      <li>
+	SWSL-Rules -- a declarative rule-based language based on the logic
+	programmin/deductive database paradigm; and
+      </li>
+      <li>
+	SWSL-FOL -- a classical first order logic based language
+      </li>
+    </ol> 
+    <p>
+      In this section, we discuss how -- and also why -- 
+      to <b>combine</b> knowledge expressed in
+      SWSL-Rules with knowledge expressed in SWSL-FOL. 
+    </p>
+    <p>
+      First, it is worthwhile to review the motivations for having the two 
+      distinct knowledge representation languages. 
+    </p>
+    <p> SWSL-Rules is especially well suited to represent available knowledge
+      and desired patterns of reasoning for several tasks in semantic Web
+      services:
+    </p>
+    <ul>
+      <li>
+	authorization policies (for security, access control, confidentiality, 
+	privacy, and other kinds of trust); 
+      </li>
+      <li>
+	contracts (partial or complete, proposed or finalized); 
+      </li>
+      <li> monitoring of processes to recognize and handle exceptions or
+	other dynamic conditions (e.g., monitoring of performance of
+	contracts to detect and respond to violations of contract provisions
+	such as late delivery or non-payment);
+      </li>
+      <li> advertising, discovery, and matchmaking (e.g., advertisements
+	and requests for quotation or requests for proposals can be regarded
+	as partial contract proposals);
+      </li>
+      <li>
+	semantic mediation, especially translation mappings that mediate 
+	between different 
+	ontologies or contexts and thus between knowledge expressed in those 
+	different ontologies or contexts (e.g., to translate from the output 
+	of one service to the input expected by another service); and 
+      </li>
+      <li> object-oriented ontologies that use default inheritance with
+	priorities and/or cancellation (e.g., in the manner of the Process
+	Handbook [<cite><a href="http://ccs.mit.edu/ph/">Process
+	    Handbook</a></cite>]
+	[<cite><a href="#Bernstein2003">Bernstein2003</a></cite>]
+	[<cite><a href="#Grosof2004d">Grosof2004d</a></cite>]).
+    </li>
+    </ul>
+    <p>
+      In particular, the capabilities of SWSL-Rules for logical nonmonotonicity
+      (negation-as-failure and/or Courteous prioritized conflict handling) 
+      is used heavily in many use case scenarios for each of the above tasks 
+      and the associated kinds of knowledge.    
+    </p>
+    <p>
+      SWSL-FOL is especially well suited to represent available knowledge 
+      and desired patterns of reasoning for several other tasks in semantic Web
+      services, especially revolving around the process model:
+    </p>
+    <ul>
+      <li>
+	Composition of services, and associated planning using process 
+	models;
+      </li>
+      <li>
+	Analysis, verification, and validation of services in terms of their 
+	process models; and
+      </li>
+      <li>
+	Ontologies expressed in first order classical logic, e.g., in 
+	Description Logic (for example, in OWL-DL).  
+    </li>
+    </ul>
+    <p>
+      In particular, the capabilities of SWSL-FOL for disjunction,  
+      reasoning by cases, contrapositive reasoning, and/or existentials 
+      are used heavily in many use case scenarios for each of the above tasks 
+      and its associated kinds of knowledge.   
+    </p>
+
+    <p>
+      SWSL-Rules and SWSL-FOL overlap largely in syntax, and SWSL-Rules includes
+      almost all of the connectives of SWSL-FOL.
+      The deeper issue, however, is
+      the semantic relationship between SWSL-Rules and SWSL-FOL. 
+    </p>
+    <p>
+      For several purposes it is desirable to <i>combine</i> knowledge
+      expressed in the SWSL-Rules form with knowledge expressed in the
+      SWSL-FOL form.  One important such purpose is:
+    </p>
+    <ul>
+      <li>
+	LP rules "on top of" FOL ontologies.  "On top of" here means that
+	some of the predicates mentioned in the set of rules are defined via
+	ontological knowledge expressed in FOL.  Such FOL ontologies can
+	often be viewed as "background" knowledge.
+      </li>
+    </ul> 
+    <p>
+      For example, the predicates might be classes or properties defined via
+      OWL-DL axioms, i.e., expressed in the Description Logic fragment of FOL.
+    </p>
+    <p>
+      In terms of semantics, it is desirable to have reasoning in SWSL-Rules
+      <i>respect</i> as much as possible the information contained in such
+      background FOL ontologies.  In particular, it is desirable to enable
+      sufficient completeness in the semantic combination to ensure that the
+      conclusions drawn in SWSL-Rules will be (classically) <i>not
+      inconsistent</i> with the SWSL-FOL ontologies.
+    </p>
+    <p>
+      Ideally, there would be one well-understood overall knowledge
+      representation formalism that subsumes both SWSL-Rules and SWSL-FOL.
+      This would provide the general theoretical basis for combining arbitrary
+      SWSL-Rules knowledge with arbitrary SWSL-FOL knowledge.  Unfortunately,
+      finding such an umbrella formalism is still an open issue for basic
+      research.  Instead, the current scientific understanding provides only a
+      limited theoretical basis for combining SWSL-Rules knowledge with
+      SWSL-FOL knowledge. On the bright side, there are limited expressive
+      cases for which it is well-understood theoretically how to do such
+      combination.
+    </p>
+    <p> 
+      The Venn diagram of relationships between the different formalisms, 
+      given in Figure 2.1 illustrates the 
+      most salient aspects of the current scientific understanding.  
+    </p>
+    <div class="figure">
+      <img src="images/kr-diagram-for-SW.jpg" alt="Relationships among
+      different formalisms" width="800"/>
+      <p>Figure 2.1: The relationships among different formalisms</p>
+    </div>
+    <p>
+      The shield shape represents first-order logic-based formalisms.
+      The (diagonally-rotated) bread-slice shape shows the expressivity of the
+      logic programming based paradigms.
+      These overlap partially -- in the Horn rules subset.  FOL includes
+      expressiveness beyond the overlap, notably: positive disjunctions;  
+      existentials; and entailment of non-ground and non-atomic conclusions.  
+      Likewise, LP includes expressiveness beyond the overlap, such as
+      negation-as-failure, which is
+      logically nonmonotonic.   
+      Description Logic (cf. OWL-DL), depicted as an oval shape, is a fragment 
+      of FOL.
+    </p>
+    <p> Horn FOL is another fragment of FOL.  Horn LP is a slight weakening of
+      Horn FOL.  "Weakening" here means that the conclusions from a given set
+      of Horn premises that are entailed according to the Horn LP formalism are
+      a subset of the conclusions entailed (from that same set of premises)
+      according to the Horn FOL formalism.  However, the set of ground atomic
+      conclusions is the same in the Horn LP as in the Horn FOL.  For most
+      practical purposes (e.g., relational database query answering), Horn LP
+      is thus essentially similar in its power to the Horn FOL.
+    </p>
+    <p>  
+      Horn LP is a fragment of both FOL and nonmonotonic LP -- 
+      i.e., of both SWSL-Rules and SWSL-FOL. 
+      Horn LP is thus a limited "bridge" that provides 
+      a way to pass information 
+      -- either premises, or ground-atomic conclusions -- from FOL to LP, or
+      vice versa.  Knowledge from FOL that is in the Horn LP subset of
+      expressiveness can be easily combined with general LP knowledge.  Vice
+      versa, knowledge from LP that is in the Horn LP subset of expressiveness
+      can be easily combined with general FOL knowledge.  Description Logic
+      Programs (DLP) [<cite><a href="#Grosof2003a">Grosof2003a</a></cite>]
+      represent a fragment of Horn LP.  It likewise acts as a "bridge" between
+      Description Logic (i.e., OWL-DL) and LP.
+    </p>
+    <p>
+      Note that, technically, LP uses a different logical connective for
+      implication (":-" in SWSL syntax) than FOL uses.  When we speak of Horn
+      LP as a fragment of FOL, we are viewing this LP implication connective as
+      mapped into the FOL implication connective (also known as <em>material
+      implication</em>).
+    </p>
+    <p>
+      <b>Horn LP as "bridge".</b> To summarize, there is some initial good news
+      about semantic combination:
+    </p>
+    <ul>
+      <li>
+	The Horn LP case 
+	is a "bridge" between SWSL-Rules and SWSL-FOL.
+      </li>
+      <li>
+	The DLP case is a "bridge" between SWSL-Rules and OWL-DL.  
+      </li>
+    </ul>
+    <p>
+      <b>Builtin predicates.</b>  Another case of well behaved semantic
+      combination is for <em><b>builtin predicates</b></em> that are purely
+      informational, e.g., that represent arithmetic comparisons or operations
+      such as less-than or multiplication.  Technically, in LP these can be
+      viewed as procedural attachments.  But alternatively, they can be viewed
+      as predicates that have fixed extensions.  Their semantics in both FOL
+      and LP can thus be viewed essentially as virtual knowledge base
+      consisting of a set of ground facts.  This thus falls into the Horn LP
+      fragment.
+    </p>
+    <p>
+      <b>Hypermonotonic reasoning as "bridge".</b>  Recently, a new theoretical
+      approach called <em><b>hypermonotonic reasoning</b></em>
+      [<cite><a href="#Grosof2004c">Grosof2004c</a></cite>] has been developed
+      to enable a case of "bridging" between (nonmon) LP and FOL that is
+      considerably more expressive than Horn LP.
+    </p>
+    <p>
+      We will now describe in more detail some preliminary results about this
+      hypermonotonic reasoning approach that bear upon the relationship of LP
+      to FOL and thus upon how to combine LP knowledge with FOL knowledge.
+    </p>
+    <p>
+      Courteous LP (including its fragment: LP with negation-as-failure) can be
+      viewed as a weakening of FOL, under a simple mapping of Courteous LP
+      rules/conclusions into FOL.  "Weakening" here means that for a given set
+      of premises, the set of conclusions entailed in the Courteous LP
+      formalism is in general a subset of the set of conclusions entailed by
+      the FOL formalism.  In other words:
+    </p>
+    <ul>
+      <li>
+	<em>(Courteous) LP is sound but incomplete relative to FOL.</em>
+      </li>
+    </ul>
+    <p> This fundamental relationship between the formalisms provides an
+      augmentation to the theoretical basis for combining knowledge in LP (i.e.,
+      SWSL-Rules) with knowledge in FOL.
+    </p>
+    <p> Consider a set of rules S in LP and a set of formulas B in FOL.  Let T
+      be a translation mapping from the language of S to the language of B.  S
+      is said to be <b><i>hypermonotonic</i></b> with respect to B and T when S
+      is sound but incomplete relative to B, under the mapping T.  That is,
+      when the conclusions entailed in S from a given set of premises P are in
+      general always a subset of the conclusions entailed in B from the
+      translated premises of S.
+    </p>
+    <p>
+      Define CLP2 to be the fragment of the Courteous LP formalism in which 
+      explicit negation-as-failure is omitted (i.e., prohibited).  
+      Each rule and mutex in CLP2 can be mapped quite straightforwardly and 
+      intuitively to a clause in FOL:  
+      simply replace the LP implication connective 
+      (":-" in SWSL-Rules syntax) by the FOL implication connective.
+      Observe that this is the same mapping/translation that 
+      was considered in relating the Horn LP to FOL.  
+      Each ground-literal conclusion in CLP2 can also be mapped, in the 
+      same fashion, into a ground-literal in FOL.  
+    </p>
+    <p>    
+      The restriction on Courteous LP to avoid explicit negation-as-failure 
+      is not very onerous essentially, since the great majority of use cases in
+      which explicit negation-as-failure is employed can be reformulated during 
+      manual authoring of rules so as to avoid it as a construct.
+      More generally, the mapping can be extended, by complicating it a bit,
+      to permit explicit negation-as-failure.      
+    </p>
+    <p>
+      Going in the reverse direction, every clause in FOL can also be mapped
+      into CLP2, in such a way that the resulting CLP information is a
+      weakening of the FOL clause that nevertheless preserves much of the
+      strength of the FOL clause.  This reverse-translation mapping from FOL to
+      CLP is complicated somewhat by the <i>directional</i> nature of the LP
+      implication connective.  "Directional" here means having a direction from
+      body towards head.  Each LP rule can be viewed as a directed clause.
+      Consider a FOL clause <i>C</i> that consists of a disjunction of <i>m</i>
+      literals:
+    </p>
+    <ul>
+      <li>
+	(universal closure of:) L1 or ... or Lm.
+      </li>
+    </ul>
+    <p>
+      Here, each Li is an atom or a classically-negated atom.  When
+      mapping <i>c</i> to CLP2, there are <i>m</i> possible choices of one
+      for each possible choice of which literal is to be made head of the LP
+      rule.  Each possible choice corresponds to a different rule -- the LP
+      rule in which literal Li is chosen as head has the form:
+    </p>
+    <ul>
+      <li>
+	<code>
+	  Li :- neg L1, ..., neg Li-1, neg Li+1, ..., neg Lm .
+	</code>
+    </li>
+    </ul>
+    <p>
+      Altogether, the FOL clause <i>C</i> is mapped into a set of <i>m</i> 
+      LP rules:
+    </p>
+    <ul>
+      <li>
+	<code>
+	  L1 :- neg L2, neg L3, ..., neg Lm . 
+	</code>
+      </li>
+      <li>
+	<code>
+	  L2 :- neg L1, neg L3, ..., neg Lm .
+	</code>
+      </li>
+      <li>
+	...
+      </li>
+      <li>
+	<code>
+	  Lm :- neg L1, neg L2, ..., neg Lm-1 .
+	</code>
+      </li>
+    </ul>
+    <p>
+      where neg (neg A) is replaced equivalently by A.  This set of rules is
+      called the "omni-directional" set of rules for that clause -- or, more
+      briefly, the <i>"omni rules"</i> for that clause.
+    </p>
+    <p>
+      In general, FOL axioms need not be clausal since they may include
+      existential quantifiers.  However, often <i>skolemization</i> can be
+      performed to represent such existentials in a manner that preserves
+      soundness (as is usual for skolemization).  A refinement of the reverse
+      translation mapping above is to exploit such skolemization in order to
+      relax the requirement of clausal form.  We use such skolemization
+      particularly for head existentials.
+    </p>
+    <p>
+      <b>Automatic weakened translation of FOL ontologies into SWSL-Rules.</b>
+      In the ontologies aspect of SWSL, it is desirable to have a "bridging"
+      technique to automatically translate FOL ontologies into SWSL-Rules in
+      such a manner as to preserve soundness (from an FOL viewpoint) but to be
+      nevertheless fairly strong (i.e., capture much of the strength/content of
+      the original FOL axioms).  We have adopted, as an experimental "bridging"
+      approach, the reverse translation mapping technique described above in
+      order to map FOL ontologies into SWSL-Rules (heavily using the Courteous
+      feature).  In particular, we have applied this technique to map the
+      axioms of PSL Core and Outer Core into SWSL-Rules so as to create a
+      weakened version of that ontology that can be utilized within SWSL-Rules.
+      Because some of these PSL axioms include existentials, we utilize the
+      skolemization refinement described above, particularly for head
+      existentials. The mapping from the PSL axioms to SWSL-Rules is given
+      in appendix <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/appendices/psl-swsl.html"> PSL in SWSL-FOL and
+      SWSL-Rules</a>.
+    </p>
+
+<p>
+The precise algorithm used to obtain the SWSL-Rules translation for a
+given axiom in SWSL-FOL is as follows:
+</p>
+
+<pre>
+Input: a formula F in SWSL-FOL.
+Output: a set of rules R, expressed in SWSL-Rules.
+
+1) Translate F into formula F1 in Prenex Normal Form.
+
+2) Skolemize F1 to get F2, which is in Skolem Normal Form.
+
+3) Write F2 as a set S of clauses.
+
+4) For each clause C in S, produce the omnidirectional set of rules for C (as defined above).
+
+R then is the union of all the omnidirectional sets of rules produced by (4). 
+</pre>
+
+
+      <hr/>
+      <h1><a id="sec-markup" name="sec-markup">
+	4 Serialization of SWSL in RuleML
+	</a>
+      </h1>
+          <p>
+      SWSL is serialized in XML using RuleML.
+      RuleML-style serialization of SWSL enables interoperation with
+      other XML applications for rules and provides an encoding for
+      transporting SWSL-Rules via the SOAP infrastructure of Web services.
+    </p>
+    <p>
+      <a href="http://www.ruleml.org">RuleML</a> integrates various rule
+      paradigms via common set of concepts and defines a family of rule-based,
+      Web-enabled sublanguages with various degrees of expressiveness.  This
+      section applies the RuleML approach to serialization of SWSL. This is
+      done mostly by reusing and sometimes extending the existing RuleML
+      sublanguages. In addition, a new sublanguage for the serialization of
+      HiLog is developed.
+    </p>
+    <p>
+      Serialization of the presentation syntax of SWSL-Rules amounts to
+      construction of explicit parse trees and then representing these trees
+      linearly as XML markup that is compliant with XML Schema of the
+      appropriate RuleML sublanguages.  Starting with <a
+      href="http://www.ruleml.org/0.89/">Version 0.89</a>, the
+      <a href="http://www.ruleml.org/spec/">XML Schema specification of
+      RuleML</a> supports SWSL-Rules.
+    </p>
+    <p>
+      Serialization of SWSL-FOL does not require any new constructs, and it is
+      done by repurposing existing RuleML features. Serialization of SWSL-FOL
+      is discussed at the end of this section, in <a href="#ruleml-fol">Section
+      4.5</a>.
+    </p>
+    <p>
+      Conceptually, RuleML models XML trees as objects and thus divides all
+      XML tags into class descriptors, called
+      <em>type tags</em>, and property descriptors, called
+      <em>role tags</em>. This conceptual object-oriented model implies that
+      type tags and role tags must alternate, which is known as <em>striped XML
+      syntax</em>. For instance, in F-logic and RDF, classes can have properties,
+      which point to classes, which have properties that point to classes,
+      etc. Similarly, in the striped XML syntax, a type tag has role tags as
+      subelements, whose children are again type tags, etc.  When the role of a
+      subelement is clear from the context, its tag may be skipped for brevity,
+      as in RDF's <a
+      href="http://esw.w3.org/topic/StripeSkipping">StripeSkipping</a>.
+    </p>
+
+    <h2>
+      <a name="ruleml-hilog">
+	4.1 Serialization of the HiLog Layer
+      </a>
+    </h2>
+
+    <p>
+      <b>HiLog terms</b>.  The HiLog serialization uses the
+      <em>type tag</em> <code>Hterm</code> for HiLog terms, <code>Con</code>
+      for constants, and <code>Var</code> for variables.  Since HiLog allows
+      arbitrary terms to be used in the position of predicate and function
+      symbols, the RuleML serialization allows not only constants but also
+      variables and Hterms under the <code>op</code> <em>role tag</em> .  The
+      following illustrates the main aspects of the HiLog serialization.
+    </p>
+    <ul> 
+      <li>
+	<p>
+	  <em><b>Regular first-order terms</b></em>. For instance, the HiLog
+	  terms <code>c</code>, <code>f(a,?X)</code>, <code>?X</code> are
+	  represented by the following three XML fragments, respectively:
+	</p>
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Con&gt;c&lt;/Con&gt;
+	  </pre>
+	</div>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Hterm&gt;
+	       &lt;op&gt;&lt;Con&gt;f&lt;/Con&gt;&lt;/op&gt;
+	       &lt;Con&gt;a&lt;/Con&gt;
+	       &lt;Var&gt;X&lt;/Var&gt;
+	    &lt;/Hterm&gt;
+	  </pre>
+	</div>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Var&gt;X&lt;/Var&gt;
+	  </pre>
+	</div>
+
+      </li>
+
+      <li>
+	<p>
+	  <em><b>Variables over function symbols</b></em>. For
+	  instance, the terms <code>?X(a,?Y)</code>,
+	  <code>?X(a,?Y(?X))</code> are serialized as follows:
+	</p>
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Hterm&gt;
+	       &lt;op&gt;&lt;Var&gt;X&lt;/Var&gt;&lt;/op&gt;
+	       &lt;Con&gt;a&lt;/Con&gt;
+	       &lt;Var&gt;Y&lt;/Var&gt;
+	    &lt;/Hterm&gt;
+	  </pre>
+	</div>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Hterm&gt;
+	       &lt;op&gt;&lt;Var&gt;X&lt;/Var&gt;&lt;/op&gt;
+	       &lt;Con&gt;a&lt;/Con&gt;
+	       &lt;Hterm&gt;
+	          &lt;op&gt;&lt;Var&gt;Y&lt;/Var&gt;&lt;/op&gt;
+	          &lt;Var&gt;X&lt;/Var&gt;
+	       &lt;/Hterm&gt;
+	    &lt;/Hterm&gt;
+	  </pre>
+	</div>
+
+
+      </li>
+
+      <li>
+	<p>
+	  <em><b>Parameterized function symbols</b></em>. For
+	  instance, the HiLog terms <code>f(?X,a)(b,?X(c))</code>,
+	  <code>?Z(?X,a)(b,?X(?Y)(d))</code>,  <code>?Z(f)(g,a)(p,?X)</code>
+	  will be serialized as shown below:
+	</p>
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Hterm&gt;
+	       &lt;op&gt;
+	          &lt;Hterm&gt;
+	             &lt;op&gt;&lt;Con&gt;f&lt;/Con&gt;&lt;/op&gt;
+	             &lt;Var&gt;X&lt;/Var&gt;
+	             &lt;Con&gt;a&lt;/Con&gt;
+	          &lt;/Hterm&gt;
+	       &lt;/op&gt;
+	       &lt;Con&gt;b&lt;/Con&gt;
+	       &lt;Hterm&gt;
+	          &lt;op&gt;&lt;Var&gt;X&lt;/Var&gt;&lt;/op&gt;
+	          &lt;Con&gt;c&lt;/Con&gt;
+	       &lt;/Hterm&gt;
+	    &lt;/Hterm&gt;
+	  </pre>
+	</div>
+
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Hterm&gt;
+	       &lt;op&gt;
+	          &lt;Hterm&gt;
+	             &lt;op&gt;&lt;Var&gt;Z&lt;/Var&gt;&lt;/op&gt;
+	             &lt;Var&gt;X&lt;/Var&gt;
+	             &lt;Con&gt;a&lt;/Con&gt;
+	          &lt;/Hterm&gt;
+	       &lt;/op&gt;
+	       &lt;Con&gt;b&lt;/Con&gt;
+	       &lt;Hterm&gt;
+	          &lt;op&gt;
+	             &lt;Hterm&gt;
+                        &lt;op&gt;&lt;Var&gt;X&lt;/Var&gt;&lt;/op&gt;
+                        &lt;Var&gt;Y&lt;/Var&gt;
+	             &lt;/Hterm&gt;
+	          &lt;/op&gt;
+	          &lt;Con&gt;d&lt;/Con&gt;
+	       &lt;/Hterm&gt;
+	    &lt;/Hterm&gt;
+	  </pre>
+	</div>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Hterm&gt;
+	       &lt;op&gt;
+	          &lt;Hterm&gt;
+	             &lt;op&gt;
+                        &lt;Hterm&gt;
+                           &lt;op&gt;&lt;Var&gt;Z&lt;/Var&gt;&lt;/op&gt;
+                           &lt;Con&gt;f&lt;/Con&gt;
+                        &lt;/Hterm&gt;
+	             &lt;/op&gt;
+	             &lt;Con&gt;g&lt;/Con&gt;
+	             &lt;Con&gt;a&lt;/Con&gt;
+	          &lt;/Hterm&gt;
+	       &lt;/op&gt;
+	       &lt;Con&gt;p&lt;/Con&gt;
+	       &lt;Var&gt;X&lt;/Var&gt;
+	    &lt;/Hterm&gt;
+	  </pre>
+	</div>
+
+      </li>
+    </ul>
+
+
+
+    <p>
+      <b>HiLog atomic formulas</b>.  Since any HiLog term is also a HiLog atomic
+      formula, the RuleML serialization for these formulas is the same as for HiLog terms.
+      The following example shows an encoding of a query, which uses
+      the <code>Query</code> element of RuleML:
+    </p>
+    <div class="exampleInner">
+      <pre>
+	?- q(?X) and ?X.
+      </pre>
+    </div>
+
+
+    <div class="exampleInner">
+      <pre>
+	&lt;Query&gt;
+	   &lt;And&gt;
+	      &lt;Hterm&gt;
+	         &lt;op&gt;&lt;Con&gt;q&lt;/Con&gt;&lt;/op&gt;
+	         &lt;Var&gt;X&lt;/Var&gt;
+	      &lt;/Hterm&gt;
+	      &lt;Var&gt;X&lt;/Var&gt;
+	   &lt;/And&gt;
+	&lt;Query&gt;
+      </pre>
+    </div>
+
+
+    <p>
+      Another interesting example is a HiLog rule
+    </p>
+    <div class="exampleInner">
+      <pre>
+	call(?X) :- ?X.
+      </pre>
+    </div>
+    <p>
+      which is a logical definition of the meta-predicate <code>call/1</code> in
+      Prolog.  This is translated using the RuleML
+      tags <tt>Implies</tt>, <tt>head</tt>, and <tt>body</tt>, as follows:
+    </p>
+
+
+
+    <div class="exampleInner">
+      <pre>
+	&lt;Implies&gt;
+	   &lt;head&gt;
+	      &lt;Hterm&gt;
+	         &lt;op&gt;&lt;Con&gt;call&lt;/Con&gt;&lt;/op&gt;
+	         &lt;Var&gt;X&lt;/Var&gt;
+	      &lt;/Hterm&gt;
+	   &lt;/head&gt;
+	   &lt;body&gt;
+	      &lt;Var&gt;X&lt;/Var&gt;
+	   &lt;/body&gt;
+	&lt;/Implies&gt;
+      </pre>
+    </div>
+
+
+
+    <h2>
+      <a name="ruleml-eq">
+	4.2 Serialization of Explicit Equality
+      </a>
+    </h2>
+
+    <p>
+      The explicit equality predicate <code>:=:</code> is serialized using the
+      RuleML's element <code>Equal</code>.  For example,
+    </p>
+    <div class="exampleInner">
+      <pre>
+	f(a,?X):=:g(?Y,b) :- p(?X,?Y).
+      </pre>  
+
+    </div>
+    <p>
+      is serialized as
+    </p>
+
+
+    <div class="exampleInner">
+      <pre>
+	&lt;Implies&gt;
+	   &lt;head&gt;
+	      &lt;Equal&gt;
+	         &lt;Hterm&gt;
+	            &lt;op&gt;&lt;Con&gt;f&lt;/Con&gt;&lt;/op&gt;
+	            &lt;Con&gt;a&lt;/Con&gt;
+	            &lt;Var&gt;X&lt;/Var&gt;
+	         &lt;/Hterm&gt;
+	         &lt;Hterm&gt;
+	            &lt;op&gt;&lt;Con&gt;g&lt;/Con&gt;&lt;/op&gt;
+	            &lt;Var&gt;Y&lt;/Var&gt;
+	            &lt;Con&gt;b&lt;/Con&gt;
+	         &lt;/Hterm&gt;
+	      &lt;/Equal&gt;
+	   &lt;/head&gt;
+	   &lt;body&gt;
+	      &lt;Hterm&gt;
+	         &lt;op&gt;&lt;Con&gt;p&lt;/Con&gt;&lt;/op&gt;
+	         &lt;Var&gt;X&lt;/Var&gt;
+	         &lt;Var&gt;Y&lt;/Var&gt;
+	      &lt;/Hterm&gt;
+	   &lt;/body&gt;
+	&lt;/Implies&gt;
+      </pre>
+    </div>
+
+
+
+
+    <h2>
+      <a name="ruleml-frames">
+	4.3 Serialization of the Frames Layer
+      </a>
+    </h2>
+    <p>
+      To serialize the Frames layer of SWSL-Rules we need to show the
+      serialization of the various molecules and path expressions introduced by
+      F-logic.
+    </p>
+    <p>
+      <b>Molecules</b>.  The serialization of molecules uses slotted
+      atoms, which have an <code>oid</code> but often do not have
+      an <code>op</code>. The overall structure of F-logic molecules (except for
+      class membership and subclassing) is as follows:
+    </p>
+
+
+    <div class="exampleInner">
+      <pre>
+	Atom ::= oid op? slot*
+      </pre>
+    </div>
+
+
+
+    <ul> 
+      <li>
+	<p>
+	  <em><b>Value molecules</b></em>.  
+	  If <code>t</code>, <code>m</code>, <code>v</code> are terms then the
+	  value molecule <code>t[m -&gt; v]</code> is serialized as follows:
+	</p>
+
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Atom&gt;&lt;oid&gt;t'&lt;/oid&gt;&lt;slot&gt;m' v'&lt;/slot&gt;&lt;/Atom&gt;
+	  </pre>
+	</div>
+
+
+	<p>
+	  Here and elsewhere we use primes to represent recursive RuleML
+	  serialization.  For instance, <code>t'</code>, <code>m'</code>,
+	  and <code>v'</code> denote RuleML serializations
+	  of <code>t</code>, <code>m</code>, and <code>v</code>,
+	  respectively. For instance, <code>o[f(a,b) -&gt; 3]</code> would be
+	  represented by the following fragment:
+	</p>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Atom&gt;
+	       &lt;oid&gt;&lt;Con&gt;o&lt;/Con&gt;&lt;/oid&gt;
+	       &lt;slot&gt;
+	          &lt;Hterm&gt;&lt;Con&gt;f&lt;/Con&gt;&lt;Con&gt;a&lt;/Con&gt;&lt;Con&gt;b&lt;/Con&gt;&lt;/Hterm&gt;
+	          &lt;Con&gt;3&lt;/Con&gt;
+	       &lt;/slot&gt;
+	    &lt;/Atom&gt;
+	  </pre>
+	</div>
+
+
+
+	<p>
+	  The syntax <code>t[m -&gt; {v<sub>1</sub>,...,v<sub>k</sub>}]</code>
+	  is also supported: the set-valued result is serialized using
+	  the <code>Set</code> tag:
+	</p>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Atom&gt;
+	       &lt;oid&gt;t'&lt;/oid&gt;
+	       &lt;slot&gt;
+	          m'
+	          &lt;Set&gt;v<sub>1</sub>',...,v<sub>k</sub>'&lt;/Set&gt;
+	       &lt;/slot&gt;
+	    &lt;/Atom&gt;
+	  </pre>
+	</div>
+
+
+      </li>
+
+      <li>
+	<p>
+	  <em><b>Boolean molecules</b></em>.  These molecules have the form
+	  <code>t[m]</code> where <code>t</code> and <code>m</code> are
+	  terms. They are serialized using singleton <code>slot</code>
+	  elements.  For instance,
+	  <code>mary[female]</code> is represented as follows:
+	</p>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Atom&gt;
+	       &lt;oid&gt;&lt;Con&gt;mary&lt;/Con&gt;&lt;/oid&gt;
+	       &lt;slot&gt;
+	          &lt;Con&gt;female&lt;/Con&gt;
+	       &lt;/slot&gt;
+	    &lt;/Atom&gt;
+	  </pre>
+	</div>
+
+
+      </li>
+      <li>
+	<p>
+	  <em><b>Class membership molecule</b></em>.  Class membership
+	  molecules of the form
+	  <code>t:s</code> are serialized using the <tt>InstanceOf</tt> element:
+	</p>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;InstanceOf&gt;t' s'&lt;/InstanceOf&gt;
+	  </pre>
+	</div>
+
+	<p>
+	  where <code>t'</code> and <code>s'</code> represent RuleML
+	  serializations of <code>t</code> and <code>s</code>.
+	</p>
+
+      </li>
+      <li>
+
+	<p>
+	  <em><b>Subclass molecule</b></em>.  The subclass molecules of the
+	  form <code>t::s</code> are represented using
+	  the <code>SubclassOf</code> element as follows:
+	</p>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;SubclassOf&gt;t' s'&lt;/SubclassOf&gt;
+	  </pre>
+	</div>
+
+	<p>
+	  As before, <code>t'</code> and <code>s'</code> represent RuleML
+	  serializations of <code>t</code> and <code>s</code>, respectively.
+	</p>
+
+      </li>
+      <li>
+	<p>
+	  <em><b>Signature molecule</b></em>.  Signature molecules of the
+	    form <code>t[m =&gt; v]</code> are represented using
+	    the <code>Signature</code> element, where the prime represents
+	    RuleML serialization of the corresponding term:
+	</p>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Signature&gt;&lt;oid&gt;t'&lt;/oid&gt;&lt;slot&gt;m' v'&lt;/slot&gt;&lt;/Signature&gt;
+	  </pre>
+	</div>
+      </li>
+
+
+      <li>
+	<p>
+	  <em><b>Boolean signature molecules</b></em>.  A Boolean signature
+	  molecule has the form <code>t[=&gt;m]</code>. Its RuleML
+	  serialization uses singleton <code>slot</code>
+	  elements within a <code>Signature</code> element:
+	</p>
+
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Signature&gt;&lt;oid&gt;t'&lt;/oid&gt;&lt;slot&gt;m'&lt;/slot&gt;&lt;/Signature&gt;
+	  </pre>
+	</div>
+      </li>
+
+      <li>  
+	<p>
+	  <em><b>Cardinality constraints</b></em>.  Signature molecules can
+	  have associated cardinality constraints. Such molecules have the form
+	</p>
+
+	<div class="exampleInner">
+	  <code>
+	    t[s(t<sub>1</sub>,...,t<sub>n</sub>) {<em>min</em> : <em>max</em>}
+	    =&gt; v]
+	  </code>
+	</div>
+
+	<p>
+	  In RuleML this becomes:
+	</p>
+
+	<div class="exampleInner">
+	  <pre>
+	    &lt;Signature&gt;
+	       &lt;oid&gt;t'&lt;/oid&gt;
+	       &lt;slot mincard="<em>min</em>" maxcard="<em>max</em>"&gt;
+	          &lt;Hterm&gt;&lt;Con&gt;s'&lt;/Con&gt;t<sub>1</sub>'...t<sub>n</sub>'&lt;/Hterm&gt;
+	          v'
+	       &lt;/slot&gt;
+	    &lt;/Signature&gt;
+	  </pre>
+	</div>
+
+
+      </li>
+    </ul>
+
+    <p>
+      <b>Nested molecules</b>.  Direct serialization of nested molecules
+      is not currently supported. Instead, they must first be broken into
+      conjunctions of non-nested molecules and then serialized.
+    </p>
+
+    <p>
+      <b>Slot access and path expressions</b>.  Serialization of slot access
+      uses the RuleML <code>Get</code> primitive. Serialization of path expressions
+      is supported via the polyadic RuleML <code>SlotProd</code> element.
+      For example, <code>room.ceiling.color</code>
+      becomes the following:
+      </p>
+
+    <div class="exampleInner">
+      <pre>
+        &lt;Get&gt;
+           &lt;oid&gt;&lt;Con&gt;room&lt;/Con&gt;&lt;/oid&gt;
+           &lt;SlotProd&gt;&lt;Con&gt;ceiling&lt;/Con&gt;&lt;Con&gt;color&lt;/Con&gt;&lt;/SlotProd&gt;
+        &lt;/Get&gt; 
+      </pre>
+    </div>
+
+
+
+    <h2>
+      <a name="ruleml-reification">
+	4.4 Serialization of Reification
+      </a>
+      </h2>
+
+    <p>
+      SWSL-Rules supports reification of F-logic molecules, formulas that can
+      occur in the head or the body of a rule, and of the rules themselves. The
+      only restriction is that explicit quantifiers cannot occur under the
+      scope of the reification operator. The main idea behind RuleML
+      serialization of such statements is that the corresponding serialized
+      statement must be embedded within a <code>Reify</code> element.
+    </p>
+    <p>
+      To illustrate, consider the following molecule:
+    </p>
+    <div class="exampleInner">
+      <pre>
+	a[b -&gt; ${p(X[foo -&gt; bar])}] 
+      </pre>
+    </div>
+    <p>
+      Since the reified statement (<code>p(X[foo -&gt; bar])</code> is an
+      <code>Hterm</code>, this tag becomes the child of the <code>Reify</code> element.
+    </p>
+
+
+    <div class="exampleInner">
+      <pre>
+	&lt;Hterm&gt;
+	   &lt;oid&gt;&lt;Con&gt;a&lt;/Con&gt;&lt;/oid&gt;
+	   &lt;slot&gt;
+	      &lt;Con&gt;b&lt;/Con&gt;
+	      &lt;Reify&gt;
+	         &lt;Hterm&gt;
+	            &lt;op&gt;&lt;Con&gt;p&lt;/Con&gt;&lt;/op&gt;
+	            &lt;Hterm&gt;
+	               &lt;oid&gt;&lt;Var&gt;X&lt;/Var&gt;&lt;/oid&gt;
+	               &lt;slot&gt;&lt;Con&gt;foo&lt;/Con&gt;&lt;Con&gt;bar&lt;/Con&gt;&lt;/slot&gt;
+	            &lt;/Hterm&gt;
+	         &lt;/Hterm&gt;
+	      &lt;/Reify&gt;
+	   &lt;/slot&gt;
+	&lt;/Hterm&gt;
+      </pre>
+    </div>
+
+
+    <p>
+      The following example illustrates serialization of a reified rule.
+    </p>
+
+    <div class="exampleInner">
+      <pre>
+	john[believes -&gt; ${p(?X) implies q(?X)}].
+      </pre>
+    </div>
+
+    <p>
+      The corresponding serialization is shown below.
+      Since the top-level tag of a rule is <code>Implies</code>,
+      this tag becomes the child of the <code>Reify</code> element.
+    </p>
+
+
+    <div class="exampleInner">
+      <pre>
+	&lt;Hterm&gt;
+	   &lt;oid&gt;john&lt;/oid&gt;
+	   &lt;slot&gt;
+	      &lt;Con&gt;believes&lt;/Con&gt;
+	      &lt;Reify&gt;
+	         &lt;Implies&gt;
+	            &lt;body&gt;
+	               &lt;Hterm&gt;
+	                  &lt;op&gt;&lt;Con&gt;p&lt;/Con&gt;&lt;/op&gt;
+	                  &lt;Var&gt;X&lt;/Var&gt;
+	               &lt;/Hterm&gt;
+	            &lt;/body&gt;
+	            &lt;head&gt;
+	               &lt;Hterm&gt;
+	                  &lt;op&gt;&lt;Con&gt;q&lt;/Con&gt;&lt;/op&gt;
+	                  &lt;Var&gt;X&lt;/Var&gt;
+	               &lt;/Hterm&gt;
+	            &lt;/head&gt;
+	         &lt;/Implies&gt;
+	      &lt;/Reify&gt;
+	   &lt;/slot&gt;
+	&lt;/Hterm&gt;
+      </pre>
+    </div>
+
+
+    <h2>
+      <a name="ruleml-fol">
+	4.5 Serialization of SWSL-FOL
+      </a>
+    </h2>
+
+
+    <p> 
+      Serialization of SWSL-FOL
+      reuses the existing
+      <a href="http://www.ruleml.org/fol/">FOL RuleML</a> sublanguage.
+      The serialization is accomplished through the following rules:
+    </p>
+    <ul>  
+      <li>
+	First-order atomic formulas are serialized
+	as <code>&lt;Atom&gt;...&lt;/Atom&gt;</code>.
+	What actually goes between the <tt>Atom</tt> tags depends on the type
+	of the atomic formula (i.e., whether it is a predicate formula or a
+	F-logic frame). 
+      </li>
+      <li>
+	If &phi; and &psi; are serialized SWSL-FOL formulas then so are
+	<code>&lt;And&gt;</code> &phi; &psi; <code>&lt;/And&gt;</code>,
+	<code>&lt;Or&gt;</code> &phi; &psi; <code>&lt;/Or&gt;</code>,
+	<code>&lt;Neg&gt;</code> &phi; <code>&lt;/Neg&gt;</code>,
+	<code>&lt;Implies&gt;</code> &phi;
+	&psi; <code>&lt;/Implies&gt;</code> (SWSL-FOL's
+	&phi; <code>impliedBy</code> &psi; must be first replaced
+	with &psi; <code>implies</code>
+	&phi;), and <code>&lt;Equivalent&gt;</code> &phi;
+	&psi; <code>&lt;/Equivalent&gt;</code> (for SWSL-FOL's <code>iff</code>).
+      </li>
+      <li>
+	If <code>X</code> is a variable and &phi; is a serialized SWSL-FOL
+	formula, then the following are also SWSL-FOL serialized formulas:
+	<code>&lt;Exists&gt;</code> <code>&lt;Var&gt;X&lt;/Var&gt;</code>
+	&phi; <code>&lt;/Exists&gt;</code> and
+	<code>&lt;Forall&gt;</code> <code>&lt;Var&gt;X&lt;/Var&gt;</code>
+	&phi; <code>&lt;/Forall&gt;</code>. Serialized SWSL-FOL also allows to
+	combine quantifiers of the same sort and reduce repetitiveness.  For
+	instance, <code>&lt;Exists&gt;</code> <code>&lt;Var&gt;X&lt;/Var&gt;</code>
+	<code>&lt;Var&gt;Y&lt;/Var&gt;</code>
+	&phi; <code>&lt;/Exists&gt;</code> is a shorthand for
+	<code>&lt;Exists&gt;</code> <code>&lt;Var&gt;X&lt;/Var&gt;</code>
+	<code>&lt;Exists&gt;</code> <code>&lt;Var&gt;Y&lt;/Var&gt;</code>
+	&phi; <code>&lt;/Exists&gt;</code> <code>&lt;/Exists&gt;</code>.
+      </li>
+    </ul>
+
+
+
+      <hr/>
+      <h1><a id="sec-glossary" name="sec-glossary">5  Glossary</a></h1>
+      
+<dl>
+
+  <dt><a name="gl-Activity"><b>Activity</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Activity</em>.  
+      In the formal PSL ontology, the notion of activity is a basic construct,
+      which corresponds intuitively to a kind of (manufacturing
+      or processing) activity.  
+      In PSL, an activity may have associated
+      <em>occurrences</em>, which 
+      correspond intuitively to individual instances or 
+      executions of the activity.
+      (We note that in PSL an activity is not a class or type with
+      occurrences as members; rather, an activity is an object,
+      and occurrences are related to this object by the
+      binary predicate <code>occurrence_of</code>.) 
+      The occurrences of an activity may impact 
+      fluents (which provide an abstract
+      representation of the "real world").
+      In FLOWS, with each service there is an associated
+      activity (called the "service activity" of that service).
+      The service activity may specify aspects of the internal
+      process flow of the service, and also aspects of the
+      messaging interface of that service to other services.
+  </dd>    
+
+
+
+  <dt><a name="gl-Channel"><b>Channel</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Channel</em>.  
+      In FLOWS, a channel is a formal conceptual object, 
+      which corresponds intuitively to a repository and
+      conduit for messages.
+      The FLOWS notion of channel is quite primitive,
+      and under various restrictions can be used to model
+      the form of channel or message-passing as 
+      found in web services standards,
+      including WSDL, BPEL, WS-Choreography, WSMO,
+      and also as found in several research investigations,
+      including process algrebras.
+  </dd>    
+
+
+  <dt><a name="gl-FLOWS"><b>FLOWS</b></a></dt>
+   <dd> <!-- description text here -->
+    <em><b>F</b>irst-order 
+     <b>L</b>ogic <b>O</b>ntology for <b>W</b>eb <b>S</b>ervices</em>.  
+     FLOWS, also known as SWSO-FOL, 
+     is the first-order logic version of the Semantic Web Services Ontology.
+     FLOWS is an extension of the PSL-OuterCore ontology, to 
+     incorporate the fundamental aspects of 
+     (web and other electronic) services, including service descriptors,
+     the service activity, and the service grounding.
+   </dd>
+
+
+
+  <dt><a name="gl-fluent"><b>Fluent</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Fluent</em>.  
+      In FLOWS, following PSL and the situation calculii, a
+      fluent is a first-order logic term or predicate whose
+      value may vary over time.
+      In a first-order model of a FLOWS theory, this 
+      being a model of PSL-OuterCore,
+      time is represented as a discrete linear sequence
+      of <em>timees</em>, and
+      fluents has a value for each time in this sequence.
+  </dd>    
+
+
+
+  <dt><a name="gl-grounding"><b>Grounding</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Grounding</em>.  
+      The SWSO concepts for describing service activities,
+      and the instantiations
+      of these concepts that describe a particular service activity, are
+      <i>abstract</i> specifications, in the sense that they do not specify
+      the details of particular message formats, transport protocols, 
+      and network
+      addresses by which a Web service is accessed. The role of
+      the <i>grounding</i> is to provide these more concrete
+      details.
+      A substantial portion of the grounding can be acheived by
+      mapping SWSO concepts into corresponding WSDL constructs.
+      (Additional grounding, e.g., of some process-related aspects
+      of SWSO, might be acheived using other standards, such
+      as BPEL.)
+  </dd>    
+
+
+
+  <dt><a name="gl-Message"><b>Message</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Message</em>.  
+      In FLOWS, a message is a formal conceptual object, 
+      which corresponds intuitively to a single message that
+      is created by a service occurrence, and read by zero
+      or more service occurrences.
+      The FLOWS notion of message is quite primitive, and
+      under various restrictions can be used to model
+      the form of messages as found in web services standards,
+      including WSDL (1.0 and 2.0), BPEL, WS-Choreography, WSMO,
+      and also as found in several research investigations.
+      A message has a <em>payload</em>, which corresponds 
+      intuitively to the body or contents of the message.
+      In FLOWS emphasis is placed on the knowledge that
+      is gained by a service occurrence when reading a message
+      with a given payload
+      (and the knowledge needed to create that message.
+  </dd>    
+
+  <dt><a name="gl-Occurrence"><b>Occurrence</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Occurence (of a service)</em>.  
+      In FLOWS, a service <em>S</em> has an associated FLOWS activity 
+      <em>A</em> (which
+      generalizes the notion of PSL activity).
+      An <em>occurrence</em> of <em>S</em> is formally
+      a PSL occurrence of the activity <em>A</em>.
+      Intuitively, this occurrence corresponds to
+      an instance or execution (from start to finish) of the activity
+      <em>A</em>, i.e., of the process associated with
+      service <em>S</em>.
+      As in PSL, an occurrence has a starting time
+      time and an ending time.
+  </dd>    
+
+
+
+  <dt><a name="gl-PSL"><b>PSL</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Process Specification Language</em>.  
+      The Process Specification Language (PSL) is a
+      formally axiomatized ontology 
+      [<cite><a href="#PSL1-Gruninger">Gruninger03a</a></cite>, 
+       <cite><a href="#PSL2-Gruninger">Gruninger03b</a></cite>] 
+      that has been
+      standardized as ISO 18629.  
+      PSL provides a layered, extensible ontology
+      for specifying properties of processes. 
+      The most basic PSL constructs are embodied in
+      PSL-Core; and PSL-OuterCore incorporates 
+      several extensions of PSL-Core that includes
+      several useful constructs.  
+      (An overview of concepts in PSL
+      that are
+      relevant to FLOWS is given in 
+      <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/#onto-background">Section 6 of the 
+      Semantic Web Services Ontology document</a>.)
+  </dd>    
+
+  <dt><a name="gl-qname"><b>QName</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Qualified name</em>.  
+     A pair (<em>URI</em>, <em>local-name</em>). The <em>URI</em> represents a
+     namespace and <em>local-name</em> represents a name used in an XML
+     document, such as a tag name or an attribute name.
+    In XML, QNames are syntactically
+    represented as <em>prefix</em>:<em>local-name</em>, where <em>prefix</em> is
+     a macro that expands into a concrete URI.
+    See <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/">Namespaces
+     in XML</a> for more details.
+  </dd>    
+
+
+
+  <dt><a name="gl-ROWS"><b>ROWS</b></a></dt>
+   <dd> <!-- description text here -->
+    <em><b>R</b>ules <b>O</b>ntology for <b>W</b>eb <b>S</b>ervices</em>.  
+     ROWS, also known as SWSO-Rules, 
+     is the rules-based version of the Semantic Web Services Ontology.
+     ROWS is created by a relatively straight-forward,
+     almost faithful,
+     transformation of FLOWS, the First-order Logic Ontology for
+     Web Services.
+     As with FLOWS, ROWS incorporates
+     fundamental aspects of 
+     (web and other electronic) services, including service descriptors,
+     the service activity, and the service grounding.
+     ROWS enables a rules-based specification of a family of
+     services, including both the underlying ontology and
+     the domain-specific aspects.
+   </dd>
+
+
+
+  <dt><a name="gl-service"><b>Service</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>(Formal) Service</em>.  
+     In FLOWS, a service is a conceptual object, that
+     corresponds intuitively to a web service (or other electronically
+     accessible service).  Through binary predicates a service
+     is associated with various service descriptors (a.k.a. 
+     non-functional properties) such as Service Name, Service Author, 
+     Service URL, etc.; an <em>activity</em> (in the sense of
+     PSL) which specifies intuitively the process model associated with the
+     service; and a <em>grounding</em>.
+  </dd>    
+
+
+
+  <dt><a name="gl-contract"><b>Service contract</b></a></dt>
+  <dd>Describes an agreement between the service requester and service 
+  provider, 
+  detailing requirements on a service occurrence or family of
+  service occurrences.
+</dd>
+
+
+  <dt><a name="gl-service-descriptor"><b>Service descriptor</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Service Descriptor</em>.  
+     This is one of several non-functional properties 
+     associated with services.
+     The Service Descriptors include
+     Service Name, Service Author, Service Contract Information,
+     Service Contributor, Service Description, Service URL,
+     Service Identifier, Service Version, Service Release Date, 
+     Service Language, Service Trust, Service Subject, 
+     Service Reliability, and Service Cost.
+  </dd>    
+
+
+  <dt><a name="gl-serv-offer"><b>Service offer description</b></a></dt>
+  <dd> <!-- description text here -->
+    Describes an abstract service (i.e. not a concrete instance of the service) 
+  provided by a service provider agent.
+  </dd>    
+
+
+
+  <dt><a name="gl-serv-req"><b>Service requirement description</b></a> </dt>
+  <dd>
+    Describes an abstract service required by a service requester agent,
+    in the context of service discovery, service brokering, or negotiation.
+</dd>
+
+
+  <dt><a name="gl-sqname"><b>sQName</b></a></dt>
+  <dd>
+    <em>Serialized QName</em>.  
+    A serialized QName is a shorthand representation of a URI. It is
+    a macro that expands into a full-blown URI.
+    sQNames are <em>not</em> QNames: the former are URIs, while the latter are
+    pairs (<em>URI</em>, <em>local-name</em>).   
+    Serialized QNames were originally introduced in RDF as a notation for
+    shortening URI representation. Unfortunately, 
+    RDF introduced confusion by adopting the term QName for something that is
+    different from QNames used in XML. To add to the confusion, RDF uses
+    the syntax for sQNames that is identical to XML's syntax for QNames.
+    SWSL distinguishes between QNames and sQNames, and uses the
+    syntax <em>prefix</em>#<em>local-name</em> for the latter.
+    Such an sQName expands into a full URI by concatenating the value
+    of <em>prefix</em> with <em>local-name</em>.  
+  </dd>
+
+
+  <dt><a name="gl-uri"><b>URI</b></a></dt>
+  <dd>
+    <em>Universal Resource Identifier</em>.  
+    A symbol used to locate resources on the Web. URIs are defined by IETF. See
+    <a href="http://www.ietf.org/rfc/rfc2396.txt">Uniform Resource Identifiers
+    (URI): Generic Syntax</a> for more details.
+    Within the IETF standards the notion of URI is an extension
+    and refinement of the notions of Uniform Resource Locator (URL)
+    and Relative Uniform Resource Locators.
+  </dd>
+</dl>
+  
+
+      <hr/>
+      <h1><a id="sec-references" name="sec-references">6 References</a></h1>
+      
+<dl>
+  <dt> <a id="Berardi03">[Berardi03]</a></dt>
+  <dd><cite>Automatic composition of e-services that export their
+behavior</cite>.
+D. Berardi, D. Calvanese, G. De Giacomo, M. Lenzerini, and M. Mecella.
+In <em> Proc. 1st Int. Conf. on Service Oriented Computing (ICSOC)</em>,
+volume 2910 of <em> LNCS</em>, pages 43--58, 2003. </dd>
+</dl>
+<dl>
+  <dt><a id="Bernstein2000">[Bernstein2000]</a></dt>
+  <dd> <cite>How can cooperative work tools support dynamic group
+processes? Bridging the specificity frontier</cite>. A. Bernstein. In <em>
+Proc. Computer Supported Cooperative Work (CSCW'2000)</em>, 2000. </dd>
+</dl>
+<dl>
+  <dt><a id="Bernstein2002">[Bernstein2002]</a></dt>
+  <dd> <cite>Towards High-Precision Service Retrieval</cite>. A.
+Bernstein, and M. Klein. In <em>
+Proc. of the first International Semantic Web Conference (ISWC'2002)</em>,
+2002. </dd>
+</dl>
+<dl>
+  <dt><a id="Bernstein2003">[Bernstein2003]</a></dt>
+  <dd> <cite>Beyond Monotonic Inheritance: Towards Semantic Web
+Process Ontologies</cite>. A. Bernstein and B.N. Grosof (NB: authorship
+sequence is alphabetic). Working Paper, Aug. 2003. Available at: <a
+ href="http://ebusiness.mit.edu/bgrosof/#beyond-mon-inh-basic">http://ebusiness.mit.edu/bgrosof/#beyond-mon-inh-basic</a>.
+  </dd>
+</dl>
+<dl>
+  <dt> <a id="Bonner93">[Bonner93]</a></dt>
+  <dd> <cite>Database Programming in Transaction Logic</cite>. A.J.
+    Bonner, M. Kifer, M. Consens. <em>Proceedings of the 4-th Intl.~Workshop on
+      Database Programming Languages</em>,
+    C. Beeri, A. Ohori and D.E. Shasha
+    (eds.), 1993. In Springer-Verlag Workshops in Computing Series, Feb.
+    1994: 309-337. </dd>
+</dl>
+<dl>
+  <dt> <a id="Bonner98">[Bonner98]</a></dt>
+  <dd> <cite>A Logic for Programming Database Transactions</cite>.
+A.J. Bonner, M. Kifer. Logics for Databases and Information Systems, J.
+Chomicki and G. Saake (eds.). Kluwer Academic Publishers, 1998: 117-166.</dd>
+</dl>
+
+<dl>
+  <dt> <a id="wsmo-d2">[Bruijn05]</a></dt>
+  <dd> <cite>Web Service Modeling Ontology (WSMO)</cite>.
+    J. de Bruijn, C. Bussler, J. Domingue,
+    D. Fensel, M. Hepp, M. Kifer, B. Kaenig-Ries, J. Kopecky,
+    R. Lara, E. Oren, A. Polleres, J. Scicluna, M. Stollberg.
+    <cite><a href="http://www.wsmo.org/TR/d2/v1.2/">
+	DERI Technical Report.
+      </a>
+    </cite>
+  </dd>
+</dl>
+
+<dl>
+  <dt> <a id="BPML">[BPML 1.0]</a></dt>
+  <dd> <cite>A. Arkin. <a href="http://www.bpmi.org/bpml-spec.htm">
+	Business Process Modeling Language</a></cite>.
+    BPMI.org, 2002 </dd>
+</dl>
+
+<dl>
+  <dt> <a id="BPEL">[BPEL 1.1]</a></dt>
+  <dd><cite><a
+ href="http://www-128.ibm.com/developerworks/library/ws-bpel/">
+Business Process Execution Language for Web Services, Version 1.1
+  </a></cite>.  S. Thatte, editor.
+OASIS Standards Specification, May 5, 2003.</dd>
+</dl>
+<dl>
+  <dt> <a id="Bultan03">[Bultan03]</a></dt>
+  <dd><cite>Conversation specification: A new approach to design and
+analysis of e-service composition</cite>.
+T. Bultan, X. Fu, R. Hull, and J. Su. In <em> Proc. Int. World Wide
+Web Conf. (WWW)</em>, May 2003. </dd>
+</dl>
+<dl>
+  <dt> <a id="chang-lee73">[Chang73]</a></dt>
+  <dd> <cite>Symbolic Logic and Mechanical Theorem Proving</cite>.
+C.L. Chang and R.C.T. Lee. Academic Press, 1973. </dd>
+</dl>
+<dl>
+  <dt> <a id="hilog">[Chen93]</a></dt>
+  <dd> <cite>HiLog: A Foundation for Higher-Order Logic Programming</cite>.
+W. Chen, M. Kifer, D.S. Warren. Journal of Logic Programming, 15:3,
+February 1993, 187-230. </dd>
+</dl>
+<dl>
+  <dt> <a id="ldl-vldb89">[Chimenti89]</a></dt>
+  <dd> <cite>Towards an Open Architecture for LDL</cite>. D. Chimeti,
+R. Gamboa, R. Krishnamurthy, VLDB Conference, 1989: 195-203. </dd>
+</dl>
+<dl>
+  <dt> <a id="ConGolog">[deGiacomo00]</a></dt>
+  <dd><cite>ConGolog, A Concurrent Programming Language Based on the
+Situation
+Calculus</cite>.
+G. de Giacomo, Y. Lesperance, and H. Levesque.
+Artificial Intelligence, 121(1--2):109--169, 2000. </dd>
+</dl>
+<dl>
+  <dt> <a id="Fu04">[Fu04]</a></dt>
+  <dd><cite>WSAT: A Tool for Formal Analysis of Web Services</cite>.
+X. Fu, T. Bultan, and J. Su. <em>16th International Conference on
+Computer Aided Verification (CAV)</em>, July 2004. </dd>
+</dl>
+<dl>
+  <dt><a id="Frohn94">[Frohn94]</a></dt>
+  <dd> <cite>Access to Objects by Path Expressions and Rules</cite>.
+J. Frohn, G. Lausen, H. Uphoff. Intl. Conference on Very Large
+Databases, 1994, pp. 273-284.</dd>
+</dl>
+<dl>
+  <dt> <a id="java">[Gosling96]</a></dt>
+  <dd> <cite> The Java language specification.</cite>Gosling, James,
+Bill Joy, and Guy L. Steele. 1996. Reading, Mass.: Addison-Wesley. </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof99a">[Grosof99a]</a></dt>
+  <dd> <cite>A Courteous Compiler From Generalized Courteous Logic
+Programs To Ordinary Logic Programs</cite>. B.N. Grosof. IBM Report
+included as part of documentation in the IBM CommonRules 1.0 software
+toolkit and documentation, released on <a
+ href="http://alphaworks.ibm.com">http://alphaworks.ibm.com</a>. July
+1999. Also available at: <a
+ href="http://ebusiness.mit.edu/bgrosof/#gclp-rr-99k">
+http://ebusiness.mit.edu/bgrosof/#gclp-rr-99k</a>. </dd>
+</dl>
+
+<dl><dt><a id="Grosof99b">[Grosof99b]</a></dt><dd>
+<cite>A Declarative Approach to Business Rules in Contracts</cite>.  
+B.N. Grosof, J.K. Labrou, and H.Y. Chan.  
+Proceedings of the 1st ACM Conference on Electronic Commerce (EC-99).
+Also available at:  
+<a href="http://ebusiness.mit.edu/bgrosof/#econtracts+rules-ec99">http://ebusiness.mit.edu/bgrosof/#econtracts+rules-ec99</a>.  
+</dd></dl>
+
+<dl><dt><a id="Grosof99c">[Grosof99c]</a></dt><dd>
+<cite>DIPLOMAT:  Compiling Prioritized Default Rules Into Ordinary 
+Logic Programs (Extended Abstract of Intelligent Systems Demonstration)</cite>.
+B.N. Grosof.  IBM Research Report RC 21473, May 1999.
+Extended version of 2-page refereed conference paper
+appearing in Proceedings of the National Conference on 
+Artificial Intelligence (AAAI-99), 1999.  Also available at:
+<a href="http://ebusiness.mit.edu/bgrosof/#cr-ec-demo-rr-99b">http://ebusiness.mit.edu/bgrosof/#cr-ec-demo-rr-99b</a>.  
+</dd></dl>
+
+<dl>
+  <dt> <a id="Grosof2003a">[Grosof2003a]</a> </dt>
+  <dd> <cite>Description Logic Programs: Combining Logic Programs with
+Description Logic</cite>. B.N. Grosof, I. Horrocks, R. Volz, and S.
+Decker. Proceedings of the 12th International Conference on the World
+Wide Web (WWW-2003). Also available at: <a
+ href="http://ebusiness.mit.edu/bgrosof/#dlp-www2003">http://ebusiness.mit.edu/bgrosof/#dlp-www2003</a>.
+  </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof2004a">[Grosof2004a]</a></dt>
+  <dd> <cite>Representing E-Commerce Rules Via Situated Courteous
+Logic Programs in RuleML</cite>. B.N. Grosof. Electronic Commerce
+Research and Applications, 3:1, 2004, 2-20. Preprint version is also
+available at: <a href="http://ebusiness.mit.edu/bgrosof/#">http://ebusiness.mit.edu/bgrosof/#</a>.
+  </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof2004b">[Grosof2004b]</a></dt>
+  <dd> <cite>SweetRules: Tools for Semantic Web Rules and Ontologies,
+including Translation, Inferencing, Analysis, and Authoring</cite>.
+B.N. Grosof, M. Dean, S. Ganjugunte, S. Tabet, C. Neogy, and D. Kolas. <a
+ href="http://sweetrules.projects.semwebcentral.org">
+http://sweetrules.projects.semwebcentral.org</a>. Software toolkit and
+documentation. Version 2.0, Dec. 2004. </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof2004c">[Grosof2004c]</a></dt>
+  <dd> <cite>Hypermonotonic Reasoning: Unifying Nonmonotonic Logic
+Programs with First Order Logic</cite>. B.N. Grosof. <a
+ href="http://ebusiness.mit.edu/bgrosof/#HypermonFromPPSWR04InvitedTalk">
+http://ebusiness.mit.edu/bgrosof/#HypermonFromPPSWR04InvitedTalk</a>.
+Slides from Invited Talk at Workshop on Principles and Practice of
+Semantic Web Reasoning (PPWSR04), Sep. 2004; revised Oct. 2004. Paper
+in preparation. </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof2004d">[Grosof2004d]</a></dt>
+  <dd> <cite>SweetPH: Using the Process Handbook for Semantic Web
+Services</cite>. B.N. Grosof and A. Bernstein. <a
+ href="http://ebusiness.mit.edu/bgrosof/#SweetPHSWSLF2F1204Talk">
+http://ebusiness.mit.edu/bgrosof/#SweetPHSWSLF2F1204Talk</a>. Slides
+from Presentation at SWSL Meeting, Dec. 9-10, 2004. <i>Note: Updates
+the design in the 2003 Working Paper "Beyond Monotonic Inheritance:
+Towards Semantic Web Process Ontologies" and describes implementation.</i>
+  </dd>
+</dl>
+
+<dl><dt><a id="Grosof2004e">[Grosof2004e]</a></dt><dd>
+<cite>SweetDeal:  Representing Agent Contracts with Exceptions using 
+Semantic Web Rules, Ontologies, and Process Descriptions</cite>.
+B.N. Grosof and T.C. Poon.  
+International Journal of Electronic Commerce (IJEC), 8(4):61-98, Summer 2004
+Also available at:
+<a href="http://ebusiness.mit.edu/bgrosof/#sweetdeal-exceptions-ijec">http://ebusiness.mit.edu/bgrosof/#sweetdeal-exceptions-ijec</a>.  
+</dd></dl>
+
+<dl><dt><a id="Grosof2004f">[Grosof2004f]</a></dt><dd>
+<cite>Semantic Web Rules with Ontologies, and their E-Business Applications</cite>.
+B.N. Grosof and M. Dean.
+Slides of Conference Tutorial (3.5-hour) at the 3rd International Semantic
+Web Conference (ISWC-2004).  
+Available at:
+<a href="http://ebusiness.mit.edu/bgrosof/#ISWC2004RulesTutorial">http://ebusiness.mit.edu/bgrosof/#ISWC2004RulesTutorial</a>.  
+</dd></dl>
+
+<dl>
+  <dt><a id="PSL1-Gruninger">[Gruninger03a]</a> </dt>
+  <dd>
+    <cite>
+      A Guide to the Ontology of the Process Specification Language.
+    </cite>
+    M. Gruninger.
+    <em>
+      Handbook on Ontologies in Information Systems.
+    </em>
+    R. Studer and S. Staab (eds.).  Springer Verlag, 2003.
+  </dd>
+</dl>
+
+
+<dl>
+  <dt>
+    <a id="PSL2-Gruninger">[Gruninger03b]</a>
+  </dt>
+  <dd>
+    <em>
+      Process Specification Language:  Principles and Applications.
+    </em>
+    M. Gruninger and C. Menzel.
+    <em>AI Magazine,</em> 24:63-74, 2003.
+  </dd>
+</dl>
+
+<dl>
+
+  <dt><a id="PSL3-Gruninger">[Gruninger03c]</a> </dt>
+  <dd>
+    <cite>
+      Applications of PSL to Semantic Web Services.
+    </cite>
+    M. Gruninger.
+    <em>
+Workshop on Semantic Web and Databases. Very Large Databases Conference, Berlin.
+    </em>
+
+  </dd>
+</dl>
+
+<dl>
+  <dt><a id="rdf-mt">[Hayes04]</a></dt>
+  <dd> <cite><a href="http://www.w3.org/TR/rdf-mt/">RDF Model Theory</a></cite>.
+Hayes, P. W3C, February 2004. </dd>
+</dl>
+<dl>
+  <dt> <a id="Helland05">[Helland05]</a></dt>
+  <dd><cite>Data on the Outside Versus Data on the Inside</cite>.
+P. Helland. <em><a href="http://www-db.cs.wisc.edu/cidr/program.html">Proc.
+2005 Conf. on Innovative Database Research (CIDR)</a></em>, January,
+2005. </dd>
+</dl>
+<dl>
+  <dt> <a id="Hull03">[Hull03]</a></dt>
+  <dd><cite>E-Services: A Look Behind the Curtain</cite>.
+R. Hull, M. Benedikt, V. Christophides, J. Su. <em>Proc. of the ACM
+Symp. on Principles of Database Systems (PODS)</em>, San Diego, June,
+2003. </dd>
+</dl>
+<dl>
+  <dt><a id="f-logic">[Kifer95]</a></dt>
+  <dd> <cite>Logical Foundations of Object-Oriented and Frame-Based
+Languages</cite>, M. Kifer, G. Lausen, J. Wu. Journal of ACM, 1995, 42,
+741-843. </dd>
+</dl>
+<dl>
+  <dt><a id="serv-disc-tr">[Kifer04]</a></dt>
+  <dd> <cite>A Logical Framework for Web Service Discovery</cite>, M.
+Kifer, R. Lara, A. Polleres, C. Zhao. Semantic Web Services Workshop,
+November 2004, Hiroshima, Japan. </dd>
+</dl>
+<dl>
+  <dt> <a id="exception-design">[Klein00a]</a></dt>
+  <dd> <cite>Towards a Systematic Repository of Knowledge About
+Managing Collaborative Design Conflicts.</cite> Klein, Mark.
+2000.&nbsp; Proceedings of the Conference on Artificial Intelligence in
+Design. Boston, MA, USA. </dd>
+</dl>
+<dl>
+  <dt> <a id="exception-wfm">[Klein00b]</a></dt>
+  <dd> <cite> A Knowledge-Based Approach to Handling Exceptions in
+Workflow Systems.</cite> Klein, Mark, and C. Dellarocas. 2000.&nbsp;
+Computer Supported Cooperative Work: The Journal of Collaborative
+Computing 9:399-412. </dd>
+</dl>
+<dl>
+  <dt><a id="Lloyd87">[Lloyd87]</a></dt>
+  <dd><cite>Foundations of logic programming (second, extended edition)</cite>.
+J. W. Lloyd. Springer series in symbolic computation. Springer-Verlag,
+New York, 1987. </dd>
+</dl>
+<dl>
+  <dt><a id="lindenstraus97">[Lindenstrauss97]</a></dt>
+  <dd><cite>Automatic Termination Analysis of Logic Programs</cite>.
+    N. Lindenstrauss and Y. Sagiv. International Conference on Logic
+    Programming (ICLP), 1997.
+  </dd>
+</dl>
+<dl>
+  <dt><a id="Maier81">[Maier81]</a></dt>
+  <dd><cite>Incorporating Computed Relations in Relational Databases</cite>.
+D. Maier, D.S. Warren. SIGMOD Conference, 1981: 176-187. </dd>
+</dl>
+<dl>
+  <dt> <a id="Malone99">[Malone99]</a></dt>
+  <dd><cite>Tools for inventing organizations: Toward a handbook of
+organizational processes</cite>. T. W. Malone, K. Crowston, J. Lee, B.
+Pentland, C. Dellarocas, G. Wyner, J. Quimby, C. Osborne, A. Bernstein,
+G. Herman, M. Klein, E. O'Donnell. <em>Management Science</em>, 45(3),
+pages 425--443, 1999. </dd>
+</dl>
+<dl>
+  <dt> <a id="McIlraith01">[McIlraith01]</a></dt>
+  <dd><cite>Semantic Web Services</cite>.
+<em>IEEE Intelligent Systems</em>, Special Issue on the
+Semantic Web, S. McIlraith, T.Son and H. Zeng.
+16(2):46--53, March/April, 2001. </dd>
+</dl>
+<dl>
+  <dt> <a id="Pi-Calculus">[Milner99]</a></dt>
+  <dd><cite>Communicating and Mobile Systems: The &#960;-Calculus</cite>.
+R. Milner. Cambridge University Press, 1999. </dd>
+</dl>
+<dl>
+  <dt> <a id="Narayanan02">[Narayanan02]</a></dt>
+  <dd><cite>Simulation, Verification and Automated Composition of Web
+Services</cite>. S. Narayanan and S. McIlraith.
+In <em> Proceedings of the Eleventh International World Wide Web
+Conference (WWW-11)</em>, May, 2002. </dd>
+</dl>
+<dl>
+  <dt><a id="ontoprise">[Ontobroker]</a></dt>
+  <dd> <cite><a href="http://www.ontoprise.de/content/e3/e27/index_eng.html">
+	Ontobroker 3.8</a></cite>. Ontoprise, GmbH.
+  </dd>
+</dl>
+<dl>
+  <dt><a id="owl-ref">[OWL Reference]</a></dt>
+  <dd> <cite><a href="http://www.w3.org/TR/2002/WD-owl-ref-20021112/">OWL
+Web Ontology Language 1.0 Reference</a></cite>. Mike Dean, Dan
+Connolly, Frank van Harmelen, James Hendler, Ian Horrocks, Deborah L.
+McGuinness, Peter F. Patel-Schneider, and Lynn Andrea Stein. W3C
+Working Draft 12 November 2002. Latest version is available at <a
+ href="http://www.w3.org/TR/owl-ref/">http://www.w3.org/TR/owl-ref/</a>.
+  </dd>
+</dl>
+<dl>
+  <dt> <a id="OWL-S-white-paper">[OWL-S 1.1]</a></dt>
+  <dd><cite><a
+ href="http://www.daml.org/services/owl-s/1.1/overview/"> OWL-S:
+Semantic Markup for Web Services</a></cite>.  David Martin, editor.  Technical Overview
+(associated with OWL-S Release 1.1).
+  </dd>
+</dl>
+<dl>
+  <dt><a id="Papazoglou-SOA-WISE-03">[Papazoglou03]</a></dt>
+  <dd> <cite>Service-Oriented Computing: Concepts, 
+             Characteristics and Directions. </cite> 
+       M.P. Papazoglou. 
+       Keynote for the 4th International Conference on Web Information 
+       Systems Engineering (WISE 2003), December 10-12, 2003. 
+   </dd>
+</dl>
+
+<dl>
+  <dt> <a id="perlis85">[Perlis85]</a></dt>
+  <dd> <cite>Languages with Self-Reference I: Foundations</cite>. D.
+Perlis. Artificial Intelligence, 25, 1985, 301-322. </dd>
+</dl>
+<dl>
+  <dt> <a id="Preist04">[Preist04]</a></dt>
+  <dd> A Conceptual Architecture for Semantic Web Services, C. Preist, 1993. 
+    In Proceedings of Third International Semantic Web Conference, Nov. 2004:
+    395-409.
+  </dd>
+</dl>
+<dl>
+  <dt> <a id="Golog">[Reiter01]</a></dt>
+  <dd><cite>Knowledge in Action: Logical Foundations for Specifying and
+Implementing Dynamical Systems.</cite>
+Raymond Reiter. MIT Press. 2001 </dd>
+</dl>
+<dl>
+  <dt> <a id="Scherl03">[Scherl03]</a></dt>
+  <dd><cite>Knowledge, Action, and the Frame Problem</cite>.
+R. B. Scherl and H. J. Levesque. <em>Artificial Intelligence</em>,
+Vol. 144, 2003, pp. 1-39. </dd>
+</dl>
+
+<dl>
+  <dt> <a id="Singh04">[Singh04]</a></dt>
+  <dd><cite>Protocols for Processes: Programming in the Large for Open
+Systems</cite>.
+M. P. Singh, A. K. Chopra, N. V. Desai, and A. U. Mallya. <em>Proc. of
+the 19th Annual ACM Conf. on Object-Oriented Programming, Systems,
+Languages, and Applications (OOPSLA)</em>, Vancouver, October 2004. </dd>
+</dl>
+
+<dl>
+  <dt> <a id="SWSL-Req">[SWSL Requirements]</a></dt>
+  <dd><cite><a
+ href="http://www.daml.org/services/swsl/requirements/swsl-requirements.shtml">Semantic Web Services Language Requirements</a></cite>.
+B. Grosof, M. Gruninger, et al, editors.
+White paper of the Semantic Web Services Language Committee.
+</dd>
+</dl>
+
+<dl>
+  <dt> <a id="UDDI">[UDDI v3.02]</a></dt>
+  <dd><cite><a
+ href="http://www.oasis-open.org/committees/uddi-spec/doc/spec/v3/uddi-v3.0.2-20041019.htm">
+Universal Description, Discovery and Integration (UDDI)
+  protocol</a></cite>.  S. Thatte, editor.
+OASIS Standards Specification, February 2005.  </dd>
+</dl>
+<dl>
+  <dt> <a id="well-founded">[VanGelder91]</a></dt>
+  <dd> <cite>The Well-Founded Semantics for General Logic Programs</cite>.
+A. Van Gelder, K.A. Ross, J.S. Schlipf. Journal of ACM, 38:3, 1991,
+620-650. </dd>
+</dl>
+<dl>
+  <dt> <a id="WSCL">[WSCL 1.0]</a></dt>
+  <dd><cite> <a
+ href="http://www.w3.org/TR/2002/NOTE-wscl10-20020314/"> Web Services
+Conversation Language (WSCL) 1.0</a></cite>.  A. Banerji et al.  W3C Note, March 14, 2002.</dd>
+</dl>
+<dl>
+  <dt> <a id="WSDL">[WSDL 1.1]</a></dt>
+  <dd><cite>
+    <a href="http://www.w3.org/TR/wsdl"> Web Services Description
+Language (WSDL) 1.1</a></cite>.  E. Christensen, F. Curbera,
+  G. Meredith, and S. Weerawarana.  W3C Note, March 15, 2001. 
+</dd>
+</dl>
+<dl>
+  <dt> <a id="WSDL20">[WSDL 2.0]</a></dt>
+  <dd>
+       <cite>
+          <a href="http://www.w3.org/TR/wsdl20/"> Web Services Description
+                    Language (WSDL) 2.0 -- 
+                    Part 1: Core Language</a></cite>.  R. Chinnici, M. Gudgin, J.-J. Moreau, J. Schlimmer, and S. Weerawarana.
+           W3C Working Draft, 
+           August 3, 2004. </dd>
+</dl>
+<dl>
+  <dt> <a id="WSDL20-Primer">[WSDL 2.0 Primer]</a></dt>
+  <dd>
+       <cite>
+          <a href="http://www.w3.org/TR/wsdl20-primer/"> Web Services Description
+                    Language (WSDL) Version 2.0 -- 
+                    Part 0: Primer</a></cite>.  D. Booth, C. Liu, editors.
+           W3C Working Draft,
+           21 December 2004.  </dd>
+</dl>
+<dl>
+  <dt> <a id="WS-Choreography">[WS-Choreography]</a></dt>
+  <dd><cite> <a
+ href="http://www.w3.org/TR/2004/WD-ws-cdl-10-20041217/">Web Services
+  Choreography Description Language Version 1.0</a></cite>.  N. Kavantzas, D. Burdett, et. al., editors. W3C
+  Working Draft, December 17,
+2004. </dd>
+</dl>
+<dl>
+  <dt> <a id="XSLT">[XSLT]</a></dt>
+  <dd><cite> <a
+ href="http://www.w3.org/TR/xslt">XSL Transformations (XSLT) Version
+  1.0</a></cite>.  J. Clark, editor.  W3C
+  Recommendation, 16 November 1999. </dd>
+</dl>
+<dl>
+  <dt> <a id="XQuery">[XQuery 1.0]</a></dt>
+  <dd><cite> <a
+ href="http://www.w3.org/TR/xquery/">XQuery 1.0: An XML Query
+  Language</a></cite>.  S. Boag, D. Chamberlin, et al, editors.
+  W3C Working Draft 04 April 2005. 
+  </dd>
+</dl>
+<dl>
+  <dt><a id="well-founded-inheritance">[Yang02]</a></dt>
+  <dd> <cite> Well-Founded Optimism: Inheritance in Frame-Based
+Knowledge Bases</cite>. G. Yang, M. Kifer. Intl. Conference on
+Ontologies, DataBases, and Applications of Semantics for Large Scale
+Information Systems (ODBASE), October 2002. </dd>
+</dl>
+<dl>
+  <dt><a id="reification">[Yang03]</a></dt>
+  <dd> <cite>Reasoning about Anonymous Resources and Meta Statements
+on the Semantic Web</cite>. G. Yang, M. Kifer. Journal on Data
+Semantics, Lecture Notes in Computer Science 2800, Springer Verlag,
+September 2003, 69-98. </dd>
+</dl>
+<dl>
+  <dt> <a id="flora-manual">[Yang04]</a></dt>
+  <dd> <cite><a href="http://flora.sourceforge.net">FLORA-2</a> User's
+Manual</cite>. G. Yang, M. Kifer, C. Zhao, V. Chowdhary. 2004.</dd>
+</dl>
+
+
+      <hr/>
+    </div>
+  </body>
+</html>

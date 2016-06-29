@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="I've been promising to blog more about some technical things about the FastMail/Opera infrastructure, and the recent leap second fiasco is a good place to point out not only some failures, but also the great things about our system which helped limit the damage.">
+<title>A story of leaping seconds | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="A story of leaping seconds">
+<meta property="og:description" content="I've been promising to blog more about some technical things about the FastMail/Opera infrastructure, and the recent leap second fiasco is a good place to point out not only some failures, but also the great things about our system which helped limit the damage.">
+<meta property="og:url" content="https://blog.fastmail.com/2012/07/03/a-story-of-leaping-seconds/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2012/07/03/a-story-of-leaping-seconds/">
+<meta name="twitter:title" content="A story of leaping seconds">
+<meta name="twitter:description" content="I've been promising to blog more about some technical things about the FastMail/Opera infrastructure, and the recent leap second fiasco is a good place to point out not only some failures, but also the great things about our system which helped limit the damage.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2012/07/03/a-story-of-leaping-seconds/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2012/07/03/a-story-of-leaping-seconds/'>A story of leaping seconds</a></h1>
+<p class="blog-author">Bron Gondwana &ndash;  3 July 2012</p>
+<p>I've been promising to blog more about some technical things about the
+FastMail/Opera infrastructure, and the recent leap second fiasco is a
+good place to point out not only some failures, but also the great
+things about our system which helped limit the damage.</p>
+
+<h2><strong>Being on duty</strong></h2>
+
+<p>First of all, it was somewhat random that I was on duty. We've recently
+switched to a more explicit "one person on primary duty" from the
+previous timezone and time-of-day based rules. Partially so other people
+knew who to contact, and partially to bring some predictability to when
+you had to be responsible.</p>
+
+<p>Friday 29th June was my last working day for nearly 3 weeks. My wife is
+on the other side of the world, and the kids are off school. I was
+supposed to be handing duty off to one of the Robs in Australia (we have
+two Robs on the roster - one Rob M and the other Rob N. This doesn't
+cause any confusion because we're really good at spelling). I had made
+some last minute changes (as you always do before going away) and wanted
+to keep an eye on them, so I decided to stay on duty.</p>
+
+<p>Still, it was the goodbye party for a colleague that night, so I took
+the kids along to Friday Beer (one of the awesome things about working
+for Opera) and had quite a few drinks. Not really drunk, but not 100%
+sober either. Luckily, our systems take this into account... in theory.</p>
+
+<h2>The first crash</h2>
+
+<p>Fast forward to 3:30am, and I was sound asleep when two SMSes came in
+quick succession. Bleary eyed, I stumbled out to the laptop to discover
+that one of our compute servers had frozen. Nothing on the console, no
+network connectivity, no response to keystrokes via the KVM. These
+machines are in New York, and I'm in Oslo, so kicking it in person is
+out of the question - and techs onsite aren't going to get anything I
+don't.</p>
+
+<p>These are Dell M610 blades. Pretty chunky boxes. We have 6, split
+between two bladecentres. We can easily handle running on 3, mail
+delivery just slows by a few milliseconds - so we have each one paired
+with one in another bladecentre and two IP addresses shared between
+them. In normal mode, there's one IP address per compute server. 
+(amongst the benefits of this setup - we can take down an entire
+bladecentre for maintenance in about 20 minutes - with no user visible
+outage)</p>
+
+<p>Email delivery is hashed between those 6 machines so that the email for
+the same user goes to the same machine, giving much better caching of
+bayes databases and other per-user state. Everything gets pushed back to
+central servers on change as well, so we can afford to lose a compute
+server, no big deal.</p>
+
+<p>But - the tool for moving those IP addresses, "utils/FailOver.pl",
+didn't support the '-K servername' parameter, which means "assume that
+server is dead, and start up the services as if they had been moved off
+there".  It still tries to do a clean shutdow, but on failure it just
+keeps going. The idea is to have a tool which can be used while asleep,
+or drunk, or both...</p>
+
+<p>The older "utils/FailOverCyrus.pl", which is still used just for the
+backend mail servers, does support -K. It's been needed before. The
+eventual goal is to merge these two tools into one, which supports
+everything. But other things keep being higher priority.</p>
+
+<p>So - no tool. I read the code enough to remind myself how it actually
+works, and hand wrote SQL statements to perform the necessary magic on
+the database so that the IP could be started on the correct host.</p>
+
+<p>I could have just bound the IP by hand as well. But I wanted to not
+confuse anything. Meanwhile I had rebooted the host, and everything
+looked fine, so I switched back to normal mode.</p>
+
+<p>Then (still at 3:something am) I wrote -K into FailOver.pl. Took a
+couple of attempts and some testing to get it right, but it was working
+well before I wrote up the IncidentReport and went back to bed some time
+after 4.</p>
+
+<p>The IncidentReport is very important - it tells all the OTHER admins
+what went wrong and what you did to fix it, plus anything interesting
+you saw along the way. It's super useful if it's not you dealing with
+this issue next time. It included the usage instructions for the new
+'-K' option.</p>
+
+<h2>Incident 2 - another compute server and an imap server</h2>
+
+<p>But it was me again - 5:30am, the next blade over failed. Same problem,
+same no way to figure out what was wrong. At least this time I had a
+nice tool.</p>
+
+<p>Being 5:30am, I just rebooted that blade and the other one with the same
+role in the same datacentre, figuring that the thing they had in common
+was bladecentre2 compute servers.</p>
+
+<p>But while this was happening, I also lost an imap server. That's a lot
+more serious. It causes user visible downtime - so it gets blogged.</p>
+
+<ul>
+<li><a href="http://status.fastmail.fm/2012/06/30/one-imap-server-crashed/">http://status.fastmail.fm/2012/06/30/one-imap-server-crashed/</a></li>
+</ul>
+
+<p>From the imap server crash, I also got a screen capture, because
+blanking wasn't enabled for the VGA attached KVM unit. Old server. This
+capture potentially implicated ntpd, but at the time I figured it was
+still well in advance of the leap second, so probably just a
+coincidence. I wasn't even sure it was related, since the imap server
+was an IBM x3550, and the other incidents had been blades. Plus it was
+still the middle of the night and I was dopey.</p>
+
+<h2>Incident 3</h2>
+
+<p>Fast forward to 8:30am in the middle of breakfast with my very forgiving
+kids who had let me sleep in. Another blade, this time in the other
+blade centre. I took a bit longer over this one - decided the lack of
+kernel dumps was stupid, and I would get kdump set up. I already had all
+the bits in place from earlier experiments, so I configured up kdump and
+rolled it onto all our compute servers. Rob M (see, told you I could
+spell) came online during this, and we chatted about it and agreed that
+kdump was a good next step.</p>
+
+<p>I also made sure every machine was running the latest 3.2.21 kernel
+build.</p>
+
+<p>Then we sat, and waited, and waited. Watched pots never boil.  I also
+told our discussion forum what was going on, because some of our more
+technical users are interested.</p>
+
+<ul>
+<li><a href="http://www.emaildiscussions.com/showthread.php?t=64840">http://www.emaildiscussions.com/showthread.php?t=64840</a></li>
+</ul>
+
+<h2>Incident 4</h2>
+
+<p>One of the other IMAP servers, this time in Iceland!</p>
+
+<p>We have a complete live-spare datacentre in Iceland. Eventually it will
+be a fully operational centre in its own right, but for now it's running
+almost 100% in replica mode. There are a handful of internal users with
+email hosted there to test thing (indeed, back at the start, my "urgent"
+change which meant I was still on call was changing how we replicate
+filestorage backends around so that adding a second copy in Iceland to
+be production rather than backup didn't lead to vast amounts of data
+being copied through the VPN to New York and back while I was away)</p>
+
+<p>So this was a Dell R510 - one of our latest "IMAP toasters". 12 x 2Tb
+SATA drives for data (in 5 x RAID1 and 2 hot spares) for 20 x 500Gb
+cyrus data stores, 2 x SSD in RAID1 for super-hot Cyrus metadata, 2 x
+quadcore processor, 48 Gb RAM. For about US $12k, these babies can run
+hundreds of thousands of users comfortably. They're our current sweet
+spot for price/performance.</p>
+
+<p>No console of course, and no kdump either. I hadn't set up the Iceland
+servers with kdump support yet. Doh.</p>
+
+<p>One thing I did do was create an alias. Most of our really commonly used
+commands have super short aliases. utils/FailOver.pl is now "fo". There
+are plenty of good reasons for this.</p>
+
+<h2>Incident 5</h2>
+
+<p>One reason is phones. This was Saturday June 30th, and I'm taking the
+kids to a friend's cabin for a few days during the holidays. They needed
+new bathers, and I had promised to take them shopping. Knowing it could
+be hours until the next crash, I set up the short alias, checked I could
+use it from my phone, and off we went. I use Port Knocker + Connect Bot
+from my Android phone to get a secure connection into our production
+systems while I'm on the move.</p>
+
+<p>So incident 5 was another blade failing - about 5:30pm Oslo time, while
+I was in the middle of a game shop with the kids. Great I thought, kdump
+will get it. I ran the "fo" command from my phone, 20 seconds of hunt
+and peck on a touch keyboard, and waited for the reboot. No reboot.
+Couldn't ping it.</p>
+
+<p>Came home and checked - it was frozen. Kdump hadn't triggered. Great.</p>
+
+<p>As I cooked dinner, I chatted with the sysadmins from other Opera
+deparements on our internal IRC channel. They confirmed similar failures
+all around the world in our other datacentres. Everything from
+unmodified Squeeze kernels through to our 3.2.21 kernel. I would have
+been running something more recent, but the bnx2 driver has been broken
+with incorrect firmware since then - and guess what the Dell blades
+contain. Other brands of server crashed too, so it wasn't just Dell.</p>
+
+<h2>Finding a solution</h2>
+
+<p>The first thing was to disable console blanking on all our machines.
+I've been wanting to do it for a while, but I down-prioritised it after
+getting kdump working (so I thought). By now we were really suspicious
+of ntp and the leap second, but didn't have "proof". A screen capture of
+another crash with ntp listed would be enough for that. I did that
+everywhere - and then didn't get another crash!</p>
+
+<p>Another thing I did was post a question to superuser.com. Wrong site -
+thankfully someone moved it to serverfault.com where it belonged. My
+fault, I have been aware of these sites for a while, but not really
+participated. The discussion took a while to start up, but by the time
+the kids were asleep, it had exploded. Lots of people confirming the
+issue, and looking for workarounds.  I updated it multiple times as I
+had more information from other sysadmins and from my own
+investigations.</p>
+
+<ul>
+<li><a href="http://serverfault.com/q/403732/126591">http://serverfault.com/q/403732/126591</a></li>
+</ul>
+
+<p>Our own Marco had blogged about solutions to the leap second, including
+smearing, similar to what Google have done.  I admit I didn't give his
+warnings the level of attention I should have - not that any of us
+expected what happened, but he was at least aware of the risk more than
+some of us cowboys.</p>
+
+<ul>
+<li><a href="http://my.opera.com/marcomarongiu/blog/2012/03/12/no-step-back">http://my.opera.com/marcomarongiu/blog/2012/03/12/no-step-back</a></li>
+<li><a href="http://my.opera.com/marcomarongiu/blog/2012/06/01/an-humble-attempt-to-work-around-the-leap-second">http://my.opera.com/marcomarongiu/blog/2012/06/01/an-humble-attempt-to-work-around-the-leap-second</a></li>
+<li><a href="http://googleblog.blogspot.no/2011/09/time-technology-and-leaping-seconds.html">http://googleblog.blogspot.no/2011/09/time-technology-and-leaping-seconds.html</a></li>
+</ul>
+
+<p>Marco was also on IRC, and talked me though using the Perl code from his
+blog to clear the leapsecond flag from the kernel using adjtimex. I did
+that, and also prepared the script a bit for more general use and
+uploaded it to my filestorage space to link into the serverfault
+question where it could be useful to others.</p>
+
+<p>By now I was the top trending piece of tech news, and scoring badges and
+reputation points at a crazy rate. I had killed NTP everywhere on our
+servers and cleared the flag, so they were marching on oblivious to the
+leap second - no worries there. So I joined various IRC channels and
+forums and talked about the issue.</p>
+
+<p>I did stay up until 2am Oslo time to watch the leap second in.  In the
+end the only thing to die was my laptop's VPN connection, because of
+course I hadn't actually fixed the local end (also running Linux). 
+There was a moment of excitement before I reconnected and confirmed that
+our servers were all fine.  10 minutes later, I restarted NTP and went
+to bed.</p>
+
+<h2>The aftermath: corruption</h2>
+
+<p>One of the compute server crashes had corrupted a spamassassin data
+file, enough that spam scanning was broken.  It took users reports for
+us to be aware of it.  We have now added a run of 'spamassassin --lint'
+in startup scripts of our compute servers, so we can't operate in this
+broken state again.</p>
+
+<p>We also reinstalled the server.  We reinstall at almost any excuse.  The
+whole process is totally automated.  The entire set of commands was</p>
+
+<p># fo -a    (remember the alias from earlier) <br />
+ # srv all stop <br />
+ # utils/ReinstallGrub2.pl -r     (this one has no alias) <br />
+ # reboot</p>
+
+<p>and about 30 minutes later, when I remembered to go check</p>
+
+<p># c4 (alias for ssh compute4) <br />
+ # srv all start <br />
+ # c1 (the pair machine for compute4 is compute1) <br />
+ # fo -m (-a is "all", -m is "mastered elsewhere")</p>
+
+<p>And we were fully back in production with that server.  The ability to
+fail services off quickly, and reinstall back to production state from
+bare metal, is a cornerstone of good administration in my opinion.  It's
+why we've managed to run such a successful service with less than one
+person's time dedicated to sysadmin.  Until 2 months ago, the primary
+sysadmin has been me - and I've also rewritten large parts of Cyrus
+during that time, and worked on other parts of our site too.</p>
+
+<p>The other issue was imap3 - the imap server which crashed right back
+during incident 2.  After it was up, I failed all Cyrus instances off,
+so it's only running replicas right now.  But the backup script goes to
+the primary location by default.</p>
+
+<p>I saw two backup error messages go by today (while eating my breakfast -
+so much for being on holiday - errors get sent to our IRC channel and I
+was still logged in).  They were missing file errors, which never
+happen.  So I investigated.</p>
+
+<p>Again, we have done a LOT of work on Cyrus over the years (mostly, I
+have), and one thing has been adding full checksum support to all the
+file formats in Cyrus.  With the final transition to the twoskip
+internal database format I wrote earlier this year, the only remaining
+file that doesn't have any checksum is the quota file - and we can
+regenerate that from our billing database (for limit) and the other
+index files on disk (for usage).</p>
+
+<p>So it was just a matter of running scripts/audit_slots.pl with the
+right options, and waiting most of the day.  The output contains things
+like this:</p>
+
+<p># user.censored1.Junk Mail cyrus.index missing file 87040 <br />
+ # sucessfully fetched missing file from sloti20d3p2 <br />
+ ... <br />
+ # user.censored2 cyrus.index missing file 18630 <br />
+ # sucessfully fetched missing file from slots3a2p2</p>
+
+<p> The script has enough smarts to detect that files are missing, or even
+corrupted.  The cyrus.index file contains a sha1 of each message file as
+well as its size (and a crc32 of the record containing THAT data as
+well), so we can confirm that the file content is undamaged.  It can
+connect to one of the replicas using data from our "production.dat"
+cluster configuration file, and find the matching copy of the file -
+check that the sha1 on THAT end is correct, and copy it into place.</p>
+
+<p>The backup system knows the internals of Cyrus well.  The new Cyrus
+replication protocol was built after making our backup tool, and similar
+checks the checksums of data it receives over the wire.  At every level,
+our systems are designed to detect corruption and complain loudly rather
+than blindly replicating the corruption to other locations.  We know
+that RAID1 is no protection, not with the amount of data we have.  It's
+very rare, but with enough disks, very rare means a few times a month. 
+So paranoia is good.</p>
+
+<h2>Summary</h2>
+
+<p>All these layers of protection, redundancy, and tooling mean that with
+very little work, even while not totally awake, the entire impact on our
+users was an ~15 minute outage for the few users who were primary on
+imap3 (less than 5% of our userbase) - plus delays of 5-10 minutes on
+incoming email to 16.7% of users each time a compute server crashed. 
+While we didn't do quite as well as Google, we did OK!  The spam
+scanning issue lasted a lot longer, but at least it's fully fixed for
+the future.</p>
+
+<p>We had corruption, but we have the tools to detect and recover, and
+replicas of all the data to repair from.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2012/06/28/changes-to-web-interface-address-book-rolled-out/">Changes to web interface Address Book rolled out</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2012/07/09/enforcing-ssltls-encryption-on-all-imappopsmtp-connections-from-july-14/">Enforcing SSL/TLS encryption on all IMAP/POP/SMTP connections from July 14</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

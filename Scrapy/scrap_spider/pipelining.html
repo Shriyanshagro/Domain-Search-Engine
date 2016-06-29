@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<TITLE>Pipelining</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF LINK=#000000 VLINK="#CCCC99">
+<CENTER>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<TR>
+		<TD BGCOLOR="#000000" HEIGHT=1 WIDTH=1><IMG SRC="options/spacer.gif" WIDTH=1 HEIGHT=1></TD>
+		<TD BGCOLOR="#000000" HEIGHT=1><IMG SRC="options/spacer.gif" WIDTH=1 HEIGHT=1></TD>
+		<TD BGCOLOR="#000000" HEIGHT=1 WIDTH=1><IMG SRC="options/spacer.gif" WIDTH=1 HEIGHT=1></TD>
+	</TR>
+	<TR>
+		<TD BGCOLOR="#000000" WIDTH=1><IMG SRC="options/spacer.gif" WIDTH=1 HEIGHT=1></TD>
+		<TD>
+			<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+				<TR>
+					<TD>
+						<IMG SRC="options/index_01.gif" WIDTH=607 HEIGHT=28></TD>
+				</TR>
+				<TR>
+					<TD>
+						<IMG SRC="options/index_02.jpg" WIDTH=607 HEIGHT=33></TD>
+				</TR>
+				<TR>
+					<TD>
+						<TABLE BORDER=0 CELLSPACING=7 CELLPADDING=0 WIDTH=607>
+							<TR>
+								<TD WIDTH=100% ALIGN=LEFT VALIGN=TOP>
+									<FONT SIZE=-1 FACE="Verdana,Arial">
+
+										<!-- main text area here -->
+
+										<B>How Pipelining Works</B><BR>
+
+										PIpelining, a standard feature in RISC processors, is much like an assembly line. Because the processor works on different steps of the instruction at the same time, more instructions can be executed in a shorter period of time.<P>
+															
+										A useful method of demonstrating this is the laundry analogy. Let's say that there are four loads of dirty laundry that need to be washed, dried, and folded. We could put the the first load in the washer for 30 minutes, dry it for 40 minutes, and then take 20 minutes to fold the clothes. Then pick up the second load and wash, dry, and fold, and repeat for the third and fourth loads. Supposing we started at 6 PM and worked as efficiently as possible, we would still be doing laundry until midnight.<P>
+
+										<IMG SRC="laundry1.gif" ALT="non-pipelined laundry" BORDER=0><P>
+										<P ALIGN=RIGHT>Source: <A HREF="http://www.ece.arizona.edu/~ece462/Lec03-pipe/">http://www.ece.arizona.edu/~ece462/Lec03-pipe/</A></P>
+										
+										However, a smarter approach to the problem would be to put the second load of dirty laundry into the washer after the first was already clean and whirling happily in the dryer. Then, while the first load was being folded, the second load would dry, and a third load could be added to the pipeline of laundry. Using this method, the laundry would be finished by 9:30.<P>
+
+										<IMG SRC="laundry2.gif" ALT="pipelined laundry" BORDER=0><P>
+										<P ALIGN=RIGHT>Source <A HREF="http://www.ece.arizona.edu/~ece462/Lec03-pipe/">http://www.ece.arizona.edu/~ece462/Lec03-pipe/</A></P>
+										<A HREF="pipelining1.mov">Watch a movie of pipelining in action!</A> (Source: <A HREF="http://www.inf.fh-dortmund.de/person/prof/si/risc/intro_to_risc/irt0_index.html">http://www.inf.fh-dortmund.de/person/prof/si/risc/intro_to_risc/irt0_index.html)</A><P>
+
+										<B>RISC Pipelines</B><BR>
+
+										A RISC processor pipeline operates in much the same way, although the stages in the pipeline are different. While different processors have different numbers of steps, they are basically variations of these five, used in the MIPS R3000 processor:<P>
+										<OL>
+											<LI>fetch instructions from memory</LI>
+											<LI>read registers and decode the instruction</LI>
+											<LI>execute the instruction or calculate an address</LI>
+											<LI>access an operand in data memory</LI>
+											<LI>write the result into a register</LI>
+										</OL><P>
+
+										If you glance back at the diagram of the laundry pipeline, you'll notice that 										although the washer finishes in half an hour, the dryer takes an extra ten 										minutes, and thus the wet clothes must wait ten minutes for the dryer to free 										up. Thus, the length of the pipeline is dependent on the length of the longest 										step. Because RISC instructions are simpler than those used in pre-RISC 										processors (now called CISC, or Complex Instruction Set Computer), they 										are more conducive to pipelining. While CISC instructions varied in length, 										RISC instructions are all the same length and can be fetched in a single 										operation. Ideally, each of the stages in a RISC processor pipeline should 										take 1 clock cycle so that the processor finishes an instruction each clock 										cycle and averages one cycle per instruction (CPI).<P>
+										
+										<B>Pipeline Problems</B><BR>
+
+										In practice, however, RISC processors operate at more than one cycle per 										instruction. The processor might occasionally stall a a result of data 										dependencies and branch instructions.<P>
+
+										A data dependency occurs when an instruction depends on the results of a 										previous instruction. A particular instruction might need data in a register 										which has not yet been stored since that is the job of a preceeding 											instruction which has not yet reached that step in the pipeline.<P>
+
+										For example:<P>
+
+										<BLOCKQUOTE><FONT COLOR="BLUE">
+										add $r3, $r2, $r1<BR>
+										add $r5, $r4, $r3<BR>
+										<I>more instructions that are independent of the first two</I> 											</FONT></BLOCKQUOTE><P>
+
+										In this example, the first instruction tells the processor to add the contents 										of registers r1 and r2 and store the result in register r3. The second instructs 										it to add r3 and r4 and store the sum in r5. We place this set of instructions 										in a pipeline. When the second instruction is in the second stage, the 										processor will be attempting to read r3 and r4 from the registers. Remember, 										though, that the first instruction is just one step ahead of the second, so the 										contents of r1 and r2 are being added, but the result has not yet been written 										into register r3. The second instruction therefore cannot read from the 										register r3 because it hasn't been written yet and must wait until the data it 										needs is stored. Consequently, the pipeline is stalled and a number of 										empty instructions (known as <I>bubbles</I> go into the pipeline. Data 										dependency affects long pipelines more than shorter ones since it takes a 										longer period of time for an instruction to reach the final register-writing stage 										of a long pipeline.<P>
+
+										MIPS' solution to this problem is code reordering. If, as in the example 										above, the following instructions have nothing to do with the first two, the 										code could be rearranged so that those instructions are executed in between 										the two dependent instructions and the pipeline could flow efficiently. The 										task of code reordering is generally left to the compiler, which recognizes 										data dependencies and attempts to minimize performance stalls.<P>
+
+										Branch instructions are those that tell the processor to make a decision 										about what the next instruction to be executed should be based on the 										results of another instruction. Branch instructions can be troublesome in a 										pipeline if a branch is conditional on the results of an instruction which has 										not yet finished its path through the pipeline.<P>
+
+										For example:<P>
+
+										<BLOCKQUOTE><TABLE>
+											<TR><TD><FONT SIZE=-1 FACE="Verdana,Arial" COLOR="BLUE">Loop :<BR><BR><BR></TD>								
+											<TD><FONT SIZE=-1 FACE="Verdana,Arial" COLOR="BLUE">add $r3, $r2, $r1<BR>
+											sub $r6, $r5, $r4<BR>
+											beq $r3, $r6, Loop</TD></TR>
+										</TABLE></BLOCKQUOTE><P>
+
+										The example above instructs the processor to add r1 and r2 and put the 										result in r3, then subtract r4 from r5, storing the difference in r6. In the third 										instruction, beq stands for branch if equal. If the contents of r3 and r6 are 										equal, the processor should execute the instruction labeled "Loop." 											Otherwise, it should continue to the next instruction. In this example, the 										processor cannot make a decision about which branch to take because 										neither the value of r3 or r6 have been written into the registers yet.<P>
+
+										The processor could stall, but a more sophisticated method of dealing with 										branch instructions is branch prediction. The processor makes a guess 										about which path to take - if the guess is wrong, anything written into the 										registers must be cleared, and the pipeline must be started again with the 										correct instruction. Some methods of branch prediction depend on 											stereotypical behavior. Branches pointing backward are taken about 90% of 										the time since backward-pointing branches are often found at the bottom of 										loops. On the other hand, branches pointing forward, are only taken 										approximately 50% of the time. Thus, it would be logical for processors to 										always follow the branch when it points backward, but not when it points 										forward. Other methods of branch prediction are less static: processors that 										use dynamic prediction keep a history for each branch and uses it to predict 										future branches. These processors are correct in their predictions 90% of the 										time.<P>
+
+										Still other processors forgo the entire branch prediction ordeal. The RISC 										System/6000 fetches and starts decoding instructions from both sides of the 										branch. When it determines which branch should be followed, it then sends 										the correct instructions down the pipeline to be executed.<P>
+
+										<B>Pipelining Developments</B><BR>
+
+										In order to make processors even faster, various methods of optimizing 										pipelines have been devised.<P>
+
+										Superpipelining refers to dividing the pipeline into more steps. The more pipe 										stages there are, the faster the pipeline is because each stage is then 										shorter. Ideally, a pipeline with five stages should be five times faster than a 										non-pipelined processor (or rather, a pipeline with one stage). The 											instructions are executed at the speed at which each stage is completed, 										and each stage takes one fifth of the amount of time that the non-pipelined 										instruction takes. Thus, a processor with an 8-step pipeline (the MIPS 										R4000) will be even faster than its 5-step counterpart. The MIPS R4000 										chops its pipeline into more pieces by dividing some steps into two. 										Instruction fetching, for example, is now done in two stages rather than one. 										The stages are as shown:<P>
+
+										<OL>
+											<LI>Instruction Fetch (First Half)</LI>
+											<LI>Instruction Fetch (Second Half)</LI>
+											<LI>Register Fetch</LI>
+											<LI>Instruction Execute</LI>
+											<LI>Data Cache Access (First Half)</LI>
+											<LI>Data Cache Access (Second Half)</LI>
+											<LI>Tag Check</LI>
+											<LI>Write Back</LI>
+										</OL><P>
+
+										Superscalar pipelining involves multiple pipelines in parallel. Internal 										components of the processor are replicated so it can launch multiple 										instructions in some or all of its pipeline stages. The RISC System/6000 has 										a forked pipeline with different paths for floating-point and integer 											instructions. If there is a mixture of both types in a program, the processor 										can keep both forks running simultaneously. Both types of instructions 										share two initial stages (Instruction Fetch and Instruction Dispatch) before 										they fork. Often, however, superscalar pipelining refers to multiple copies of 										all pipeline stages (In terms of laundry, this would mean four washers, four 										dryers, and four people who fold clothes). Many of today's machines attempt 										to find two to six instructions that it can execute in every pipeline stage. If 										some of the instructions are dependent, however, only the first instruction or 										instructions are issued.<P>
+
+										Dynamic pipelines have the capability to schedule around stalls. A dynamic 										pipeline is divided into three units: the instruction fetch and decode unit, five 										to ten execute or functional units, and a commit unit. Each execute unit has 										reservation stations, which act as buffers and hold the operands and 										operations.<P>
+										
+										<IMG SRC="dynamic.jpg" ALT="dynamic pipelining" BORDER=0><P>
+
+										While the functional units have the freedom to execute out of order, the 										instruction fetch/decode and commit units must operate in-order to maintain 										simple pipeline behavior. When the instruction is executed and the result is 										calculated, the commit unit decides when it is safe to store the result. If a 										stall occurs, the processor can schedule other instructions to be executed 										until the stall is resolved. This, coupled with the efficiency of multiple units 										executing instructions simultaneously, makes a dynamic pipeline an 										attractive alternative.<P>
+										
+										<!-- end main text -->
+
+									</FONT>
+								</TD>
+							</TR>
+						</TABLE>
+					</TD>
+				</TR>
+			</TABLE>
+		</TD>
+		<TD BGCOLOR="#000000" WIDTH=1><IMG SRC="options/spacer.gif" WIDTH=1 HEIGHT=1></TD>
+	</TR>
+	<TR?
+		<TD BGCOLOR="#000000" HEIGHT=1 WIDTH=1><IMG SRC="options/spacer.gif" WIDTH=1 HEIGHT=1></TD>
+		<TD BGCOLOR="#000000" HEIGHT=1><IMG SRC="options/spacer.gif" WIDTH=1 HEIGHT=1></TD>
+		<TD BGCOLOR="#000000" HEIGHT=1 WIDTH=1><IMG SRC="options/spacer.gif" WIDTH=1 HEIGHT=1></TD>
+	</TR>
+</TABLE>
+<FONT FACE="Verdana,Arial" SIZE=-1><A HREF="../whatis/index.html">what is risc?</A> &middot; <A HREF="../mips/index.html">mips</A> &middot; <A HREF="../risccisc/index.html">risc vs. cisc</A> &middot; <A HREF="../developments/index.html">recent developments</A> &middot; <A HREF="../bibliography/index.html">bibliography</A> &middot; <A HREF="../about/index.html">about this site</A></FONT>
+</CENTER>
+</BODY>
+</HTML>

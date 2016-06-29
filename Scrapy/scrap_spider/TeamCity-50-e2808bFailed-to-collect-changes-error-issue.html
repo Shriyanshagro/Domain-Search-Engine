@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Laurent Kempé">
+    <title>TeamCity 5.0 &#39;​Failed to collect changes error&#39; issue - Laurent Kempé</title>
+    <meta name="author" content="Laurent Kempé">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="Tonight I was facing an issue with TeamCity 5.0 plugin in Visual Studio 2008. 
+I was getting the error message ‘​Failed to collect changes error’ in the new Local changes window.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="TeamCity 5.0 '​Failed to collect changes error' issue">
+<meta property="og:url" content="http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/index.html">
+<meta property="og:site_name" content="Laurent Kempé">
+<meta property="og:description" content="Tonight I was facing an issue with TeamCity 5.0 plugin in Visual Studio 2008. 
+I was getting the error message ‘​Failed to collect changes error’ in the new Local changes window.">
+<meta property="og:updated_time" content="2009-12-11T04:49:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TeamCity 5.0 '​Failed to collect changes error' issue">
+<meta name="twitter:description" content="Tonight I was facing an issue with TeamCity 5.0 plugin in Visual Studio 2008. 
+I was getting the error message ‘​Failed to collect changes error’ in the new Local changes window.">
+<meta name="twitter:creator" content="@laurentkempe">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://www.gravatar.com/avatar/a613c55feb51f402582d82218c5b2c68?s=640"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-quwccsthbllipo6252snb2tfkddvrsp1eczkytpz3vmxpsb6nwodixemlkux.min.css" type="text/css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-64298-8']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Laurent Kempé</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="http://www.gravatar.com/avatar/a613c55feb51f402582d82218c5b2c68?s=90"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://www.gravatar.com/avatar/a613c55feb51f402582d82218c5b2c68?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">Laurent Kempé</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/laurentkempe" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://twitter.com/laurentkempe" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+                    <span class="sidebar-button-desc">Twitter</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://www.linkedin.com/in/laurentkempe" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+                    <span class="sidebar-button-desc">LinkedIn</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://feeds.feedburner.com/laurentkempe" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            TeamCity 5.0 &#39;​Failed to collect changes error&#39; issue
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Fri Dec 11 2009 05:49:21 GMT+0100">
+	
+		    Dec 11, 2009
+    	
+    </time>
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>Tonight I was facing an issue with <a href="http://www.jetbrains.com/teamcity/index.html" target="_blank" rel="external">TeamCity</a> 5.0 plugin in Visual Studio 2008. </p>
+<p>I was getting the error message ‘​Failed to collect changes error’ in the new Local changes window.<br><a id="more"></a></p>
+<p>Searching on the bug tracking tool of JetBrains for TeamCity I found this issue “<a href="http://youtrack.jetbrains.net/issue/TW-10474" target="_blank" rel="external">TW-10474 I can not make VS addin recollect changes after recieveing ‘​Failed to collect changes error’</a>”</p>
+<p>Has this issue breaks my way to work with pre-tested build I decided to search for a solution because I cannot work without this now!</p>
+<p>So following the instruction “Logging in TeamCity Visual Studio plugin” : <a href="http://www.jetbrains.net/confluence/display/TCD3/Reporting+Issues" target="_blank" rel="external">Reporting Issues</a></p>
+<p>Looking at the produced logs I found this: </p>
+<p>9:28:24 PM.987: Thread:31: svn.exe info “<del>xml” “</del>non-interactive” “p:\@projects_handsup\portal”<br><strong>9:28:24 PM.987: Thread:31: Failed to execute svn. code 1, error svn: Try ‘svn help’ for more info svn: Syntax error parsing revision ‘projects_handsup\portal’ , output &lt;?xml version=”1.0”?&gt; <info></info></strong><br>9:28:24 PM.991: Thread:31: EXCEPTION: svn: Try ‘svn help’ for more info<br>svn: Syntax error parsing revision ‘projects_handsup\portal’.<br>Svn has exited with code ‘1’.<br>SvnInfoUuidCommand failed</p>
+<p>I tried then the svn command from the command prompt and got the same error!</p>
+<p>I finally renamed the path to my project from p:\@projects_handsup\portal to p:\projects_handsup\portal </p>
+<p>And now it works again! So forget strange characters in your path!</p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Team-City/">Team City</a> <a class="tag tag--primary tag--small t-link" href="/tags/continuous-integration/">continuous integration</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2010/01/03/Optimization-of-Web-Site-hosted-on-IIS-6/"  data-tooltip="Optimization of Web Site hosted on IIS 6">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2009/12/04/TeamCity-50-Released!/" data-tooltip="TeamCity 5.0 Released!">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2016 Laurent Kempé. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2010/01/03/Optimization-of-Web-Site-hosted-on-IIS-6/"  data-tooltip="Optimization of Web Site hosted on IIS 6">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2009/12/04/TeamCity-50-Released!/" data-tooltip="TeamCity 5.0 Released!">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://www.gravatar.com/avatar/a613c55feb51f402582d82218c5b2c68?s=110"/>
+        
+            <h4 id="about-card-name">Laurent Kempé</h4>
+        
+            <h5 id="about-card-bio"><p>I am an experienced Team Leader &amp; Senior Solutions Architect with a passion for shipping high-quality products by empowering development team and culture toward an agile mindset. I bring technical vision and strategy, leading engineering teams to move product, processes and architecture forward.</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Team Leader, Senior Solutions Architect</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Illzach, France
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.1.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/scrip-rjanlllosg30d03qrddpwrs6wqf4k3v0bbo68hiifuvthyhqfefx2htcagu0.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://laurentkempe.com/2009/12/11/TeamCity-50-e2808bFailed-to-collect-changes-error-issue/';
+                 
+                    this.page.identifier = '20091211054921';
+                                  
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'laurentkempe';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+</html>

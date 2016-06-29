@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta property="og:image" content="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/Red_Hat_RGB.jpg" />    <!--[if IE]><![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="https://www.redhat.com/zh/technologies/storage/ceph" rel="alternate" hreflang="zh" />
+<meta http-equiv="content-language" content="de" />
+<meta name="node-type" content="page" />
+<link rel="shortcut icon" href="https://www.redhat.com/profiles/rh/themes/redhatdotcom/favicon.ico" type="image/x-icon" />
+<meta name="last-publish-date" content="Fri, 25 Sep 2015 17:40:16 GMT" />
+<link href="https://www.redhat.com/pt-br/technologies/storage/ceph" rel="alternate" hreflang="pt-br" />
+<link href="https://www.redhat.com/fr/technologies/storage/ceph" rel="alternate" hreflang="fr" />
+<link href="https://www.redhat.com/es/technologies/storage/ceph" rel="alternate" hreflang="es" />
+<link href="https://www.redhat.com/de/technologies/storage/ceph" rel="alternate" hreflang="de" />
+<link href="https://www.redhat.com/en/technologies/storage/ceph" rel="alternate" hreflang="en" />
+<link href="https://www.redhat.com/ko/technologies/storage/ceph" rel="alternate" hreflang="ko" />
+<link href="https://www.redhat.com/ja/technologies/storage/ceph" rel="alternate" hreflang="ja" />
+<link href="https://www.redhat.com/it/technologies/storage/ceph" rel="alternate" hreflang="it" />
+<meta name="description" content="Open software-defined Objekt- und Block-Storage | Red Hat Red Hat Ceph Storage vereint Objekt- und Block-Storage, damit Sie Ihre explosiv gestiegenen Datenmengen flexibel und bezahlbar in der Cloud ablegen können." />
+<meta name="generator" content="Drupal 7 (http://drupal.org)" />
+<link rel="canonical" href="https://www.redhat.com/de/technologies/storage/ceph" />
+
+    <title>Red Hat Ceph Storage | Red Hat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__8SBcAez4jv8T_DR04KsGS275ML8dF9O0nv5Pl63M5Qw__OVfUTODQVMVoZQPUU_jHsESaTdGStPUQvBoC6HUIrqI__KQTk3u0YcYgeqWtTLSz_VhzWbFZLWM-lFMX4nTqQk2E.css" media="all" />
+<link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__FAwh7iJGNvjTMUQCL4Px_IFO9-luAfME1Sy67NPnlq4__qKAPnCeuNA6LyIJyIvKKfI_wV4lYAFJlyPNooiQrgog__KQTk3u0YcYgeqWtTLSz_VhzWbFZLWM-lFMX4nTqQk2E.css" media="all" />
+<link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__4SAHbjIlop4yPVHcTlAVkFAm2KyrG0QfgW127LqYIBY__OtpONs9apitshJXdqLyI3lqJQEmyOzkYGh3D3IOpf-8__KQTk3u0YcYgeqWtTLSz_VhzWbFZLWM-lFMX4nTqQk2E.css" media="all" />
+<link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__wpajrf8pWA19ifT2xQXPB3J1TByoCXqZVtt6kXfl4Ow__gsja5J6gcE1j6hdq0fRZlr4gsMczmnjgcxgQ0Wdp3nA__KQTk3u0YcYgeqWtTLSz_VhzWbFZLWM-lFMX4nTqQk2E.css" media="print" />
+<link type="text/css" rel="stylesheet" href="/sites/default/files/advagg_css/css__njxMpwSi51b6jbLBApwtKotmRwKEqYnOXZO7s3tQb4o__pFrX19m_nNKQ5GmBg7AavYNkUUZhUcxhq8JX9365SFM__KQTk3u0YcYgeqWtTLSz_VhzWbFZLWM-lFMX4nTqQk2E.css" media="all" />
+
+    <!--[if lt IE 9]>
+      <script src="/profiles/rh/themes/redhatdotcom/js/selectivizr-min.js" type="text/javascript"></script>
+      <script src="/profiles/rh/themes/redhatdotcom/js/nwmatcher-min.js" type="text/javascript"></script>
+      <script src="/profiles/rh/themes/redhatdotcom/js/respond.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="/sites/default/files/advagg_js/js__2LT6OV8u4_n6xL0szBFiK3PuIhoqGCPt48Skhqwmw9o__ZAp3nwsxJYiNKravLeFhaqBmXQvfkfhVhfnYYsnJEBw__KQTk3u0YcYgeqWtTLSz_VhzWbFZLWM-lFMX4nTqQk2E.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(){var b=this._tly={q:[],mark:function(a,c){b.q.push(["mark",a,c||(new Date).getTime()])},measure:function(a,c,e){b.q.push(["measure",a,c,e||(new Date).getTime()])},done:function(a){b.q.push(["done",a])},cid:"Gf1RWYTZaFM4LqZzJ3SwugOCOhM=",xt:"1B04FFB6B8F2D210EE6E70773656F18C0386BB0A79A56B99BC8E41D009"};b.mark("firstbyte");this.onerror=function(a,c,e){b.measure(["_jserror ",a,"|",c,"|",e].join(""))};var d=this.attachEvent,f=this.addEventListener;var g=function(){b.measure("winload");b.done()};d?d("onload",g):f&&f("load",g,!1);var h=document.createElement("script");
+h.type="text/javascript";h.async=!0;h.src=("http:"===document.location.protocol?"http:":"https:")+"//d2gfdmu30u15x7.cloudfront.net/1/tly.js";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(h,i);}());
+
+//--><!]]>
+</script>
+<script type="text/javascript" src="/profiles/rh/modules/redhat_www_tracking/js/adobe/target/mbox.js?o6kl41"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"de\/","ajaxPageState":{"theme":"redhatdotcom","theme_token":"RP9rhdnj5e3iKJGXLWRDGWObFnRTJV342rhuHaSk1AI","css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"sites\/all\/modules\/google_appliance\/theme\/google_appliance.css":1,"modules\/node\/node.css":1,"sites\/all\/modules\/picture\/picture_wysiwyg.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/node_embed\/plugins\/node_embed\/node_embed.css":1,"modules\/locale\/locale.css":1,"sites\/all\/libraries\/rh_iconfont\/dist\/files\/rh-iconfont.css":1,"sites\/all\/libraries\/rh_iconfont\/dist\/files\/rh-web-iconfont.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/bootstrap.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/chrome.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/overpass.css":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.selectBoxIt\/jquery.selectBoxIt.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/print.css":1,"sites\/all\/libraries\/webrh\/dist\/css\/webrh.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/style.css":1,"profiles\/rh\/themes\/redhatdotcom\/css\/editorial.css":1},"js":{"sites\/all\/modules\/picture\/picturefill\/matchmedia.js":1,"sites\/all\/modules\/picture\/picturefill\/picturefill.js":1,"sites\/all\/modules\/picture\/picture.js":1,"\/\/www.redhat.com\/j\/elqNow\/elqImg.js":1,"\/\/www.redhat.com\/j\/elqNow\/elqCfg.js":1,"profiles\/rh\/modules\/redhat_www_analytics\/js\/s_code.js":1,"profiles\/rh\/modules\/redhat_www_analytics\/js\/rh_analytics.js":1,"profiles\/rh\/modules\/redhat_www_analytics\/js\/rh_video.js":1,"profiles\/rh\/modules\/redhat_www_analytics\/js\/rh_demand_base.js":1,"profiles\/rh\/modules\/redhat_www_analytics\/js\/rh_analytics_nav_tracking.js":1,"profiles\/rh\/modules\/redhat_www_analytics\/js\/rh_omni_footer.js":1,"sites\/all\/modules\/jquery_update\/replace\/jquery\/1.10\/jquery.min.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.core.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.widget.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.effect.min.js":1,"sites\/all\/libraries\/webrh\/dist\/js\/webrh.vendor.js":1,"sites\/all\/libraries\/webrh\/dist\/js\/webrh.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.effect-slide.min.js":1,"profiles\/rh\/modules\/redhat_www_analytics\/js\/rh_analytics_on_page.js":1,"public:\/\/languages\/de_ivEFpBi4OcoVA_1qhxJyTlfNP6n3r7IYjEoK7t5ouH0.js":1,"sites\/all\/libraries\/jquery-cookie\/jquery.cookie-1.4.1.min.js":1,"profiles\/rh\/modules\/redhat_www_share\/js\/rh_share.js":1,"profiles\/rh\/modules\/redhat_www_solr\/js\/rh_solr.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/modernizr.min.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.pushmenu.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery-scrolltofixed.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/waypoints.min.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/sass-bootstrap.min.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/rh-chrome.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.fitvids.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.switchIt.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.selectBoxIt\/jquery.selectBoxIt.js":1,"profiles\/rh\/themes\/redhatdotcom\/js\/jquery.viewport\/jquery.viewport.min.js":1,"profiles\/rh\/modules\/redhat_www_tracking\/js\/adobe\/target\/mbox.js":1}},"rh_analytics_enabled":true,"rh_analytics_node_id":"129721","rh_analytics_subtype":"","rh_analytics_title":"rh | technologies | storage | ceph storage","rh_analytics_langcode":"de","redhat_www_share":{"facebook":{"popup":true,"window":{"height":"400","width":"600"}},"google":{"popup":true,"window":{"height":"650","width":"500"}},"twitter":{"popup":true,"window":{"height":"500","width":"500"}},"linkedin":{"popup":true,"window":{"height":"570","width":"520"}},"reddit":{"popup":true,"window":{"height":"700","width":"850"}}},"urlIsAjaxTrusted":{"\/de\/search\/node":true}});
+//--><!]]>
+</script>
+  </head>
+  <body class="bands-index html not-front not-logged-in no-sidebars page-node page-node- page-node-129721 node-type-page i18n-de editorial header-background-product-storage" >
+    <div class="page">
+      
+      
+
+
+
+<div class="header-background-image">
+</div>
+
+
+
+<header class="main-header">
+
+  <div id="main-nav-wrap">
+    <div id="main-menu" class="clearfix">
+      <div class="container">
+        <div class="logo-mobile-wrap">
+          <div id="logo">
+            <a href="/de"><img src="/profiles/rh/themes/redhatdotcom/img/logo.png" class="screen" title="Red Hat" /></a>
+            <a href="/de"><img src="/profiles/rh/themes/redhatdotcom/img/logo-print.png" class="print" title="" /></a>
+          </div>
+          <div id="mobile-nav">
+            <ul>
+              <li class="mobile-search">
+                <a class="expand-mobile-search" href="#"></a>
+              </li>
+              <li class="mobile-drop">
+                <a class="expand-mobile-nav" href=""></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="mobile-utility-nav">
+          <ul class="main">
+            <li class="trigger"><a href="#account-tray" class="account"><i class="web-icon web-icon-user"></i>Ihr Konto</a>
+            </li>
+            <li class="trigger"><a href="#global-tray" class="global"><i class="web-icon web-icon-globe"></i>Globale Voreinstellungen</a></li>
+          </ul>
+          <ul class="tray account-tray" id="account-tray">
+                          <li class="first rh-user-loggedout"><a href="https://www.redhat.com/wapps/sso/login.html" class="account-login-link utility-user-login-link">Anmelden</a></li>
+                                      <li class="last rh-user-loggedout"><a href="https://www.redhat.com/wapps/ugc/register.html" class="account-register-link">Registrieren</a></li>
+                                      <li class="first rh-user-loggedin"><a href="https://www.redhat.com/wapps/ugc/protected/account.html" class="account-edit-link">Profil und Einstellungen bearbeiten</a></li>
+                                      <li class="last rh-user-loggedin"><a href="http://www.redhat.com/wapps/sso/logout.html" class="account-logout-link">Abmelden</a></li>
+                      </ul>
+          <ul class="tray global-tray" id="global-tray">
+                          <li class="first trigger"><a href="#global-language-tray" class="global-language">Sprache wählen</a>
+                <div id="global-language-tray" class="tray global-language-tray">
+                  <section><div><div><a href="/zh/technologies/storage/ceph" class="language-link" xml:lang="zh" hreflang="zh" title="Red Hat Ceph Storage">简体中文</a></div><div><a href="/en/technologies/storage/ceph" class="language-link" xml:lang="en" hreflang="en" title="Red Hat Ceph Storage">English</a></div><div><a href="/fr/technologies/storage/ceph" class="language-link" xml:lang="fr" hreflang="fr" title="Red Hat Ceph Storage">Français</a></div><div><a href="/de/technologies/storage/ceph" class="language-link active" xml:lang="de" hreflang="de" title="Red Hat Ceph Storage">Deutsch</a></div></div><div><div><a href="/it/technologies/storage/ceph" class="language-link" xml:lang="it" hreflang="it" title="Red Hat Ceph Storage">Italiano</a></div><div><a href="/ja/technologies/storage/ceph" class="language-link" xml:lang="ja" hreflang="ja" title="Red Hat Ceph Storage">日本語</a></div><div><a href="/ko/technologies/storage/ceph" class="language-link" xml:lang="ko" hreflang="ko" title="Red Hat Ceph Storage">한국어</a></div><div><a href="/pt-br/technologies/storage/ceph" class="language-link" xml:lang="pt-br" hreflang="pt-br" title="Red Hat Ceph Storage">Português</a></div><div><a href="/es/technologies/storage/ceph" class="language-link" xml:lang="es" hreflang="es" title="Red Hat Ceph Storage">Español</a></div></div></section>                </div>
+              </li>
+                                      <li class="last trigger"><a href="#global-countries-tray" class="global-countries">Weitere Länderinformationen</a>
+                <div id="global-countries-tray" class="tray global-countries-tray">
+                  <ul class="menu"><li class="first expanded trigger"><a class="asien-pazifik">Asien-Pazifik</a><div class="tray asien-pazifik-tray"><ul class="menu"><li class="first leaf"><a href="/de/global/china">China</a></li>
+<li class="leaf"><a href="/de/global/india">India</a></li>
+<li class="leaf"><a href="/de/global/japan">Japan</a></li>
+<li class="last leaf"><a href="/de/global/south-korea">Südkorea</a></li>
+</ul></div></li><li class="expanded trigger"><a class="europa-naher-osten-und-afrika">Europa, Naher Osten und Afrika</a><div class="tray europa-naher-osten-und-afrika-tray"><ul class="menu"><li class="first leaf"><a href="/de/global/austria">Österreich</a></li>
+<li class="leaf"><a href="/de/global/czech-republic">Tschechische Republik</a></li>
+<li class="leaf"><a href="/de/global/germany">Deutschland</a></li>
+<li class="leaf"><a href="/de/global/denmark">Dänemark</a></li>
+<li class="leaf"><a href="/de/global/finland">Finnland</a></li>
+<li class="leaf"><a href="/de/global/israel">Israel</a></li>
+<li class="leaf"><a href="/de/global/italy">Italien</a></li>
+<li class="leaf"><a href="/de/global/netherlands">Niederlande</a></li>
+<li class="leaf"><a href="/de/global/norway">Norwegen</a></li>
+<li class="leaf"><a href="/de/global/poland">Polen</a></li>
+<li class="leaf"><a href="/de/global/russia">Russland</a></li>
+<li class="leaf"><a href="/de/global/sweden">Schweden</a></li>
+<li class="last leaf"><a href="/de/global/switzerland">Schweiz</a></li>
+</ul></div></li><li class="expanded trigger"><a class="lateinamerika">Lateinamerika</a><div class="tray lateinamerika-tray"><ul class="menu"><li class="first leaf"><a href="/de/global/argentina">Argentinien</a></li>
+<li class="leaf"><a href="/de/global/brazil">Brasilien</a></li>
+<li class="leaf"><a href="/de/global/chile">Chile</a></li>
+<li class="leaf"><a href="/de/global/colombia">Kolumbien</a></li>
+<li class="last leaf"><a href="/de/global/mexico">Mexiko</a></li>
+</ul></div></li><li class="last expanded trigger"><a class="nordamerika">Nordamerika</a><div class="tray nordamerika-tray"><ul class="menu"><li class="first last leaf"><a href="/de/global/united-states">USA</a></li>
+</ul></div></li></ul>                </div>
+              </li>
+                      </ul>
+        </div>
+        <nav id="main-nav">
+          <ul>
+            <li class="first expanded nav-links top-level-wrapper"><a href="/de/technologies" class="active">Technologien</a></li>
+<li class="expanded nav-links top-level-wrapper"><a href="/de/services">Services &amp; support</a></li>
+<li class="expanded nav-links top-level-wrapper"><a href="/de/success-stories">Success stories</a></li>
+<li class="last expanded nav-links top-level-wrapper"><a href="/de/about">Über Red Hat</a></li>
+          </ul>
+        </nav>
+        <div id="to-top">
+          <a class="btn_slideto" href="">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="main-subnav">
+      <div class="container equal-height">
+        <div class="sub-menu"><div class="sub-container"> <div class="inner-sub-container"><div class="menu-items"><h3><a href="/de/technologies">Lösungen</a></h3><ul class="menu"><li class="first leaf"><a href="/de/technologies/it-infrastructure">Infrastruktur</a></li>
+<li class="leaf"><a href="/de/technologies/infrastructure-as-a-service">IaaS</a></li>
+<li class="leaf"><a href="/de/technologies/platform-as-a-service">PaaS</a></li>
+<li class="last leaf"><a href="/de/technologies/cloud-applications">Anwendungs- entwicklung und -integration</a></li>
+</ul></div>
+<div class="menu-items"><h3><a href="/de/technologies/all-products">Produkte</a></h3><ul class="menu"><li class="first leaf"><a href="/de/technologies/linux-platforms">Linux-Plattformen</a></li>
+<li class="leaf"><a href="/de/technologies/jboss-middleware">JBoss Middleware</a></li>
+<li class="leaf"><a href="/de/technologies/virtualization">Virtualisierung</a></li>
+<li class="leaf"><a href="/de/technologies/cloud-computing">Cloud Computing</a></li>
+<li class="leaf"><a href="/de/technologies/storage">Storage</a></li>
+<li class="leaf"><a href="/de/technologies/mobile">Mobil</a></li>
+<li class="last leaf"><a href="/de/technologies/all-products" class="see-all">Alle Produkte</a></li>
+</ul></div>
+<div class="menu-items"><h3><a href="/de/technologies/industries">Branchen</a></h3><ul class="menu"><li class="first leaf"><a href="/de/technologies/industries/financial">Finanzdienstleistungen</a></li>
+<li class="leaf"><a href="/de/technologies/industries/government">Öffentlicher Sektor</a></li>
+<li class="leaf"><a href="/de/technologies/industries/health-life-sciences">Gesundheitswesen</a></li>
+<li class="leaf"><a href="/de/technologies/industries/telecommunications">Telekommunikation</a></li>
+<li class="last leaf"><a href="/de/technologies/industries" class="see-all">Alle Branchen</a></li>
+</ul></div>
+<aside><div class="trending">
+  <a href="/de/insights/openstack">
+    <div class="trending-item">
+      <p><strong>Wie kann OpenStack das Cloud Computing standardisieren?</strong></p>
+      <p>Die häufigsten drei Gründe, warum sich Unternehmen für OpenStack entscheiden: niedrige Kosten, hohe Effizienz und die Tatsache, dass OpenStack eine offene Plattform ist.</p>
+    </div>
+    </a>
+    <a href="/de/insights/security">
+    <div class="trending-item">
+      <p><strong>Security is about more than code</strong></p>
+      <p>Learn about Red Hat’s collaborative approach to security.</p>
+    </div>
+    </a>
+</div></aside>      <div class="go-to"><a href="/de/technologies" class="link-all entire">Technologien durchsuchen</a></div></div></div></div><div class="sub-menu"><div class="sub-container"> <div class="inner-sub-container"><div class="menu-items"><h3><a href="/de/services/support">Support</a></h3><ul class="menu"><li class="first leaf"><a href="https://access.redhat.com/">Customer Portal</a></li>
+<li class="leaf"><a href="/de/services/support/technical-account-management">Technische Kundenbetreuung</a></li>
+<li class="last leaf"><a href="https://access.redhat.com/support/contact/customerService/">Kundendienst</a></li>
+</ul></div>
+<div class="menu-items"><h3><a href="/de/services/training">Training</a></h3><ul class="menu"><li class="first leaf"><a href="/de/services/training/all-courses-exams">Alle Kurse</a></li>
+<li class="leaf"><a href="/de/services/training/courses-by-curriculum">Kurse nach Lehrplan</a></li>
+<li class="leaf"><a href="/de/services/training/ways-to-train">Schulungsformate</a></li>
+<li class="leaf"><a href="/de/services/training/learning-subscription">Learning Subscription</a></li>
+<li class="leaf"><a href="/de/services/training/student-center">Student Center</a></li>
+<li class="leaf"><a href="https://www.redhat.com/rhtapps/assessment/">Einstufungstest</a></li>
+<li class="last leaf"><a href="/de/services/training/contact">Red Hat Training kontaktieren</a></li>
+</ul></div>
+<div class="menu-items"><h3><a href="/de/services/certification">Zertifizierung</a></h3><ul class="menu"><li class="first leaf"><a href="/de/services/all-certifications-exams">Alle Zertifizierungen</a></li>
+<li class="leaf"><a href="/de/services/certification/rhcp">Für Certified Professionals</a></li>
+<li class="leaf"><a href="/de/services/certification/resources-for-employers">Für Arbeitgeber</a></li>
+<li class="leaf"><a href="https://www.redhat.com/rhtapps/certification/">Zertifizierungs- zentrale</a></li>
+<li class="leaf"><a href="/de/services/certification/ways-to-test">Individual Exam Sessions</a></li>
+<li class="last leaf"><a href="/de/services/training/contact">Contact certification</a></li>
+</ul></div>
+<div class="menu-items"><h3><a href="/de/services/consulting">Consulting</a></h3><ul class="menu"><li class="first leaf"><a href="/de/services/consulting/innovation-paths">IT-Ziele</a></li>
+<li class="leaf"><a href="/de/services/consulting/cloud">Unternehmens- lösungen</a></li>
+<li class="leaf"><a href="/de/services/consulting/application-services">Technologie- lösungen</a></li>
+<li class="last leaf"><a href="/de/services/consulting/infrastructure">Optimierter Produkteinsatz</a></li>
+</ul></div>
+<aside><div class="trending">
+  <a href="/de/services/training/learning-subscription">
+    <div class="trending-item">
+      <p><strong>Red Hat Learning Subscription</strong></p>
+      <p>Eine flexible Trainingsl&ouml;sung, mit der Sie Zeit, Energie und Kosten sparen k&ouml;nnen.</p>
+    </div>
+  </a>
+  <a href="/de/services/support">
+    <div class="trending-item">
+      <p><strong>Why subscribe to free software?</strong></p>
+      <p>Learn about the value of a Red Hat subscription.</p>
+    </div>
+  </a>
+</div></aside>      <div class="go-to"><a href="/de/services" class="link-all entire">Services &amp; support durchsuchen</a></div></div></div></div><div class="sub-menu"><div class="sub-container"> <div class="inner-sub-container"><div class="menu-items"><h3><a href="/de/success-stories">Kunden</a></h3><ul class="menu"><li class="first leaf"><a href="/de/success-stories/adobe">Adobe</a></li>
+<li class="leaf"><a href="/de/success-stories/ampersand">Ampersand</a></li>
+<li class="leaf"><a href="/de/success-stories/bayer-business-services">Bayer Business Services</a></li>
+<li class="leaf"><a href="/de/success-stories/beth-israel-medical-center">Beth Israel Medical Center</a></li>
+<li class="leaf"><a href="/de/success-stories/grupo-bmv">Mexikanische Wertpapierbörse</a></li>
+<li class="last leaf"><a href="/de/success-stories">Booz Allen Hamilton</a></li>
+</ul></div>
+<div class="menu-items"><h3><a href="/de/partners">Partners</a></h3><ul class="menu"><li class="first leaf"><a href="/de/success-stories/red-hat-and-hp">HP</a></li>
+<li class="leaf"><a href="/de/success-stories/gca-technology-services" title="GCA Technology Services">GCA Technology Services</a></li>
+<li class="leaf"><a href="/de/success-stories/quru">Quru</a></li>
+<li class="last leaf"><a href="/de/success-stories/shadow-soft">Shadow-Soft</a></li>
+</ul></div>
+<aside><div class="trending">
+  <a href="/en/resources/telegraph-media-group-builds-integration-platform-support-digital-first-strategy">
+    <div class="trending-item">
+      <p><strong>Britische Telegraph Media Group unterst&uuml;tzt eine digitalorientierte Strategie</strong></p>
+      <p>Mit Red&nbsp;Hat konnte die britische Telegraph Media Group Konsumenten schnell und einfach neue digitale Inhalte an Computern, Tablets und Smartphones bereitstellen.</p>
+    </div>
+  </a>
+  <a href="/de/success-stories/intuit">
+    <div class="trending-item">
+      <p><strong>Intuit konnte die Leistung seiner Steuersoftware gewaltig steigern</strong></p>
+      <p>Red Hat stellte eine schnelle, zuverlässige, kosteneffektive Storage-Lösung für die TurboTax-Produkte von Intuit zur Verfügung.</p>
+    </div>
+  </a>
+</div></aside>      <div class="go-to"><a href="/de/success-stories" class="link-all entire">Success stories durchsuchen</a></div></div></div></div><div class="sub-menu"><div class="sub-container"> <div class="inner-sub-container"><div class="menu-items"><h3>Warum Red Hat</h3><ul class="menu"><li class="first leaf"><a href="/de/about/value-of-subscription">Subskriptionsmodell</a></li>
+<li class="leaf"><a href="/de/about/trusted">In der Branche bewährt</a></li>
+<li class="leaf"><a href="/de/explore/the-open-organization-book">The Open Organization</a></li>
+<li class="leaf"><a href="/de/open-source-stories">Open Source Stories</a></li>
+<li class="last leaf"><a href="/de/insights">Einblicke</a></li>
+</ul></div>
+<div class="menu-items"><h3>Unsere Firma</h3><ul class="menu"><li class="first leaf"><a href="/de/about/company">Über Red Hat</a></li>
+<li class="leaf"><a href="/de/about/company/management">Management</a></li>
+<li class="leaf"><a href="/de/about/newsroom">News</a></li>
+<li class="leaf"><a href="/de/about/events">Veranstaltungen</a></li>
+<li class="leaf"><a href="/de/about/around-the-world">Red Hat weltweit</a></li>
+<li class="leaf"><a href="http://investors.redhat.com/">Investor Relations</a></li>
+<li class="last leaf"><a href="/de/about/analysts">Analystenbeziehung</a></li>
+</ul></div>
+<div class="menu-items"><h3>&nbsp;</h3><ul class="menu"><li class="first leaf"><a href="/de/about/social">Soziale Netzwerke</a></li>
+<li class="leaf"><a href="/de/about/all-blogs">Blogs</a></li>
+<li class="leaf"><a href="/de/about/videos">Videos</a></li>
+<li class="leaf"><a href="/de/about/women-in-open-source">Women in Open Source Award</a></li>
+<li class="leaf"><a href="http://jobs.redhat.com/">Jobs bei Red Hat (English)</a></li>
+<li class="last leaf"><a href="/de/about/office-locations">Standorte</a></li>
+</ul></div>
+<aside><div class="trending">
+  <a href="/en/about/blog/state-red-hat-union-secure">
+    <div class="trending-item">
+      <p><strong>Red Hat bleibt sicher</strong></p>
+      <p>Reflexionen von Red Hats Präsident und CEO Jim Whitehurst über den Stand der Unternehmens-IT und was sich 2016 ändern wird. </p>
+    </div>
+  </a>
+  <a href="/de/services/support">
+    <div class="trending-item">
+      <p><strong>The software is free. The subscription is invaluable.</strong></p>
+      <p>Red Hat customers enjoy the latest security fixes, award-winning support, and committed product life cycles.</p>
+    </div>
+  </a>
+</div></aside>      <div class="go-to"><a href="/de/about" class="link-all entire">Weitere Informationen Über Red Hat</a></div></div></div></div>      </div>
+    </div>
+  </div>
+  <div id="second-menu">
+    <div class="container">
+      <nav id="secondary-nav">
+        <ul class="menu"><li class="first leaf"><a href="/de/customers">Kunden</a></li>
+<li class="leaf"><a href="/de/partners">Partner</a></li>
+<li class="last leaf"><a href="/de/open-source">Open Source-Communitys</a></li>
+</ul>      </nav>
+      <nav id="utility-nav">
+        <div class="item-list"><ul><li id="utility-search" class="switch first" title="Suche"><a href="/de/search" class="expand" onclick="return false;"></a></li>
+<li id="utility-account" class="switch" title="Konten"><a href="https://www.redhat.com/wapps/sso/login.html" class="expand" onclick="return false;"></a></li>
+<li id="utility-globe" class="switch last" title="Globale Einstellungen"><a href="/de/about/global" class="expand" onclick="return false;"></a></li>
+</ul></div>      </nav>
+    </div>
+  </div>
+
+  <div id="sliding-utility-panel">
+    <div id="search-panel" class="utility-panel">
+      <div class="utility-content">
+        <form class="search-form" action="/de/search/node" method="post" id="redhat-www-solr-search-box" accept-charset="UTF-8"><div><div class="container-inline form-wrapper" id="edit-basic"><div class="form-item form-type-textfield form-item-keys">
+  <label class="element-invisible" for="edit-keys">Enter your keywords </label>
+ <input maxlength="128" size="15" placeholder="Suchbegriff eingeben" type="text" id="edit-keys" name="keys" value="" class="form-text" />
+</div>
+<div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Suche" class="form-submit" /></div></div><input type="hidden" name="form_build_id" value="form-RFB5HmPHPKQ9LoFtJwtcvJ9r8tSNtH_X17j96RGXJyU" />
+<input type="hidden" name="form_id" value="redhat_www_solr_search_box" />
+</div></form>      </div>
+    </div>
+    <div id="account-panel" class="utility-panel">
+        <div class="utility-content">
+                      <section class="account-tray">
+  <header>
+    <div class="container">
+              <p class="rh-login-heading rh-user-loggedin">Welcome, <span class='rh-name'></span></p>
+                    <p class="rh-login-heading rh-user-loggedout">Beim Red Hat Konto anmelden</p>
+          </div>
+  </header>
+  <div class="content">
+    <div class="container">
+      <section class="account-login rh-user-loggedout">
+        <div class="account-login-wrapper">
+                      <a href="https://www.redhat.com/wapps/sso/login.html" class="account-login-link utility-user-login-link">Anmelden</a>                                <p>Über Ihr Red Hat Konto können Sie auf Ihr Benutzerprofil, Ihre Einstellungen und die folgenden Services abhängig von Ihrem Kundenstatus zugreifen:</p>
+                                <div class="utility-user-additional-links"><div class="item-list"><ul><li class="first">Customer Portal</li>
+<li class="last">Red Hat Connect für Geschäftspartner</li>
+</ul></div><div class="item-list"><ul><li class="first">Benutzerverwaltung</li>
+<li class="last">Certification Central</li>
+</ul></div></div>                  </div>
+        <div class="account-register-wrapper">
+                      <a href="https://www.redhat.com/wapps/ugc/register.html" class="account-register-link">Registrieren</a>                                <h2>Noch nicht registriert? Folgende Gründe sprechen dafür, dass Sie es sein sollten:</h2><div class="item-list"><ul><li class="first">Greifen Sie auf Artikel in unserer Knowledgebase zu, verwalten Sie Ihre Supportfälle und Subskriptionen, laden Sie Updates herunter, und nutzen Sie viele weitere Funktionen über eine zentrale Schnittstelle.</li>
+<li>Lassen Sie sich die Benutzer aus Ihrem Unternehmen anzeigen, und bearbeiten Sie deren Kontoinformationen, Einstellungen und Berechtigungen.</li>
+<li class="last">Verwalten Sie Ihre Red Hat Zertifizierungen, sehen Sie Ihre Prüfungsübersicht ein, und laden Sie Logos und Dokumente zum Thema Zertifizierung herunter.</li>
+</ul></div>                  </div>
+      </section>
+      <section class="account-logout rh-user-loggedin">
+        <div class="account-welcome-wrapper">
+                      <a href="https://www.redhat.com/wapps/ugc/protected/account.html" class="account-edit-link">Profil und Einstellungen bearbeiten</a>                                <p>Über Ihr Red Hat Konto können Sie auf Ihr Benutzerprofil, Ihre Einstellungen und andere Services abhängig von Ihrem Kundenstatus zugreifen.</p>
+                            </div>
+        <div class="account-logout-wrapper">
+                      <p>Vergessen Sie zu Ihrer Sicherheit nicht, sich wieder abzumelden, wenn Sie die Red Hat Services auf einem öffentlichen Computer verwendet haben.</p>
+                                <a href="http://www.redhat.com/wapps/sso/logout.html" class="account-logout-link">Abmelden</a>                  </div>
+      </section>
+    </div>
+  </div>
+</section>
+                  </div>
+    </div>
+    <div id="globe-panel" class="utility-panel">
+        <div class="utility-content">
+                      <section class="globe-tray">
+  <header>
+    <div class="container">
+              <p class="rh-global-pref-heading" >Allgemeine Einstellungen für Red Hat</p>
+          </div>
+  </header>
+  <div class="content">
+    <div class="container">
+      <!-- LEFT SIDE -->
+      <div class="language-picker">
+                  <p class="rh-global-pref-heading2">Sprache wählen</p>
+                          <section><div><div><a href="/zh/technologies/storage/ceph" class="language-link" xml:lang="zh" hreflang="zh" title="Red Hat Ceph Storage">简体中文</a></div><div><a href="/en/technologies/storage/ceph" class="language-link" xml:lang="en" hreflang="en" title="Red Hat Ceph Storage">English</a></div><div><a href="/fr/technologies/storage/ceph" class="language-link" xml:lang="fr" hreflang="fr" title="Red Hat Ceph Storage">Français</a></div><div><a href="/de/technologies/storage/ceph" class="language-link active" xml:lang="de" hreflang="de" title="Red Hat Ceph Storage">Deutsch</a></div></div><div><div><a href="/it/technologies/storage/ceph" class="language-link" xml:lang="it" hreflang="it" title="Red Hat Ceph Storage">Italiano</a></div><div><a href="/ja/technologies/storage/ceph" class="language-link" xml:lang="ja" hreflang="ja" title="Red Hat Ceph Storage">日本語</a></div><div><a href="/ko/technologies/storage/ceph" class="language-link" xml:lang="ko" hreflang="ko" title="Red Hat Ceph Storage">한국어</a></div><div><a href="/pt-br/technologies/storage/ceph" class="language-link" xml:lang="pt-br" hreflang="pt-br" title="Red Hat Ceph Storage">Português</a></div><div><a href="/es/technologies/storage/ceph" class="language-link" xml:lang="es" hreflang="es" title="Red Hat Ceph Storage">Español</a></div></div></section>                </div>
+      <!-- RIGHT SIDE -->
+      <div class="explore">
+        <section>
+                      <p class="rh-global-pref-heading2">Weitere Informationen</p>
+                                <p>Verpassen Sie nicht die neuesten Beiträge zu Red Hat Kunden weltweit:</p>
+                  </section>
+        <nav>
+                      <ul class="menu"><div class="first expanded"><h3>Asien-Pazifik</h3><ul class="menu"><li class="first leaf"><a href="/de/global/china">China</a></li>
+<li class="leaf"><a href="/de/global/india">India</a></li>
+<li class="leaf"><a href="/de/global/japan">Japan</a></li>
+<li class="last leaf"><a href="/de/global/south-korea">Südkorea</a></li>
+</ul></div><div class="expanded"><h3>Europa, Naher Osten und Afrika</h3><ul class="menu"><li class="first leaf"><a href="/de/global/austria">Österreich</a></li>
+<li class="leaf"><a href="/de/global/czech-republic">Tschechische Republik</a></li>
+<li class="leaf"><a href="/de/global/germany">Deutschland</a></li>
+<li class="leaf"><a href="/de/global/denmark">Dänemark</a></li>
+<li class="leaf"><a href="/de/global/finland">Finnland</a></li>
+<li class="leaf"><a href="/de/global/israel">Israel</a></li>
+<li class="leaf"><a href="/de/global/italy">Italien</a></li>
+<li class="leaf"><a href="/de/global/netherlands">Niederlande</a></li>
+<li class="leaf"><a href="/de/global/norway">Norwegen</a></li>
+<li class="leaf"><a href="/de/global/poland">Polen</a></li>
+<li class="leaf"><a href="/de/global/russia">Russland</a></li>
+<li class="leaf"><a href="/de/global/sweden">Schweden</a></li>
+<li class="last leaf"><a href="/de/global/switzerland">Schweiz</a></li>
+</ul></div><div class="expanded"><h3>Lateinamerika</h3><ul class="menu"><li class="first leaf"><a href="/de/global/argentina">Argentinien</a></li>
+<li class="leaf"><a href="/de/global/brazil">Brasilien</a></li>
+<li class="leaf"><a href="/de/global/chile">Chile</a></li>
+<li class="leaf"><a href="/de/global/colombia">Kolumbien</a></li>
+<li class="last leaf"><a href="/de/global/mexico">Mexiko</a></li>
+</ul></div><div class="last expanded"><h3>Nordamerika</h3><ul class="menu"><li class="first last leaf"><a href="/de/global/united-states">USA</a></li>
+</ul></div></ul>                  </nav>
+      </div>
+    </div>
+  </div>
+</section>
+                  </div>
+    </div>
+  </div>
+
+</header>
+
+  <div id="main-content">
+
+            <a id="main-content"></a>
+                                                  <div class="region region-content">
+    <div id="block-system-main" class="block block-system">
+
+      
+  <article class="node-129721 node node-page clearfix">
+
+  
+  <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even"><style>
+.band.reversed {background: #f0f0f0 !important;}
+.tab-pane-content.container {margin-bottom:0;}
+</style>
+
+<section class="hero1 simple band">
+        <header>
+            <div class="container">
+                <p>Storage</p>
+                <!-- Title -->
+                <h1>Red&nbsp;Hat Ceph Storage</h1>
+            </div>
+        </header>
+    </section>
+    <section class="body1 generic1 expand band">
+<header>
+    <div class="container">
+        <h1>Open, software-defined Storage</h1>
+         <h2>Zukunftsweisende Plattform mit Speicherkapazit&auml;ten im Petabyte-Bereich</h2>
+    </div>
+</header>
+        <div class="container">      
+            <section class="content-body">
+  
+                <p><a href="../../insights/big-data">Das Wachstum der Datenmenge</a> setzt sich mit beispielloser Geschwindigkeit fort. Wenn Sie Petabytes an Daten in einer Ihren Gesch&auml;ftsanforderungen entsprechenden Geschwindigkeit verwalten m&uuml;ssen, so kommen Sie nicht umhin, Ihre Daten flexibel und kosteng&uuml;nstig in der <a href="../../technologies/cloud-computing">Cloud</a> zu speichern.</p>
+                <p>Der f&uuml;r die Cloud konzipierte Red&nbsp;Hat<sup>&reg;</sup> Ceph Storage gestattet eine beachtliche Senkung der Kosten f&uuml;r das Speichern von Unternehmensdaten und erleichtert es Ihnen durch effiziente und automatische Abl&auml;ufe, das exponentielle Wachstum Ihrer Datenmenge im Griff zu behalten. Der &uuml;ber eine einzige Selbstverwaltungs- und Selbstdiagnose-Plattform ohne Ausfallpunkt bereitgestellte Red&nbsp;Hat Ceph Storage bew&auml;ltigt Ihr Datenmanagement, damit Sie sich auf die Verbesserung der Datenverf&uuml;gbarkeit in Ihrem Unternehmen konzentrieren k&ouml;nnen.</p>
+</section>
+
+                
+            <aside class="content-tabs mini-tabs">
+                <div class="content-tabs-content">
+                    <div class="content-tabs-navbar">
+                        <div class="container">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.resources.minitab">
+                                </button>
+                            </div>
+                            <div class="navbar-collapse resources minitab c-tabs collapse">
+                                <div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#Try" data-toggle="tab">Testen</a></li>
+                                        <li><a href="#Buy" data-toggle="tab">Kaufen</a></li>
+                                        <li><a href="#Download" data-toggle="tab">Herunterladen</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--/navbar-collapse -->
+                        </div>
+                        <!--/container -->
+                    </div>
+                    <!--/content-tabs-navbar -->
+                    <div class="tab-pane-content">
+                        <div class="container">
+                            <div class="tab-content">
+                                <div class="tab-pane fade-in active" id="Try" style="opacity: 1;">
+                                    <p>Testen Sie Red&nbsp;Hat Ceph Storage. Dank Amazon Web Services geht dies problem- und kostenlos.</p>
+                                    <a href="https://engage.redhat.com/ceph-storage-aws-s-201506170259" class="cta-primary">Jetzt testen</a>
+                                </div>
+                                <div class="tab-pane fade-in" id="Buy" style="opacity: 1;">
+                                    <p>Unser freundliches Vertriebsteam ist Ihnen beim Kauf von Red&nbsp;Hat Ceph Storage gern behilflich.</p>
+                                    <a href="../../about/contact/sales" class="cta-primary">Vertrieb kontaktieren</a>
+                                </div>
+                                <div class="tab-pane fade-in" id="Download" style="opacity: 1;">
+                                    <p>Laden Sie hier Red&nbsp;Hat Ceph Storage herunter.<sup>*</sup>
+                                        <br> <small><sup>*</sup>&nbsp;Aktive Subskription erforderlich.</small></p>
+                                    <a href="https://access.redhat.com/products/red-hat-ceph-storage" class="cta-primary">Jetzt herunterladen</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </container> -->
+                    </div>
+                    <!-- </tab-pane-content> -->
+                </div>
+                <!--content-tabs-content -->
+            </aside>
+
+    </div>
+</section>
+
+
+<section class="fset1 band reversed">
+    <header>
+        <div class="container">
+            <p>Vorteile</p>
+            <h1>Erschlie&szlig;en Sie sich den gesamten Wert Ihrer Storage-Infrastruktur&nbsp;&ndash; und Ihrer Daten</h1>
+        </div>
+    </header>
+    <div class="content">
+        <div class="container">
+            <section>
+
+                <ul class="equal-height">
+                    <li>
+                        <span class="rh-icon-piggy-bank" aria-hidden="true"></span>
+                        <div>
+                        <h3>Mehrwert</h3>
+                        <p>Erzielen Sie eine drastische Kostensenkung bei der Datenspeicherung. Legen Sie den Grundstein f&uuml;r das Management des exponentiellen Wachstums der Datenmenge mit geringen Kosten pro Gigabyte.</p>
+                      </div>
+                    </li>
+                    <li>
+                        <span class="rh-icon-puzzle-piece" aria-hidden="true"></span>
+                        <div>
+                        <h3>Langfristige L&ouml;sung</h3>
+                        <p>Beginnen Sie in Ihrem Unternehmen mit Block-Storage, und erweitern Sie den Ansatz durch Objekt-Storage, oder umgekehrt. Profitieren Sie von der unkomplizierten Integration in Ihre vorhandene Storage-Infrastruktur.</p>
+                      </div>
+                    </li>
+                    <li>
+                        <span class="rh-icon-server-stack-alt1" aria-hidden="true"></span>
+                        <div>
+                        <h3>F&uuml;r Unternehmen geeignet</h3>
+                        <p>Integrieren Sie die L&ouml;sung nahtlos in OpenStack<sup>&reg;</sup>, und nutzen Sie sie dank ihrer erweiterten Block-Storage-Funktionen wie ein herk&ouml;mmliches Block-Storage-Ger&auml;t, jedoch mit Hardware-Flexibilit&auml;t und drastischer Skalierbarkeit.</p>
+                      </div>
+                    </li>
+                    <li>
+                        <span class="rh-icon-award-ribbon" aria-hidden="true"></span>
+                        <div>
+                        <h3>Mit Expertenunterst&uuml;tzung</h3>
+                        <p>Profitieren Sie von der Erfahrung und Sachkenntnis der Entwickler und Hauptsponsoren von Ceph in Form herausragender professioneller Services und Schulungen.</p>
+                      </div>
+                    </li>
+                    
+                </ul>
+            </section><!-- row -->
+        </div><!-- container -->
+    </div><!-- content -->
+</section>
+
+<section class="content-tabs  band">
+      <div class="content-tabs-inner">
+           <header>
+            <div class="container">     
+                <h1>Produktdetails</h1>
+                <h2>Weniger Managementaufwand f&uuml;r Cloud-Daten, h&ouml;herer Fokus auf Ihr Kerngesch&auml;ft</h2>
+            </div>
+        </header>
+          <div class="content-tabs-content">
+              <div class="content-tabs-navbar">
+                  <div class="container">
+                      <div class="navbar-header">
+                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.resources">
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                          </button>
+                      </div>
+                      <div class="navbar-collapse c-tabs collapse">
+                          <div>
+                              <ul class="nav nav-tabs">
+                                <li class="active"><a href="#Tab1" data-toggle="tab">&Uuml;bersicht</a></li>
+                                  <li><a href="#Tab2" data-toggle="tab">Flexibel</a></li>
+                                  <li><a href="#Tab3" data-toggle="tab">Wirtschaftlich</a></li>
+                                  <li><a href="#Tab4" data-toggle="tab">Integriert</a></li>
+                                 
+                              </ul>
+                          </div>
+                      </div>
+                      <!--/navbar-collapse -->
+                  </div>
+                  <!--/container -->
+              </div>
+              <!--/content-tabs-navbar -->
+              <div class="tab-pane-content">
+                  <div class="container">
+                      <div class="tab-content">
+                         <div class="tab-pane fade-in active" id="Tab1">
+                             <header>   
+                                 <div class="container">                          
+                                      <h3>Bietet eine einheitliche Selbstverwaltungsplattform</h3>
+                                </div>
+                              </header>
+                               <section class="main-and-side">
+                                <article>
+                  <p>Red&nbsp;Hat Ceph Storage ist ein &auml;u&szlig;erst skalierbares, softwaredefiniertes Open&nbsp;Source-Speichersystem zur Bereitstellung einer einheitlichen Storage-L&ouml;sung f&uuml;r Ihre Cloud-Umgebung. Da Objekt- und Block-Storage in ein und derselben Plattform vereint sind, erm&ouml;glicht Red&nbsp;Hat Ceph Storage effiziente und automatische Abl&auml;ufe beim Management jener Petabytes an Daten, die f&uuml;r Ihre Gesch&auml;ftsaktivit&auml;ten unumg&auml;nglich sind&nbsp;&ndash; und nimmt Ihnen so die Arbeit ab.</p>
+                                </article>
+                                <aside class="icon-big">
+                                    <div><span class="rh-icon-virtual-storage-stack" aria-hidden="true"></span></div>
+                                </aside>
+                               </section>
+                        </div>
+                        
+                        <div class="tab-pane fade-in" id="Tab2"> 
+                             
+                                  <header>
+                                  <div class="container">
+                                      <h3>Schnelle Anpassung an Ver&auml;nderungen</h3>
+                                  </div>
+                              </header>
+                              <section class="main-and-side">
+                                <article>
+                                  <p>Moderne Workloads erfordern Storage-Services, die automatisch auf sich ver&auml;ndernde Hardware- und Netzwerkbedingungen reagieren. Das auf einer Open Source Software mit flexiblen, offenen Schnittstellen beruhende Red&nbsp;Hat Ceph Storage eignet sich f&uuml;r die unterschiedlichsten Workloads der n&auml;chsten Generation und erm&ouml;glicht es Ihnen, schneller als mit herk&ouml;mmlicher Hardware auf sich ver&auml;ndernde Anforderungen einzugehen. Dies gestattet Ihnen die Bereitstellung zuverl&auml;ssiger und intelligenter Storage-Services auf verteilter Hardware, w&auml;hrend Ihre Administratoren sich ganz der Aufgabe widmen k&ouml;nnen, einzustellen, wie sich das System am besten selbst verwaltet.</p>
+                                </article>
+                                <aside class="icon-big">
+                                    <div><span class="rh-icon-tools" aria-hidden="true"></span></div>
+                                </aside>
+                          </section>     
+                          </div>                        
+                        
+                          <div class="tab-pane fade-in" id="Tab3">                             
+                             
+                                 <header>   
+                                 <div class="container">                          
+                                      <h3>Skalierung mit geringen Kosten</h3>
+                                </div>
+                              </header>
+                              <section class="main-and-side">
+                                <article>
+                                  <p>Storage-Hardware ist auf dem besten Wege, zum aufwendigsten Bestandteil von IT-Budgets zu werden. Kosten im Zusammenhang mit urheberrechtlich gesch&uuml;tzten Appliance-L&ouml;sungen lassen sich vermeiden, wenn Sie bei der Einrichtung Ihres Storage-Clusters auf Standardausr&uuml;stung wie ganz normale Server und Festplatten zur&uuml;ckgreifen. Bei der Ausf&uuml;hrung von Red&nbsp;Hat Ceph Storage auf <a href="../../technologies/linux-platforms/enterprise-linux">Red&nbsp;Hat Enterprise Linux<sup>&reg;</sup></a> sind Sie in der Lage, diese L&ouml;sung unter Nutzung einer breiten Vielzahl kompatibler Hardware bereitzustellen und zudem von einem erweiterten, alle Bereiche umfassenden Support zu profitieren.</p>
+                                  <p>Achten Sie darauf, Red&nbsp;Hat Ceph Storage auf Servern auszuf&uuml;hren, die zur Erzielung der bestm&ouml;glichen Performance oder der gr&ouml;&szlig;ten Kapazit&auml;t optimiert wurden. Wenn sich die Anforderungen &auml;ndern, k&ouml;nnen Sie die Kapazit&auml;t schrittweise&nbsp;&ndash; falls erforderlich, jeweils um eine Festplatte&nbsp;&ndash; erweitern oder verringern. In diesem Fall &uuml;bernimmt Red&nbsp;Hat Ceph Storage auf intelligente Weise die automatische Anpassung an die neue Hardware-Topologie.</p>
+                                </article>
+                                <aside class="icon-big">
+                                    <div><span class="rh-icon-piggy-bank" aria-hidden="true"></span></div>
+                                </aside>
+                          </section>
+                       </div>
+                          <div class="tab-pane fade-in" id="Tab4">
+                                                           
+                                <header>
+                                  <div class="container">
+                                      <h3>Kompatibilit&auml;t mit anderen Anwendungen</h3>
+                                  </div>
+                              </header>
+                              <section class="main-and-side">
+                                <article>
+                                  <p>Red&nbsp;Hat Ceph Storage kann vollst&auml;ndig in die <a href="../../technologies/linux-platforms/openstack-platform">Red&nbsp;Hat Enterprise Linux OpenStack Platform integriert werden</a> und empfiehlt sich somit als zentraler Storage-Service f&uuml;r virtuelle Maschinen (VMs) und eine Cloud-Plattform mit komplettem Support. Auf <a href="http://ceph.com/">Ceph</a>&nbsp;&ndash; dem Open&nbsp;Source software-defined Storage-System, <a href="http://superuser.openstack.org/articles/openstack-user-survey-insights-november-2014">das von OpenStack-Benutzern generell die Bestnote</a> erhielt&nbsp;&ndash; basierende Red&nbsp;Hat Ceph Storage l&auml;sst sich ebenfalls in Mirantis OpenStack und Ubuntu OpenStack integrieren.</p>
+                                  <p>Die Kompatibilit&auml;t mit der beliebten S3 Objekt-Storage API (Application Program Interface) bringt es mit sich, dass eine beeindruckende Anzahl bew&auml;hrter Anwendungen ebenfalls unterst&uuml;tzt wird. F&uuml;r Kunden mit ganz spezifischen Anforderungen wird durch einen vollst&auml;ndigen Satz von Datenzugriffs-APIs mit nativen Sprachbindungen eine hervorragende Integration gew&auml;hrleistet.</p>
+                                </article>
+                                <aside class="icon-big">
+                                    <div><span class="rh-icon-puzzle-piece" aria-hidden="true"></span></div>
+                                </aside>
+                          </section>   
+                          </div>
+        
+                      </div>
+                  </div>
+                  <!-- </container> -->
+              </div>
+              <!-- </tab-pane-content> -->
+          </div>
+          <!--content-tabs-content -->
+      </div>
+      <!--content-tabs-inner -->
+  </section>
+
+
+
+<section class="vertical-tabs band reversed">
+  <div class="vertical-tabs-inner">
+    <header>
+      <div class="container">
+        <p>Services und Support</p>
+        <h1>
+          Wir verkaufen Ihnen nicht einfach nur Technologie. Wir stehen Ihnen mit Rat und Tat zur Seite.
+        </h1>
+      </div>
+    </header>
+    <div class="content">
+      <div class="container">
+        <section>
+          <div class="vertical-tabs-content">
+            <div class="vertical-tabs-navbar">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.contact">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="navbar-collapse contact c-tabs collapse" style="height: 1px;">
+                <div class="row">
+                  <ul class="nav nav-tabs nav-stacked">
+                    <li class="active">
+                      <a href="#Support" data-toggle="tab">Support</a>
+                    </li>
+                    <li>
+                      <a href="#Contact" data-toggle="tab">Kontakt</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!--/navbar-collapse -->
+            </div>
+          </div>
+          <!--/container -->
+          <!--/vertical-tabs-navbar -->
+          <div class="tab-pane-content container">
+            <div class="tab-content content">
+              
+              <div class="tab-pane fade-in active " id="Support">
+                <header>
+                  <div class="container">
+                    <h2>
+                      Gemeinsam erreichen wir mehr
+                    </h2>
+                  </div>
+                </header>
+               
+                  
+                    <section>
+                      <p>Zusammenarbeit ist ein Pfeiler der Open&nbsp;Source Community. Und sie verk&ouml;rpert das, was Red&nbsp;Hat unter Support versteht. Nehmen Sie &uuml;ber unser preisgekr&ouml;ntes <a href="https://access.redhat.com/">Red&nbsp;Hat Customer Portal</a> jederzeit und an jedem Ort Kontakt zum Red&nbsp;Hat Support auf, um Zugang zu branchenf&uuml;hrenden technischen Ressourcen zu erhalten.</p>
+                      <ul class="cta-list">
+                        <li><a href="../../services/support" class="cta-secondary">Weitere Informationen zum Red&nbsp;Hat Support</a></li>
+                   <li><a class="cta-secondary" href="../../about/subscription">Weitere Informationen zu den Vorteilen einer Red&nbsp;Hat Subskription</a></li>
+                        <li><a href="https://access.redhat.com/products/red-hat-ceph-storage/" class="cta-secondary">Mehr &uuml;ber Red&nbsp;Hat Ceph Storage im Customer Portal</a></li>
+                      </ul>
+                    </section>
+                  
+               
+              </div>
+              <div class="tab-pane fade-in" id="Contact">
+                <header>
+                  <div class="container">
+                    <h2>
+                      Wir h&ouml;ren zu
+                    </h2>
+                  </div>
+                </header>
+
+                    <section>
+                      <p>Im Einklang mit dem Open&nbsp;Source-Gedanken legen wir Wert auf eine offene Kommunikation. Ganz gleich, ob Sie bereits ein Kunde von uns sind oder einfach nur mehr erfahren m&ouml;chten, nehmen Sie mit uns Kontakt auf. Wir freuen uns darauf, Ihre Fragen zu beantworten.</p>
+
+                      <dl>
+                        <dt><a href="../../about/contact/sales">Vertrieb kontaktieren</a></dt>
+                        <dd><p>Unsere kompetenten und freundlichen Vertriebsmitarbeiter sind jederzeit f&uuml;r Sie da.</p></dd>
+                        <dt><a href="http://redhat.force.com/finder/">Vertriebspartner finden</a></dt>
+                        <dd><p>Finden Sie einen Red&nbsp;Hat Partner, der Red&nbsp;Hat Ceph Storage oder zugeh&ouml;rige Anwendungen verkauft.</p></dd>
+                        <dt><a href="https://engage.redhat.com/forms/storage-news">Abonnieren Sie unseren Newsletter</a></dt>
+                        <dd><p>Bleiben Sie immer auf dem Laufenden mit den neuesten News zu Red&nbsp;Hat Storage.</p></dd>
+                      </dl>
+
+                    </section>
+                  
+                </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section> <!-- /vertical-tabs -->
+
+<section class="socl1 band">
+<!-- specific component -->
+    <header>
+        <div class="container">
+            <h1>Social</h1>
+            <h2>Reden Sie mit</h2>
+        </div>
+    </header>
+    <div class="content">
+        <div class="container">
+            <ul class="equal-height">
+                <li>
+                    <a href="http://redhatstorage.redhat.com/"> <span class="web-icon-rss"></span> Blog zu Red&nbsp;Hat Storage Server </a>
+                </li>
+                <li>
+                    <a href="http://www.twitter.com/redhatstorage"> <span class="web-icon-twitter"></span> @RedHatStorage </a>
+                </li>                
+            </ul>
+            <a class="cta-primary" href="../../about/social">Kontaktieren Sie uns</a>
+        </div><!-- container -->
+    </div><!-- content -->
+</section>
+
+
+<section class="tsmn1 tsmn-rancore band ">
+<!-- specific component -->
+    <div class="content">
+        <div class="container">
+            <section>
+                  <blockquote>
+                        <p>Bei Unternehmen in der Gr&ouml;&szlig;e von DTAG h&auml;ngt extrem viel von der Storage-Infrastruktur ab. Das Wissen um die Zuverl&auml;ssigkeit unseres Storage-Bereichs und darum, dass wir diese f&uuml;r uns unverzichtbare Zuverl&auml;ssigkeit in beliebigen Gr&ouml;&szlig;enordnungen bereitstellen k&ouml;nnen, l&auml;sst sich nicht mit Gold aufwiegen. Ganz zweifellos erf&uuml;llt Ceph all unsere Storage-Anforderungen.</p>
+                        <small><span>Christoph Thiel</span>, Senior Cloud Technology Manager, Deutsche Telekom</small> <a class="cta-primary" href="http://www.redhat.com/en/success-stories?f[0]=field_success_product_lines:841&rset1_format=grid">Weitere Informationen</a>
+                    </blockquote>
+            </section><!-- row -->
+        </div><!-- container -->
+    </div><!-- content -->
+</section>
+
+<section class="body1 generic1 band">
+        <header>
+            <div class="container">
+                <h1>Anwendungsf&auml;lle</h1>
+            </div>
+        </header>
+        <div class="container">
+            <section class="content-body">
+                <h1>Wie l&auml;sst sich Red&nbsp;Hat Ceph Storage in Ihrer Umgebung einsetzen?</h1>
+                <p>
+Wenn Sie kosteng&uuml;nstigen und stets verf&uuml;gbaren Speicherplatz ohne Kompromisse bei Skalierbarkeit oder Leistungsf&auml;higkeit brauchen, dann ist Red&nbsp;Hat Ceph Storage die richtige L&ouml;sung f&uuml;r Sie. Besonders ist diese L&ouml;sung f&uuml;r Workloads in der Cloud Infrastruktur&nbsp;&ndash; wie OpenStack und Amazon Web Services&nbsp;&ndash; sowie f&uuml;r Rich Media und zur Archivierung geeignet.
+                </p>
+            </section>
+            <aside>
+                <h3>Weitere Informationen</h3>
+                <dl class="compact">
+                    <dt><a href="../storage/use-cases/cloud-infrastructure" class="cta-secondary">Cloud-Infrastruktur</a></dt>
+                    <dt><a href="../storage/use-cases/rich-media" class="cta-secondary">Rich Media</a></dt>
+                    <dt><a href="../storage/use-cases/archival-data" class="cta-secondary">Aktive Archive</a></dt>
+                </dl>
+            </aside>
+        </div>
+    </section> 
+<section class="content-tabs resources band">
+    <div class="content-tabs-inner">
+        <header>
+            <div class="container">
+                <h2>Zugeh&ouml;rige Ressourcen</h2>
+            </div>
+        </header>
+        <div class="content-tabs-content">
+            <div class="content-tabs-navbar">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.resources.related">
+                        </button>
+                    </div>
+                    <div class="navbar-collapse resources related c-tabs collapse">
+                        <div>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#Datasheets" data-toggle="tab">Datenbl&auml;tter</a></li>
+                                <li><a href="#CaseStudies" data-toggle="tab">Case Studies</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--/navbar-collapse -->
+                </div>
+                <!--/container -->
+            </div>
+            <!--/content-tabs-navbar -->
+            <div class="tab-pane-content">
+                <div class="container">
+                    <div class="tab-content">
+                        <div class="tab-pane fade-in active" id="Datasheets">
+                          <header>
+                                <div class="container">
+                                    <h2>Datenbl&auml;tter</h2>
+                                </div>  
+                            </header>
+                            <section>
+                                <ul>
+                                  <li><a href="../../resources/red-hat-ceph-storage">Red&nbsp;Hat Ceph Storage</a></li>
+                                  <li><a href="../../resources/complete-openstack-storage">Complete OpenStack storage</a></li>
+                                  <li><a href="../../resources/cache-tier-and-erasure-coding-faq">Cache tier and erasure coding FAQs</a></li>
+                                  <li><a href="../../resources/raid-versus-replication">RAID vs. Replication</a></li>                                  
+                                </ul>
+<br />
+                                <a href="../../resources?f[0]=field_resource_type%3A911&f[1]=field_resource_product_line%3A841&rset1_format=list" class="cta-primary">Alle Datenbl&auml;tter zu Storage anzeigen</a>
+                            </section>
+                        </div>
+                     
+                        <div class="tab-pane fade-in" id="CaseStudies">
+                          <header>
+                                <div class="container">
+                                    <h2>Case Studies</h2>
+                                </div>  
+                            </header>
+                            <section>
+                              <dl>
+                                <dt>Dell</dt>
+                                <dd>Die IT-Abteilung der University of Alabama in Birmingham stellte angesichts des Storage-Bedarfs im Zusammenhang mit den sich dynamisch ver&auml;ndernden Anforderungen ihrer Forschungsmitarbeiter eine Private Storage Cloud mithilfe der Dell OpenStack-Powered Cloud-L&ouml;sung bereit. Diese st&uuml;tzt sich auf Dell Server, Storage, Netzwerke und Services sowie OpenStack, Ceph und Dell Crowbar Software. Diese Bereitstellung versetzte die Universit&auml;t in die Lage, ihr wachsendes Datenspeichervolumen im Rahmen eines offenen, flexiblen und an ihre sich ver&auml;ndernden Erfordernisse anpassbaren Systems auf unkomplizierte und kosteng&uuml;nstige Weise zu verwalten.</dd>
+<br />
+                                <dt><a href="https://engage.redhat.com/inktank-helps-dreamhost-s-201409081124">DreamHost</a></dt>
+                                <dd>Aus Interesse an der Bereitstellung kosteng&uuml;nstiger, zuverl&auml;ssiger und flexibler Cloud Storage, st&uuml;tzte sich DreamHost beim Aufbau eines vollst&auml;ndig auf Ceph beruhenden Objekt-Storage-Service auf professionelle Ceph Services. Das als DreamObjects bekannte Ergebnis erm&ouml;glicht v&ouml;llig ortsunabh&auml;ngig das Hochladen von Dateien sowie den Zugriff darauf&nbsp;&ndash; nicht nur auf kosteng&uuml;nstige Weise, sondern mit einer herausragenden Performance, Zuverl&auml;ssigkeit und Skalierbarkeit. </dd>
+
+                              </dl>
+                                <a href="../../resources?f[0]=field_resource_product_line%3A841&f[1]=field_resource_type%3A4901&rset1_format=list" class="cta-primary">Alle Case Studies zu Storage anzeigen</a>
+                                
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <!-- </container> -->
+            </div>
+            <!-- </tab-pane-content> -->
+        </div>
+        <!--content-tabs-content -->
+    </div>
+    <!--content-tabs-inner -->
+</section>
+
+<section class="call1 band imaged">
+    <div class="container">
+    <div class="content">
+        <h1>Weitere Informationen &uuml;ber die Vereinfachung des Datenmanagements</h1>
+        <a href="../../about/contact/sales" class="cta-primary">Vertrieb kontaktieren</a>
+    </div>
+    </div>
+</section>
+
+<article class="node-shared">
+      <section class="body1 generic1 band fineprint">
+  <div class="container">
+    <p class="fine">Die OpenStack<sup>&reg;</sup> Wortmarke und das OpenStack&nbsp;Logo sind eingetragene Marken/Dienstleistungsmarken oder Marken/Dienstleistungsmarken der OpenStack Foundation in den USA und anderen L&auml;ndern und werden mit der Genehmigung der OpenStack Foundation verwendet. Wir sind weder mit der OpenStack Foundation oder der OpenStack Community verbunden, noch werden wir von ihnen unterst&uuml;tzt oder finanziert.</p>
+  </div>
+</section> </article>
+</div>
+      </div>
+</div>
+
+  
+  
+</article>
+
+</div>
+  </div>
+          
+    
+  </div>
+
+  <aside class="mini-bar band">
+  <div class="mini-bar-inner">
+    <div class="container">
+      <div>
+        <div class="content">
+
+          <ul class="options">
+            <li class="contact"><span>Kontaktieren Sie uns</span></li>
+            <li class="share"><span>Freigeben &amp; speichern</span></li>
+          </ul>
+
+          <div class="mini-bar-panels">
+            <div class="contact-panel">
+              <h3>Kontaktieren Sie uns</h3>
+              <div class="mini-bar-links">
+                <ul class="contact-options">
+                  <li><a href="tel:+19197543700" class="web-icon-call">+1 (919) 754-3700</a></li>
+                  <li><a href=" https://access.redhat.com/support/contact/customerService/" class="web-icon-envelope">Kundendienst</a></li>
+                                      <li><a href="http://access.redhat.com" class="web-icon-dashboard">Customer Portal</a></li>
+                                                        <li><a href="/de/contact" class="web-icon-plus">Weitere Möglichkeiten der Kontaktaufnahme</a></li>
+                                  </ul>
+                                  <h4>Vertrieb</h4>
+                  <ul class="sales-options">
+                                          <li><a href="/de/about/contact/sales" class="web-icon-plus">Kontaktformular</a></li>
+                                                              <li><a href="http://redhat.force.com/finder" class="web-icon-laptop">Partner finden</a></li>
+                                                              <li><a href="https://www.redhat.com/wapps/store/catalog.html" class="web-icon-cart">Online kaufen (Weltweit)</a><br /><a href="/de/about/japan-buy" class="web-icon-cart">Online kaufen (Japan)</a></li>
+                                      </ul>
+                                                  <h4>Training</h4>
+                  <ul class="training-options">
+                      <li><a href="/de/services/training/contact" class="web-icon-plus">Kontaktformular</a></li>
+                  </ul>
+                              </div>
+            </div>
+
+            <div class="share-panel">
+              <h3>Diese Seite freigeben und speichern</h3>
+              <div class="mini-bar-links">
+                                  <ul class="save-options">
+                                          <li><a href="javascript:window.print();" class="print-link web-icon" title="Klicken, um diese Seite auszudrucken"><i class="web-icon-print"></i> Drucken</a></li>
+                                                              <li><a href="mailto:?subject=Werfen Sie einen Blick auf diese Seite von redhat.com: Red Hat Ceph Storage&amp;body=Ich habe etwas Interessantes auf redhat.com gefunden. Hier ist der Link dazu: https://www.redhat.com/de/technologies/storage/ceph" class="download-link web-icon" title="Klicken, um diese Seite als E-Mail zu versenden"><i class="web-icon-envelope"></i> Als E-Mail senden</a></li>
+                                      </ul>
+                                                  <div class="item-list"><ul class="share-options"><li class="first"><a href="http://www.facebook.com/sharer.php?u=https%3A//www.redhat.com/de/technologies/storage/ceph" class="redhat_www_share-facebook"><span class='web-icon web-icon-facebook'></span>Facebook</a></li>
+<li><a href="https://plus.google.com/share?url=https%3A//www.redhat.com/de/technologies/storage/ceph" class="redhat_www_share-google"><span class='web-icon web-icon-gplus'></span>Google+</a></li>
+<li><a href="https://twitter.com/share?url=https%3A//www.redhat.com/de/technologies/storage/ceph&amp;text=Red%20Hat%20Ceph%20Storage" class="redhat_www_share-twitter"><span class='web-icon web-icon-twitter'></span>Twitter</a></li>
+<li><a href="http://www.linkedin.com/shareArticle?url=https%3A//www.redhat.com/de/technologies/storage/ceph&amp;title=Red%20Hat%20Ceph%20Storage&amp;source=Redhat" class="redhat_www_share-linkedin"><span class='web-icon web-icon-linkedin'></span>LinkedIn</a></li>
+<li class="last"><a href="http://www.reddit.com/submit?url=https%3A//www.redhat.com/de/technologies/storage/ceph&amp;title=Red%20Hat%20Ceph%20Storage" class="redhat_www_share-reddit"><span class='web-icon web-icon-reddit'></span>Reddit</a></li>
+</ul></div>                              </div>
+            </div>
+
+          </div>
+        </div><!-- content -->
+
+      </div><!-- row -->
+    </div><!-- container -->
+  </div><!-- mini-bar-inner -->
+</aside><!-- mini-bar -->
+  <footer>
+  <section class="extended">
+    <div class="content">
+      <div class="container">
+        <nav class="row footer-items"><div class="first expanded col-md-2 col-sm-2 foot-col foot-logo"><h3>Red Hat</h3></div><div class="first expanded col-md-2 col-sm-2 foot-col foot-featured"><h3>Vorgestellt</h3><ul class="menu"><li class="first leaf"><a href="/de/technologies/linux-platforms/enterprise-linux">Red Hat Enterprise Linux</a></li>
+<li class="leaf"><a href="/de/technologies/storage/gluster">Red Hat Gluster Storage</a></li>
+<li class="leaf"><a href="/de/technologies/linux-platforms/satellite">Red Hat Satellite</a></li>
+<li class="leaf"><a href="/de/technologies/cloud-computing/openshift">OpenShift Enterprise by Red Hat</a></li>
+<li class="leaf"><a href="/de/technologies/linux-platforms/openstack-platform">Red Hat  OpenStack Platform</a></li>
+<li class="last leaf"><a href="/de/technologies/mobile/application-platform">Red Hat Mobile Application Platform</a></li>
+</ul></div>
+<div class="expanded col-md-2 col-sm-2 foot-col foot-tools"><h3>Tools</h3><ul class="menu"><li class="first leaf"><a href="https://www.redhat.com/wapps/sso/login.html">Eigenes Konto</a></li>
+<li class="leaf"><a href="https://access.redhat.com">Customer Portal</a></li>
+<li class="leaf"><a href="https://access.redhat.com/certification">Hardwarekatalog</a></li>
+<li class="leaf"><a href="http://partner.redhat.com/connect/business">Red Hat Connect für Geschäftspartner</a></li>
+<li class="last leaf"><a href="/de/resources">Bibliothek</a></li>
+</ul></div>
+<div class="expanded col-md-2 col-sm-2 foot-col foot-purchase"><h3>Kaufen</h3><ul class="menu"><li class="first leaf"><a href="https://www.redhat.com/wapps/store/catalog.html">Online kaufen (Weltweit)</a></li>
+<li class="leaf"><a href="/de/about/japan-buy">Online kaufen (Japan)</a></li>
+<li class="leaf"><a href="/de/about/contact/sales">Vertrieb kontaktieren</a></li>
+<li class="leaf"><a href="/de/services/training/contact">Schulungsteam kontaktieren</a></li>
+<li class="last leaf"><a href="http://redhat.force.com/finder/">Partner finden</a></li>
+</ul></div>
+<div class="expanded col-md-2 col-sm-2 foot-col foot-communicate"><h3>Kommunizieren</h3><ul class="menu"><li class="first leaf"><a href="/de/about/contact">Kontaktieren Sie uns</a></li>
+<li class="leaf"><a href="/de/about/mediarelations/contact">Media inquiries</a></li>
+<li class="leaf"><a href="/de/about/analysts">Industry analyst inquiries</a></li>
+<li class="leaf"><a href="/de/about/feedback">Feedback</a></li>
+<li class="last leaf"><a href="/de/about/social">Soziale Netzwerke</a></li>
+</ul></div>
+<div class="last expanded col-md-2 col-sm-2 foot-col foot-about"><h3>Info</h3><ul class="menu"><li class="first leaf"><a href="/de/about/newsroom">News</a></li>
+<li class="leaf"><a href="/de/about/events">Veranstaltungen</a></li>
+<li class="leaf"><a href="/de/about/all-blogs">Blogs</a></li>
+<li class="leaf"><a href="/de/about/videos">Videos</a></li>
+<li class="leaf"><a href="/de/about/around-the-world">Red Hat weltweit</a></li>
+<li class="leaf"><a href="/de/insights">Einblicke</a></li>
+<li class="leaf"><a href="http://investors.redhat.com/">Investor Relations</a></li>
+<li class="leaf"><a href="http://jobs.redhat.com/">Jobs bei Red Hat (English)</a></li>
+<li class="last leaf"><a href="http://www.redhat.corpmerchandise.com/">Cool Stuff Store</a></li>
+</ul></div>
+</nav>      </div>
+    </div>
+  </section>
+  <section class="traditional">
+    <div class="content">
+      <div class="container">
+        <section>
+          <div class="traditional-primary">
+            <div class="row">
+              <div class="event-logo">
+                <div id="block-block-5" class="block block-block block-footer-promote">
+
+      
+  <a href="http://www.redhat.com/summit/"><img src="/profiles/rh/themes/redhatdotcom/img/logo-summit.png" style="margin-right:10px"></a>
+<a href="http://www.devnation.org/"><img src="/profiles/rh/themes/redhatdotcom/img/logo-devnation.png" alt="DevNation" style="max-width:70px;"></a>
+</div>
+              </div>
+              <div class="social-links">
+                <nav id="foot-social"><ul><li class="first leaf"><a href="https://plus.google.com/+RedHat" class="icon-google-plus"></a></li>
+<li class="leaf"><a href="http://www.linkedin.com/company/red-hat" class="icon-linkedin-sign"></a></li>
+<li class="leaf"><a href="http://www.youtube.com/user/RedHatVideos" class="icon-youtube"></a></li>
+<li class="leaf"><a href="https://www.facebook.com/redhatinc" class="icon-facebook"></a></li>
+<li class="last leaf"><a href="https://twitter.com/RedHatNews" class="icon-twitter"></a></li>
+</ul></nav>              </div>
+            </div>
+          </div>
+          <div id="legal" class="legal">
+            <div class="row">
+              <ul class="menu"><li class="first leaf"><a href="/de/about/privacy-statement">Datenschutzerklärung</a></li>
+<li class="leaf"><a href="/de/about/terms-use">Nutzungsbedingungen</a></li>
+<li class="leaf"><a href="/de/about/all-policies-guidelines">Alle Richtlinien und Leitlinien</a></li>
+<li class="last leaf"><a href="/de/about/impressum">Impressum</a></li>
+</ul>              <div class="copyright">Copyright ©2016 Red Hat, Inc.</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</footer>
+  <div class="region region-bottom">
+    <img src="//20656543p.rfihub.com/ca.gif?rb=15393&ca=20656543&ra=%n" height="0" width="0" style="display:none" alt="Rocket Fuel" />
+      <noscript>
+        <img style="border-style:none;display:block" src="https://smtrcs.redhat.com/b/ss/redhatglobal/1/H.25--NS/0?[AQB]&cdp=3&[AQE]" height="1" width="1" border="0" alt="" />
+      </noscript>
+    <img height="1" width="1" style="border-style:none;display:block;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/990030321/?value=0&amp;label=rxV4CN_35QQQ8dOK2AM&amp;guid=ON&amp;script=0" />
+  </div>
+
+      <script type="text/javascript" src="/sites/default/files/advagg_js/js__6pKtxAsuiEwzLqzoBMwLb9k53D1ylTZ0_Wo0K-Slycc__tofWCRo9EstSHqoc3_PkzULPYnY3J0XlHcENfxp_9Ww__KQTk3u0YcYgeqWtTLSz_VhzWbFZLWM-lFMX4nTqQk2E.js"></script>
+<script type="text/javascript" src="//www.redhat.com/j/elqNow/elqImg.js"></script>
+<script type="text/javascript" src="//www.redhat.com/j/elqNow/elqCfg.js"></script>
+<script type="text/javascript" src="/sites/default/files/advagg_js/js__mIWlY_sRKZ2jg-kwpoN3NTwS1-dGBn7970FouYQexG0__azmFwbdGmLcME4sk15OfJK1NlYNj41ohJ1ArPhlFyuk__KQTk3u0YcYgeqWtTLSz_VhzWbFZLWM-lFMX4nTqQk2E.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+this._tly&&this._tly.measure("domload");
+
+//--><!]]>
+</script>
+    </div>
+  </body>
+</html>

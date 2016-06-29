@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    
+
+    <meta charset="utf-8">
+    <title>Sign in // Twitonomy</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="twitonomy-custom.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      
+.warning {
+  color: #FF0000;
+}
+      
+    </style>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- <script src="https://code.jquery.com/jquery-1.7.min.js"></script> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="bootstrap/js/bootstrap-alert.js"></script>
+    <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+
+	 <script type="text/javascript">
+	  $(function(){
+	   // On Ajax calls, check that user is authenticated
+	   $('#navBarLogo').ajaxStart(function() {
+			$(this).attr('src', 'images/logo-loading-40.gif');
+			$.get('auth.php', 'chk=1', function(data) { 
+			  if(data<1) 
+			  { 
+			    alert('Your session has expired, please sign in again...'); 
+			    window.location = 'http://www.twitonomy.com/sign-in.php';
+			  }
+			});
+	   });
+	   $('#navBarLogo').ajaxStop(function() {
+			$(this).attr('src', 'images/logo-white-40.jpg');
+	   });
+	  });
+	  </script>
+
+    <script src="lib/twitter-text/twitter-text.js"></script>
+<script type="text/javascript">
+  $(function(){
+/*!
+ * jQuery Cookie Plugin by Klaus Hartl
+ * https://github.com/carhartl/jquery-cookie
+ */
+$.cookie = function(key, value, options) {
+
+    // key and at least value given, set cookie...
+    if (arguments.length > 1 && (!/Object/.test(Object.prototype.toString.call(value)) || value === null || value === undefined)) {
+        options = $.extend({}, options);
+
+        if (value === null || value === undefined) {
+            options.expires = -1;
+        }
+
+        if (typeof options.expires === 'number') {
+            var days = options.expires, t = options.expires = new Date();
+            t.setDate(t.getDate() + days);
+        }
+
+        value = String(value);
+
+        return (document.cookie = [
+            encodeURIComponent(key), '=', options.raw ? value : encodeURIComponent(value),
+            options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+            options.path    ? '; path=' + options.path : '',
+            options.domain  ? '; domain=' + options.domain : '',
+            options.secure  ? '; secure' : ''
+        ].join(''));
+    }
+
+    // key and possibly options given, get cookie...
+    options = value || {};
+    var decode = options.raw ? function(s) { return s; } : decodeURIComponent;
+
+    var pairs = document.cookie.split('; ');
+    for (var i = 0, pair; pair = pairs[i] && pairs[i].split('='); i++) {
+        if (decode(pair[0]) === key) return decode(pair[1] || ''); // IE saves cookies with empty string as 'c; ', e.g. without '=' as opposed to EOMB, thus pair[1] may be undefined
+    }
+    return null;
+};
+  });
+</script>
+  
+<script type="text/javascript">
+  $(function(){
+	 $('#navBtnTweet').click(function() {
+	      $('#widgetTweet').slideToggle();
+	 });
+
+	 $('#widgetTweetHide').click(function() {
+	      $('#widgetTweet').slideUp();
+	      return false;
+	 });
+
+	 if($.cookie('widgetTweetText') != null) $('#widgetTweetInput').val($.cookie('widgetTweetText'));
+	 
+	 $('#widgetTweetInput').keyup(function () {
+	    var maxLengthHttp = 20;
+	    var maxLengthHttps = 21;
+	    
+	    var rawTweet = $(this).val();
+	    $.cookie('widgetTweetText', rawTweet);
+	    
+	    var extractedUrls = twttr.txt.extractUrlsWithIndices(rawTweet);
+	    $('#widgetTweetUrlcount').text(extractedUrls.length);
+	    var urls = '';
+	    var subfromcount = 0;
+	    $.each(extractedUrls, function(index, value) { 
+	      var url = value['url'];
+	      var shortened = false;
+	      if(url.substr(0, 5) == 'https') 
+	      {
+	        isHttps = true;
+	        if(url.length>maxLengthHttps) 
+	        {
+	          shortened = true;
+	          subfromcount += url.length - maxLengthHttps;
+	        }  
+	        else shortened = false;
+	      }  
+	      else 
+	      {
+	        isHttps = false;
+	        if(url.length>maxLengthHttp) 
+	        {
+	          shortened = true;
+	          subfromcount += url.length - maxLengthHttp;
+	        }  
+	        else shortened = false;
+	      }  
+	      urls += '<div class=link>' + url + (shortened ? ' (will be shortened by Twitter)' : '') + '</div>';
+	    });
+	    // $('#widgetTweetUrls').html(urls);
+	
+	    var i = rawTweet.length;
+	    var l = (140 - i) + subfromcount;
+	    $('#widgetTweetCharcount').text(l);
+	    if(l<10) $('#widgetTweetCharcount').addClass('warning');
+	    else $('#widgetTweetCharcount').removeClass('warning');
+	    if(l<0)
+	    {
+	      $('#widgetTweetIconOK').hide();
+	      $('#widgetTweetIconNOK').show();
+	      $('#widgetTweetBtnSubmit').attr('disabled', 'disabled').addClass('disabled');
+	    }
+	    else
+	    {
+	      $('#widgetTweetIconOK').show();
+	      $('#widgetTweetIconNOK').hide();
+	      $('#widgetTweetBtnSubmit').removeAttr('disabled', 'disabled').removeClass('disabled');
+	    }
+	  });    
+	
+		$('#widgetTweetBtnSubmit').click(function() {
+		     var tweet = $('#widgetTweetInput').val();
+		     var buttonText = $(this).text();
+		     $(this).attr('disabled', 'disabled').addClass('disabled').text('Posting...');
+			 $.post(
+			  'ajax.tweet.php',
+			  { post: '1', tweet: tweet },
+			  function(data) { 
+				if(data!=null)
+				{
+				  if(data.success == '1')
+				  {
+				      $.cookie('widgetTweetText', null);
+				      $('#widgetTweet').slideUp();
+				      $('#widgetTweetBtnSubmit').removeAttr('disabled', 'disabled').removeClass('disabled').text(buttonText);
+				      $('#widgetTweetInput').val('');
+				      // $('#widgetTweetUrls').empty();
+				      $('#widgetTweetCharcount').removeClass('warning').text('140');
+				      $('#widgetTweetUrlcount').text('0');
+				      $('#widgetTweetIconOK').show();
+				      $('#widgetTweetIconNOK').hide();
+				  }
+				  else
+				  {
+				      alert(data.error);
+				      $('#widgetTweetBtnSubmit').removeAttr('disabled', 'disabled').removeClass('disabled').text(buttonText);
+				  }
+				}
+				else alert("Oops, your tweet was not posted. Please try again...");
+			 });
+		     return false;
+		});
+	
+	
+    $('#widgetTweetBitlyStatus').click(function() {
+      $('#widgetTweetBitlyLoading').show();
+      if($(this).text() == 'On')
+      {
+          // Turn off
+	      $.getJSON(
+	        'ajax.bitly.php', 
+	        'activate=0',
+	        function(data) {
+	          if(data.ok == '1')
+	          {
+	            $('#widgetTweetBitlyLoading').hide();
+	            $('#widgetTweetBitlyStatus').text('Off');
+	          }
+	        }
+	      );
+      }
+      else
+      {
+          // Turn on
+	      $.getJSON(
+	        'ajax.bitly.php', 
+	        'activate=1',
+	        function(data) {
+	          if(data.ok == '1')
+	          {
+	            $('#widgetTweetBitlyLoading').hide();
+	            $('#widgetTweetBitlyStatus').text('On');
+	          }
+	        }
+	      );
+      }
+      return false;
+    });
+      
+
+  });
+</script><script type="text/javascript">
+$(function(){
+
+});
+  </script>
+
+  </head>
+
+  <body>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WKNK86"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WKNK86');</script>
+<!-- End Google Tag Manager -->
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="index.php" style="padding: 0 5px 0 20px;"><img id=navBarLogo src="images/logo-white-40.jpg" alt="Twitonomy" width="110" height="40" style="max-width: none;" /></a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="index.php"><i class="icon-home icon-white"></i> Home</a></li>
+      <li class="active"><a href="sign-in.php"><i class="icon-play icon-white"></i> Sign in</a></li>
+      <li><a href="mailto:webmaster@twitonomy.com"><i class="icon-envelope icon-white"></i> Contact</a></li>
+            </ul>
+            <form class="navbar-search pull-right" name="formSearchNavbar" action="search.php" method="get"><input id=inputSearchNavbar name=q type="text" class="search-query" placeholder="@user or #hashtag" style="width: 120px; font-size: 12px; background-image: url('images/search-white.png'); background-position: 115px 5px; background-repeat: no-repeat;"></form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+      
+	  <div id="widgetTweet" style="display: none; width: 1170px; margin-left: auto; margin-right: auto;">
+	    <div class="alert alert-info" style="width: 460px; margin: 0 0 0 143px; padding: 0px 10px 8px 10px;">
+		   <table style="width: 100%;">
+		     <tr>
+		       <td><div style="margin: 2px 0;">Post a tweet:</div></td>
+		       <td style="text-align: right; line-height: 16px;"><a href=# id="widgetTweetHide" style="margin-left: 10px; font-weight: bold;">x</a></td>
+		     </tr>
+		   </table>
+		   <div><textarea name="tweet" id="widgetTweetInput" class="input-xlarge" style="width: 448px; height: 60px; margin: 0; padding: 5px;"></textarea></div>
+		   <table style="width: 100%; margin-top: 5px;">
+		     <tr>
+		       <td><i class="icon-share"></i> <span id=widgetTweetUrlcount>0</span><span style="margin-left: 20px;" class=txtGrey><img src="images/icons/bitly.png" width=16 height=16 align=absmiddle style="margin-right: 5px;"><a href=bitly.php class=txtGrey style="text-decoration: underline;">bit.ly</a> tracking: <a id=widgetTweetBitlyStatus href="#">Off</a><img id="widgetTweetBitlyLoading" src=images/loading16trspt.gif width=16 height=16 align=absmiddle style="display: none; margin: 0 0 0 5px;"></span></td>
+		       <td style="text-align: right;"><i class="icon-ok" id=widgetTweetIconOK></i><i class="icon-remove" id=widgetTweetIconNOK style="display: none;"></i> <span id=widgetTweetCharcount>140</span> <button id=widgetTweetBtnSubmit type="submit" class="btn btn-mini btn-primary" style="margin: 0 0 0 10px;">Tweet</button></td>
+		     </tr>
+		   </table>
+		   <div style="clear: both;"></div>
+	    </div>
+	  </div>
+      
+    </div>
+
+
+    <div class="container">
+
+      <div align=center>
+        <img src="images/logo_500x170.jpg" alt="logo_300x105" width="300" height="105" style="margin-top: 50px; margin-bottom: 30px;" />
+        <h1>Get started, sign in with your Twitter account:</h1>
+        <div style="margin-top: 10px; margin-bottom: 10px;"><a id="btnSignIn" href="?authenticate=1"><img src="images/sign-in-with-twitter-l.png" alt="Sign in with Twitter" width="151" height="24" /></a><div id=loggedin style="margin-top: 5px; color: #1E7EBE; font-size: 10px;">(You will sign in with the Twitter account your browser is currently logged in to. <a href="?authenticate=1&force=1" style="text-decoration: underline;">Sign in with another account</a>)</div><div style="margin-top: 5px; color: #1E7EBE; font-size: 11px;">By signing in you agree to our <a href="/content/terms.php" style="color: #1E7EBE;" target="_blank">terms of service</a> and <a href="/content/privacy.php" style="color: #1E7EBE;" target="_blank">privacy policy</a></div>
+        
+        <div style="margin-top: 40px;">&nbsp;</div>
+      </div>
+            <hr>
+
+      <footer>
+        
+        
+	    <table style="width: 1170px; margin-bottom: 10px;" cellspacing="0" cellpadding="0" border="0"><tr>
+	      <td><div class=txtGrey>&copy 2016 Diginomy Pty Ltd<span style="margin-left: 20px;"><a href="content/terms.php" class=txtGrey>Terms of Service</a></span><span style="margin-left: 20px;"><a href="content/privacy.php" class=txtGrey>Privacy Policy</a></span><span style="margin-left: 20px;"><a href="mailto:hello@twitonomy.com" class=txtGrey>Contact Us</a></span></div></td>
+	      <td style="text-align: right;"></td>
+	    </tr></table>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>

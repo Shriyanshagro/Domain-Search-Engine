@@ -1,0 +1,1445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+	<title>Binary RDF Representation for Publication and Exchange (HDT)</title>
+<style type="text/css">
+ span.termdef { color: #850021 }
+ span.arrow { font-style: normal; font-weight: bold }
+   
+ a.termdef:visited, a.termdef:link { font-family: sans-serif;
+                              font-style: normal;
+                              color: #850021;
+                              text-decoration: none }
+
+/*<![CDATA[*/
+ 
+.RFC2119 {
+  text-transform: lowercase;
+  font-style: italic;
+}
+ 
+/*additional styles*/
+.toc{text-indent:0px;text-align:left;}
+ul.toc{list-style:none;list-style-type:none;}
+.toc1{list-style-type:none;font-weight:bold;}
+.toc2{list-style-type:none;font-weight:normal;}
+.featured {background-color:#e7f0ef; padding:10px 10px 6px 10px; margin-bottom:15px;width:98%;border-style:dashed;border-width:1px;}
+/* styles for code examples*/
+code {
+		font-family: sans-serif;
+}
+ 
+code.keyword {font-weight: bold}
+ 
+pre {margin: 0.5em}
+ 
+/*general styles for tables*/
+table.general {border: none; border-spacing: 0px; font-size: small}
+table.general td {border: solid thin; padding: 5pt; margin: 5pt; font-size:small}
+caption {caption-side:bottom; margin: 2pt}
+ 
+ 
+ .tocpart{font-size: large}
+ 
+ 
+		/*styles for the Sable CC grammar*/
+		.helpers, .tokens, .ignored-tokens, .productions {font-size:x-small; margin-right:20px; padding-left:10px}
+		h4.sableCC {font-size:small; font-weight:bold; padding-left:0px;}
+		div.productions td {vertical-align: top;  word-spacing: 0.5em; margin-bottom: 0.5em}
+		div.helpers td {vertical-align: top;  word-spacing: 0.5em; margin-bottom: 0.5em}
+		div.tokens td {vertical-align: top;  word-spacing: 0.5em; margin-bottom: 0.5em}
+		table.sablecc { background-color: rgb(210,210,210)}
+		table.sablecc td {vertical-align: top;  word-spacing: 0.5em; text-align: left}
+		table.alternatives {margin-top: -2px}
+		.char {
+				color: red;
+		}
+		.dec-char {
+				color: blue;
+		}
+		.hex-char {
+				color: rgb(139, 69, 19);
+		}
+		.string {
+				color: green;
+		}
+		.un-op {
+				color: rgb(218, 165, 32);
+				font-weight: bold;
+		}
+		.colname {
+				text-align: right;
+				vertical-align: top;
+				font-weight: bold;
+		}
+		.colequal {
+				vertical-align: top;
+		}
+		.coldata {
+		}
+		.colspare {
+				font-family: monospace;
+		}
+		.elem-name {
+				color: blue;
+		}
+		.alt-name {
+				color: red;
+				font-weight: normal;
+		}
+/*]]>*/
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM.css" />
+</head>
+
+<body>
+<div class="head">
+<p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C"
+src="http://www.w3.org/Icons/w3c_home" /></a> <a
+href="http://www.w3.org/Submission/"><img height="48" width="211"
+src="http://www.w3.org/Icons/member_subm" alt="W3C Member Submission"
+/></a></p>
+
+	<h1><a id="ST" name="ST">Binary RDF Representation for Publication and Exchange (HDT)</a></h1>
+
+<h2><a id="SW" name="SW">W3C Member Submission 30 March 2011</a></h2>
+
+<dl>
+	<dt>This version:</dt>
+
+	<dd><a href="http://www.w3.org/Submission/2011/SUBM-HDT-20110330/">http://www.w3.org/Submission/2011/SUBM-HDT-20110330/</a></dd>
+
+	<dt>Latest version:</dt>
+
+	<dd><a href="http://www.w3.org/Submission/HDT/">http://www.w3.org/Submission/HDT/</a></dd>
+
+	<dt>Editor:</dt>
+
+	<dd>Javier D. Fern&aacute;ndez</dd>
+
+	<dt>Authors:</dt>
+
+	<dd>
+	Javier D. Fern&aacute;ndez<br />	
+	Miguel A. Mart&iacute;nez-Prieto<br />	
+	Claudio Gutierrez<br />	
+	Axel Polleres<br />
+	</dd>
+</dl>
+
+<p class="copyright">Copyright &copy; 2011 DERI Galway at the National University of Ireland, Galway, Ireland, Free University of Bozen-Bolzano, The Open University, Universidad Polit&eacute;cnica de Madrid, Alcatel-Lucent, Cisco, OpenLink Software and Profium Ltd. All rights reserved.<br />
+This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document License</a>. See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notice and Legal Disclaimers</a> for additional information.</p>
+</div>
+<hr />
+
+<h2><a name="abstract" id="abstract">Abstract</a></h2>
+
+	<p>RDF HDT (Header-Dictionary-Triples) is a binary format for publishing and exchanging RDF data at large scale. RDF HDT represents RDF in a compact manner, natively supporting splitting huge RDF graphs into several chunks. It is designed to allow high compression rates. This is achieved by organizing and representing the RDF graph in terms of two main components: Dictionary and Triples structure. The Dictionary organizes all vocabulary present in the RDF graph in a manner that permits rapid search  and high levels of compression. The Triples component comprises the pure structure of the underlying graph in a compressed form. An additional and <em title="RECOMMENDED in RFC 2119 context" class="RFC2119">RECOMMENDED</em> Header component includes extensible metadata describing the RDF data set and its organization. Further, the document specifies how to efficiently translate between HDT and other RDF representation formats, such as Notation 3.</p>
+
+<h2><a name="status" id="status">Status of this Document</a></h2>
+
+	<p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+
+	<p>This document is a part of the <a href="/Submission/2011/03/">HDT Submission</a> which comprises five documents:</p>
+
+	<ol>
+		<li><em><a href="/Submission/2011/SUBM-HDT-20110330/">Binary RDF Representation for Publication and Exchange (HDT)</a></em></li>
+	<li><em><a href="/Submission/2011/SUBM-HDT-Extending-VoID-20110330/">Extending VoID for publishing HDT</a></em></li>
+	<li><em><a href="/Submission/2011/SUBM-HDT-RDFS-20110330/">RDF Schema for HDT Header Descriptions</a></em></li>
+	<li><em><a href="/Submission/2011/SUBM-HDT-Related-20110330/">Relationship of HDT to relevant other technologies</a></em></li>
+	<li><em><a href="/Submission/2011/SUBM-HDT-Implementation-20110330/">Implementation of HDT</a></em></li>
+	</ol>
+
+	<p>By publishing this document, W3C acknowledges that the <a href="http://www.w3.org/Submission/2011/03/#submitting_parties">Submitting Members</a> have made a formal Submission request to W3C for discussion. Publication of this document by W3C indicates no endorsement of its content by W3C, nor that W3C has, is, or will be allocating any resources to the issues addressed by it. This document is not the product of a chartered W3C group, but is published as potential input to the <a href="/Consortium/Process">W3C Process</a>. A <a href="http://www.w3.org/Submission/2011/03/Comment/">W3C Team Comment</a> has been published in conjunction with this Member Submission. Publication of acknowledged Member Submissions at the W3C site is one of the benefits of <a href="/Consortium/Prospectus/Joining">W3C Membership</a>. Please consult the requirements associated with Member Submissions of <a href="/Consortium/Patent-Policy-20030520.html#sec-submissions">section 3.3 of the W3C Patent Policy</a>. Please consult the complete <a href="/Submission">list of acknowledged W3C Member Submissions</a>.</p>
+	
+
+<h2 id="contents">Table of Contents</h2>
+	<ul class="toc">
+		<li class="toc1">1. <a href="#introduction">Introduction</a></li>
+		<li class="toc1">2. <a href="#concepts">Basic Concepts</a></li>
+		<li class="toc1">3. <a href="#syntax">HDT Syntax</a>
+			<ul class="toc">
+				<li class="toc2">3.1 <a href="#headerHDT">Header</a></li>
+				<li class="toc2">3.2 <a href="#control">Control Information</a>
+					<ul style="margin-left:20px;">
+						<li class="toc2">3.2.1 <a href="#cookie">HDT Cookie</a></li>
+						<li class="toc2">3.2.2 <a href="#version">HDT Format Version</a></li>
+						<li class="toc2">3.2.3 <a href="#component">HDT Component Distinguishing Bits</a></li>
+						<li class="toc2">3.2.4 <a href="#options">HDT Options</a></li>
+					</ul>	
+				</li>
+				<li class="toc2">3.3 <a href="#dictionary">Dictionary</a>
+				<ul style="margin-left:20px;">
+						<li class="toc2">3.3.1 <a href="#dictionaryEncoding">Dictionary Encoding</a></li>
+						<li class="toc2">3.3.2 <a href="#dicByDefault">Dictionary Codification by Default</a></li>
+					</ul>	
+				
+				</li>
+				<li class="toc2">3.4 <a href="#triples">Triples</a>
+					<ul style="margin-left:20px;">
+						<li class="toc2">3.4.1 <a href="#plainTriples">Plain Triples</a></li>
+						<li class="toc2">3.4.2 <a href="#compactTriples">Compact Triples</a></li>
+						<li class="toc2">3.4.3 <a href="#bitmapTriples">Bitmap Triples</a></li>
+					</ul>	
+				</li>
+			</ul>
+		</li>
+		<li class="toc1">4. <a href="#identifiers">Identifiers For HDT</a></li>
+		<li class="toc1">5. <a href="#media">Media Type And Content Encoding</a></li>
+		<li class="toc1">6. <a href="#management">HDT Operations Over Bitmaps Triples</a></li>
+		<li class="toc1">7. <a href="#sparql">HDT And SPARQL</a></li>
+		<li class="toc1">A. <a href="#references">References</a></li>
+		<li class="toc1">B. <a href="#acknowledgements">Acknowledgements</a></li>
+	</ul>
+	
+<h2 id="introduction">1. Introduction</h2>
+
+	<p>This document defines the RDF HDT format, an RDF data-centric format which reduces verbosity in favor of machine-understandability and data management.
+	</p>
+	<p>HDT introduces a new representation format using the skewed structure of big RDF graphs to achieve large spatial savings. It is based on two main components (as shown in <a href="#fig1">Figure 1</a>):
+	</p>
+	
+	<ul>
+		<li><strong>Dictionary</strong>, organizes all vocabulary present in the RDF graph in a manner that avoids repetitions and permits rapid search and high levels of compression.</li>
+		<li><strong>Triples</strong>, comprises the pure structure of the underlying graph, avoiding noise produced by long labels, repetitions, etc.</li>
+	</ul>
+	
+	<p>Additionally, a <em title="RECOMMENDED in RFC 2119 context" class="RFC2119">RECOMMENDED</em> <strong>Header</strong> component <em title="SHOULD in RFC 2119 context" class="RFC2119">SHOULD</em> include logical and physical metadata required to describe the RDF data set.</p>
+	
+	<div style="text-align:center;" id="fig1">
+		<img src="images/HDTExplanation.png" alt="A explanation on HDT components" width="528" height="296"/><br/>
+		<strong>Figure 1: HDT Components: Header-Dictionary-Triples (<a href="images/HDTExplanation.png" rel="external">PNG</a>)</strong>
+	</div>
+		
+	<p>
+	The aims of the format are:
+	</p>
+	<ul>
+		<li>Compactness, use much less space, saving thus storing space and communication bandwidth and time.</li>
+		<li>Clean Publication and exchange,  separate dictionary from triples (the graph structure), includes a header with metadata about provenance and statistics about data.</li>
+		<li>On-demand indexed accessing, permits basic data operations, accesing parts of the file without having to process all of it.</li>
+		<li>RDF compression, improvements with respect to universal compressors.</li>
+	</ul>	
+	
+	<p>The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [<a href="#keywords">RFC2119</a>]</p>
+
+<h2 id="concepts">2. Basic Concepts</h2>
+	
+	<p><span class="termdef"><a name="key-hdtprocessor" id="key-hdtprocessor">[Definition:]&nbsp;&nbsp;</a>A program module called an <b>HDT processor</b>, whether it is 
+		software or hardware, is used by application programs to encode their data into <a href="#key-hdtstream" class="termdef"><span class="arrow">HDT core data
+			</span></a> and/or to decode <a href="#key-hdtstream" class="termdef"><span class="arrow">HDT core data</span></a> to 
+			make the data accessible.</span>
+		
+		The former and latter aforementioned roles of HDT processors are called <span class="termdef"><a name="key-hdtencoder" id="key-hdtencoder">[Definition:]&nbsp;&nbsp;</a>
+			<b>HDT encoder</b></span> and <span class="termdef"><a name="key-hdtdecoder" id="key-hdtdecoder">[Definition:]&nbsp;&nbsp;</a><b>HDT decoder</b></span> 
+		respectfully.
+	</p>	
+	
+	<p><span class="termdef"><a name="key-hdtstream" id="key-hdtstream">[Definition:]&nbsp;&nbsp;</a><b>HDT core data</b> consists of the Dictionary and Triples information
+		of the HDT representation, whether it is present in a unique or several files or streams.</span> This core data <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be self-contained, <em>i.e.</em>, 
+		it <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> contain enough information to consume the data set. Each file or stream belonging to the HDT core data 
+		is headed by <a href="#control">control information</a> and followed by the <span class="termdef"><a name="key-hdtbody" id="key-hdtbody">[Definition:]&nbsp;&nbsp;</a><b>HDT body</b> which can be the full or part of the Dictionary component or the Triples component or both</span>. Note that the optional Header is out of the 
+		definition of the HDT core data, constituting a different file or stream.
+	</p>
+	
+	<div style="text-align:center;" id="fig2">
+		<img src="images/HDTProcess.png" alt="The process of HDT encoding/decoding" width="800" height="271"/><br/>
+		<strong>Figure 2: The process of HDT encoding/decoding (<a href="images/HDTProcess.png" rel="external">PNG</a>)</strong>
+	</div>
+	
+	<p><a href="#fig2">Figure 2</a> shows a typical producer/consumer case in HDT. First, the content producer makes use of an <a href="#key-hdtencoder" class="termdef">
+		<span class="arrow">HDT encoder</span></a> in order to generate HDT from RDF content. The Header, if present, can be retrieved by the consumer in order to get metadata
+		about the dataset and the publication. In turn, the consumer uses an <a href="#key-hdtdecoder" class="termdef">
+			<span class="arrow">HDT decoder</span></a> to efficiently access the <a href="#key-hdtstream" class="termdef"><span class="arrow">HDT core data</span></a>. Furthermore, the <a href="#key-hdtdecoder" class="termdef">
+				<span class="arrow">HDT decoder</span></a> <em title="SHOULD in RFC 2119 context" class="RFC2119">SHOULD</em>  provide the consumer with distinct access possibilities, such as getting the original full RDF document, querying over the data or several management operations.</p> 
+	
+<h2 id="syntax">3. HDT Syntax</h2>
+				
+	<p>
+		The syntax of HDT is given by the syntax of the Dictionary codification and the Triples encoding. If the additional Header component exists, 
+		it <em title="SHOULD in RFC 2119 context" class="RFC2119">SHOULD</em> follow a standard vocabulary for describing RDF data sets. 
+		The use of an <em><a href="/Submission/2011/SUBM-HDT-Extending-VoID-20110330/">extension of VoID for publishing HDT</a></em> is strongly <em title="RECOMMENDED in RFC 2119 context" class="RFC2119">RECOMMENDED</em>.     
+	</p>	
+	
+	<div style="text-align:center;" id="ex1">
+		<img src="images/ex1.png" alt="RDF graph example figure" width="773" height="393"/><br/>
+		<strong>Example 1: RDF graph example of DBpedia. (<a href="images/ex1.png" rel="external">PNG</a>)</strong>
+		
+	</div>
+	
+	<p> <a href="#ex2">Example 1</a> shows a brief RDF graph example from <a href="http://dbpedia.org" rel="external">DBpedia</a> in which pages are described with labels, they can reference other external pages and they are categorized through other DBpedia category pages. <a href="#ex2">Example 2</a> shows the skeleton conversion of <a href="#ex1"> Example 1</a> to RDF HDT.
+	</p>
+	
+	<div style="text-align:center;" id="ex2">
+		<img src="images/ex2.png" alt="intro figure" width="634" height="417"/><br/>
+		<strong>Example 2: A construction of the HDT format for the <a href="#ex1"> Example 1</a> (<a href="images/ex2.png" rel="external">PNG</a>)</strong>
+	</div>
+							
+	<h3 id="headerHDT">3.1 Header</h3>
+	
+	<p>The Header is an optional component containing metadata about the data publication together with information to retrieve and process the 
+		<a href="#key-hdtstream" class="termdef"><span class="arrow">HDT core data</span></a>. If the additional Header component exists, it 
+		<em title="SHOULD in RFC 2119 context" class="RFC2119">SHOULD</em> be an RDF graph. This allows expressing metadata about the
+		data set (originally in RDF) with an RDF syntax, which can be discovered and used through well-known mechanisms, such as SPARQL Endpoints.  
+	</p>
+	
+	<p>The use of [<a href="#void">VoID</a>] as the main vocabulary of the Header and/or an <em><a href="/Submission/2011/SUBM-HDT-Extending-VoID-20110330/">extension of VoID for publishing HDT</a></em> are strongly <em title="RECOMMENDED in RFC 2119 context" class="RFC2119">RECOMMENDED</em>.</p>
+
+<h3 id="control">3.2 Control Information</h3>
+	
+	<p>Each Dictionary and Triples component, as well as subparts of them in case of splitting, is headed by a sequence representing control information.
+		<span class="termdef"><a name="key-hdtControl" id="key-hdtControl">[Definition:]&nbsp;&nbsp;</a><b>The Control Information</b> can identify Dictionary and Triples components or subparts of them, distinguish <a href="#key-hdtstream" class="termdef"><span class="arrow">HDT core data</span></a> streams from text, identify the version of the HDT format being used, and specify the options used to process the <a href="#key-hdtstream" class="termdef"><span class="arrow">HDT core data</span></a></span>. The control information has the following structure:
+	</p>
+	
+	<table border="1" rules="cols" summary="Control information scheme"><tbody><tr><td align="center" rowspan="2">
+		<a href="#key-hdtCookie" class="termref"><span class="arrow"></span>
+			&nbsp;HDT&nbsp;Cookie&nbsp;
+			<span class="arrow"></span></a>
+		
+	</td><td align="center">
+				<a href="#key-version" class="termref"><span class="arrow"></span>
+					&nbsp;HDT&nbsp;Format&nbsp;
+					<span class="arrow"></span></a>
+			</td>
+		<td align="center">
+			&nbsp;<a href="#key-component" class="termref"><span class="arrow"></span>HDT&nbsp;Component<span class="arrow"></span></a>&nbsp;
+			</td><td align="center">
+				&nbsp;Presence&nbsp;Bit&nbsp;
+			</td>
+		<td align="center" rowspan="2">
+				&nbsp;[<a href="#key-options" class="termref"><span class="arrow"></span>HDT&nbsp;Options<span class="arrow"></span></a>]&nbsp;
+		</td>
+	</tr><tr>
+		<td align="center">
+				<a href="#key-version" class="termref"><span class="arrow"></span>
+					&nbsp;Version&nbsp;
+					<span class="arrow"></span></a>
+		</td>
+		<td align="center">
+			<a href="#key-component" class="termref"><span class="arrow"></span>
+				&nbsp;Distinguishing Bits&nbsp;
+				<span class="arrow"></span></a>
+		</td>
+		<td align="center">
+				&nbsp;for&nbsp;HDT&nbsp;Options&nbsp;
+			</td></tr></tbody></table>
+	
+	<p>The HDT Options field is optional and its presence is indicated by
+		the value of the presence bit that follows the <a href="#key-component" class="termref"><span class="arrow"></span>HDT Component Distinguishing Bits<span class="arrow"></span></a>. 
+		If the HDT Options are present (presence bit sets to '1'), then a final reserved word "$END"  <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be added at the end of the Control Information to delimit its length.
+		The details of each field within the control information are described in the following sections.  
+	</p>
+
+<h4 id="cookie" style="margin-top:10px;">3.2.1 HDT Cookie</h4>
+<p>	<span class="termdef"><a name="key-hdtCookie" id="key-hdtCookie">[Definition:]&nbsp;&nbsp;</a>
+		The <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a> starts with an <b>HDT Cookie</b>,
+		which is a four byte field that serves to indicate that the file or stream of which it is a part is <a href="#key-hdtstream" class="termdef"><span class="arrow">
+			HDT core data</span></a></span>. 
+	The four byte field consists of four characters 
+	"&nbsp;$&nbsp;" , "&nbsp;H&nbsp;", "&nbsp;D&nbsp;" and "&nbsp;T&nbsp;" 
+	
+	in that order, each represented as an ASCII octet, as follows.
+	</p><table border="1"><tbody><tr class="bitcell"><td align="center" class="bitcell">'<sup>&nbsp;</sup>$<sub>&nbsp;</sub>'</td><td align="center" class="bitcell">'<sup>&nbsp;</sup>H<sub>&nbsp;</sub>'</td><td align="center" class="bitcell">'<sup>&nbsp;</sup>D<sub>&nbsp;</sub>'</td><td align="center" class="bitcell">'<sup>&nbsp;</sup>T<sub>&nbsp;</sub>'</td></tr></tbody></table><p>
+		This four byte sequence is particular to HDT and specific enough to distinguish HDT files and streams from a broad range of data types currently used on the Web. 
+	</p>
+
+<h4 id="version" style="margin-top:10px;">3.2.2 HDT Format Version</h4>
+
+	<p><span class="termdef"><a name="key-version" id="key-version">[Definition:]&nbsp;&nbsp;</a>
+		The second part of the <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a> is the <b>HDT Format Version</b>,  which identifies the 
+		version of the HDT format being used.</span>  The HDT format version number corresponding with this document is 1 (one).
+	</p>
+	<p>
+		The version is a sequence of one or more 4-bit unsigned integers. The first bit set to 1 indicates that the next 4-bits must be read.  The version number is determined by summing each sequence of 4-bit unsigned integers and adding 1 (one). There are examples of versions: 
+	</p>
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="HDT format scheme examples">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">HDT Format Version</th>
+				<th style="text-align:center;">Stands for</th>
+			</tr>
+			<tr>
+				<td>0000
+				</td>
+				<td>Version 1
+				</td>
+			</tr>
+			<tr>
+				<td>0111
+				</td>
+				<td>Version 8
+				</td>
+			</tr>
+			<tr>
+				<td>1000 0000
+				</td>
+				<td>Version 9
+				</td>
+			</tr>
+			<tr>
+				<td>1000 0001
+				</td>
+				<td>Version 10
+				</td>
+			</tr>
+		</tbody>
+		</table>
+<h4 id="component" style="margin-top:10px;">3.2.3 HDT Component Distinguishing Bits</h4>
+	
+	<p><span class="termdef"><a name="key-component" id="key-component">[Definition:]&nbsp;&nbsp;</a>
+		The third part of the <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a> consists in the <b>HDT Component Distinguishing Bits</b>,  which identify the 
+		component or components of the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a> that follow the <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a>.</span> 
+	</p>
+	<p>
+		The  <a href="#key-component" class="termdef"><span class="arrow">HDT Component Distinguishing Bits</span></a> are three bits. The combination of the first two bits identifies the information below the HDT <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a>, as follows:  
+	</p>
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="HDT Component Distinguishing Bits">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">HDT Component Distinguishing first and second bits</th>
+				<th style="text-align:center;">Stands for</th>
+			</tr>
+			<tr>
+				<td>01
+				</td>
+				<td>Dictionary Component
+				</td>
+			</tr>
+			<tr>
+				<td>10
+				</td>
+				<td>Triples Component
+				</td>
+			</tr>
+			<tr>
+				<td>11
+				</td>
+				<td>both Dictionary and Triples Component
+				</td>
+			</tr>
+			<tr>
+				<td>00
+				</td>
+				<td>Reserved
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<p>The third bit set to 1 indicates that the current file or stream is a subpart of the entire component.</p>
+	
+	<p>When both Dictionary and Triples Component, <em>i.e.</em> <a href="#key-hdtstream" class="termdef"><span class="arrow">
+		HDT core data</span></a> follow the <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a>.</p>
+	
+<h4 id="options" style="margin-top:10px;">3.2.4 HDT Options</h4>
+	
+	<p><span class="termdef"><a name="key-options" id="key-options">[Definition:]&nbsp;&nbsp;</a>
+		The fifth part of the <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a>, if present, consists in the <b>HDT Options</b>,  which provides a mechanism
+		to specify the options of the encoded component or components of the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a>.</span> It <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> include all the required information to decode the data. 
+		The  <b>HDT Options</b> are represented as text with a <em>&lt;property&gt;:&lt;value&gt;;</em> scheme. 
+	</p>
+	
+	
+	<p>The presence of HDT Options is optional in the <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a>, and it is predicated on the value of the presence bit that follows the Distinguishing Bits. 
+		When HDT Options are present, an <a href="#key-hdtprocessor" class="termdef"><span class="arrow">HDT Processor</span></a> <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> observe the specified options to process the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a>. Otherwise, an <a href="#key-hdtprocessor" class="termdef"><span class="arrow">HDT Processor</span></a> may follow
+		the default values. If the Header component is present and it informs about such information, their values override the default ones. In case of conflicts, the HDT Options override the information of the Header. </p>
+	
+	<p>The following table describes the HDT options that may be specified in the <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a>.</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="HDT options description">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">Property</th>
+				<th style="text-align:center;">Use</th>
+			</tr>
+			<tr>
+				<td><a href="#key-codification" class="termdef"><span class="arrow">codification</span></a>
+				</td>
+				<td>Identify the codification scheme used to encode the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a>.
+				</td>
+			</tr>
+			<tr>
+				<td><a href="#key-format" class="termdef"><span class="arrow">format</span></a>
+				</td>
+				<td>Set up the MIME type of the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a>.
+				</td>
+			</tr>
+			<tr>
+				<td> [<a href="#key-userMetaData" class="termdef"><span class="arrow">user defined meta-data</span></a>]
+				</td>
+				<td>
+					User defined meta-data <em title="MAY in RFC 2119 context" class="RFC2119">MAY</em> be included with additional information to decode the data. 
+				</td>
+				
+			</tr>
+			
+		</tbody>
+		
+	</table>
+
+	
+	<p>Below is a brief description of each option.</p>
+	
+	<p><span class="termdef"><a name="key-codification" id="key-codification">[Definition:]&nbsp;&nbsp;</a>
+		The <b>codification</b> is used to identify the concrete codification scheme used to process the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a>.</span>
+		This <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be an URI identifying the codification of the component or components indicated by the <a href="#key-component" class="termdef"><span class="arrow">HDT Component Distinguishing Bits</span></a>.
+		When the codification option is absent, undefined or empty, no statement is made about the codification scheme, therefore an <a href="#key-hdtprocessor" class="termdef"><span class="arrow">HDT Processor</span></a> <em title="SHOULD in RFC 2119 context" class="RFC2119">SHOULD</em> assume the codification by default of the component or components indicated by the <a href="#key-component" class="termdef"><span class="arrow">HDT Component Distinguishing Bits</span></a>, unless other information is communicated out of band.
+		The following table shows the URIs of the codifications by default and the section with detailed information:
+	</p>
+		<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="Codifications by default">
+			<tbody>
+				<tr>
+					<th style="text-align:center;">HDT Component</th>
+					<th style="text-align:center;">Codification by default</th>
+					<th style="text-align:center;">Details</th> 
+				</tr>
+				<tr>
+					<td>Dictionary Component
+					</td>
+					<td>
+						http://purl.org/HDT/hdt#dictionaryPlain
+					</td>
+					<td>
+						<a href="#dicByDefault">Section 3.3.2</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Triples Component
+					</td>
+					<td>http://purl.org/HDT/hdt#triplesBitmap
+					</td>
+					<td>
+						<a href="#bitmapTriples">Section 3.4.3</a>
+					</td>
+				</tr>
+				<tr>
+					<td>both Dictionary and Triples Component
+					</td>
+					<td>http://purl.org/HDT/hdt#globalBitmap
+					</td>
+					<td>
+						<a href="#triples">Section 3.4</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	
+	<p><span class="termdef"><a name="key-format" id="key-format">[Definition:]&nbsp;&nbsp;</a>
+		The <b>format</b> sets up the MIME type of the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a>.</span> When the format option is absent, undefined or empty, an <a href="#key-hdtprocessor" class="termdef"><span class="arrow">HDT Processor</span></a> <em title="SHOULD in RFC 2119 context" class="RFC2119">SHOULD</em> assume the format by default of the component or components indicated by the <a href="#key-component" class="termdef"><span class="arrow">HDT Component Distinguishing Bits</span></a>, unless other information is communicated out of band.
+		The following table shows the formats by default:
+	</p>
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="Formats by default">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">HDT Component</th>
+				<th style="text-align:center;">Format by default</th>
+			</tr>
+			<tr>
+				<td>Dictionary Component
+				</td>
+				<td>
+					text/plain
+				</td>
+			</tr>
+			<tr>
+				<td>Triples Component
+				</td>
+				<td>
+					application/octetstream
+				</td>
+			</tr>
+			<tr>
+				<td>both Dictionary and Triples Component
+				</td>
+				<td>
+					multipart/mixed
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<p><span class="termdef"><a name="key-userMetaData" id="key-userMetaData">[Definition:]&nbsp;&nbsp;</a>
+		The <b>user defined meta-data</b> sets up auxiliary properties with additional control information to process the data.</span> The syntax and semantic of the user defined properties depend on the codification of the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a>, thus <a href="#key-hdtprocessor" class="termdef"><span class="arrow">HDT Processor</span></a> <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> interpret the user defined properties within the codification context. 
+		User defined properties <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> follow the following naming conventions to prevent conflicts between different component properties:
+	</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary=">Rules for naming user defined properties">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">HDT Component involved</th>
+				<th style="text-align:center;">Rules for naming user defined properties</th>
+			
+			</tr>
+			<tr>
+				<td>Dictionary Component
+				</td>
+				<td>
+					Property names <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> start with one unique dollar sign('$') character followed by alphanumeric characters.   
+				</td>
+			
+			</tr>
+			<tr>
+				<td>Triples Component
+				</td>
+				<td>
+					Property names <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> start with two unique dollar signs ('$$') characters followed by alphanumeric characters.   
+				</td>
+				
+			</tr>
+			<tr>
+				<td>both Dictionary and Triples Component
+				</td>
+				<td>
+					Property names <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> start with three unique dollar signs('$$$') characters followed by alphanumeric characters.   
+				</td>
+				
+			</tr>
+		</tbody>
+	</table>
+	
+<h3 id="dictionary">3.3 Dictionary</h3>
+				
+	<p>
+		The goal of the Dictionary is to assign a unique ID to each element in the data set. This way, the dictionary contributes to the aim of
+compactness, by replacing the long repeated strings in triples by their short IDs. In fact, the assignment of IDs, named as mapping, is usually the first step in RDF indexing.
+	</p>
+	<p>
+		There is no restriction on the particular mapping or codification. A <a href="#dicByDefault">dictionary codification by default</a> is given, and it 
+		<em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be assumed by <a href="#key-hdtprocessor" class="termdef"><span class="arrow">HDT Processors</span></a> 
+		when no other codification scheme is specified in the <a href="#key-codification" class="termdef"><span class="arrow">codification</span></a> option or in the Header 
+		component.
+	</p>
+	
+	<h4 id="dictionaryEncoding" style="margin-top:10px;">3.3.1 Dictionary Encoding</h4>
+	
+	<p> The distinction between URIs, literals and blanks, as well as string escaping, follows a similar <a href="http://www.w3.org/DesignIssues/Notation3" rel="external">N3 syntax</a>:</p>
+		
+	<ul style="margin:10px 0 10px 20px;list-style-type:disc;">
+	
+	  <li>
+		URIs are delimited by angle brackets '&lt;' and '&gt;'. Whitespace within the angle brackets is to be ignored.
+	  </li>
+	  <li>
+	  	URIs can be absolute or relative to the base URI (defined in the <a href="#key-userMetaData" class="termdef"><span class="arrow">user defined meta-data</span></a> or in the Header component).
+	  </li>
+	  <li>
+	  	URIs can make use of prefixes (defined in the <a href="#key-userMetaData" class="termdef"><span class="arrow">user defined meta-data</span></a> or in the Header component) or predefined prefixes (described below).
+	  </li>
+	  <li>
+		 Blanks are named with the _: namespace prefix, e.g. _:b19 represents a blank node.
+	  </li>
+	  <li>
+		Literals are written using double-quotes (e.g. "literal"). The """literal""" string form is used when they may contain linebreaks.
+	  </li>
+	  <li>
+		Literals represented numbers or booleans can be written directly corresponding to the right XML Schema Datatype: <a href="http://www.w3.org/TR/xmlschema-2/#integer" rel="external">xsd:integer</a>, <a href="http://www.w3.org/TR/xmlschema-2/#double" rel="external">xsd:double</a>, <a href="http://www.w3.org/TR/xmlschema-2/#integer" rel="external">xsd:decimal</a> or <a href="http://www.w3.org/TR/xmlschema-2/#boolean" rel="external">xsd:boolean</a>.
+	  </li>
+	  <li>
+		Comments are not allowed in any form.
+	  </li>
+	</ul>	
+	
+	<p>Predefined prefixes:</p>
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="Predefined prefixes">
+	  <tbody>
+		<tr>
+		  <th style="text-align:center;">Prefix</th>
+		  <th style="text-align:center;">Stands for</th>
+		</tr>
+	  <tr>
+		<td>a
+		</td>
+		<td>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;
+		</td>
+	  </tr>
+	  <tr>
+		<td>=
+		</td>
+		<td>
+		  &lt;http://www.w3.org/2002/07/owl#sameAs&gt;
+		</td>
+	  </tr>
+	  <tr>
+		<td>
+			=&gt;
+		 </td>
+		  <td>&lt;http://www.w3.org/2000/10/swap/log#implies&gt;
+		 </td>
+	  </tr>	
+	  <tr>
+		<td>
+		  &lt;=
+		</td>
+		<td>&lt;http://www.w3.org/2000/10/swap/log#implies&gt; but in the inverse direction
+		  </td>
+	   </tr>					  	
+	  </tbody>
+	</table>
+
+	  
+	<p>String escaping sequences:</p>
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="Predefined prefixes">
+	  <tbody>
+		<tr>
+		  <th style="text-align:center;">Escape Sequence</th>
+		  <th style="text-align:center;">Stands for</th>
+		</tr>
+	  <tr>
+		<td>\newline
+		</td>
+		<td>
+		  Ignored
+		</td>
+	  </tr>
+	   <tr>
+		<td>\\
+		</td>
+		<td>
+		  Backslash (\)
+		</td>
+	  </tr>
+	   <tr>
+		<td>\'
+		</td>
+		<td>
+		  Single quote (')
+		</td>
+	  </tr>
+	   <tr>
+		<td>\"
+		</td>
+		<td>
+		  Double quote (")
+		</td>
+	  </tr>
+	   <tr>
+		<td>\n
+		</td>
+		<td>
+		  ASCII Linefeed (LF)
+		</td>
+	  </tr>
+	   <tr>
+		<td>\r
+		</td>
+		<td>
+		  ASCII Carriage Return (CR)
+		</td>
+	  </tr>
+	   <tr>
+		<td>\t
+		</td>
+		<td>
+		  ASCII Horizontal Tab (TAB)
+		</td>
+	  </tr>
+	   <tr>
+		<td>\uhhhh
+		</td>
+		<td>
+		  character in BMP with Unicode value U+hhhh
+		</td>
+	  </tr>
+	   <tr>
+		<td>\U00hhhhhh
+		</td>
+		<td>
+		  character in plane 1-16 with Unicode value U+hhhhhh
+		</td>
+	  </tr>
+	  </tbody>				  
+	  </table>
+	
+  <h4 id="dicByDefault" style="margin-top:10px;">3.3.2 Dictionary Codification by Default</h4>
+	<p>
+		The dictionary codification by default, referred to as <a href="http://purl.org/HDT/hdt#dictionaryPlain">http://purl.org/HDT/hdt#dictionaryPlain</a>, <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be assumed by <a href="#key-hdtprocessor" class="termdef"><span class="arrow">HDT Processors</span></a> 
+		when no other codification scheme is specified in the <a href="#key-codification" class="termdef"><span class="arrow">codification</span></a> option or in the Header 
+		component.
+	</p>
+	<p>				
+		Four subsets are mapped as follows (for a graph G with S<sub>G</sub>, P<sub>G</sub>, O<sub>G</sub> the different subjects, predicates and objects):
+	</p>	
+	<ul>
+		<li>1. Common subject-objects (SO<sub>G</sub>) with IDs from 1 to |SO<sub>G</sub>|</li>
+		<li>2. Non common subjects (S<sub>G</sub>-SO<sub>G</sub>), mapped to [|SO<sub>G</sub>| +1, |S<sub>G</sub>|] </li>
+		<li>3. Non common objects (O<sub>G</sub>-SO<sub>G</sub>), in [|SO<sub>G</sub>|+1, |O<sub>G</sub>|]</li>
+		<li>4. Predicates, mapped to [1, |P<sub>G</sub>|].</li>
+	</ul>
+	<p>
+		Common subject-objects avoids duplicating entries in the dictionary and thus reducing the dictionary size. Furthermore, these elements are well and fast localized in the top IDs, as they conform the basis of subject-object JOINs in SPARQL. The common subject-object proportion is measured by the definition of subject-object ratio in <a href="#hdtISWC">[HDT-ISWC2010]</a>.
+	</p>
+	<p>
+		The physical Dictionary component consists in a list of strings matching the mapping of the four subsets, in order from (1) to (4),as shown in <a href="#ex3">Example 3</a>. A reserved '\2' character is appended to the end of
+		each string and each vocabulary to delimit their size. 
+	</p>
+	
+	<p style="margin-top:10px;"><a href="#ex3">Example 3</a> expands the <a href="#ex1">Example 1</a> to show the RDF graph and the Dictionary in HDT, by default.</p>
+	
+	
+	
+	<div class="featured" id="ex3">
+		
+		&lt;http://dbpedia.org/resource/page2&gt; \2\2 &lt;http://dbpedia.org/resource/page1&gt;\2 &lt;http://dbpedia.org/resource/page4&gt; \2\2 &lt;http://dbpedia.org/resource/page3&gt;\2 &lt;http://example.org/example1&gt; \2 "Label1"@en \2 "Label2"@en \2\2 &lt;http://dbpedia.org/property/reference&gt; \2 &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; \2 &lt;http://www.w3.org/2004/02/skos/core#broader&gt; \2 &lt;http://www.w3.org/2004/02/skos/core#subject&gt; \2\2
+		
+	</div>
+	
+	<div style="text-align:center;">
+		<strong>Example 3: RDF graph and dictionary representation.</strong>
+	</div>
+	
+	<p>
+		The dictionary codification by default allows to parametrize the configuration by some <a href="#key-userMetaData" class="termdef"><span class="arrow">user defined meta-data</span></a>, as follows:
+	</p>
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="dictionary configuration">
+	  <tbody>
+		<tr>
+		  <th style="text-align:center;">User defined property</th>
+		  <th style="text-align:center;">Use</th>
+		</tr>
+		<tr>
+		   <td>$dictionaryEncoding
+		  </td>
+			<td>Set up the dictionary encoding. By default, utf8.
+			</td>
+		</tr>
+		 <tr>
+		  <td>$dictionarySeparator
+		  </td>
+		  <td>Define the reserved separator character. The default value is '\2'.
+		  </td>
+		</tr>
+		 <tr>
+		  <td>$dictionaryOrder
+		  </td>
+		  <td>Describe the order inside each defined subset in the dictionary. By default there is no implicit order.
+		  </td>
+		</tr>
+		 <tr>
+		  <td>$dictionaryPrefixBaseURI
+		  </td>
+		  <td>Set up the base prefix to be used in the dictionary when parsing relative URIs.
+		  </td>
+		 </tr>
+		
+		<tr>
+			<td>
+				$dictionaryPrefixLabel_1, $dictionaryPrefixLabel_2, etc.
+			</td>
+			<td>
+				Set up prefixes labels to be used in the dictionary.
+			</td>
+		</tr>
+	  	<tr>
+			<td>
+				$dictionaryPrefixURI_1, $dictionaryPrefixURI_2, etc. 
+			</td>
+			<td>
+				Set up the corresponding URIs to the predefined prefix labels.
+			</td>
+	  	</tr>
+	  	
+	  	<tr>
+	  		<td>$dictionarySequence
+	  		</td>
+	  		<td>Identify the order in the sequence of all the dictionary chunks in case of splitting the dictionary in several files or streams.
+	  		</td>
+	  	</tr>
+	  	
+		</tbody>
+		
+		</table>
+		
+	<p>If the dictionary is split in several files or streams, each chunk <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be interpreted as a continuous order in the mapping sequence, following the $dictionarySequence property.
+		</p>
+
+	
+<h3 id="triples" style="margin-top:10px;">3.4 Triples</h3>
+				
+	
+	<p>The Triples component contains the structure of the data after the ID replacement, comprising the pure structure of the underlying graph. </p>
+	
+	<p>There is no restriction on a particular codification for the Triples component, but three types of codification are specified in this document. <a href="#ex4">Example 4</a> shows the three given codifications within the <a href="#ex1">Example 1</a>. These possibilities are described in the next subsections. Further triple codifications <em title="MAY in RFC 2119 context" class="RFC2119">MAY</em> be established by specifying a concrete <a href="#key-codification">codification</a> option or by the Header component. The codification by default <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em>  be interpreted as <a href="#bitmapTriples">Bitmap Triples</a> (referred to as <a href="http://purl.org/HDT/hdt#triplesBitmap">http://purl.org/HDT/hdt#triplesBitmap</a>) by <a href="#key-hdtprocessor">HDT Processors</a>.
+	</p>
+	
+	
+	<div style="text-align:center;" id="ex4">
+		<img src="images/ex4.png" alt="intro figure" width="824" height="310"/><br/>
+		<strong>Example 4: Three possibilities of triple representations succeeding the dictionary creation for the <a href="#ex1">Example 1</a> (<a href="images/ex4.png" rel="external">PNG</a>)</strong>
+	</div>
+	
+	<p>
+		When the same file or stream comprises both the dictionary component and the triples component, then a <b>secondary <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a> <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be included in between the two streams, identifying the <a href="#component" class="termdef">HDT Component Distinguishing Bits</a> of each stream.</b>
+	</p>
+	
+	<h4 style="margin-bottom:5px;" id="plainTriples">3.4.1 Plain Triples</h4> 
+	<p>This is the most naive approach in which only the ID substitution is performed. This option is denoted by the <a href="http://purl.org/HDT/hdt#triplesPlain">http://purl.org/HDT/hdt#triplesPlain</a> codification
+		property.
+	</p>	
+		<p>The physical file contains three ID per triple, each of them codified with 32 bits by default. The codification allows to parametrize the configuration
+			by some <a href="#key-userMetaData" class="termdef"><span class="arrow">user defined meta-data</span></a>, as follows:</p>
+
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="plain triples configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">User defined property</th>
+				<th style="text-align:center;">Use</th>
+			</tr>
+			<tr>
+				<td>$$IDCodificationBits
+				</td>
+				<td>The number of bits of each ID. The default value is set to 32. The value logBits must be interpreted as follows: each ID is encoded with log(n) bits, n being the number of total subjects, predicates or objects.
+				</td>
+			</tr>
+			<tr>
+				<td>$$subjectCodificationBits
+				</td>
+				<td>The number of bits of the subject IDs. This element must supersede the $$IDCodificationBits if both properties coexist in the same configuration. The value logBits must be interpreted as follows: each ID is encoded with log(n) bits, n being the number of total subjects.
+				</td>
+			</tr>
+			<tr>
+				<td>$$predicateCodificationBits
+				</td>
+				<td>The number of bits of the predicate IDs. This element must supersede the $$IDCodificationBits if both properties coexist in the same configuration. The value logBits must be interpreted as follows: each ID is encoded with log(n) bits, n being the number of total predicates.
+				</td>
+			</tr>
+			
+			<tr>
+				<td>$$objectCodificationBits
+				</td>
+				<td>The number of bits of the object IDs. This element must supersede the $$IDCodificationBits if both properties coexist in the same configuration. The value logBits must be interpreted as follows: each ID is encoded with log(n) bits, n being the number of total objects.
+				</td>
+			</tr>
+			
+			<tr>
+				<td>$$triplesSequence
+				</td>
+				<td>Identify the order in the sequence of all the triples chunks in case of splitting the triples in several files or streams.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+	
+	<p>If the triples are split in several files or streams, each chunk <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be interpreted as a continuous order, following the $$triplesSequence property.
+	</p>
+		
+	<p>A specific number of bits for each element is available using $$subjectCodificationBits, $$predicateCodificationBits and $$objectCodificationBits. This provides flexibility 
+		and space savings, e.g. keeping the default codification to 32 bits but specifying a $$predicateCodificationBits property, because the limited size of the predicates 
+		allows them to be represented with fewer bits. 
+		
+		</p>
+	<h4 style="margin-bottom:5px;" id="compactTriples">3.4.2 Compact Triples</h4>
+	<p>This option is denoted by the <a href="http://purl.org/HDT/hdt#triplesCompact">http://purl.org/HDT/hdt#triplesCompact</a> codification property, and it implies a
+		triple sorting by subject and the creation of predicate and object adjacency lists.</p>
+	
+	<p>Adjacency List is a natural data structure that facilitates managing, searching, and a
+		good compromise of size (as compared to naive lists of tuples or triples). For example,
+		the set of triples:</p>
+	
+	<p>{(s, p<sub>1</sub>, o<sub>11</sub>), ... ,(s, p<sub>1</sub>, o<sub>1n<sub>1</sub></sub>), (s, p<sub>2</sub>, o<sub>21</sub>), ... ,(s, p<sub>1</sub>, o<sub>2n<sub>2</sub></sub>), ... ,(s, p<sub>k</sub>, o<sub>kn<sub>k</sub></sub> )}
+		
+	</p>
+	<p>can be written as the adjacency list (named S-P-O Adj. List):</p>
+	<p>	s &rarr; [(p1, (o<sub>11</sub>, ..., o<sub>1n<sub>1</sub></sub>), (p<sub>2</sub>, (o<sub>21</sub>, ...,o<sub>2n<sub>2</sub></sub>)), ... ,(p<sub>k</sub>, (o<sub>kn<sub>k</sub></sub>))].
+	</p>
+	<p>
+	Turtle (and hence N3) allows such generalized adjacency lists for triples. For example the set of triples {(s, p, o<sub>j</sub>)} 1&le;j&le; n, can be abbreviated as (s p o<sub>1</sub>, ... ,o<sub>n</sub>).
+	</p>
+	
+	<p>
+	The Triples component contains a compact adjacency list representation, whose construction process is shown in <a href="#ex5">Example 5</a>. 
+	</p>
+	
+	<div style="text-align:center;" id="ex5">
+		<img src="images/ex5.png" alt="compact figure" width="825" height="207"/><br/>
+		<strong>Example 5: Compact Transformation from ID-based triples. (<a href="images/ex5.png" rel="external">PNG</a>)</strong>
+	</div>
+	
+	<p>
+	First, a subject ordered grouping is performed, that is, triples are reorganized
+	in an adjacency list, in sequential order of subject IDs. Due to this order, an
+	immediate saving can be achieved by omitting the subject representation, as we know
+	the first list corresponds to the first subject, the second list to the following, and so on. 
+	</p>
+	<p>Then, the representation is split into two coordinated streams of Predicates
+	and Objects. The first stream of Predicates corresponds to the lists of predicates
+	associated with subjects, maintaining the implicit grouping order. 
+	The end of a list of predicates implies a change of subject, and must be marked with a separator, the
+	non-assigned zero ID. The second stream (Objects) groups the lists of objects for each
+	pair (s, p). These pairs are formed by the subjects (implicit and sequential), and coordinated
+	predicates following the order of the first stream. In this case, the end of a list
+	of objects (also marked in the stream with the non-assigned zero ID) implies a change of (s, p) pair, moving forward
+	in the first stream processing.
+	</p>
+	
+	<p>
+	Thus, the compact triple representation is supported by two Streams: (1)
+	a predicate stream in which the predicate lists are separated by
+	0s (i-th list belongs to i-th subject) and (2) an object stream in which
+	the object lists are separated in the same way (j-th list belongs to j-th predicate in the
+	former predicate stream). </p>
+	
+	<p>
+		This format, by default, assumes an S-P-O Adj. List, being S implicitly represented and P as the <b>key stream</b> to access the <b>secondary stream</b> of objects. 
+		Alternative representations are also possible, specifying a $$streamsOrder property in the <a href="#key-userMetaData" class="termdef"><span class="arrow">
+			user defined meta-data</span></a> or in the Header Component, as follows:</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="streamsOrder configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">$$streamsOrder property value</th>
+				<th style="text-align:center;">Stands for</th>
+			</tr>
+			<tr>
+				<td>SPO
+				</td>
+				<td>Set up the order of the streams as Subject-Property-Object Adj. Lists. This <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be taken as the default order of the streams.
+				</td>
+			</tr>
+			<tr>
+				<td>SOP
+				</td>
+				<td>Set up the order of the streams as Subject-Object-Property Adj. Lists.
+				</td>
+			</tr>
+			<tr>
+				<td>PSO
+				</td>
+				<td>Set up the order of the streams as Property-Subject-Object Adj. Lists.
+				</td>
+			</tr>
+			
+			<tr>
+				<td>POS
+				</td>
+				<td>Set up the order of the streams as Property-Object-Subject Adj. Lists.
+				</td>
+			</tr>
+			
+			<tr>
+				<td>OPS
+				</td>
+				<td>Set up the order of the streams as Object-Property-Subject Adj. Lists.
+				</td>
+			</tr>
+			
+			<tr>
+				<td>OSP
+				</td>
+				<td>Set up the order of the streams as Object-Subject-Property Adj. Lists.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+ 
+	
+	<p>In every case, the first stream is implicit and then it is not represented, and the second stream acts as the key stream to access the secondary stream. 
+		Both the key stream and the secondary stream can be defined in the same <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a> or in different files or streams.
+	</p>
+	
+	<p>
+		When the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a> only comprises one unique stream, its function 
+ <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be defined with the $$streamFunction property in the <a href="#key-userMetaData" class="termdef"><span class="arrow">
+			user defined meta-data</span></a> or in the Header Component, as follows:</p>
+		
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="$$streamFunction configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">$$streamFunction property value</th>
+				<th style="text-align:center;">Stands for</th>
+			</tr>
+			<tr>
+				<td>key
+				</td>
+				<td>Identify the current stream as the key stream.
+				</td>
+			</tr>
+			<tr>
+				<td>secondary
+				</td>
+				<td>Identify the current stream as the secondary stream.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+
+	<p> Other <a href="#key-userMetaData" class="termdef"><span class="arrow">
+	user defined meta-data</span></a> or Header information can also be defined for the stream, as follows:</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="stream configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">User defined property</th>
+				<th style="text-align:center;">Use</th>
+			</tr>
+			<tr>
+				<td>$$IDCodificationBits
+				</td>
+				<td>The number of bits of each ID. The default value is set to 32. The value logBits must be interpreted as follows: each ID is encoded with log(n) bits, n being the number of total subjects, predicates or objects.
+				</td>
+			</tr>			
+			<tr>
+				<td>$$triplesSequence
+				</td>
+				<td>Identify the order in the sequence of all the triples chunks in case of splitting the triples in several files or streams.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+
+	<p>If the triples are split in several files or streams, each chunk  <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be interpreted as a continuous order, following the $$triplesSequence property.</p>
+
+	<p>
+		When the same file or stream comprises both the key stream and the secondary stream, then a <b>secondary <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a> <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be included in between the two streams, identifying the $$streamFunction on each stream.</b>
+	</p>
+	
+	<h4 style="margin-bottom:5px;" id="bitmapTriples">3.4.3 Bitmap Triples</h4>
+	<p>
+	This format, denoted by <a href="http://purl.org/HDT/hdt#triplesBitmap">http://purl.org/HDT/hdt#triplesBitmap</a>, extracts the 0's out of the predicate and object streams of compact triple representation. The graph structure is indexed with two bitsequences (B<sub>p</sub> and B<sub>o</sub>, for predicates
+	and objects) in which 0-bits mark IDs in the corresponding S<sub>p</sub> or S<sub>o</sub> sequence, whereas
+	1-bits are used to mark the end of an adjacency list. This transformation is shown in <a href="#ex6">Example 6</a>. On the one hand, Predicates={2,3,0,1,2,4,0,3,0} evolves to the sequence S<sub>p</sub>={2,3,1,2,4,3} and the bitsequence B<sub>p</sub>={001000101} whereas, on the other hand, Objects= {6,0,2,0,3,0,4,5,0,1,0,2.0} is reorganized
+	in S<sub>o</sub>={6,2,3,4,5,1,2} and B<sub>o</sub>={0101010010101}.
+	</p>
+	
+	<div style="text-align:center;" id="ex6">
+		<img src="images/ex6.png" alt="bitmap figure" width="850" height="210"/><br/>
+		<strong>Example 6: Bitmap Transformation from Compact Streams. (<a href="images/ex6.png" rel="external">PNG</a>)</strong>
+	</div>
+	
+	<p>Formally, the i-th 1-bit in B<sub>p</sub> marks the
+	end of the predicate adjacency list for the i-th subject (it is referred to as P<sub>i</sub>), whereas
+	the length of the 0-bit sequences between two consecutive 1-bit represents the number
+	of predicates in the corresponding list.</p>
+
+	<p>In <a href="#ex6">Example 6</a>, the second 1-bit in B<sub>p</sub> marks the
+	end of the predicate adjacency list for the second subject (P<sub>2</sub>). As we can see, a sequence
+	of three 0-bit exists in between the previous and the current 1-bit. This means
+	P<sub>2</sub> contains three predicates, which are represented by the third, fourth and fifth IDs in S<sub>p</sub> by
+	considering that the third, fourth and fifth 0-bit in B<sub>p</sub> correspond to P<sub>2</sub>. Thus, P<sub>2</sub>={1,2,4}.</p>
+	
+	<p>Data in S<sub>o</sub> and B<sub>o</sub> are related in the same way. Hence, the j-th 1-bit in B<sub>o</sub> marks
+the end of the object adjacency list for the j-th predicate. This predicate is represented
+by the j-th 0-bit in B<sub>p</sub> and it is retrieved from the j-th position of S<sub>p</sub>.</p>
+
+<p>In <a href="#ex6">Example 6</a>, the fourth 1-bit in B<sub>o</sub> refers the end of the object adjacency list for the fourth predicate in
+S<sub>p</sub> which is related to the second subject as we have previously explained. Thus, this
+adjacency list stores all objects o in triples (2,2,o) &isin; G.</p>
+	
+	<p>
+		This format, by default, assumes an S-P-O Adj. List, being the subject implicitly represented. S<sub>p</sub> and B<sub>p</sub> are the <b>key stream and bitmap</b> respectively in order to access the <b>secondary stream</b> (S<sub>o)</sub> and the secondary bitmap (B<sub>o</sub>). 
+		Alternative representations are also possible, specifying a $$streamsOrder property in the <a href="#key-userMetaData" class="termdef"><span class="arrow">
+			user defined meta-data</span></a> or in the Header Component, as follows:</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="streamsOrder configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">$$streamsOrder property value</th>
+				<th style="text-align:center;">Stands for</th>
+			</tr>
+			<tr>
+				<td>SPO
+				</td>
+				<td>Set up the order of the streams as Subject-Property-Object Adj. Lists. This <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be taken as the default order of the streams.
+				</td>
+			</tr>
+			<tr>
+				<td>SOP
+				</td>
+				<td>Set up the order of the streams as Subject-Object-Property Adj. Lists.
+				</td>
+			</tr>
+			<tr>
+				<td>PSO
+				</td>
+				<td>Set up the order of the streams as Property-Subject-Object Adj. Lists.
+				</td>
+			</tr>
+			
+			<tr>
+				<td>POS
+				</td>
+				<td>Set up the order of the streams as Property-Object-Subject Adj. Lists.
+				</td>
+			</tr>
+			
+			<tr>
+				<td>OPS
+				</td>
+				<td>Set up the order of the streams as Object-Property-Subject Adj. Lists.
+				</td>
+			</tr>
+			
+			<tr>
+				<td>OSP
+				</td>
+				<td>Set up the order of the streams as Object-Subject-Property Adj. Lists.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+	
+	<p>In every case, the first stream is implicit and then it is not represented, and the second stream acts as the key stream to access the secondary stream. 
+		The key stream, the key bitmap, the secondary stream and the secondary bitmap can be defined in the same <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a> or in different files or streams.
+	</p>
+	
+	<p>
+		When the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a> only comprises one unique stream, its function 
+		<em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be defined with the $$streamFunction property in the <a href="#key-userMetaData" class="termdef"><span class="arrow">
+			user defined meta-data</span></a> or in the Header Component, as follows:</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="$$streamFunction configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">$$streamFunction property value</th>
+				<th style="text-align:center;">Stands for</th>
+			</tr>
+			<tr>
+				<td>key
+				</td>
+				<td>Identify the current stream as the key stream.
+				</td>
+			</tr>
+			<tr>
+				<td>secondary
+				</td>
+				<td>Identify the current stream as the secondary stream.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+	
+	<p>
+		When the <a href="#key-hdtbody" class="termdef"><span class="arrow">HDT body</span></a> only comprises one unique bitmap, its function 
+		<em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be defined with the $$bitmapFunction property in the <a href="#key-userMetaData" class="termdef"><span class="arrow">
+			user defined meta-data</span></a> or in the Header Component, as follows:</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="$$bitmapFunction configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">$$bitmapFunction property value</th>
+				<th style="text-align:center;">Stands for</th>
+			</tr>
+			<tr>
+				<td>key
+				</td>
+				<td>Identify the current bitmap as the key bitmap.
+				</td>
+			</tr>
+			<tr>
+				<td>secondary
+				</td>
+				<td>Identify the current bitmap as the secondary bitmap.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+
+	<p> Other <a href="#key-userMetaData" class="termdef"><span class="arrow">
+		user defined meta-data</span></a> or Header information can also be defined for the stream, as follows:</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="stream configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">User defined property</th>
+				<th style="text-align:center;">Use</th>
+			</tr>
+			<tr>
+				<td>$$IDCodificationBits
+				</td>
+				<td>The number of bits of each ID. The default value is set to 32. The value logBits must be interpreted as follows: each ID is encoded with log(n) bits, n being the number of total subjects, predicates or objects.
+				</td>
+			</tr>			
+			<tr>
+				<td>$$triplesSequence
+				</td>
+				<td>Identify the order in the sequence of all the triples chunks in case of splitting the triples in several files or streams.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+	
+	<p> Regarding bitmaps, <a href="#key-userMetaData"  class="termdef"><span class="arrow">
+		user defined meta-data</span></a> or Header information can also define an additional property, as follows:</p>
+	
+	<table style="border-spacing: 2px 2px; border-color: gray; border-collapse: separate; display: table;" border="1" summary="bitmap configuration">
+		<tbody>
+			<tr>
+				<th style="text-align:center;">User defined property</th>
+				<th style="text-align:center;">Use</th>
+			</tr>			
+			<tr>
+				<td>$$triplesSequence
+				</td>
+				<td>Identify the order in the sequence of all the triples chunks in case of splitting the triples in several files or streams.
+				</td>
+			</tr>
+			
+		</tbody>
+		
+	</table>
+	
+	<p>If the triples are split in several files or streams, each chunk  <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be interpreted as a continuous order, following the $$triplesSequence property.</p>
+	
+	<p>
+		When the same file or stream comprises both the key stream or bitmap and the secondary stream or bitmap, then  <b>additional <a href="#key-hdtControl" class="termdef"><span class="arrow">Control Information</span></a> <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em>  be included in between each stream or bitmap.</b>
+	</p>
+	 
+
+<h2 id="identifiers">4. Identifiers For HDT</h2>
+					
+	<p>The URI identifying the HDT representation is: <strong>http://purl.org/HDT/hdt#hdt</strong></p>
+	  <p>The Vocabulary used for HDT specification is:
+	  <br /><br />Namespace: http://purl.org/HDT/hdt#
+	  <br/>Local name: hdt.
+	  </p>		
+
+<h2 id="media">5. Media Type And Content Encoding</h2>
+
+	<p>The media type of HDT is the media type of their parts. The Header <em title="SHOULD in RFC 2119 context" class="RFC2119">SHOULD</em> be represented in an RDF syntax. The normative format of the Header is [<a href="#rdfxml">RDF/XML</a>]. The Dictionary encoding and its media type <em title="MAY in RFC 2119 context" class="RFC2119">MAY</em> be specified in the Control Information or in the Header (utf8 and plain/text by default respectively). The triples encoding depends on the triple representation (See <a href="#triples">Triples</a>), and the media type <em title="MUST in RFC 2119 context" class="RFC2119">MAY</em> be specified in the Control Information or in the Header. </p>
+
+
+<h2 id="management">6. HDT Operations Over Bitmaps Triples</h2>
+
+	<p>
+	  Bitmaps Triples representation (See <a href="#bitmapTriples">Bitmap Triples</a>) allows for an on-demand loading strategy over the structure indexed in B<sub>p</sub> and B<sub>o</sub>, accessible by fast rank/select operations.
+	</p>
+	<p>
+	  In general terms, rank/select operate over a sequence S of length n drawn from an alphabet &Sigma; = {0,1}, as follows:
+	  </p>
+	  <ul>
+	  <li>
+	  rank<sub>a</sub>(S,i): counts the occurrences of a symbol a &isin; {0,1} in S[1,i].
+	  </li>
+	  <li>
+	  select<sub>a</sub>(S,i): finds the i-th occurrence of symbol a &isin; {0,1} in S.
+	  </li>
+	  </ul>
+	  <p>This problem has been solved using n + o(n) bits of space while answering the
+queries in constant time ([<a href="#compactPAT">Compact-PAT</a>]).</p>
+
+	  <p>Multiple operations can be defined. <a href="#algorithm1">Algorithm 1</a> shows a Check&amp;Find operation for a triple (s,p,o) over the Bitmaps Triples representation. </p>	
+	  
+	  
+	  <div style="margin-top:20px; font-weight:bold;" id="algorithm1">Algorithm 1. Check&amp;Find operation for a triple (s,p,o).</div>
+	<div class="featured">
+	  <div style="text-align:left;font-family: monospace; margin-bottom: 0em; margin-left: 0em; margin-top: 0em;font-size:12px;">
+			  1:&nbsp;  begin &larr; select<sub>1</sub>(B<sub>p</sub>, s-1) + 2;
+		<br />2:&nbsp;  end &larr; select<sub>1</sub>(B<sub>p</sub>, s) - 1;
+		<br />3:&nbsp;  size<sub>P<sub>s</sub></sub> &larr; end - begin;
+		<br />4:&nbsp;  Ps &larr; retrieve(S<sub>p</sub>, 1 + rank<sub>0</sub>(B<sub>p</sub>, begin), size<sub>P<sub>s</sub></sub> );
+		<br />5:
+		<br />6:&nbsp;  plist &larr; binary_search(P<sub>s</sub>, p);
+		<br />7:&nbsp;  pseq &larr; rank<sub>0</sub>(B<sub>p</sub>, begin) + plist;
+		<br />8:
+		<br />9:&nbsp;  begin &larr; select<sub>1</sub>(B<sub>o</sub>, pseq - 1) + 2;
+		<br />10: end &larr; select<sub>1</sub>(B<sub>o</sub>, pseq)- 1;
+		<br />11: size<sub>O<sub>sp</sub></sub> &larr; end - begin;
+		<br />12: O<sub>sp</sub> &larr; retrieve(S<sub>o</sub>, 1 + rank<sub>0</sub>(B<sub>o</sub>, begin), size<sub>O<sub>sp</sub></sub>);
+		<br />13:
+		<br />14: plist &larr; binary_search(O<sub>sp</sub>, o);
+
+	  </div>
+	</div>
+
+	<p>Lines 1-4 describe the steps performed to retrieve the predicate adjacency list for the subject s (P<sub>s</sub>).
+	First, the size of the list is retrieved by locating its begin/end positions in B<sub>p</sub>.
+Next, the sequence of predicate IDs is obtained from S<sub>p</sub>. This operation seeks the
+position where P<sub>s</sub> begins in S<sub>p</sub> (by using the rank<sub>0</sub> operation in line 4), and, next,
+retrieves the sequence of size<sub>P<sub>s</sub></sub> predicates that composed it. Lines 6-7 describe the identification of the position (pseq) where s and p are related in S<sub>p</sub>. The predicate p is located in P<sub>s</sub> with a binary_search, and, next, this
+local position (plist) is used to obtain its global rank in Sp. In this step, the object adjacency list for (s,p) (O<sub>sp</sub>) is ready to use, by considering that it is indexed through
+the pseq-th predicate. O<sub>sp</sub> is retrieved (lines 9-12) similarly to P<sub>s</sub>, considering B<sub>o</sub>
+and S<sub>o</sub>. Finally, o is located with a binary_search on O<sub>sp</sub>.</p>
+
+	  <p>This operation does not just find the required triple (s,p,o), but also the triples (s,p,z) &isin; G</p>
+	  
+	  <p>The S-P-O Adjacency List order <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be assumed. The algorithm <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> be modified for alternative representations S-O-P Adj. List, P-S-O, P-O-S, O-P-S Adj. List and O-S-P Adj. List. 
+ </p>
+
+	<h3 id="sparql">7. HDT And SPARQL</h3>
+	
+	<p>The <a href="http://www.w3.org/TR/rdf-sparql-query/" rel="external">SPARQL Query Language for RDF</a> can make use of some interesting features in HDT:</p>
+	 <ul style="margin:10px 0 10px 20px;list-style-type:disc;">
+	  <li>Subject-object JOINs resolution can profit from the common naming in the dictionary, as the elements
+are correctly and quickly localized in the top IDs.
+	  </li>
+	  <li><a href="#algorithm1">Algorithm 1</a> can response basic ASK queries of SPARQL for patterns (s,p,o), (s,?p,?o) and (s,p,?o).</li>
+	  <li><a href="#algorithm1">Algorithm 1</a> can response basic CONSTRUCT query of SPARQL for simple WHERE patterns (s,p,o), (s,?p,?o) and (s,p,?o).The resultant is a RDF HDT graph.</li>
+	</ul>
+	
+	<p>The S-P-O Adjacency List order <em title="MUST in RFC 2119 context" class="RFC2119">MUST</em> assumed. The response patterns vary for alternative representations S-O-P Adj. List, P-S-O, P-O-S, O-P-S Adj. List and O-S-P Adj. List. 
+ </p>
+
+<h3 id="references">A. References</h3>
+<dl>
+<dt>
+<a id="hdtISWC">[HDT-ISWC2010]</a>
+</dt>
+<dd>
+	<cite>
+		J.D. Fern&aacute;ndez, M.A. Mart&iacute;nez-Prieto, and C. Gutierrez. Compact Representation of Large
+		RDF Data Sets for publishing and exchange. In ISWC 2010, LNCS 6496, pages 193-208, 2010.
+		
+	</cite>
+</dd>	
+
+<dt>
+<a id="void">[VoID]</a>
+</dt>
+<dd>
+		<cite>K. Alexander, R. Cyganiak, M. Hausenblas, and J. Zhao. <a href="http://www.w3.org/TR/2011/NOTE-void-20110303/">Describing Linked Datasets with the VoID Vocabulary. W3C Interest Group Note 03 March 2011</a>. Available at <a href="http://www.w3.org/TR/2011/NOTE-void-20110303/">http://www.w3.org/TR/2011/NOTE-void-20110303/</a>.</cite>
+	
+</dd>
+
+<dt>
+<a id="compactPAT">[Compact-PAT]</a>
+</dt>
+<dd>
+	<cite>D. Clark. Compact PAT trees. PhD thesis, University of Waterloo, 1996.</cite>
+	
+</dd>
+
+</dl>
+
+<dl>
+<dt>
+<a id="keywords">[KEYWORDS]</a>
+</dt>
+<dd>
+<cite>S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</a>. The Internet Society, March 1997. Available at <a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a>.</cite>
+</dd>
+</dl>
+
+<dl>
+<dt>
+<a id="rdfxml">[RDF/XML]</a>
+</dt>
+<dd>
+<cite>D. Beckett. <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/">RDF/XML Syntax Specification (Revised)</a>. W3C Recommendation 10 February 2004. Available at <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/">http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/</a></cite>
+</dd>
+</dl>
+
+<h3 id="acknowledgements">B. Acknowledgements (Informative)</h3>
+<p>HDT work is partially funded by MICINN (TIN2009-14009-C02-02), Millennium Institute for Cell Dynamics and Biotechnology (ICDB) (Grant ICM P05-001-F), and Fondecyt 1090565 and 1110287. Javier D. Fern&aacute;ndez is granted by the Regional Government of Castilla y Leon (Spain) and the European Social Fund.
+</p>
+
+</body>
+</html>

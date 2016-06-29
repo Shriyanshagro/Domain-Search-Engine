@@ -1,0 +1,198 @@
+
+<html dir="LTR"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><META name="MS.LOCALE" content="ko-kr"><title>뉴스레터 구독 관리</title><meta name="description" content="Microsoft는 최신솔루션, 기술, Tip, 제품, 서비스 및 세미나를 포함한 이벤트 정보를 제공해 드리고 있습니다."><meta name="keywords" content="뉴스레터, 구독 관리, 최신솔루션, 기술, Tip, 제품, 서비스 및 세미나"><link type="text/css" rel="Stylesheet" href="/korea/mnp_utility.mspx/templatecss?template=%2flibrary%2fgallery%2ftemplates%2fMNP2.GenericHome&amp;shell=%2fkorea%2fnewsletter%2fConfiguration.xml&amp;locale=ko-kr"><meta name="search.mnp.template" content="MNP2.GenericHome">
+<link type='text/css' rel='Stylesheet' href='/library/mnp/2/aspx/css.aspx?locale=ko-kr&amp;name=Menu&amp;static=Page' />
+<script type='text/javascript' language='Javascript' src='/korea/mnp_utility.mspx/menujs?mnpshell=%2fkorea%2fnewsletter%2fConfiguration.xml&amp;clicktrax=False'></script>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"><link rel='stylesheet' type='text/css' href='/library/toolbar/3.0/css.aspx?c=/korea/newsletter/Configuration.xml'/><script language='JavaScript'>var doImage=doImage;var TType=TType;var defaultSearchLable;
+function mhHover(tbl,idx,cls){var t,d;if(document.getElementById)t=document.getElementById(tbl);else t=document.all(tbl);if(t==null)return;if(t.getElementsByTagName)d=t.getElementsByTagName("TD");else d=t.all.tags("TD");if(d==null)return;if(d.length<=idx)return;d[idx].className=cls;}
+function footerjs(doc){};
+var varSegmentation = 0;
+var varClickTracking = 1;
+var varCustomerTracking=1;
+document.write("<script type='text/javascript' src='" + (window.location.protocol) + "//c.microsoft.com/ms.js'"+"'><\/script>");
+
+
+var rsltextbox = 'msviLSBtbox'; var wtflag = false;
+function stripSymbols () { var objrslttextbox = getObjectById(rsltextbox); if (objrslttextbox) { var form = objrslttextbox.form; var s = objrslttextbox.value; filteredValues = "<>!@^*"; var i; var returnString = ""; for (i = 0; i < s.length; i++) { var c = s.charAt(i); if (filteredValues.indexOf(c) == -1) { returnString += c; } else { returnString += " "; } } objrslttextbox.value = returnString; } if(!wtflag) { trackLSB("Site"); } } 
+function addSubmitEvent() {
+ msviLSBtbox=document.getElementById("msviLSBtbox")
+ if(msviLSBtbox)
+ {
+    defaultSearchLable = msviLSBtbox.value;
+ }
+ var objrslttextbox = getObjectById(rsltextbox); 
+ if (objrslttextbox) 
+ { 
+    var form = objrslttextbox.form;
+     if (window.attachEvent) 
+     { 
+         form.attachEvent("onsubmit",stripSymbols); 
+     }
+     else 
+     { 
+        form.addEventListener("submit",stripSymbols,false);
+     }
+  } 
+} 
+function getObjectById(elid) 
+{ 
+    if (document.getElementById) 
+    { 
+        return document.getElementById(elid); 
+    } 
+    else if (document.all) 
+    { 
+        return document.all[elid]; 
+    } 
+    else if (document.layers) 
+    { 
+        return document.layers[elid];
+    } 
+} 
+if (window.attachEvent) { window.attachEvent("onload",addSubmitEvent); } else { window.addEventListener("load",addSubmitEvent,false); } 
+var FromWeb = false;
+function trackLSB(type)
+{
+
+  clearDefaultSearchLable();
+ 
+  if(type=="Web")
+    FromWeb = true;
+  var tmp = document.getElementById("msviLSBtbox");
+  var errorInfo = document.getElementById("errorInfo");
+  if(type=="Site" && tmp.value.length==0 && !FromWeb)
+  {
+       tmp.value=errorInfo.value;
+       tmp.style.color='#bc2b2b';
+       ajustWidth();
+  }
+  if (typeof dcsMultiTrack == "function")
+  { 
+      var qu = document.getElementById("msviLSBtbox").value;
+      var dcsuri = "results.aspx";
+      var dcssip, ti;
+      if (type == "Site")
+      {
+        dcssip = "search.microsoft.com";
+        ti = "SearchButton: OnSite"; 
+      }
+      else if (type == "Web")
+      {
+         dcssip = "bing.com";
+         ti = "SearchButton: Web";
+      }
+      dcsMultiTrack("DCS.dcsuri", dcsuri, "DCS.dcssip", dcssip, "WT.ti", ti, "WT.dl", "2", "WT.z_srch_t", qu, "DCS.dcsqry", "", "WT.ad", "", "WT.mc_id", ""); 
+      wtflag = true; DCS.dcsuri=DCS.dcssip=DCS.dcsqry=WT.ti=WT.z_srch_t="";
+  }
+}
+
+var isInputqu = false;
+var searchBoxWidthWithKievLogo = 0;
+var searchBoxWidthWithoutKievLogo = 0;
+function clearDefaultSearchLable()
+{var searchBox = document.getElementById("msviLSBtbox");
+if(!isInputqu){searchBox.value = "";}}
+var kievImageWidth = 47;
+var isAdTboxWidth = false;
+var isInitailed = false;
+function ajustWidth()
+{
+    var searchBoxInput = document.getElementById("msviLSBtbox");
+    var kievImage = document.getElementById("msviLSBlogo");
+    if(!isInitailed)
+    {
+         searchBoxWidthWithKievLogo = searchBoxInput.style.width;
+         searchBoxWidthWithoutKievLogo = searchBoxInput.clientWidth + (kievImageWidth - 1);
+         isInitailed = true;
+    }
+    var width = kievImage.clientWidth-1;
+    kievImage.style.width = '1px';
+    var tBoxAloneWidth = searchBoxInput.clientWidth + width;
+    searchBoxInput.style.width = tBoxAloneWidth;
+    isAdTboxWidth = true;
+    
+      
+    
+}
+
+function searchBoxFocused(defaultSearchLabel)
+{
+    var searchBoxInput = document.getElementById("msviLSBtbox");
+    var kievImage = document.getElementById("msviLSBlogo");
+    if(searchBoxInput.value == defaultSearchLabel || searchBoxInput.value==document.getElementById("errorInfo").value)
+    {
+        searchBoxInput.value = '';
+        searchBoxInput.style.fontStyle = '';
+        searchBoxInput.style.color='#000000';
+        kievImage.style.width = '1px';
+        if(searchBoxWidthWithKievLogo == 0 && !isAdTboxWidth &&!isInitailed)
+        {
+            searchBoxWidthWithKievLogo = searchBoxInput.style.width;
+            searchBoxWidthWithoutKievLogo = searchBoxInput.clientWidth + (kievImageWidth - 1);
+            isInitailed = true;
+        }
+        searchBoxInput.style.width = searchBoxWidthWithoutKievLogo;
+    }
+}
+
+function searchBoxBlur(defaultSearchLabel)
+{
+    var searchBoxInput = document.getElementById("msviLSBtbox");
+    var kievImage = document.getElementById("msviLSBlogo");
+    if(searchBoxInput.value.replace(/(^\s*)|(\s*$)/g, '')=='') 
+    {
+        searchBoxInput.value=defaultSearchLabel;searchBoxInput.style.fontStyle ='Italic';
+        searchBoxInput.style.color = "#a1a1a1";
+        kievImage.style.width = kievImageWidth;
+        
+        searchBoxInput.style.width = searchBoxWidthWithKievLogo;
+        isInputqu = false;
+     }
+     else
+     {
+        isInputqu = true;
+     }
+}
+
+function Test()
+{
+    var searchBox = document.getElementById(rsltextbox);
+    var go = document.getElementById("errorInfo");
+    if(searchBox.value==go.value)
+        return false;
+    return true; 
+}</script><meta name="WT.sp" content="_korea_" /><script language='JavaScript' src='http://js.microsoft.com/library/svy/broker.js'></script><script language="Javascript">
+					if (self.name == "MNPMainFrame") top.location.href = self.location.href;
+				</script><META name="save" content="favorite"></head><body bgcolor="#FFFFFF" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0"><!--NOINDEX_START--><a name="top"></a><div id="msviMasthead"><table cellpadding="0" cellspacing="0" width="100%" border="0"><tr><td width="100%"><table cellpadding="0" cellspacing="0" width="100%" height="22" border="0"><tr><td id="msviMarketing" bgcolor="#4B92D9" nowrap=""><a href="http://go.microsoft.com/fwlink/?LinkID=92799">Silverlight를 설치하려면 여기를 클릭합니다.</a></td><td width="100%" bgcolor="#1E77D3"><img src="/library/toolbar/3.0/gradient.aspx?a=4B92D9&amp;b=1E77D3&amp;w=250&amp;h=22&amp;d=ltr&amp;c=eFLbOmyDquZL7nbgTLBSftxozLo%3d" width="250" height="22" alt="*" title=""></td></tr></table></td><td id="msviGlobalToolbar" bgcolor="#1E77D3" height="22" nowrap="" dir="ltr" align="left"><table cellpadding="0" cellspacing="0" border="0"><tr><td id="msviRegionId" nowrap>Korea 대한민국</td><td id="msviRegionSelector" nowrap><a href="http://www.microsoft.com/worldwide">변경</a></td><td class="gtsep">|</td><td id="msviSiteMap" nowrap><a href="http://www.microsoft.com/ko/kr/sitemap.aspx">Microsoft 전체 사이트</a></td><td class="msviPPSpace"></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" border="0"><tr valign="top"><td><table cellpadding="0" cellspacing="0" width="100%" height="42" border="0" style="height:expression(parentElement.parentElement.parentElement.parentElement.offsetHeight)"><tr valign="top"><td id="msviBrandBanner" bgcolor="0A6CCE"><a href="http://www.microsoft.com/korea/"><img src="/library/toolbar/3.0/images/banners/ms_masthead_ltr.gif" width="136" height="42" alt="Microsoft" title="" border="0"></a></td></tr></table></td><td id="msviGlobalSearch" width="100%" bgcolor="#FFFFFF"><div class="msviLSBsform"><form id="msviLSBForm" action="/library/toolbar/3.0/search.aspx" target="_top"><div id="msKiev"><input type="hidden" name="View" value="ko-kr"><input type="hidden" name="charset" value="utf-8"><input id="msviLSBtbox" style="font-style:italic; color:#a1a1a1" onkeydown="if(event.keyCode == 13)searchBoxBlur('Microsoft.com 검색')" onfocus="searchBoxFocused('Microsoft.com 검색')" onblur="searchBoxBlur('Microsoft.com 검색')" type="text" name="qu" value="Microsoft.com 검색" autocomplete="off"><span id="msviLSBlogo" class="msviLSBlogo" title="Bing 제공"></span><input id="msviLSBssearch" title="Microsoft.com 검색" type="image" name="site" src="/library/toolbar/3.0/images/LSB/Search_icon.gif" align="absmiddle" onclick="trackLSB('Site')"></div><input id="msviLSBWeb" title="웹 검색" name="sweb" type="submit" value="" onclick="trackLSB('Web')" align="absmiddle"></form></div></td></tr></table><div id="msviLocalToolbar"><table cellpadding="0" cellspacing="0" width="100%" height="19" border="0"><tr><td nowrap id="msviHomePageLink"><a href="/korea/newsletter/notice/default.mspx">Microsoft Subscription 홈</a></td><td><span class="ltsep">|</span></td><td class="lt0" nowrap onmouseover="mhHover('msviLocalToolbar', 2, 'lt1')" onmouseout="mhHover('msviLocalToolbar', 2, 'lt0')"><a href="http://www.msn.co.kr/">MSN</a></td><td><span class="ltsep">|</span></td><td class="lt0" nowrap onmouseover="mhHover('msviLocalToolbar', 4, 'lt1')" onmouseout="mhHover('msviLocalToolbar', 4, 'lt0')"><a href="https://profile.microsoft.com/RegSysProfileCenter/SubCntDefault.aspx?lcid=1042&amp;sic=1">뉴스레터</a></td><td><span class="ltsep">|</span></td><td class="lt0" nowrap onmouseover="mhHover('msviLocalToolbar', 6, 'lt1')" onmouseout="mhHover('msviLocalToolbar', 6, 'lt0')"><a href="https://profile.microsoft.com/RegSysProfileCenter/Infodefault.aspx?lcid=1042">프로필센터</a></td><td width="100%"></td></tr></table></div></div><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr valign="top"><td height="100%" style="overflow-x: hidden" width="181"><div id="mnpMenuTop" class="mnpMenuTop" style="overflow-x: hidden; width: 181px" url="/korea/newsletter/default.mspx" dir="LTR" parent="/korea/newsletter/notice/default.mspx"><div class="mnpInherit"><div class="mnpMenuLabel">제품군</div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/windows/default.mspx">Windows</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/office/default.mspx">Office</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/windowsserversystem/default.mspx">Windows Server System</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/msdn/">Developer Tools</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/games/">Games &amp; Xbox</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/windowsmobile/">Windows Mobile</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.msn.co.kr">MSN</a></div><div class="mnpMenuBorder" style="width: 180px"></div><div class="mnpMenuLabel">제품 리소스</div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/download/">다운로드</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://windowsupdate.microsoft.com">Windows Update</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://office.microsoft.com/OfficeUpdate/default.aspx">Office Update</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/security/">보안</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/communities/">커뮤니티</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://support.microsoft.com/?ln=ko">기술지원</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/learning/default.mspx">교육 및 자격증</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/korea/events/default.mspx">이벤트 및 e-Seminar</a></div><div class="mnpMenuRow" style="border-color: #999999; background: white; cursor: default; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a aoff="yes" href="/korea/newsletter/default.mspx">뉴스레터 구독 관리</a></div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="/korea/myprofile/default.mspx">프로필 업데이트</a></div><div class="mnpMenuBorder" style="width: 180px"></div><div class="mnpMenuLabel">마이크로소프트 웹사이트</div><div class="mnpMenuRow" style="border-color: #F1F1F1; background: #F1F1F1; width: 153px; overflow-x: hidden"><img width="4" height="7" border="0" alt="*" title="" class="mnpMenuArrow" src="/library/mnp/2/gif/arrowLTR.gif" style="left: 166px; visibility: hidden"><a href="http://www.microsoft.com/worldwide/" target="_blank">국가별 찾기</a></div><div class="mnpMenuBorder" style="width: 180px; margin-bottom: 0px"></div></div></div><div class="mnpAds" style="width: 181px; height: 100%; padding-bottom: 20px; background: #F1F1F1; border-style: solid; border-color: #999999; border-width: 0px 1px 0px 0px"><center><script type="text/javascript" src=""></script></center></div></td><td width="100%" dir="LTR">
+<div style="
+          margin-bottom: 21px"><div style="padding-right: 15px"><script language="javascript" xmlns="http://www.microsoft.com/MSCOM/MNP2/Schemas">
+				window.location = "https://profile.microsoft.com/RegSysProfileCenter/SubCntDefault.aspx?lcid=1042";
+			</script><style type="text/css" xmlns="http://www.microsoft.com/MSCOM/MNP2/Schemas"><!--
+			.style1 {
+				font-family: "굴림";
+				font-size: 12px;
+				line-height: 15px;
+				color: #333333;
+			}
+			.style2 {
+				font-family: "굴림";
+				font-size: 12px;
+				line-height: 15px;
+				color: #05445a;
+				font-weight:bold;
+			}
+			.style3 {
+				font-family: "굴림";
+				font-size: 12px;
+				line-height: 15px;
+				color: #05445a;
+				padding-left:5px;
+			}
+			body {
+				margin-left: 0px;
+				margin-top: 0px;
+			}
+
+			.table1 {background-image: url('/korea/newsletter/images/newletter_box_bg.gif') right top; background-repeat: repeat-y; }
+			--></style><table width="665" border="0" cellspacing="0" cellpadding="0" xmlns="http://www.microsoft.com/MSCOM/MNP2/Schemas"><tr><td><img src="/korea/newsletter/images/newletter_topimg_s.jpg" width="665" height="136" alt=""></td></tr><tr><td align="center" valign="top" style="padding-top:30px"><table width="622" border="0" cellpadding="0" cellspacing="0"><tr><td><img src="/korea/newsletter/images/newletter_toptext_s.gif" width="622" height="27" alt=""></td></tr><tr><td><img src="/korea/newsletter/images/newletter_box_top.gif" width="622" height="36" alt=""></td></tr><tr><td align="center" valign="top" background="/korea/newsletter/images/newletter_box_bg.gif"><table width="575" border="0" cellspacing="0" cellpadding="0" class="table1"><tr><td align="center" valign="top" style="padding:0px 0px 20px 0px"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td rowspan="2" valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td align="left" valign="top"><img src="/korea/newsletter/images/newletter_tt_01.gif" width="170" height="20" alt=""></td><td width="96"><a href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=220671b8-ee19-4a94-b3e9-4429cfd350ed&amp;lcid=1042"><img src="/korea/newsletter/images/newletter_btn.gif" alt="" width="71" height="22" border="0"></a></td></tr></table></td></tr><tr align="left"><td style="padding:15px 0px 0px 32px" class="style1">TechNet뉴스레터 서비스에 가입하시면, 마이크로소프트 <br>보안 및 제품 업데이트, 문제해결방안 IT 운영 노하우, <br>관련세미나 안내 등의 정보를 받으실 수 있습니다</td></tr></table></td><td width="32" rowspan="2" align="center" valign="bottom"><img src="/korea/newsletter/images/newletter_center_line.gif" width="4" height="81" alt=""></td><td width="185" valign="top"><img src="/korea/newsletter/images/newletter_right01.gif" width="185" alt=""></td></tr><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="6cafc6"><tr><td width="30%" height="22" align="center" bgcolor="acd8e8" class="style2">대상자</td><td width="70%" align="left" bgcolor="e9f5f9" class="style3">IT 운영자, 실무자<br>관리자</td></tr><tr><td height="22" align="center" bgcolor="acd8e8" class="style2">발송주기</td><td align="left" bgcolor="e9f5f9" class="style3">정보 업데이트 시</td></tr></table></td></tr></table></td></tr><tr><td><img src="/korea/newsletter/images/newletter_line.gif" width="561" height="1" alt=""></td></tr><tr><td align="center" valign="top" style="padding:17px  0px  20px  0px"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td rowspan="2" valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td align="left" valign="top"><img src="/korea/newsletter/images/newletter_tt_02.gif" width="170" height="20" alt=""></td><td width="96"><a href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=f7570c60-f467-4861-a57d-55e923fc084e&amp;lcid=1042"><img src="/korea/newsletter/images/newletter_btn.gif" alt="" width="71" height="22" border="0"></a></td></tr></table></td></tr><tr align="left"><td style="padding:15px 0px 0px 32px" class="style1">MSDN 뉴스레터 서비스에 가입하시면, Microsoft가 전달해 드리는 최신 개발 정보, SDK다운로드 파트너 제품 보안 <br>업데이트, 개발자 세미나 안내를 받으실 수 있습니다.</td></tr></table></td><td width="32" rowspan="2" align="center" valign="bottom"><img src="/korea/newsletter/images/newletter_center_line.gif" width="4" height="81" alt=""></td><td width="185" valign="top"><img src="/korea/newsletter/images/newletter_right02.gif" width="185" alt=""></td></tr><tr><td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="6cafc6"><tr><td width="30%" height="22" align="center" bgcolor="acd8e8" class="style2">대상자</td><td width="70%" align="left" bgcolor="e9f5f9" class="style3">개발 담당자</td></tr><tr><td height="22" align="center" bgcolor="acd8e8" class="style2">발송주기</td><td align="left" bgcolor="e9f5f9" class="style3">2주 1회</td></tr></table></td></tr></table></td></tr><tr><td><img src="/korea/newsletter/images/newletter_line.gif" width="561" height="1" alt=""></td></tr><tr><td align="center" valign="top" style="padding:17px  0px  20px  0px"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td rowspan="2" valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td align="left" valign="top"><img src="/korea/newsletter/images/newletter_tt_03.gif" width="215" height="20" alt=""></td><td width="96"><a href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=41a26253-1afb-4299-9f31-148b05716f6d&amp;lcid=1042"><img src="/korea/newsletter/images/newletter_btn.gif" alt="" width="71" height="22" border="0"></a></td></tr></table></td></tr><tr align="left"><td class="style1" style="padding:15px 0px 0px 32px">보안 업데이트는 새로 발견된 보안 취약점을 기록하였으며 어떤 제품들이 영향을 받는지와 취약점의 위험도, 제거 방법 등을 알려 드립니다 </td></tr></table></td><td width="32" rowspan="2" align="center" valign="middle"><img src="/korea/newsletter/images/newletter_center_line.gif" width="4" height="81" alt=""></td><td width="185" valign="top"><img src="/korea/newsletter/images/newletter_right03.gif" width="185" alt=""></td></tr><tr><td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="6cafc6"><tr><td width="30%" height="22" align="center" bgcolor="acd8e8" class="style2">대상자</td><td width="70%" align="left" bgcolor="e9f5f9" class="style3">MIcrosoft 제품 사용자</td></tr><tr><td height="22" align="center" bgcolor="acd8e8" class="style2">발송주기</td><td align="left" bgcolor="e9f5f9" class="style3">보안 공지 업데이트 시</td></tr></table></td></tr></table></td></tr><tr><td><img src="/korea/newsletter/images/newletter_line.gif" width="561" height="1" alt=""></td></tr><tr><td align="center" valign="top" style="padding:17px  0px  20px  0px"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td rowspan="2" valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td align="left" valign="top"><img src="/korea/newsletter/images/newletter_tt_04.gif" width="154" height="20" alt=""></td><td width="96"><a href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=c2aa454f-9f7e-41a0-a922-1e936b3c96b7&amp;lcid=1042"><img src="/korea/newsletter/images/newletter_btn.gif" alt="" width="71" height="22" border="0"></a></td></tr></table></td></tr><tr align="left"><td class="style1" style="padding:15px 0px 0px 32px">매월 발송되는 본 뉴스레터는 Microsoft의 보안 전략과<br>우선 순위들을 이해하기 위한 권위 있는 정보 소스입니다. <br>
+																	IT 관리자, 개발자, 비즈니스 담당자들을 위한 내용과 함께 최신 보안 업데이트, 질문과 답변, 규정 가이드, 커뮤니티 <br>리소스, 이벤트 등을 알려 드립니다. <br></td></tr></table></td><td width="32" rowspan="2" align="center" valign="middle"><img src="/korea/newsletter/images/newletter_center_line.gif" width="4" height="81" alt=""></td><td width="185" valign="top"><img src="/korea/newsletter/images/newletter_right04.gif" width="185" alt=""></td></tr><tr><td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="6cafc6"><tr><td width="30%" height="22" align="center" bgcolor="acd8e8" class="style2">대상자</td><td width="70%" align="left" bgcolor="e9f5f9" class="style3">Microsoft 제품 사용자</td></tr><tr><td height="22" align="center" bgcolor="acd8e8" class="style2">발송주기</td><td align="left" bgcolor="e9f5f9" class="style3">월1회</td></tr></table></td></tr></table></td></tr><tr><td><img src="/korea/newsletter/images/newletter_line.gif" width="561" height="1" alt=""></td></tr><tr><td align="center" valign="top" style="padding:17px  0px  20px  0px"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td rowspan="2" valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td align="left" valign="top"><img src="/korea/newsletter/images/newletter_tt_05.gif" width="179" height="20" alt=""></td><td width="96"><a href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=bb65513d-76db-481d-9515-1d009b6963ee&amp;lcid=1042"><img src="/korea/newsletter/images/newletter_btn.gif" alt="" width="71" height="22" border="0"></a></td></tr></table></td></tr><tr align="left"><td style="padding:15px 0px 0px 32px" class="style1">나만의 	Office 활용 정보 메일을 통해 최신 서식, 새로운 <br>오피스 팁 오피스 지식 검색, 오피스 온라인 무료 다운로드 안내 등의 내용을 한 눈에 파악하실 수 있습니다</td></tr></table></td><td width="32" rowspan="2" align="center" valign="bottom"><img src="/korea/newsletter/images/newletter_center_line.gif" width="4" height="81" alt=""></td><td width="185" valign="top"><img src="/korea/newsletter/images/newletter_right05.gif" width="185" alt=""></td></tr><tr><td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="6cafc6"><tr><td width="30%" height="22" align="center" bgcolor="acd8e8" class="style2">대상자</td><td width="70%" align="left" bgcolor="e9f5f9" class="style3">Microsoft Office <br>사용자</td></tr><tr><td height="22" align="center" bgcolor="acd8e8" class="style2">발송주기</td><td align="left" bgcolor="e9f5f9" class="style3">월1회</td></tr></table></td></tr></table></td></tr><tr><td><img src="/korea/newsletter/images/newletter_line.gif" width="561" height="1" alt=""></td></tr><tr><td align="center" valign="top" style="padding:17px  0px  20px  0px"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td rowspan="2" valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td align="left" valign="top"><img src="/korea/newsletter/images/newletter_tt_06.gif" width="197" height="20" alt=""></td><td width="96"><a href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=cd990e19-f4a3-4819-adc4-40b654afe9fe&amp;lcid=1042"><img src="/korea/newsletter/images/newletter_btn.gif" alt="" width="71" height="22" border="0"></a></td></tr></table></td></tr><tr align="left"><td class="style1" style="padding:15px 0px 0px 32px">Microsoft 고객지원부에서 발송하는 Microsoft 온라인 <br>뉴스레터에 가입하시면, 새롭게 게시되는 기술 자료,  <br>제품 별 Top 50 기술자료,
+																	고객지원센터를 통해 자주 <br>문의되는 질문/ 답변, 다양한 고객지원  서비스 안내 등의<br> 정보를 받으실 수 있습니다. <br></td></tr></table></td><td width="32" rowspan="2" align="center" valign="middle"><img src="/korea/newsletter/images/newletter_center_line.gif" width="4" height="81" alt=""></td><td width="185" valign="top"><img src="/korea/newsletter/images/newletter_right06.gif" width="185" alt=""></td></tr><tr><td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="6cafc6"><tr><td width="30%" height="22" align="center" bgcolor="acd8e8" class="style2">대상자</td><td width="70%" align="left" bgcolor="e9f5f9" class="style3">Microsoft 제품 사용자</td></tr><tr><td height="22" align="center" bgcolor="acd8e8" class="style2">발송주기</td><td align="left" bgcolor="e9f5f9" class="style3">월1회</td></tr></table></td></tr></table></td></tr><tr><td><img src="/korea/newsletter/images/newletter_line.gif" width="561" height="1" alt=""></td></tr><tr><td align="center" valign="top" style="padding:17px  0px  20px  0px"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td rowspan="2" valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td align="left" valign="top"><img src="/korea/newsletter/images/newletter_tt_07.gif" width="197" height="20" alt=""></td><td width="96"><a href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=6c8e1ca0-26e6-489c-a3ca-ff5600be516e&amp;lcid=1042"><img src="/korea/newsletter/images/newletter_btn.gif" alt="" width="71" height="22" border="0"></a></td></tr></table></td></tr><tr align="left"><td class="style1" style="padding:15px 0px 0px 32px">마이크로소프트 파트너 프로그램을 통한 혜택, 지원 및<br> 파트너에게 필요한 다양한 리소스를 제공합니다.<br></td></tr></table></td><td width="32" rowspan="2" align="center" valign="middle"><img src="/korea/newsletter/images/newletter_center_line.gif" width="4" height="81" alt=""></td><td width="185" valign="top"><img src="/korea/newsletter/images/partnerprogram_masthead_ltr_ko.gif" width="185" alt=""></td></tr><tr><td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="6cafc6"><tr><td width="30%" height="22" align="center" bgcolor="acd8e8" class="style2">대상자</td><td width="70%" align="left" bgcolor="e9f5f9" class="style3">마이크로소프트 파트너 프로그램 회원사</td></tr><tr><td height="22" align="center" bgcolor="acd8e8" class="style2">발송주기</td><td align="left" bgcolor="e9f5f9" class="style3">2주 1회</td></tr></table></td></tr></table></td></tr><tr><td><img src="/korea/newsletter/images/newletter_line.gif" width="561" height="1" alt=""></td></tr><tr><td align="center" valign="top" style="padding:17px  0px  20px  0px"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td rowspan="2" valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><table width="355" border="0" cellspacing="0" cellpadding="0"><tr><td align="left" valign="top"><img src="/korea/newsletter/images/newletter_tt_08.gif" width="230" height="20" alt=""></td><td width="96"><a href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=80d27966-21b7-44f0-8ac4-546b44ab6b99&amp;lcid=1042"><img src="/korea/newsletter/images/newletter_btn.gif" alt="" width="71" height="22" border="0"></a></td></tr></table></td></tr><tr align="left"><td class="style1" style="padding:15px 0px 0px 32px">마이크로소프트 중소기업센터 회원가입을 통한 맞춤형 컨텐츠 제공, 격주로 발행되는 뉴스레터 수신, 세미나 초대를 제공합니다.<br></td></tr></table></td><td width="32" rowspan="2" align="center" valign="middle"><img src="/korea/newsletter/images/newletter_center_line.gif" width="4" height="81" alt=""></td><td width="185" valign="top"><img src="/korea/newsletter/images/newletter_right08.gif" width="185" alt=""></td></tr><tr><td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="6cafc6"><tr><td width="30%" height="22" align="center" bgcolor="acd8e8" class="style2">대상자</td><td width="70%" align="left" bgcolor="e9f5f9" class="style3">중소기업 실무담당자, IT 관리자, 운영자</td></tr><tr><td height="22" align="center" bgcolor="acd8e8" class="style2">발송주기</td><td align="left" bgcolor="e9f5f9" class="style3">2주 1회</td></tr></table></td></tr></table></td></tr></table></td></tr><tr><td><img src="/korea/newsletter/images/newletter_box_foot.gif" width="622" height="13" alt=""></td></tr></table></td></tr></table></div></div></td></tr></table><br clear="all" style="line-height: 1px; overflow: hidden"><table id="msviFooter" width="100%" cellpadding="0" cellspacing="0"><tr valign="bottom"><td id="msviFooter2" style="filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#FFFFFF', endColorStr='#3F8CDA', gradientType='1')"><div id="msviLocalFooter"><nobr><a href="https://profile.microsoft.com/RegSysProfileCenter/default.aspx?lcid=1042" target="_top">프로필(내 정보) 관리</a> |</nobr><wbr></wbr><nobr><a href="http://support.microsoft.com/contactus/" target="_parent">문의처</a></nobr></div><div id="msviGlobalFooter"><span dir="ltr">&#169;2016 Microsoft Corporation. All rights reserved.&nbsp;</span><nobr><a href="http://support.microsoft.com/contactus/?ln=ko" target="_parent">사용자 문의</a> |</nobr><wbr></wbr><nobr><a href="http://www.microsoft.com/korea/info/cpyright.htm" target="_parent">사용약관</a> |</nobr><wbr></wbr><nobr><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/ko-kr.mspx" target="_top">상표</a> |</nobr><wbr></wbr><nobr><a href="http://go.microsoft.com/fwlink/?LinkId=81184" target="_parent">개인정보취급방침 및 청소년보호정책</a> |</nobr><wbr></wbr><nobr><a href="http://www.microsoft.com/korea/about/legal/default.mspx" target="_top">법적정보</a></nobr></div></td></tr></table><div style="display:none"><script type="text/javascript">var gDomain="m.webtrends.com";var gDcsId="dcsjwb9vb00000c932fd0rjc7_5p3t";var gFpc="WT_FPC";if(document.cookie.indexOf(gFpc+"=")==-1){document.write("<SCR"+"IPT TYPE='text/javascript' SRC='"+"http"+(window.location.protocol.indexOf('https:')==0?'s':'')+"://"+gDomain+"/"+gDcsId+"/wtid.js"+"'><\/SCR"+"IPT>");}</script><script src="http://js.microsoft.com/library/mnp/2/wt/js/wt.js" type="text/javascript"></script><noscript><img border="0" name="DCSIMG" width="1" height="1" src="http://m.webtrends.com/dcsjwb9vb00000c932fd0rjc7_5p3t/njs.gif?dcsuri=/nojavascript&WT.js=No"/></noscript></div><layer visibility="hide"><div style="display:none"><noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"></noscript></div></layer></body></html>

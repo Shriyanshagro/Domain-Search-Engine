@@ -1,0 +1,3217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML lang="en">
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Web Service Definition Language (WSDL)</title>
+
+<style type="text/css">
+      <!--
+      p.MsoNormal, li.MsoNormal, div.MsoNormal
+      {}
+      p.MsoCaption, li.MsoCaption, div.MsoCaption
+      {font-weight:bold}
+      p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+      {padding-top:0.25em;
+      padding-bottom:0.25em;}
+      p.MsoListNumber, li.MsoListNumber, div.MsoListNumber
+      {padding-top:0.25em;
+      padding-bottom:0.25em;}
+      p.MsoListBullet2, li.MsoListBullet2, div.MsoListBullet2
+      {padding-top:0.25em;
+      padding-bottom:0.25em;}
+      p.MsoListNumber2, li.MsoListNumber2, div.MsoListNumber2
+      {padding-top:0.25em;
+      padding-bottom:0.25em;}
+      p.MsoTitle, li.MsoTitle, div.MsoTitle
+      {}
+      p.MsoDDef, dd.MsoDDef, div.MsoDDef
+      {padding-bottom:0.25em;}
+      p.MsoDTerm, dt.MsoDTerm, div.MsoDTerm
+      {}
+      p.Preformatted, li.Preformatted, div.Preformatted
+      {margin-left:2em;
+      background:#80ffff;
+      font-family:"Courier New"}
+      p.Reference, li.Reference, div.Reference
+      {}
+      table.MsoNormal
+      {border-collapse:collapse;
+      background:#f5dcb3;
+      border-spacing:1pt;
+      border:solid black}
+      td.MsoNormal
+      {border: 1pt solid black;
+      padding: 0.2em}
+      p.TableText, li.TableText, div.TableText
+      {margin-top:0.2em;
+      margin-bottom:0.2em;
+      font-family:"Arial"}
+      p.TableHeader, li.TableHeader, div.TableHeader
+      {text-align:center;
+      font-family:"Arial";
+      font-weight:bold}
+      -->
+    </style>
+<LINK href="http://www.w3.org/StyleSheets/TR/W3C-NOTE.css" type="text/css" rel="stylesheet">
+</head>
+
+<body link="#0000FF" vlink="#0000FF" lang="EN-US">
+
+<div class="head">
+<p><a href="http://www.w3.org/"><IMG height=48 alt=W3C src="http://www.w3.org/Icons/w3c_home" width=72></a></p>
+
+<h1>
+<a name="_Toc492291034">Web Services Description Language (WSDL) 1.1</a></h1>
+
+<h2>
+<a name="_draft">W3C Note 15 March 2001</a></h2>
+
+<DL>
+  <DT>This version:
+  <DD><A
+  href="http://www.w3.org/TR/2001/NOTE-wsdl-20010315">http://www.w3.org/TR/2001/NOTE-wsdl-20010315</A></DD>
+
+  <DT>Latest version:
+  <DD><A href="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</A></DD>
+	
+	<DT>Authors (alphabetically):
+
+  <DD><a href="mailto:erikc@microsoft.com">Erik Christensen</a>, Microsoft</DD>
+  <DD><a href="mailto:curbera@us.ibm.com">Francisco Curbera</a>, IBM Research</DD>
+  <DD><a href="mailto:gregmer@microsoft.com">Greg Meredith</a>, Microsoft</DD>
+  <DD><a href="mailto:sanjiva@us.ibm.com">Sanjiva Weerawarana</a>, IBM Research</DD>
+</DL>
+
+<p class="copyright">Copyright© 2001
+<a href="http://www.ariba.com/">Ariba</a>,
+<a href="http://www.ibm.com/">International Business Machines Corporation</a>,
+<a href="http://www.microsoft.com/">Microsoft</a></p>
+
+</div>
+
+<hr>
+
+<h2
+><a
+name="_abstract">Abstract</a></h2>
+
+<p>WSDL is an XML format for describing network services as a set
+of endpoints operating on messages containing either document-oriented
+or procedure-oriented information. The operations and messages
+are described abstractly, and then bound to a concrete network
+protocol and message format to define an endpoint. Related
+concrete endpoints are combined into abstract endpoints (services).
+WSDL is extensible to allow description of endpoints and their
+messages regardless of what message formats or network protocols
+are used to communicate, however, the only bindings described in
+this document describe how to use WSDL in conjunction with SOAP 1.1,
+HTTP GET/POST, and MIME.</p>
+
+<h2
+><a name="_status">Status</a></h2>
+<P class="MsoBodyText">This document is a submission to the <A
+href="http://www.w3.org/">World Wide Web Consortium</A> (see <a href="/Submission/2001/07/">Submission Request</a>,
+<a href="/Submission/2001/07/Comment">W3C Staff Comment</a>) as a suggestion for describing services for the <A
+href="http://www.w3.org/2000/xp/">W3C XML Activity on XML
+Protocols</A>. For a full list of all acknowledged Submissions, please
+see <A href="/Submission/">Acknowledged Submissions to W3C</A>.</P>
+
+<p>This draft represents the current thinking
+with regard to descriptions of services within Ariba, IBM and Microsoft.&nbsp;
+It consolidates concepts found in NASSL, SCL, and SDL (earlier
+proposals in this space).</p>
+
+<P>This document is a NOTE made available by the W3C for discussion only.
+Publication of this Note by W3C indicates no endorsement by W3C or the W3C
+Team, or any W3C Members. W3C has had no editorial control over the
+preparation of this Note. This document is a work in progress and may be
+updated, replaced, or rendered obsolete by other documents at any
+time.</P>
+
+<P>A list of current W3C technical documents can be found at the <A HREF="/TR/">Technical Reports</A> page.</P>
+
+<h2><a
+name="_table">Table of Contents</a></h2>
+
+
+<p class="MsoToc1">
+<a href="#_introduction">1 Introduction.</a><br>
+<a href="#_wsdl">1.1&nbsp;WSDL Document Example</a><br>
+<a href="#_notational">1.2&nbsp;Notational Conventions</a><br>
+<a href="#_service">2 Service Definition</a><br>
+<a href="#_document-s">2.1 Document Structure</a><br>
+<a href="#_document-n">2.1.1 Document Naming and Linking</a><br>
+<a href="#_style">2.1.2 Authoring Style</a><br>
+<a href="#_language">2.1.3&nbsp;Language Extensibility and
+Binding</a><br>
+<a href="#_documentation">2.1.4&nbsp;Documentation</a><br>
+<a href="#_types">2.2&nbsp;Types</a><br>
+<a href="#_messages">2.3&nbsp;Messages</a><br>
+<a href="#_message">2.3.1 Message Parts</a><br>
+<a href="#_abstract-v">2.3.2 Abstract vs. Concrete Messages</a><br>
+<a href="#_porttypes">2.4&nbsp;Port Types</a><br>
+<a href="#_one-way">2.4.1 One-way Operation</a><br>
+<a href="#_request-response">2.4.2 Request-response Operation.</a><br>
+<a href="#_solicit-response">2.4.3 Solicit-response Operation</a><br>
+<a href="#_notification">2.4.4 Notification Operation</a><br>
+<a href="#_names">2.4.5 Names of Elements within an Operation</a><br>
+<a href="#_parameter">2.4.6 Parameter Order within an Operation</a><br>
+<a href="#_bindings">2.5&nbsp;Bindings</a><br>
+<a href="#_ports">2.6&nbsp;Ports</a><br>
+<a href="#_services">2.7&nbsp;Services</a><br>
+<a href="#_soap-b">3 SOAP Binding</a><br>
+<a href="#_soap-e">3.1 SOAP Examples</a><br>
+<a href="#_how-s">3.2 How the SOAP Binding Extends WSDL</a><br>
+<a href="#_soap:binding">3.3&nbsp;soap:binding</a><br>
+<a href="#_soap:operation">3.4&nbsp;soap:operation</a><br>
+<a href="#_soap:body">3.5&nbsp;soap:body</a><br>
+<a href="#_soap:fault">3.6&nbsp;soap:fault</a><br>
+<a href="#_soap:header">3.7&nbsp;soap:header and soap:headerfault</a><br>
+<a href="#_soap:address">3.8&nbsp;soap:address</a><br>
+<a href="#_http">4 HTTP GET &amp; POST Binding</a><br>
+<a href="#_http-e">4.1 HTTP GET/POST Examples</a><br>
+<a href="#_http-b">4.2 How the HTTP GET/POST Binding Extends WSDL</a><br>
+<a href="#_http:address">4.3&nbsp;http:address</a><br>
+<a href="#_http:binding">4.4&nbsp;http:binding</a><br>
+<a href="#_http:operation">4.5&nbsp;http:operation</a><br>
+<a href="#_http:urlEncoded">4.6 http:urlEncoded</a><br>
+<a href="#_http:urlReplacement">4.7 http:urlReplacement</a><br>
+<a href="#_Toc492291084">5 MIME Binding</a><br>
+<a href="#_Toc492291085">5.1 MIME Binding example</a><br>
+<a href="#_Toc492291086">5.2&nbsp;How the MIME Binding extends
+WSDL</a><br>
+<a href="#_mime:content">5.3&nbsp;mime:content</a><br>
+<a href="#_mime:multipartRelated">5.4&nbsp;mime:multipartRelated</a><br>
+<a href="#_mime:soap:body">5.5&nbsp;soap:body</a><br>
+<a href="#_mime:mimeXml">5.6&nbsp;mime:mimeXml</a><br>
+<a href="#_Toc492291091">6 References</a><br>
+<a href="#_Toc492291092">A 1 Notes on URIs</a><br>
+<a href="#_Toc492291093">A 1.1 XML namespaces &amp; schema
+locations</a><br>
+<a href="#_Toc492291094">A 1.2 Relative URIs</a><br>
+<a href="#_Toc492291095">A 1.3 Generating URIs</a><br>
+<a href="#_Toc492291096">A 2 Wire format for WSDL examples</a><br>
+<a href="#_Toc492291097">A 2.1 Example 1</a><br>
+<a href="#A3">A 3 Location of Extensibility Elements<br>
+</a><a href="#A4">A 4 Schemas<br>
+</a><a href="#A4.1">A 4.1 WSDL Schema<br>
+</a><a href="#A4.2">A 4.2 SOAP Binding Schema<br>
+</a><a href="#A4.3">A 4.3 HTTP Binding Schema<br>
+</a><a href="#A4.4">A 4.4 MIME Binding Schema<br>
+</a></p>
+
+<h2 class="MsoToc1">1.   <a name="_introduction">Introduction</a></h2>
+
+<p>As communications protocols and message formats are
+standardized in the web community, it becomes increasingly
+possible and important to be able to describe the communications
+in some structured way.  WSDL addresses this need by defining
+an XML grammar for describing network services as collections of
+communication endpoints capable of exchanging messages. WSDL
+service definitions provide documentation for distributed systems
+and serve as a recipe for automating the details involved in
+applications communication. </p>
+
+<p>A WSDL document defines <strong>services</strong> as
+collections of network endpoints, or <strong>ports</strong>. In
+WSDL, the abstract definition of endpoints and messages is
+separated from their concrete network deployment or data format
+bindings. This allows the reuse of abstract definitions: <strong>messages</strong>,
+which are abstract descriptions of the data being exchanged, and <strong>port
+types</strong> which are abstract collections of <strong>operations</strong>.
+The concrete protocol and data format specifications for
+a particular port type constitutes a reusable <strong>binding</strong>.
+A port is defined by associating a network address with a
+reusable binding, and a collection of ports define a service.
+Hence, a WSDL document uses the following elements in the
+definition of network services:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    ><b>Types</b>&#150;
+        a container for data type definitions using some type
+        system (such as XSD).</li>
+    <li class="MsoNormal"
+    ><b>Message</b>&#150;
+        an abstract, typed definition of the data being
+        communicated.</li>
+    <li class="MsoNormal"
+    ><b>Operation</b>&#150;
+        an abstract description of an action supported by the
+        service.</li>
+    <li class="MsoNormal"
+    ><b>Port
+        Type</b>&#150;an abstract set of operations supported by
+        one or more endpoints.</li>
+    <li class="MsoNormal"
+    ><b>Binding</b>&#150;
+        a concrete protocol and data format specification for a
+        particular port type.</li>
+    <li class="MsoNormal"
+    ><b>Port</b>&#150;
+        a single endpoint defined as a combination of a binding
+        and a network address.</li>
+    <li class="MsoNormal"
+    ><b>Service</b>&#150;
+        a collection of related endpoints.</li>
+</ul>
+
+<p>These elements are described in detail in Section 2. It is
+important to observe that WSDL does not introduce a new type
+definition language. WSDL recognizes the need for rich type
+systems for describing message formats, and supports the XML
+Schemas specification (XSD) <a href="#_9.__">[11]</a> as its
+canonical type system. However, since it is unreasonable to
+expect a single type system grammar to be used to describe all
+message formats present and future, WSDL allows using other type
+definition languages via extensibility.</p>
+
+<p>In addition, WSDL defines a common <strong>binding</strong>
+mechanism. This is used to attach a specific protocol or data
+format or structure to an abstract message, operation, or
+endpoint. It allows the reuse of abstract definitions. </p>
+
+<p>In addition to the core service definition framework, this
+specification introduces specific <b>binding extensions</b> for
+the following protocols and message formats:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >SOAP 1.1
+        (<a href="#_6.__">see Section 3</a>) </li>
+    <li class="MsoNormal"
+    >HTTP
+        GET / POST (<a href="#_7.__">see Section 4</a>) </li>
+    <li class="MsoNormal"
+    >MIME (<a
+        href="#_8.__">see Section 5</a>) </li>
+</ul>
+
+<p>Although defined within this document, the above language
+extensions are layered on top of the core <a href="#_3.__">service
+definition framework</a>.  Nothing precludes the use of
+other binding extensions with WSDL.</p>
+
+<h3><a name="_wsdl"></a>1.2
+WSDL Document Example</h3>
+
+<p class="msoddef">The following example shows the WSDL definition
+of a simple service providing stock quotes. The service supports
+a single operation called GetLastTradePrice, which is deployed
+using the SOAP 1.1 protocol over HTTP. The request takes a ticker
+symbol of type string, and returns the price as a float. A
+detailed description of the elements used in this definition can
+be found in Section 2 (core language) and Section 3 (SOAP binding).</p>
+
+<p>This example uses a fixed XML format instead of the SOAP encoding 
+(for an example using the SOAP encoding, see <a href="#_rpcexample">Example 4</a>).</p>
+
+<p class="msoddef"><a name="_example1"></a><strong>Example 1 SOAP
+1.1 Request/Response via HTTP</strong></p>
+
+<pre class="clsCode">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;definitions name=&quot;StockQuote&quot;
+
+targetNamespace=&quot;http://example.com/stockquote.wsdl&quot;
+          xmlns:tns=&quot;http://example.com/stockquote.wsdl&quot;
+          xmlns:xsd1=&quot;http://example.com/stockquote.xsd&quot;
+          xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+          xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;
+
+    &lt;types&gt;
+       &lt;schema targetNamespace=&quot;http://example.com/stockquote.xsd&quot;
+              xmlns=&quot;http://www.w3.org/2000/10/XMLSchema&quot;&gt;
+           &lt;element name=&quot;TradePriceRequest&quot;&gt;
+              &lt;complexType&gt;
+                  &lt;all&gt;
+                      &lt;element name=&quot;tickerSymbol&quot; type=&quot;string&quot;/&gt;
+                  &lt;/all&gt;
+              &lt;/complexType&gt;
+           &lt;/element&gt;
+           &lt;element name=&quot;TradePrice&quot;&gt;
+              &lt;complexType&gt;
+                  &lt;all&gt;
+                      &lt;element name=&quot;price&quot; type=&quot;float&quot;/&gt;
+                  &lt;/all&gt;
+              &lt;/complexType&gt;
+           &lt;/element&gt;
+       &lt;/schema&gt;
+    &lt;/types&gt;
+
+    &lt;message name=&quot;GetLastTradePriceInput&quot;&gt;
+        &lt;part name=&quot;body&quot; element=&quot;xsd1:TradePriceRequest&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;message name=&quot;GetLastTradePriceOutput&quot;&gt;
+        &lt;part name=&quot;body&quot; element=&quot;xsd1:TradePrice&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;portType name=&quot;StockQuotePortType&quot;&gt;
+        &lt;operation name=&quot;GetLastTradePrice&quot;&gt;
+           &lt;input message=&quot;tns:GetLastTradePriceInput&quot;/&gt;
+           &lt;output message=&quot;tns:GetLastTradePriceOutput&quot;/&gt;
+        &lt;/operation&gt;
+    &lt;/portType&gt;
+
+    &lt;binding name=&quot;StockQuoteSoapBinding&quot; type=&quot;tns:StockQuotePortType&quot;&gt;
+        &lt;soap:binding style=&quot;document&quot; transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;/&gt;
+        &lt;operation name=&quot;GetLastTradePrice&quot;&gt;
+           &lt;soap:operation soapAction=&quot;http://example.com/GetLastTradePrice&quot;/&gt;
+           &lt;input&gt;
+               &lt;soap:body use=&quot;literal&quot;/&gt;
+           &lt;/input&gt;
+           &lt;output&gt;
+               &lt;soap:body use=&quot;literal&quot;/&gt;
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;service name=&quot;StockQuoteService&quot;&gt;
+        &lt;documentation&gt;My first service&lt;/documentation&gt;
+        &lt;port name=&quot;StockQuotePort&quot; binding=&quot;tns:StockQuoteBinding&quot;&gt;
+           &lt;soap:address location=&quot;http://example.com/stockquote&quot;/&gt;
+        &lt;/port&gt;
+    &lt;/service&gt;
+
+&lt;/definitions&gt;
+</pre>
+
+<h3><a name="_notational">1.2 Notational
+Conventions</a></h3>
+
+<p>1. The keywords &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;,
+&quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
+&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;,
+and &quot;OPTIONAL&quot; in this document are to be interpreted
+as described in RFC-2119 <a href="#_9.__">[2]</a>.</p>
+
+<p>2. The following namespace prefixes are used throughout this
+document:</p>
+
+
+<TABLE CLASS="clsRef" BORDER="0" CELLPADDING="5" CELLSPACING="2"  WIDTH="80%"
+ summary="summary of namespaces used in wsdl specification document">
+
+    <tr>
+        <td BGCOLOR="#A6CAF0"
+        >prefix</td>
+        <td BGCOLOR="#A6CAF0" width="356"
+        >namespace
+        URI </td>
+        <td BGCOLOR="#A6CAF0" valign="top" width="607"
+        >definition</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >wsdl</td>
+        <td BGCOLOR="#EEEEE" width="356"
+
+  >http://schemas.xmlsoap.org/wsdl/</td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >WSDL
+        namespace for WSDL framework.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >soap</td>
+        <td BGCOLOR="#EEEEE" width="356"
+        >http://schemas.xmlsoap.org/wsdl/soap/</td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >WSDL
+        namespace for WSDL SOAP binding.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >http</td>
+        <td BGCOLOR="#EEEEE" width="356"
+        >http://schemas.xmlsoap.org/wsdl/http/</td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >WSDL
+        namespace for WSDL HTTP GET &amp; POST binding.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >mime</td>
+        <td BGCOLOR="#EEEEE" width="356"
+
+  >http://schemas.xmlsoap.org/wsdl/mime/</td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >WSDL
+        namespace for WSDL MIME binding.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >soapenc</td>
+        <td BGCOLOR="#EEEEE" width="356"
+        ><a
+        href="http://schemas.xmlsoap.org/soap/encoding/">http://schemas.xmlsoap.org/soap/encoding/</a></td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >Encoding namespace as defined by SOAP 1.1 <a href="#_9.__">[8]</a>.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >soapenv</td>
+        <td BGCOLOR="#EEEEE" width="356"
+        ><a
+        href="http://schemas.xmlsoap.org/soap/envelope/">http://schemas.xmlsoap.org/soap/envelope/</a></td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >Envelope namespace as defined by SOAP 1.1 <a href="#_9.__">[8]</a>.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >xsi</td>
+        <td BGCOLOR="#EEEEE"  width="356"
+
+  ><a
+        href="http://www.w3.org/2000/10/XMLSchema-instance">http://www.w3.org/2000/10/XMLSchema-instance</a>
+       </td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >Instance
+        namespace as defined by XSD <a href="#_9.__">[10]</a>.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >xsd</td>
+        <td BGCOLOR="#EEEEE"  width="356"
+
+  ><a
+        href="http://www.w3.org/2000/10/XMLSchema">http://www.w3.org/2000/10/XMLSchema</a></td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+
+  >Schema
+        namespace as defined by XSD <a href="#_9.__">[10]</a>.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >tns</td>
+        <td BGCOLOR="#EEEEE" width="356"
+
+  >(various)</td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >The
+        &#147;this namespace&#148; (tns) prefix is used as a
+        convention to refer to the current document.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >(other)</td>
+        <td BGCOLOR="#EEEEE" width="356"
+
+  >(various)</td>
+        <td BGCOLOR="#EEEEE" valign="top" width="607"
+
+  >All
+        other namespace prefixes are samples only.  In
+        particular, URIs starting with &#147;http://example.com&#148;
+        represent some application-dependent or context-dependent
+        URI <a href="#_9.__">[4]</a>.</td>
+    </tr>
+</table>
+
+
+<p>3. This specification uses an <b>informal syntax</b> to
+describe the XML grammar of a WSDL document:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >The
+        syntax appears as an XML instance, but the values
+        indicate the data types instead of values. </li>
+    <li class="MsoNormal"
+    >Characters
+        are appended to elements and attributes as follows:
+        &quot;?&quot; (0 or 1), &quot;*&quot; (0 or more), &quot;+&quot;
+        (1 or more). </li>
+    <li class="MsoNormal"
+    >Elements
+        names ending in &quot;&#133;&quot; (such as &lt;element&#133;/&gt;
+        or &lt;element&#133;&gt;) indicate that elements/attributes
+        irrelevant to the context are being omitted. </li>
+    <li class="MsoNormal"
+    >Grammar
+        in bold has not been introduced earlier in the document,
+        or is of particular interest in an example. </li>
+    <li class="MsoNormal"
+    >&lt;--
+        extensibility element --&gt; is a placeholder for
+        elements from some &quot;other&quot; namespace (like ##other
+        in XSD). </li>
+    <li class="MsoNormal"
+    >The XML
+        namespace prefixes (defined above) are used to indicate
+        the namespace of the element being defined. </li>
+    <li class="MsoNormal"
+    >Examples
+        starting with &lt;?xml contain enough information to
+        conform to this specification; others examples are
+        fragments and require additional information to be
+        specified in order to conform. </li>
+</ul>
+
+<p>XSD schemas are provided as a formal definition of
+ WSDL grammar (see <a href="#A4">section A4</a>).</p>
+
+<h2><a name="_service"></a><a name="_3.__"></a>2. Service
+Definition </h2>
+
+<p>This section describes the core elements of the WSDL language.
+Binding extensions for SOAP, HTTP and MIME are included in
+Sections 3, 4 and 5. </p>
+
+<h3><a name="_document-s"></a>2.1  WSDL Document Structure</h3>
+
+<p>A WSDL document is simply a <b>set of definitions</b>.
+There is a <b>definitions</b> element at the root, and
+definitions inside. The grammar is as follows:</p>
+
+<pre class="clsCode">
+&lt;wsdl:definitions name="nmtoken"? targetNamespace="uri"?&gt;
+
+    &lt;import namespace="uri" location="uri"/&gt;*
+
+    &lt;wsdl:documentation .... /&gt; ?
+
+    &lt;wsdl:types&gt; ?
+        &lt;wsdl:documentation .... /&gt;?
+        &lt;xsd:schema .... /&gt;*
+        &lt;-- extensibility element --&gt; *
+    &lt;/wsdl:types&gt;
+
+    &lt;wsdl:message name=&quot;nmtoken&quot;&gt; *
+        &lt;wsdl:documentation .... /&gt;?
+        &lt;part name=&quot;nmtoken&quot; element=&quot;qname&quot;? type=&quot;qname&quot;?/&gt; *
+    &lt;/wsdl:message&gt;
+
+    &lt;wsdl:portType name=&quot;nmtoken&quot;&gt;*
+        &lt;wsdl:documentation .... /&gt;?
+        &lt;wsdl:operation name=&quot;nmtoken&quot;&gt;*
+           &lt;wsdl:documentation .... /&gt; ?
+           &lt;wsdl:input name=&quot;nmtoken&quot;? message=&quot;qname&quot;&gt;?
+               &lt;wsdl:documentation .... /&gt; ?
+           &lt;/wsdl:input&gt;
+           &lt;wsdl:output name=&quot;nmtoken&quot;? message=&quot;qname&quot;&gt;?
+               &lt;wsdl:documentation .... /&gt; ?
+           &lt;/wsdl:output&gt;
+           &lt;wsdl:fault name=&quot;nmtoken&quot; message=&quot;qname&quot;&gt; *
+               &lt;wsdl:documentation .... /&gt; ?
+           &lt;/wsdl:fault&gt;
+        &lt;/wsdl:operation&gt;
+    &lt;/wsdl:portType&gt;
+
+    &lt;wsdl:binding name=&quot;nmtoken&quot; type=&quot;qname&quot;&gt;*
+        &lt;wsdl:documentation .... /&gt;?
+        &lt;-- extensibility element --&gt; *
+        &lt;wsdl:operation name=&quot;nmtoken&quot;&gt;*
+           &lt;wsdl:documentation .... /&gt; ?
+           &lt;-- extensibility element --&gt; *
+           &lt;wsdl:input&gt; ?
+               &lt;wsdl:documentation .... /&gt; ?
+               &lt;-- extensibility element --&gt;
+           &lt;/wsdl:input&gt;
+           &lt;wsdl:output&gt; ?
+               &lt;wsdl:documentation .... /&gt; ?
+               &lt;-- extensibility element --&gt; *
+           &lt;/wsdl:output&gt;
+           &lt;wsdl:fault name=&quot;nmtoken&quot;&gt; *
+               &lt;wsdl:documentation .... /&gt; ?
+               &lt;-- extensibility element --&gt; *
+           &lt;/wsdl:fault&gt;
+        &lt;/wsdl:operation&gt;
+    &lt;/wsdl:binding&gt;
+
+    &lt;wsdl:service name=&quot;nmtoken&quot;&gt; *
+        &lt;wsdl:documentation .... /&gt;?
+        &lt;wsdl:port name=&quot;nmtoken&quot; binding=&quot;qname&quot;&gt; *
+           &lt;wsdl:documentation .... /&gt; ?
+           &lt;-- extensibility element --&gt;
+        &lt;/wsdl:port&gt;
+        &lt;-- extensibility element --&gt;
+    &lt;/wsdl:service&gt;
+
+    &lt;-- extensibility element --&gt; *
+
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>Services are defined using six major elements:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    ><strong>types</strong>,
+        which provides data type definitions used to describe the
+        messages exchanged.</li>
+    <li class="MsoNormal"
+    ><b>message</b>,
+        which represents an abstract definition of the data being
+        transmitted.  A message consists of logical parts,
+        each of which is associated with a definition within some
+        type system.</li>
+    <li class="MsoNormal"
+    ><b>portType</b>,
+        which is a set of abstract operations.  Each
+        operation refers to an input message and output messages.</li>
+    <li class="MsoNormal"
+    ><b>binding</b>,
+        which specifies concrete protocol and data format
+        specifications for the operations and messages defined by
+        a particular portType.</li>
+    <li class="MsoNormal"
+    ><b>port</b>,
+        which specifies an address for a binding, thus defining a
+        single communication endpoint. </li>
+    <li class="MsoNormal"
+    ><b>service</b>,
+        which is used to aggregate a set of related ports.</li>
+</ul>
+
+<p>These elements will be described in detail in Sections 2.2 to
+2.7. In the rest of this section we describe the rules introduced
+by WSDL for naming documents, referencing document definitions,
+using language extensions and adding contextual documentation.</p>
+
+<h4><a name="_document-n"></a>2.1.1 Document Naming and Linking</h4>
+
+<p class="MsoNormal">WSDL documents can be assigned an optional <b>name</b>
+attribute of type NCNAME that serves as a lightweight form of
+documentation. Optionally, a <b>targetNamespace</b> attribute of
+type URI may be specified. The URI MUST NOT be a relative URI. </p>
+
+<p>WSDL allows associating a <b>namespace</b> with a document <b>location</b>
+using an <b>import</b> statement:</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+<b>    &lt;import namespace=&quot;uri&quot; location=&quot;uri&quot;/&gt; *</b>
+&lt;/definitions&gt;</pre>
+
+<p>A reference to a WSDL definition is made using a <a
+href="http://www.w3.org/TR/xmlschema-2/#QName">QName</a>. The
+following types of definitions contained in a WSDL document may
+be referenced:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >WSDL
+        definitions: service, port, message, bindings, and
+        portType</li>
+    <li class="MsoNormal"
+    >Other
+        definitions: if additional definitions are added
+        via extensibility, they SHOULD use QName linking. </li>
+</ul>
+
+<p>Each WSDL definition type listed above has its own <b>name
+scope</b> (i.e. port names and message names never conflict).
+Names within a name scope MUST be unique within the WSDL document. </p>
+
+<p>The resolution of QNames in WSDL is similar to the resolution
+of QNames described by the XML Schemas specification <a
+href="#_9.__">[11]</a>.</p>
+
+<h4><a name="_style">2.1.2 Authoring Style</a></h4>
+
+<p>The use of the <b>import</b> element allows
+the separation of the different elements of a service definition
+into independent documents, which can then be imported as needed.
+This technique helps writing clearer service definitions, by
+separating the definitions according to their level of
+abstraction. It also maximizes the ability to reuse service
+definitions of all kinds. As a result, WSDL documents structured
+in this way are easier to use and maintain. Example 2 below shows
+how to use this authoring style to define the service presented
+in <a href="#_example1">Example 1</a>. Here we separate the
+definitions in three documents: data type definitions, abstract
+definitions, and specific service bindings. The use of this
+mechanism is of course not limited to the definitions explicitly
+presented in the example, which uses only language elements
+defined in this specification. Other types of definitions based
+on additional language extensions can be encoded and reused in a
+similar fashion. </p>
+
+<p><strong>Example 2. Alternative authoring style for the service
+in Example 1.</strong></p>
+
+<p class="MsoCaption">http://example.com/stockquote/stockquote.xsd</p>
+
+<pre class="clsCode">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;schema targetNamespace=&quot;http://example.com/stockquote/schemas&quot;
+       xmlns=&quot;http://www.w3.org/2000/10/XMLSchema&quot;&gt;
+       
+    &lt;element name=&quot;TradePriceRequest&quot;&gt;
+        &lt;complexType&gt;
+            &lt;all&gt;
+                &lt;element name=&quot;tickerSymbol&quot; type=&quot;string&quot;/&gt;
+            &lt;/all&gt;
+        &lt;/complexType&gt;
+    &lt;/element&gt;
+    &lt;element name=&quot;TradePrice&quot;&gt;
+        &lt;complexType&gt;
+            &lt;all&gt;
+                &lt;element name=&quot;price&quot; type=&quot;float&quot;/&gt;
+            &lt;/all&gt;
+        &lt;/complexType&gt;
+    &lt;/element&gt;
+&lt;/schema&gt;
+</pre>
+
+<p class="MsoCaption">http://example.com/stockquote/stockquote.wsdl</p>
+
+<pre class="clsCode">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;definitions name=&quot;StockQuote&quot;
+
+targetNamespace=&quot;http://example.com/stockquote/definitions&quot;
+          xmlns:tns=&quot;http://example.com/stockquote/definitions&quot;
+          xmlns:xsd1=&quot;http://example.com/stockquote/schemas&quot;
+          xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+          xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;
+
+<b>   &lt;import namespace=&quot;http://example.com/stockquote/schemas&quot;
+           location=&quot;http://example.com/stockquote/stockquote.xsd&quot;/&gt;</b>
+
+    &lt;message name=&quot;GetLastTradePriceInput&quot;&gt;
+        &lt;part name=&quot;body&quot; element=&quot;xsd1:TradePriceRequest&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;message name=&quot;GetLastTradePriceOutput&quot;&gt;
+        &lt;part name=&quot;body&quot; element=&quot;xsd1:TradePrice&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;portType name=&quot;StockQuotePortType&quot;&gt;
+        &lt;operation name=&quot;GetLastTradePrice&quot;&gt;
+           &lt;input message=&quot;tns:GetLastTradePriceInput&quot;/&gt;
+           &lt;output message=&quot;tns:GetLastTradePriceOutput&quot;/&gt;
+        &lt;/operation&gt;
+    &lt;/portType&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p class="MsoCaption">http://example.com/stockquote/stockquoteservice.wsdl</p>
+
+<pre class="clsCode">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;definitions name=&quot;StockQuote&quot;
+
+targetNamespace=&quot;http://example.com/stockquote/service&quot;
+          xmlns:tns=&quot;http://example.com/stockquote/service&quot;
+          xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+          xmlns:defs=&quot;http://example.com/stockquote/definitions&quot;
+          xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;
+
+<b>   &lt;import namespace=&quot;http://example.com/stockquote/definitions&quot;
+           location=&quot;http://example.com/stockquote/stockquote.wsdl&quot;/&gt;</b>
+
+    &lt;binding name=&quot;StockQuoteSoapBinding&quot; type=&quot;defs:StockQuotePortType&quot;&gt;
+        &lt;soap:binding style=&quot;document&quot; transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;/&gt;
+        &lt;operation name=&quot;GetLastTradePrice&quot;&gt;
+           &lt;soap:operation soapAction=&quot;http://example.com/GetLastTradePrice&quot;/&gt;
+           &lt;input&gt;
+               &lt;soap:body use=&quot;literal&quot;/&gt;
+           &lt;/input&gt;
+           &lt;output&gt;
+               &lt;soap:body use=&quot;literal&quot;/&gt;
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;service name=&quot;StockQuoteService&quot;&gt;
+        &lt;documentation&gt;My first service&lt;/documentation&gt;
+        &lt;port name=&quot;StockQuotePort&quot; binding=&quot;tns:StockQuoteBinding&quot;&gt;
+           &lt;soap:address location=&quot;http://example.com/stockquote&quot;/&gt;
+        &lt;/port&gt;
+    &lt;/service&gt;
+&lt;/definitions&gt;
+</pre>
+
+<h4
+><a name="_language"></a>2.1.3 Language Extensibility and Binding</h4>
+
+<p>In WSDL the term binding refers to the process associating
+protocol or data format information with an abstract entity like
+a message, operation, or portType. WSDL allows elements
+representing a specific technology (referred to here as <b>extensibility
+elements</b>) under various elements defined by WSDL.  These
+points of extensibility are typically used to specify binding
+information for a particular protocol or message format, but are
+not limited to such use.  Extensibility elements MUST use an
+XML namespace different from that of WSDL. The specific locations
+in the document where extensibility elements can appear are
+described in detail in <a href="#A3">section A3</a>. </p>
+
+<p>Extensibility elements are commonly used to specify some
+technology specific binding.  To distinguish whether the
+semantic of the technology specific binding is required for
+communication or optional, extensibility elements MAY place a <b>wsdl:required</b>
+attribute of type boolean on the element.   The default
+value for required is false.  The required attribute is
+defined in the namespace &quot;http://schemas.xmlsoap.org/wsdl/&quot;.</p>
+
+<p>Extensibility elements allow innovation in the area of network 
+and message protocols without having to revise the base 
+WSDL specification.  WSDL recommends that specifications 
+defining such protocols also define any necessary WSDL extensions 
+used to describe those protocols or formats.</p>
+
+<p>See Sections 3, 4, and 5 for examples of extensibility
+elements defined as part of the base WSDL specification.</p>
+
+<h4
+><a
+name="_documentation"></a>2.1.4 Documentation</h4>
+
+<p>WSDL uses the optional <strong>wsdl:document</strong> element as
+a container for human readable documentation.  The content
+of the element is arbitrary text and elements (&quot;mixed&quot;
+in XSD).  The documentation element is allowed inside any
+WSDL language element. </p>
+
+<h3
+><a
+name="_types"></a><a name="_Type_systems"></a>2.2 Types</h3>
+
+<p>The <strong>types</strong> element encloses data type
+definitions that are relevant for the exchanged messages. For
+maximum interoperability and platform neutrality, WSDL prefers the
+use of XSD as the canonical type system, and treats it as the
+intrinsic type system.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;types&gt;
+        &lt;xsd:schema .... /&gt;*
+    &lt;/types&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>The XSD type system can be used to define the types in a
+message regardless of whether or not the resulting wire format is
+actually XML, or whether the resulting XSD schema validates the
+particular wire format.  This is especially interesting if
+there will be multiple bindings for the same message, or if there
+is only one binding but that binding type does not already
+have a type system in widespread use.  In these cases, the
+recommended approach for encoding abstract types using XSD is as follows:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >Use
+        element form (not attribute).</li>
+    <li class="MsoNormal"
+    >Don't
+        include attributes or elements that are peculiar to the
+        wire encoding (e.g. have nothing to do with the abstract
+        content of the message).  Some examples are soap:root,
+      soap:encodingStyle, xmi:id, xmi:name.</li>
+    <li class="MsoNormal"
+    >Array types should extend the Array type defined in the SOAP v1.1 encoding schema (<a href="http://schemas.xmlsoap.org/soap/encoding/">http://schemas.xmlsoap.org/soap/encoding/</a>)
+      (regardless of whether the resulting form
+      actually uses the encoding specified in Section 5 of the SOAP v1.1
+      document).
+        Use the name ArrayOfXXX for array types (where XXX is the
+        type of the items in the array).&nbsp; The type of the items in the
+      array and the array dimensions are
+      specified by using a default value for the soapenc:arrayType attribute.&nbsp;
+      At the time of this writing, the XSD specification does not have a
+      mechanism for specifying the default value of an attribute which contains
+      a QName value.&nbsp; To overcome this limitation, WSDL introduces the <b>arrayType</b>
+      attribute (from namespace http://schemas.xmlsoap.org/wsdl/) which has
+      the semantic of providing the default value.&nbsp; If XSD is revised to
+      support this functionality, the revised mechanism SHOULD be used in favor
+      of the arrayType attribute defined by WSDL.</li>
+    <li class="MsoNormal"
+    >Use the xsd:anyType type to represent a field/parameter which can have any
+      type.&nbsp;</li>
+</ul>
+
+<p>However, since it is unreasonable to expect a single type
+system grammar can be used to describe all abstract types present
+and future, WSDL allows type systems to be added via extensibility
+elements.  An extensibility element may appear under the <b>types</b>
+element to identify the type definition system being used and to
+provide an XML container element for the type definitions. The
+role of this element can be compared to that of the <b>schema</b>
+element of the XML Schema language.  </p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;types&gt;
+        &lt;-- type-system extensibility element --&gt; *
+    &lt;/types&gt;
+&lt;/definitions&gt;
+</pre>
+
+<h3 class="Code"><a name="_messages"></a>2.3   Messages</h3>
+
+<p>Messages consist of one or more logical <b>parts</b>.
+Each part is associated with a type from some type system using a
+message-typing attribute.  The set of message-typing
+attributes is extensible.  WSDL defines several such message-typing
+attributes for use with XSD:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    ><b>element</b>.
+        Refers to an XSD element using a QName.</li>
+    <li class="MsoNormal"
+    ><b>type</b>.
+        Refers to an XSD simpleType or complexType using a QName.
+    </li>
+</ul>
+
+<p>Other message-typing attributes may be defined as long as they
+use a namespace different from that of WSDL.  Binding
+extensibility elements may also use message-typing attributes.</p>
+
+<p>The syntax for defining a message is as follows.  The
+message-typing attributes (which may vary depending on the type
+system used) are shown in <b>bold</b>.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;message name=&quot;nmtoken&quot;&gt; *
+        &lt;part name=&quot;nmtoken&quot; <b>element=&quot;qname&quot;? type=&quot;qname&quot;?</b>/&gt; *
+    &lt;/message&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>The message <b>name</b> attribute provides a unique name among
+all messages defined within the enclosing WSDL document. </p>
+
+<p>The part <b>name</b> attribute provides a unique name among
+all the parts of the enclosing message.</p>
+
+<h4><a name="_message">2.3.1
+Message Parts</a></h4>
+
+<p>Parts are a flexible mechanism for describing the logical
+abstract content of a message.  A binding may reference the
+name of a part in order to specify binding-specific information
+about the part.  For example, if defining a message for use
+with RPC, a part MAY represent a parameter in the message.
+However, the bindings must be inspected in order to determine the
+actual meaning of the part.</p>
+
+<p>Multiple part elements are used if the message has multiple
+logical units.  For example, the following message consists
+of a Purchase Order and an Invoice.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;types&gt;
+        &lt;schema .... &gt;
+           &lt;element name=&quot;PO&quot; type=&quot;tns:POType&quot;/&gt;
+           &lt;complexType name=&quot;POType&quot;&gt;
+               &lt;all&gt;
+                   &lt;element name=&quot;id&quot; type=&quot;string/&gt;
+                   &lt;element name=&quot;name&quot; type=&quot;string&quot;/&gt;
+                   &lt;element name=&quot;items&quot;&gt;
+                       &lt;complexType&gt;
+                           &lt;all&gt;
+                               &lt;element name=&quot;item&quot; type=&quot;tns:Item&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+                           &lt;/all&gt;
+                       &lt;/complexType&gt;
+                   &lt;/element&gt;
+              &lt;/all&gt;
+           &lt;/complexType&gt;
+
+           &lt;complexType name=&quot;Item&quot;&gt;
+               &lt;all&gt;
+                   &lt;element name=&quot;quantity&quot; type=&quot;int&quot;/&gt;
+                   &lt;element name=&quot;product&quot; type=&quot;string&quot;/&gt;
+               &lt;/all&gt;
+           &lt;/complexType&gt;
+           &lt;element name=&quot;Invoice&quot; type=&quot;tns:InvoiceType&quot;/&gt;
+           &lt;complexType name=&quot;InvoiceType&quot;&gt;
+               &lt;all&gt;
+                   &lt;element name=&quot;id&quot; type=&quot;string&quot;/&gt;
+               &lt;/all&gt;
+           &lt;/complexType&gt;
+        &lt;/schema&gt;
+    &lt;/types&gt;
+
+    &lt;message name=&quot;PO&quot;&gt;
+<b>        &lt;part name=&quot;po&quot; element=&quot;tns:PO&quot;/&gt;</b>
+<b>        &lt;part name=&quot;invoice&quot; element=&quot;tns:Invoice&quot;/&gt;</b>
+    &lt;/message&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>However, if the message contents are sufficiently complex,
+then an alternative syntax may be used to specify the composite
+structure of the message using the type system directly. In this usage, only one
+part may be specified.&nbsp; In
+the following example, the body is either a purchase order, or a set of
+invoices.&nbsp;&nbsp;</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;types&gt;
+        &lt;schema .... &gt;
+           &lt;complexType name=&quot;POType&quot;&gt;
+               &lt;all&gt;
+                   &lt;element name=&quot;id&quot; type=&quot;string/&gt;
+                   &lt;element name=&quot;name&quot; type=&quot;string&quot;/&gt;
+                   &lt;element name=&quot;items&quot;&gt;
+                       &lt;complexType&gt;
+                           &lt;all&gt;
+                               &lt;element name=&quot;item&quot; type=&quot;tns:Item&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+                           &lt;/all&gt;			      
+                       &lt;/complexType&gt;
+                   &lt;/element&gt;
+               &lt;/all&gt;
+           &lt;/complexType&gt;
+
+           &lt;complexType name=&quot;Item&quot;&gt;
+               &lt;all&gt;
+                   &lt;element name=&quot;quantity&quot; type=&quot;int&quot;/&gt;
+                   &lt;element name=&quot;product&quot; type=&quot;string&quot;/&gt;
+               &lt;/all&gt;
+           &lt;/complexType&gt;
+           &lt;complexType name=&quot;InvoiceType&quot;&gt;
+               &lt;all&gt;
+                   &lt;element name=&quot;id&quot; type=&quot;string&quot;/&gt;
+               &lt;/all&gt;
+           &lt;/complexType&gt;
+
+<b>           &lt;complexType name=&quot;Composite&quot;&gt;</b>
+<b>               &lt;choice&gt;</b>
+<b>                   &lt;element name=&quot;PO&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; type=&quot;tns:POType&quot;/&gt;</b>
+<b>                   &lt;element name=&quot;Invoice&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot; type=&quot;tns:InvoiceType&quot;/&gt;</b>
+<b>               &lt;/choice&gt;</b>
+<b>           &lt;/complexType&gt;</b>
+        &lt;/schema&gt;
+    &lt;/types&gt;
+
+    &lt;message name=&quot;PO&quot;&gt;
+<b>        &lt;part name=&quot;composite&quot; type=&quot;tns:Composite&quot;/&gt;</b>
+    &lt;/message&gt;
+&lt;/definitions&gt;
+</pre>
+
+<h4><a name="_abstract-v">2.3.2
+Abstract vs. Concrete Messages</a></h4>
+
+<p>Message definitions are always considered to be an abstract
+definition of the message content. A message binding
+describes how the abstract content is mapped into a concrete
+format. However, in some cases, the abstract definition may match
+the concrete representation very closely or exactly for one or
+more bindings, so those binding(s) will supply little or no
+mapping information.  However, another binding of the same
+message definition may require extensive mapping information.
+For this reason, it is not until the binding is inspected that
+one can determine &quot;how abstract&quot; the message really is.</p>
+
+<h3>2.4<a name="_porttypes">    Port Types</a></h3>
+
+<p>A port type is a named set of abstract operations and the
+abstract messages involved. </p>
+
+<pre class="clsCode">&lt;wsdl:definitions .... &gt;
+<b>    &lt;wsdl:portType name=&quot;nmtoken&quot;&gt;</b>
+<b>        &lt;wsdl:operation name=&quot;nmtoken&quot; .... /&gt; *</b>
+<b>    &lt;/wsdl:portType&gt;</b>
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>The port type <b>name</b> attribute provides a unique name
+among all port types defined within in the enclosing WSDL document.</p>
+
+<p>An operation is named via the <b>name</b> attribute.</p>
+
+<p>WSDL has four transmission primitives that an endpoint can
+support: </p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    ><b>One-way</b>.
+        The endpoint receives a message.</li>
+    <li class="MsoNormal"
+    ><b>Request-response</b>.
+        The endpoint receives a message, and sends a correlated
+        message.</li>
+    <li class="MsoNormal"
+    ><b>Solicit-response</b>.
+        The endpoint sends a message, and receives a correlated
+        message.</li>
+    <li class="MsoNormal"
+    ><b>Notification</b>.
+        The endpoint sends a message.</li>
+</ul>
+
+<p>WSDL refers to these primitives as <b>operations</b>.
+Although request/response or solicit/response can be modeled
+abstractly using two one-way messages, it is useful to model
+these as primitive operation types because:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >They
+        are very common. </li>
+    <li class="MsoNormal"
+    >The
+        sequence can be correlated without having to introduce
+        more complex flow information. </li>
+    <li class="MsoNormal"
+    >Some
+        endpoints can only receive messages if they are the
+        result of a synchronous request response.</li>
+    <li class="MsoNormal"
+    >A
+        simple flow can algorithmically be derived from these
+        primitives at the point when flow definition is desired. </li>
+</ul>
+
+<p>Although request/response or solicit/response are logically
+correlated in the WSDL document, a given binding describes the
+concrete correlation information. For example, the request and
+response messages may be exchanged as part of one or two actual
+network communications.</p>
+
+<p>Although the base WSDL structure supports bindings for these four
+transmission primitives, WSDL only defines bindings for the One-way and
+Request-response primitives.&nbsp; It is expected that specifications that
+define the protocols for Solicit-response or Notification would also include
+WSDL binding extensions that allow use of these primitives.</p>
+
+<p>Operations refer to the messages involved using the <b>message</b>
+attribute of type QName.  This attribute follows the rules
+defined by WSDL for linking (see <a href="#_document-n">section 2.1.2</a>).</p>
+
+<h4>2.4.1<a name="_one-way">      One-way
+Operation</a></h4>
+
+<p>The grammar for a one-way operation is:</p>
+
+<pre class="clsCode">&lt;wsdl:definitions .... &gt; &lt;wsdl:portType .... &gt; *
+<b>        &lt;wsdl:operation name=&quot;nmtoken&quot;&gt;</b>
+<b>           &lt;wsdl:input name=&quot;nmtoken&quot;? message=&quot;qname&quot;/&gt;</b>
+<b>        &lt;/wsdl:operation&gt;</b>
+    &lt;/wsdl:portType &gt;
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>The <b>input</b> element specifies the abstract message format
+for the one-way operation.</p>
+
+<h4>2.4.2<a name="_request-response">
+Request-response Operation</a></h4>
+
+<p>The grammar for a request-response operation is:</p>
+
+<pre class="clsCode">&lt;wsdl:definitions .... &gt;
+    &lt;wsdl:portType .... &gt; *
+        &lt;wsdl:operation name=&quot;nmtoken&quot; parameterOrder=&quot;nmtokens&quot;&gt;
+<b>           &lt;wsdl:input name=&quot;nmtoken&quot;? message=&quot;qname&quot;/&gt;</b>
+<b>           &lt;wsdl:output name=&quot;nmtoken&quot;? message=&quot;qname&quot;/&gt;</b>
+<b>           &lt;wsdl:fault name=&quot;nmtoken&quot; message=&quot;qname&quot;/&gt;*</b>
+        &lt;/wsdl:operation&gt;
+    &lt;/wsdl:portType &gt;
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>The input and output elements specify the abstract message
+format for the request and response, respectively.  The
+optional fault elements specify the abstract message format for
+any error messages that may be output as the result of the
+operation (beyond those specific to the protocol).</p>
+
+<p>Note that a request-response operation is an abstract notion;
+a particular binding must be consulted to determine how the
+messages are actually sent: within a single communication (such
+as a HTTP request/response), or as two independent communications
+(such as two HTTP requests).</p>
+
+<h4>2.4.3<a name="_solicit-response">
+Solicit-response Operation</a></h4>
+
+<p>The grammar for a solicit-response operation is:</p>
+
+<pre class="clsCode">&lt;wsdl:definitions .... &gt;
+    &lt;wsdl:portType .... &gt; *
+        &lt;wsdl:operation name=&quot;nmtoken&quot; parameterOrder=&quot;nmtokens&quot;&gt;
+<b>           &lt;wsdl:output name=&quot;nmtoken&quot;? message=&quot;qname&quot;/&gt;</b>
+<b>           &lt;wsdl:input name=&quot;nmtoken&quot;? message=&quot;qname&quot;/&gt;</b>
+<b>           &lt;wsdl:fault name=&quot;nmtoken&quot; message=&quot;qname&quot;/&gt;*</b>
+        &lt;/wsdl:operation&gt;
+    &lt;/wsdl:portType &gt;
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>The output and input elements specify the abstract message
+format for the solicited request and response, respectively.
+The optional fault elements specify the abstract message format
+for any error messages that may be output as the result of the
+operation (beyond those specific to the protocol).</p>
+
+<p>Note that a solicit-response operation is an abstract notion;
+a particular binding must be consulted to determine how the
+messages are actually sent: within a single communication (such
+as a HTTP request/response), or as two independent communications
+(such as two HTTP requests).</p>
+
+<h4>2.4.4<a name="_notification">
+Notification Operation</a></h4>
+
+<p>The grammar for a notification operation is:</p>
+
+<pre class="clsCode">&lt;wsdl:definitions .... &gt;
+    &lt;wsdl:portType .... &gt; *
+<b>        &lt;wsdl:operation name=&quot;nmtoken&quot;&gt;</b>
+<b>           &lt;wsdl:output name=&quot;nmtoken&quot;? message=&quot;qname&quot;/&gt;</b>
+<b>        &lt;/wsdl:operation&gt;</b>
+    &lt;/wsdl:portType &gt;
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>The <b>output</b> element specifies the abstract message
+format for the notification operation.</p>
+
+<h4>2.4.5<a name="_names">      Names of
+Elements within an Operation</a></h4>
+
+<p>The <b>name</b> attribute of the input and output elements
+provides a unique name among all input and output elements within
+the enclosing port type.</p>
+
+<p>In order to avoid having to name each input and output element
+within an operation, WSDL provides some default values based on
+the operation name.  If the name attribute is not specified
+on a one-way or notification message, it defaults to the name of
+the operation.  If the name attribute is not specified on
+the input or output messages of a request-response or solicit-response
+operation, the name defaults to the name of the operation with
+&quot;Request&quot;/&quot;Solicit&quot; or &quot;Response&quot;
+appended, respectively.   </p>
+
+<p>Each fault element must be named to allow a binding to specify
+the concrete format of the fault message. The name of the fault
+element is unique within the set of faults defined for the
+operation.</p>
+
+<h4>2.4.6<a name="_parameter">
+Parameter Order within an Operation</a></h4>
+
+<p>Operations do not specify whether they are to be used with RPC-like
+bindings or not.  However, when using an operation with an
+RPC-binding, it is useful to be able to capture the original RPC
+function signature.   For this reason, a request-response
+or solicit-response operation MAY specify a list of parameter
+names via the <b>parameterOrder</b> attribute (of type nmtokens).
+The value of the attribute is a list of message part names
+separated by a single space.  The value of the parameterOrder attribute MUST follow
+the following rules:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >The part name order reflects the order of the
+        parameters in the RPC signature</li>
+    <li class="MsoNormal"
+    >The <b>return
+        </b>value part is not present in the list</li>
+    <li class="MsoNormal"
+    >If a
+        part name appears in both the input and output message,
+        it is an <b>in/out</b> parameter </li>
+    <li class="MsoNormal"
+    >If a
+        part name appears in only the input message, it is an <b>in</b>
+        parameter </li>
+    <li class="MsoNormal"
+    >If a
+        part name appears in only the output message, it is an <b>out</b>
+        parameter</li>
+</ul>
+
+<p>Note that this information serves as a &quot;hint&quot; and
+may safely be ignored by those not concerned with RPC signatures.
+Also, it is not required to be present, even if the operation is
+to be used with an RPC-like binding.</p>
+
+<h3><a name="_bindings"></a>2.5    Bindings</h3>
+
+<p>A binding defines message format and protocol details for
+operations and messages defined by a particular portType.
+There may be any number of bindings for a given portType.
+The grammar for a binding is as follows:</p>
+
+<pre class="clsCode">&lt;wsdl:definitions .... &gt;
+<b>    &lt;wsdl:binding name=&quot;nmtoken&quot; type=&quot;qname&quot;&gt; *</b>
+<b>        &lt;-- extensibility element (1) --&gt; *</b>
+<b>        &lt;wsdl:operation name=&quot;nmtoken&quot;&gt; *</b>
+<b>           &lt;-- extensibility element (2) --&gt; *</b>
+<b>           &lt;wsdl:input name=&quot;nmtoken&quot;? &gt; ?</b>
+<b>               &lt;-- extensibility element (3) --&gt; </b>
+<b>           &lt;/wsdl:input&gt;</b>
+<b>           &lt;wsdl:output name=&quot;nmtoken&quot;? &gt; ?</b>
+<b>               &lt;-- extensibility element (4) --&gt; *</b>
+<b>           &lt;/wsdl:output&gt;</b>
+<b>           &lt;wsdl:fault name=&quot;nmtoken&quot;&gt; *</b>
+<b>               &lt;-- extensibility element (5) --&gt; *</b>
+<b>           &lt;/wsdl:fault&gt;</b>
+<b>        &lt;/wsdl:operation&gt;</b>
+<b>    &lt;/wsdl:binding&gt;</b>
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>The <b>name</b> attribute provides a unique name among all
+bindings defined within in the enclosing WSDL document.</p>
+
+<p>A binding references the portType that it binds using the <b>type</b>
+attribute.   This QName value follows the linking rules
+defined by WSDL (see <a href="#_document-n">section 2.1.2</a>).</p>
+
+<p>Binding extensibility elements are used to specify the
+concrete grammar for the input (3), output (4), and fault
+messages (5).  Per-operation binding information (2) as well
+as per-binding information (1) may also be specified.</p>
+
+
+<p>An operation element within a binding specifies binding information
+for the operation with the same name within the binding's portType.
+Since operation names are not required to be unique (for example, in
+the case of overloading of method names), the name attribute in the
+operation binding element might not be enough to uniquely identify an
+operation. In that case, the correct operation should be identified by
+providing the <b>name</b> attributes of the corresponding wsdl:input
+and wsdl:output elements.</p>
+
+<p>A binding MUST specify exactly one protocol.</p>
+
+<p>A binding MUST NOT specify address information.</p>
+
+<h3>2.6<a name="_ports">    Ports</a></h3>
+
+<p>A port defines an individual endpoint by specifying a single
+address for a binding.</p>
+
+<pre class="clsCode">&lt;wsdl:definitions .... &gt;
+    &lt;wsdl:service .... &gt; *
+<b>        &lt;wsdl:port name=&quot;nmtoken&quot; binding=&quot;qname&quot;&gt; *</b>
+<b>           &lt;-- extensibility element (1) --&gt;</b>
+<b>        &lt;/wsdl:port&gt;</b>
+    &lt;/wsdl:service&gt;
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>The <b>name</b> attribute provides a unique name among all
+ports defined within in the enclosing WSDL document.</p>
+
+<p>The <b>binding</b> attribute (of type QName) refers to the
+binding using the linking rules defined by WSDL (see <a
+href="#_document-n">Section 2.1.2</a>).</p>
+
+<p>Binding extensibility elements (1) are used to specify the
+address information for the port.</p>
+
+<p>A port MUST NOT specify more than one address.</p>
+
+<p>A port MUST NOT specify any binding information other than
+address information.</p>
+
+<h3>2.7<a name="_services">    Services</a></h3>
+
+<p>A service groups a set of related ports together:</p>
+
+<pre class="clsCode">&lt;wsdl:definitions .... &gt;
+    &lt;wsdl:service name=&quot;nmtoken&quot;&gt; *
+<b>        &lt;wsdl:port .... /&gt;*</b>
+    &lt;/wsdl:service&gt;
+&lt;/wsdl:definitions&gt;
+</pre>
+
+<p>The <b>name</b> attribute provides a unique name among all
+services defined within in the enclosing WSDL document.</p>
+
+<p>Ports within a service have the following relationship:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >None of
+        the ports communicate with each other (e.g. the output of
+        one port is not the input of another). </li>
+    <li class="MsoNormal"
+    >If a
+        service has several ports that share a port type, but
+        employ different bindings or addresses, the ports are
+        alternatives.  Each port provides semantically
+        equivalent behavior (within the transport and message
+        format limitations imposed by each binding).  This
+        allows a consumer of a WSDL document to choose particular
+        port(s) to communicate with based on some criteria (protocol,
+        distance, etc.). </li>
+    <li class="MsoNormal"
+    >By
+        examining it's ports, we can determine a service's
+        port types.  This allows a consumer of a WSDL
+        document to determine if it wishes to communicate to a
+        particular service based whether or not it supports
+        several port types.  This is useful if there is some
+        implied relationship between the operations of the port
+        types, and that the entire set of port types must be
+        present in order to accomplish a particular task. </li>
+</ul>
+
+<h2><a name="_soap-b"></a><a name="_6.__"></a>3.   SOAP
+Binding</h2>
+
+<p>WSDL includes a binding for SOAP 1.1 endpoints, which supports
+the specification of the following protocol specific information:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >An
+        indication that a binding is bound to the SOAP 1.1
+        protocol </li>
+    <li class="MsoNormal"
+    >A way of
+        specifying an address for a SOAP endpoint.</li>
+    <li class="MsoNormal"
+    >The URI
+        for the SOAPAction HTTP header for the HTTP binding of
+        SOAP </li>
+    <li class="MsoNormal"
+    >A list
+        of definitions for Headers that are transmitted as part
+        of the SOAP Envelope </li>
+</ul>
+
+<p>This binding grammar it is not an exhaustive specification
+since the set of SOAP bindings is evolving.  Nothing
+precludes additional SOAP bindings to be derived from portions of
+this grammar.  For example:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >SOAP
+        bindings that do not employ a URI addressing scheme may
+        substitute another addressing scheme by replacing the
+        soap:address element defined in <a href="#_soap:address">section
+        3.8</a>. </li>
+    <li class="MsoNormal"
+    >SOAP
+        bindings that do not require a SOAPAction omit the
+        soapAction attribute defined in <a
+        href="#_soap:operation">section 3.4</a>.</li>
+</ul>
+
+<h3>3.<a name="_soap-e">1    SOAP Examples</a></h3>
+
+<p class="msoddef">In the following example, a SubscribeToQuotes
+SOAP 1.1 one-way message is sent to a StockQuote service via a
+SMTP binding. The request takes a ticker symbol of type string,
+and includes a header defining the subscription URI.</p>
+
+<p class="MsoCaption"><strong>Example 3. SOAP binding of one-way
+operation over SMTP using a SOAP Header</strong></p>
+
+<pre class="clsCode">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;definitions name=&quot;StockQuote&quot;
+          targetNamespace=&quot;http://example.com/stockquote.wsdl&quot;
+          xmlns:tns=&quot;http://example.com/stockquote.wsdl&quot;
+          xmlns:xsd1=&quot;http://example.com/stockquote.xsd&quot;
+          xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+          xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;
+
+    &lt;message name=&quot;SubscribeToQuotes&quot;&gt;
+        &lt;part name=&quot;body&quot; element=&quot;xsd1:SubscribeToQuotes&quot;/&gt;
+<b>        &lt;part name=&quot;subscribeheader&quot; element=&quot;xsd1:SubscriptionHeader&quot;/&gt;</b>
+    &lt;/message&gt;
+
+    &lt;portType name=&quot;StockQuotePortType&quot;&gt;
+        &lt;operation name=&quot;SubscribeToQuotes&quot;&gt;
+           &lt;input message=&quot;tns:SubscribeToQuotes&quot;/&gt;
+        &lt;/operation&gt;
+    &lt;/portType&gt;
+
+    &lt;binding name=&quot;StockQuoteSoap&quot; type=&quot;tns:StockQuotePortType&quot;&gt;
+<b>        &lt;soap:binding style=&quot;document&quot; transport=&quot;http://example.com/smtp&quot;/&gt;</b>
+        &lt;operation name=&quot;SubscribeToQuotes&quot;&gt;
+           &lt;input message=&quot;tns:SubscribeToQuotes&quot;&gt;
+<b>               &lt;soap:body parts=&quot;body&quot; use=&quot;literal&quot;/&gt;
+               &lt;soap:header message=&quot;tns:SubscribeToQuotes&quot; part=&quot;subscribeheader&quot; use=&quot;literal&quot;/&gt;</b>
+           &lt;/input&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;service name=&quot;StockQuoteService&quot;&gt;
+        &lt;port name=&quot;StockQuotePort&quot; binding=&quot;tns:StockQuoteSoap&quot;&gt;
+<b>           &lt;soap:address location=&quot;mailto:subscribe@example.com&quot;/&gt;</b>
+        &lt;/port&gt;
+    &lt;/service&gt;
+
+    &lt;types&gt;
+        &lt;schema targetNamespace=&quot;http://example.com/stockquote.xsd&quot;
+               xmlns=&quot;http://www.w3.org/2000/10/XMLSchema&quot;&gt;
+           &lt;element name=&quot;SubscribeToQuotes&quot;&gt;
+               &lt;complexType&gt;
+                   &lt;all&gt;
+                       &lt;element name=&quot;tickerSymbol&quot; type=&quot;string&quot;/&gt;
+                   &lt;/all&gt;
+               &lt;/complexType&gt;
+           &lt;/element&gt;
+           &lt;element name=&quot;SubscriptionHeader&quot; type=&quot;uriReference&quot;/&gt;
+        &lt;/schema&gt;
+    &lt;/types&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p class="msoddef">This example describes that a GetTradePrice SOAP 1.1 request may be sent to a StockQuote
+service via the SOAP 1.1 HTTP binding. The request takes a ticker
+symbol of type string, a time of type timeInstant, and returns
+the price as a float in the SOAP response. </p>
+
+<p class="MsoCaption"><a name="_rpcexample"></a><strong>Example 4. SOAP binding of request-response
+RPC operation over HTTP</strong></p>
+
+<pre class="clsCode">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;definitions name=&quot;StockQuote&quot;
+          targetNamespace=&quot;http://example.com/stockquote.wsdl&quot;
+          xmlns:tns=&quot;http://example.com/stockquote.wsdl&quot;
+          xmlns:xsd=&quot;http://www.w3.org/2000/10/XMLSchema&quot;
+          xmlns:xsd1=&quot;http://example.com/stockquote.xsd&quot;
+          xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+          xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;
+
+    &lt;message name=&quot;GetTradePriceInput&quot;&gt;
+        &lt;part name=&quot;tickerSymbol&quot; element=&quot;xsd:string&quot;/&gt;
+        &lt;part name=&quot;time&quot; element=&quot;xsd:timeInstant&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;message name=&quot;GetTradePriceOutput&quot;&gt;
+        &lt;part name=&quot;result&quot; type=&quot;xsd:float&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;portType name=&quot;StockQuotePortType&quot;&gt;
+        &lt;operation name=&quot;GetTradePrice&quot;&gt;
+           &lt;input message=&quot;tns:GetTradePriceInput&quot;/&gt;
+           &lt;output message=&quot;tns:GetTradePriceOutput&quot;/&gt;
+        &lt;/operation&gt;
+    &lt;/portType&gt;
+
+    &lt;binding name=&quot;StockQuoteSoapBinding&quot; type=&quot;tns:StockQuotePortType&quot;&gt;
+<b>        &lt;soap:binding style=&quot;rpc&quot; transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;/&gt;</b>
+        &lt;operation name=&quot;GetTradePrice&quot;&gt;
+<b>           &lt;soap:operation soapAction=&quot;http://example.com/GetTradePrice&quot;/&gt;</b>
+           &lt;input&gt;
+<b>               &lt;soap:body use=&quot;encoded&quot; namespace=&quot;http://example.com/stockquote&quot;</b>
+<b>                          encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;/&gt;</b>
+           &lt;/input&gt;
+           &lt;output&gt;
+<b>               &lt;soap:body use=&quot;encoded&quot; namespace=&quot;http://example.com/stockquote&quot;</b>
+<b>                          encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;/&gt;</b>
+           &lt;/output&gt;
+        &lt;/operation&gt;&gt;
+    &lt;/binding&gt;
+
+    &lt;service name=&quot;StockQuoteService&quot;&gt;
+        &lt;documentation&gt;My first service&lt;/documentation&gt;
+        &lt;port name=&quot;StockQuotePort&quot; binding=&quot;tns:StockQuoteBinding&quot;&gt;
+<b>           &lt;soap:address location=&quot;http://example.com/stockquote&quot;/&gt;</b>
+        &lt;/port&gt;
+    &lt;/service&gt;
+&lt;/definitions&gt;</pre>
+
+<p class="msoddef">This example describes that a GetTradePrices SOAP 1.1 request may be sent to a StockQuote
+service via the SOAP 1.1 HTTP binding. The request takes a stock quote symbol
+string, an application defined TimePeriod structure containing a start and end
+time and returns an array of stock prices recorded by the service within that
+period of time, as well as the frequency at which they were recorded as the SOAP response.&nbsp;
+The RPC signature that corresponds to this service has in parameters
+tickerSymbol and timePeriod followed by the output parameter frequency, and
+returns an array of floats. </p>
+
+<p class="MsoCaption"><strong>Example 5. SOAP binding of request-response
+RPC operation over HTTP</strong></p>
+
+<pre class="clsCode">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;definitions name=&quot;StockQuote&quot;
+
+targetNamespace=&quot;http://example.com/stockquote.wsdl&quot;
+          xmlns:tns=&quot;http://example.com/stockquote.wsdl&quot;
+          xmlns:xsd=&quot;http://www.w3.org/2000/10/XMLSchema&quot;
+          xmlns:xsd1=&quot;http://example.com/stockquote/schema&quot;
+          xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+          xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+          xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;
+
+    &lt;types&gt;
+       &lt;schema targetNamespace=&quot;http://example.com/stockquote/schema&quot;
+              xmlns=&quot;http://www.w3.org/2000/10/XMLSchema&quot;&gt;
+<b>           &lt;complexType name=&quot;TimePeriod&quot;&gt;
+              &lt;all&gt;
+                  &lt;element name=&quot;startTime&quot; type=&quot;xsd:timeInstant&quot;/&gt;
+                  &lt;element name=&quot;endTime&quot; type=&quot;xsd:timeInstant&quot;/&gt;
+              &lt;/all&gt;
+           &lt;/complexType&gt;
+           &lt;complexType name=&quot;ArrayOfFloat&quot;&gt;
+              &lt;complexContent&gt;
+                  &lt;restriction base=&quot;soapenc:Array&quot;&gt;
+                      &lt;attribute ref=&quot;soapenc:arrayType&quot; wsdl:arrayType=&quot;xsd:float[]&quot;/&gt;
+                  &lt;/restriction&gt;
+              &lt;/complexContent&gt;
+           &lt;/complexType&gt;
+</b>       &lt;/schema&gt;
+    &lt;/types&gt;
+
+    &lt;message name=&quot;GetTradePricesInput&quot;&gt;
+        &lt;part name=&quot;tickerSymbol&quot; element=&quot;xsd:string&quot;/&gt;
+        &lt;part name=&quot;timePeriod&quot; element=&quot;xsd1:TimePeriod&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;message name=&quot;GetTradePricesOutput&quot;&gt;
+        &lt;part name=&quot;result&quot; type=&quot;xsd1:ArrayOfFloat&quot;/&gt;
+        &lt;part name=&quot;frequency&quot; type=&quot;xsd:float&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;portType name=&quot;StockQuotePortType&quot;&gt;
+        &lt;operation name=&quot;GetLastTradePrice&quot; <b>parameterOrder=&quot;tickerSymbol timePeriod frequency&quot;</b>&gt;
+           &lt;input message=&quot;tns:GetTradePricesInput&quot;/&gt;
+           &lt;output message=&quot;tns:GetTradePricesOutput&quot;/&gt;
+        &lt;/operation&gt;
+    &lt;/portType&gt;
+
+    &lt;binding name=&quot;StockQuoteSoapBinding&quot; type=&quot;tns:StockQuotePortType&quot;&gt;
+        &lt;soap:binding style=&quot;rpc&quot; transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;/&gt;
+        &lt;operation name=&quot;GetTradePrices&quot;&gt;
+           &lt;soap:operation soapAction=&quot;http://example.com/GetTradePrices&quot;/&gt;
+           &lt;input&gt;
+               &lt;soap:body use=&quot;encoded&quot; namespace=&quot;http://example.com/stockquote&quot;
+                          encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;/&gt;
+           &lt;/input&gt;
+           &lt;output&gt;
+               &lt;soap:body use=&quot;encoded&quot; namespace=&quot;http://example.com/stockquote&quot;
+                          encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;/&gt;
+           &lt;/output&gt;
+        &lt;/operation&gt;&gt;
+    &lt;/binding&gt;
+
+    &lt;service name=&quot;StockQuoteService&quot;&gt;
+        &lt;documentation&gt;My first service&lt;/documentation&gt;
+        &lt;port name=&quot;StockQuotePort&quot; binding=&quot;tns:StockQuoteBinding&quot;&gt;
+           &lt;soap:address location=&quot;http://example.com/stockquote&quot;/&gt;
+        &lt;/port&gt;
+    &lt;/service&gt;
+&lt;/definitions&gt;</pre>
+
+<h3>3.<a name="_how-s">2    How the SOAP Binding
+Extends WSDL</a></h3>
+
+<p>The SOAP Binding extends WSDL with the following extension
+elements:</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+<b>        &lt;soap:binding style=&quot;rpc|document&quot; transport=&quot;uri&quot;&gt;</b>
+        &lt;operation .... &gt;
+<b>           &lt;soap:operation soapAction=&quot;uri&quot;? style=&quot;rpc|document&quot;?&gt;?</b>
+           &lt;input&gt;
+<b>               &lt;soap:body parts=&quot;nmtokens&quot;? use=&quot;literal|encoded&quot;
+                          encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;</b>
+<b>               &lt;soap:header message=&quot;qname&quot; part=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;</b>
+<b>                            encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;*</b>
+<b>                 &lt;soap:headerfault message=&quot;qname&quot; part=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;</b>
+<b>                                   encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?/&gt;*</b>
+<b>               &lt;soap:header&gt;</b>                                
+           &lt;/input&gt;
+           &lt;output&gt;
+<b>               &lt;soap:body parts=&quot;nmtokens&quot;? use=&quot;literal|encoded&quot;
+                          encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;</b>
+<b>               &lt;soap:header message=&quot;qname&quot; part=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;</b>
+<b>                            encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;*</b>
+<b>                 &lt;soap:headerfault message=&quot;qname&quot; part=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;</b>
+<b>                                   encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?/&gt;*</b>
+<b>               &lt;soap:header&gt;</b>                                
+           &lt;/output&gt;
+           &lt;fault&gt;*
+<b>               &lt;soap:fault name=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;
+                           encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;</b>
+            &lt;/fault&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;port .... &gt;
+<b>        &lt;soap:address location=&quot;uri&quot;/&gt; </b>
+    &lt;/port&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>Each extension element of the SOAP binding is covered in
+subsequent sections. </p>
+
+<h3>3.<a name="_soap:binding">3    soap:binding</a></h3>
+
+<p>The purpose of the SOAP binding element is to signify that the
+binding is bound to the SOAP protocol format: Envelope, Header
+and Body.  This element makes no claims as to the encoding
+or format of the message (e.g. that it necessarily follows
+section 5 of the SOAP 1.1 specification).</p>
+
+<p>The soap:binding element MUST be present when using the SOAP
+binding.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+<b>        &lt;soap:binding transport=&quot;uri&quot;? style=&quot;rpc|document&quot;?&gt;</b>
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>The value of the <b>style</b> attribute is the default for the
+style attribute for each contained operation.  If the style
+attribute is omitted, it is assumed to be &quot;document&quot;.
+See <a href="#_soap:operation">section 3.4</a> for more
+information on the semantics of style.</p>
+
+<p>The value of the required <b>transport</b> attribute indicates
+which transport of SOAP this binding corresponds to.  The
+URI value <b>http://schemas.xmlsoap.org/soap/http</b> corresponds
+to the HTTP binding in the SOAP specification.  Other URIs
+may be used here to indicate other transports (such as SMTP, FTP,
+etc.).</p>
+
+<h3>3.4<a name="_soap:operation"></a> soap:operation</h3>
+
+<p>The soap:operation element provides information for the
+operation as a whole.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+        &lt;operation .... &gt;
+<b>           &lt;soap:operation soapAction=&quot;uri&quot;? style=&quot;rpc|document&quot;?&gt;?</b>
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>The <b>style</b> attribute indicates whether the operation is
+RPC-oriented (messages containing parameters and return values)
+or document-oriented (message containing document(s)).  This
+information may be used to select an appropriate programming
+model.  The value of this attribute also affects the way in which
+the Body of the SOAP message is constructed, as explained in 
+<a href="#_soap:body">Section 3.5</a> below.
+If the attribute is not specified, it defaults to
+the value specified in the soap:binding element.  If the
+soap:binding element does not specify a style, it is assumed to
+be &quot;document&quot;.</p>
+
+<p>The <b>soapAction</b> attribute specifies the value of the
+SOAPAction header for this operation.  This URI value should
+be used directly as the value for the SOAPAction header; no
+attempt should be made to make a relative URI value absolute when
+making the request.  For the HTTP protocol binding of SOAP,
+this is value required (it has no default value).  For other
+SOAP protocol bindings, it MUST NOT be specified, and the soap:operation
+element MAY be omitted.  </p>
+
+<h3>3.5<a name="_soap:body"></a> soap:body</h3>
+
+<p>The soap:body element specifies how the message parts appear
+inside the SOAP Body element.</p>
+
+<p>The parts of a message may either be abstract type definitions,
+or concrete schema definitions.  If abstract definitions,
+the types are serialized according to some set of rules defined
+by an encoding style.  Each encoding style is identified
+using a list of URIs, as in the SOAP specification.  Since
+some encoding styles such as the SOAP Encoding (http://schemas.xmlsoap.org/soap/encoding/)
+allow variation in the message format for a given set of abstract
+types, it is up to the reader of the message to understand all
+the format variations: &quot;reader makes right&quot;. To avoid
+having to support all variations, a message may be defined
+concretely and then indicate it&#146;s original encoding style (if
+any) as a hint. In this case, the writer of the message must
+conform exactly to the specified schema: &quot;writer makes right&quot;.</p>
+
+<p>The soap:body binding element provides information on how to 
+assemble the different message parts inside the Body element of
+the SOAP message. The soap:body element is used 
+in both RPC-oriented and document-oriented
+messages, but the style of the enclosing operation has important effects on how
+the Body section is structured:
+</p>
+<ul>
+<li>If the operation style is rpc each part is a parameter or a return
+value and appears inside a wrapper element within the body (following
+Section 7.1 of the SOAP specification).  The wrapper element is named
+identically to the operation name and its namespace is the value of
+the namespace attribute.  Each message part (parameter) appears under
+the wrapper, represented by an accessor named identically to the
+corresponding parameter of the call. Parts are arranged in the same
+order as the parameters of the call.  <li>If the operation style is
+document there are no additional wrappers, and the message parts
+appear directly under the SOAP Body element.
+</ul>
+<p>The same mechanisms are used to define the content of the
+Body and parameter accessor elements.
+</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+        &lt;operation .... &gt;
+           &lt;input&gt;
+<b>               &lt;soap:body parts=&quot;nmtokens&quot;? use=&quot;literal|encoded&quot;?</b>
+<b>                          encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;</b>
+           &lt;/input&gt;
+           &lt;output&gt;
+<b>               &lt;soap:body parts=&quot;nmtokens&quot;? use=&quot;literal|encoded&quot;?</b>
+<b>                          encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;</b>
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>The optional <b>parts</b> attribute of type nmtokens indicates
+which parts appear somewhere within the SOAP Body portion of the
+message (other parts of a message may appear in other portions of
+the message such as when SOAP is used in conjunction with the
+multipart/related MIME binding).  If the parts attribute is
+omitted, then all parts defined by the message are assumed to be
+included in the SOAP Body portion.</p>
+
+<p>The required <b>use</b> attribute indicates whether the
+message parts are encoded using some encoding rules, or whether
+the parts define the concrete schema of the message.</p>
+
+<p>If use is <b>encoded</b>, then each message part references an
+abstract type using the <b>type</b> attribute.  These
+abstract types are used to produce a concrete message by applying
+an encoding specified by the <b>encodingStyle</b> attribute.
+The part <b>names</b>, <b>types</b> and value of the <b>namespace</b>
+attribute are all inputs to the encoding, although the namespace
+attribute only applies to content not explicitly defined by the
+abstract types. If the referenced encoding style allows
+variations in it&#146;s format (such as the SOAP encoding does),
+then all variations MUST be supported (&quot;reader makes right&quot;).</p>
+
+<p>If use is <b>literal</b>, then each part references a concrete
+schema definition using either the <b>element</b>  or <b>type</b> attribute.  In
+the first case, the element referenced by the part will appear
+directly under the Body element (for document style bindings) or under an
+accessor element named after the message part (in rpc style). In the
+second, the type referenced by the part becomes the schema type of the
+enclosing element (Body for document style or part accessor element for rpc
+style). For an example that
+illustrates defining the contents of a composite Body using a type, see <a href="#_message"> 
+section 2.3.1</a>.&nbsp; The value of the
+<b>encodingStyle</b> attribute MAY be used when the use is literal to
+indicate that the concrete format was derived using a particular
+encoding (such as the SOAP encoding), but that only the specified
+variation is supported (&quot;writer makes right&quot;).</p>
+
+<p>The value of the <b>encodingStyle</b> attribute is a list
+of URIs, each separated by a single space. The URI's represent
+encodings used within the message, in order from most restrictive
+to least restrictive (exactly like the encodingStyle attribute
+defined in the SOAP specification).</p>
+
+<h3>3.6<a name="_soap:fault">    soap:fault</a></h3>
+
+<p>The soap:fault element specifies the contents of the contents
+of the SOAP Fault Details element.  It is patterned after
+the soap:body element (see <a href="#_soap:body">section 3.5</a>).</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+        &lt;operation .... &gt;
+           &lt;fault&gt;*
+<b>               &lt;soap:fault name=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;
+                                 encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;</b>
+           &lt;/fault&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>The <b>name</b> attribute relates the soap:fault to the wsdl:fault
+defined for the operation.</p>
+
+<p>The fault message MUST have a single part. The <b>use</b>, <b>encodingStyle</b>
+and <b>namespace</b> attributes are all used in the same way as
+with soap:body (see <a href="#_soap:body">section 3.5</a>), only style="document"
+is assumed since faults do not contain parameters.</p>
+
+<h3>3.<a name="_soap:header">7    soap:header and soap:headerfault</a></h3>
+
+<p>The soap:header and soap:headerfault elements allows header to be defined 
+that are transmitted inside the Header element of the SOAP Envelope. It is 
+patterned after the soap:body element (see <a href="#_soap:body">section 3.5</a>).</p>
+
+<p>It is not necessary to exhaustively list all headers that appear in 
+the SOAP Envelope using soap:header.  For example, extensions 
+(see <a href="#_language">section 2.1.3</a>) to WSDL may imply specific headers 
+should be added to the actual payload and it is not required to list those 
+headers here.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+        &lt;operation .... &gt;
+           &lt;input&gt;
+<b>             &lt;soap:header message=&quot;qname&quot; part=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;</b>
+<b>                          encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;*</b>
+<b>               &lt;soap:headerfault message=&quot;qname&quot; part=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;</b>
+<b>                                 encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?/&gt;*</b>
+<b>             &lt;soap:header&gt;</b>                                
+           &lt;/input&gt;
+           &lt;output&gt;
+<b>               &lt;soap:header message=&quot;qname&quot; part=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;</b>
+<b>                            encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?&gt;*</b>
+<b>                 &lt;soap:headerfault message=&quot;qname&quot; part=&quot;nmtoken&quot; use=&quot;literal|encoded&quot;</b>
+<b>                                   encodingStyle=&quot;uri-list&quot;? namespace=&quot;uri&quot;?/&gt;*</b>
+<b>               &lt;soap:header&gt;</b>                                
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>The <b>use</b>, <b>encodingStyle</b>
+and <b>namespace</b> attributes are all used in the same way as
+with soap:body (see <a href="#_soap:body">section 3.5</a>), only style="document"
+is assumed since headers do not contain parameters.</p>
+
+<p>Together, the <b>message</b> attribute (of type QName) and the <b>part</b> attribute 
+(of type nmtoken) reference the message part that defines the header type.  
+The schema referenced by the part MAY include definitions for the soap:actor 
+and soap:mustUnderstand attributes if use="literal", but MUST NOT if use="encoded".  The
+referenced message need not be the same as the message that defines the SOAP Body.</p>
+
+<p>The optional <b>headerfault</b> elements which appear inside soap:header and 
+have the same syntax as soap:header) allows specification of the header type(s) 
+that are used to transmit error information pertaining to the header defined by
+the soap:header.  The SOAP specification states that errors pertaining to headers 
+must be returned in headers, and this mechanism allows specification of the format 
+of such headers.</p>
+
+<h3>3.8 <a name="_soap:address"></a>soap:address</h3>
+
+<p>The SOAP address binding is used to give a port an address (a
+URI).  A port using the SOAP binding MUST specify exactly
+one address.&nbsp; The URI scheme specified for the address must correspond to
+the transport specified by the soap:binding.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;port .... &gt;
+        &lt;binding .... &gt;
+<b>           &lt;soap:address location=&quot;uri&quot;/&gt; </b>
+        &lt;/binding&gt;
+    &lt;/port&gt;
+&lt;/definitions&gt;
+</pre>
+
+<h2>4.<a name="_http"></a><a name="_7.__"></a>   HTTP
+GET &amp; POST Binding</h2>
+
+<p>WSDL includes a binding for HTTP 1.1's GET and POST verbs
+in order to describe the interaction between a Web Browser and a
+web site.  This allows applications other than Web Browsers
+to interact with the site.  The following protocol specific
+information may be specified: </p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >An
+        indication that a binding uses HTTP GET or POST</li>
+    <li class="MsoNormal"
+    >An
+        address for the port</li>
+    <li class="MsoNormal"
+    >A
+        relative address for each operation (relative to the base
+        address defined by the port)</li>
+</ul>
+
+<h3>4.<a name="_http-e">1    HTTP GET/POST
+Examples</a></h3>
+
+<p>The following example shows three ports that are bound
+differently for a given port type.</p>
+
+<p>If the values being passed are part1=1, part2=2, part3=3, the
+request format would be as follows for each port:</p>
+
+<pre class="clsCode">port1: GET, URL=&quot;http://example.com/o1/A1B2/3&quot;
+port2: GET, URL=&quot;http://example.com/o1?p1=1&amp;p2=2&amp;p3=3
+port3: POST, URL=&quot;http://example.com/o1&quot;, PAYLOAD=&quot;p1=1&amp;p2=2&amp;p3=3&quot;
+</pre>
+
+<p>For each port, the response is either a GIF or a JPEG image.</p>
+
+<p class="MsoCaption"><strong>Example 6. GET and FORM POST
+returning GIF or JPG</strong></p>
+
+<pre class="clsCode">
+&lt;definitions .... &gt;
+    &lt;message name=&quot;m1&quot;&gt;
+        &lt;part name=&quot;part1&quot; type=&quot;xsd:string&quot;/&gt;
+        &lt;part name=&quot;part2&quot; type=&quot;xsd:int&quot;/&gt;
+        &lt;part name=&quot;part3&quot; type=&quot;xsd:string&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;message name=&quot;m2&quot;&gt;
+        &lt;part name=&quot;image&quot; type=&quot;xsd:binary&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;portType name=&quot;pt1&quot;&gt;
+        &lt;operation name=&quot;o1&quot;&gt;
+           &lt;input message=&quot;tns:m1&quot;/&gt;
+           &lt;output message=&quot;tns:m2&quot;/&gt;
+        &lt;/operation&gt;
+    &lt;/portType&gt;
+
+    &lt;service name=&quot;service1&quot;&gt;
+        &lt;port name=&quot;port1&quot; binding=&quot;tns:b1&quot;&gt;
+           &lt;http:address location=&quot;http://example.com/&quot;/&gt;
+        &lt;/port&gt;
+        &lt;port name=&quot;port2&quot; binding=&quot;tns:b2&quot;&gt;
+           &lt;http:address location=&quot;http://example.com/&quot;/&gt;
+        &lt;/port&gt;
+        &lt;port name=&quot;port3&quot; binding=&quot;tns:b3&quot;&gt;
+             &lt;http:address location=&quot;http://example.com/&quot;/&gt;
+        &lt;/port&gt;
+    &lt;/service&gt;
+
+    &lt;binding name=&quot;b1&quot; type=&quot;pt1&quot;&gt;
+<b>        &lt;http:binding verb=&quot;GET&quot;/&gt;</b>
+        &lt;operation name=&quot;o1&quot;&gt;
+<b>           &lt;http:operation location=&quot;o1/A(part1)B(part2)/(part3)&quot;/&gt;</b>
+           &lt;input&gt;
+<b>               &lt;http:urlReplacement/&gt;</b>
+           &lt;/input&gt;
+           &lt;output&gt;
+<b>               &lt;mime:content type=&quot;image/gif&quot;/&gt;</b>
+<b>               &lt;mime:content type=&quot;image/jpeg&quot;/&gt;</b>
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;binding name=&quot;b2&quot; type=&quot;pt1&quot;&gt;
+<b>        &lt;http:binding verb=&quot;GET&quot;/&gt;</b>
+        &lt;operation name=&quot;o1&quot;&gt;
+<b>           &lt;http:operation location=&quot;o1&quot;/&gt;</b>
+<b>           &lt;input&gt;</b>
+<b>               &lt;http:urlEncoded/&gt;</b>
+<b>           &lt;/input&gt;</b>
+           &lt;output&gt;
+<b>               &lt;mime:content type=&quot;image/gif&quot;/&gt;</b>
+<b>               &lt;mime:content type=&quot;image/jpeg&quot;/&gt;</b>
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;binding name=&quot;b3&quot; type=&quot;pt1&quot;&gt;
+<b>        &lt;http:binding verb=&quot;POST&quot;/&gt;</b>
+        &lt;operation name=&quot;o1&quot;&gt;
+<b>           &lt;http:operation location=&quot;o1&quot;/&gt;</b>
+           &lt;input&gt;
+<b>               &lt;mime:content type=&quot;application/x-www-form-urlencoded&quot;/&gt;</b>
+           &lt;/input&gt;
+           &lt;output&gt;
+<b>               &lt;mime:content type=&quot;image/gif&quot;/&gt;</b>
+<b>               &lt;mime:content type=&quot;image/jpeg&quot;/&gt;</b>
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<h3>4.<a name="_http-b">2    How the HTTP GET/POST
+Binding Extends WSDL</a></h3>
+
+<p>The HTTP GET/POST Binding extends WSDL with the following
+extension elements:</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+<b>        &lt;http:binding verb=&quot;nmtoken&quot;/&gt;</b>
+        &lt;operation .... &gt;
+<b>           &lt;http:operation location=&quot;uri&quot;/&gt;</b>
+           &lt;input .... &gt;
+<b>               &lt;-- mime elements --&gt;</b>
+           &lt;/input&gt;
+           &lt;output .... &gt;
+<b>               &lt;-- mime elements --&gt;</b>
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;port .... &gt;
+<b>        &lt;http:address location=&quot;uri&quot;/&gt;</b>
+    &lt;/port&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>These elements are covered in the subsequent sections.</p>
+
+<h3>4.3 <a name="_http:address"></a>http:address</h3>
+
+<p>The <b>location</b> attribute specifies the base URI for the
+port.  The value of the attribute is combined with the
+values of the location attribute of the http:operation binding
+element.  See <a href="#_http:operation">section 4.5</a> for
+more details.</p>
+
+<h3>4.<a name="_http:binding">4    http:binding</a></h3>
+
+<p>The <b>http:binding</b> element indicates that this binding
+uses the HTTP protocol.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+<b>        &lt;http:binding verb=&quot;nmtoken&quot;/&gt;</b>
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>The value of the required <b>verb</b> attribute indicates the
+HTTP verb.  Common values are GET or POST, but others may be
+used.  Note that HTTP verbs are case sensitive.</p>
+
+<h3>4.<a name="_http:operation">5    http:operation</a></h3>
+
+<p>The <b>location</b> attribute specifies a relative URI for the
+operation.  This URI is combined with the URI specified in
+the http:address element to form the full URI for the HTTP
+request.  The URI value MUST be a relative URI.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+        &lt;operation .... &gt;
+<b>           &lt;http:operation location=&quot;uri&quot;/&gt;</b>
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<h3>4.<a name="_http:urlEncoded">6    http:urlEncoded</a></h3>
+
+<p>The urlEncoded element indicates that all the message parts
+are encoded into the HTTP request URI using the standard URI-encoding
+rules (name1=value&amp;name2=value&#133;).   The names
+of the parameters correspond to the names of the message parts.
+Each value contributed by the part is encoded using a name=value
+pair.  This may be used with GET to specify URL encoding, or
+with POST to specify a FORM-POST.  For GET, the &quot;?&quot;
+character is automatically appended as necessary.</p>
+
+<pre class="clsCode">&lt;http:urlEncoded/&gt;
+</pre>
+
+<p>For more information on the rules for URI-encoding parameters,
+see [<a href="#_9.__">5</a>], [<a href="#_9.__">6</a>], and [<a
+href="#_9.__">7</a>]. </p>
+
+<h3><a name="_http:urlReplacement">4.7    http:urlReplacement</a></h3>
+
+<p>The <b>http:urlReplacement</b> element indicates that all the
+message parts are encoded into the HTTP request URI using a
+replacement algorithm:</p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >The
+        relative URI value of http:operation is searched for a
+        set of search patterns.</li>
+    <li class="MsoNormal"
+    >The
+        search occurs before the value of the http:operation is
+        combined with the value of the location attribute from
+        http:address.</li>
+    <li class="MsoNormal"
+    >There is
+        one search pattern for each message part.  The
+        search pattern string is the name of the message part
+        surrounded with parenthesis &quot;(&quot; and
+        &quot;)&quot;.  </li>
+    <li class="MsoNormal"
+    >For each
+        match, the value of the corresponding message part is
+        substituted for the match at the location of the match.</li>
+    <li class="MsoNormal"
+    >Matches
+        are performed before any values are replaced (replaced
+        values do not trigger additional matches).</li>
+</ul>
+
+<p>Message parts MUST NOT have repeating values.</p>
+
+<pre class="clsCode">&lt;http:urlReplacement/&gt;
+</pre>
+
+<h2><a name="_Toc492291084"></a><a name="_8.__"></a>5.
+MIME Binding</h2>
+
+<p>WSDL includes a way to bind abstract types to concrete messages
+in some MIME format.  Bindings for the following MIME types
+are defined: </p>
+
+<ul type="disc" >
+    <li class="MsoNormal"
+    >multipart/related
+    </li>
+    <li class="MsoNormal"
+    >text/xml
+    </li>
+    <li class="MsoNormal"
+    >application/x-www-form-urlencoded
+        (the format used to submit a form in HTML) </li>
+    <li class="MsoNormal"
+    >Others (by
+        specifying the MIME type string) </li>
+</ul>
+
+<p>The set of defined MIME types is both large and evolving, so
+it is not a goal for WSDL to exhaustively define XML grammar for
+each MIME type.  Nothing precludes additional grammar to be
+added to define additional MIME types as necessary.  If a
+MIME type string is sufficient to describe the content, the mime
+element defined below can be used.</p>
+
+<h3>5.1<a name="_Toc492291085">1    MIME Binding
+example</a></h3>
+
+<p class="MsoCaption"><strong>Example 7. Using multipart/related
+with SOAP</strong></p>
+
+<p>This example describes that a GetCompanyInfo SOAP 1.1 request
+may be sent to a StockQuote service via the SOAP 1.1 HTTP binding.
+The request takes a ticker symbol of type string.  The
+response contains multiple parts encoded in the MIME format
+multipart/related: a SOAP Envelope containing the current stock
+price as a float, zero or more marketing literature documents in
+HTML format, and an optional company logo in either GIF or JPEG
+format.</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+
+    &lt;types&gt;
+        &lt;schema .... &gt;
+           &lt;element name=&quot;GetCompanyInfo&quot;&gt;
+               &lt;complexType&gt;
+                   &lt;all&gt;
+                       &lt;element name=&quot;tickerSymbol &quot; type=&quot;string&quot;/&gt;
+                   &lt;/all&gt;
+               &lt;/complexType&gt;
+           &lt;/element&gt;
+           &lt;element name=&quot;GetCompanyInfoResult&quot;&gt;
+               &lt;complexType&gt;
+                   &lt;all&gt;
+                       &lt;element name=&quot;result&quot; type=&quot;float&quot;/&gt;
+                   &lt;/all&gt;
+               &lt;/complexType&gt;
+           &lt;/element&gt;
+           &lt;complexType name=&quot;ArrayOfBinary&quot;&gt;
+               &lt;complexContent&gt;
+                   &lt;restriction base=&quot;soapenc:Array&quot;&gt;
+                      &lt;attribute ref=&quot;soapenc:arrayType&quot; wsdl:arrayType=&quot;xsd:binary[]&quot;/&gt;
+                   &lt;/restriction&gt;
+               &lt;complexContent&gt;
+           &lt;/complexType&gt;
+        &lt;/schema&gt;
+    &lt;/types&gt;
+
+    &lt;message name=&quot;m1&quot;&gt;
+        &lt;part name=&quot;body&quot; element=&quot;tns:GetCompanyInfo&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;message name=&quot;m2&quot;&gt;
+        &lt;part name=&quot;body&quot; element=&quot;tns:GetCompanyInfoResult&quot;/&gt;
+        &lt;part name=&quot;docs&quot; type=&quot;xsd:string&quot;/&gt;
+        &lt;part name=&quot;logo&quot; type=&quot;tns:ArrayOfBinary&quot;/&gt;
+    &lt;/message&gt;
+
+    &lt;portType name=&quot;pt1&quot;&gt;
+        &lt;operation name=&quot;GetCompanyInfo&quot;&gt;
+           &lt;input message=&quot;m1&quot;/&gt;
+           &lt;output message=&quot;m2&quot;/&gt;
+        &lt;/operation&gt;
+    &lt;/portType&gt;
+
+    &lt;binding name=&quot;b1&quot; type=&quot;tns:pt1&quot;&gt;
+        &lt;operation name=&quot;GetCompanyInfo&quot;&gt;
+<b>           &lt;soap:operation soapAction=&quot;http://example.com/GetCompanyInfo&quot;/&gt;</b>
+           &lt;input&gt;
+<b>               &lt;soap:body use=&quot;literal&quot;/&gt;</b>
+           &lt;/input&gt;
+           &lt;output&gt;
+<b>               &lt;mime:multipartRelated&gt;</b>
+<b>                   &lt;mime:part&gt;</b>
+<b>                       &lt;soap:body parts=&quot;body&quot; use=&quot;literal&quot;/&gt;</b>
+<b>                   &lt;/mime:part&gt;</b>
+<b>                   &lt;mime:part&gt;</b>
+<b>                       &lt;mime:content part=&quot;docs&quot; type=&quot;text/html&quot;/&gt;</b>
+<b>                   &lt;/mime:part&gt;</b>
+<b>                   &lt;mime:part&gt;</b>
+<b>                       &lt;mime:content part=&quot;logo&quot; type=&quot;image/gif&quot;/&gt;</b>
+<b>                       &lt;mime:content part=&quot;logo&quot; type=&quot;image/jpeg&quot;/&gt;</b>
+<b>                   &lt;/mime:part&gt;</b>
+<b>               &lt;/mime:multipartRelated&gt;</b>
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;service name=&quot;CompanyInfoService&quot;&gt;
+        &lt;port name=&quot;CompanyInfoPort&quot;binding=&quot;tns:b1&quot;&gt;
+<b>           &lt;soap:address location=&quot;http://example.com/companyinfo&quot;/&gt;</b>
+        &lt;/port&gt;
+    &lt;/service&gt;
+&lt;/definitions&gt;
+</pre>
+
+<h3>5.2<a name="_Toc492291086">    How the MIME
+Binding extends WSDL</a></h3>
+
+<p>The MIME Binding extends WSDL with the following extension
+elements:</p>
+
+<pre class="clsCode">&lt;mime:content part=&quot;nmtoken&quot;? type=&quot;string&quot;?/&gt;
+
+&lt;mime:multipartRelated&gt;
+    &lt;mime:part&gt; *
+        &lt;-- mime element --&gt;
+    &lt;/mime:part&gt;
+&lt;/mime:multipartRelated&gt;
+<b> </b>
+&lt;mime:mimeXml part=&quot;nmtoken&quot;?/&gt;
+</pre>
+
+<p>They are used at the following locations in WSDL:</p>
+
+<pre class="clsCode">&lt;definitions .... &gt;
+    &lt;binding .... &gt;
+        &lt;operation .... &gt;
+           &lt;input .... &gt;
+<b>               &lt;-- mime elements --&gt;</b>
+           &lt;/input&gt;
+           &lt;output .... &gt;
+<b>               &lt;-- mime elements --&gt;</b>
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+&lt;/definitions&gt;
+</pre>
+
+<p>MIME elements appear under input and output to specify the
+MIME format.  If multiple appear, they are considered to be
+alternatives. </p>
+
+<h3>5.3<a name="_mime:content">    mime:content</a></h3>
+
+<p>To avoid having to define a new element for every MIME format,
+the <b>mime:content</b> element may be used if there is no
+additional information to convey about the format other than its
+MIME type string.  </p>
+
+<pre class="clsCode">&lt;mime:content part=&quot;nmtoken&quot;? type=&quot;string&quot;?/&gt;
+</pre>
+
+<p>The <b>part</b> attribute is used to specify the name of the
+message part. If the message has a single part, then the part
+attribute is optional. The <b>type</b> attribute contains the
+MIME type string.  A type value has two portions, separated
+by a slash (/), either of which may be a wildcard (*).  Not
+specifying the type attribute indicates that all MIME types are
+acceptable.</p>
+
+<p>If the return format is XML, but the schema is not known ahead
+of time, the generic mime element can be used indicating text/xml:</p>
+
+<pre class="clsCode">&lt;mime:content type=&quot;text/xml&quot;/&gt;
+</pre>
+
+<p>A wildcard (*) can be used to specify a family of mime types,
+for example all text types. </p>
+
+<pre class="clsCode">&lt;mime:content type=&quot;text/*&quot;/&gt;
+</pre>
+
+<p>The following two examples both specify all mime types: </p>
+
+<pre class="clsCode">&lt;mime:content type=&quot;*/*&quot;/&gt;
+&lt;mime:content/&gt;
+</pre>
+
+<h3>5.4<a name="_mime:multipartRelated">    mime:multipartRelated</a></h3>
+
+<p>The multipart/related MIME type aggregates an arbitrary set of
+MIME formatted parts into one message using the MIME type &quot;multipart/related&quot;.
+ The <b>mime:multipartRelated</b> element describes the
+concrete format of such a message:</p>
+
+<pre class="clsCode">&lt;mime:multipartRelated&gt;
+    &lt;mime:part&gt; *
+        &lt;-- mime element --&gt;
+    &lt;/mime:part&gt;
+&lt;/mime:multipartRelated&gt;
+</pre>
+
+<p>The <b>mime:part</b> element describes each part of a
+multipart/related message.  MIME elements appear within <b>mime:part</b>
+to specify the concrete MIME type for the part.  If more
+than one MIME element appears inside a mime:part, they are
+alternatives.</p>
+
+<h3>5.5<a name="_mime:soap:body">    soap:body</a></h3>
+
+<p>When using the MIME binding with SOAP requests, it is legal to
+use the soap:body element as a MIME element.  It indicates
+the content type is &quot;text/xml&quot;, and there is an
+enclosing SOAP Envelope.</p>
+
+<h3>5.6<a name="_mime:mimeXml">    mime:mimeXml</a></h3>
+
+<p>To specify XML payloads that are not SOAP compliant (do not
+have a SOAP Envelope), but do have a particular schema, the <b>mime:mimeXml</b>
+element may be used to specify that concrete schema.  The <b>part</b>
+attribute refers to a message part defining the concrete schema
+of the root XML element. The part attribute MAY be omitted if the
+message has only a single part. The part references a concrete
+schema using the <b>element</b> attribute for simple parts or <b>type</b>
+attribute for composite parts (see section 2.3.1).</p>
+
+<pre class="clsCode">&lt;mime:mimeXml part=&quot;nmtoken&quot;?/&gt;
+</pre>
+
+<h2><a name="_Toc492291091"></a><a name="_9.__"></a> 6.
+References</h2>
+
+<p class="reference">[2] S. Bradner, &quot;Key words for use in
+RFCs to Indicate Requirement Levels&quot;, <a
+href="http://www.normos.org/ietf/rfc/rfc2119.txt">RFC 2119</a>,
+Harvard University, March 1997</p>
+
+<p class="reference">[4] T. Berners-Lee, R. Fielding, L. Masinter,
+&quot;Uniform Resource Identifiers (URI): Generic Syntax&quot;, <a
+href="http://www.normos.org/ietf/rfc/rfc2396.txt">RFC 2396</a>,
+MIT/LCS, U.C. Irvine, Xerox Corporation, August 1998.</p>
+
+<p class="reference">[5] <a
+href="http://www.w3.org/TR/html401/interact/forms.html#submit-format">http://www.w3.org/TR/html401/interact/forms.html
+- submit-format</a></p>
+
+<p class="reference">[6] <a
+href="http://www.w3.org/TR/html401/appendix/notes.html#ampersands-in-uris">http://www.w3.org/TR/html401/appendix/notes.html
+- ampersands-in-uris</a></p>
+
+<p class="reference">[7] <a
+href="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4">http://www.w3.org/TR/html401/interact/forms.html
+- h-17.13.4</a></p>
+
+<p class="reference">[8] Simple Object Access Protocol (SOAP) 1.1 &quot;<a href="http://www.w3.org/TR/2000/NOTE-SOAP-20000508/">http://www.w3.org/TR/2000/NOTE-SOAP-20000508/</a>&quot;</p>
+
+<p class="reference">[10] W3C Working Draft &quot;<a
+href="http://www.w3.org/TR/xmlschema-1/">XML Schema Part 1:
+Structures</a>&quot;. This is work in progress. </p>
+
+<p class="reference">[11] W3C Working Draft &quot;<a
+href="http://www.w3.org/TR/xmlschema-2/">XML Schema Part 2:
+Datatypes</a>&quot;. This is work in progress.</p>
+
+<h2
+><a
+name="_Toc492291092">A 1. Notes on URIs</a></h2>
+
+<p class="MsoNormal">This section does not directly contribute to
+the specification, but provide background that may be useful when
+implementing the specification.</p>
+
+<h3
+><a
+name="_Toc492291093">A 1.1 XML namespaces &amp; schema locations</a></h3>
+
+<p class="MsoNormal">It is a common misperception to equate the
+targetNamespace of an XML schema or the value of the <i>xmlns</i>
+attribute in XML instances with the location of the corresponding
+schema. Since namespaces are in fact URIs, and URIs may be
+locations, and you may be able to retrieve a schema from that
+location, it does not mean that is the only schema that is
+associated with that namespace. There can be multiple schemas
+associated with a particular namespace, and it is up to a
+processor of XML to determine which one to use in a particular
+processing context. The WSDL specification provides the processing
+context here via the <i>&lt;import&gt;</i> mechanism, which is
+based on the XML schemas grammar for the similar concept.</p>
+
+<h3
+><a
+name="_Toc492291094">A 1.2 Relative URIs</a></h3>
+
+<p class="MsoNormal">Throughout this document you see fully
+qualified URIs used in WSDL and XSD documents. The use of a fully
+qualified URI is simply to illustrate the referencing concepts.
+The use of relative URIs is completely allowed and is warranted
+in many cases. For information on processing relative URIs, see <a
+href="http://www.normos.org/ietf/rfc/rfc2396.txt">http://www.normos.org/ietf/rfc/rfc2396.txt</a>.</p>
+
+<h3
+><a
+name="_Toc492291095">A 1.3 Generating URIs</a></h3>
+
+<p class="MsoNormal" >When working with
+WSDL, it is sometimes desirable to make up a URI for an entity,
+but not make the URI globally unique for all time and have it
+&quot;mean&quot; that version of the entity (schema, WSDL document,
+etc.). There is a particular URI base reserved for use for this
+type of behavior. The base URI &quot;http://tempuri.org/&quot; can
+be used to construct a URI without any unique association to an
+entity. For example, two people or programs could choose to
+simultaneously use the URI &quot;http://tempuri.org/myschema&quot; for
+two completely different schemas, and as long as the scope of the
+use of the URIs does not intersect, then they are considered
+unique enough. This has the further benefit that the entity
+referred to by the URI can be versioned without having to
+generate a new URI, as long as it makes sense within the
+processing context. It is not recommended that &quot;http://tempuri.org/&quot; 
+be used as a base for stable, fixed entities.</p>
+
+<h2
+><a
+name="_Toc492291096">A 2. Wire format for WSDL examples</a></h2>
+
+<h3
+><a
+name="_Toc492291097">A 2.1. Example 1</a></h3>
+
+<p class="MsoCaption">SOAP Message Embedded in HTTP Request</p>
+
+<pre class="clsCode">POST /StockQuote HTTP/1.1
+Host: www.stockquoteserver.com
+Content-Type: text/xml; charset=&quot;utf-8&quot;
+Content-Length: nnnn
+SOAPAction: &quot;Some-URI&quot;
+
+&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+    &lt;soapenv:Body&gt;
+        &lt;m:GetLastTradePrice xmlns:m=&quot;Some-URI&quot;&gt;
+            &lt;m:tickerSymbol&gt;DIS&lt;/m:tickerSymbol&gt;
+        &lt;/m:GetLastTradePrice&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+
+<p class="MsoCaption">SOAP Message Embedded in HTTP Response</p>
+
+<pre class="clsCode">HTTP/1.1 200 OK
+Content-Type: text/xml; charset=&quot;utf-8&quot;
+Content-Length: nnnn
+
+&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+    &lt;soapenv:Body&gt;
+        &lt;m:GetLastTradePriceResponse xmlns:m=&quot;Some-URI&quot;&gt;
+            &lt;m:price&gt;34.5&lt;/m:price&gt;
+        &lt;/m:GetLastTradePriceResponse&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</pre>
+
+<h2 class="Code"><a name="A3">A 3. Location of Extensibility
+Elements</a></h2>
+
+<p>Extensibility elements can appear at the following locations
+in a WSDL document: </p>
+
+
+<TABLE CLASS="clsRef" BORDER="0" CELLPADDING="5" CELLSPACING="2" WIDTH="80%"
+ summary="possible locations for extensibility elements in wsdl documents">
+
+    <tr>
+        <td BGCOLOR="#A6CAF0"
+        >Location</td>
+        <td BGCOLOR="#A6CAF0"
+
+  >Meaning
+        </td>
+        <td BGCOLOR="#A6CAF0" valign="top"
+
+  >Possible
+        usage</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element applies to the WSDL document as a
+        whole.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Introduce additional information or definitions to a WSDL
+        document as a whole.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions/types</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element is a type system.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Specify the format of the message in a type system other
+        than XSD.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions/service</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element applies to the service.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Introduce additional information or definitions for the
+        service.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions/service/port</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element applies to the port.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Specify an address for the port.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions/binding</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element applies to the binding as a whole.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Provide protocol specific information that applies to all
+        the operations in the port type being bound.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions/binding/operation</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element applies to the operation as a whole.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Provide protocol specific information that applies to
+        both the input message and the output message.</td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions/binding/operation/input</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element applies to the input message for
+        the operation.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Provide details on how abstract message parts map into
+        the concrete protocol and data formats of the binding.<p
+
+
+  >·
+        Provide additional protocol specific information for the
+        input message.</p>
+        </td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions/binding/operation/output</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element applies to the output message of
+        the operation.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Provide details on how abstract message parts map into
+        the concrete protocol and data formats of the binding.<p
+
+
+  >·
+        Provide additional protocol specific information for the
+        output message.</p>
+        </td>
+    </tr>
+    <tr>
+        <td BGCOLOR="#EEEEE"
+
+  >definitions/binding/operation/fault</td>
+        <td BGCOLOR="#EEEEE"
+
+
+  >The
+        extensibility element applies to a fault message of the
+        operation.</td>
+        <td BGCOLOR="#EEEEE"  valign="top"
+
+
+  >·
+        Provide details on how abstract message parts map into
+        the concrete protocol and data formats of the binding.<p
+
+
+  >·
+        Provide additional protocol specific information for the
+        fault message.</p>
+        </td>
+    </tr>
+</table>
+
+
+<hr>
+
+<p > </p>
+
+<h2
+><a
+name="A4">A 4. Schemas</a></h2>
+
+<h3
+><a
+name="A4.1">A 4.1 WSDL Schema</a></h3>
+
+<pre class="clsCode">
+&lt;schema xmlns=&quot;http://www.w3.org/2000/10/XMLSchema&quot;
+        xmlns:wsdl=&quot;http://schemas.xmlsoap.org/wsdl/&quot;
+        targetNamespace=&quot;http://schemas.xmlsoap.org/wsdl/&quot;
+        elementFormDefault=&quot;qualified&quot;&gt;
+   &lt;element name=&quot;documentation&quot;&gt;
+      &lt;complexType mixed=&quot;true&quot;&gt;
+         &lt;choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+            &lt;any minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+         &lt;/choice&gt;
+         &lt;anyAttribute/&gt;
+      &lt;/complexType&gt;
+   &lt;/element&gt;
+   &lt;complexType name=&quot;documented&quot; abstract=&quot;true&quot;&gt;
+      &lt;sequence&gt;
+         &lt;element ref=&quot;wsdl:documentation&quot; minOccurs=&quot;0&quot;/&gt;
+      &lt;/sequence&gt;
+   &lt;/complexType&gt;
+   &lt;complexType name=&quot;openAtts&quot; abstract=&quot;true&quot;&gt;
+      &lt;annotation&gt;
+         &lt;documentation&gt;
+         This type is extended by  component types
+         to allow attributes from other namespaces to be added.
+         &lt;/documentation&gt;
+      &lt;/annotation&gt;
+      &lt;sequence&gt;
+         &lt;element ref=&quot;wsdl:documentation&quot; minOccurs=&quot;0&quot;/&gt;
+      &lt;/sequence&gt;
+      &lt;anyAttribute namespace=&quot;##other&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;element name=&quot;definitions&quot; type=&quot;wsdl:definitionsType&quot;&gt;
+      &lt;key name=&quot;message&quot;&gt;
+         &lt;selector xpath=&quot;message&quot;/&gt;
+         &lt;field xpath=&quot;@name&quot;/&gt;
+      &lt;/key&gt;
+      &lt;key name=&quot;portType&quot;&gt;
+         &lt;selector xpath=&quot;portType&quot;/&gt;
+         &lt;field xpath=&quot;@name&quot;/&gt;
+      &lt;/key&gt;
+      &lt;key name=&quot;binding&quot;&gt;
+         &lt;selector xpath=&quot;binding&quot;/&gt;
+         &lt;field xpath=&quot;@name&quot;/&gt;
+      &lt;/key&gt;
+      &lt;key name=&quot;service&quot;&gt;
+         &lt;selector xpath=&quot;service&quot;/&gt;
+         &lt;field xpath=&quot;@name&quot;/&gt;
+      &lt;/key&gt;
+      &lt;key name=&quot;import&quot;&gt;
+            &lt;selector xpath=&quot;import&quot;/&gt;
+            &lt;field xpath=&quot;@namespace&quot;/&gt;
+         &lt;/key&gt;
+      &lt;key name=&quot;port&quot;&gt;
+         &lt;selector xpath=&quot;service/port&quot;/&gt;
+         &lt;field xpath=&quot;@name&quot;/&gt;
+      &lt;/key&gt;
+   &lt;/element&gt;
+   &lt;complexType name=&quot;definitionsType&quot;&gt;
+      &lt;complexContent&gt;
+         &lt;extension base=&quot;wsdl:documented&quot;&gt;
+            &lt;sequence&gt;
+               &lt;element ref=&quot;wsdl:import&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+               &lt;element ref=&quot;wsdl:types&quot; minOccurs=&quot;0&quot;/&gt;
+               &lt;element ref=&quot;wsdl:message&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+               &lt;element ref=&quot;wsdl:portType&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+               &lt;element ref=&quot;wsdl:binding&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+               &lt;element ref=&quot;wsdl:service&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+               &lt;any namespace=&quot;##other&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                  &lt;annotation&gt;
+                     &lt;documentation&gt;to support extensibility elements &lt;/documentation&gt;
+                  &lt;/annotation&gt;
+               &lt;/any&gt;
+            &lt;/sequence&gt;
+            &lt;attribute name=&quot;targetNamespace&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;
+            &lt;attribute name=&quot;name&quot; type=&quot;NMTOKEN&quot; use=&quot;optional&quot;/&gt;
+         &lt;/extension&gt;
+      &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;import&quot; type=&quot;wsdl:importType&quot;/&gt;
+   &lt;complexType name=&quot;importType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;attribute name=&quot;namespace&quot; type=&quot;uriReference&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;location&quot; type=&quot;uriReference&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;types&quot; type=&quot;wsdl:typesType&quot;/&gt;
+   &lt;complexType name=&quot;typesType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;sequence&gt;
+   &lt;any namespace=&quot;##other&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+  &lt;/sequence&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;message&quot; type=&quot;wsdl:messageType&quot;&gt;
+      &lt;unique name=&quot;part&quot;&gt;
+         &lt;selector xpath=&quot;part&quot;/&gt;
+         &lt;field xpath=&quot;@name&quot;/&gt;
+      &lt;/unique&gt;
+   &lt;/element&gt;
+   &lt;complexType name=&quot;messageType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;sequence&gt;
+   &lt;element ref=&quot;wsdl:part&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+  &lt;/sequence&gt;
+      &lt;attribute name=&quot;name&quot; type=&quot;NCName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;part&quot; type=&quot;wsdl:partType&quot;/&gt;
+   &lt;complexType name=&quot;partType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:openAtts&quot;&gt;
+   &lt;attribute name=&quot;name&quot; type=&quot;NMTOKEN&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;type&quot; type=&quot;QName&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;element&quot; type=&quot;QName&quot; use=&quot;optional&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;portType&quot; type=&quot;wsdl:portTypeType&quot;/&gt;
+   &lt;complexType name=&quot;portTypeType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;sequence&gt;
+   &lt;element ref=&quot;wsdl:operation&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+  &lt;/sequence&gt;
+      &lt;attribute name=&quot;name&quot; type=&quot;NCName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;operation&quot; type=&quot;wsdl:operationType&quot;/&gt;
+   &lt;complexType name=&quot;operationType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+      &lt;choice&gt;
+         &lt;group ref=&quot;wsdl:one-way-operation&quot;/&gt;
+         &lt;group ref=&quot;wsdl:request-response-operation&quot;/&gt;
+         &lt;group ref=&quot;wsdl:solicit-response-operation&quot;/&gt;
+         &lt;group ref=&quot;wsdl:notification-operation&quot;/&gt;
+      &lt;/choice&gt;
+      &lt;attribute name=&quot;name&quot; type=&quot;NCName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;group name=&quot;one-way-operation&quot;&gt;
+      &lt;sequence&gt;
+         &lt;element ref=&quot;wsdl:input&quot;/&gt;
+      &lt;/sequence&gt;
+   &lt;/group&gt;
+   &lt;group name=&quot;request-response-operation&quot;&gt;
+      &lt;sequence&gt;
+         &lt;element ref=&quot;wsdl:input&quot;/&gt;
+         &lt;element ref=&quot;wsdl:output&quot;/&gt;
+         &lt;element ref=&quot;wsdl:fault&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+      &lt;/sequence&gt;
+   &lt;/group&gt;
+   &lt;group name=&quot;solicit-response-operation&quot;&gt;
+      &lt;sequence&gt;
+         &lt;element ref=&quot;wsdl:output&quot;/&gt;
+         &lt;element ref=&quot;wsdl:input&quot;/&gt;
+         &lt;element ref=&quot;wsdl:fault&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+      &lt;/sequence&gt;
+   &lt;/group&gt;
+   &lt;group name=&quot;notification-operation&quot;&gt;
+      &lt;sequence&gt;
+         &lt;element ref=&quot;wsdl:output&quot;/&gt;
+      &lt;/sequence&gt;
+   &lt;/group&gt;
+   &lt;element name=&quot;input&quot; type=&quot;wsdl:paramType&quot;/&gt;
+   &lt;element name=&quot;output&quot; type=&quot;wsdl:paramType&quot;/&gt;
+   &lt;element name=&quot;fault&quot; type=&quot;wsdl:faultType&quot;/&gt;
+   &lt;complexType name=&quot;paramType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;attribute name=&quot;name&quot; type=&quot;NMTOKEN&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;message&quot; type=&quot;QName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;complexType name=&quot;faultType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;attribute name=&quot;name&quot; type=&quot;NMTOKEN&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;message&quot; type=&quot;QName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;complexType name=&quot;startWithExtensionsType&quot; abstract=&quot;true&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;sequence&gt;
+   &lt;any namespace=&quot;##other&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+  &lt;/sequence&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;binding&quot; type=&quot;wsdl:bindingType&quot;/&gt;
+   &lt;complexType name=&quot;bindingType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:startWithExtensionsType&quot;&gt;
+   &lt;sequence&gt;
+   &lt;element name=&quot;operation&quot; type=&quot;wsdl:binding_operationType&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+  &lt;/sequence&gt;
+      &lt;attribute name=&quot;name&quot; type=&quot;NCName&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;type&quot; type=&quot;QName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;complexType name=&quot;binding_operationType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:startWithExtensionsType&quot;&gt;
+   &lt;sequence&gt;
+   &lt;element name=&quot;input&quot; type=&quot;wsdl:startWithExtensionsType&quot; minOccurs=&quot;0&quot;/&gt;
+      &lt;element name=&quot;output&quot; type=&quot;wsdl:startWithExtensionsType&quot; minOccurs=&quot;0&quot;/&gt;
+      &lt;element name=&quot;fault&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+         &lt;complexType&gt;
+            &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:startWithExtensionsType&quot;&gt;
+   &lt;attribute name=&quot;name&quot; type=&quot;NMTOKEN&quot; use=&quot;required&quot;/&gt;
+         &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+      &lt;/element&gt;
+  &lt;/sequence&gt;
+      &lt;attribute name=&quot;name&quot; type=&quot;NCName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;service&quot; type=&quot;wsdl:serviceType&quot;/&gt;
+   &lt;complexType name=&quot;serviceType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;sequence&gt;
+   &lt;element ref=&quot;wsdl:port&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+      &lt;any namespace=&quot;##other&quot; minOccurs=&quot;0&quot;/&gt;
+  &lt;/sequence&gt;
+      &lt;attribute name=&quot;name&quot; type=&quot;NCName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;port&quot; type=&quot;wsdl:portType&quot;/&gt;
+   &lt;complexType name=&quot;portType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;extension base=&quot;wsdl:documented&quot;&gt;
+   &lt;sequence&gt;
+   &lt;any namespace=&quot;##other&quot; minOccurs=&quot;0&quot;/&gt;
+  &lt;/sequence&gt;
+      &lt;attribute name=&quot;name&quot; type=&quot;NCName&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;binding&quot; type=&quot;QName&quot; use=&quot;required&quot;/&gt;
+   &lt;/extension&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+  <span class="m">&lt;</span><span class="t">attribute</span> <span class="t">name</span><span class="m">=&quot;</span>arrayType<span class="m">&quot;</span><span class="t"> type</span><span class="m">=&quot;</span>string<span class="m">&quot;/&gt;</span>
+&lt;/schema&gt;
+</pre>
+
+<h3><a
+name="A4.2">A 4.2 SOAP Binding Schema</a></h3>
+
+<pre class="clsCode">
+&lt;schema xmlns=&quot;http://www.w3.org/2000/10/XMLSchema&quot;
+        xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+        targetNamespace=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;&gt;
+   &lt;element name=&quot;binding&quot; type=&quot;soap:bindingType&quot;/&gt;
+   &lt;complexType name=&quot;bindingType&quot;&gt;
+      &lt;attribute name=&quot;transport&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;style&quot; type=&quot;soap:styleChoice&quot; use=&quot;optional&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;simpleType name=&quot;styleChoice&quot;&gt;
+      &lt;restriction base=&quot;string&quot;&gt;
+   &lt;enumeration value=&quot;rpc&quot;/&gt;
+      &lt;enumeration value=&quot;document&quot;/&gt;
+  &lt;/restriction&gt;
+   &lt;/simpleType&gt;
+   &lt;element name=&quot;operation&quot; type=&quot;soap:operationType&quot;/&gt;
+   &lt;complexType name=&quot;operationType&quot;&gt;
+      &lt;attribute name=&quot;soapAction&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;style&quot; type=&quot;soap:styleChoice&quot; use=&quot;optional&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;element name=&quot;body&quot; type=&quot;soap:bodyType&quot;/&gt;
+   &lt;complexType name=&quot;bodyType&quot;&gt;
+      &lt;attribute name=&quot;encodingStyle&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;parts&quot; type=&quot;NMTOKENS&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;use&quot; type=&quot;soap:useChoice&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;namespace&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;simpleType name=&quot;useChoice&quot;&gt;
+      &lt;restriction base=&quot;string&quot;&gt;
+   &lt;enumeration value=&quot;literal&quot;/&gt;
+      &lt;enumeration value=&quot;encoded&quot;/&gt;
+  &lt;/restriction&gt;
+   &lt;/simpleType&gt;
+   &lt;element name=&quot;fault&quot; type=&quot;soap:faultType&quot;/&gt;
+   &lt;complexType name=&quot;faultType&quot;&gt;
+      &lt;complexContent&gt;
+   &lt;restriction base=&quot;soap:bodyType&quot;&gt;
+   &lt;attribute name=&quot;parts&quot; type=&quot;NMTOKENS&quot; use=&quot;prohibited&quot;/&gt;
+   &lt;/restriction&gt;
+  &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+   &lt;element name=&quot;header&quot; type=&quot;soap:headerType&quot;/&gt;
+   &lt;complexType name=&quot;headerType&quot;&gt;            
+      &lt;all&gt;
+          &lt;element ref=&quot;soap:headerfault&quot;&gt;
+      &lt;/all&gt;
+      &lt;attribute name=&quot;message&quot; type=&quot;QName&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;parts&quot; type=&quot;NMTOKENS&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;use&quot; type=&quot;soap:useChoice&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;encodingStyle&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;namespace&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;      
+   &lt;/complexType&gt;
+   &lt;element name=&quot;headerfault&quot; type=&quot;soap:headerfaultType&quot;/&gt;
+   &lt;complexType name=&quot;headerfaultType&quot;&gt;            
+      &lt;attribute name=&quot;message&quot; type=&quot;QName&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;parts&quot; type=&quot;NMTOKENS&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;use&quot; type=&quot;soap:useChoice&quot; use=&quot;required&quot;/&gt;
+      &lt;attribute name=&quot;encodingStyle&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;namespace&quot; type=&quot;uriReference&quot; use=&quot;optional&quot;/&gt;      
+   &lt;/complexType&gt;
+   &lt;element name=&quot;address&quot; type=&quot;soap:addressType&quot;/&gt;
+   &lt;complexType name=&quot;addressType&quot;&gt;
+      &lt;attribute name=&quot;location&quot; type=&quot;uriReference&quot; use=&quot;required&quot;/&gt;
+   &lt;/complexType&gt;
+&lt;/schema&gt;
+
+</pre>
+
+<h3
+><a
+name="A4.3">A 4.3 HTTP Binding Schema</a></h3>
+
+<pre class="clsCode">
+&lt;schema xmlns=&quot;http://www.w3.org/2000/10/XMLSchema&quot;
+        xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+        targetNamespace=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;&gt;
+   &lt;element name=&quot;address&quot; type=&quot;http:addressType&quot;/&gt;
+   &lt;complexType name=&quot;addressType&quot;&gt;
+      &lt;attribute name=&quot;location&quot; type=&quot;uriReference&quot; use=&quot;required&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;element name=&quot;binding&quot; type=&quot;http:bindingType&quot;/&gt;
+   &lt;complexType name=&quot;bindingType&quot;&gt;
+      &lt;attribute name=&quot;verb&quot; type=&quot;NMTOKEN&quot; use=&quot;required&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;element name=&quot;operation&quot; type=&quot;http:operationType&quot;/&gt;
+   &lt;complexType name=&quot;operationType&quot;&gt;
+      &lt;attribute name=&quot;location&quot; type=&quot;uriReference&quot; use=&quot;required&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;element name=&quot;urlEncoded&quot;&gt;
+      &lt;complexType&gt;
+  &lt;/complexType&gt;
+   &lt;/element&gt;
+   &lt;element name=&quot;urlReplacement&quot;&gt;
+      &lt;complexType&gt;
+  &lt;/complexType&gt;
+   &lt;/element&gt;
+&lt;/schema&gt;
+</pre>
+
+<h3
+><a
+name="A4.4">A 4.4 MIME Binding Schema</a></h3>
+
+<pre class="clsCode">
+&lt;schema  targetNamespace=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+         xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+         xmlns=&quot;http://www.w3.org/2000/10/XMLSchema&quot;&gt;
+   &lt;element name=&quot;content&quot; type=&quot;mime:contentType&quot;/&gt;
+   &lt;complexType name=&quot;contentType&quot; content=&quot;empty&quot;&gt;
+      &lt;attribute name=&quot;type&quot; type=&quot;string&quot; use=&quot;optional&quot;/&gt;
+      &lt;attribute name=&quot;part&quot; type=&quot;NMTOKEN&quot; use=&quot;optional&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;element name=&quot;multipartRelated&quot; type=&quot;mime:multipartRelatedType&quot;/&gt;
+   &lt;complexType name=&quot;multipartRelatedType&quot; content=&quot;elementOnly&quot;&gt;
+      &lt;element ref=&quot;mime:part&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;element name=&quot;part&quot; type=&quot;mime:partType&quot;/&gt;
+   &lt;complexType name=&quot;partType&quot; content=&quot;elementOnly&quot;&gt;
+      &lt;any namespace=&quot;targetNamespace&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
+      &lt;attribute name=&quot;name&quot; type=&quot;NMTOKEN&quot; use=&quot;required&quot;/&gt;
+   &lt;/complexType&gt;
+   &lt;element name=&quot;mimeXml&quot; type=&quot;mime:mimeXmlType&quot;/&gt;
+   &lt;complexType name=&quot;mimeXmlType&quot; content=&quot;empty&quot;&gt;
+      &lt;attribute name=&quot;part&quot; type=&quot;NMTOKEN&quot; use=&quot;optional&quot;/&gt;
+   &lt;/complexType&gt;
+&lt;/schema&gt;
+</pre>
+
+</body>
+</html>
+

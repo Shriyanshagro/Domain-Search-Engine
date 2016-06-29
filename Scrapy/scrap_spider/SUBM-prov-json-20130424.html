@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="description" content="Provenance JSON Representation">
+    <meta name="keywords" content="W3C,PROV,PROV-JSON,JSON,Provenance,University of Southampton">
+    <title>The PROV-JSON Serialization</title> 
+        
+
+    <style type="text/css">
+        @import url("extra.css");
+        .code-comment { color: #808080;}
+
+        .code-new { color: #000080;}
+
+        .note { font-size:small; margin-left:50px }
+        
+        .diamond {
+            font-weight: normal;
+            font-style: normal;
+            font-size:100%;
+            font-family: sans-serif;
+        }
+        a.internalDFN {
+            color:  inherit;
+            border-bottom:  1px solid #99c;
+            text-decoration:    none;
+        }
+        
+        a.externalDFN {
+            color:  inherit;
+            border-bottom:  1px dotted #ccc;
+            text-decoration:    none;
+        }
+    </style>
+
+     
+  <style>/*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+
+/* --- INLINES --- */
+em.rfc2119 { 
+    text-transform:     lowercase;
+    font-variant:       small-caps;
+    font-style:         normal;
+    color:              #900;
+}
+
+h1 acronym, h2 acronym, h3 acronym, h4 acronym, h5 acronym, h6 acronym, a acronym,
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
+    border: none;
+}
+
+dfn {
+    font-weight:    bold;
+}
+
+a.internalDFN {
+    color:  inherit;
+    border-bottom:  1px solid #99c;
+    text-decoration:    none;
+}
+
+a.externalDFN {
+    color:  inherit;
+    border-bottom:  1px dotted #ccc;
+    text-decoration:    none;
+}
+
+a.bibref {
+    text-decoration:    none;
+}
+
+cite .bibref {
+    font-style: normal;
+}
+
+code {
+    color:  #ff4500;
+}
+
+
+/* --- --- */
+ol.algorithm { counter-reset:numsection; list-style-type: none; }
+ol.algorithm li { margin: 0.5em 0; }
+ol.algorithm li:before { font-weight: bold; counter-increment: numsection; content: counters(numsection, ".") ") "; }
+
+/* --- TOC --- */
+.toc a, .tof a {
+    text-decoration:    none;
+}
+
+a .secno, a .figno {
+    color:  #000;
+}
+
+ul.tof, ol.tof {
+    list-style: none outside none;
+}
+
+.caption {
+    margin-top: 0.5em;
+    font-style:   italic;
+}
+
+/* --- TABLE --- */
+table.simple {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    border-bottom:  3px solid #005a9c;
+}
+
+.simple th {
+    background: #005a9c;
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+}
+
+.simple th[scope="row"] {
+    background: inherit;
+    color:  inherit;
+    border-top: 1px solid #ddd;
+}
+
+.simple td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+    background: #f0f6ff;
+}
+
+/* --- DL --- */
+.section dd > p:first-child {
+    margin-top: 0;
+}
+
+.section dd > p:last-child {
+    margin-bottom: 0;
+}
+
+.section dd {
+    margin-bottom:  1em;
+}
+
+.section dl.attrs dd, .section dl.eldef dd {
+    margin-bottom:  0;
+}
+</style><style>/* --- EXAMPLES --- */
+div.example-title {
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.example-title span {
+    text-transform: uppercase;   
+}
+aside.example, div.example, div.illegal-example {
+    padding: 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+div.illegal-example { color: red }
+div.illegal-example p { color: black }
+aside.example, div.example {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+    border-color: #e0cb52;
+    background: #fcfaee;    
+}
+
+aside.example div.example {
+    border-left-width: .1em;
+    border-color: #999;
+    background: #fff;
+}
+aside.example div.example div.example-title {
+    color: #999;
+}
+</style><style>/* --- ISSUES/NOTES --- */
+div.issue-title, div.note-title {
+    padding-right:  1em;
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.issue-title { color: #e05252; }
+div.note-title { color: #2b2; }
+div.issue-title span, div.note-title span {
+    text-transform: uppercase;
+}
+div.note, div.issue {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.note > p:first-child, .issue > p:first-child { margin-top: 0 }
+.issue, .note {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+}
+div.issue, div.note {
+    padding: 1em 1.2em 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+span.note, span.issue { padding: .1em .5em .15em; }
+
+.issue {
+    border-color: #e05252;
+    background: #fbe9e9;
+}
+.note {
+    border-color: #52e052;
+    background: #e9fbe9;
+}
+
+
+</style><link rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM"></head> 
+
+<body><div class="head">
+  <p>
+      <a href="http://www.w3.org/"><img width="72" height="48" src="http://www.w3.org/Icons/w3c_home" alt="W3C"></a>
+      <a href="http://www.w3.org/Submission/"><img height="48" width="211" src="http://www.w3.org/Icons/member_subm" alt="W3C Member Submission"/></a>    
+  </p>
+  <h1 class="title" id="title">The PROV-JSON Serialization</h1>
+  
+    <h2 id="subtitle">A JSON Representation for the PROV Data Model</h2>
+  
+  <h2 id="w3c-member-submission-24-apr-2013"><abbr title="World Wide Web Consortium">W3C</abbr> Member Submission 24 April 2013</h2>
+  <dl>
+    
+      <dt>This version:</dt>
+      <dd><a href="http://www.w3.org/Submission/2013/SUBM-prov-json-20130424/">http://www.w3.org/Submission/2013/SUBM-prov-json-20130424/</a></dd>
+      <dt>Latest published version:</dt>
+      <dd><a href="http://www.w3.org/Submission/prov-json/">http://www.w3.org/Submission/prov-json/</a></dd>
+    
+    
+      <dt>Latest editor's draft:</dt>
+      <dd><a href="http://provenance.ecs.soton.ac.uk/prov-json/">http://provenance.ecs.soton.ac.uk/prov-json/</a></dd>
+    
+      <dt>Authors:</dt>
+      <dd><a href="http://users.ecs.soton.ac.uk/tdh/">Trung Dong Huynh</a>, University of Southampton</dd>
+<dd><a href="http://www.ecs.soton.ac.uk/people/moj">Michael O. Jewell</a>, University of Southampton</dd>
+<dd><a href="http://www.ecs.soton.ac.uk/people/ask2g10">Amir Sezavar Keshavarz</a>, University of Southampton</dd>
+<dd><a href="http://users.ecs.soton.ac.uk/dtm/">Danius T. Michaelides</a>, University of Southampton</dd>
+<dd><a href="http://www.ecs.soton.ac.uk/people/hy2">Huanjia Yang</a>, University of Southampton</dd>
+<dd><a href="http://users.ecs.soton.ac.uk/lavm/">Luc Moreau</a>, University of Southampton</dd>
+
+    
+  </dl>
+  
+  
+  
+  
+    
+      <p class="copyright">Copyright © 2013 <a href="http://www.southampton.ac.uk/">University of Southampton</a>. This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document
+License</a>. See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C
+Intellectual Rights Notice and Legal Disclaimers</a> for additional
+information.</p>
+    
+  
+  <hr>
+</div> 
+
+<section id="abstract" class="introductory"><h2>Abstract</h2>
+  <p>This document specifies a JSON representation for the PROV Data Model, called PROV-JSON. It provides a compact and faithful representation of PROV that supports fast data look-up and is particularly suitable for interchanging PROV documents between web services and clients.</p>
+</section><section id="sotd" class="introductory"><h2>Status of This Document</h2>
+  
+    
+      
+        <p>
+          <em>This section describes the status of this document at the time of its publication. Other
+          documents may supersede this document. A list of current <abbr title="World Wide Web Consortium">W3C</abbr> publications can be found in the <a href="http://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports
+          index</a> at http://www.w3.org/TR/.</em>
+        </p>
+
+        <p>
+          By publishing this document, W3C acknowledges that the <a href="http://www.w3.org/Submission/2013/01/">Submitting Members</a> 
+          have made a formal Submission request to W3C for discussion.
+          Publication of this document by W3C indicates no endorsement of its
+          content by W3C, nor that W3C has, is, or will be allocating any
+          resources to the issues addressed by it. This document is not the
+          product of a chartered W3C group, but is published as potential input
+          to the <a href="http://www.w3.org/Consortium/Process">W3C Process</a>.
+          A <a href="http://www.w3.org/Submission/2013/01/Comment/">W3C Team Comment</a> has been published in conjunction
+          with this Member Submission.
+          Publication of acknowledged Member Submissions at the W3C site is one
+          of the benefits of <a href="http://www.w3.org/Consortium/Prospectus/Joining">W3C
+          Membership</a>. Please consult the requirements associated with
+          Member Submissions of <a href="http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">section
+          3.3 of the W3C Patent Policy</a>. Please consult the complete
+          <a href="http://www.w3.org/Submission">list of acknowledged W3C Member
+          Submissions</a>.
+        </p>
+        
+        
+          
+    
+  
+</section><section id="toc"><h2 class="introductory">Table of Contents</h2><ul class="toc"><li class="tocline"><a href="#introduction" class="tocxref"><span class="secno">1. </span>Introduction</a><ul class="toc"><li class="tocline"><a href="#design-considerations" class="tocxref"><span class="secno">1.1 </span>Design considerations</a></li><li class="tocline"><a href="#structure-of-this-document" class="tocxref"><span class="secno">1.2 </span>Structure of this Document</a></li><li class="tocline"><a href="#prov-dm-namespace" class="tocxref"><span class="secno">1.3 </span>Namespace</a></li><li class="tocline"><a href="#conventions" class="tocxref"><span class="secno">1.4 </span>Conventions</a></li></ul></li><li class="tocline"><a href="#PROV-JSON-overview" class="tocxref"><span class="secno">2. </span>Overview</a><ul class="toc"><li class="tocline"><a href="#identifiers" class="tocxref"><span class="secno">2.1 </span>Identifiers</a></li><li class="tocline"><a href="#data-typing" class="tocxref"><span class="secno">2.2 </span>JSON Data Typing</a></li><li class="tocline"><a href="#validation" class="tocxref"><span class="secno">2.3 </span>Validating PROV-JSON Documents</a></li></ul></li><li class="tocline"><a href="#prov-json-representation" class="tocxref"><span class="secno">3. </span>Representing PROV in JSON</a><ul class="toc"><li class="tocline"><a href="#elements" class="tocxref"><span class="secno">3.1 </span>Elements</a><ul class="toc"><li class="tocline"><a href="#term-entity" class="tocxref"><span class="secno">3.1.1 </span>Entity</a></li><li class="tocline"><a href="#term-agent" class="tocxref"><span class="secno">3.1.2 </span>Agent</a></li><li class="tocline"><a href="#term-Activity" class="tocxref"><span class="secno">3.1.3 </span>Activity</a></li></ul></li><li class="tocline"><a href="#relations" class="tocxref"><span class="secno">3.2 </span>Relations</a><ul class="toc"><li class="tocline"><a href="#term-Generation" class="tocxref"><span class="secno">3.2.1 </span>Generation</a></li><li class="tocline"><a href="#term-Usage" class="tocxref"><span class="secno">3.2.2 </span>Usage</a></li><li class="tocline"><a href="#term-Communication" class="tocxref"><span class="secno">3.2.3 </span>Communication</a></li><li class="tocline"><a href="#term-Start" class="tocxref"><span class="secno">3.2.4 </span>Start</a></li><li class="tocline"><a href="#term-End" class="tocxref"><span class="secno">3.2.5 </span>End</a></li><li class="tocline"><a href="#term-Invalidation" class="tocxref"><span class="secno">3.2.6 </span>Invalidation</a></li><li class="tocline"><a href="#term-Derivation" class="tocxref"><span class="secno">3.2.7 </span>Derivation</a></li><li class="tocline"><a href="#term-attribution" class="tocxref"><span class="secno">3.2.8 </span>Attribution</a></li><li class="tocline"><a href="#term-Association" class="tocxref"><span class="secno">3.2.9 </span>Association</a></li><li class="tocline"><a href="#term-delegation" class="tocxref"><span class="secno">3.2.10 </span>Delegation</a></li><li class="tocline"><a href="#term-influence" class="tocxref"><span class="secno">3.2.11 </span>Influence</a></li><li class="tocline"><a href="#term-specialization" class="tocxref"><span class="secno">3.2.12 </span>Specialization</a></li><li class="tocline"><a href="#term-alternate" class="tocxref"><span class="secno">3.2.13 </span>Alternate</a></li><li class="tocline"><a href="#term-membership" class="tocxref"><span class="secno">3.2.14 </span>Membership</a></li></ul></li><li class="tocline"><a href="#bundle" class="tocxref"><span class="secno">3.3 </span>Bundles</a></li></ul></li><li class="tocline"><a href="#prov-json-example" class="tocxref"><span class="secno">A. </span>PROV-JSON Serialization Example</a><ul class="toc"><li class="tocline"><a href="#example-the-authors-view" class="tocxref"><span class="secno">A.1 </span>Example: The Authors View</a></li><li class="tocline"><a href="#example-the-process-view" class="tocxref"><span class="secno">A.2 </span>Example: The Process View</a></li><li class="tocline"><a href="#example-attribution-of-provenance" class="tocxref"><span class="secno">A.3 </span>Example: Attribution of Provenance</a></li></ul></li><li class="tocline"><a href="#prov-json-dictionary" class="tocxref"><span class="secno">B. </span>PROV-JSON Representation for PROV-Dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-membership" class="tocxref"><span class="secno">B.1 </span>Dictionary Membership</a></li><li class="tocline"><a href="#dictionary-insertion" class="tocxref"><span class="secno">B.2 </span>Dictionary Insertion</a></li><li class="tocline"><a href="#dictionary-removal" class="tocxref"><span class="secno">B.3 </span>Dictionary Removal</a></li></ul></li><li class="tocline"><a href="#acknowledgements" class="tocxref"><span class="secno">C. </span>Acknowledgements</a></li><li class="tocline"><a href="#references" class="tocxref"><span class="secno">D. </span>References</a><ul class="toc"><li class="tocline"><a href="#informative-references" class="tocxref"><span class="secno">D.1 </span>Informative references</a></li></ul></li></ul></section> 
+
+
+
+
+<section id="introduction"> 
+<!--OddPage--><h2><span class="secno">1. </span>Introduction</h2> 
+
+<p>PROV-JSON is a JSON representation for the PROV Data Model (PROV-DM). The PROV-JSON representation was designed for facilitating client-side manipulations of provenance information. It provides a compact and faithful representation of PROV that supports fast data look-up and is particularly suitable for interchanging PROV documents between web services and clients.. </p>
+
+<section id="design-considerations">
+
+<h3><span class="secno">1.1 </span>Design considerations</h3>
+<p>The development of the PROV-JSON representation has the following goals:</p>
+<ul>
+  <li><strong>Interoperability</strong>: PROV-JSON aims to map closely the PROV Data Model in order to ensure the interoperability between applications adopting the PROV recommendations. Therefore, provenance information represented in PROV-JSON can be converted from and to its counterparts PROV-N (the Provenance Notation used by PROV-DM [<cite><a class="bibref" href="#bib-PROV-N">PROV-N</a></cite>]), PROV-O (The PROV Ontology [<cite><a class="bibref" href="#bib-PROV-O">PROV-O</a></cite>]), and PROV-XML (The PROV XML Schema [<cite><a class="bibref" href="#bib-PROV-XML">PROV-XML</a></cite>]).</li>
+  <li><strong>Lightweight</strong>: native JavaScript data types are used where possible.</li>
+  <li><strong>Extensibility</strong>: application-specific terms and data can be introduced via the use of namespaces and custom data types.</li>
+  <li><strong>Ease of use</strong>: The design of PROV-JSON aims to follow the <a href="http://en.wikipedia.org/wiki/Convention_over_Configuration">Convention-over-Configuration</a> approach. Although PROV-JSON offers flexibility in extending the core specification to accommodate application-specific requirements, it is possible to produce simple PROV-JSON structures without unnecessary overhead, such as namespace declarations.</li>
+</ul>
+</section>
+
+<section id="structure-of-this-document"> 
+
+<h3><span class="secno">1.2 </span>Structure of this Document</h3>
+
+<p><a href="#PROV-JSON-overview">Section 2</a> provides an overview of the PROV-JSON representation.</p>
+
+<p><a href="#prov-json-representation">Section 3</a> specifies the JSON encoding for all PROV expressions.</p>
+
+<p><a href="#prov-json-example">Appendix A</a> provides a PROV-JSON example representation encoding <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#prov-dm-example">the PROV-DM Example</a>.</p>
+
+<p><a href="#prov-json-dictionary">Appendix B</a> defines the PROV-JSON mappings for Dictionary-related constructs [<cite><a class="bibref" href="#bib-PROV-DICTIONARY">PROV-DICTIONARY</a></cite>].</p>
+
+</section> 
+
+<section id="prov-dm-namespace">
+<h3><span class="secno">1.3 </span>Namespace</h3>
+
+<p>All the elements, relations, reserved names and attributes used in this specification belong to the PROV namespace, which is <span class="name">http://www.w3.org/ns/prov#</span>.</p>
+
+<p></p>
+</section>
+
+
+<section id="conventions">
+<h3><span class="secno">1.4 </span>Conventions</h3>
+
+<p>The key words "<em class="rfc2119" title="MUST">MUST</em>", "<em class="rfc2119" title="MUST NOT">MUST NOT</em>", "<em class="rfc2119" title="REQUIRED">REQUIRED</em>", "<em class="rfc2119" title="SHALL">SHALL</em>", "<em class="rfc2119" title="SHALL NOT">SHALL NOT</em>", "<em class="rfc2119" title="SHOULD">SHOULD</em>", "<em class="rfc2119" title="SHOULD NOT">SHOULD NOT</em>", "<em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em>",  "<em class="rfc2119" title="MAY">MAY</em>", and "<em class="rfc2119" title="OPTIONAL">OPTIONAL</em>" in this document are to be interpreted as described in [<cite><a class="bibref" href="#bib-RFC2119">RFC2119</a></cite>].</p>
+</section> 
+
+</section> 
+
+
+<section id="PROV-JSON-overview"> 
+      
+<!--OddPage--><h2><span class="secno">2. </span>Overview</h2>
+
+<p>A PROV <span class="nonterminal">document</span> (see <a href="http://www.w3.org/TR/2013/REC-prov-n-20130430/#document">Document</a> [<cite><a class="bibref" href="#bib-PROV-N">PROV-N</a></cite>]) is used to wrap PROV assertions and facilitate their interchange. It is represented in PROV-JSON as a top-level JSON object; each type of PROV assertions (e.g. entity, activity, generation, usage, etc.) is organised into a separate property with the same name in the top-level object as follows.</p>
+
+<div class="grammar"><pre>{
+    "entity": { <span class="code-comment">// Map of entities by entities' IDs</span>
+    },
+    "activity": { <span class="code-comment">// Map of activities by IDs</span>
+    },
+    "agent": { <span class="code-comment">// Map of agents by IDs</span>
+    },
+    &lt;<i>relationName</i>&gt;: { <span class="code-comment">// A map of relations of type <i>relationName</i> by their IDs</span>
+    },
+    ...
+    "bundle": { <span class="code-comment">// Map of named bundles by IDs</span>
+    }
+}
+</pre></div>
+
+<p>Each property itself is a JSON object, which is a map-like structure to hold all the PROV-JSON representation of assertions of the same type indexed by their <a href="#identifiers">identifiers</a>. Hence, a PROV-JSON document is an indexed representation of a PROV document, in which PROV assertions are indexed by their types and by their identifiers. This allows fast look-up of specific assertions without the need to traverse the whole document.</p>
+
+<p>In addition, the top-level object contains an additional object called <span class="name">prefix</span> that defines all the namespaces referred in the document.
+Prefixes can then be used to bind terms to specific namespaces. There is a special prefix called <code>default</code>, which can be used to declare the default namespace to which all unprefixed terms will be bound.</p>
+
+<p><strong>Default prefixes</strong>: By default, the following prefixes are implicitly defined:</p>
+<ul>
+  <li><code>prov</code>: <span class="name">http://www.w3.org/ns/prov#</span> (i.e. <a href="#prov-dm-namespace">PROV namespace</a>)</li>
+  <li><code>xsd</code>: <span class="name">http://www.w3.org/2000/10/XMLSchema#</span> (i.e. XML Schema Namespace [<cite><a class="bibref" href="#bib-XMLSCHEMA11-2">XMLSCHEMA11-2</a></cite>])</li>
+</ul>
+<p>Therefore, terms that are prefixed with <code>prov:</code> or <code>xsd:</code> will be implicitly bound to the relevant namespaces without the need for their explicit declarations.
+
+</p><div class="grammar"><pre>{
+    "prefix": {
+        "default": "http://example.org/default",
+        "ex": "http://example.org/"
+        ...
+    },
+    ...
+}
+</pre>
+</div>
+
+
+<section id="identifiers"> 
+
+<h3><span class="secno">2.1 </span>Identifiers</h3>
+
+<p>An identifier in PROV-JSON, as in [<cite><a class="bibref" href="#bib-PROV-DM">PROV-DM</a></cite>], is a <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-qualified-name">qualified name</a>. A qualified name can be mapped into an IRI by concatenating the IRI associated with the prefix and the local part.</p>
+
+<div class="note"><div class="note-title"><span>Note</span></div><div class="">It is possible that there are two (or more) qualified names that resolves to the same IRI. PROV-JSON makes no provision to ensure that records referred by equivalent identifiers will be merged. It is the responsibility of the application consuming PROV-JSON to deal with such cases properly. However, it is recommended that applications producing PROV-JSON make an effort to prevent those cases from occurring.</div></div>
+
+
+<h3 id="blank-node-ids">Blank node identifiers</h3>
+
+<p>Although identifiers of relations are optional in PROV, they are still required at all time in PROV-JSON in order to maintain the validity of a JSON structure (since they are keys in relevant relation map structures). In such cases, blank node identifiers <em class="rfc2119" title="MUST">MUST</em> be created for such relations following the <a href="http://www.w3.org/TeamSubmission/turtle/#nodeID">nodeID production in Turtle</a> (e.g. <code>_:A1</code>). It is up to the serialization algorithm to generate blank node identifiers that are internally unique to a PROV-JSON serialization.</p>
+
+<p>Blank node identifiers do not carry any semantics and <em class="rfc2119" title="SHOULD">SHOULD</em> be ignored by applications consuming PROV-JSON documents.</p>
+
+</section>
+
+
+<section id="data-typing">
+
+<h3><span class="secno">2.2 </span>JSON Data Typing</h3>
+
+<p><a href="http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-literal">PROV literal values</a> in PROV-JSON are represented in a JSON object with its data type explicitly provided. The value of a literal is stored in the object's special property <code>$</code>, represented as a string; the data type in the <code>type</code> property, given as a <a href="http://www.w3.org/TR/2013/REC-prov-n-20130430/#prod-datatype">qualified name</a>.
+</p>
+
+<div class="example"><div class="example-title"><span>Example 1</span></div><pre class="example">"prefix": {
+    "ex": "http://example.org/"
+},
+...
+"entity": {
+    "e1": {
+        "ex:byteSize": {
+            "$": "1034",
+            "type": "xsd:positiveInteger"
+        },
+        "ex:compression": {
+            "$": "82.5e-2",
+            "type": "xsd:double"
+        },
+        "ex:content": {
+            "$": "Y29udGVudCBoZXJl",
+            "type": "xsd:base64Binary"
+        }
+    }
+}</pre></div>
+
+<p>xsd:decimal, xsd:string, and xsd:boolean values <em class="rfc2119" title="MAY">MAY</em> be represented using the JSON native data types number, string, and boolean, respectively. However, if the xsd:string value has a <a href="http://www.w3.org/TR/rdf-sparql-query/#rLANGTAG">language tag</a>, the literal <em class="rfc2119" title="MUST">MUST</em> be represented in a JSON object as specified above, the language tag in the <code>lang</code> property and the <code>type</code> property omitted.
+</p>
+
+<div class="example"><div class="example-title"><span>Example 2</span></div><pre class="example">...
+"entity": {
+    "e1": {
+        "ex:cityName": {
+            "$": "Londres",
+            "lang": "fr"
+        }
+        ...
+    }
+}</pre></div>
+
+
+<h3 id="multiple-value-properties">Properties with multiple values</h3>
+
+<p>Some keys in PROV-JSON may have more than one value. These <em class="rfc2119" title="MUST">MUST</em> be represented as PROV-JSON literals as above and collated in to a JSON array, as in the example below.</p>
+
+<div class="example"><div class="example-title"><span>Example 3</span></div><pre class="example">"entity":{
+   "e1":{
+      "ex:values":[
+         {
+            "$":"1034",
+            "type":"xsd:positiveInteger"
+         },
+         2,
+         {
+            "$":"82.5",
+            "type":"xsd:decimal"
+         },
+         {
+            "$":"Y29udGBudCBoZXJl",
+            "type":"xsd:base64Binary"
+         }
+      ]
+   }
+}</pre></div>
+
+</section>
+
+
+<section class="informative" id="validation"> 
+
+<h3><span class="secno">2.3 </span>Validating PROV-JSON Documents</h3><p><em>This section is non-normative.</em></p>
+
+<p>A <a href="schema">schema for PROV-JSON</a> is provided, which defines all the valid PROV-JSON constructs described in this document. The schema was written using the schema language specified in [<cite><a class="bibref" href="#bib-JSON-SCHEMA">JSON-SCHEMA</a></cite>] (Version 4). It can be used for the purpose of validating PROV-JSON documents. A number of libraries for JSON schema validation are available at <a href="http://json-schema.org/implementations.html">json-schema.org/implementations.html</a>.</p>
+
+</section>
+
+</section>
+
+
+<section id="prov-json-representation"> 
+
+<!--OddPage--><h2><span class="secno">3. </span>Representing PROV in JSON</h2>
+
+<p>This section defines the JSON serialization mappings for PROV constructs (expressed in the PROV notation [<cite><a class="bibref" href="#bib-PROV-N">PROV-N</a></cite>]). The mappings are presented in the forms of examples (from <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#data-model-components">Section 5</a> of the [<cite><a class="bibref" href="#bib-PROV-DM">PROV-DM</a></cite>] document)</p>
+
+
+<section id="elements">
+
+<h3><span class="secno">3.1 </span>Elements</h3>
+
+<p>This section describes the JSON representations for all PROV elements: <span class="nonterminal">entity</span>, <span class="nonterminal">activity</span>, and <span class="nonterminal">agent</span>. In the JSON container to which these elements belong, they are put into separate structures  <span class="name">entity</span>, <span class="name">activity</span>, and <span class="name">agent</span>, respectively.</p>
+
+<section id="term-entity">
+<h4><span class="secno">3.1.1 </span>Entity</h4>
+
+<p>Each <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-entity" class="externalDFN">entity</a> is represented as a property in the <span class="nonterminal">entity</span> object, identified by the entity's <span class="name">id</span>. The property's value itself is an object structure containing the entity's attribute-values pairs.</p>
+
+The following entity expression<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-activity"><span class="diamond">◊</span></a></sup>, for example,
+<div class="example"><div class="example-title"><span>Example 4</span></div><pre class="example">entity(tr:WD-prov-dm-20111215, [ prov:type="document", ex:version="2" ])</pre></div>
+is serialized into the following structure
+<div class="example"><div class="example-title"><span>Example 5</span></div><pre class="example">...
+"entity": {
+    "tr:WD-prov-dm-20111215": {
+        "prov:type": "document",
+        "ex:version": "2"
+    }
+},
+...</pre></div>
+
+<div class="note"><div class="note-title"><span>Note</span></div><div class="">Since a <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-collection" class="externalDFN">Collection</a> is a special case of Entity, it is represented in the same <span class="name">entity</span> structure as above.</div></div>
+
+</section>
+
+<section id="term-agent">
+<h4><span class="secno">3.1.2 </span>Agent</h4>
+
+<p>Similarly, an <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent" class="externalDFN">agent</a> expression<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#example_34"><span class="diamond">◊</span></a></sup> below.
+
+</p><div class="example"><div class="example-title"><span>Example 6</span></div><pre class="example">agent(e1, [ex:employee="1234", ex:name="Alice", prov:type='prov:Person' ])</pre></div>
+is encoded into:
+<div class="example"><div class="example-title"><span>Example 7</span></div><pre class="example">...
+"agent": {
+    "e1": {
+        "ex:employee": "1234",
+        "ex:name": "Alice",
+        "prov:type": {
+            "$": "prov:Person",
+            "type": "xsd:QName"
+        }
+    }
+    ...
+},
+...</pre></div>
+
+</section>
+
+<section id="term-Activity">
+<h4><span class="secno">3.1.3 </span>Activity</h4>
+
+<p>Each <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Activity" class="externalDFN">activity</a> is represented as a property in the <span class="nonterminal">activity</span> object identified by the Activity's <span class="name">id</span>. The property's value itself is an object structure containing the activity's properties and its other attribute-values pairs.</p>
+
+<p>
+The following activity expression<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-activity"><span class="diamond">◊</span></a></sup>, for example,</p>
+<div class="example"><div class="example-title"><span>Example 8</span></div><pre class="example">activity(a1, 2011-11-16T16:05:00, 2011-11-16T16:06:00,
+    [ ex:host="server.example.org", prov:type='ex:edit' ])</pre></div>
+<p>is serialized into:</p>
+<div class="example"><div class="example-title"><span>Example 9</span></div><pre class="example">...
+"activity": {
+    "a1": {
+        "prov:startTime": "2011-11-16T16:05:00",
+        "prov:endTime": "2011-11-16T16:06:00",
+        "ex:host": "server.example.org",
+        "prov:type": {
+            "$": "ex:edit",
+            "type": "xsd:QName"
+        }
+    }
+},
+...</pre></div>
+<div class="note"><div class="note-title"><span>Note</span></div><div class="">Extra attribute-value pairs of an activity expression are put at the same level with other properties in an activity JSON structure.</div></div>
+
+<p>The values of <span class="nonterminal">startTime</span> and <span class="nonterminal">endTime</span> <em class="rfc2119" title="MUST">MUST</em> conform to xsd:dateTime [<cite><a class="bibref" href="#bib-XMLSCHEMA11-2">XMLSCHEMA11-2</a></cite>].</p>
+</section>
+
+</section>
+
+
+<section id="relations">
+<h3><span class="secno">3.2 </span>Relations</h3>
+
+<p>This section specifies how various PROV relations records  are serialized in PROV-JSON.</p>
+
+<p>In general, a PROV relation expression follows the following construct:</p>
+
+<div class="grammar">
+<span class="nonterminal">relationExpression</span>&nbsp;:=  
+<span class="nonterminal">relationName</span>
+(<span class="nonterminal">relationID</span>; <span class="nonterminal">identifier1</span>,
+<span class="nonterminal">identifier2</span>,
+[<span class="nonterminal">additionalProperties</span>])
+<br>
+</div>
+<p>where <span class="nonterminal">identifier1</span> and <span class="nonterminal">identifier2</span> are identifiers to PROV elements</p>
+Relations are grouped by <span class="nonterminal">relationName</span> in a PROV-JSON structure.
+<div class="grammar">
+  <pre>    ...
+    "activity": { ... },
+    <i>relationName</i>: {
+        <span class="code-comment">// relationName(identifier1, identifier2, ...)</span>
+        <i>relationID</i>: {
+            <i>attribute1</i>: <em>identifier1</em>,
+            <i>attribute2</i>: <em>identifier2</em>,
+                ...
+        },
+        <span class="code-comment">// More relationID, identifier1, identifier2 structures here if there are more instances of relationName(...)</span>
+    },
+    <i>anotherRelationName</i>: {
+        ...
+    },
+    ...
+</pre></div>
+Any values of <span class="nonterminal">additionalProperties</span> are specified alongside the identifier pairs in above structure.
+
+<p>The following sections provide more details on how each type of relation is serialized via typical examples.</p>
+
+
+<section id="term-Generation">
+<h4><span class="secno">3.2.1 </span>Generation</h4>
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Generation" class="externalDFN">Generation</a> expressions<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-generation1"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 10</span></div><pre class="example">wasGeneratedBy(e1, a1, 2001-10-26T21:32:52, [ ex:port="p1" ])
+wasGeneratedBy(ex:gen1; e2, a1, 2001-10-26T10:00:00, [ ex:port="p2" ])</pre></div>
+<p>are serialized as follows.</p>
+<div class="example"><div class="example-title"><span>Example 11</span></div><pre class="example">{
+    ...
+    "wasGeneratedBy": {
+        "_:wBG1": {
+            "prov:entity": "e1",
+            "prov:activity": "a1",
+            "prov:time": "2001-10-26T21:32:52",
+            "ex:port": "p1"
+        },
+        "ex:gen1": {
+            "prov:entity": "e2",
+            "prov:activity": "a1",
+            "prov:time": "2001-10-26T10:00:00",
+            "ex:port": "p1"
+        },
+    },
+    ...
+}</pre></div>
+
+</section>
+
+<section id="term-Usage">
+<h4><span class="secno">3.2.2 </span>Usage</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Usage" class="externalDFN">Usage</a> expressions<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-usage"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 12</span></div><pre class="example">used(a1,e1,2011-11-16T16:00:00,[ex:parameter="p1"])
+used(ex:use1; a1,e2,2011-11-16T16:00:01,[ex:parameter="p2"])</pre></div>
+<p>are serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 13</span></div><pre class="example">{
+    ...
+    "used": {
+        "_:u1": {
+            "prov:entity": "e1",
+            "prov:activity": "a1",
+            "ex:parameter": "p1",
+            "prov:time": "2011-11-16T16:00:00"
+        },
+        "ex:use1": {
+            "prov:entity": "e2",
+            "prov:activity": "a1",
+            "ex:parameter": "p2",
+            "prov:time": "2011-11-16T16:00:01"
+        },
+    },
+    ...
+}</pre></div>
+
+</section>
+
+<section id="term-Communication">
+<h4><span class="secno">3.2.3 </span>Communication</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Communication" class="externalDFN">Communication</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-communication"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 14</span></div><pre class="example">activity(a1, [ prov:type="traffic regulations enforcing" ])
+activity(a2, [ prov:type="fine paying" ])
+wasInformedBy(a2, a1)</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 15</span></div><pre class="example">{
+    ...
+    "activity": {
+        "a1": {
+            "prov:type": "traffic regulations enforcing"
+        },
+        "a2": {
+            "prov:type": "fine paying"
+        }
+    },
+    "wasInformedBy": {
+        "_:Infm2": {
+            "prov:informant": "a1",
+            "prov:informed": "a2"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+<section id="term-Start">
+<h4><span class="secno">3.2.4 </span>Start</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Start" class="externalDFN">Start</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-start1"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 16</span></div><pre class="example">entity(e1, [ prov:type="email message"] )
+activity(a1, [ prov:type="Discuss" ])
+wasStartedBy(a1, e1, -, 2011-11-16T16:05:00)</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 17</span></div><pre class="example">{
+    ...
+    "entity": {
+        "e1": {
+            "prov:type": "email message"
+        }
+    },
+    "activity": {
+        "a1": {
+            "prov:type": "Discuss"
+        }
+    },
+    "wasStartedBy": {
+        "_:wSB2": {
+            "prov:activity": "a1",
+            "prov:time": "2011-11-16T16:05:00",
+            "prov:trigger": "e1"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+<section id="term-End">
+<h4><span class="secno">3.2.5 </span>End</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-End" class="externalDFN">End</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-end"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 18</span></div><pre class="example">entity(e1, [ prov:type="approval document" ])
+activity(a1, [ prov:type="Editing" ])
+wasEndedBy(a1, e1, -, -)</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 19</span></div><pre class="example">{
+    ...
+    "entity": {
+        "e1": {
+            "prov:type": "approval document"
+        }
+    },
+    "activity": {
+        "a1": {
+            "prov:type": "Editing"
+        }
+    },
+    "wasEndedBy": {
+        "_:wEB1": {
+            "prov:activity": "a1",
+            "prov:trigger": "e1"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+<section id="term-Invalidation">
+<h4><span class="secno">3.2.6 </span>Invalidation</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Invalidation" class="externalDFN">Invalidation</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-invalidation1"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 20</span></div><pre class="example">entity(ex:The-Painter)
+agent(ex:Picasso)
+wasAttributedTo(ex:The-Painter, ex:Picasso)
+activity(ex:crash)
+wasInvalidatedBy(ex:The-Painter, ex:crash, 1998-09-03T01:31:00, [ ex:circumstances="plane accident" ])</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 21</span></div><pre class="example">{
+    ...
+    "entity": {
+        "ex:The-Painter": {
+        }
+    },
+    "agent": {
+        "ex:Picasso": {
+        }
+    },
+    "activity": {
+        "ex:crash": {
+        }
+    },
+    "wasInvalidatedBy": {
+        "_:wIB1": {
+            "prov:activity": "ex:crash",
+            "prov:time": "1998-09-03T01:31:00",
+            "ex:circumstances": "plane accident",
+            "prov:entity": "ex:The-Painter"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+<section id="term-Derivation">
+<h4><span class="secno">3.2.7 </span>Derivation</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Derivation" class="externalDFN">Derivation</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-derivation"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 22</span></div><pre class="example">wasDerivedFrom(e2, e1, a, g2, u1)
+wasGeneratedBy(g2; e2, a, -)
+used(u1; a, e1, -)</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 23</span></div><pre class="example">{
+    ...
+    "wasGeneratedBy": {
+        "g2": {
+          "prov:activity": "a",
+          "prov:entity": "e2"
+        }
+    },
+    "wasDerivedFrom": {
+        "_:wDF1": {
+          "prov:activity": "a",
+          "prov:generatedEntity": "e2",
+          "prov:usage": "u1",
+          "prov:generation": "g2",
+          "prov:usedEntity": "e1"
+        }
+    },
+    "used": {
+        "u1": {
+          "prov:activity": "a",
+          "prov:entity": "e1"
+        }
+    }
+    ...
+}</pre></div>
+
+<p>Since <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-revision" class="externalDFN">Revision</a>, <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-quotation" class="externalDFN">Quotation</a>, and <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-primary-source" class="externalDFN">Primary Source</a> are special cases of <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Derivation" class="externalDFN">Derivation</a>, they are represented in the same <span class="name">wasDerivedFrom</span> JSON structure. For examples, the following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-revision" class="externalDFN">Revision</a><a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-revision"></a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-derivation"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 24</span></div><pre class="example">entity(tr:WD-prov-dm-20111215, [ prov:type='rec54:WD'  ])
+entity(tr:WD-prov-dm-20111018, [ prov:type='rec54:WD'  ])
+wasDerivedFrom(tr:WD-prov-dm-20111215, 
+               tr:WD-prov-dm-20111018, 
+               [ prov:type='prov:Revision' ])</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 25</span></div><pre class="example">{
+    ...
+    "entity": {
+        "tr:WD-prov-dm-20111215": {
+            "prov:type": {
+                "$": "rec54:WD",
+                "type": "xsd:QName"
+            }
+        },
+        "tr:WD-prov-dm-20111018": {
+            "prov:type": {
+                "$": "rec54:WD",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "wasDerivedFrom": {
+        "_:wDF21": {
+            "prov:generatedEntity": "tr:WD-prov-dm-20111215",
+            "prov:type": {
+                "$": "prov:Revision",
+                "type": "xsd:QName"
+            },
+            "prov:usedEntity": "tr:WD-prov-dm-20111018"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+
+<section id="term-attribution">
+<h4><span class="secno">3.2.8 </span>Attribution</h4> 
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-attribution" class="externalDFN">Attribution</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-attribution"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 26</span></div><pre class="example">agent(ex:Paolo, [ prov:type='prov:Person' ])
+agent(ex:Simon, [ prov:type='prov:Person' ])
+entity(tr:WD-prov-dm-20111215, [ prov:type='rec54:WD' ])
+wasAttributedTo(tr:WD-prov-dm-20111215, ex:Paolo, [ prov:type="editorship" ])
+wasAttributedTo(tr:WD-prov-dm-20111215, ex:Simon, [ prov:type="authorship" ])</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 27</span></div><pre class="example">{
+    ...
+    "agent": {
+        "ex:Simon": {
+              "prov:type": {
+                "$": "prov:Person",
+                "type": "xsd:QName"
+            }
+        },
+        "ex:Paolo": {
+              "prov:type": {
+                "$": "prov:Person",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "entity": {
+        "tr:WD-prov-dm-20111215": {
+              "prov:type": {
+                "$": "rec54:WD",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "wasAttributedTo": {
+        "_:wAT1": {
+            "prov:type": "authorship",
+            "prov:agent": "ex:Simon",
+            "prov:entity": "tr:WD-prov-dm-20111215"
+        },
+        "_:wAT2": {
+            "prov:type": "editorship",
+            "prov:agent": "ex:Paolo",
+            "prov:entity": "tr:WD-prov-dm-20111215"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+<section id="term-Association">
+<h4><span class="secno">3.2.9 </span>Association</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Association" class="externalDFN">Association</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-wasAssociatedWith-2"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 28</span></div><pre class="example">activity(ex:a, [ prov:type="workflow execution" ])
+wasAssociatedWith(ex:a, -, ex:wf)
+entity(ex:wf, [ prov:type='prov:Plan', 
+                ex:label="Workflow 1", 
+                ex:url="http://example.org/workflow1.bpel" %% xsd:anyURI])</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 29</span></div><pre class="example">{
+    ...
+    "entity": {
+        "ex:wf": {
+            "prov:type": {
+                "$": "prov:Plan",
+                "type": "xsd:QName"
+            },
+            "ex:url": {
+                "$": "http://example.org/workflow1.bpel",
+                "type": "xsd:anyURI"
+            },
+            "ex:label": "Workflow 1"
+        }
+    },
+    "activity": {
+        "ex:a": {
+              "prov:type": "workflow execution"
+        }
+    },
+    "wasAssociatedWith": {
+        "_:wAW1": {
+            "prov:activity": "ex:a",
+            "prov:plan": "ex:wf"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+<section id="term-delegation">
+<h4><span class="secno">3.2.10 </span>Delegation</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-delegation" class="externalDFN">Delegation</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#example_38"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 30</span></div><pre class="example">activity(a,[ prov:type="workflow" ])
+agent(ag1, [ prov:type="programmer" ])
+agent(ag2, [ prov:type="researcher" ])
+agent(ag3, [ prov:type="funder" ])
+wasAssociatedWith(a, ag1, [ prov:role="loggedInUser" ])
+wasAssociatedWith(a, ag2)
+wasAssociatedWith(a, ag3)
+actedOnBehalfOf(ag1, ag2, a, [ prov:type="line-management" ])
+actedOnBehalfOf(ag2, ag3, a, [ prov:type="contract" ])</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 31</span></div><pre class="example">{
+    ...
+    "wasAssociatedWith": {
+        "_:wAW14": {
+            "prov:activity": "a",
+            "prov:agent": "ag1"
+        }
+    },
+    "agent": {
+        "ag1": {
+            "prov:type": "programmer"
+        },
+        "ag2": {
+            "prov:type": "researcher"
+        },
+        "ag3": {
+            "prov:type": "funder"
+        }
+    },
+    "actedOnBehalfOf": {
+        "_:aOBO7": {
+            "prov:activity": "a",
+            "prov:type": "contract",
+            "prov:delegate": "ag2",
+            "prov:responsible": "ag3"
+        },
+        "_:aOBO6": {
+            "prov:activity": "a",
+            "prov:type": "line-management",
+            "prov:delegate": "ag1",
+            "prov:responsible": "ag2"
+        }
+    },
+    "activity": {
+        "a": {
+            "prov:type": "workflow"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+
+<section id="term-influence">
+<h4><span class="secno">3.2.11 </span>Influence</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-influence" class="externalDFN">Influence</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#influence-example"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 32</span></div><pre class="example">wasInfluencedBy(tr:WD-prov-dm-20111215, w3:Consortium)</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 33</span></div><pre class="example">{
+    ...
+    "wasInfluencedBy": {
+        "_:wInf1": {
+            "prov:influencer": "w3:Consortium",
+            "prov:influencee": "tr:WD-prov-dm-20111215"
+        }
+    },
+    ...
+}</pre></div>
+
+</section>
+
+
+<section id="term-specialization">
+<h4><span class="secno">3.2.12 </span>Specialization</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-specialization" class="externalDFN">Specialization</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-specialization"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 34</span></div><pre class="example">specializationOf(ex:bbcNews2012-03-23, bbc:news/)</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 35</span></div><pre class="example">{
+    ...
+    "specializationOf": {
+        "_:sO1": {
+            "prov:generalEntity": "bbc:news/",
+            "prov:specificEntity": "ex:bbcNews2012-03-23"
+        }
+    },
+    ...
+}</pre></div>
+
+</section>
+
+
+<section id="term-alternate">
+<h4><span class="secno">3.2.13 </span>Alternate</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-alternate" class="externalDFN">Alternate</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-alternate"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 36</span></div><pre class="example">entity(bbc:news/science-environment-17526723, 
+       [ prov:type="a news item for desktop"])
+entity(bbc:news/mobile/science-environment-17526723, 
+       [ prov:type="a news item for mobile devices"])
+alternateOf(bbc:news/science-environment-17526723, 
+            bbc:news/mobile/science-environment-17526723)</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 37</span></div><pre class="example">{
+    ...
+    "entity": {
+        "bbc:news/science-environment-17526723": {
+            "prov:type": "a news item for desktop"
+        },
+        "bbc:news/mobile/science-environment-17526723": {
+            "prov:type": "a news item for mobile devices"
+        }
+    },
+    "alternateOf": {
+        "_:aO1": {
+            "prov:alternate2": "bbc:news/science-environment-17526723",
+            "prov:alternate1": "bbc:news/mobile/science-environment-17526723"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+
+<section id="term-membership">
+<h4><span class="secno">3.2.14 </span>Membership</h4>
+
+<p>The following <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-membership" class="externalDFN">Membership</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#example_47"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 38</span></div><pre class="example">entity(e0)
+entity(e1)
+entity(e2)
+
+entity(c, [prov:type='prov:Collection'  ])      // c is a collection, with unknown content
+hadMember(c, e0)
+hadMember(c, e1)
+hadMember(c, e2)</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 39</span></div><pre class="example">{
+    ...
+    "entity": {
+        "e0": {
+        },
+        "e1": {
+        },
+        "e2": {
+        },
+        "c": {
+            "prov:type": {
+                "$": "prov:Collection",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "hadMember": {
+        "_:hM1": {
+            "prov:collection": "c",
+            "prov:entity": "e0"
+        },
+        "_:hM2": {
+            "prov:collection": "c",
+            "prov:entity": "e1"
+        },
+        "_:hM3": {
+            "prov:collection": "c",
+            "prov:entity": "e2"
+        }
+    }
+    ...
+}</pre></div>
+
+</section>
+
+
+</section>
+
+<section id="bundle">
+<h3><span class="secno">3.3 </span>Bundles</h3>
+
+<p>This section introduces the PROV-JSON representation for <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#component4">PROV bundles</a>. A <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-bundle" class="externalDFN">Bundle</a> is a named set of provenance descriptions, which can contain any of the PROV expressions in previous sections. Therefore, a PROV bundle's content is represented as a normal PROV-JSON document with the exception that it <em class="rfc2119" title="MUST NOT">MUST NOT</em> contain another PROV bundle. The PROV-JSON bundle's content is then put into the <span class="name">bundle</span> structure of the containing PROV-JSON document and indexed by its identifier.</p>
+
+<p>For example, the following bundle example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#anexample-provenance-of-provenance"><span class="diamond">◊</span></a></sup></p>
+
+<div class="example"><div class="example-title"><span>Example 40</span></div><pre class="example">entity(ex:report1, [ prov:type="report", ex:version=1 ])
+wasGeneratedBy(ex:report1, -, 2012-05-24T10:00:01)
+entity(ex:report2, [ prov:type="report", ex:version=2])
+wasGeneratedBy(ex:report2, -, 2012-05-25T11:00:01)
+wasDerivedFrom(ex:report2, ex:report1)
+
+bundle bob:bundle1
+  entity(ex:report1, [ prov:type="report", ex:version=1 ])
+  wasGeneratedBy(ex:report1, -, 2012-05-24T10:00:01)
+endBundle
+
+bundle alice:bundle2
+  entity(ex:report1)
+  entity(ex:report2, [ prov:type="report", ex:version=2 ])
+  wasGeneratedBy(ex:report2, -, 2012-05-25T11:00:01)
+  wasDerivedFrom(ex:report2, ex:report1)
+endBundle
+
+entity(bob:bundle1, [ prov:type='prov:Bundle' ])
+wasGeneratedBy(bob:bundle1, -, 2012-05-24T10:30:00)
+wasAttributedTo(bob:bundle1, ex:Bob)
+
+entity(alice:bundle2, [ prov:type='prov:Bundle' ])
+wasGeneratedBy(alice:bundle2, -, 2012-05-25T11:15:00)
+wasAttributedTo(alice:bundle2, ex:Alice)</pre></div>
+
+<p>is represented in PROV-JSON as follows.</p>
+
+<div class="example"><div class="example-title"><span>Example 41</span></div><pre class="example">{
+    "entity": {
+        "ex:report2": {
+            "prov:type": "report",
+            "ex:version": 2
+        },
+        "ex:report1": {
+            "prov:type": "report",
+            "ex:version": 1
+        },
+        "alice:bundle2": {
+            "prov:type": {
+                "$": "prov:Bundle",
+                "type": "xsd:QName"
+            }
+        },
+        "bob:bundle1": {
+            "prov:type": {
+                "$": "prov:Bundle",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "wasDerivedFrom": {
+        "_:wDF1": {
+            "prov:generatedEntity": "ex:report2",
+            "prov:usedEntity": "ex:report1"
+        }
+    },
+    "wasGeneratedBy": {
+        "_:wGB1": {
+            "prov:time": "2012-05-24T10:00:01",
+            "prov:entity": "ex:report1"
+        },
+        "_:wGB2": {
+            "prov:time": "2012-05-25T11:00:01",
+            "prov:entity": "ex:report2"
+        },
+        "_:wGB3": {
+            "prov:time": "2012-05-24T10:30:00",
+            "prov:entity": "bob:bundle1"
+        },
+        "_:wGB4": {
+            "prov:time": "2012-05-25T11:15:00",
+            "prov:entity": "alice:bundle2"
+        }
+    },
+    "wasAttributedTo": {
+        "_:wAT1": {
+            "prov:agent": "ex:Alice",
+            "prov:entity": "alice:bundle2"
+        },
+        "_:wAT2": {
+            "prov:agent": "ex:Bob",
+            "prov:entity": "bob:bundle1"
+        }
+    },
+    "bundle": {
+        "alice:bundle2": {
+            "wasGeneratedBy": {
+                "_:wGB29": {
+                    "prov:time": "2012-05-25T11:00:01",
+                    "prov:entity": "ex:report2"
+                }
+            },
+            "entity": {
+                "ex:report2": {
+                    "prov:type": "report",
+                    "ex:version": 2
+                },
+                "ex:report1": {
+                }
+            },
+            "wasDerivedFrom": {
+                "_:wDF25": {
+                    "prov:generatedEntity": "ex:report2",
+                    "prov:usedEntity": "ex:report1"
+                }
+            }
+        },
+        "bob:bundle1": {
+            "wasGeneratedBy": {
+                "_:wGB28": {
+                    "prov:time": "2012-05-24T10:00:01",
+                    "prov:entity": "ex:report1"
+                }
+            },
+            "entity": {
+                "ex:report1": {
+                    "prov:type": "report",
+                    "ex:version": 1
+                }
+            }
+        }
+    }
+}</pre></div>
+
+
+</section>
+
+</section>
+
+<section id="prov-json-example" class="appendix"> 
+<!--OddPage--><h2><span class="secno">A. </span>PROV-JSON Serialization Example</h2>
+
+In order to illustrate the use of PROV-JSON in a real-world scenario, this section provides the PROV-JSON representation for the <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#prov-dm-example">document publishing example</a> [<cite><a class="bibref" href="#bib-PROV-DM">PROV-DM</a></cite>]: <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#section-example-one">the authors view</a>, <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#section-example-two">the process view</a>, and <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#section-example-c">attribution of provenance</a>.
+
+<section id="example-the-authors-view">
+<h3><span class="secno">A.1 </span>Example: The Authors View</h3>
+
+<div class="example"><div class="example-title"><span>Example 42</span></div><pre class="example">{
+    "prefix": {
+        <span class="code-comment">// Defining namespaces</span>
+        "ex": "http://example.org",
+        "w3": "http://www.w3.org/",
+        "tr": "http://www.w3.org/TR/2011/"
+    },
+    "entity": {
+        <span class="code-comment">// entity(tr:WD-prov-dm-20111215, [ prov:type="document", ex:version="2" ])</span>
+        "tr:WD-prov-dm-20111215": {
+            "prov:type": "document",
+            "ex:version": "2"
+        }
+    },
+    "activity": {
+        <span class="code-comment">// activity(ex:edit1, [ prov:type="edit" ])</span>
+        "ex:edit1": {
+            "prov:type": "edit"
+        }
+    },
+    "wasGeneratedBy": {
+        <span class="code-comment">// wasGeneratedBy(tr:WD-prov-dm-20111215, ex:edit1, -)</span>
+        "_:wGB1": {
+            "prov:activity": "ex:edit1",
+            "prov:entity": "tr:WD-prov-dm-20111215"
+        }
+    },
+    "agent": {
+        <span class="code-comment">// agent(ex:Paolo, [ prov:type='prov:Person' ])</span>
+        "ex:Paolo": {
+            "prov:type": {
+                "$": "prov:Person",
+                "type": "xsd:QName"
+            }
+        },
+        <span class="code-comment">// agent(ex:Simon, [ prov:type='prov:Person' ])</span>
+        "ex:Simon": {
+            "prov:type": {
+                "$": "prov:Person",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "wasAssociatedWith": {
+        <span class="code-comment">// wasAssociatedWith(ex:edit1, ex:Paolo, -, [ prov:role="editor" ])</span>
+        "_:wAW1": {
+            "prov:activity": "ex:edit1",
+            "prov:agent": "ex:Paolo",
+            "prov:role": "editor"
+        },
+        <span class="code-comment">// wasAssociatedWith(ex:edit1, ex:Simon, -, [ prov:role="contributor" ])</span>
+        "_:wAW2": {
+            "prov:activity": "ex:edit1",
+            "prov:agent": "ex:Simon",
+            "prov:role": "contributor"
+        }
+    }
+}</pre></div>
+
+</section>
+
+<section id="example-the-process-view">
+<h3><span class="secno">A.2 </span>Example: The Process View</h3>
+
+<div class="example"><div class="example-title"><span>Example 43</span></div><pre class="example">{
+    "prefix": {
+        <span class="code-comment">// Defining namespaces</span>
+        "ex": "http://example.org",
+        "process": "http://www.w3.org/2005/10/Process-20051014/tr.html#",
+        "rec54": "http://www.w3.org/2001/02pd/rec54#",
+        "tr": "http://www.w3.org/TR/2011/",
+        "w3": "http://www.w3.org/",
+        "email": "https://lists.w3.org/Archives/Member/w3c-archive/"
+    },
+    "entity": {
+        <span class="code-comment">// entity(tr:WD-prov-dm-20111215, [ prov:type='rec54:WD' ])</span>
+        "tr:WD-prov-dm-20111215": {
+            "prov:type": {
+                "$": "rec54:WD",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "activity": {
+        <span class="code-comment">// activity(ex:act2, [ prov:type="publish" ])</span>
+        "ex:act2": {
+            "prov:type": "publish"
+        }
+    },
+    "wasGeneratedBy": {
+        <span class="code-comment">// wasGeneratedBy(tr:WD-prov-dm-20111215, ex:act2, -)</span>
+        "_:wGB4": {
+            "prov:activity": "ex:act2",
+            "prov:entity": "tr:WD-prov-dm-20111215"
+        }
+    },
+    "wasDerivedFrom": {
+        <span class="code-comment">// wasDerivedFrom(tr:WD-prov-dm-20111215, tr:WD-prov-dm-20111018)</span>
+        "_:wDF2":{
+            "prov:generatedEntity": "tr:WD-prov-dm-20111215",
+            "prov:usedEntity": "tr:WD-prov-dm-20111018"
+        }
+    },
+    "used": {
+        <span class="code-comment">// used(ex:act2, email:2011Dec/0111, -)</span>
+        "_:u2": {
+            "prov:activity": "ex:act2",
+            "prov:entity": "email:2011Dec/0111"
+        }
+    },
+    "wasAssociatedWith": {
+        <span class="code-comment">// wasAssociatedWith(ex:act2, w3:Consortium, process:rec-advance)</span>
+        "_:wAW6": {
+            "prov:activity": "ex:act2",
+            "prov:agent": "w3:Consortium",
+            "prov:plan": "process:rec-advance"
+        }
+    }
+}</pre></div>
+
+</section>
+
+<section id="example-attribution-of-provenance">
+<h3><span class="secno">A.3 </span>Example: Attribution of Provenance</h3>
+
+<div class="example"><div class="example-title"><span>Example 44</span></div><pre class="example">{
+    "prefix": {
+        <span class="code-comment">// Defining namespaces</span>
+        "ex": "http://example.org",
+        "w3": "http://www.w3.org/",
+    },
+    "bundle": {
+        <span class="code-comment">// bundle ex:author-view</span>
+        "ex:author-view": {
+            "agent": {
+                <span class="code-comment">// agent(ex:Paolo, [ prov:type='prov:Person' ])</span>
+                "ex:Paolo": {
+                    "prov:type": {
+                        "$": "prov:Person",
+                        "type": "xsd:QName"
+                    }
+                },
+                <span class="code-comment">// agent(ex:Simon, [ prov:type='prov:Person' ])</span>
+                "ex:Simon": {
+                    "prov:type": {
+                        "$": "prov:Person",
+                        "type": "xsd:QName"
+                    }
+                }
+            },
+            <span class="code-comment">// ...</span>
+        },
+        <span class="code-comment">// bundle ex:author-view</span>
+        "ex:author-view": {
+            "agent": {
+                <span class="code-comment">// agent(ex:Paolo, [ prov:type='prov:Person' ])</span>
+                "w3:Consortium": {
+                    "prov:type": {
+                        "$": "prov:Organization",
+                        "type": "xsd:QName"
+                    }
+                },
+                <span class="code-comment">// ...</span>
+                }
+            },
+            <span class="code-comment">// ...</span>
+        }
+    },
+    "entity": {
+        <span class="code-comment">// entity(ex:author-view, [ prov:type='prov:Bundle' ])</span>
+        "ex:author-view": {
+            "prov:type": {
+                "$": "prov:Bundle",
+                "type": "xsd:QName"
+            }
+        },
+        <span class="code-comment">// entity(ex:process-view, [ prov:type='prov:Bundle' ])</span>
+        "ex:process-view": {
+            "prov:type": {
+                "$": "prov:Bundle",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "wasAttributedTo": {
+        <span class="code-comment">// wasAttributedTo(ex:author-view, ex:Simon)</span>
+        "_:wAT7": {
+            "prov:agent": "ex:Simon",
+            "prov:entity": "ex:author-view"
+        },
+        <span class="code-comment">// wasAttributedTo(ex:process-view, w3:Consortium)</span>
+        "_:wAT8": {
+            "prov:agent": "w3:Consortium",
+            "prov:entity": "ex:process-view"
+        }
+    }
+}</pre></div>
+
+</section>
+
+</section>
+
+<section class="appendix" id="prov-json-dictionary">
+
+<!--OddPage--><h2><span class="secno">B. </span>PROV-JSON Representation for PROV-Dictionary</h2> 
+
+<p><a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#dictionary-conceptual-definition">Dictionary</a> [<cite><a class="bibref" href="#bib-PROV-DICTIONARY">PROV-DICTIONARY</a></cite>] extends the PROV <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/#component6">Collection</a> construct to consist key-entity pairs. This section defines the PROV-JSON mappings for Dictionary-related constructs. As in previous sections, the mappings are presented by means of examples.</p>
+
+<section id="dictionary-membership">
+
+<h3><span class="secno">B.1 </span>Dictionary Membership</h3>
+
+<p>The following <a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#term-dictionary-membership" class="externalDFN">Dictionary Membership</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#example_2"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 45</span></div><pre class="example">entity(d, [prov:type='prov:Dictionary' ])    // d is a dictionary, with (so far) unknown content
+
+entity(e1)
+entity(e2)
+
+prov:hadDictionaryMember(d, e1, "k1")  
+prov:hadDictionaryMember(d, e2, "k2")</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 46</span></div><pre class="example">{
+    ...
+    "entity": {
+        "d": {
+            "prov:type": {
+                "$": "prov:Dictionary",
+                "type": "xsd:QName"
+            }
+        },
+        "e1": {
+        },
+        "e2": {
+        }
+    },
+    "hadDictionaryMember": {
+        "_:hDM1": {
+            "prov:dictionary": "d",
+            "prov:entity": "e1",
+            "prov:key": "k1"
+        },
+        "_:hDM2": {
+            "prov:dictionary": "d",
+            "prov:entity": "e2",
+            "prov:key": "k2"
+        }
+    }
+    ...
+}</pre></div>
+
+
+</section>
+
+<section id="dictionary-insertion">
+
+<h3><span class="secno">B.2 </span>Dictionary Insertion</h3>
+
+<p>The following <a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#term-dictionary-insertion" class="externalDFN">Dictionary Insertion</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#example_3"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 47</span></div><pre class="example">entity(d0, [prov:type='prov:EmptyDictionary' ])    // d0 is an empty dictionary
+entity(e1)
+entity(e2)
+entity(e3)
+entity(d1, [prov:type='prov:Dictionary' ])
+entity(d2, [prov:type='prov:Dictionary' ])
+
+prov:derivedByInsertionFrom(d1, d0, {("k1", e1), ("k2", e2)})       
+prov:derivedByInsertionFrom(d2, d1, {("k3", e3)}, [ dcterms:description ="A second insertion" ])    // an insertion with optional attribute dcterms:description </pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 48</span></div><pre class="example">{
+    ...
+    "entity": {
+        "d0": {
+            "prov:type": {
+                "$": "prov:EmptyDictionary",
+                "type": "xsd:QName"
+            }
+        },
+        "e1": {
+        },
+        "e2": {
+        },
+        "e3": {
+        },
+        "d1": {
+            "prov:type": {
+                "$": "prov:Dictionary",
+                "type": "xsd:QName"
+            }
+        },
+        "d2": {
+            "prov:type": {
+                "$": "prov:Dictionary",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "derivedByInsertionFrom": {
+        "_:dBIF1": {
+            "prov:after": "d1",
+            "prov:before": "d0",
+            "prov:key-entity-set": [
+                {
+                    "key": "k1",
+                    "$": "e1"
+                },
+                {
+                    "key": "k2",
+                    "$": "e2"
+                }
+            ]
+        },
+        "_:dBIF2": {
+            "prov:after": "d2",
+            "prov:before": "d1",
+            "prov:key-entity-set": [
+                {
+                    "key": "k3",
+                    "$": "e3"
+                }
+            ],
+            "dcterms:description": "A second insertion"
+        }
+    }
+    ...
+}</pre></div>
+
+<p>In the PROV-JSON serialization of a Dictionary Insertion relation, the set of all inserted key-entity pairs is represented as a list of JSON objects, each of which the representation of a <a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#prod-keyEntityPairs">key-entity pair</a>. For each pair, the entity is given as a qualified name while the <a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#prod-key">key</a> a PROV literal, which can be of any data type. The encoding of the key in a key-entity pair follows the same data typing rules specified in <a href="#data-typing">Section 2.2</a>. The following example demonstrates keys of different data types.</p>
+
+<div class="example"><div class="example-title"><span>Example 49</span></div><pre class="example">{
+    ...
+    "derivedByInsertionFrom": {
+        "ex:deriv1": {
+            "prov:before": "ex:d1",
+            "prov:after": "ex:d2",
+            "prov:key-entity-set": [
+                {
+                    "key": "a",
+                    "$": "ex:e0"
+                },
+                {
+                    "key": 1,
+                    "$": "ex:e1"
+                },
+                {
+                    "key": {
+                        "$": "ex:a",
+                        "type": "xsd:QName"
+                    },
+                    "$": "ex:e2"
+                }
+            ]
+        }
+    }
+    ...
+}</pre></div>
+
+In the special case where the keys of <strong>all</strong> the key-entity pairs in a Dictionary Insertion relation are of the same data type, the <code>key-entity-set</code> <em class="rfc2119" title="MAY">MAY</em> be represented a map structure, taking advantage of the native JSON object representation as follows.
+
+<div class="example"><div class="example-title"><span>Example 50</span></div>
+<pre class="example">{
+    ...
+    "derivedByInsertionFrom": {
+        "ex:deriv2": {
+            "prov:before": "ex:d1",
+            "prov:after": "ex:d2",
+            "prov:key-datatype": "xsd:string",
+            "prov:key-entity-set": {
+                "a": "ex:e0",
+                "b": "ex:e1",
+                "c": "ex:e2"
+            }
+        }
+    }
+    ...
+}</pre></div>
+
+<p>In that case, the <code>prov:key-datatype</code> property <em class="rfc2119" title="MUST">MUST</em> be provided and <em class="rfc2119" title="MUST">MUST</em> specify the data type of (all) the keys (i.e. xsd:string), which dictates how the keys should be interpreted.</p>
+
+</section>
+
+<section id="dictionary-removal">
+
+<h3><span class="secno">B.3 </span>Dictionary Removal</h3>
+
+<p>The following <a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#term-dictionary-removal" class="externalDFN">Dictionary Removal</a> example<sup><a class="externalDFN" href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#example_5"><span class="diamond">◊</span></a></sup></p>
+<div class="example"><div class="example-title"><span>Example 51</span></div><pre class="example">entity(d0, [prov:type="prov:EmptyDictionary"])    // d0 is an empty dictionary
+entity(e1)
+entity(e2)
+entity(e3)
+entity(d1, [prov:type="prov:Dictionary"])
+entity(d2, [prov:type="prov:Dictionary"])
+entity(d3, [prov:type="prov:Dictionary"])
+entity(d4, [prov:type="prov:Dictionary"])
+
+prov:derivedByInsertionFrom(d1, d0, {("k1", e1), ("k2",e2)})       
+prov:derivedByInsertionFrom(d2, d1, {("k3", e3)})
+prov:derivedByRemovalFrom(d3, d2, {"k1", "k3"})   
+prov:derivedByRemovalFrom(d4, d3, {"k1"})</pre></div>
+<p>is serialized in to PROV-JSON as follows.</p>
+<div class="example"><div class="example-title"><span>Example 52</span></div><pre class="example">{
+    ...
+    "entity": {
+        ...
+        "d3": {
+            "prov:type": {
+                "$": "prov:Dictionary",
+                "type": "xsd:QName"
+            }
+        },
+        "d4": {
+            "prov:type": {
+                "$": "prov:Dictionary",
+                "type": "xsd:QName"
+            }
+        }
+    },
+    "derivedByInsertionFrom": {
+        ...
+    },
+    "derivedByRemovalFrom": {
+        "_:dBRF1": {
+            "prov:after": "d3",
+            "prov:before": "d2",
+            "prov:key-set": [
+                "k1",
+                "k3"
+            ]
+        },
+        "_:dBRF2": {
+            "prov:after": "d4",
+            "prov:before": "d3",
+            "prov:key-set": [
+                "k1"
+            ]
+        }
+    }
+    ...
+}</pre></div>
+
+<p>In a Dictionary Removal relation, the <a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/#removal.key-set">key-set</a> is represented as a list of keys. As in the previous section, keys are PROV literals and should be represented accordingly as specified in <a href="#data-typing">Section 2.2</a>.</p>
+
+</section>
+
+</section>
+
+<section class="appendix" id="acknowledgements">
+
+<!--OddPage--><h2><span class="secno">C. </span>Acknowledgements</h2> 
+<p>This specification was developed based on the PROV-DM Specification [<cite><a class="bibref" href="#bib-PROV-DM">PROV-DM</a></cite>] and reused significant content therefrom to provide consistent mappings between the two documents.</p>
+<p>This work was partly supported by funding from the UK Engineering and Physical Sciences Research Council for project <a href="http://www.orchid.ac.uk">Orchid</a>, grant EP/I011587/1.</p> 
+</section> 
+   
+ 
+<section id="references" class="appendix"><!--OddPage--><h2><span class="secno">D. </span>References</h2><section id="informative-references"><h3><span class="secno">D.1 </span>Informative references</h3><dl class="bibliography"><dt id="bib-JSON-SCHEMA">[JSON-SCHEMA]</dt><dd>Francis Galiegue, Kris Zyp, and Gary Court <a href="http://tools.ietf.org/html/draft-zyp-json-schema-04"><cite>JSON Schema: core definitions and terminology</cite></a>. 2013, Draft 4. URL: <a href="http://tools.ietf.org/html/draft-zyp-json-schema-04">http://tools.ietf.org/html/draft-zyp-json-schema-04</a>
+</dd><dt id="bib-PROV-DICTIONARY">[PROV-DICTIONARY]</dt><dd>Tom De Nies; Sam Coppens; eds. <a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/"><cite>PROV Dictionary: Modeling Provenance for Dictionary Data Structures</cite></a>. 30 April 2013, W3C Note. URL: <a href="http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/">http://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/</a>
+</dd><dt id="bib-PROV-DM">[PROV-DM]</dt><dd>Luc Moreau; Paolo Missier; eds. <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/"><cite>PROV-DM: The PROV Data Model</cite></a>. 30 April 2013, W3C Recommendation. URL: <a href="http://www.w3.org/TR/2013/REC-prov-dm-20130430/">http://www.w3.org/TR/2013/REC-prov-dm-20130430/</a>
+</dd><dt id="bib-PROV-N">[PROV-N]</dt><dd>Luc Moreau; Paolo Missier; eds. <a href="http://www.w3.org/TR/2013/REC-prov-n-20130430/"><cite>PROV-N: The Provenance Notation</cite></a>. 30 April 2013, W3C Recommendation. URL: <a href="http://www.w3.org/TR/2013/REC-prov-n-20130430/">http://www.w3.org/TR/2013/REC-prov-n-20130430/</a>
+</dd><dt id="bib-PROV-O">[PROV-O]</dt><dd>Timothy Lebo; Satya Sahoo; Deborah McGuinness; eds. <a href="http://www.w3.org/TR/2013/REC-prov-o-20130430/"><cite>PROV-O: The PROV Ontology</cite></a>. 30 April 2013, W3C Recommendation. URL: <a href="http://www.w3.org/TR/2013/REC-prov-o-20130430/">http://www.w3.org/TR/2013/REC-prov-o-20130430/</a>
+</dd><dt id="bib-PROV-XML">[PROV-XML]</dt><dd>Hook Hua; Curt Tilmes; Stephan Zednik; eds. <a href="http://www.w3.org/TR/2013/NOTE-prov-xml-20130430/"><cite>PROV-XML: The PROV XML Schema</cite></a>. 30 April 2013, W3C Note. URL: <a href="http://www.w3.org/TR/2013/NOTE-prov-xml-20130430/">http://www.w3.org/TR/2013/NOTE-prov-xml-20130430/</a>
+</dd><dt id="bib-RFC2119">[RFC2119]</dt><dd>S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words for use in RFCs to Indicate Requirement Levels.</cite></a> March 1997. Internet RFC 2119.  URL: <a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a> 
+</dd><dt id="bib-XMLSCHEMA11-2">[XMLSCHEMA11-2]</dt><dd>Henry S. Thompson et al. <a href="http://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/"><cite>W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes</cite></a>. 5 April 2012. W3C Recommendation. URL: <a href="http://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/">http://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/</a>
+</dd></dl></section></section></body></html>

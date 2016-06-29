@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>SQL Server 2016 RC1: What&rsquo;s new in Reporting Services | SQL Server Reporting Services Team Blog</title>
+
+	<meta name="description" content="Blog from the Microsoft SQL Server product team.">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="SQL Server Reporting Services Team Blog &raquo; Feed" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SQL Server Reporting Services Team Blog &raquo; Comments Feed" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SQL Server Reporting Services Team Blog &raquo; SQL Server 2016 RC1: What&rsquo;s new in Reporting Services Comments Feed" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="SQL Server 2016 RC1: What&rsquo;s new in Reporting Services" />
+<meta property="og:url" content="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="SQL Server 2016 RC1: What&rsquo;s new in Reporting Services" />
+<meta name="twitter:url" content="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/" />
+<meta name="twitter:description" content="" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/msdn-network-parent/js/social-counts.min.js?ver=4.1.5'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/' />
+<link rel='shortlink' href='https://blogs.msdn.microsoft.com/sqlrsteamblog/?p=1321' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #d14600;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #9d3602;
+	border-bottom-color: #9d3602;
+}
+
+.main-navigation li:hover {
+  background: #9d3602;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #9d3602;
+}
+
+.sub-menu.active li:hover{
+  background: #d14600;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #d14600;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #d14600; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #d14600; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #9d3602;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #9d3602;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.bi-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('http://blogs.technet.com/cfs-filesystemfile.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-94-25/0045.icon_2D00_tile_2D00_rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-94-25/twitter_2D00_tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('http://blogs.technet.com/cfs-filesystemfile.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-94-25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  background-color: #9d3602;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}
+
+			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/cloud-platform/images/favicon-msdn.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="single single-post postid-1321 single-format-standard msdn-65303 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.msdn.microsoft.com/business-intelligence">Business Intelligence Blogs</a> > SQL Server Reporting Services Team Blog</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.msdn.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-business-intelligence-primary-menu-container"><ul id="menu-business-intelligence-primary-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Power BI</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-133"><a href="https://powerbi.microsoft.com/blog/">Power BI</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-431"><a href="http://blogs.msdn.microsoft.com/analysisservices/">Analysis Services &amp; PowerPivot</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="https://powerbi.microsoft.com/blog/category/support/">Power BI Support</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Reporting Services</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-451"><a href="http://blogs.msdn.microsoft.com/sqlrsteamblog/">SQL Server Reporting Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-441"><a href="http://blogs.msdn.microsoft.com/analysisservices/">Analysis Services &amp; PowerPivot</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-173"><a href="https://blogs.technet.microsoft.com/dataplatforminsider/">SQL Server</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-461"><a href="#">Analysis Services</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-472"><a href="http://blogs.msdn.microsoft.com/analysisservices/">Analysis Services &amp; PowerPivot</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-491"><a href="http://blogs.msdn.microsoft.com/analysisservices/tag/analysis-services/">All MSDN Analysis Posts</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-462"><a href="#">Information Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-501"><a href="http://blogs.msdn.microsoft.com/mds/">Master Data Services Blog</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-511"><a href="http://blogs.msdn.com/b/ssis/">SSIS Blog (SQL Server Integration Services)</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Big Data</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-234"><a href="https://blogs.technet.microsoft.com/dataplatforminsider/">SQL Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-531"><a href="https://azure.microsoft.com/blog/topics/big-data/">Azure Big Data</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-74"><a href="#">Data in the Cloud</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-254"><a href="https://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="https://blogs.technet.microsoft.com/dataplatforminsider/">SQL Server</a></li>
+	<li id="menu-item-541" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-541"><a href="http://blogs.microsoft.com/iot/">Internet of Things</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+					</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.msdn.microsoft.com/sqlrsteamblog">SQL Server Reporting Services Team Blog</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description">Blog from the Microsoft SQL Server product team. </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+									</div>
+
+			</div>
+
+			
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="SQL Server Reporting Services Team Blog &raquo; Feed" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SQL Server Reporting Services Team Blog &raquo; Comments Feed" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="SQL Server Reporting Services Team Blog &raquo; SQL Server 2016 RC1: What&rsquo;s new in Reporting Services Comments Feed" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="SQL Server 2016 RC1: What&rsquo;s new in Reporting Services" />
+<meta property="og:url" content="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="SQL Server 2016 RC1: What&rsquo;s new in Reporting Services" />
+<meta name="twitter:url" content="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/" />
+<meta name="twitter:description" content="" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/' />
+<link rel='shortlink' href='https://blogs.msdn.microsoft.com/sqlrsteamblog/?p=1321' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #d14600;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #9d3602;
+	border-bottom-color: #9d3602;
+}
+
+.main-navigation li:hover {
+  background: #9d3602;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #9d3602;
+}
+
+.sub-menu.active li:hover{
+  background: #d14600;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #d14600;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #d14600; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #d14600; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #9d3602;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #9d3602;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.bi-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('http://blogs.technet.com/cfs-filesystemfile.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-94-25/0045.icon_2D00_tile_2D00_rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-94-25/twitter_2D00_tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('http://blogs.technet.com/cfs-filesystemfile.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-94-25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  background-color: #9d3602;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}
+
+			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/cloud-platform/images/favicon-msdn.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+				
+				<article id="post-1321" class="post-1321 post type-post status-publish format-standard hentry category-uncategorized tag-mobile-report-publisher tag-report-builder tag-sql-server-2016">
+	<header class="entry-header">
+		<h1 class="entry-title">SQL Server 2016 RC1: What&rsquo;s new in Reporting Services</h1>
+		<div class="rating-wrap">
+		<div id="star-rating-1321" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="1321">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>	</header><!-- .entry-header -->
+
+	<div class="entry-meta row">
+		<div class="post-info">
+			<span class="posted-on"><time class="entry-date published" datetime="2016-03-18T08:30:00+00:00">March 18, 2016</time><time class="updated" datetime="2016-03-18T12:03:58+00:00">March 18, 2016</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="df858119d80649ea80e6b729e5463c8f" href="https://social.msdn.microsoft.com/profile/Riccardo++Muti">Riccardo Muti</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/#comments">30 Comments</a>		</div>
+
+		<div class="row">
+			<div class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/", "text": "SQL Server 2016 RC1: What&rsquo;s new in Reporting Services"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/", "text": "SQL Server 2016 RC1: What&rsquo;s new in Reporting Services"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/", "text": "SQL Server 2016 RC1: What&rsquo;s new in Reporting Services"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</div><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+	</div><!-- .entry-meta -->
+
+	
+	<div class="entry-content">
+		<p>Just a couple of weeks since <a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/?p=661">we released SQL Server 2016 RC0</a>, we have another preview release with several updates for you to try. <a href="http://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2016">SQL Server 2016 RC1</a> contains a bunch of enhancements to Reporting Services, culminating in the first relatively “feature-complete” preview release of SQL Server 2016 Reporting Services.</p>
+<p>Since there’s quite a lot new in RC1, we’ll provide an overview in today’s post and dive deeper over the coming days.</p>
+<ul>
+<li><a href="http://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2016">Download SQL Server 2016 RC1</a></li>
+<li><a href="https://www.microsoft.com/en-ca/download/details.aspx?id=50400">Download Mobile Report Publisher Preview</a></li>
+<li><a href="https://itunes.apple.com/us/app/microsoft-power-bi/id929738808">Download Power BI for iPhone/iPad from the App Store</a></li>
+</ul>
+<h1>A modern web portal by default</h1>
+<p>In CTP 3.2, <a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2015/12/17/introducing-mobile-reports-and-a-brand-new-web-portal/">we introduced the first preview of a brand-new Reporting Services web portal</a> alongside the classic Report Manager. With each preview release since, we’ve been lighting up more and more functionality. With new features like <a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2015/12/17/introducing-mobile-reports-and-a-brand-new-web-portal/">key performance indicators (KPIs)</a> and <a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/02/03/access-your-favorite-kpis-and-reports-with-sql-server-2016-ctp-3-3/">Favorites</a>, the new site is your personalized portal into the metrics, trends, and reports that matter to you. Plus, it’s designed from the outset for modern browsers and built from the ground up on HTML5.</p>
+<p>With RC1, the new web portal is “feature-complete” and replaces Report Manager.</p>
+<p>Among the features we’ve recently added is <strong>search</strong>. Just enter a search term and we’ll search everything you can access and categorize the results into KPIs, reports, datasets, and other items:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/image330.png"><img width="644" height="457" title="image" alt="image" src="https://msdnshared.blob.core.windows.net/media/2016/03/image_thumb271.png" border="0"></a></p>
+<p>With RC0, we enabled you to <a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/?p=661">subscribe to a report</a> to have it delivered to your email inbox on a schedule. Now, with SQL Server Enterprise Edition, you can create <strong>data-driven subscriptions</strong> as well. Whereas a standard subscription generates and delivers one report, a data-driven subscription generates and delivers one report <em>for each row in a dataset</em>. For example, you could have it execute a query to return a list of people who have work assigned to them and then deliver a personalized report to each person with their assigned tasks.</p>
+<h1>Reflect your organization’s brand</h1>
+<p>Many of you have sought a way to customize the look-and-feel of Report Manager to reflect your organization’s brand, so we wanted you to have that ability with the new web portal. We took the popular <strong>custom branding</strong> feature from Datazen and made it even better; now you can easily customize the web portal with your organization’s name, logo, and colors:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/image349.png"><img width="644" height="177" title="image" alt="image" src="https://msdnshared.blob.core.windows.net/media/2016/03/image_thumb286.png" border="0"></a></p>
+<p>Want to customize your web portal? Stay tuned for an upcoming post to learn how.</p>
+<h1>Embed reports in other apps</h1>
+<p>Want to embed a report in a SharePoint page, web page, or app? Now it’s easier than ever. Open the report in the web portal:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/image332.png"><img width="244" height="190" title="image" style="margin: 0px" alt="image" src="https://msdnshared.blob.core.windows.net/media/2016/03/image_thumb273.png" border="0"></a></p>
+<p>Take a look at the address in your browser’s address bar – in this example,</p>
+<p>https://reportserver/reports/mobilereport/Marketing%20Scorecard</p>
+<p>Append <strong>rs:Embed=true</strong> like so:</p>
+<p>https://reportserver/reports/mobilereport/Marketing%20Scorecard<strong>?rs:Embed=true</strong></p>
+<p>And now you have an embedding-optimized view of the report without the web portal header and menus:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/image333.png"><img width="244" height="173" title="image" style="margin: 0px" alt="image" src="https://msdnshared.blob.core.windows.net/media/2016/03/image_thumb274.png" border="0"></a></p>
+<p>Just insert that address into an HTML iframe in your web page or app and you have an embedded report. This feature works with both mobile and paginated reports, and for the latter, you can specify report parameter values as well.</p>
+<h1>Create enhanced KPIs and mobile reports</h1>
+<p>We’ve made a number of enhancements to KPIs and mobile reports. Namely,</p>
+<ul>
+<li>You can now bind KPIs and mobile reports to shared datasets that have parameters.</li>
+<li>When you bind a KPI value to a dataset field, you can now <strong>summarize</strong> the field values (sum, average, min, max, etc.).</li>
+<li>You can now design KPIs and mobile report visualizations to “<strong>drill through</strong>” to more details, navigating either to another mobile report or to a custom URL.</li>
+</ul>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/KPI.png"><img width="244" height="80" title="KPI" alt="KPI" src="https://msdnshared.blob.core.windows.net/media/2016/03/KPI_thumb.png" border="0"></a></p>
+<p>Make sure to install the latest Mobile Report Publisher preview to use these new features and to work with your RC1 report server.</p>
+<h1>Design modern paginated reports</h1>
+<p>Designing modern paginated reports is easier than ever with the latest Report Builder preview. We’ve overhauled the default styles for tables, charts, gauges, maps, and other data visualizations so they look beautifully modern without any extra effort.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/image334.png"><img width="244" height="215" title="image" alt="image" src="https://msdnshared.blob.core.windows.net/media/2016/03/image_thumb275.png" border="0"></a></p>
+<h1>Do more in any modern browser</h1>
+<p>From developing a brand-new web portal, to <a href="http://blogs.msdn.com/b/sqlrsteamblog/archive/2015/09/02/what-s-new-in-reporting-services-in-sql-server-2016-ctp-2-3.aspx">emitting report content in HTML5</a>, to <a href="http://blogs.msdn.com/b/sqlrsteamblog/archive/2015/09/30/more-reporting-services-enhancements-in-sql-server-2016-ctp-2-4.aspx">replacing the printing feature</a> with one that doesn’t use an ActiveX plugin, we’ve invested heavily in optimizing for modern browsers, and in RC1, we’ve made a few more improvements to ensure we’re delivering a first-class experience across Edge, Internet Explorer 10+, Chrome, Firefox, and Safari.</p>
+<p>When you want to create or edit a report, it’s nice to be able to open Report Builder – a desktop app – right from the web portal.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/image339.png"><img width="644" height="259" title="image" style="margin: 0px" alt="image" src="https://msdnshared.blob.core.windows.net/media/2016/03/image_thumb280.png" border="0"></a></p>
+<p>Previously, this feature depended on ClickOnce technology, which works well in Internet Explorer but not across the broader range of modern browsers. With RC1, we have a new approach that doesn’t use ClickOnce and works cross-browser. You’ll need to install an updated version of Report Builder, and this dialog can help you do so:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/image338.png"><img width="609" height="190" title="image" alt="image" src="https://msdnshared.blob.core.windows.net/media/2016/03/image_thumb279.png" border="0"></a></p>
+<p>Plus, you can now open Mobile Report Publisher this way as well.</p>
+<p>Meanwhile, with our new HTML renderer for your existing paginated reports, we can enable features that previously depended on Internet Explorer so they work across other browsers as well. In Edge, Chrome, Firefox, and Safari, you can now <strong>zoom</strong> into and out of reports, and in Safari in particular, where you used to have to type date values into report parameters, you can now use the <strong>calendar</strong> control:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/2016/03/image337.png"><img width="644" height="365" title="image" alt="image" src="https://msdnshared.blob.core.windows.net/media/2016/03/image_thumb278.png" border="0"></a></p>
+<h1>More to come</h1>
+<p>Stay tuned for a series of posts over the coming days as we dive deeper into some of these new features.</p>
+<h1>Try it now and send us your feedback</h1>
+<ul>
+<li>Download <a href="http://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2016">SQL Server 2016 RC1</a></li>
+<li>Download <a href="https://www.microsoft.com/en-ca/download/details.aspx?id=50400">Mobile Report Publisher Preview</a></li>
+<li>Download <a href="https://www.microsoft.com/download/details.aspx?id=51243">Report Builder Preview</a></li>
+<li>Download <a href="https://msdn.microsoft.com/en-us/library/mt204009.aspx">SQL Server Data Tools Preview</a> for Visual Studio 2015</li>
+<li>Check out the preview documentation: <a href="https://msdn.microsoft.com/en-us/library/ms170438.aspx">What&#8217;s new in Reporting Services (SQL Server 2016)</a></li>
+<li>Post in the <a href="http://go.microsoft.com/fwlink/?LinkId=620231">Reporting Services forum</a> (or if you prefer, <a href="mailto:ssrs-2016-feedback@microsoft.com">send us an email</a>)</li>
+<li>Join the conversation on Twitter: <a href="https://twitter.com/SQLServerBI">@SQLServerBI</a>, #SSRS</li>
+</ul>
+				<div class="back-to-top-wrap"><a href="#top-link" class="back-to-top">Back to<br>top</a></div>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+				
+			
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="msdn_bing_social_search-4" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=SQL%2BServer%2BReporting%2BServices%2BTeam%2BBlog&rq=site%3Ahttp%3A%2F%2Fblogs.msdn.com%2Fb%2Fsqlrsteamblog" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="text-4" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Top Server &amp; Tools Blogs</h2>			<div class="textwidget"><div class="widget-rss-link">
+	<a href="http://sxp.microsoft.com/feeds/3.0/ServerTools/ServerToolsTopPosts" target="_blank"><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png" /></a></div>
+
+<ul class="widget-link-list">
+    <li><a href="http://weblogs.asp.net/scottgu">ScottGu's Blog</a></li>
+    <li><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson&rsquo;s "In the Cloud" Blog</a></li>
+    <li><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry's Blog</a></li>
+    <li><a href="https://blogs.msdn.microsoft.com/stevengu/">Steve "Guggs" Guggenheimer's Blog</a></li>
+</ul>
+</div>
+		</aside><aside id="msdn-sharing-2" class="widget msdn-sharing"><h2 class="widget-title color-highlight-bg">Share This Post</h2><div class='social-share-icons-wrap'><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-facebook facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fsqlrsteamblog%2F2016%2F03%2F18%2Fsql-server-2016-rc1-whats-new-in-reporting-services%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-twitter twitter" href="https://twitter.com/intent/tweet/?text=SQL+Server+2016+RC1%3A+What%26rsquo%3Bs+new+in+Reporting+Services&url=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fsqlrsteamblog%2F2016%2F03%2F18%2Fsql-server-2016-rc1-whats-new-in-reporting-services%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-linkedin linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fsqlrsteamblog%2F2016%2F03%2F18%2Fsql-server-2016-rc1-whats-new-in-reporting-services%2F&title=SQL+Server+2016+RC1%3A+What%26rsquo%3Bs+new+in+Reporting+Services&source=https://blogs.msdn.microsoft.com/sqlrsteamblog">Share</a><a onclick="" class="social-sharing social-sharing-email email" href="mailto:?subject=SQL Server 2016 RC1: What&rsquo;s new in Reporting Services&body=SQL Server 2016 RC1: What&rsquo;s new in Reporting Services https%3A%2F%2Fblogs.msdn.microsoft.com%2Fsqlrsteamblog%2F2016%2F03%2F18%2Fsql-server-2016-rc1-whats-new-in-reporting-services%2F">Share</a><a onclick="" class="social-sharing social-sharing-rss rss" href="https://blogs.msdn.microsoft.com/sqlrsteamblog/feed/">Share</a></div></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title color-highlight-bg">Recent Posts</h2>		<ul>
+					<li>
+				<a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/04/25/new-mobile-report-publisher-preview-now-available/">New Mobile Report Publisher preview now available</a>
+							<span class="post-date">April 25, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/22/whats-new-for-kpis-and-mobile-reports-in-sql-server-2016-rc1/">What&#8217;s new for KPIs and mobile reports in SQL Server 2016 RC1</a>
+							<span class="post-date">March 22, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/20/how-to-create-a-custom-brand-package-for-reporting-services-with-sql-server-2016/">How to create a custom brand package for Reporting Services with SQL Server 2016</a>
+							<span class="post-date">March 20, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/">SQL Server 2016 RC1: What&rsquo;s new in Reporting Services</a>
+							<span class="post-date">March 18, 2016</span>
+						</li>
+				</ul>
+		</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/bi/' class='tag-link-23' title='2 topics' style='font-size: 11.516129032258pt;'>BI</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/bol/' class='tag-link-243' title='1 topic' style='font-size: 9pt;'>BOL</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/crescent/' class='tag-link-143' title='3 topics' style='font-size: 13.193548387097pt;'>Crescent</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/datazen/' class='tag-link-221' title='5 topics' style='font-size: 15.709677419355pt;'>Datazen</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/downloads/' class='tag-link-183' title='1 topic' style='font-size: 9pt;'>Downloads</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/excel/' class='tag-link-43' title='1 topic' style='font-size: 9pt;'>Excel</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/kinect/' class='tag-link-193' title='1 topic' style='font-size: 9pt;'>Kinect</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/mobile-report-publisher/' class='tag-link-231' title='7 topics' style='font-size: 17.387096774194pt;'>Mobile Report Publisher</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/power-bi/' class='tag-link-83' title='1 topic' style='font-size: 9pt;'>Power BI</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/power-pivot/' class='tag-link-33' title='1 topic' style='font-size: 9pt;'>Power Pivot</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/power-view/' class='tag-link-3' title='6 topics' style='font-size: 16.688172043011pt;'>Power View</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/report-builder/' class='tag-link-163' title='4 topics' style='font-size: 14.591397849462pt;'>Report Builder</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/reporting-services/' class='tag-link-53' title='7 topics' style='font-size: 17.387096774194pt;'>Reporting Services</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/rs-2008-r2/' class='tag-link-153' title='6 topics' style='font-size: 16.688172043011pt;'>RS 2008 R2</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/rs-azure/' class='tag-link-173' title='3 topics' style='font-size: 13.193548387097pt;'>RS Azure</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/sharepoint/' class='tag-link-241' title='1 topic' style='font-size: 9pt;'>SharePoint</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/sql/' class='tag-link-13' title='2 topics' style='font-size: 11.516129032258pt;'>SQL</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/sql-server-2016/' class='tag-link-211' title='16 topics' style='font-size: 22pt;'>SQL Server 2016</a>
+<a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/ssrs/' class='tag-link-63' title='6 topics' style='font-size: 16.688172043011pt;'>SSRS</a></div>
+</aside><aside id="msdn-archive-widget-2" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/04/'>April 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/03/'>March 2016</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/02/'>February 2016</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2015/12/'>December 2015</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2015/10/'>October 2015</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/'>All of 2016</a>&nbsp;(9)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2015/'>All of 2015</a>&nbsp;(7)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2013/'>All of 2013</a>&nbsp;(7)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2012/'>All of 2012</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2011/'>All of 2011</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2010/'>All of 2010</a>&nbsp;(7)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2009/'>All of 2009</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2008/'>All of 2008</a>&nbsp;(10)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/sqlrsteamblog/2007/'>All of 2007</a>&nbsp;(8)</li>
+</aside>
+	</div><!-- #secondary -->
+
+	<div id="tag-wrap"><h2 class="color-highlight-bg">Tags</h2><ul class="tag-list"><li><a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/mobile-report-publisher/">Mobile Report Publisher</a></li><li><a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/report-builder/">Report Builder</a></li><li><a href="https://blogs.msdn.microsoft.com/sqlrsteamblog/tag/sql-server-2016/">SQL Server 2016</a></li></ul></div>
+	
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+					<h3 class="comments-title color-highlight-bg">
+				Join the conversation			</h3>
+			<a href="#" class="add-comment-button button">Add Comment</a>
+			</div>
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow" id="cancel-comment-reply-link" href="/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/#respond" style="display:none;">Cancel</a></small></h3>
+									<form action="https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>												<p class="form-submit">
+							<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='1321' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="1a662072b2" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="36"/></p>					</form>
+							</div><!-- #respond -->
+			
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-3411" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-3411" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-19T15:57:37+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3411#respond' onclick='return addComment.moveForm( "div-comment-3411", "3411", "respond", "1321" )' aria-label='Reply to Chris C.'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/7b13efd34206f75c3ccb3f29e362a713?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.cloudappointments.co.nz' rel='external nofollow' class='url'>Chris C.</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,</p>
+<p>We currently use Reporting Services with SQL Server 2012 and use .RDLC files as our host provider does not provide a Reporting Services Server.<br />
+This suits us as well as we do not give want or need to give our users access to Report Builder.</p>
+<p>Will we be able to continue to create our report files in this way ?</p>
+<p>Chris C.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-3523" class="comment byuser comment-author-riccardo-muti bypostauthor odd alt depth-2">
+			<article id="div-comment-3523" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-21T21:55:30+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3523#respond' onclick='return addComment.moveForm( "div-comment-3523", "3523", "respond", "1321" )' aria-label='Reply to Riccardo Muti'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6239d607f25a6b08407d0f7e808aa8e9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Riccardo Muti</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The SQL Server 2016 release doesn&#8217;t really affect &#8220;local reports&#8221; (.rdlc reports) since they&#8217;re not part of SQL Server, more a feature of Visual Studio.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-3422" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-3422" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-20T06:45:45+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3422#respond' onclick='return addComment.moveForm( "div-comment-3422", "3422", "respond", "1321" )' aria-label='Reply to Robert French'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/8695edfcee4439c95e955f9405fe0090?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Robert French</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Just downloaded and installed RC1 today, noticed the data control.  Have M/Soft finally resolved the issue with the date format being returned from the date control for users that do not use MM/DD/YYYY format?  Guess l will find out when l get a chance to play with it.  Been an issue for as long as l have been working with MS BI stack a mere 9 +  or so YEARS ! &#8230;&#8230;&#8230;&#8230;</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-3543" class="comment byuser comment-author-riccardo-muti bypostauthor odd alt depth-2">
+			<article id="div-comment-3543" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-21T22:04:43+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3543#respond' onclick='return addComment.moveForm( "div-comment-3543", "3543", "respond", "1321" )' aria-label='Reply to Riccardo Muti'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6239d607f25a6b08407d0f7e808aa8e9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Riccardo Muti</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It&#8217;s one of the issues we&#8217;re investigating. If we haven&#8217;t addressed a specific issue yet (even a long-standing one), know that we are indeed looking at them and investing time to chip away at them in this release and beyond. So far this release, we&#8217;ve fixed 24 bugs that customers have filed through Microsoft Connect.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-3461" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-3461" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-20T16:37:16+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3461#respond' onclick='return addComment.moveForm( "div-comment-3461", "3461", "respond", "1321" )' aria-label='Reply to JoeD'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/de654e148e1a05dcc56951f04cf94e2e?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">JoeD</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I like all the new features being put in to SSRS, but it&#8217;s really a shame something couldn&#8217;t be done about the Boolean report parameter that uses the computer-ese &#8220;True&#8221; and &#8220;False&#8221; choices. They almost never make little to no sense to the end user. Seems like a very simple change to just let us specify the words for the True/False value or better yet an option to use a checkbox instead of radio buttons (unchecked = false, checked = true). That&#8217;s what end users expect in a Windows or web application.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-3553" class="comment byuser comment-author-riccardo-muti bypostauthor odd alt depth-2">
+			<article id="div-comment-3553" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-21T22:09:23+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3553#respond' onclick='return addComment.moveForm( "div-comment-3553", "3553", "respond", "1321" )' aria-label='Reply to Riccardo Muti'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6239d607f25a6b08407d0f7e808aa8e9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Riccardo Muti</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for the feedback. In addition to the enhancements we&#8217;ve made to report parameters in this release, we&#8217;d definitely like to continue to invest in improving them beyond this RTM.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-3491" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-3491" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-21T07:01:17+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3491#respond' onclick='return addComment.moveForm( "div-comment-3491", "3491", "respond", "1321" )' aria-label='Reply to Joseph Fallon'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/c6ddbdd7ab9dfea56b4bf1575d0f45bf?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Joseph Fallon</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>What level of support for &#8220;Always Encrypted&#8221; will there be in SQL SSRS 2016 ?<br />
+If a report is set up to run using Windows Credentials will SSRS be able to determine whether the client has the required certificate installed on their local machine, and hence know whether to provide the encrypted or decrypted data ?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-3561" class="comment byuser comment-author-riccardo-muti bypostauthor odd alt depth-2">
+			<article id="div-comment-3561" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-21T22:19:26+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3561#respond' onclick='return addComment.moveForm( "div-comment-3561", "3561", "respond", "1321" )' aria-label='Reply to Riccardo Muti'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6239d607f25a6b08407d0f7e808aa8e9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Riccardo Muti</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>SSRS 2016 does work with SQL Server 2016&#8217;s new Always Encrypted feature (thanks in part to SSRS 2016&#8217;s support for .NET 4.6). If you&#8217;re storing your encryption key in the certificate store, the app looks for the certificate on the same machine, so when you&#8217;re using a client app like Report Builder, it&#8217;ll look on that client machine, but when you&#8217;re using the report server, it&#8217;ll look on the report server. (If you&#8217;re storing your encryption key in Azure Key Vault, then it&#8217;ll just look in AKV.)</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-3571" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-3571" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-22T07:22:34+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3571#respond' onclick='return addComment.moveForm( "div-comment-3571", "3571", "respond", "1321" )' aria-label='Reply to Tim Konecky'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/dbaab168c1546215ba36e09c9102a139?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Tim Konecky</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Posted this in the SQL Server RC1 release blog so I apologize if this is redundant.</p>
+<p>I&#8217;ve found browser based issues in Chrome and Firefox re: back button from Drill Through report.</p>
+<p>Not sure if this is just me, but I’ve found a browser based issue with Drill Through action type reports. Click Action takes you to the desired drill through report. However, when you hit the (browser’s) back button, it takes you back to the landing page of the original report unrendered.</p>
+<p>Results: Firefox 44.0.2 – Back button takes you to original report landing page. Original parameters remain intact.<br />
+Results: Chrome 49.0.2623.87 m – Back button takes you to original report landing page. Original parameters do not remain intact.<br />
+Results: IE11 – Back button works as designed.</p>
+<p>We’re getting there, just not quite all the way yet it seems in functionality for all modern browsers.  Keep up the good work! Just thought I’d let you know in case this hasn’t come up yet. Here’s to hoping a fix is in place for RC2 or the final release. Thanks!</p>
+<p>Looking forward to seeing more information about the Branding feature.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-3754" class="comment byuser comment-author-riccardo-muti bypostauthor odd alt depth-2">
+			<article id="div-comment-3754" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-24T17:32:44+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3754#respond' onclick='return addComment.moveForm( "div-comment-3754", "3754", "respond", "1321" )' aria-label='Reply to Riccardo Muti'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6239d607f25a6b08407d0f7e808aa8e9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Riccardo Muti</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks very much for reporting this issue. We&#8217;ll try to reproduce it as a next step.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-3743" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-3743" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-24T12:28:29+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3743#respond' onclick='return addComment.moveForm( "div-comment-3743", "3743", "respond", "1321" )' aria-label='Reply to Chetan K'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/a1e95a2a025805ebf6b03dbbd59a1f5d?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Chetan K</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,</p>
+<p>SQL Server 2016 RC1 is really great!</p>
+<p>I would like post a feature request for &#8220;Custom Fiscal Calendar&#8221; for the Time Navigator in the SQL Server. The current Time Navigator expects Calendar dates. But, lot of companies have different Fiscal calendars. For example one of our clients have following Fiscal Calendar:<br />
+&#8211; 13 periods per Fiscal Year<br />
+&#8211; Fiscal week (7days) from Tuesday to Monday<br />
+&#8211; 4 Weeks in each period<br />
+&#8211; 28 days in each period<br />
+&#8211; There is an extra Fiscal week in Period 13 after every five year</p>
+<p>So the Time Navigator control in the Mobile Report Publisher is completely useless. Instead of using the Time Navigator, we have to use three Selection Lists for Fiscal Year, Period, &amp; Week, which consumes lot of space on Mobile devices.</p>
+<p>HUMBLE REQUEST TO SSRS TEAM TO INCORPORATE CUSTOM FISCAL CALENDARS!</p>
+<p>Please contact me if you need further details.</p>
+<p>Thanks<br />
+Chetan</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-3753" class="comment odd alt depth-2 parent">
+			<article id="div-comment-3753" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-24T12:45:51+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3753#respond' onclick='return addComment.moveForm( "div-comment-3753", "3753", "respond", "1321" )' aria-label='Reply to Chetan K'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/a1e95a2a025805ebf6b03dbbd59a1f5d?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Chetan K</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Continuing on my previous request regarding &#8220;Custom Fiscal Calendar&#8221;. Instead of attaching the Time Navigator to &#8220;Date&#8221; field of the current DataSet, it would be nice to have the following &#8220;Data properties&#8221; for the Time Navigator Control:<br />
+&#8211; Fiscal Year<br />
+&#8211; Fiscal Quarter<br />
+&#8211; Fiscal Period<br />
+&#8211; Fiscal Week<br />
+&#8211; Fiscal Day<br />
+As far as the Dataset has these fields the Time Navigators should be able to summaries the data based on the &#8220;Time Level&#8221;</p>
+<p>Hopefully we will see this feature soon.</p>
+<p>Thanks<br />
+Chetan</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-3783" class="comment byuser comment-author-cfinlan even depth-3">
+			<article id="div-comment-3783" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-24T18:05:14+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3783#respond' onclick='return addComment.moveForm( "div-comment-3783", "3783", "respond", "1321" )' aria-label='Reply to Christopher Finlan'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/370d705044406b56bc5a19f66f4c1818?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.christopherfinlan.com' rel='external nofollow' class='url'>Christopher Finlan</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for the additional info, Chetan!</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-3773" class="comment byuser comment-author-cfinlan odd alt depth-2">
+			<article id="div-comment-3773" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-24T18:04:31+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3773#respond' onclick='return addComment.moveForm( "div-comment-3773", "3773", "respond", "1321" )' aria-label='Reply to Christopher Finlan'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/370d705044406b56bc5a19f66f4c1818?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.christopherfinlan.com' rel='external nofollow' class='url'>Christopher Finlan</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Chetan,</p>
+<p>Thanks for your feedback &#8211; I&#8217;ve already added it to the feature backlog and see about getting it in a future release.</p>
+<p>Thanks,</p>
+<p>Chris</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-3854" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-3854" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-25T10:52:29+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3854#respond' onclick='return addComment.moveForm( "div-comment-3854", "3854", "respond", "1321" )' aria-label='Reply to Devin M'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/e7fe8635f851b6e996588c7522d0bf72?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Devin M</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, </p>
+<p>I am using an ssas cube to create a dataset in the mobile report publisher. I have a field with type date and i have tried converting to date time and many other formats yet none of them are being considered a date by mobile report publisher. What format do i need to convert to?</p>
+<p>Thanks,<br />
+Devin</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-3864" class="comment byuser comment-author-cfinlan odd alt depth-2 parent">
+			<article id="div-comment-3864" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-25T16:37:18+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=3864#respond' onclick='return addComment.moveForm( "div-comment-3864", "3864", "respond", "1321" )' aria-label='Reply to Christopher Finlan'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/370d705044406b56bc5a19f66f4c1818?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.christopherfinlan.com' rel='external nofollow' class='url'>Christopher Finlan</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Devin,</p>
+<p>This is a known issue currently &#8211; right now, the workaround is to create a measure to hold the value of the date field in question, and in the expression field, choose the hierarchy/level of the date and append .CurrentMember.MemberValue;</p>
+<p>ex. [Internet Sales].[Ship Date].CurrentMember.MemberValue</p>
+<p>This will work for both multidimensional and tabular models.</p>
+<p>Let me know if you run into any other issues.</p>
+<p>Thanks,</p>
+<p>Chris</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-4034" class="comment even depth-3">
+			<article id="div-comment-4034" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-29T09:56:30+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4034#respond' onclick='return addComment.moveForm( "div-comment-4034", "4034", "respond", "1321" )' aria-label='Reply to Devin M'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/e7fe8635f851b6e996588c7522d0bf72?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Devin M</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks Chris. One more question, I have a fairly simple cube query it produces about 500k rows and when browsing the cube it takes about 5 secs to load. When i try to load the dataset into mobile report publisher it times out. Is there another step i need to take to get the dataset into mobile report publisher?</p>
+<p>Thanks,<br />
+Devin</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-4024" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-4024" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-29T09:47:58+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4024#respond' onclick='return addComment.moveForm( "div-comment-4024", "4024", "respond", "1321" )' aria-label='Reply to Chris Oneslager'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/981b9b58afc4627f5a5a49f94dac20e1?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.pktechnology.com' rel='external nofollow' class='url'>Chris Oneslager</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>We are currently rewriting application and would really like to deeply integrate SSRS 2016 capabilities into our MVC application.  I have found posting on the new reporting portal, SharePoint, and even Windows apps, but what is the best practice for MVC?  The new embed=true might work for just kpi&#8217;s and dashboards, but what about good ol&#8217; paginated reports with parameters, printing, exports, etc?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-4043" class="comment byuser comment-author-cfinlan even thread-even depth-1">
+			<article id="div-comment-4043" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-29T16:07:34+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4043#respond' onclick='return addComment.moveForm( "div-comment-4043", "4043", "respond", "1321" )' aria-label='Reply to Christopher Finlan'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/370d705044406b56bc5a19f66f4c1818?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.christopherfinlan.com' rel='external nofollow' class='url'>Christopher Finlan</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Devin,</p>
+<p>While we&#8217;re optimizing the Mobile Report Publisher runtime to handle larger datasets than it can in the current preview, your Mobile Reports are best used with parameters for datasets of this size, so it is only loading the data required as needed in the report and not bringing in all 500k rows.  A general best practice is to limit your result set to 100k records or less when using non-parameterized datasets.</p>
+<p>Thanks,</p>
+<p>Chris</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-4161" class="comment odd alt thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-4161" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-31T02:50:26+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4161#respond' onclick='return addComment.moveForm( "div-comment-4161", "4161", "respond", "1321" )' aria-label='Reply to Daniel Alexander'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/02115a02bf90f9590b276a10510fa200?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Daniel Alexander</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Is the Details View (alternative previously to Tile View) gone for good? I can&#8217;t seem to find it in RC1, or any mention of it being added/removed. </p>
+<p>For some (probably legacy) reason we&#8217;re quite partial to it, going as far as enforcing it.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-4191" class="comment byuser comment-author-cfinlan even depth-2">
+			<article id="div-comment-4191" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-31T17:07:08+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4191#respond' onclick='return addComment.moveForm( "div-comment-4191", "4191", "respond", "1321" )' aria-label='Reply to Christopher Finlan'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/370d705044406b56bc5a19f66f4c1818?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.christopherfinlan.com' rel='external nofollow' class='url'>Christopher Finlan</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Daniel,</p>
+<p>Thanks for the feedback. We weren’t able to squeeze an equivalent of the Details view into RTM, but have been looking into when we could do so.  As a workaround, you could use <a href="http://machinename/reportserver" rel="nofollow">http://machinename/reportserver</a>, which is not exactly the same thing, but it shows a changed date in a basic list view.</p>
+<p>Thanks,</p>
+<p>Chris</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-4252" class="comment byuser comment-author-riccardo-muti bypostauthor odd alt thread-even depth-1">
+			<article id="div-comment-4252" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-03T21:00:02+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4252#respond' onclick='return addComment.moveForm( "div-comment-4252", "4252", "respond", "1321" )' aria-label='Reply to Riccardo Muti'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6239d607f25a6b08407d0f7e808aa8e9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Riccardo Muti</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>You have a couple of options:<br />
+&#8211; For the simplest solution with no coding, you can use rs:embed=true. It does work with good ol&#8217; paginated reports and you can choose to show (or hide) the toolbar to enable parameters, page navigation, exporting, printing, and so on.<br />
+&#8211; For a richer API, you can use the Report Viewer control. The current version (Report Viewer 2015) is an ASP.NET Web Forms control, which although not quite ideal for an MVC web app, is possible to integrate via interop. There&#8217;s tons of customer demand for an alternative Report Viewer control designed for MVC and other web app frameworks (non-Web Forms), so it&#8217;s something we&#8217;re already looking into for sometime after SQL Server 2016 RTM.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-4262" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-4262" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-05T12:35:25+00:00">
+							4 weeks ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4262#respond' onclick='return addComment.moveForm( "div-comment-4262", "4262", "respond", "1321" )' aria-label='Reply to Nicole Salazar'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/cafb559442fb03292a8ee9a11f04f575?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Nicole Salazar</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,</p>
+<p>After upgrading from SQL Server 2016 RC0 to SQL Server 2016 RC2,  we noticed that connection type &#8220;Oracle&#8221; is missing.  It was present in the previous releases.  Do you know if this was permanently removed?</p>
+<p>Thanks.<br />
+Nicole</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-4403" class="comment byuser comment-author-cfinlan odd alt depth-2">
+			<article id="div-comment-4403" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-13T17:34:37+00:00">
+							3 weeks ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4403#respond' onclick='return addComment.moveForm( "div-comment-4403", "4403", "respond", "1321" )' aria-label='Reply to Christopher Finlan'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/370d705044406b56bc5a19f66f4c1818?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.christopherfinlan.com' rel='external nofollow' class='url'>Christopher Finlan</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Nicole,</p>
+<p>Make sure you are installing the Oracle data provider (ODP.net) on the server you&#8217;ve installed Reporting Services on.  This was a bit of a change from previous releases that we&#8217;ll make sure is documented going forward.</p>
+<p>Thanks,</p>
+<p>Chris</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-4304" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-4304" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-07T21:09:55+00:00">
+							4 weeks ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4304#respond' onclick='return addComment.moveForm( "div-comment-4304", "4304", "respond", "1321" )' aria-label='Reply to Iran Saffron'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/329869f9102a7ff254b6f29a203ac9ff?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.iransaffrons.com' rel='external nofollow' class='url'>Iran Saffron</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Nice Article! thanks<br />
+I like all the new things being put in to SSRS.<br />
+<a href="http://www.iransaffrons.com" rel="nofollow">http://www.iransaffrons.com</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-4363" class="comment byuser comment-author-cfinlan odd alt depth-2">
+			<article id="div-comment-4363" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-13T16:54:59+00:00">
+							3 weeks ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4363#respond' onclick='return addComment.moveForm( "div-comment-4363", "4363", "respond", "1321" )' aria-label='Reply to Christopher Finlan'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/370d705044406b56bc5a19f66f4c1818?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.christopherfinlan.com' rel='external nofollow' class='url'>Christopher Finlan</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Great, thanks Iran!</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-4341" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-4341" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-11T22:40:45+00:00">
+							3 weeks ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4341#respond' onclick='return addComment.moveForm( "div-comment-4341", "4341", "respond", "1321" )' aria-label='Reply to Selvaraju'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0046d498db5d1019975a45e60e6cb6e3?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Selvaraju</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I know Datazen is been implemented in 2016 Reporting services. One of challenge in Datazen, it doesnt give a feature to download KPI in Excel or PDF. Can you please confirm 2016 has this feature to download KPI dashboard in excel or PDF.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-4371" class="comment byuser comment-author-cfinlan odd alt depth-2">
+			<article id="div-comment-4371" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-13T16:56:11+00:00">
+							3 weeks ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4371#respond' onclick='return addComment.moveForm( "div-comment-4371", "4371", "respond", "1321" )' aria-label='Reply to Christopher Finlan'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/370d705044406b56bc5a19f66f4c1818?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.christopherfinlan.com' rel='external nofollow' class='url'>Christopher Finlan</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Selvaraju,</p>
+<p>Thanks for the comment &#8211; we&#8217;ve not implemented this in Reporting Services currently, but it is an item we are looking at getting added in a post-RTM release of the product. </p>
+<p>Thanks,</p>
+<p>Chris</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-4485" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-4485" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-19T06:11:07+00:00">
+							2 weeks ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4485#respond' onclick='return addComment.moveForm( "div-comment-4485", "4485", "respond", "1321" )' aria-label='Reply to Jeff S'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/e0fd5e1238d2470ad2da80540b2fe36e?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Jeff S</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I haven&#8217;t found information on this anywhere (and I&#8217;m not sure if it will be answered her)..<br />
+We used the IQueryDesigner interface to create a custom query designer extension in a previous version of SSRS, but this seems to be missing from 2016 and hasn&#8217;t appeared in any of the releases.</p>
+<p>Are there plans on allowing custom query designers, or has this moved somewhere else?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-4586" class="comment byuser comment-author-riccardo-muti bypostauthor odd alt depth-2">
+			<article id="div-comment-4586" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-22T14:54:39+00:00">
+							2 weeks ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/?replytocom=4586#respond' onclick='return addComment.moveForm( "div-comment-4586", "4586", "respond", "1321" )' aria-label='Reply to Riccardo Muti'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6239d607f25a6b08407d0f7e808aa8e9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Riccardo Muti</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>SSRS 2016 still supports custom query designers (we haven&#8217;t really made a change in that area). The report design tools in SSRS 2008 R2 and earlier used .NET 2.0/3.5, whereas the one in SSRS 2012 and later use .NET 4.0/4.x, so depending on which previous version you were using, you might need to rebuild your designer to target .NET 4. See <a href="http://stackoverflow.com/questions/23641508/unable-to-implement-iquerydesigner-for-ssrs-2012" rel="nofollow">http://stackoverflow.com/questions/23641508/unable-to-implement-iquerydesigner-for-ssrs-2012</a> for an example of that issue.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+		
+</div><!-- #comments -->
+
+
+	
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-sql-server-reporting-footer-menu-container"><ul id="menu-sql-server-reporting-footer-menu" class="footer-menu"><li id="menu-item-451" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-451"><a href="http://msdn.microsoft.com/cc300389">Terms of Use</a></li>
+<li id="menu-item-461" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-461"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-471" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-471"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/' );
+			$.cookie( 'aadsso-redirect', '/sqlrsteamblog/2016/03/18/sql-server-2016-rc1-whats-new-in-reporting-services/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='65303' post-id='1321'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.5'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/sqlrsteamblog\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/sqlrsteamblog\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/sqlrsteamblog\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-includes/js/comment-reply.min.js?ver=4.1.5'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/msdn-network-parent/js/comments.min.js?ver=06182015'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":"1"};
+var msdnparent = {"is_search":"","is_singular":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/sqlrsteamblog/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

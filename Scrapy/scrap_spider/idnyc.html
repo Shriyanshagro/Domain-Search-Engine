@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta prefix="og: http://ogp.me/ns#" property="og:type" content="website">
+	<meta prefix="og: http://ogp.me/ns#" property="og:title" content="ID NYC Finder">
+	<meta prefix="og: http://ogp.me/ns#" property="og:url" content="http://maps.nyc.gov/idnyc">
+	<meta prefix="og: http://ogp.me/ns#" property="og:image" content="http://maps.nyc.gov/idnyc/img/li.png">
+	<meta prefix="og: http://ogp.me/ns#" property="og:image:type" content="image/png">
+	<meta prefix="og: http://ogp.me/ns#" property="og:image:width" content="280">
+	<meta prefix="og: http://ogp.me/ns#" property="og:image:height" content="136">
+	<meta prefix="og: http://ogp.me/ns#" property="og:image" content="http://maps.nyc.gov/idnyc/img/og.png">
+	<meta prefix="og: http://ogp.me/ns#" property="og:image:width" content="1200">
+	<meta prefix="og: http://ogp.me/ns#" property="og:image:height" content="626">
+	<meta prefix="og: http://ogp.me/ns#" property="og:description" content="Find an ID NYC location where you can obtain a municipal identification card">
+	<meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="NYC.gov">	
+ 	<title>ID NYC Finder</title>
+	<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
+	<link rel="stylesheet" href="js/OpenLayers-2.13.1/theme/default/style.mobile.tidy.css" type="text/css">
+	<link rel="stylesheet" href="css/facility.css" type="text/css"> 
+	<link rel="stylesheet" href="css/lang.css" type="text/css"> 
+	<link rel="apple-touch-icon" href="img/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="img/apple-touch-icon-60.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="img/apple-touch-icon-76.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-152.png">
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="//code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+	<script type="text/javascript" src="js/OpenLayers-2.13.1/OpenLayers.js"></script>
+	<script type="text/javascript" src="js/proj4js/proj4js-compressed.js"></script>	
+</head>
+<body class="firstLoad">
+	<div id="page" data-role="page">
+		<div id="panel" data-role="panel" data-position="right" data-display="overlay">
+			<div id="panelContent">
+				<div id="filter" data-role="collapsible">
+					<h3>Filter by location type...</h3>
+					<div>
+						<div id="filter-type" data-role="controlgroup" data-type="vertical">
+							<input id="filter-type-perm" type="checkbox" checked  data-filter-name="type" data-filter-value="permanent">
+							<label for="filter-type-perm"><img class="type-icon" alt="ID NYC (permanent)" src="img/permanent1.png">ID NYC (permanent)</label>
+							<input id="filter-type-temp" type="checkbox" checked data-filter-name="type" data-filter-value="temporary">
+							<label for="filter-type-temp"><img class="type-icon" alt="ID NYC (temporary)" src="img/temporary1.png">ID NYC (temporary)</label>
+							<input id="filter-type-cultural" type="checkbox" checked data-filter-name="type" data-filter-value="cultural">
+							<label for="filter-type-cultural"><img class="type-icon" alt="Cultural Institution" src="img/cultural1.png">Cultural Institution</label>
+							<input id="filter-type-financial" type="checkbox" checked data-filter-name="type" data-filter-value="financial">
+							<label for="filter-type-financial"><img class="type-icon" alt="Bank/Credit Union" src="img/financial1.png">Bank/Credit Union</label>
+						</div>
+					</div>
+				</div>
+				<div id="facilityContent">
+					<table id="facilityTable"></table>
+				</div>
+			</div>
+		</div>
+		<div id="banner" data-role="header">
+			<h1 onclick="document.location='./';">
+				<img id="nycLogo" class="nycLogo" src="img/nycLogo.png" onclick="document.location='./';"/>
+				<img id="idNycLogo" src="img/idNycLogo.png" onclick="document.location='./';"/>
+				<span class="noshow">ID NYC</span>
+			</h1>
+			<div id="toggles" data-role="controlgroup" data-type="horizontal">
+				<a id="toggleToMap" class="ui-btn" data-role="button" data-transition="fade" href="#map">Map</a>
+				<a class="ui-btn ui-btn-active" data-role="button" data-transition="fade">List</a>
+			</div>
+		</div>
+		<div id="main" role="main" class="ui-content">
+			<div id="map"></div>
+			<div id="_search" class="mapCtl"></div>
+			<div id="_srch" class="mapCtl"></div>
+			<div id="mapControls">
+				<div id="search" class="mapCtl">
+					<input id="address" size="100" placeholder="Enter an address..."/>
+				</div>
+		        <a id="srch" data-role="button" data-icon="search" class="mapCtl mapBtn ui-btn-left" title="Search" onclick="nyc.app.search();">
+		        	<span class="noshow">Search</span>
+		        </a>
+		        <a id="zIn" data-role="button" data-icon="plus" class="mapCtl mapBtn ui-btn-left" title="Zoom in" onclick="nyc.app.zoom(1);">
+		        	<span class="noshow">Zoom in</span>
+	        	</a>
+		        <a id="zOut" data-role="button" data-icon="minus" class="mapCtl mapBtn ui-btn-left" title="Zoom out" onclick="nyc.app.zoom(-1);">
+		        	<span class="noshow">Zoom out</span>
+		        </a>
+	        </div>
+			<div id="possibleMenu"></div>
+	        <a id="share" data-role="button" class="mapCtl mapBtn ui-btn-left" title="Share..." onclick="$('#shareBtns').fadeToggle();">
+	        	<span class="noshow">Share...</span>
+        	</a>
+			<div id="shareBtns">
+		        <a id="facebook" data-role="button" class="mapCtl mapBtn ui-btn-left" href="https://www.facebook.com/sharer/sharer.php?u=http://maps.nyc.gov/idnyc" target="_blank" title="Facebook">
+					<span class="noshow">Facebook</span>
+		        </a>
+		        <a id="twitter" data-role="button" class="mapCtl mapBtn ui-btn-left" href="https://twitter.com/intent/tweet?text=http://maps.nyc.gov/idnyc @nycgov&source=webclient" target="_blank" title="Twitter">
+		        	<span class="noshow">Twitter</span>
+		        </a>
+		        <a id="google" data-role="button" class="mapCtl mapBtn ui-btn-left" href="https://plus.google.com/share?url=http://maps.nyc.gov/idnyc" target="_blank" title="Google+">
+					<span class="noshow">Google+</span>
+		        </a>
+		        <a id="linkedin" data-role="button" class="mapCtl mapBtn ui-btn-left" href="http://www.linkedin.com/shareArticle?mini=true&url=http://maps.nyc.gov/idnyc" target="_blank" title="LinkedIn">
+					<span class="noshow">LinkedIn</span>
+		        </a>
+		        <a id="tumblr" data-role="button" class="mapCtl mapBtn ui-btn-left" href="http://www.tumblr.com/share/link?url=http://maps.nyc.gov/idnyc&name=ID NYC Finder&description=via%20NYC.gov" target="_blank" title="Tumblr">
+					<span class="noshow">Tumblr</span>
+		        </a>
+		        <a id="email" data-role="button" class="mapCtl mapBtn ui-btn-left" href="mailto:?subject=ID NYC Finder&body=Find an ID NYC location where you can obtain a municipal identification card%0A%0Ahttp://maps.nyc.gov/idnyc" title="email">
+					<span class="noshow">Email</span>
+		        </a>
+			</div>	
+			<div id="copyright"></div>
+		</div>
+		<div id="alert">
+			<div id="msg"></div>
+			<input data-role="button" title="OK" onclick="$('#alert').fadeOut();" type="button" value="OK"/>
+		</div>
+		<div id="external">
+			<a id="back" class="ui-btn" data-role="button" onclick="$('#external').slideToggle();">
+				<table><tbody><tr>
+				<td>Return to <span class="noshow">ID NYC</span></td>
+				<td><img class="nycLogo" src="img/nycLogo.png"/></td>
+				<td><img id="idNycLogo" src="img/idNycLogo.png"/></td>
+				</tr></tbody></table>
+			</a>		
+			<div id="iframeContainer"><iframe frameborder="0"></iframe></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/nyc/constants.js"></script>
+	<script type="text/javascript" src="js/nyc/conf.js"></script>
+	<script type="text/javascript" src="js/nyc/facility.js"></script>
+	<script type="text/javascript" src="js/nyc/info.js"></script>
+	<script type="text/javascript" src="js/nyc/locate.js"></script>
+	<script type="text/javascript" src="js/nyc/lang.js"></script>
+	<script type="text/javascript" src="js/nyc/app.js"></script>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-41281554-11', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script type="text/javascript">var prod_dcsId_val = "dcs22269ss2k7ba3tm8elp97p_7k8l";</script>
+	<script type="text/javascript" src="https://www1.nyc.gov/assets/home/js/webtrends/webtrends_v10.js"></script>
+	<img id="popPreload" src="js/OpenLayers-2.13.1/img/cloud-popup-relative.png">
+</body>
+</html>

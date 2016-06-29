@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "">
+
+<html lang=en-US>
+ <head profile="http://dublincore.org/documents/2008/08/04/dc-html/ ">
+  <title>Behavioral Extensions to CSS</title>
+
+  <link href="http://purl.org/dc/terms/" rel=schema.dcterms>
+  <link href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
+   rel=dcterms.rights>
+  <meta content="Behavioral Extensions to CSS" name=dcterms.title>
+  <meta content=text name=dcterms.type>
+  <meta content=2014-10-14 name=dcterms.date>
+  <meta content="Ian Hickson" name=dcterms.creator>
+  <meta content=W3C name=dcterms.publisher>
+  <meta content="http://www.w3.org/TR/2014/NOTE-becss-20141014/"
+   name=dcterms.identifier>
+  <link href="http://www.w3.org/StyleSheets/TR/W3C-WG-NOTE" rel=stylesheet
+   type="text/css">
+
+ <body>
+  <div class=head> <!--begin-logo-->
+   <p><a href="http://www.w3.org/"><img alt=W3C height=48
+    src="http://www.w3.org/Icons/w3c_home" width=72></a> <!--end-logo-->
+
+   <h1>Behavioral Extensions to CSS</h1>
+
+   <h2 class="no-num no-toc">W3C Working Group Note 14 October 2014</h2>
+
+   <dl>
+    <dt>This version:
+
+    <dd><a
+     href="http://www.w3.org/TR/2014/NOTE-becss-20141014/">http://www.w3.org/TR/2014/NOTE-becss-20141014/</a>
+
+    <dt>Latest version:
+
+    <dd><a href="http://www.w3.org/TR/becss">http://www.w3.org/TR/becss</a>
+
+    <dt>Previous version:
+
+    <dd><a
+     href="http://www.w3.org/TR/2007/WD-becss-20071019">http://www.w3.org/TR/2007/WD-becss-20071019</a>
+
+    <dt>Editors:
+
+    <dd><a href="mailto:ian@hixie.ch">Ian Hickson</a>, Google, Inc.
+
+    <dt>Editors' draft:
+
+    <dd><a
+     href="http://dev.w3.org/2006/xbl2/css-module.html">http://dev.w3.org/2006/xbl2/css-module.html</a>
+   </dl>
+   <!--begin-copyright-->
+   <p class=copyright><a
+    href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright"
+    rel=license>Copyright</a> © 2014 <a href="http://www.w3.org/"><abbr
+    title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a
+    href="http://www.csail.mit.edu/"><abbr
+    title="Massachusetts Institute of Technology">MIT</abbr></a>, <a
+    href="http://www.ercim.eu/"><abbr
+    title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+    <a href="http://www.keio.ac.jp/">Keio</a>, <a
+    href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved. W3C <a
+    href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+    <a
+    href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
+    and <a
+    href="http://www.w3.org/Consortium/Legal/copyright-documents">document
+    use</a> rules apply.</p>
+   <!--end-copyright-->
+   <hr title="Separator for header">
+  </div>
+
+  <h2 class="no-num no-toc" id=abstract>Abstract</h2>
+
+  <p>This Note replaces a proposal for features in CSS that allow to bind
+   “behaviors” to the elements of a document. A “behavior” is defined
+   by a URL and typically points to an object (in a language such as XBL <a
+   href="#ref-XBL" rel=biblioentry>[XBL]<!--{{XBL}}--></a>) that defines its
+   own appearance and user interaction. Such a binding allows, e.g. to
+   replace an element by a complex user interface control. The features are
+   no longer being developed.
+
+  <h2 class="no-num no-toc" id=status>Status of this document</h2>
+  <!--begin-status-->
+
+  <p><em>This section describes the status of this document at the time of
+   its publication. Other documents may supersede this document. A list of
+   current W3C publications and the latest revision of this technical report
+   can be found in the <a href="http://www.w3.org/TR/">W3C technical reports
+   index at http://www.w3.org/TR/.</a></em>
+
+  <p>Publication as a Working Group Note does not imply endorsement by the
+   W3C Membership. This is a draft document and may be updated, replaced or
+   obsoleted by other documents at any time. It is inappropriate to cite this
+   document as other than work in progress.
+
+  <p>This document was produced by the <a
+   href="http://www.w3.org/Style/CSS/members">CSS Working Group</a> (part of
+   the <a href="http://www.w3.org/Style/">Style Activity</a>).
+
+  <p>The (<a
+   href="http://lists.w3.org/Archives/Public/www-style/">archived</a>) public
+   mailing list <a
+   href="mailto:www-style@w3.org?Subject=%5Bbecss%5D%20PUT%20SUBJECT%20HERE">www-style@w3.org</a>
+   (see <a href="http://www.w3.org/Mail/Request">instructions</a>) is
+   preferred for discussion of this document. When sending e-mail, please put
+   the text “becss” in the subject, preferably like this:
+   “[<!---->becss<!---->] <em>…summary of comment…</em>”
+
+  <p>This document was produced by a group operating under the <a
+   href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February
+   2004 W3C Patent Policy</a>. W3C maintains a <a
+   href="http://www.w3.org/2004/01/pp-impl/32061/status"
+   rel=disclosure>public list of any patent disclosures</a> made in
+   connection with the deliverables of the group; that page also includes
+   instructions for disclosing a patent. An individual who has actual
+   knowledge of a patent which the individual believes contains <a
+   href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
+   Claim(s)</a> must disclose the information in accordance with <a
+   href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
+   6 of the W3C Patent Policy</a>.
+
+  <p>This document is governed by the <a
+   href="http://www.w3.org/2014/Process-20140801/"
+   id="w3c_process_revision">1 August 2014 W3C Process Document</a>.</p>
+  <!--end-status-->
+
+  <p class=mtb><em>The CSS Working Group does not expect further work on this
+   document.</em>
+
+  <h2 class="no-num no-toc" id=contents>Table of contents</h2>
+  <!--begin-toc-->
+
+  <ul class=toc>
+   <li><a href="#summary"><span class=secno>1. </span>Summary</a>
+
+   <li><a href="#references"><span class=secno>2. </span>References</a>
+  </ul>
+  <!--end-toc-->
+
+  <h2 id=summary><span class=secno>1. </span>Summary</h2>
+
+  <p>In 1999, the CSS working group worked on a Behavioral Extensions to CSS
+   specification that proposed syntax for actual binding definitions. Since
+   then, separate languages have been developed for this purpose (e.g. XBL <a
+   href="#ref-XBL" rel=biblioentry>[XBL]<!--{{XBL}}--></a>), and the
+   CSS-specific way of defining bindings was dropped.
+
+  <p>The proposed role of CSS then became only to attach the external object
+   defined in XBL to an element in a document, via a ‘<code
+   class=property>binding</code>’ property that takes a URL as value.
+
+  <p>Insufficient interest in XBL and the ‘<code
+   class=property>binding</code>’ property made the CSS Working Group
+   decide to stop the development of the specification. (For the same reason,
+   the Web Applications Working Group decided to halt the development of
+   XBL.)
+
+  <p>Note that for the specific case of documents in HTML <a
+   href="#ref-HTML5" rel=biblioentry>[HTML5]<!--{{HTML5}}--></a>, the HTML
+   Working Group has developed an alternative solution. (See the <a
+   href="http://www.w3.org/TR/html5/scripting-1.html#the-template-element"><code>template</code>
+   element.</a>)
+
+  <h2 id=references><span class=secno>2. </span>References</h2>
+  <!--begin-informative-->
+  <!-- Sorted by label -->
+
+  <dl class=bibliography>
+   <dd style="display: none"><!-- keeps the doc valid if the DL is empty -->
+    <!---->
+
+   <dt id=ref-HTML5>[HTML5]
+
+   <dd>Ian Hickson; et al. <a
+    href="http://www.w3.org/TR/2014/PR-html5-20140916/"><cite>HTML5.</cite></a>
+    16 September 2014. W3C Proposed Recommendation. (Work in progress.) URL:
+    <a
+    href="http://www.w3.org/TR/2014/PR-html5-20140916/">http://www.w3.org/TR/2014/PR-html5-20140916/</a>
+   </dd>
+   <!---->
+
+   <dt id=ref-XBL>[XBL]
+
+   <dd>Ian Hickson. <a
+    href="http://www.w3.org/TR/2012/NOTE-xbl-20120524/"><cite>XBL
+    2.0.</cite></a> 24 May 2012. W3C Working Group Note. URL: <a
+    href="http://www.w3.org/TR/2012/NOTE-xbl-20120524/">http://www.w3.org/TR/2012/NOTE-xbl-20120524/</a>
+   </dd>
+   <!---->
+  </dl>
+  <!--end-informative-->

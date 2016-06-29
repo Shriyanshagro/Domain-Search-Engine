@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html >
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=latin-1" />
+
+   <title>Loginmgr Tool</title>
+
+   <!-- Style sheets  -->
+   <style type="text/css">
+    /* wg-page.css */
+    /* HTML element styles */
+    body	{
+		    background-color: white;    
+		    margin: 0;
+		    padding: 0;
+		    border: 0;
+    }
+    body, th, td	{
+		    font-family: "Times New Roman", times, serif;
+		    font-size: 11pt;
+		    margin: 0;
+		}
+		
+    td		{ vertical-align: top; padding: 0 0 0 0; }
+    h1		{ font-size: 150%; }
+    h2		{ margin: 0.22em 0 0.22em 0; }
+    h4		{ margin: 0.45em 0 0 0; }
+    form	{ margin: 1em; }
+    .menu form	{ margin: 0; }
+
+    input.frugal,textarea.frugal {
+	    border-top: groove 2px #bbb;
+	    border-left: groove 2px #ccc;
+	    border-right: ridge 2px #ddd ;
+	    border-bottom: solid 1px #ddd;
+	    padding: 1px;
+	    margin: 1px;
+	    vertical-align: middle;
+    }
+
+    /* Style classes */
+
+    .page	{
+		  margin: 0.2em 0.4em;
+		  width: 70em;
+		}
+  /* Undo some of the settings above, for fully css compliant browsers. */
+  /* The qualification of the elements hide this from less capable browsers. */
+    div[class=page]	{
+		  width: auto;
+		  max-width: 70em;	/* 58em = 128ex in the design browser */
+		}
+    div[class=content]	{
+		  width: auto;
+		  max-width: 70em;
+		}
+    div[class=search]	{
+		  width: auto;
+		  max-width: 50em;
+		}
+
+    /* Link styles */
+    :link, :visited {
+	    text-decoration: underline;
+	    color: #00D;
+	    border-bottom: 0;
+    }
+    :link:hover, :visited:hover {
+	    background-color: inherit;
+	    color: #00D;
+    }
+
+    .masthead {
+        font-family: "Didot", "Cochin", "Baskerville", serif;
+        font-size: 420%;
+	text-align: center;
+	padding: 0.22em;
+    }
+    .slogan {
+        font-family: "Didot", "Cochin", "Baskerville", serif;
+        font-style: italic;
+	text-align: center;
+	padding-bottom: 0.45em;
+    }
+    .news {
+        font-family: "Times", "Times Roman", serif;
+	color: #222;
+	padding: 0.45em;
+    }
+    td.news {
+	width: 50%;
+    }
+
+    .version	{
+		  font-family: helvetica, arial, sans-serif;
+		  font-style: italic;
+		  font-size: 8.5pt;
+		  text-align: right;
+		  color: #aaa;
+		  margin: 0;
+		  padding: 0;
+		} 
+    .version a:link	{ color: #aaa; }
+    .version a:visited	{ color: #aaa; }
+    .version a:active	{ color: #aaa; }
+    .version a:hover	{ color: #888; }
+
+    .logo	{ border: 0;  }
+    .logomargin { margin: 0; padding: 0; border: 0; width: 0px;}
+    @media print {
+	    .wglist { display: none; }
+    }
+    @media screen {
+	    .wglist	{ border-right: groove gray 2px; width: 4.7em; }
+    }
+    .content	{ margin: 0 0 0 0.45em; }
+    .date	{ font-size: 9pt; font-family: 'Courier New', monospace; padding: 0.27em 2em 0 0; }
+    .new	{ font-size: 8pt; font-weight: bold; font-style: italic; color: red;}
+    .rfcsearch	{ font-size: 8pt; margin: 0; }
+    .submit	{ padding: 0; border: outset gray 1px; font-size: 8pt; }
+    .topmenu {
+		  border-top: solid black 1px;
+		  border-bottom: solid black 1px;
+		  width: 100%;
+		  text-align: center;
+		}
+    .topmenu table {
+		  width: 100%;
+		}
+    .topmenu table tr td {
+		  font-family: Arial, Helvetica, sans-serif;
+		  font-weight: bold;
+		  font-size: 80%;	
+		}
+    .topmenu table tr td a {
+		  text-decoration: none;
+		  color: #222;
+		}
+    .topmenu table tr td a:hover {
+		  color: #555;
+		}
+    .menu	{
+		  width: 100%;
+		  text-align: center;
+		  font-weight: bold;
+		  margin: 0.22em;
+		  font-family: Verdana, Optima, Helvetica, sans-serif;
+		  font-size: 8pt;
+		}
+    .right	{
+		  float: right;
+		  font-weight: bold;
+		}
+    .navbar	{ 
+		  text-align: center;
+		  font-family: Verdana, Optima, Helvetica, sans-serif;
+		  font-size: 8pt;
+		  width: 100%;
+		}
+    table.menutop { width: 100%; margin-right: 1px;}
+    .edit	{ float: left; }
+    .update	{ font-size: 9pt; font-style: italic; text-align: right; width: 100%; margin-top: 3em; }
+    .chairs	{ vertical-align: bottom; text-align: right; font-size: 10pt; font-style: italic; }
+    
+    a:link	{ color: #00D }
+    a:visited	{ color: #408 }
+/*     a:active	{ color: #04C } */
+    a:hover	{ color: #00F }
+
+    a.external:link	{ color: #800 }
+    a.external:visited	{ color: #840 }
+    a.external:active	{ color: #804 }
+    a.external:hover	{ color: #C00 }
+
+    .active, .active_wg	{ border-left: solid white 0.22em; padding: 0.2em 0.22em 0 0; }
+    .concluded, .concluded_wg { background-color: #F8F8D0; border-left: solid white 0.22em; padding: 0.22em 0.22em 0 0; }
+    .not_a_wg { background-color: #EEF; border-left: solid white 0.22em; padding: 0.22em 0.22em 0 0; }
+    .bof { background-color: #EFE; border-left: solid white 0.22em; padding: 0.22em 0.22em 0 0; }
+
+    .draftspanel { width: 7.25em; padding: 0.9em; background-color: #EEE; }
+    .concluded_wg .draftspanel { background-color: #EEB; }
+    .not_a_wg .draftspanel { background-color: #DDE; }
+
+    .caption	{ margin: 2em; font-size: 12pt; }
+    .draftspanel { margin: 1.8em 0 0 1.8em; }
+    .draftslist { }
+    .draftslist td { padding: 1px; }
+    /*     .draftslist td div { position: relative; vertical-align: top; } */
+    .draftslist .entry { position: relative; vertical-align: top; }
+    .hover { position: absolute; top: 10px; left: 3px; border: black solid 1px; background-color: #FFE; visibility: hidden; }
+    td.rev { padding-left: 0.2em; white-space: nowrap; }
+    .draftdate { font-size: 9pt; font-family: monospace; white-space: nowrap; }
+    .menuitem	{ margin-top: 0.25em; margin-bottom: 0.25em; }
+    .topitem	{ margin-top: 0.25em; margin-bottom: 0; }
+    .subitem	{ margin-left: 0.5em; margin-bottom: 0.25em;  }
+    .small	{ font-size: 8pt; font-family: Verdana, Helvetica, Arial, sans-serif; }
+    .menuform	{ margin: 0 0 0.45em 0; vertical-align: baseline; }
+    .subitem form	{ margin: 0 0 0.45em 0; }
+    .subitem input	{ width: 5.5em; font-size: 8pt; }
+    .subitem button	{ padding: 0; margin: 0px; }
+
+    .spellcheck	{ border-bottom: red solid 2px; text-decoration: none; color: black; }
+    a.spellcheck	{ text-decoration: none; color: black; }
+    a.spellcheck:link	{ text-decoration: none; color: black; }
+    a.spellcheck:visited	{ text-decoration: none; color: black; }
+    a.spellcheck:hover	{ text-decoration: none; color: black; }
+    a.spellcheck:active	{ text-decoration: none; color: black; }
+
+    .popup	{
+	    position:absolute;
+	    visibility:hidden;
+	    background-color:#F0F0D0;
+	    padding: 1.4em; 
+	    border: solid #345 1px;
+	    margin: 0px;
+	    font-size: 10pt;
+	    font-family: monospace;
+	    white-space: pre;
+	    text-align: left;
+    }
+
+    /* progress bar and ticket indication */
+    table.draftissues { margin-top: 0.15em; }
+    td.progressbar { vertical-align: middle }
+    table.progressbar {
+	    border: 1px solid gray;
+	    border-collapse: collapse;
+	    border-spacing: 0;
+	    margin: 0;
+	    padding: 0;
+	    empty-cells: show;
+	    width: 2em;
+    }
+    table.progressbar a, table.progressbar :link, table.progressbar :visited,
+    table.progressbarbar :link:hover, table.progressbar :visited:hover {
+	    border: none;
+	    display: block;
+	    width: 100%;
+	    height: 100%;
+	    padding: 0;
+	    margin: 0;
+	    text-decoration: none;
+    }
+    table.progressbar td { padding: 0; height: 0.45em; }
+    table.progressbar td.closed { background: #4c4 }
+    table.progressbar td :hover { background: none }
+    table.draftissues td.small {
+	    font-size: 0.9em;
+	    font-family: sans-serif;
+	    font-weight: bold;
+	    text-decoration: none;
+	    color: black;
+	    vertical-align: middle;
+    }
+    table.avp td { font-family: monospace; font-size: 80%; padding: 0 1em 0.1em 0; }
+
+    .toolblurb { margin: 2em 3em 0 4em; }
+/* Style definition file generated by highlight 2.4-2, http://www.andre-simon.de/ */
+
+/* Highlighting theme definition: */
+
+body.hl	{ background-color:#ffffff; }
+pre.hl	{ color:#000000; background-color:#ffffff; font-size:10pt; font-family:Courier;}
+.num	{ color:#2928ff; }
+.esc	{ color:#ff00ff; }
+.str	{ color:#cc0000; }
+.dstr	{ color:#818100; }
+.slc	{ color:#008800; font-style:italic; }
+.com	{ color:#008800; font-style:italic; }
+.dir	{ color:#008200; }
+.sym	{ color:#000000; }
+.line	{ color:#555555; }
+.kwa	{ color:#000000; font-weight:bold; }
+.kwb	{ color:#0000ff; font-weight:bold; }
+.kwc	{ color:#0000ff; font-weight:bold; }
+.kwd	{ color:#010181; }
+
+
+   </style>
+   <!-- Javascript -->
+   <script src="/js/hide.js" type="text/javascript" ></script>
+</head>
+
+<body>
+<div class="page">
+   <table border="0" width="100%" >
+      <tr>
+	 <!-- Left column --><!--*- html -*-->
+	<td class="wglist">
+	  <!-- - ietf tools logo with link back to the ietf tools site,   -->
+	  <a href="/"><img class="logo" src="/images/ietflogo3h.png" alt="IETF" /></a><br /><br />
+	  	  <div class="menuitem"><a href="http://www.ietf.org/">IETF Home</a></div>
+	  <div class="menuitem"><a href="http://www1.tools.ietf.org/newlogin">Get&nbsp;Passwd</a></div>
+	  <div class="menuitem">IETF-96:
+	     <div class="subitem"><a href="/rooms">Rooms</a></div>
+	     <div class="subitem"><a href="/agenda/96">Agenda</a></div>
+	     <div class="subitem"><a href="/agenda/96/calendar">Calendar</a></div>
+	  </div>
+	  <div class="topitem"><a href="/html/">Documents</a></div>
+	  <form class="menuform" action="/html/" id="rfcform" onsubmit="return inputMassage()"
+		title="Enter document number or name - rfc, bcp, draft-... etc., and hit return.">
+	  <div class="topitem" >Doc fetch:</div>
+	  <div class="subitem"><input class="frugal" type="text" name="doc" /><button type="submit">!</button></div>
+	  <script type="text/javascript">
+	    function inputMassage() {
+		window.location = document.rfcform.action + document.rfcform.doc.value;
+		return false;
+	    }
+	  </script>
+	  </form>
+	  <div class="topitem"><a href="/rfc/index">RFCs</a></div>
+	  <!-- 	  <div class="topitem"><a href="/notify">Notifier</a></div> -->
+	  <div class="topitem"><a href="/group/iesg/">IESG</a></div>	  
+	  <div class="topitem"><a href="/group/iab/">IAB</a></div>
+	  <div class="topitem"><a href="/group/wgchairs/">Chairs</a></div>
+	  <div class="topitem"><a href="/group/irtf/">IRTF</a></div>
+	  <div class="topitem"><a href="http://www.ietf.org/nomcom/2016/">NomCom</a></div>
+	  <div class="topitem"><a href="/wg">WGs</a></div>
+	  <div class="topitem"><a href="/area">Areas</a></div>
+	  <div class="topitem"><a href="/bof">BOFs</a></div>
+	  <div class="topitem"><a href="/tools">Tools</a>:</div>
+	     <div class="subitem"><a href="/tools/idcomments/">idcomment</a></div>
+	     <div class="subitem"><a href="/tools/idnits/">idnits</a></div>
+	     <div class="subitem"><a href="/tools/idspell/">idspell</a></div>
+	     <br />
+	     <div class="subitem"><a href="/tools/searchplugins/">search-</a>
+		&nbsp;<a href="/tools/searchplugins/">plugins</a></div>
+	     <br />
+	     <div class="subitem"><a href="/tools/loginmgr/">loginmgr</a></div>
+	     <br />
+	     <div class="subitem"><a href="/tools/rfcindex/">rfcindex</a></div>
+	     <div class="subitem"><a href="/tools/rfcdiff/">rfcdiff</a></div>	     
+	     <div class="subitem"><a href="/tools/rfcmarkup/">rfcmarkup</a></div>	     	     
+	     <div class="subitem"><a href="/tools/rfcstrip/">rfcstrip</a></div>	     
+	     <div class="subitem"><a href="/tools/doublespace/">double-</a>
+	     <div class="subitem"><a href="/tools/doublespace/">space</a></div></div>
+  <!-- 	  <div class="subitem"><a href="/tools/rfcmarkup/">rfcmarkup</a></div> -->
+
+	  	</td>
+
+	 <td>
+
+	    <div class="content">
+
+	       <div>
+		  <!-- Caption -->
+		  <table width="100%">
+		     <tr>
+			<td rowspan="2">
+			   <h2 align="left">Create or Re-set your Login Password</h2>
+			</td>
+			<td class="version" style="color: black; font-size:11pt;">
+			</td>
+		     </tr>
+		     <tr>
+			<!-- left column inherited from previous row -->
+			<td class="chairs">
+			   <i>Version:</i> 0.16
+			   <br />
+
+			</td>
+		     </tr>
+		  </table>
+	       </div>
+	       <hr/>
+	       <p>
+
+		  In order to log in to password-protected pages on tools.ietf.org, you
+		  need a login identity and a password.  Your login identity is simply
+		  your email address.
+	       </p>
+
+	       <p>
+		  Please observe that you do <b>not</b> need a password in order to subscribe
+		  to <a href="http://www.ietf.org/lists/">IETF mailing lists</a>, retrieve <a href="http://tools.ietf.org/html/">IETF drafts</a> or
+		  <a href="http://tools.ietf.org/rfc/">RFCs</a>, or almost any other IETF-related activity on tools.ietf.org
+		  but updating of WG issue-tracker items or wiki pages.
+	       </p>
+
+	       <p>
+		  (Please use an all lower-case email address for this purpose.
+		  Http authentication is case sensitive, and consistently using
+		  lower-case emails as login names avoids unnecessary trouble when
+		  access control lists for various areas are updated based on
+		  email addresses.)
+	       </p>
+	       <p>
+		  To get or re-set a password, you need a one-time
+		  URL which you can request here.  :
+	       </p>
+
+	       <form action="/tools/loginmgr/sendlogin.pyht" method="post" >
+		  Email&nbsp(lowercase):&nbsp;<input type="text" name="email" size="40"/>
+		  <input type="submit" value="Request password" />
+	       </form>
+
+	    </p>
+	    </div>
+
+	        <div class="update">
+      
+      Latest update: 2011-04-14 06:33 PDT - 
+      <a href="mailto:webmaster@tools.ietf.org">webmaster@tools.ietf.org</a>
+    </div>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/wg/httpbis/trac/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      function setCookie(name,value,days) {
+         if (days) {
+           var date = new Date();
+           date.setTime(date.getTime()+(days*24*60*60*1000));
+           var expires = "; expires="+date.toGMTString();
+         }
+         else var expires = "";
+         document.cookie = name+"="+value+expires+"; path=/";
+      };
+      function getCookie(name) {
+         var nameEQ = name + "=";
+         var ca = document.cookie.split(';');
+         for(var i=0;i < ca.length;i++) {
+           var c = ca[i];
+           while (c.charAt(0)==' ') c = c.substring(1,c.length);
+           if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+         }
+         return null;
+      };
+      jQuery(document).ready(function($) {
+         function showMenu() {
+              $("#narrow_menu").show(300);
+              $("#show").hide();
+              setCookie('ietfmenu', 'show', 30);
+         };
+         function hideMenu() {
+              $("#narrow_menu").hide(300);
+              $("#show").show();
+              setCookie('ietfmenu', 'hide', 30);
+         };
+         $("#show").click(showMenu);
+         $("#hide").click(hideMenu);
+         if (getCookie('ietfmenu') != 'hide') {
+           showMenu();
+         };
+         $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+
+
+
+	 </td>
+      </tr>
+   </table>
+</div>
+</body>
+</html>

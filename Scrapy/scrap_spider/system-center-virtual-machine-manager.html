@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>System Center Virtual Machine Manager | Building Clouds</title>
+
+	<meta name="description" content="&#8230;building hybrid clouds that can support any device from anywhere">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.technet.microsoft.com/privatecloud/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/privatecloud/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="Building Clouds &raquo; Feed" href="https://blogs.technet.microsoft.com/privatecloud/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Building Clouds &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/privatecloud/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Building Clouds &raquo; System Center Virtual Machine Manager Tag Feed" href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/feed/" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.technet.microsoft.com/privatecloud/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.technet.microsoft.com/privatecloud/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.technet.microsoft.com/privatecloud/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.technet.microsoft.com/privatecloud/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/privatecloud/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/privatecloud/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/privatecloud/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/privatecloud/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/privatecloud/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			/* Building Clouds new navigation */
+#site-navigation + aside {
+  display: none;
+}
+#building-clouds-nav {
+  clear: both;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#building-clouds-nav a {
+  font-size: 13px;
+  text-decoration: none;
+}
+.bc-row {
+  clear: both;
+  margin-bottom: 1px;
+  overflow: hidden;
+}
+.bc-rotated {
+  background-color: #00368a;
+  float: left;
+  height: 130px;
+  position: relative;
+  width: 36px;
+}
+.bc-rotated:hover {
+  background-color: #01265f;
+}
+.bc-rotated:first-child {
+  margin-right: 1px;
+}
+.bc-rotated a {
+  display: block;
+  color: #fff !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 36px;
+  margin-top: 130px;
+  text-align: center;
+  width: 130px;
+  height: 36px;
+  -webkit-transform: rotate(-90deg);
+  -webkit-transform-origin: top left;
+  -moz-transform: rotate(-90deg);
+  -moz-transform-origin: top left;
+  -ms-transform: rotate(-90deg);
+  -ms-transform-origin: top left;
+  -o-transform: rotate(-90deg);
+  -o-transform-origin: top left;
+  transform: rotate(-90deg);
+  transform-origin: top left;
+}
+.bc-rotated-1 a:hover,
+.bc-rotated-2 a:hover {
+  color: #fff;
+}
+.bc-container {
+  background-color: #00368a;
+  color: #fff;
+  float: none;
+  height: 130px;
+  margin-right: 1px;
+  width: 100%;
+}
+.bc-container:hover {
+  background-color: #01265f;
+}
+.bc-container-title {
+  font-size: 18px;
+  text-align: center;
+  padding: 5px 0;
+}
+.bc-container-column {
+  float: left;
+  padding-top: 5px;
+  width: 25%;
+}
+.bc-container-column.last {
+  width: 25%;
+}
+.bc-container-column a {
+  background-color: #006bc2;
+  color: #fff !important;
+  display: block;
+  margin: 0 1px 1px 0;
+  padding: 5px 10px;
+  text-align: center;
+}
+.bc-container-column a.tall {
+  padding-top: 10px;
+  padding-bottom: 11px;
+}
+.bc-container-column:first-child a {
+  margin-left: 1px;
+}
+.bc-container-column a:hover {
+  background-color: #00368a;
+}
+a.bc-logo {
+  color: #fff !important;
+  display: block;
+  text-align: center;
+  width: 136px;
+}
+.bc-logo img {
+  display: block;
+  height: 80px;
+  margin: 10px auto;
+  width: 80px;
+}
+.bc-logo span {
+  display: block;
+  font-size: 18px;
+}
+.bc-half {
+  display: block;
+  float: left;
+  width: 50%;
+}
+.bc-half a {
+  background-color: #00368a;
+  color: #fff !important;
+  display: block;
+  padding: 10px;
+  text-align: center;
+}
+.bc-half:first-child a {
+  margin-right: 1px;
+}
+.bc-half a:hover {
+  background-color: #01265f;
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/privatecloud/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="archive tag tag-system-center-virtual-machine-manager tag-553 msdn-2172 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.technet.microsoft.com/server-management">Server &amp; Management Blogs</a> > Building Clouds</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.technet.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-server-and-management-blogs-main-menu-container"><ul id="menu-server-and-management-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-33"><a href="#">All About Windows Server</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113"><a href="https://blogs.technet.microsoft.com/windowsserver/">Windows Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="https://blogs.technet.microsoft.com/sbs/">Windows Server Essentials</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="https://blogs.technet.microsoft.com/askperf/">Ask the Performance Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="https://blogs.technet.microsoft.com/askpfeplat/">Ask Premier Field Engineering (PFE) Platforms</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-652"><a href="https://blogs.technet.microsoft.com/askcore/">Ask the Core Team</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Cloud Platform Blogs</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-223"><a href="https://blogs.technet.microsoft.com/server-cloud/">Server &amp; Cloud</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-661"><a href="https://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-214"><a href="https://blogs.technet.microsoft.com/privatecloud/">Building Clouds</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-204"><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson &#8211; In the Cloud</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Datacenter Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-233"><a href="https://blogs.technet.microsoft.com/systemcenter/">Hybrid Cloud IT Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-653"><a href="https://blogs.technet.microsoft.com/msoms/">Operations Management Suite (OMS)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.technet.microsoft.com/scvmm/">System Center Virtual Machine Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-253"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="https://blogs.technet.microsoft.com/momteam/">System Center Operations Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-283"><a href="https://blogs.technet.microsoft.com/orchestrator/">System Center Orchestrator</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Client Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-293"><a href="https://blogs.technet.microsoft.com/configurationmgr/">System Center Configuration Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-303"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-313"><a href="https://blogs.technet.microsoft.com/mmpc/">Malware Protection Center</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-323"><a href="https://blogs.technet.microsoft.com/microsoftintune/">Microsoft Intune</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-333"><a href="https://blogs.technet.microsoft.com/sus/">Server Update Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-343"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Virtualization, VDI &amp; Remote Desktop</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-353"><a href="https://blogs.technet.microsoft.com/virtualization/">Virtualization Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-363"><a href="http://blogs.msdn.microsoft.com/virtual_pc_guy/">Ben Armstrong&#8217;s Virtualization</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-364"><a href="https://blogs.technet.microsoft.com/josebda/tag/hyper-v/">Jose Barreto on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-374"><a href="http://blogs.msdn.microsoft.com/rds/">Remote Desktop Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-394"><a href="https://blogs.technet.microsoft.com/askcore/tag/hyper-v/">Ask the Core Team on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">File &amp; Storage &amp; High Availability</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-404"><a href="https://blogs.technet.microsoft.com/filecab/">File &amp; Storage</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="https://blogs.technet.microsoft.com/josebda/">Jose Barreto</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-414"><a href="https://blogs.technet.microsoft.com/askcore/tag/failover-cluster/">Ask the Core Team on Failover Cluster</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="http://blogs.msdn.microsoft.com/clustering/">Clustering &amp; High Availability</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Windows Server Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-433"><a href="http://blogs.msdn.microsoft.com/powershell/">PowerShell</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-443"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/">Hey Scripting Guy (PowerShell)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="https://blogs.technet.microsoft.com/networking/">Networking</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-103"><a href="#">Identity, Access &amp; Security</a>
+<ul class="sub-menu">
+	<li id="menu-item-666" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666"><a href="https://blogs.technet.microsoft.com/datacentersecurity/">Datacenter and Private Cloud Security</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.technet.microsoft.com/askds/">Ask Directory Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="https://blogs.technet.microsoft.com/ad/">Active Directory</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-493"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+			<aside id="text-10" class="widget widget_text">			<div class="textwidget"><aside id="wds-private-cloud-menu-4" class="widget wds-private-cloud-menu"><div id="building-clouds-nav">
+  <div class="bc-row">
+    <div class="bc-rotated-1">
+      <a href="http://aka.ms/BuildingCloudsForum" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsFeaturedPosts?json">BC Forum</a>
+    </div>
+    <div class="bc-container">
+      <div class="bc-container-title">View by Track</div>
+      <div class="bc-container-column">
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/application-management-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsAppMgmnt?json">Application Management</a>
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsAutomation?json">Automation</a>
+	<a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-solutions-track/" class="js-switch-feed" data-feed-url="#">Cloud Solutions</a>
+      </div>
+      <div class="bc-container-column">
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/deployment-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsdeploy?json">Deployment</a>
+	<a href="https://blogs.technet.microsoft.com/privatecloud/tag/dr-and-planning-track/" class="js-switch-feed" data-feed-url="#">Disaster Recovery</a>
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/fabric-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsFabric?json">Fabric</a>
+      </div>
+      <div class="bc-container-column">
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/it-service-management-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsITSrvcMgmnt?json">IT Service Management</a>
+	<a href="https://blogs.technet.microsoft.com/privatecloud/tag/architecture-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsPlanDesign?json">Planning and Design</a>
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/security-track/" class="js-switch-feed" data-feed-url="#">Security</a>
+      </div>
+      <div class="bc-container-column last">
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service-track/" class="js-switch-feed" data-feed-url="#">Self Service</a>
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/udm-track/" class="js-switch-feed" data-feed-url="#">Unified Device Management</a> 
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vm-migration-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsVMMigration?json">VM Migration</a>
+      </div>
+    </div>
+    <div class="bc-container-2">
+      <a href="https://blogs.technet.microsoft.com/privatecloud/" class="bc-logo js-switch-feed js-initial-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsAllPosts?json">
+        <img src="http://blogs.technet.com/cfs-filesystemfile.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-85-24/6708.building_2D00_clouds_2D00_logo.png" alt="Building Clouds">
+        <span>All Posts</span>
+      </a>
+    </div>
+    <div class="bc-rotated-2">
+      <a href="https://blogs.technet.microsoft.com/privatecloud/tag/just-for-fun-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsJust4Fun?json">Just for Fun</a>
+    </div>
+  </div>
+  <div class="bc-row">
+    <div class="bc-half">
+      <a href="http://aka.ms/WSSCCATKnowledge" class="js-switch-feed">ECG CAT Knowledge</a>
+    </div>
+    <div class="bc-half">
+      <a href="http://gallery.technet.microsoft.com/site/search?f%5B0%5D.Type=SearchText&amp;f%5B0%5D.Value=%22Building%20Clouds%22&amp;sortBy=Downloads" target="_blank">Free Solution Example Downloads</a>
+    </div>
+  </div>
+</div></aside></div>
+		</aside>		</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.technet.microsoft.com/privatecloud">Building Clouds</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description">...building hybrid clouds that can support any device from anywhere </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+									</div>
+
+			</div>
+
+			<aside id="text-10" class="widget widget_text">			<div class="textwidget"><aside id="wds-private-cloud-menu-4" class="widget wds-private-cloud-menu"><div id="building-clouds-nav">
+  <div class="bc-row">
+    <div class="bc-rotated-1">
+      <a href="http://aka.ms/BuildingCloudsForum" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsFeaturedPosts?json">BC Forum</a>
+    </div>
+    <div class="bc-container">
+      <div class="bc-container-title">View by Track</div>
+      <div class="bc-container-column">
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/application-management-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsAppMgmnt?json">Application Management</a>
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsAutomation?json">Automation</a>
+	<a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-solutions-track/" class="js-switch-feed" data-feed-url="#">Cloud Solutions</a>
+      </div>
+      <div class="bc-container-column">
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/deployment-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsdeploy?json">Deployment</a>
+	<a href="https://blogs.technet.microsoft.com/privatecloud/tag/dr-and-planning-track/" class="js-switch-feed" data-feed-url="#">Disaster Recovery</a>
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/fabric-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsFabric?json">Fabric</a>
+      </div>
+      <div class="bc-container-column">
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/it-service-management-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsITSrvcMgmnt?json">IT Service Management</a>
+	<a href="https://blogs.technet.microsoft.com/privatecloud/tag/architecture-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsPlanDesign?json">Planning and Design</a>
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/security-track/" class="js-switch-feed" data-feed-url="#">Security</a>
+      </div>
+      <div class="bc-container-column last">
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service-track/" class="js-switch-feed" data-feed-url="#">Self Service</a>
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/udm-track/" class="js-switch-feed" data-feed-url="#">Unified Device Management</a> 
+        <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vm-migration-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsVMMigration?json">VM Migration</a>
+      </div>
+    </div>
+    <div class="bc-container-2">
+      <a href="https://blogs.technet.microsoft.com/privatecloud/" class="bc-logo js-switch-feed js-initial-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsAllPosts?json">
+        <img src="http://blogs.technet.com/cfs-filesystemfile.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-85-24/6708.building_2D00_clouds_2D00_logo.png" alt="Building Clouds">
+        <span>All Posts</span>
+      </a>
+    </div>
+    <div class="bc-rotated-2">
+      <a href="https://blogs.technet.microsoft.com/privatecloud/tag/just-for-fun-track/" class="js-switch-feed" data-feed-url="http://sxp.microsoft.com/feeds/3.0/servermanagement/BuildingCloudsJust4Fun?json">Just for Fun</a>
+    </div>
+  </div>
+  <div class="bc-row">
+    <div class="bc-half">
+      <a href="http://aka.ms/WSSCCATKnowledge" class="js-switch-feed">ECG CAT Knowledge</a>
+    </div>
+    <div class="bc-half">
+      <a href="http://gallery.technet.microsoft.com/site/search?f%5B0%5D.Type=SearchText&amp;f%5B0%5D.Value=%22Building%20Clouds%22&amp;sortBy=Downloads" target="_blank">Free Solution Example Downloads</a>
+    </div>
+  </div>
+</div></aside></div>
+		</aside>
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="Building Clouds &raquo; Feed" href="https://blogs.technet.microsoft.com/privatecloud/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Building Clouds &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/privatecloud/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Building Clouds &raquo; System Center Virtual Machine Manager Tag Feed" href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/feed/" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/privatecloud/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/privatecloud/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			/* Building Clouds new navigation */
+#site-navigation + aside {
+  display: none;
+}
+#building-clouds-nav {
+  clear: both;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#building-clouds-nav a {
+  font-size: 13px;
+  text-decoration: none;
+}
+.bc-row {
+  clear: both;
+  margin-bottom: 1px;
+  overflow: hidden;
+}
+.bc-rotated {
+  background-color: #00368a;
+  float: left;
+  height: 130px;
+  position: relative;
+  width: 36px;
+}
+.bc-rotated:hover {
+  background-color: #01265f;
+}
+.bc-rotated:first-child {
+  margin-right: 1px;
+}
+.bc-rotated a {
+  display: block;
+  color: #fff !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 36px;
+  margin-top: 130px;
+  text-align: center;
+  width: 130px;
+  height: 36px;
+  -webkit-transform: rotate(-90deg);
+  -webkit-transform-origin: top left;
+  -moz-transform: rotate(-90deg);
+  -moz-transform-origin: top left;
+  -ms-transform: rotate(-90deg);
+  -ms-transform-origin: top left;
+  -o-transform: rotate(-90deg);
+  -o-transform-origin: top left;
+  transform: rotate(-90deg);
+  transform-origin: top left;
+}
+.bc-rotated-1 a:hover,
+.bc-rotated-2 a:hover {
+  color: #fff;
+}
+.bc-container {
+  background-color: #00368a;
+  color: #fff;
+  float: none;
+  height: 130px;
+  margin-right: 1px;
+  width: 100%;
+}
+.bc-container:hover {
+  background-color: #01265f;
+}
+.bc-container-title {
+  font-size: 18px;
+  text-align: center;
+  padding: 5px 0;
+}
+.bc-container-column {
+  float: left;
+  padding-top: 5px;
+  width: 25%;
+}
+.bc-container-column.last {
+  width: 25%;
+}
+.bc-container-column a {
+  background-color: #006bc2;
+  color: #fff !important;
+  display: block;
+  margin: 0 1px 1px 0;
+  padding: 5px 10px;
+  text-align: center;
+}
+.bc-container-column a.tall {
+  padding-top: 10px;
+  padding-bottom: 11px;
+}
+.bc-container-column:first-child a {
+  margin-left: 1px;
+}
+.bc-container-column a:hover {
+  background-color: #00368a;
+}
+a.bc-logo {
+  color: #fff !important;
+  display: block;
+  text-align: center;
+  width: 136px;
+}
+.bc-logo img {
+  display: block;
+  height: 80px;
+  margin: 10px auto;
+  width: 80px;
+}
+.bc-logo span {
+  display: block;
+  font-size: 18px;
+}
+.bc-half {
+  display: block;
+  float: left;
+  width: 50%;
+}
+.bc-half a {
+  background-color: #00368a;
+  color: #fff !important;
+  display: block;
+  padding: 10px;
+  text-align: center;
+}
+.bc-half:first-child a {
+  margin-right: 1px;
+}
+.bc-half a:hover {
+  background-color: #01265f;
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/privatecloud/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+
+<section id="content" class="site-content">
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		
+			<header class="page-header">
+				<h1 class="page-title">
+					Tag: System Center Virtual Machine Manager				</h1>
+			</header><!-- .page-header -->
+
+										
+<div class="post-wrap">
+	<article id="post-113" class="post-113 post type-post status-publish format-standard hentry category-uncategorized tag-application-management-track tag-building-clouds tag-building-clouds-blog tag-cloud tag-cloud-computing tag-hyper-v tag-hyper-v-cloud tag-iaas tag-infrastructure-as-a-service tag-private-cloud-architecture tag-scvmm tag-scvmm-2012 tag-self-service tag-self-service-track tag-sql-server tag-system-center tag-system-center-2012-r2 tag-system-center-virtual-machine-manager tag-technet-gallery-contribution tag-virtual-machine-manager tag-vmm tag-windows-azure-pack tag-windows-server-2012-r2 tag-wssc-cat-knowledge">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2015/05/13/updated-white-paper-enabling-database-as-a-service-enabling-database-as-a-service-with-the-microsoft-private-cloud-stack/" rel="bookmark">Updated White Paper &#8211; Enabling Database as a Service Enabling Database as a Service with the Microsoft Private Cloud Stack</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-113" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="113">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2015-05-13T05:35:32+00:00">May 13, 2015</time><time class="updated" datetime="2015-11-02T07:46:46+00:00">November 2, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="dbc201f68ec94710a1f1832d3d8e2f6f" href="https://social.technet.microsoft.com/profile/Bruno+Saille+%5BMSFT%5D">Bruno Saille [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2015/05/13/updated-white-paper-enabling-database-as-a-service-enabling-database-as-a-service-with-the-microsoft-private-cloud-stack/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Hello Readers, Just a quick note to let you know that the document from this blog post has just been updated. It now includes updates related to the latest changes and enhancements in Update Rollups (UR) 3, 5 and 6 for Windows Azure Pack. There are also a few additional FAQ entries in the second&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2015/05/13/updated-white-paper-enabling-database-as-a-service-enabling-database-as-a-service-with-the-microsoft-private-cloud-stack/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/application-management-track/">Application Management Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/">Building Clouds</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds-blog/">building clouds blog</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud/">Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/">Cloud Computing</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v/">Hyper-V</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v-cloud/">Hyper-V cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/iaas/">IaaS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/">Infrastructure as a Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud-architecture/">Private Cloud Architecture</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/scvmm/">SCVMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/scvmm-2012/">SCVMM 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service/">Self-Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service-track/">Self-Service Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/sql-server/">SQL Server</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center/">System Center</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/technet-gallery-contribution/">TechNet Gallery Contribution</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/">Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmm/">VMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wssc-cat-knowledge/">WSSC CAT Knowledge</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-253" class="post-253 post type-post status-publish format-standard hentry category-uncategorized tag-application-management tag-architecture tag-automation tag-azure tag-azure-infrastructure-services tag-azure-virtual-machines tag-building-clouds tag-cloud tag-cloud-computing tag-cloud-infrastructure tag-dsc tag-hybrid-cloud tag-hybrid-it tag-hyper-v tag-hyper-v-cloud tag-iaas tag-infrastructure tag-infrastructure-as-a-service tag-microsoft-azure tag-modern-datacenter tag-orchestrator tag-planning-and-design tag-powershell tag-powershell-v3 tag-private-cloud tag-private-cloud-architecture tag-scvmm tag-scvmm-2012 tag-self-service tag-service-templates tag-system-center tag-system-center-2012-r2 tag-system-center-operations-manager tag-system-center-orchestrator tag-system-center-virtual-machine-manager tag-technet-gallery-contribution tag-virtual-machine-manager tag-virtualization tag-vmm tag-vmrole tag-wap tag-windows tag-windows-azure tag-windows-azure-pack tag-windows-server tag-windows-server-2012-r2 tag-wssc-cat-knowledge">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2015/02/17/white-paper-modern-application-modeling-and-configuration-for-infrastructure-clouds/" rel="bookmark">White paper: Modern Application Modeling and Configuration for Infrastructure Clouds</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-253" class="wds-ratings" data-rating="0" data-userrating="0" data-postid="253">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2015-02-17T05:11:00+00:00">February 17, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="dbc201f68ec94710a1f1832d3d8e2f6f" href="https://social.technet.microsoft.com/profile/Bruno+Saille+%5BMSFT%5D">Bruno Saille [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2015/02/17/white-paper-modern-application-modeling-and-configuration-for-infrastructure-clouds/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>&nbsp; Hello readers! This blog post introduces the &ldquo;Modern Application Modeling and Configuration for Infrastructure Clouds&rdquo; white paper from the Enterprise Cloud Group (ECG) CAT team, that you can download at the link below. We hope you will find this resource useful! Audience This document is for IT professionals or application owners interested in understanding&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2015/02/17/white-paper-modern-application-modeling-and-configuration-for-infrastructure-clouds/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/application-management/">application management</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/architecture/">Architecture</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation/">Automation</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/azure/">Azure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/azure-infrastructure-services/">Azure Infrastructure Services</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/azure-virtual-machines/">Azure Virtual Machines</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/">Building Clouds</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud/">Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/">Cloud Computing</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-infrastructure/">Cloud Infrastructure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/dsc/">DSC</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hybrid-cloud/">Hybrid Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hybrid-it/">hybrid IT</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v/">Hyper-V</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v-cloud/">Hyper-V cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/iaas/">IaaS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure/">Infrastructure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/">Infrastructure as a Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/microsoft-azure/">Microsoft Azure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/modern-datacenter/">Modern Datacenter</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/orchestrator/">Orchestrator</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/planning-and-design/">Planning and Design</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell/">Powershell</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell-v3/">PowerShell v3</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud/">Private Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud-architecture/">Private Cloud Architecture</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/scvmm/">SCVMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/scvmm-2012/">SCVMM 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service/">Self-Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/service-templates/">Service Templates</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center/">System Center</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-operations-manager/">System Center Operations Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-orchestrator/">System Center Orchestrator</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/technet-gallery-contribution/">TechNet Gallery Contribution</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/">Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtualization/">Virtualization</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmm/">VMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmrole/">vmrole</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wap/">WAP</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows/">Windows</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure/">Windows Azure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server/">Windows Server</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wssc-cat-knowledge/">WSSC CAT Knowledge</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-273" class="post-273 post type-post status-publish format-standard hentry category-uncategorized tag-architecture tag-architecture-track tag-cloud-platform-system tag-cloud-solutions-track tag-cps tag-private-cloud tag-private-cloud-architecture tag-system-center-2012-r2 tag-system-center-data-protection-manager tag-system-center-operations-manager tag-system-center-service-management-automation tag-system-center-service-provider-foundation tag-system-center-virtual-machine-manager tag-windows-azure-pack tag-windows-server-2012-r2">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2015/02/09/cps-management-cluster-and-its-performance/" rel="bookmark">CPS Management Cluster and Its Performance</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-273" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="273">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2015-02-09T13:26:14+00:00">February 9, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="4483f7f1219448ff98115fb9bab5c32b" href="https://social.technet.microsoft.com/profile/Cheng+Wei">Cheng Wei</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2015/02/09/cps-management-cluster-and-its-performance/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>By now, I hope that you&rsquo;ve had some opportunities to read and understand what Cloud Platform System (CPS) is, how the fabric monitoring capability works in CPS, how we take advantage of CPS inside of Microsoft, and how we&#39;re building and testing Microsoft workloads in this platform. In today&rsquo;s post, we&rsquo;d like to take you&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2015/02/09/cps-management-cluster-and-its-performance/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/architecture/">Architecture</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/architecture-track/">Architecture Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-platform-system/">Cloud Platform System</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-solutions-track/">Cloud Solutions Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cps/">CPS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud/">Private Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud-architecture/">Private Cloud Architecture</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-data-protection-manager/">System Center Data Protection Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-operations-manager/">System Center Operations Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-service-management-automation/">System Center Service Management Automation</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-service-provider-foundation/">System Center Service Provider Foundation</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-573" class="post-573 post type-post status-publish format-standard hentry category-uncategorized tag-application-management tag-application-management-track tag-architecture tag-architecture-track tag-automation tag-automation-track tag-building-clouds tag-building-clouds-blog tag-charles-joy tag-cloud tag-cloud-computing tag-cloud-infrastructure tag-dsc tag-fabric tag-fabric-track tag-infrastructure tag-infrastructure-as-a-service tag-modern-datacenter tag-powershell tag-powershell-script tag-powershell-v3 tag-powershell-workflow tag-private-cloud tag-private-cloud-architecture tag-runbook tag-self-service tag-self-service-track tag-service-management-automation tag-sma tag-sma-runbook tag-system-center tag-system-center-2012-r2 tag-system-center-virtual-machine-manager tag-teched tag-virtual-machine-manager tag-virtualization tag-vmm tag-vmrole tag-wap tag-windows-azure-pack tag-windows-server tag-windows-server-2012-r2 tag-wssc-cat-knowledge">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2014/11/03/thank-you-teched-europe-2014/" rel="bookmark">Thank You TechEd Europe 2014!</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-573" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="573">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-11-03T09:40:00+00:00">November 3, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="47a5c99a4e3d4229ab9f6ed1de5115c1" href="https://social.technet.microsoft.com/profile/Charles+Joy+%5BMSFT%5D">Charles Joy [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2014/11/03/thank-you-teched-europe-2014/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Hello Readers and Viewers! Quite a few Enterprise Cloud Group CAT Team Members / Building Clouds Bloggers were speakers at TechEd Europe this year! On behalf of the team, I would like to express our appreciation to the many thousands of attendees that showed up ready to learn and experience everything TechEd had to offer&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2014/11/03/thank-you-teched-europe-2014/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/application-management/">application management</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/application-management-track/">Application Management Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/architecture/">Architecture</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/architecture-track/">Architecture Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation/">Automation</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation-track/">Automation Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/">Building Clouds</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds-blog/">building clouds blog</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/charles-joy/">Charles Joy</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud/">Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/">Cloud Computing</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-infrastructure/">Cloud Infrastructure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/dsc/">DSC</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/fabric/">Fabric</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/fabric-track/">Fabric Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure/">Infrastructure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/">Infrastructure as a Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/modern-datacenter/">Modern Datacenter</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell/">Powershell</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell-script/">powershell script</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell-v3/">PowerShell v3</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell-workflow/">PowerShell Workflow</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud/">Private Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud-architecture/">Private Cloud Architecture</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/runbook/">Runbook</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service/">Self-Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service-track/">Self-Service Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/service-management-automation/">Service Management Automation</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/sma/">SMA</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/sma-runbook/">SMA Runbook</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center/">System Center</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/teched/">TechEd</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/">Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtualization/">Virtualization</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmm/">VMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmrole/">vmrole</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wap/">WAP</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server/">Windows Server</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wssc-cat-knowledge/">WSSC CAT Knowledge</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-693" class="post-693 post type-post status-publish format-standard hentry category-uncategorized tag-automation tag-automation-track tag-building-clouds tag-charles-joy tag-cloud-computing tag-gallery-item tag-hyper-v tag-iaas tag-infrastructure-as-a-service tag-powershell tag-powershell-script tag-private-cloud tag-system-center tag-system-center-2012 tag-system-center-2012-r2 tag-system-center-virtual-machine-manager tag-system-center-virtual-machine-manager-2012-r2 tag-virtual-machine-manager tag-vmrole tag-windows tag-windows-azure tag-windows-azure-pack tag-windows-azure-powershell tag-windows-server tag-windows-server-2012 tag-windows-server-2012-r2 tag-wssc-cat-knowledge">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2014/10/02/automationwindows-azure-pack-service-management-automationautomated-tenant-deprovisioning/" rel="bookmark">Automation&ndash;Windows Azure Pack &amp; Service Management Automation&ndash;Automated Tenant Deprovisioning</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-693" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="693">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-10-02T11:00:00+00:00">October 2, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="47a5c99a4e3d4229ab9f6ed1de5115c1" href="https://social.technet.microsoft.com/profile/Charles+Joy+%5BMSFT%5D">Charles Joy [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2014/10/02/automationwindows-azure-pack-service-management-automationautomated-tenant-deprovisioning/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Hello Readers! Today&rsquo;s topic is one that has been coming up more and more as the usage of Windows Azure Pack (WAP) increases. Problem Statement / Question / Answer Problem&nbsp;&nbsp;&nbsp;&nbsp; &ldquo;When I delete the Subscription for a WAP User (or the actual User), their Subscription Resources remain in VMM!&rdquo; Question&nbsp;&nbsp;&nbsp;&nbsp; &ldquo;How do I automatically remove&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2014/10/02/automationwindows-azure-pack-service-management-automationautomated-tenant-deprovisioning/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation/">Automation</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation-track/">Automation Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/">Building Clouds</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/charles-joy/">Charles Joy</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/">Cloud Computing</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/gallery-item/">Gallery Item</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v/">Hyper-V</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/iaas/">IaaS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/">Infrastructure as a Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell/">Powershell</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell-script/">powershell script</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud/">Private Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center/">System Center</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012/">System Center 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager-2012-r2/">System Center Virtual Machine Manager 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/">Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmrole/">vmrole</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows/">Windows</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure/">Windows Azure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-powershell/">Windows Azure PowerShell</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server/">Windows Server</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012/">Windows Server 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wssc-cat-knowledge/">WSSC CAT Knowledge</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-733" class="post-733 post type-post status-publish format-standard hentry category-uncategorized tag-building-clouds tag-building-clouds-blog tag-charles-joy tag-cloud tag-cloud-computing tag-iaas tag-infrastructure-as-a-service tag-scvmm tag-scvmm-2012 tag-self-service tag-self-service-track tag-system-center tag-system-center-2012 tag-system-center-2012-r2 tag-system-center-virtual-machine-manager tag-system-center-virtual-machine-manager-2012-r2 tag-virtual-machine tag-virtual-machine-manager tag-virtualization tag-vmm tag-wap tag-windows-azure-pack tag-windows-server-2012-r2">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2014/09/22/windows-azure-pack-vm-deployment-tip-vmm-vm-template-default-network-configuration-potential-issues-workaround-enclosed/" rel="bookmark">Windows Azure Pack VM Deployment Tip: VMM VM Template + Default Network Configuration = Potential Issues; Workaround Enclosed</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-733" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="733">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-09-22T14:37:11+00:00">September 22, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="47a5c99a4e3d4229ab9f6ed1de5115c1" href="https://social.technet.microsoft.com/profile/Charles+Joy+%5BMSFT%5D">Charles Joy [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2014/09/22/windows-azure-pack-vm-deployment-tip-vmm-vm-template-default-network-configuration-potential-issues-workaround-enclosed/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Hello Readers! Today I am back with a Windows Azure Pack (WAP) Standalone VM Deployment Tip&hellip; Problem With the wider adoption of WAP, we have seen a &ldquo;known issue&rdquo; crop up for a particular use case when leveraging the following products: Windows Azure Pack (Tenant Portal) Virtual Machine Manager VM Templates Issue Failure when attempting&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2014/09/22/windows-azure-pack-vm-deployment-tip-vmm-vm-template-default-network-configuration-potential-issues-workaround-enclosed/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/">Building Clouds</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds-blog/">building clouds blog</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/charles-joy/">Charles Joy</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud/">Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/">Cloud Computing</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/iaas/">IaaS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/">Infrastructure as a Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/scvmm/">SCVMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/scvmm-2012/">SCVMM 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service/">Self-Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service-track/">Self-Service Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center/">System Center</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012/">System Center 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager-2012-r2/">System Center Virtual Machine Manager 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine/">virtual machine</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/">Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtualization/">Virtualization</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmm/">VMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wap/">WAP</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-953" class="post-953 post type-post status-publish format-standard hentry category-uncategorized tag-cloud-infrastructure tag-fabric-track tag-iaas tag-networking tag-system-center-virtual-machine-manager tag-wap tag-windows-azure-pack">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2014/06/15/public-ip-address-requirements-within-a-windows-azure-pack-environment/" rel="bookmark">Public IP Address Requirements within a Windows Azure Pack environment</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-953" class="wds-ratings" data-rating="0" data-userrating="0" data-postid="953">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-06-15T19:41:27+00:00">June 15, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="2253a5dd2e4b450d9b19fc7e6e6e73f2" href="https://social.technet.microsoft.com/profile/Kenon+Owens+-+VMW">Kenon Owens - VMW</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2014/06/15/public-ip-address-requirements-within-a-windows-azure-pack-environment/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Introduction Hello everyone, this is Kenon Owens from the Windows Server and System Center CAT Team in Asia Pacific. I created this post as I have been working with customers recently who asked this question, and since they have, I am guessing more of you have the same or similar question. Whether you are a&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2014/06/15/public-ip-address-requirements-within-a-windows-azure-pack-environment/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-infrastructure/">Cloud Infrastructure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/fabric-track/">Fabric Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/iaas/">IaaS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/networking/">Networking</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wap/">WAP</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-1153" class="post-1153 post type-post status-publish format-standard hentry category-uncategorized tag-application-management-track tag-building-clouds tag-building-clouds-blog tag-cloud tag-cloud-computing tag-hyper-v tag-hyper-v-cloud tag-iaas tag-infrastructure-as-a-service tag-private-cloud-architecture tag-scvmm tag-scvmm-2012 tag-self-service tag-self-service-track tag-sql-server tag-system-center tag-system-center-2012-r2 tag-system-center-virtual-machine-manager tag-technet-gallery-contribution tag-virtual-machine-manager tag-vmm tag-windows-azure-pack tag-windows-server-2012-r2 tag-wssc-cat-knowledge">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2014/05/06/enabling-database-as-a-service-with-the-microsoft-private-cloud-stack/" rel="bookmark">Enabling Database as a Service with the Microsoft Private Cloud Stack</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-1153" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="1153">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-05-06T11:15:00+00:00">May 6, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="dbc201f68ec94710a1f1832d3d8e2f6f" href="https://social.technet.microsoft.com/profile/Bruno+Saille+%5BMSFT%5D">Bruno Saille [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2014/05/06/enabling-database-as-a-service-with-the-microsoft-private-cloud-stack/#comments">9 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Hello Readers, During the course of the last few weeks and months, we&rsquo;ve been publishing many different articles related to automating database deployments, templates for database workloads in Windows Azure Pack (WAP), blog posts about how to leverage the WAP APIs to work with virtual machines and/or databases, and many others. All of these relate&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2014/05/06/enabling-database-as-a-service-with-the-microsoft-private-cloud-stack/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/application-management-track/">Application Management Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/">Building Clouds</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds-blog/">building clouds blog</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud/">Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/">Cloud Computing</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v/">Hyper-V</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v-cloud/">Hyper-V cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/iaas/">IaaS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/">Infrastructure as a Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud-architecture/">Private Cloud Architecture</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/scvmm/">SCVMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/scvmm-2012/">SCVMM 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service/">Self-Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/self-service-track/">Self-Service Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/sql-server/">SQL Server</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center/">System Center</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/technet-gallery-contribution/">TechNet Gallery Contribution</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/">Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmm/">VMM</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wssc-cat-knowledge/">WSSC CAT Knowledge</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-1413" class="post-1413 post type-post status-publish format-standard hentry category-uncategorized tag-automation tag-automation-track tag-azure tag-building-clouds tag-charles-joy tag-cloud-computing tag-gallery-item tag-hyper-v tag-iaas tag-infrastructure-as-a-service tag-powershell tag-powershell-script tag-private-cloud tag-system-center tag-system-center-2012 tag-system-center-2012-r2 tag-system-center-virtual-machine-manager tag-system-center-virtual-machine-manager-2012-r2 tag-virtual-machine-manager tag-vmrole tag-windows tag-windows-azure tag-windows-azure-pack tag-windows-azure-powershell tag-windows-server tag-windows-server-2012 tag-windows-server-2012-r2 tag-wssc-cat-knowledge">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2014/03/21/automationthe-new-world-of-tenant-provisioning-with-windows-azure-pack-part-4-automated-deployment-of-tenant-workloads-lync-sharepoint-and-exchange/" rel="bookmark">Automation&ndash;The New World of Tenant Provisioning with Windows Azure Pack (Part 4): Automated Deployment of Tenant Workloads (Lync, SharePoint, and Exchange)</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-1413" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="1413">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-03-21T13:03:46+00:00">March 21, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="47a5c99a4e3d4229ab9f6ed1de5115c1" href="https://social.technet.microsoft.com/profile/Charles+Joy+%5BMSFT%5D">Charles Joy [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2014/03/21/automationthe-new-world-of-tenant-provisioning-with-windows-azure-pack-part-4-automated-deployment-of-tenant-workloads-lync-sharepoint-and-exchange/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Yay! Part 4 has finally arrived&hellip; And by Part 4, I am obviously talking about the next big post in &ldquo;The New World of Tenant Provisioning with Windows Azure Pack&rdquo; blog series. What is this one all about? Automated Deployment of Tenant Workloads (Lync, SharePoint, and Exchange) What does that mean? Well, let&rsquo;s first take&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2014/03/21/automationthe-new-world-of-tenant-provisioning-with-windows-azure-pack-part-4-automated-deployment-of-tenant-workloads-lync-sharepoint-and-exchange/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation/">Automation</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation-track/">Automation Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/azure/">Azure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/">Building Clouds</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/charles-joy/">Charles Joy</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/">Cloud Computing</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/gallery-item/">Gallery Item</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v/">Hyper-V</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/iaas/">IaaS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/">Infrastructure as a Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell/">Powershell</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell-script/">powershell script</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud/">Private Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center/">System Center</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012/">System Center 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager-2012-r2/">System Center Virtual Machine Manager 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/">Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmrole/">vmrole</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows/">Windows</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure/">Windows Azure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-powershell/">Windows Azure PowerShell</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server/">Windows Server</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012/">Windows Server 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wssc-cat-knowledge/">WSSC CAT Knowledge</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-1483" class="post-1483 post type-post status-publish format-standard hentry category-uncategorized tag-automation tag-automation-track tag-azure tag-building-clouds tag-charles-joy tag-cloud-computing tag-gallery-item tag-hyper-v tag-iaas tag-infrastructure-as-a-service tag-powershell tag-powershell-script tag-private-cloud tag-system-center tag-system-center-2012 tag-system-center-2012-r2 tag-system-center-virtual-machine-manager tag-system-center-virtual-machine-manager-2012-r2 tag-virtual-machine-manager tag-vmrole tag-windows tag-windows-azure tag-windows-azure-pack tag-windows-azure-powershell tag-windows-server tag-windows-server-2012 tag-windows-server-2012-r2 tag-wssc-cat-knowledge">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.technet.microsoft.com/privatecloud/2014/03/12/automationthe-new-world-of-tenant-provisioning-with-windows-azure-pack-part-3-automated-deployment-of-the-identity-workload-as-a-tenant-admin/" rel="bookmark">Automation&ndash;The New World of Tenant Provisioning with Windows Azure Pack (Part 3): Automated Deployment of the Identity Workload as a Tenant Admin</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-1483" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="1483">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-03-12T13:00:00+00:00">March 12, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="47a5c99a4e3d4229ab9f6ed1de5115c1" href="https://social.technet.microsoft.com/profile/Charles+Joy+%5BMSFT%5D">Charles Joy [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/privatecloud/2014/03/12/automationthe-new-world-of-tenant-provisioning-with-windows-azure-pack-part-3-automated-deployment-of-the-identity-workload-as-a-tenant-admin/#comments">14 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Aaaaaand we’re back! Okay, I realize the title of this post is very similar to Part 2 of this blog series &#8211; and there is very good reason for that. Though they look similar, they are different. Different personas; different scripts; different context. Once again, I will call on a little image assistance, to clear&#8230; <a href="https://blogs.technet.microsoft.com/privatecloud/2014/03/12/automationthe-new-world-of-tenant-provisioning-with-windows-azure-pack-part-3-automated-deployment-of-the-identity-workload-as-a-tenant-admin/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation/">Automation</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/automation-track/">Automation Track</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/azure/">Azure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/">Building Clouds</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/charles-joy/">Charles Joy</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/">Cloud Computing</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/gallery-item/">Gallery Item</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v/">Hyper-V</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/iaas/">IaaS</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/">Infrastructure as a Service</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell/">Powershell</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/powershell-script/">powershell script</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud/">Private Cloud</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center/">System Center</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012/">System Center 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/">System Center 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/">System Center Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager-2012-r2/">System Center Virtual Machine Manager 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/">Virtual Machine Manager</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/vmrole/">vmrole</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows/">Windows</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure/">Windows Azure</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/">Windows Azure Pack</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-powershell/">Windows Azure PowerShell</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server/">Windows Server</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012/">Windows Server 2012</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/">Windows Server 2012 R2</a>, <a href="https://blogs.technet.microsoft.com/privatecloud/tag/wssc-cat-knowledge/">WSSC CAT Knowledge</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+			
+			<div class="row paging-wrap post-wrap">
+						<nav class="navigation paging-navigation" role="navigation">
+			<h2 class="screen-reader-text">Posts navigation</h2>
+			<div class="nav-links">
+				<span class='page-numbers current'>1</span>
+<a class='page-numbers' href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/page/2/'>2</a>
+<a class='page-numbers' href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/page/3/'>3</a>
+<span class="page-numbers dots">&hellip;</span>
+<a class='page-numbers' href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/page/7/'>7</a>
+<a class="next page-numbers" href="https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/page/2/">Next &raquo;</a>
+			</div><!-- .nav-links -->
+		</nav><!-- .navigation -->
+				</div>
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="text-8" class="widget widget_text">			<div class="textwidget"><ul class="sidebar-tiles">
+  <li class="first">
+    <a href="/privatecloud/feed/" class="sidebar-tile-subscribe">Subscribe</a>
+  </li>
+  <!--<li class="mid">
+    <a href="#" class="sidebar-tile-comments">Comments</a>  </li>
+  <li class="last">
+    <a href="#" class="sidebar-tile-contact">Contact</a>
+  </li>-->
+</ul></div>
+		</aside><aside id="msdn_bing_social_search-4" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=Building%2BClouds&rq=site%3Ahttp%3A%2F%2Fblogs.technet.com%2Fb%2Fprivatecloud" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="text-4" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Twitter Feed</h2>			<div class="textwidget"><div class="user-defined-markup">
+    <!-- SIDEBAR: TWITTER -->
+    <div class="sidebar-twitter">
+        <a class="twitter-timeline" data-chrome="noheader nofooter transparent" href="https://twitter.com/Building_Clouds/building-clouds-blog" data-widget-id="346711052047749120">Tweets from @Building_Clouds/building-clouds-blog</a>
+        <script>
+        ! function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                p = /^http:/.test(d.location) ? 'http' : 'https';
+            if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id;
+                js.src = p + "://platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        }(document, "script", "twitter-wjs");
+        </script>
+    </div>
+</div>
+</div>
+		</aside><aside id="text-6" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Top Server &amp; Tools Blogs</h2>			<div class="textwidget"><div class="widget-rss-link">
+	<a href="http://sxp.microsoft.com/feeds/3.0/ServerTools/ServerToolsTopPosts" target="_blank"><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png" /></a></div>
+
+<ul class="widget-link-list">
+    <li><a href="http://weblogs.asp.net/scottgu">ScottGu's Blog</a></li>
+    <li><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson&rsquo;s "In the Cloud" Blog</a></li>
+    <li><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry's Blog</a></li>
+    <li><a href="https://blogs.msdn.microsoft.com/stevengu/">Steve "Guggs" Guggenheimer's Blog</a></li>
+</ul></div>
+		</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.technet.microsoft.com/privatecloud/tag/application-management/' class='tag-link-883' title='62 topics' style='font-size: 12.939393939394pt;'>application management</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/application-management-track/' class='tag-link-543' title='76 topics' style='font-size: 14.712121212121pt;'>Application Management Track</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/architecture/' class='tag-link-643' title='49 topics' style='font-size: 10.969696969697pt;'>Architecture</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/automation/' class='tag-link-233' title='161 topics' style='font-size: 21.015151515152pt;'>Automation</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/automation-track/' class='tag-link-1323' title='128 topics' style='font-size: 19.045454545455pt;'>Automation Track</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds/' class='tag-link-443' title='181 topics' style='font-size: 22pt;'>Building Clouds</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/building-clouds-blog/' class='tag-link-473' title='53 topics' style='font-size: 11.560606060606pt;'>building clouds blog</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/charles-joy/' class='tag-link-1333' title='65 topics' style='font-size: 13.333333333333pt;'>Charles Joy</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/cloud/' class='tag-link-423' title='93 topics' style='font-size: 16.287878787879pt;'>Cloud</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/cloud-computing/' class='tag-link-163' title='78 topics' style='font-size: 14.909090909091pt;'>Cloud Computing</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/deployment/' class='tag-link-1013' title='52 topics' style='font-size: 11.363636363636pt;'>Deployment</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/hybrid-cloud/' class='tag-link-633' title='51 topics' style='font-size: 11.363636363636pt;'>Hybrid Cloud</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/hyper-v/' class='tag-link-193' title='66 topics' style='font-size: 13.530303030303pt;'>Hyper-V</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/iaas/' class='tag-link-223' title='68 topics' style='font-size: 13.727272727273pt;'>IaaS</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/infrastructure-as-a-service/' class='tag-link-173' title='76 topics' style='font-size: 14.712121212121pt;'>Infrastructure as a Service</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/modern-datacenter/' class='tag-link-833' title='40 topics' style='font-size: 9.1969696969697pt;'>Modern Datacenter</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/orchestrator/' class='tag-link-873' title='84 topics' style='font-size: 15.5pt;'>Orchestrator</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/powershell/' class='tag-link-673' title='155 topics' style='font-size: 20.621212121212pt;'>Powershell</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/powershell-script/' class='tag-link-1313' title='95 topics' style='font-size: 16.484848484848pt;'>powershell script</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/powershell-workflow/' class='tag-link-1283' title='46 topics' style='font-size: 10.378787878788pt;'>PowerShell Workflow</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud/' class='tag-link-183' title='169 topics' style='font-size: 21.409090909091pt;'>Private Cloud</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/private-cloud-architecture/' class='tag-link-463' title='44 topics' style='font-size: 9.9848484848485pt;'>Private Cloud Architecture</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/runbook/' class='tag-link-683' title='73 topics' style='font-size: 14.318181818182pt;'>Runbook</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/self-service-track/' class='tag-link-283' title='55 topics' style='font-size: 11.954545454545pt;'>Self-Service Track</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/service-management-automation/' class='tag-link-713' title='42 topics' style='font-size: 9.5909090909091pt;'>Service Management Automation</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/sma/' class='tag-link-733' title='45 topics' style='font-size: 10.181818181818pt;'>SMA</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/sma-runbook/' class='tag-link-723' title='42 topics' style='font-size: 9.5909090909091pt;'>SMA Runbook</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center/' class='tag-link-503' title='144 topics' style='font-size: 20.030303030303pt;'>System Center</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012/' class='tag-link-1463' title='101 topics' style='font-size: 17.075757575758pt;'>System Center 2012</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-r2/' class='tag-link-483' title='82 topics' style='font-size: 15.30303030303pt;'>System Center 2012 R2</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-sp1/' class='tag-link-1443' title='91 topics' style='font-size: 16.090909090909pt;'>System Center 2012 SP1</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-2012-sp1-orchestrator/' class='tag-link-2163' title='39 topics' style='font-size: 9pt;'>System Center 2012 SP1 - Orchestrator</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-orchestrator/' class='tag-link-843' title='74 topics' style='font-size: 14.515151515152pt;'>System Center Orchestrator</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager/' class='tag-link-553' title='64 topics' style='font-size: 13.136363636364pt;'>System Center Virtual Machine Manager</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/system-center-virtual-machine-manager-2012-service-pack-1/' class='tag-link-1613' title='39 topics' style='font-size: 9pt;'>System Center Virtual Machine Manager 2012 Service Pack 1</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/technet-gallery-contribution/' class='tag-link-413' title='62 topics' style='font-size: 12.939393939394pt;'>TechNet Gallery Contribution</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/tom-shinder/' class='tag-link-773' title='67 topics' style='font-size: 13.530303030303pt;'>Tom Shinder</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine/' class='tag-link-1513' title='40 topics' style='font-size: 9.1969696969697pt;'>virtual machine</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/virtual-machine-manager/' class='tag-link-453' title='85 topics' style='font-size: 15.5pt;'>Virtual Machine Manager</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/vmm/' class='tag-link-393' title='57 topics' style='font-size: 12.151515151515pt;'>VMM</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/windows-azure-pack/' class='tag-link-263' title='99 topics' style='font-size: 16.878787878788pt;'>Windows Azure Pack</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/windows-server/' class='tag-link-663' title='68 topics' style='font-size: 13.727272727273pt;'>Windows Server</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012/' class='tag-link-1483' title='70 topics' style='font-size: 13.924242424242pt;'>Windows Server 2012</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/windows-server-2012-r2/' class='tag-link-403' title='55 topics' style='font-size: 11.954545454545pt;'>Windows Server 2012 R2</a>
+<a href='https://blogs.technet.microsoft.com/privatecloud/tag/wssc-cat-knowledge/' class='tag-link-513' title='54 topics' style='font-size: 11.757575757576pt;'>WSSC CAT Knowledge</a></div>
+</aside><aside id="msdn-archive-widget-2" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2016/05/'>May 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2016/04/'>April 2016</a>&nbsp;(7)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2016/03/'>March 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2016/02/'>February 2016</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2016/01/'>January 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2016/'>All of 2016</a>&nbsp;(15)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2015/'>All of 2015</a>&nbsp;(46)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2014/'>All of 2014</a>&nbsp;(140)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2013/'>All of 2013</a>&nbsp;(289)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2012/'>All of 2012</a>&nbsp;(32)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2011/'>All of 2011</a>&nbsp;(19)</li>
+	<li><a href='https://blogs.technet.microsoft.com/privatecloud/2010/'>All of 2010</a>&nbsp;(7)</li>
+</aside>
+	</div><!-- #secondary -->
+
+</section><!-- section -->
+
+
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-5531" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5531"><a href="http://msdn.microsoft.com/cc300389">Terms of Use</a></li>
+<li id="menu-item-5541" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5541"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-5551" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5551"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/privatecloud/tag/system-center-virtual-machine-manager/' );
+			$.cookie( 'aadsso-redirect', '/privatecloud/tag/system-center-virtual-machine-manager/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/privatecloud\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/privatecloud/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/privatecloud/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":""};
+var msdnparent = {"is_search":"","is_singular":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/privatecloud/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/privatecloud/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

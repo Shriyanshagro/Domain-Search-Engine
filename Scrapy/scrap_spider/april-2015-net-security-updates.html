@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>April 2015 .NET Security Updates | .NET Blog</title>
+
+	<meta name="description" content="A first-hand look from the .NET engineering teams">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.msdn.microsoft.com/dotnet/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title=".NET Blog &raquo; Feed" href="https://blogs.msdn.microsoft.com/dotnet/feed/" />
+<link rel="alternate" type="application/rss+xml" title=".NET Blog &raquo; Comments Feed" href="https://blogs.msdn.microsoft.com/dotnet/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title=".NET Blog &raquo; April 2015 .NET Security Updates Comments Feed" href="https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="April 2015 .NET Security Updates" />
+<meta property="og:url" content="https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="April 2015 .NET Security Updates" />
+<meta name="twitter:url" content="https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/" />
+<meta name="twitter:description" content="" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.msdn.microsoft.com/dotnet/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.msdn.microsoft.com/dotnet/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/msdn-network-parent/js/social-counts.min.js?ver=4.1.5'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/dotnet/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/dotnet/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/' />
+<link rel='shortlink' href='https://blogs.msdn.microsoft.com/dotnet/?p=1983' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #442059;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 35px;
+	display: table-cell;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	border-right: 10px solid transparent; 
+	color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/cloud-platform/images/favicon-msdn.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="single single-post postid-1983 single-format-standard msdn-86433 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.msdn.microsoft.com/developer-tools">Developer Tools Blogs</a> > .NET Blog</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.msdn.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-developer-tools-blogs-main-menu-container"><ul id="menu-developer-tools-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Executive Bloggers</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="http://weblogs.asp.net/scottgu/">Scott Guthrie</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-133"><a href="http://blogs.msdn.microsoft.com/stevengu/">Steve Guggenheimer</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Visual Studio</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="http://blogs.msdn.microsoft.com/visualstudio">Visual Studio</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="http://blogs.msdn.microsoft.com/vscode/">Visual Studio Code</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-723"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-163"><a href="http://blogs.msdn.microsoft.com/lightswitch/">LightSwitch</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-383"><a href="http://blogs.msdn.microsoft.com/heaths/">Setup &amp; Install by Heath Stewart</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Application Lifecycle Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/insights/">Application Insights</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-393"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/release-management/">Release Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-server/">Team Foundation Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-412"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/testing/">Testing</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="http://www.visualstudio.com/news/release-archive-vso">Visual Studio Team Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/">All</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Languages</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-453"><a href="http://blogs.msdn.microsoft.com/vcblog/">Visual C++</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="http://blogs.msdn.microsoft.com/fsharpteam/">Visual F#</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.msdn.microsoft.com/visualstudio/tag/javascript/">JavaScript</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="http://blogs.msdn.microsoft.com/typescript/">TypeScript</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1075"><a href="https://blogs.msdn.microsoft.com/pythonengineering/">Python</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">.NET</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="http://blogs.msdn.microsoft.com/dotnet/">.NET</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1052"><a href="http://blogs.msdn.microsoft.com/bethmassi/tag/devcenter/">.NET with Beth Massi</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1071"><a href="http://blogs.msdn.com/b/pfxteam/">.NET Parallel Programming</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-503"><a href="http://blogs.msdn.com/b/adonet/">ADO.NET (Managed Providers, DataSet &amp; EF)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-513"><a href="http://www.hanselman.com/blog/CategoryView.aspx?category=ASP.NET">ASP.NET by Scott Hanselman</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-724"><a href="http://blogs.msdn.com/b/odatateam/">Odata Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-533"><a href="http://blogs.msdn.microsoft.com/wpf/">WPF</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Platform Development</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-273"><a href="http://blogs.windows.com/buildingapps/">Apps for Windows</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1032"><a href="http://blogs.msdn.com/b/bingdevcenter/">Bing</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1063"><a href="http://blogs.windows.com/msedgedev/">Edge</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-553"><a href="http://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-563"><a href="http://blogs.msdn.microsoft.com/vsto/">Office</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-573"><a href="http://blogs.office.com/dev?filter=true&#038;filter-product=sharepoint">Office 365 Development</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-583"><a href="http://blogs.msdn.microsoft.com/webdev/">Web</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+			<aside id="text-11" class="widget widget_text">			<div class="textwidget"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ 
+  ga('create', 'UA-62780441-3', 'auto');
+  ga('send', 'pageview');
+ 
+</script></div>
+		</aside>		</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.msdn.microsoft.com/dotnet">.NET Blog</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description">A first-hand look from the .NET engineering teams </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+					<a href=https://blogs.msdn.microsoft.com/dotnet/ title=".NET Blog" rel="home"><img src="https://msdnshared.blob.core.windows.net/media/2015/11/8814.VisualStudioClean.png" alt=".NET Blog" /></a>				</div>
+
+			</div>
+
+			<aside id="text-11" class="widget widget_text">			<div class="textwidget"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ 
+  ga('create', 'UA-62780441-3', 'auto');
+  ga('send', 'pageview');
+ 
+</script></div>
+		</aside>
+		</div>
+		<link rel="alternate" type="application/rss+xml" title=".NET Blog &raquo; Feed" href="https://blogs.msdn.microsoft.com/dotnet/feed/" />
+<link rel="alternate" type="application/rss+xml" title=".NET Blog &raquo; Comments Feed" href="https://blogs.msdn.microsoft.com/dotnet/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title=".NET Blog &raquo; April 2015 .NET Security Updates Comments Feed" href="https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="April 2015 .NET Security Updates" />
+<meta property="og:url" content="https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="April 2015 .NET Security Updates" />
+<meta name="twitter:url" content="https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/" />
+<meta name="twitter:description" content="" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/dotnet/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/dotnet/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/' />
+<link rel='shortlink' href='https://blogs.msdn.microsoft.com/dotnet/?p=1983' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #442059;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 35px;
+	display: table-cell;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	border-right: 10px solid transparent; 
+	color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/cloud-platform/images/favicon-msdn.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+				
+				<article id="post-1983" class="post-1983 post type-post status-publish format-standard hentry category-uncategorized tag-net-framework tag-releases tag-security-update tag-servicing tag-windows-update tag-wsus tag-wu">
+	<header class="entry-header">
+		<h1 class="entry-title">April 2015 .NET Security Updates</h1>
+		<div class="rating-wrap">
+		<div id="star-rating-1983" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="1983">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>	</header><!-- .entry-header -->
+
+	<div class="entry-meta row">
+		<div class="post-info">
+			<span class="posted-on"><time class="entry-date published" datetime="2015-04-14T11:00:00+00:00">April 14, 2015</time><time class="updated" datetime="2015-07-07T20:55:52+00:00">July 7, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="8b9b8206b7f24ab3a1e4a09c12265e26" href="https://social.msdn.microsoft.com/profile/The+.NET+Fundamentals+Team">The .NET Fundamentals Team</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/#comments">2 Comments</a>		</div>
+
+		<div class="row">
+			<div class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/", "text": "April 2015 .NET Security Updates"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/", "text": "April 2015 .NET Security Updates"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.msdn.microsoft.com/dotnet/2015/04/14/april-2015-net-security-updates/", "text": "April 2015 .NET Security Updates"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</div><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+	</div><!-- .entry-meta -->
+
+	
+	<div class="entry-content">
+		<p>The .NET team released a security bulletin today as part of the monthly &ldquo;patch Tuesday&rdquo; cycle.</p>
+<p><a href="https://technet.microsoft.com/en-us/library/security/ms15-041.aspx">Microsoft Security Bulletin MS15-041 &#8211; Important</a><strong>, </strong>Vulnerability in .NET Framework Could Allow Information Disclosure (<a href="http://support.microsoft.com/kb/3048010">3048010</a>)&nbsp;</p>
+<p>This update resolves a vulnerability in the Microsoft .NET Framework that could allow information disclosure if an attacker sends a specially crafted web request to an affected server that has custom error messages disabled. An attacker who successfully exploits the vulnerability would be able to view parts of a web configuration file that could expose sensitive information.</p>
+<p>This security update is rated Important for Microsoft .NET Framework 1.1 Service Pack 1, Microsoft .NET Framework 2.0 Service Pack 2, Microsoft .NET Framework 3.5, Microsoft .NET Framework 3.5.1, Microsoft .NET Framework 4, Microsoft .NET Framework 4.5, Microsoft .NET Framework 4.5.1, and Microsoft .NET Framework 4.5.2 on affected releases of Microsoft Windows.</p>
+<p>More details about the versions affected by this vulnerability can be found in the security bulletin <a href="https://technet.microsoft.com/en-us/library/security/ms15-041.aspx">MS15-041</a>.</p>
+<p><strong>How to obtain help and support for this security update</strong></p>
+<ul>
+<li>Help installing updates: <a href="http://support.microsoft.com/ph/6527">Support for Microsoft Update</a></li>
+<li>Security&nbsp;solutions for IT professionals: <a href="http://technet.microsoft.com/security/bb980617.aspx">TechNet Security Troubleshooting and Support</a></li>
+<li>Help&nbsp;protect your computer that is running Windows from viruses and malware: <a href="http://support.microsoft.com/contactus/cu_sc_virsec_master">Virus Solution and Security Center</a></li>
+<li>Local&nbsp;support according to your country: <a href="http://support.microsoft.com/common/international.aspx">International Support</a></li>
+</ul>
+<p>&nbsp;</p>
+				<div class="back-to-top-wrap"><a href="#top-link" class="back-to-top">Back to<br>top</a></div>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+				
+			
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="text-14" class="widget widget_text">			<div class="textwidget"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38776283-1', 'auto');
+  ga('send', 'pageview');
+
+</script></div>
+		</aside><aside id="text-5" class="widget widget_text">			<div class="textwidget"><div id="fb-root"></div>
+<!--FB JS-->
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=376831565741525";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div>
+<!--FB Like button-->
+<div id="fb-like" class="fb-like" data-href="https://www.facebook.com/dotnet" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+</div>
+<div>
+<!--Twitter Follow buttons-->
+<a href="https://twitter.com/dotnet" class="twitter-follow-button" data-show-count="false" data-lang="en">@dotnet</a>
+<a href="https://twitter.com/aspnet" class="twitter-follow-button" data-show-count="false" data-lang="en">@aspnet</a>
+
+<!--twitter JS-->
+<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+</div></div>
+		</aside><aside id="msdn-sharing-3" class="widget msdn-sharing"><h2 class="widget-title color-highlight-bg">Share This Post</h2><div class='social-share-icons-wrap'><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-facebook facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fdotnet%2F2015%2F04%2F14%2Fapril-2015-net-security-updates%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-twitter twitter" href="https://twitter.com/intent/tweet/?text=April+2015+.NET+Security+Updates&url=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fdotnet%2F2015%2F04%2F14%2Fapril-2015-net-security-updates%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-linkedin linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fdotnet%2F2015%2F04%2F14%2Fapril-2015-net-security-updates%2F&title=April+2015+.NET+Security+Updates&source=https://blogs.msdn.microsoft.com/dotnet">Share</a><a onclick="" class="social-sharing social-sharing-email email" href="mailto:?subject=April 2015 .NET Security Updates&body=April 2015 .NET Security Updates https%3A%2F%2Fblogs.msdn.microsoft.com%2Fdotnet%2F2015%2F04%2F14%2Fapril-2015-net-security-updates%2F">Share</a><a onclick="" class="social-sharing social-sharing-rss rss" href="https://blogs.msdn.microsoft.com/dotnet/feed/">Share</a></div></aside><aside id="msdn_bing_social_search-5" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=.NET%2BBlog&rq=site%3Ahttp%3A%2F%2Fblogs.msdn.com%2Fb%2Fdotnet" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.msdn.microsoft.com/dotnet/tag/net/' class='tag-link-861' title='45 topics' style='font-size: 19.936507936508pt;'>.NET</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/net-framework/' class='tag-link-103' title='65 topics' style='font-size: 21.587301587302pt;'>.net framework</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/net-update/' class='tag-link-163' title='5 topics' style='font-size: 10.857142857143pt;'>.NET Update</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/announcement/' class='tag-link-3' title='71 topics' style='font-size: 22pt;'>announcement</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/asp-net/' class='tag-link-183' title='17 topics' style='font-size: 15.809523809524pt;'>asp.net</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/async/' class='tag-link-503' title='11 topics' style='font-size: 13.952380952381pt;'>async</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/azure/' class='tag-link-383' title='4 topics' style='font-size: 10.031746031746pt;'>azure</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/bcl/' class='tag-link-33' title='32 topics' style='font-size: 18.492063492063pt;'>bcl</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/c/' class='tag-link-673' title='7 topics' style='font-size: 12.095238095238pt;'>c#</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/clr/' class='tag-link-273' title='21 topics' style='font-size: 16.634920634921pt;'>clr</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/codegen/' class='tag-link-463' title='7 topics' style='font-size: 12.095238095238pt;'>codegen</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/community/' class='tag-link-13' title='44 topics' style='font-size: 19.833333333333pt;'>community</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/compatibility/' class='tag-link-513' title='3 topics' style='font-size: 9pt;'>compatibility</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/compiler/' class='tag-link-373' title='6 topics' style='font-size: 11.579365079365pt;'>compiler</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/compression/' class='tag-link-523' title='3 topics' style='font-size: 9pt;'>compression</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/conferences/' class='tag-link-283' title='9 topics' style='font-size: 13.126984126984pt;'>conferences</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/diagnostics/' class='tag-link-453' title='9 topics' style='font-size: 13.126984126984pt;'>diagnostics</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/dotnetconf/' class='tag-link-293' title='3 topics' style='font-size: 9pt;'>dotnetConf</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/dotnetnative/' class='tag-link-203' title='18 topics' style='font-size: 16.015873015873pt;'>dotnetnative</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/f/' class='tag-link-712' title='11 topics' style='font-size: 13.952380952381pt;'>F#</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/fundamentals/' class='tag-link-323' title='21 topics' style='font-size: 16.634920634921pt;'>fundamentals</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/httpclient/' class='tag-link-483' title='4 topics' style='font-size: 10.031746031746pt;'>httpclient</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/immutable/' class='tag-link-493' title='4 topics' style='font-size: 10.031746031746pt;'>immutable</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/jit/' class='tag-link-333' title='7 topics' style='font-size: 12.095238095238pt;'>jit</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/lifecycle/' class='tag-link-63' title='3 topics' style='font-size: 9pt;'>Lifecycle</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/nuget/' class='tag-link-173' title='31 topics' style='font-size: 18.388888888889pt;'>nuget</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/on-net/' class='tag-link-1101' title='12 topics' style='font-size: 14.261904761905pt;'>On .NET</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/open-source/' class='tag-link-23' title='16 topics' style='font-size: 15.5pt;'>open source</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/performance/' class='tag-link-43' title='26 topics' style='font-size: 17.563492063492pt;'>performance</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/portable-class-libraries/' class='tag-link-303' title='25 topics' style='font-size: 17.357142857143pt;'>portable class libraries</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/releases/' class='tag-link-93' title='41 topics' style='font-size: 19.52380952381pt;'>releases</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/roslyn/' class='tag-link-653' title='4 topics' style='font-size: 10.031746031746pt;'>roslyn</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/ryujit/' class='tag-link-193' title='10 topics' style='font-size: 13.539682539683pt;'>ryujit</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/security-update/' class='tag-link-153' title='9 topics' style='font-size: 13.126984126984pt;'>Security Update</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/servicing/' class='tag-link-143' title='11 topics' style='font-size: 13.952380952381pt;'>Servicing</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/vb/' class='tag-link-663' title='4 topics' style='font-size: 10.031746031746pt;'>vb</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/visual-f/' class='tag-link-851' title='4 topics' style='font-size: 10.031746031746pt;'>Visual F#</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/visual-studio/' class='tag-link-53' title='14 topics' style='font-size: 14.984126984127pt;'>visual studio</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/week-in-net/' class='tag-link-1111' title='16 topics' style='font-size: 15.5pt;'>Week in .NET</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/windows-store/' class='tag-link-353' title='10 topics' style='font-size: 13.539682539683pt;'>windows store</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/windows-update/' class='tag-link-113' title='11 topics' style='font-size: 13.952380952381pt;'>Windows Update</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/wpf/' class='tag-link-73' title='4 topics' style='font-size: 10.031746031746pt;'>wpf</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/wsus/' class='tag-link-123' title='11 topics' style='font-size: 13.952380952381pt;'>WSUS</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/wu/' class='tag-link-133' title='11 topics' style='font-size: 13.952380952381pt;'>WU</a>
+<a href='https://blogs.msdn.microsoft.com/dotnet/tag/xamarin/' class='tag-link-363' title='6 topics' style='font-size: 11.579365079365pt;'>xamarin</a></div>
+</aside><aside id="msdn-archive-widget-3" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2016/05/'>May 2016</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2016/04/'>April 2016</a>&nbsp;(10)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2016/03/'>March 2016</a>&nbsp;(12)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2016/02/'>February 2016</a>&nbsp;(10)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2016/01/'>January 2016</a>&nbsp;(9)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2016/'>All of 2016</a>&nbsp;(44)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2015/'>All of 2015</a>&nbsp;(40)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2014/'>All of 2014</a>&nbsp;(56)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2013/'>All of 2013</a>&nbsp;(40)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2012/'>All of 2012</a>&nbsp;(27)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2011/'>All of 2011</a>&nbsp;(6)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2010/'>All of 2010</a>&nbsp;(12)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/dotnet/2009/'>All of 2009</a>&nbsp;(52)</li>
+</aside>
+	</div><!-- #secondary -->
+
+	<div id="tag-wrap"><h2 class="color-highlight-bg">Tags</h2><ul class="tag-list"><li><a href="https://blogs.msdn.microsoft.com/dotnet/tag/net-framework/">.net framework</a></li><li><a href="https://blogs.msdn.microsoft.com/dotnet/tag/releases/">releases</a></li><li><a href="https://blogs.msdn.microsoft.com/dotnet/tag/security-update/">Security Update</a></li><li><a href="https://blogs.msdn.microsoft.com/dotnet/tag/servicing/">Servicing</a></li><li><a href="https://blogs.msdn.microsoft.com/dotnet/tag/windows-update/">Windows Update</a></li><li><a href="https://blogs.msdn.microsoft.com/dotnet/tag/wsus/">WSUS</a></li><li><a href="https://blogs.msdn.microsoft.com/dotnet/tag/wu/">WU</a></li></ul></div>
+	
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+					<h3 class="comments-title color-highlight-bg">
+				Join the conversation			</h3>
+			<a href="#" class="add-comment-button button">Add Comment</a>
+			</div>
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow" id="cancel-comment-reply-link" href="/dotnet/2015/04/14/april-2015-net-security-updates/#respond" style="display:none;">Cancel</a></small></h3>
+									<form action="https://blogs.msdn.microsoft.com/dotnet/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>												<p class="form-submit">
+							<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='1983' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="043e615ceb" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="166"/></p>					</form>
+							</div><!-- #respond -->
+			
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-37273" class="comment even thread-even depth-1">
+			<article id="div-comment-37273" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-04-15T08:30:41+00:00">
+							1 year ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/dotnet/2015/04/14/april-2015-net-security-updates/?replytocom=37273#respond' onclick='return addComment.moveForm( "div-comment-37273", "37273", "respond", "1983" )' aria-label='Reply to wilmanwar'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">wilmanwar</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Almost two years ago I posted a question to asp.net forums about a strange case where making a syntax error on web.config file could disclose sensitive data like MachineKey if the syntax error was close enough to where the MachineKey was. &nbsp;Specially since the syntax error made to the web.config might invalidate the rest of the config file and any Debug setting would be ignored. &nbsp;</p>
+<p>I wonder if this Update takes care of that issue as well?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-37363" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-37363" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-04-23T07:37:09+00:00">
+							1 year ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/dotnet/2015/04/14/april-2015-net-security-updates/?replytocom=37363#respond' onclick='return addComment.moveForm( "div-comment-37363", "37363", "respond", "1983" )' aria-label='Reply to mike'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">mike</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@wilmanwar, perhaps you can report the issue here: <a rel="nofollow" target="_new" href="https://github.com/aspnet/Security" rel="nofollow">github.com/&#8230;/Security</a>.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+		
+</div><!-- #comments -->
+
+
+	
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-4901" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4901"><a href="http://msdn.microsoft.com/cc300389">Terms of Use</a></li>
+<li id="menu-item-4911" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4911"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-4921" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4921"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/dotnet/2015/04/14/april-2015-net-security-updates/' );
+			$.cookie( 'aadsso-redirect', '/dotnet/2015/04/14/april-2015-net-security-updates/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='86433' post-id='1983'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.msdn.microsoft.com/dotnet/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-content/plugins/akismet/_inc/form.js?ver=3.1.5'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/dotnet\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/dotnet\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/dotnet\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-includes/js/comment-reply.min.js?ver=4.1.5'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/msdn-network-parent/js/comments.min.js?ver=06182015'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":"1"};
+var msdnparent = {"is_search":"","is_singular":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/dotnet/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

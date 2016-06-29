@@ -1,0 +1,3521 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/QAPage">
+<head>
+
+<title>Why should we typedef a struct so often in C? - Stack Overflow</title>
+    <link rel="shortcut icon" href="//cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src" href="//cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com"/>
+    <meta property="og:type" content="website" />    
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="http://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded&a" />
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="Why should we typedef a struct so often in C?" />
+    <meta name="twitter:description" property="og:description" itemprop="description" content="I have seen many programs consisting of structures like the one below
+
+typedef struct 
+{
+    int i;
+    char k;
+} elem;
+
+elem user;
+
+
+Why is it needed so often? Any specific reason or applicable ar..." />
+    <meta property="og:url" content="http://stackoverflow.com/questions/252780/why-should-we-typedef-a-struct-so-often-in-c"/>
+    <link rel="canonical" href="http://stackoverflow.com/questions/252780/why-should-we-typedef-a-struct-so-often-in-c" />
+
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//cdn.sstatic.net/Js/stub.en.js?v=066c2b9eaa8d"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.sstatic.net/Sites/stackoverflow/all.css?v=8310409afe95">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;Why should we typedef a struct so often in C?&#39;" href="/feeds/question/252780">
+            <meta name="twitter:app:country" content="US" />
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:iphone" content="871299723" />
+            <meta name="twitter:app:url:iphone" content="se-zaphod://stackoverflow.com/questions/252780/why-should-we-typedef-a-struct-so-often-in-c" />
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:ipad" content="871299723" />
+            <meta name="twitter:app:url:ipad" content="se-zaphod://stackoverflow.com/questions/252780/why-should-we-typedef-a-struct-so-often-in-c" />
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://stackoverflow.com/questions/252780/why-should-we-typedef-a-struct-so-often-in-c">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                    
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.initSnippetRenderer();
+                    });
+                    
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:2,shownCommentCount:2,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:252780});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('1', '252780');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","serverTime":1462475819,"routeName":"Questions/Show","styleCode":true,"enableUserHovercards":true,"snippets":{"enabled":true,"domain":"stacksnippets.net"},"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"id":1,"enableSocialMediaInSharePopup":true},"user":{"fkey":"a13af72b54e2677d414be5d78af7b54f","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"031268be8045","js/moderator.en.js":"c7f3a2fe6f43","js/full-anon.en.js":"0f9832f38e37","js/full.en.js":"9563762bca5a","js/wmd.en.js":"1a790649860a","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"e6f0e5e9e0cc","js/help.en.js":"c8004cc0095d","js/tageditor.en.js":"9c6df10dabc4","js/tageditornew.en.js":"ff9e70607a7d","js/inline-tag-editing.en.js":"7889156f8595","js/revisions.en.js":"47de10a8358f","js/review.en.js":"4827ffb7aa63","js/tagsuggestions.en.js":"78eee7c19ab2","js/post-validation.en.js":"298524266c00","js/explore-qlist.en.js":"e71f14781288","js/events.en.js":"e757a4351836","js/keyboard-shortcuts.en.js":"dc2a2ffb67c3","js/external-editor.en.js":"692898ad9a5b","js/external-editor.en.js":"692898ad9a5b","js/snippet-javascript.en.js":"9bccc1afbb47","js/snippet-javascript-codemirror.en.js":"73567769f604"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+</head>
+<body class="question-page new-topbar">
+    <noscript><div id="noscript-padding"></div></noscript>
+    
+        <script>(function () { var old = $.fn.contents; $.fn.contents = function () { try { return old.apply(this, arguments); } catch (e) { return $([]); } } })()</script>
+        <iframe id="adzerk-user-match" width="0" height="0" frameborder="0" scrolling="no" onload="window.AUMIframeDone=true"
+                src="https://ssum-sec.casalemedia.com/usermatch?s=183712&amp;cb=https%3A%2F%2Fengine.adzerk.net%2Fudb%2F22%2Fsync%2Fi.gif%3FpartnerId%3D1%26userId%3D"
+                style="display: none;" marginheight="0" marginwidth="0"></iframe>
+
+
+
+
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="//stackoverflow.com">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+                    <a href="http://chat.stackoverflow.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:6 })"
+>chat</a>
+            </div>
+
+
+
+
+    <a href="//stackoverflow.com"
+       class="current-site-link site-link js-gps-track"
+       data-id="1"
+       data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.stackoverflow.com"
+       class="site-link js-gps-track"
+       data-id="552"
+       data-gps-track="
+            site.switch({ target_site:552, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link js-gps-track"
+                       href="//careers.stackoverflow.com?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=multicollider"
+                            data-gps-track="site_switcher.click({ item_type:9 })"
+>
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Stack Overflow Careers
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f252780%2fwhy-should-we-typedef-a-struct-so-often-in-c" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:10 })"
+>Sign up</a> or <a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f252780%2fwhy-should-we-typedef-a-struct-so-often-in-c" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:11 })"
+>log in</a> to customize your list.
+            </div>
+    </div>
+    <div class="header">
+        <h3><a href="//stackexchange.com/sites">more stack exchange communities</a></h3>
+        <a href="http://blog.stackoverflow.com" class="fr">company blog</a>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+
+            <a href="//stackexchange.com"
+               class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track"
+               data-gps-track="site_switcher.show"
+               title="A list of all 155 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+
+    <a href="#"
+       class="topbar-icon icon-inbox yes-hover js-inbox-button"
+       title="Recent inbox messages">
+        <span class="hidden-text">Inbox</span>
+        <span class="unread-count" style="display:none"></span>
+    </a>
+    <a href="#"
+       class="topbar-icon icon-achievements yes-hover js-achievements-button "
+       data-unread-class=""
+       title="Recent achievements: reputation, badges, and privileges earned">
+        <span class="hidden-text">Reputation and Badges</span>
+        <span class="unread-count" style="display:none">
+            
+        </span>
+    </a>
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                    <a href="https://stackoverflow.com/users/signup?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f252780%2fwhy-should-we-typedef-a-struct-so-often-in-c" class="login-link">sign up</a>
+                                <a href="https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f252780%2fwhy-should-we-typedef-a-struct-so-often-in-c" class="login-link">log in</a>
+
+                        <a href="/tour">tour</a>
+                            <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="//meta.stackoverflow.com" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="http://stackoverflow.com/company/about" class="js-gps-track" data-gps-track="help_popup.click({ item_type:6 })">
+                        About Us
+                        <span class="item-summary">
+                            Learn more about Stack Overflow the company
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://business.stackoverflow.com/?ref=topbar_help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:7 })">
+                        Business
+                        <span class="item-summary">
+                            Learn more about hiring developers or posting ads with us
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+                    </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="Search Q&amp;A" value="" tabindex="1" autocomplete="off" maxlength="240" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="/" >
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="/questions">Questions</a></li>
+                            <li><a id="nav-jobs" href="/jobs">Jobs</a></li>
+                        <li><a id="nav-tags" href="/tags">Tags</a></li>
+                        <li><a id="nav-users" href="/users">Users</a></li>
+                        <li><a id="nav-badges" href="/help/badges">Badges</a></li>
+                                            </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion"  href="/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content" class="snippet-hidden">
+            
+
+<div itemscope itemtype="http://schema.org/Question">
+    <link itemprop="image" href="//cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+
+<div id="herobox">
+    <div id="hero-content">
+            <div id="close"><a title="click to minimize">_</a></div>
+        <div id="blurb">
+            Stack Overflow is a community of 4.7 million programmers, just like you, helping each other.
+            <br/>
+                <br/>Join them; it only takes a minute:<br/>
+            <br/>
+            <a href="/users/signup?ssrc=hero&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f252780%2fwhy-should-we-typedef-a-struct-so-often-in-c" id="tell-me-more" class="button">Sign up</a>
+        </div>
+        <div id="desc">
+            <b>Join the Stack Overflow community to:</b>
+            <ol id="hiw">
+                <li id="q">Ask programming questions
+                </li>
+                <li id="an">Answer and help your peers
+                </li>
+                <li id="b">Get recognized for your expertise
+                </li>
+            </ol>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <script>
+        StackExchange.ready(function () {
+
+            var location = 0;
+            if ($("body").hasClass("questions-page")) {
+                location = 1;;
+            } else if ($("body").hasClass("question-page")) {
+                location = 1;;
+            } else if ($("body").hasClass("faq-page")) {
+                location = 5;;
+            } else if ($("body").hasClass("home-page")) {
+                location = 3;;
+            }
+
+            $('#tell-me-more').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+                });
+            });
+            $('#herobox #close').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: "minimize", location: location }, true);
+                });
+                $.cookie("hero", "mini", { path: "/", expires: 365 });
+                $.ajax({
+                    url: "/hero-mini",
+                    success: function (data) {
+                        $("#herobox").fadeOut("fast", function () {
+                            $("#herobox").replaceWith(data);
+                            $("#herobox-mini").fadeIn("fast");
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+
+    </script>
+</div>
+			<div id="question-header">
+                <h1 itemprop="name"><a href="/questions/252780/why-should-we-typedef-a-struct-so-often-in-c" class="question-hyperlink">Why should we typedef a struct so often in C?</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="252780"  id="question">
+
+    <script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk1753104613",4).setZone(43); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1753104613">
+            </div>    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="252780">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">192</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="#">favorite</a>
+        <div class="favoritecount"><b>119</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>I have seen many programs consisting of structures like the one below</p>
+
+<pre><code>typedef struct 
+{
+    int i;
+    char k;
+} elem;
+
+elem user;
+</code></pre>
+
+<p>Why is it needed so often? Any specific reason or applicable area?</p>
+    </div>
+    <div class="post-taglist">
+        <a href="/questions/tagged/c" class="post-tag" title="show questions tagged &#39;c&#39;" rel="tag">c</a> <a href="/questions/tagged/struct" class="post-tag" title="show questions tagged &#39;struct&#39;" rel="tag">struct</a> <a href="/questions/tagged/typedef" class="post-tag" title="show questions tagged &#39;typedef&#39;" rel="tag">typedef</a> 
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/q/252780" title="short permalink to this question" class="short-link" id="link-post-252780">share</a><span class="lsep">|</span><a href="/posts/252780/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/252780/revisions" title="show all edits to this post">edited <span title="2016-03-18 01:28:49Z" class="relativetime">Mar 18 at 1:28</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/3924118/nbro"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/xZD8t.png?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/3924118/nbro">nbro</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">3,272</span><span title="4 gold badges"><span class="badge1"></span><span class="badgecount">4</span></span><span title="11 silver badges"><span class="badge2"></span><span class="badgecount">11</span></span><span title="32 bronze badges"><span class="badge3"></span><span class="badgecount">32</span></span>
+        </div>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info user-hover">
+    <div class="user-action-time">
+        asked <span title="2008-10-31 07:14:03Z" class="relativetime">Oct 31 '08 at 7:14</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/31116/manoj-doubts"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/4efb98a1ab07449714ad6df4ee73ca7e?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/31116/manoj-doubts">Manoj Doubts</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">3,199</span><span title="12 gold badges"><span class="badge1"></span><span class="badgecount">12</span></span><span title="30 silver badges"><span class="badge2"></span><span class="badgecount">30</span></span><span title="40 bronze badges"><span class="badge3"></span><span class="badgecount">40</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-252780" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-6021727" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">9</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">More thorough and precise answer: <a href="http://stackoverflow.com/questions/612328/difference-between-struct-and-typedef-struct-in-c" title="difference between struct and typedef struct in c">stackoverflow.com/questions/612328/&hellip;</a></span>
+                    &ndash;&nbsp;<a href="/users/411582/abiusx"
+                       title="1,662 reputation"
+                       class="comment-user">AbiusX</a>
+                <span class="comment-date" dir="ltr"><span title="2011-03-17 02:14:55Z" class="relativetime-clean">Mar 17 '11 at 2:14</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-57993676" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">It has disadvantages I think you can&#39;t create a link list with anonymous struct because the line <code>struct * ptr</code> inside the struct will cause error</span>
+                    &ndash;&nbsp;<a href="/users/3960301/raghib-ahsan"
+                       title="108 reputation"
+                       class="comment-user">Raghib Ahsan</a>
+                <span class="comment-date" dir="ltr"><span title="2016-02-01 17:40:27Z" class="relativetime-clean">Feb 1 at 17:40</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-252780" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>        </table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								11 Answers
+                                <span style="display:none;" itemprop="answerCount">11</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="/questions/252780/why-should-we-typedef-a-struct-so-often-in-c?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active">
+            active</a>
+        <a href="/questions/252780/why-should-we-typedef-a-struct-so-often-in-c?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest">
+            oldest</a>
+        <a class="youarehere" href="/questions/252780/why-should-we-typedef-a-struct-so-often-in-c?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes">
+            votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="252810"></a>
+<div id="answer-252810" class="answer accepted-answer" data-answerid="252810"  itemscope itemtype="http://schema.org/Answer" itemprop="acceptedAnswer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="252810">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">258</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+        <span class="vote-accepted-on load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>As Greg Hewgill said, the typedef means you no longer have to write <code>struct</code> all over the place. That not only saves keystrokes, it also can make the code cleaner since it provides a smidgen more abstraction.</p>
+
+<p>Stuff like</p>
+
+<pre><code>typedef struct {
+  int x, y;
+} Point;
+
+Point point_new(int x, int y)
+{
+  Point a;
+  a.x = x;
+  a.y = y;
+  return a;
+}
+</code></pre>
+
+<p>becomes cleaner when you don't need to see the "struct" keyword all over the place, it looks more as if there really is a type called "Point" in your language. Which, after the <code>typedef</code>, is the case I guess.</p>
+
+<p>Also note that while your example (and mine) omitted naming the <code>struct</code>  itself, actually naming it is also useful for when you want to provide an opaque type. Then you'd have code like this in the header, for instance:</p>
+
+<pre><code>typedef struct Point Point;
+
+Point * point_new(int x, int y);
+</code></pre>
+
+<p>and then provide the <code>struct</code> declaration in the implementation file:</p>
+
+<pre><code>struct Point
+{
+  int x, y;
+};
+
+Point * point_new(int x, int y)
+{
+  Point *p;
+  if((p = malloc(sizeof *p)) != NULL)
+  {
+    p-&gt;x = x;
+    p-&gt;y = y;
+  }
+  return p;
+}
+</code></pre>
+
+<p>In this latter case, you cannot return the Point by value, since its declaration is hidden from users of the header file. This is a technique used widely in <a href="http://www.gtk.org/">GTK+</a>, for instance.</p>
+
+<p><strong>UPDATE</strong> Note that there are also highly-regarded C projects where this use of <code>typedef</code> to hide <code>struct</code> is considered a bad idea, the Linux kernel is probably the most well-known such project. See Chapter 5 of <a href="https://www.kernel.org/doc/Documentation/CodingStyle">The Linux Kernel CodingStyle document</a> for Linus' angry words. :) My point is that the "should" in the question is perhaps not set in stone, after all.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/252810" title="short permalink to this answer" class="short-link" id="link-post-252810">share</a><span class="lsep">|</span><a href="/posts/252810/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/252810/revisions" title="show all edits to this post">edited <span title="2015-10-02 07:26:26Z" class="relativetime">Oct 2 '15 at 7:26</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2008-10-31 07:37:05Z" class="relativetime">Oct 31 '08 at 7:37</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/28169/unwind"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/ec9385dc533f1a6a93769077f852503e?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/28169/unwind">unwind</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 241,255" dir="ltr">241k</span><span title="34 gold badges"><span class="badge1"></span><span class="badgecount">34</span></span><span title="319 silver badges"><span class="badge2"></span><span class="badgecount">319</span></span><span title="446 bronze badges"><span class="badge3"></span><span class="badgecount">446</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-252810" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="17"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-5072286" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="supernova">30</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">You shouldn&#39;t use identifiers with an underscore followed by an uppercase letter, they are reserved (see section 7.1.3 paragraph 1). Although unlikely to be much of a problem, it is technically undefined behaviour when you use them (7.1.3 paragraph 2).</span>
+                    &ndash;&nbsp;<a href="/users/10320/dreamlax"
+                       title="63,715 reputation"
+                       class="comment-user">dreamlax</a>
+                <span class="comment-date" dir="ltr"><span title="2011-01-06 10:40:44Z" class="relativetime-clean">Jan 6 '11 at 10:40</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-11105328" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">3</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@dreamlax: In case it wasn&#39;t clear to others, that&#39;s only <i>starting</i> an identifier with an underscore and an upper case that you shouldn&#39;t do; you&#39;re free to use that in the middle of an identifier.</span>
+                    &ndash;&nbsp;<a href="/users/1141093/sh1ftst0rm"
+                       title="3,148 reputation"
+                       class="comment-user">sh1ftst0rm</a>
+                <span class="comment-date" dir="ltr"><span title="2012-01-16 17:08:56Z" class="relativetime-clean">Jan 16 '12 at 17:08</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-11285818" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">7</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">It&#39;s interesting that the example given here (in which the typedef prevents using &quot;struct&quot; &quot;all over the place&quot;) is actually longer than the same code without the typedef, since it saves exactly one use of the word &quot;struct&quot;.  The smidgen of abstraction gained rarely compares favorable with the additional obfuscation.</span>
+                    &ndash;&nbsp;<a href="/users/140750/william-pursell"
+                       title="85,298 reputation"
+                       class="comment-user">William Pursell</a>
+                <span class="comment-date" dir="ltr"><span title="2012-01-25 14:15:10Z" class="relativetime-clean">Jan 25 '12 at 14:15</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-22829125" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">5</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@Rerito fyi, page 166 of <a href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/n1256.pdf" rel="nofollow">C99 draft</a>, <i>All identiﬁers that begin with an underscore and either an uppercase letter or another underscore are always reserved for any use.</i> And <i>All identiﬁers that begin with an underscore are always reserved for use as identiﬁers with ﬁle scope in both the ordinary and tag name spaces.</i></span>
+                    &ndash;&nbsp;<a href="/users/338904/ring%c3%b8"
+                       title="15,138 reputation"
+                       class="comment-user">ring&#248;</a>
+                <span class="comment-date" dir="ltr"><span title="2013-04-15 04:41:27Z" class="relativetime-clean">Apr 15 '13 at 4:41</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-24218913" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Interestingly enough, the linux kernel coding guidelines say we should be a lot more conservative about using typedefs (section 5): <a href="https://www.kernel.org/doc/Documentation/CodingStyle" rel="nofollow">kernel.org/doc/Documentation/CodingStyle</a></span>
+                    &ndash;&nbsp;<a href="/users/803801/gsingh2011"
+                       title="3,825 reputation"
+                       class="comment-user">gsingh2011</a>
+                <span class="comment-date" dir="ltr"><span title="2013-05-29 00:13:42Z" class="relativetime-clean">May 29 '13 at 0:13</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-252810" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>17</b> more comments</a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk1948235797",4).setZone(44); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1948235797">
+            </div>
+  
+<a name="4566358"></a>
+<div id="answer-4566358" class="answer" data-answerid="4566358"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="4566358">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">126</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>It's amazing how many people get this wrong. PLEASE don't typedef structs in C, it needlessly pollutes the global namespace which is typically very polluted already in large C programs.</p>
+
+<p>Also, typedef'd structs without a tag name are a major cause of needless imposition of ordering relationships among header files.</p>
+
+<p>Consider:</p>
+
+<pre><code>#ifndef FOO_H
+#define FOO_H 1
+
+#define FOO_DEF (0xDEADBABE)
+
+struct bar; /* forward declaration, defined in bar.h*/
+
+struct foo {
+  struct bar *bar;
+};
+
+#endif
+</code></pre>
+
+<p>With such a definition, not using typedefs, it is possible for a compiland unit to include foo.h to get at the <code>FOO_DEF</code> definition.  If it doesn't attempt to dereference  the 'bar' member of the <code>foo</code> struct then there will be no need to include the "bar.h" file.</p>
+
+<p>Also, since the namespaces are different between the tag names and the member names, it is possible to write very readable code such as:</p>
+
+<pre><code>struct foo *foo;
+
+printf("foo-&gt;bar = %p", foo-&gt;bar);
+</code></pre>
+
+<p>Since the namespaces are separate, there is no conflict in naming variables coincident with their struct tag name.</p>
+
+<p>If I have to maintain your code, I will remove your typedef'd structs.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/4566358" title="short permalink to this answer" class="short-link" id="link-post-4566358">share</a><span class="lsep">|</span><a href="/posts/4566358/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/4566358/revisions" title="show all edits to this post">edited <span title="2014-11-28 23:32:45Z" class="relativetime">Nov 28 '14 at 23:32</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/648658/jens"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/75ee864ee3bef78f2a144398789fed25?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/648658/jens">Jens</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 33,425" dir="ltr">33.4k</span><span title="8 gold badges"><span class="badge1"></span><span class="badgecount">8</span></span><span title="58 silver badges"><span class="badge2"></span><span class="badgecount">58</span></span><span title="97 bronze badges"><span class="badge3"></span><span class="badgecount">97</span></span>
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2010-12-30 21:20:44Z" class="relativetime">Dec 30 '10 at 21:20</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/558731/jerry-hicks"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/107625ad242e1e7ccfd0b2d3191689db?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/558731/jerry-hicks">Jerry Hicks</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">1,476</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="7 silver badges"><span class="badge2"></span><span class="badgecount">7</span></span><span title="5 bronze badges"><span class="badge3"></span><span class="badgecount">5</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-4566358" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="4"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-11285579" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="hot">16</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">What&#39;s more amazing is that 13 months after this answer is given, I&#39;m the first to upvote it!  typedef&#39;ing structs is one of the greatest abuses of C, and has no place in well-written code.  typedef is useful for de-obfuscating convoluted function pointer types and really serves no other useful purpose.</span>
+                    &ndash;&nbsp;<a href="/users/140750/william-pursell"
+                       title="85,298 reputation"
+                       class="comment-user">William Pursell</a>
+                <span class="comment-date" dir="ltr"><span title="2012-01-25 14:04:41Z" class="relativetime-clean">Jan 25 '12 at 14:04</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-12327463" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="hot">16</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Peter van der Linden also makes a case against typedefing structs in his enlightening book &quot;Expert C Programming - Deep C Secrets&quot;. The gist is: You WANT to know that something is a struct or union, not HIDE it.</span>
+                    &ndash;&nbsp;<a href="/users/648658/jens"
+                       title="33,425 reputation"
+                       class="comment-user">Jens</a>
+                <span class="comment-date" dir="ltr"><span title="2012-03-14 10:31:18Z" class="relativetime-clean">Mar 14 '12 at 10:31</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-18969595" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="hot">16</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">The Linux kernel coding style explicitly forbids typedefing structs. Chapter 5: Typedefs: &quot;It&#39;s a <i>mistake</i> to use typedef for structures and pointers.&quot; <a href="http://www.kernel.org/doc/Documentation/CodingStyle" rel="nofollow">kernel.org/doc/Documentation/CodingStyle</a></span>
+                    &ndash;&nbsp;<a href="/users/420851/jasso"
+                       title="9,680 reputation"
+                       class="comment-user">jasso</a>
+                <span class="comment-date" dir="ltr"><span title="2012-12-09 22:39:29Z" class="relativetime-clean">Dec 9 '12 at 22:39</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-21976993" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="supernova">30</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">What benefits, exactly, does typing &quot;struct&quot; over and over again provide? And speaking of pollution, why would you want to have a struct and a function/variable/typedef with the same name in a global namespace (unless it&#39;s a typedef for that same function)?  The safe pattern is to use <code>typedef struct X { ... } X</code>. That way you can use the short form <code>X</code> to address the struct anywhere the definition is available, but can still forward-declare and use <code>struct X</code> when desired.</span>
+                    &ndash;&nbsp;<a href="/users/111335/pavel-minaev"
+                       title="71,507 reputation"
+                       class="comment-user">Pavel Minaev</a>
+                <span class="comment-date" dir="ltr"><span title="2013-03-20 07:18:00Z" class="relativetime-clean">Mar 20 '13 at 7:18</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-24337966" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">4</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">I personal very rarely if ever use typedef, I wouldn&#39;t say other people shouldn&#39;t use it, it just not my style. I like to see a struct before a variable type so I know straight away its a struct. The easier to type argument is a bit lame, having variable that are a single letter is also easier to type, also with auto completions how hard is it to type struct nowadays anywhere.</span>
+                    &ndash;&nbsp;<a href="/users/815371/nathan-day"
+                       title="4,129 reputation"
+                       class="comment-user">Nathan Day</a>
+                <span class="comment-date" dir="ltr"><span title="2013-06-01 10:26:01Z" class="relativetime-clean">Jun 1 '13 at 10:26</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-4566358" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>4</b> more comments</a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="254250"></a>
+<div id="answer-254250" class="answer" data-answerid="254250"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="254250">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">86</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>From an old article by Dan Saks (<a href="http://www.ddj.com/cpp/184403396?pgno=3">http://www.ddj.com/cpp/184403396?pgno=3</a>):</p>
+
+<p><hr /></p>
+
+<blockquote>
+  <p>The C language rules for naming
+  structs are a little eccentric, but
+  they're pretty harmless. However, when
+  extended to classes in C++, those same
+  rules open little cracks for bugs to
+  crawl through.</p>
+  
+  <p>In C, the name s appearing in</p>
+
+<pre><code>struct s
+    {
+    ...
+    };
+</code></pre>
+  
+  <p>is a tag. A tag name is not a type
+  name. Given the definition above,
+  declarations such as</p>
+
+<pre><code>s x;    /* error in C */
+s *p;   /* error in C */
+</code></pre>
+  
+  <p>are errors in C. You must write them
+  as</p>
+
+<pre><code>struct s x;     /* OK */
+struct s *p;    /* OK */
+</code></pre>
+  
+  <p>The names of unions and enumerations
+  are also tags rather than types.</p>
+  
+  <p>In C, tags are distinct from all other
+  names (for functions, types,
+  variables, and enumeration constants).
+  C compilers maintain tags in a symbol
+  table that's conceptually if not
+  physically separate from the table
+  that holds all other names. Thus, it
+  is possible for a C program to have
+  both a tag and an another name with
+  the same spelling in the same scope.
+  For example,</p>
+
+<pre><code>struct s s;
+</code></pre>
+  
+  <p>is a valid declaration which declares
+  variable s of type struct s. It may
+  not be good practice, but C compilers
+  must accept it. I have never seen a
+  rationale for why C was designed this
+  way. I have always thought it was a
+  mistake, but there it is.</p>
+  
+  <p>Many programmers (including yours
+  truly) prefer to think of struct names
+  as type names, so they define an alias
+  for the tag using a typedef. For
+  example, defining</p>
+
+<pre><code>struct s
+    {
+    ...
+    };
+typedef struct s S;
+</code></pre>
+  
+  <p>lets you use S in place of struct s,
+  as in</p>
+
+<pre><code>S x;
+S *p;
+</code></pre>
+  
+  <p>A program cannot use S as the name of
+  both a type and a variable (or
+  function or enumeration constant):</p>
+
+<pre><code>S S;    // error
+</code></pre>
+  
+  <p>This is good.</p>
+  
+  <p>The tag name in a struct, union, or
+  enum definition is optional. Many
+  programmers fold the struct definition
+  into the typedef and dispense with the
+  tag altogether, as in:</p>
+
+<pre><code>typedef struct
+    {
+    ...
+    } S;
+</code></pre>
+</blockquote>
+
+<p><hr /></p>
+
+<p>The linked article also has a discussion about how the C++ behavior of not requireing a <code>typedef</code> can cause subtle name hiding problems.  To prevent these problems, it's a good idea to <code>typedef</code> your classes and structs in C++, too, even though at first glance it appears to be unnecessary.  In C++, with the <code>typedef</code> the name hiding become an error that the compiler tells you about rather than a hidden source of potential problems.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/254250" title="short permalink to this answer" class="short-link" id="link-post-254250">share</a><span class="lsep">|</span><a href="/posts/254250/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="/posts/254250/revisions" title="show all edits to this post"><span title="2008-10-31 17:12:55Z" class="relativetime">Oct 31 '08 at 17:12</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 31 &#39;08 at 17:12. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-254250" href="/posts/254250/revisions" title="show revision history for this post">
+        Michael Burr
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-254250" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-59223618" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thanks for clearly explaining the whole issue. As a C++ guy I didn&#39;t even know about these tags.</span>
+                    &ndash;&nbsp;<a href="/users/2061057/user2061057"
+                       title="65 reputation"
+                       class="comment-user">user2061057</a>
+                <span class="comment-date" dir="ltr"><span title="2016-03-03 15:19:53Z" class="relativetime-clean">Mar 3 at 15:19</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-254250" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="252783"></a>
+<div id="answer-252783" class="answer" data-answerid="252783"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="252783">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">41</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>Using a <code>typedef</code> avoids having to write <code>struct</code> every time you declare a variable of that type:</p>
+
+<pre><code>struct elem
+{
+ int i;
+ char k;
+};
+elem user; // compile error!
+struct elem user; // this is correct
+</code></pre>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/252783" title="short permalink to this answer" class="short-link" id="link-post-252783">share</a><span class="lsep">|</span><a href="/posts/252783/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2008-10-31 07:16:58Z" class="relativetime">Oct 31 '08 at 7:16</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/893/greg-hewgill"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/747ffa5da3538e66840ebc0548b8fd58?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/893/greg-hewgill">Greg Hewgill</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 480,236" dir="ltr">480k</span><span title="106 gold badges"><span class="badge1"></span><span class="badgecount">106</span></span><span title="836 silver badges"><span class="badge2"></span><span class="badgecount">836</span></span><span title="1013 bronze badges"><span class="badge3"></span><span class="badgecount">1013</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-252783" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-113018" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">ok we are not having that problem in C++. So why dont anybody remove that glitch from the C&#39;s compiler and make it the same as in C++.ok C++ is having some different application areas and so it is having the advanced features.but can we not inherit some of them in C without changing the original C?</span>
+                    &ndash;&nbsp;<a href="/users/31116/manoj-doubts"
+                       title="3,199 reputation"
+                       class="comment-user owner">Manoj Doubts</a>
+                <span class="comment-date" dir="ltr"><span title="2008-10-31 12:03:14Z" class="relativetime-clean">Oct 31 '08 at 12:03</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-113119" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">3</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Manoj, the tag name (&quot;struct foo&quot;) is necessary when you need to define a struct that references itself. e.g. the &quot;next&quot; pointer in a linked list. More to the point, the compiler implements the standard, and that&#39;s what the standard says to do.</span>
+                    &ndash;&nbsp;<a href="/users/8233/michael-carman"
+                       title="25,612 reputation"
+                       class="comment-user">Michael Carman</a>
+                <span class="comment-date" dir="ltr"><span title="2008-10-31 13:05:55Z" class="relativetime-clean">Oct 31 '08 at 13:05</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-113986" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="hot">24</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">It&#39;s not a glitch in the C compiler, it&#39;s part of the design.  They changed that for C++, which I think makes things easier, but that doesn&#39;t mean C&#39;s behavior is wrong.</span>
+                    &ndash;&nbsp;<a href="/users/1409/herms"
+                       title="16,541 reputation"
+                       class="comment-user">Herms</a>
+                <span class="comment-date" dir="ltr"><span title="2008-10-31 19:36:02Z" class="relativetime-clean">Oct 31 '08 at 19:36</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-49108731" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">unfortunately many &#39;programmers&#39; define a struct then typedef it with some &#39;unrelated&#39; name (like struct myStruct ...;  typedef struct myStruct susan*;   In almost all instances a typedef leads to nothing but cluttering the code, hiding the actual definition of a variable/parameter, and mis-leads everyone, including the original writer of the code.</span>
+                    &ndash;&nbsp;<a href="/users/3629249/user3629249"
+                       title="6,734 reputation"
+                       class="comment-user">user3629249</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-28 20:50:28Z" class="relativetime-clean">May 28 '15 at 20:50</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-252783" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="699528"></a>
+<div id="answer-699528" class="answer" data-answerid="699528"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="699528">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">28</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>One other good reason to always typedef enums and structs results from this problem:</p>
+
+<pre><code>enum EnumDef
+{
+  FIRST_ITEM,
+  SECOND_ITEM
+};
+
+struct StructDef
+{
+  enum EnuumDef MyEnum;
+  unsigned int MyVar;
+} MyStruct;
+</code></pre>
+
+<p>Notice the typo in EnumDef in the struct (Enu<strong>u</strong>mDef)? This compiles without error (or warning) and is (depending on the literal interpretation of the C Standard) correct. The problem is that I just created an new (empty) enumeration definition within my struct. I am not (as intended) using the previous definition EnumDef.</p>
+
+<p>With a typdef similar kind of typos would have resulted in a compiler errors for using an unknown type:</p>
+
+<pre><code>typedef 
+{
+  FIRST_ITEM,
+  SECOND_ITEM
+} EnumDef;
+
+typedef struct
+{
+  EnuumDef MyEnum; /* compiler error (unknown type) */
+  unsigned int MyVar;
+} StructDef;
+StrructDef MyStruct; /* compiler error (unknown type) */
+</code></pre>
+
+<p>I would advocate ALWAYS typedef'ing structs and enumerations. </p>
+
+<p>Not only to save some typing (no pun intended ;)), but because it is safer.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/699528" title="short permalink to this answer" class="short-link" id="link-post-699528">share</a><span class="lsep">|</span><a href="/posts/699528/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/699528/revisions" title="show all edits to this post">edited <span title="2015-02-14 22:14:34Z" class="relativetime">Feb 14 '15 at 22:14</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/1505939/m-m"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/131c67ef492a8d8352c6cf642a52e20f?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/1505939/m-m">M.M</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 64,257" dir="ltr">64.3k</span><span title="5 gold badges"><span class="badge1"></span><span class="badgecount">5</span></span><span title="51 silver badges"><span class="badge2"></span><span class="badgecount">51</span></span><span title="109 bronze badges"><span class="badge3"></span><span class="badgecount">109</span></span>
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2009-03-31 00:00:32Z" class="relativetime">Mar 31 '09 at 0:00</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/2386/cschol"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/31191ad699bf3f2a73cf1f78f1764530?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/2386/cschol">cschol</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">6,639</span><span title="8 gold badges"><span class="badge1"></span><span class="badgecount">8</span></span><span title="43 silver badges"><span class="badge2"></span><span class="badgecount">43</span></span><span title="70 bronze badges"><span class="badge3"></span><span class="badgecount">70</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-699528" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-45358500" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Even worse, your typo might coincide with a different tag. In the case of a struct this could result in the entire program compiling correctly and having runtime undefined behaviour.</span>
+                    &ndash;&nbsp;<a href="/users/1505939/m-m"
+                       title="64,257 reputation"
+                       class="comment-user">M.M</a>
+                <span class="comment-date" dir="ltr"><span title="2015-02-14 22:15:17Z" class="relativetime-clean">Feb 14 '15 at 22:15</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-49108939" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">this definition: &#39;typedef  {   FIRST_ITEM,   SECOND_ITEM } EnumDef;&#39; does not define an enum.  I&#39;ve written hundreds of huge programs and had the mis-fortune to perform maintenance on programs others have written.  From the hard hand of experience, using typedef on a struct only leads to problems.   Hopefully the programmer is not so handicapped that they have problems typing a full definition when they declare a struct instance.   C is not Basic, so typing some more characters is not detrimental to the operation of the program.</span>
+                    &ndash;&nbsp;<a href="/users/3629249/user3629249"
+                       title="6,734 reputation"
+                       class="comment-user">user3629249</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-28 20:57:05Z" class="relativetime-clean">May 28 '15 at 20:57</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-49109016" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">For those that feel some abhorrence to typing more than the absolute minimum number of characters, may I suggest joining some group that tries to write applications with the minimum number of keystrokes.  Just don&#39;t use their new &#39;skill&#39; in a work environment,  especially a work environment that rigorously performs peer reviews</span>
+                    &ndash;&nbsp;<a href="/users/3629249/user3629249"
+                       title="6,734 reputation"
+                       class="comment-user">user3629249</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-28 20:59:35Z" class="relativetime-clean">May 28 '15 at 20:59</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-699528" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="18105888"></a>
+<div id="answer-18105888" class="answer" data-answerid="18105888"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="18105888">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">17</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p><a href="https://www.kernel.org/doc/Documentation/CodingStyle">Linux kernel coding style</a> Chapter 5 gives great pros and cons (mostly cons) of using <code>typedef</code>.</p>
+
+<blockquote>
+  <p>Please don't use things like "vps_t".</p>
+  
+  <p>It's a <em>mistake</em> to use typedef for structures and pointers. When you see a</p>
+
+<pre><code>vps_t a;
+</code></pre>
+  
+  <p>in the source, what does it mean?</p>
+  
+  <p>In contrast, if it says</p>
+
+<pre><code>struct virtual_container *a;
+</code></pre>
+  
+  <p>you can actually tell what "a" is.</p>
+  
+  <p>Lots of people think that typedefs "help readability". Not so. They are useful only for:</p>
+  
+  <p>(a) totally opaque objects (where the typedef is actively used to <em>hide</em> what the object is).</p>
+  
+  <p>Example: "pte_t" etc. opaque objects that you can only access using the proper accessor functions.</p>
+  
+  <p>NOTE! Opaqueness and "accessor functions" are not good in themselves. The reason we have them for things like pte_t etc. is that there really is absolutely <em>zero</em> portably accessible information there.</p>
+  
+  <p>(b) Clear integer types, where the abstraction <em>helps</em> avoid confusion whether it is "int" or "long".</p>
+  
+  <p>u8/u16/u32 are perfectly fine typedefs, although they fit into category (d) better than here.</p>
+  
+  <p>NOTE! Again - there needs to be a <em>reason</em> for this. If something is "unsigned long", then there's no reason to do</p>
+
+<pre><code>typedef unsigned long myflags_t;
+</code></pre>
+  
+  <p>but if there is a clear reason for why it under certain circumstances might be an "unsigned int" and under other configurations might be "unsigned long", then by all means go ahead and use a typedef.</p>
+  
+  <p>(c) when you use sparse to literally create a <em>new</em> type for type-checking.</p>
+  
+  <p>(d) New types which are identical to standard C99 types, in certain exceptional circumstances.</p>
+  
+  <p>Although it would only take a short amount of time for the eyes and brain to become accustomed to the standard types like 'uint32_t', some people object to their use anyway.</p>
+  
+  <p>Therefore, the Linux-specific 'u8/u16/u32/u64' types and their signed equivalents which are identical to standard types are permitted -- although they are not mandatory in new code of your own.</p>
+  
+  <p>When editing existing code which already uses one or the other set of types, you should conform to the existing choices in that code.</p>
+  
+  <p>(e) Types safe for use in userspace.</p>
+  
+  <p>In certain structures which are visible to userspace, we cannot require C99 types and cannot use the 'u32' form above. Thus, we use __u32 and similar types in all structures which are shared with userspace.</p>
+  
+  <p>Maybe there are other cases too, but the rule should basically be to NEVER EVER use a typedef unless you can clearly match one of those rules.</p>
+  
+  <p>In general, a pointer, or a struct that has elements that can reasonably be directly accessed should <em>never</em> be a typedef.</p>
+</blockquote>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/18105888" title="short permalink to this answer" class="short-link" id="link-post-18105888">share</a><span class="lsep">|</span><a href="/posts/18105888/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/18105888/revisions" title="show all edits to this post">edited <span title="2013-10-27 13:27:11Z" class="relativetime">Oct 27 '13 at 13:27</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/41071/svick"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/0ec0f5be7749c8cc8ccda4a809103f36?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/41071/svick">svick</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 112,527" dir="ltr">113k</span><span title="20 gold badges"><span class="badge1"></span><span class="badgecount">20</span></span><span title="177 silver badges"><span class="badge2"></span><span class="badgecount">177</span></span><span title="282 bronze badges"><span class="badge3"></span><span class="badgecount">282</span></span>
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2013-08-07 14:19:02Z" class="relativetime">Aug 7 '13 at 14:19</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/1009479/yu-hao"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/wlrC5.jpg?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/1009479/yu-hao">Yu Hao</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 79,659" dir="ltr">79.7k</span><span title="18 gold badges"><span class="badge1"></span><span class="badgecount">18</span></span><span title="112 silver badges"><span class="badge2"></span><span class="badgecount">112</span></span><span title="170 bronze badges"><span class="badge3"></span><span class="badgecount">170</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-18105888" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-18105888" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="2934163"></a>
+<div id="answer-2934163" class="answer" data-answerid="2934163"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="2934163">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">10</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>I don't think forward declarations are even possible with typedef. Use of struct, enum and union allows for forward declarations when dependencies (knows about) is bidirectional.</p>
+
+<p>Style:
+Use of typedef in C++ makes quite a bit of sense. It can almost be necessary when dealing with templates that require multiple and/or variable parameters. The typedef helps keep the naming straight.</p>
+
+<p>Not so in the C programming language. The use of typedef most often serves no purpose but to obfuscate the data structure usage. Since only { struct (6), enum (4), union (5) } number of keystrokes are used to declare a data type there is almost no use for the aliasing of the struct. Is that data type a union or a struct? Using the straight forward non-typdefed declaration lets you know right away what type it is. </p>
+
+<p>Notice how Linux is written with strict avoidance of this aliasing nonsense typedef brings. The result is a minimalist and clean style.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/2934163" title="short permalink to this answer" class="short-link" id="link-post-2934163">share</a><span class="lsep">|</span><a href="/posts/2934163/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/2934163/revisions" title="show all edits to this post">edited <span title="2016-01-27 04:42:28Z" class="relativetime">Jan 27 at 4:42</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2010-05-29 07:12:11Z" class="relativetime">May 29 '10 at 7:12</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/138264/natersoz"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/7ca1128424907ab535574d5d7783df0b?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/138264/natersoz">natersoz</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">405</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="10 bronze badges"><span class="badge3"></span><span class="badgecount">10</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2934163" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="4"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-2988231" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">4</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Clean would be not repeating <code>struct</code>everywhere... Typedef&#39;s make new types. What do you use? Types. We don&#39;t <i>care</i> if it&#39;s a struct, union, or enum, that&#39;s why we typedef it.</span>
+                    &ndash;&nbsp;<a href="/users/87234/gmannickg"
+                       title="216,107 reputation"
+                       class="comment-user">GManNickG</a>
+                <span class="comment-date" dir="ltr"><span title="2010-05-29 07:14:59Z" class="relativetime-clean">May 29 '10 at 7:14</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-18574276" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">9</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">No, we <i>do</i> care if it&#39;s a struct or union, versus an enum or some atomic type. You can&#39;t coerce a struct to an integer or to a pointer (or to any other type, for that matter), which is all you sometimes have to store some context. Having the &#39;struct&#39; or &#39;union&#39; keywords around improves locality of reasoning. Nobody says you need to know what&#39;s <i>inside</i> the struct.</span>
+                    &ndash;&nbsp;<a href="/users/117911/bernd-jendrissek"
+                       title="797 reputation"
+                       class="comment-user">Bernd Jendrissek</a>
+                <span class="comment-date" dir="ltr"><span title="2012-11-26 03:59:13Z" class="relativetime-clean">Nov 26 '12 at 3:59</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-46810311" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@BerndJendrissek: Structs and unions are different from other types, but should client code care about which of those two things (struct or union) something like a <code>FILE</code> is?</span>
+                    &ndash;&nbsp;<a href="/users/363751/supercat"
+                       title="39,315 reputation"
+                       class="comment-user">supercat</a>
+                <span class="comment-date" dir="ltr"><span title="2015-03-27 18:54:07Z" class="relativetime-clean">Mar 27 '15 at 18:54</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-46853551" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@supercat FILE is a good use of typedef. I think that typedef is <i>overused</i>, not that it&#39;s a misfeature of the language. IMHO using typedef for everything is the &quot;speculative overgenerality&quot; code smell. Notice that you declare variables as FILE *foo, never as FILE foo. To me, this matters.</span>
+                    &ndash;&nbsp;<a href="/users/117911/bernd-jendrissek"
+                       title="797 reputation"
+                       class="comment-user">Bernd Jendrissek</a>
+                <span class="comment-date" dir="ltr"><span title="2015-03-29 17:16:38Z" class="relativetime-clean">Mar 29 '15 at 17:16</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-46853962" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@BerndJendrissek: If file-identifying variables were of type FILE rather than <code>FILE*</code>, it would be unclear when/whether methods should use parameters of type <code>FILE</code> versus <code>FILE*</code>.  In Pascal, the normal mode of usage would be to have variables of the type itself, but have methods take by-reference parameters of that type; C doesn&#39;t have by-reference parameters, though [I vaguely recall Pascal won&#39;t allow a variable of type <code>File</code> or <code>Text</code> to be passed by value, thus avoiding any ambiguity as to what such a thing should mean].</span>
+                    &ndash;&nbsp;<a href="/users/363751/supercat"
+                       title="39,315 reputation"
+                       class="comment-user">supercat</a>
+                <span class="comment-date" dir="ltr"><span title="2015-03-29 17:36:03Z" class="relativetime-clean">Mar 29 '15 at 17:36</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-2934163" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>4</b> more comments</a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="18173698"></a>
+<div id="answer-18173698" class="answer" data-answerid="18173698"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="18173698">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">6</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>It turns out that there are prons and cons.  A useful source of information is the seminal book "Expert C Programming" (<a href="http://www.e-reading-lib.com/bookreader.php/138815/Expert_C_Programming%3a_Deep_C_Secrets.pdf">Chapter 3</a>). Briefly, in C you have multiple namespaces: <strong>tags, types, member names and identifiers</strong>. <code>typedef</code> introduces an alias for a type and locates it in the tag namespace. Namely,</p>
+
+<pre><code>typedef struct Tag{
+...members...
+}Type;
+</code></pre>
+
+<p>defines two things. One Tag in the tag namespace and one Type in the type namespace. So you can do both <code>Type myType</code> and <code>struct Tag myTagType</code>. Declarations like <code>struct Type myType</code> or <code>Tag myTagType</code> are illegal. In addition, in a declaration like this:</p>
+
+<pre><code>typedef Type *Type_ptr;
+</code></pre>
+
+<p>we define a pointer to our Type. So if we declare:</p>
+
+<pre><code>Type_ptr var1, var2;
+struct Tag *myTagType1, myTagType2;
+</code></pre>
+
+<p>then <code>var1</code>,<code>var2</code> and <code>myTagType1</code> are pointers to Type but <code>myTagType2</code> not.</p>
+
+<p>In the above mentioned book it mentions that typedefing structs is not very useful as it only saves the programmer from writing the word struct. However, I have an objection, like many other C programmers. Although it sometimes turns to obfuscate some names (that's why it is not advisable in large code bases like the kernel) when you want to implement polymorphism in C it helps a lot <a href="http://modal-echoes.blogspot.com/2007/03/implementing-polymorphism-in-c.html">look here for details</a>. Example:</p>
+
+<pre><code>typedef struct MyWriter_t{
+    MyPipe super;
+    MyQueue relative;
+    uint32_t flags;
+...
+}MyWriter;
+</code></pre>
+
+<p>you can do:</p>
+
+<pre><code>void my_writer_func(MyPipe *s)
+{
+    MyWriter *self = (MyWriter *) s;
+    uint32_t myFlags = self-&gt;flags;
+...
+}
+</code></pre>
+
+<p>So you can access an outer member (<code>flags</code>) by the inner struct (<code>MyPipe</code>) through casting. For me it is less confusing to cast the whole type than doing <code>(struct MyWriter_ *) s;</code> every time you want to perform such functionality. In these cases brief referencing is a big deal especially if you heavily employ the technique in your code.</p>
+
+<p>Finally, a last aspect with <code>typedef</code>ed types is the inability to extend them, in contrast to macros. If for example you have: </p>
+
+<pre><code>#define X char[10] or
+typedef char Y[10]
+</code></pre>
+
+<p>you can then declare</p>
+
+<pre><code>unsigned X x; but not
+unsigned Y y;
+</code></pre>
+
+<p>We do not really care for this for structs because it does not apply for storage specifiers (<code>volatile</code> and <code>const</code>).</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/18173698" title="short permalink to this answer" class="short-link" id="link-post-18173698">share</a><span class="lsep">|</span><a href="/posts/18173698/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/18173698/revisions" title="show all edits to this post">edited <span title="2013-08-11 16:18:44Z" class="relativetime">Aug 11 '13 at 16:18</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2013-08-11 15:48:27Z" class="relativetime">Aug 11 '13 at 15:48</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/1533288/user1533288"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/UXAJ2.jpg?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/1533288/user1533288">user1533288</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">76</span><span title="1 silver badge"><span class="badge2"></span><span class="badgecount">1</span></span><span title="5 bronze badges"><span class="badge3"></span><span class="badgecount">5</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-18173698" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-49232774" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy"><code>MyPipe *s; MyWriter *self = (MyWriter *) s;</code> and you&#39;ve just broken strict aliasing.</span>
+                    &ndash;&nbsp;<a href="/users/119527/jonathon-reinhart"
+                       title="59,073 reputation"
+                       class="comment-user">Jonathon Reinhart</a>
+                <span class="comment-date" dir="ltr"><span title="2015-06-01 19:18:13Z" class="relativetime-clean">Jun 1 '15 at 19:18</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-60644381" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@JonathonReinhart It would be illustrative to mention how this can be avoided, for example how the hugely cast-happy GTK+ works around it: <a href="https://bugzilla.gnome.org/show_bug.cgi?id=140722" rel="nofollow">bugzilla.gnome.org/show_bug.cgi?id=140722</a> / <a href="https://mail.gnome.org/archives/gtk-devel-list/2004-April/msg00196.html" rel="nofollow">mail.gnome.org/archives/gtk-devel-list/2004-April/msg00196.html</a></span>
+                    &ndash;&nbsp;<a href="/users/2757035/underscore-d"
+                       title="815 reputation"
+                       class="comment-user">underscore_d</a>
+                <span class="comment-date" dir="ltr"><span title="2016-04-09 16:35:07Z" class="relativetime-clean">Apr 9 at 16:35</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-18173698" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="252867"></a>
+<div id="answer-252867" class="answer" data-answerid="252867"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="252867">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">3</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>the name you (optionally) give the struct is called the <em>tag name</em> and, as has been noted, is not a type in itself. To get to the type requires the struct prefix.</p>
+
+<p>GTK+ aside, I'm not sure the tagname is used anything like as commonly as a typedef to the struct type, so in C++ that is recognised and you can omit the struct keyword and use the tagname as the type name too:</p>
+
+<pre>
+<code>
+    struct MyStruct
+    {
+      int i;
+    };
+
+    // The following is legal in C++:
+    MyStruct obj;
+    obj.i = 7;
+</code>
+</pre>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/252867" title="short permalink to this answer" class="short-link" id="link-post-252867">share</a><span class="lsep">|</span><a href="/posts/252867/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2008-10-31 08:24:40Z" class="relativetime">Oct 31 '08 at 8:24</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/32136/philsquared"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/3Pkex.jpg?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/32136/philsquared">philsquared</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 15,519" dir="ltr">15.5k</span><span title="7 gold badges"><span class="badge1"></span><span class="badgecount">7</span></span><span title="53 silver badges"><span class="badge2"></span><span class="badgecount">53</span></span><span title="87 bronze badges"><span class="badge3"></span><span class="badgecount">87</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-252867" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-252867" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="2392856"></a>
+<div id="answer-2392856" class="answer" data-answerid="2392856"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="2392856">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">1</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>At all, in C language, struct/union/enum are macro instruction processed by the C language preprocessor (do not mistake with the preprocessor that treat "#include" and other)</p>
+
+<p>so :</p>
+
+<pre><code>struct a
+{
+   int i;
+};
+
+struct b
+{
+   struct a;
+   int i;
+   int j;
+};
+</code></pre>
+
+<p>struct b is expended as something like this :</p>
+
+<pre><code>struct b
+{
+    struct a
+    {
+        int i;
+    };
+    int i;
+    int j;
+}
+</code></pre>
+
+<p>and so, at compile time it evolve on stack as something like:
+b:
+int ai
+int i
+int j</p>
+
+<p>that also why it's dificult to have selfreferent structs, C preprocessor round in a déclaration loop that can't terminate.</p>
+
+<p>typedef are type specifier, that means only C compiler process it and it can do like he want for optimise assembler code implementation. It also dont expend member of type par stupidly like préprocessor do with structs but use more complex reference construction algorithm, so construction like :</p>
+
+<pre><code>typedef struct a A; //anticipated declaration for member declaration
+
+typedef struct a //Implemented declaration
+{
+    A* b; // member declaration
+}A;
+</code></pre>
+
+<p>is permited and fully functional. This implementation give also access to compilator type conversion and remove some bugging effects when execution thread leave the application field of initialisation functions. </p>
+
+<p>This mean that in C typedefs are more near as C++ class than lonely structs.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/2392856" title="short permalink to this answer" class="short-link" id="link-post-2392856">share</a><span class="lsep">|</span><a href="/posts/2392856/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2010-03-06 14:54:22Z" class="relativetime">Mar 6 '10 at 14:54</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/287771/doccpu"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/72ecf2360f8c100fc5d23a8e72d518a2?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/287771/doccpu">doccpu</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">27</span><span title="1 bronze badge"><span class="badge3"></span><span class="badgecount">1</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2392856" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-46892918" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">It isn&#39;t difficult to have self-referential structs at all. struct foo { struct foo *next; int thing; }</span>
+                    &ndash;&nbsp;<a href="/users/117911/bernd-jendrissek"
+                       title="797 reputation"
+                       class="comment-user">Bernd Jendrissek</a>
+                <span class="comment-date" dir="ltr"><span title="2015-03-30 18:52:26Z" class="relativetime-clean">Mar 30 '15 at 18:52</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-60644609" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">...what? Saying <i>preprocessor</i> to describe the resolution of <code>structs</code> and <code>typedef</code>s is bad enough, but the rest of your writing is so confusing that I find it hard to get any message from it. One thing I can say, though, is that your idea that a non-<code>typedef</code>d <code>struct</code> cannot be forward-declared or used as an opaque (pointer) member is totally false. In your 1st example, <code>struct b</code> can trivially contain a <code>struct a *</code>, no <code>typedef</code> required. The assertions that <code>struct</code>s are merely dumb pieces of macro-expansion, and that <code>typedef</code>s give them revolutionary new powers, are painfully incorrect</span>
+                    &ndash;&nbsp;<a href="/users/2757035/underscore-d"
+                       title="815 reputation"
+                       class="comment-user">underscore_d</a>
+                <span class="comment-date" dir="ltr"><span title="2016-04-09 16:44:28Z" class="relativetime-clean">Apr 9 at 16:44</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-2392856" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+
+  
+<a name="35103707"></a>
+<div id="answer-35103707" class="answer" data-answerid="35103707"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="35103707">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">1</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>typedef will not provide a co-dependent set of data structures. This you cannot do with typdef:</p>
+
+<pre><code>struct bar;
+struct foo;
+
+struct foo {
+    struct bar *b;
+};
+
+struct bar {
+    struct foo *f;
+};
+</code></pre>
+
+<p>Of course you can always add:</p>
+
+<pre><code>typedef struct foo foo_t;
+typedef struct bar bar_t;
+</code></pre>
+
+<p>What exactly is the point of that?</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/35103707" title="short permalink to this answer" class="short-link" id="link-post-35103707">share</a><span class="lsep">|</span><a href="/posts/35103707/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2016-01-30 15:47:18Z" class="relativetime">Jan 30 at 15:47</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/138264/natersoz"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/7ca1128424907ab535574d5d7783df0b?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/138264/natersoz">natersoz</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">405</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="10 bronze badges"><span class="badge3"></span><span class="badgecount">10</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-35103707" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-35103707" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+									<a name='new-answer'></a>
+						<form id="post-form" action="/questions/252780/answer/submit" method="post"  class="post-form">
+						    <input type="hidden" id="post-id" value="252780" />
+                            <input type="hidden" id="qualityBanWarningShown" name="qualityBanWarningShown" value="false" />
+                            <input type="hidden" name="referrer" value="http://stackoverflow.com/questions/tagged/conventions"/>
+							<h2 class="space">Your Answer</h2>
+
+
+            <script>
+            StackExchange.ifUsing("editor", function () {
+                StackExchange.using("externalEditor", function () {
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.init();
+                    });
+                });
+            }, "code-snippets");
+        </script>
+    
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+                // Have to fire editor after snippets, if snippets enabled
+                if (StackExchange.options.snippets.enabled) {
+                    StackExchange.using("snippets", function() {
+                        createEditor();
+                    });
+                }
+                else {
+                    createEditor();
+                }
+            });
+
+            function createEditor() {
+                prepareEditor({
+                    heartbeatType: 'answer',
+                convertImagesToLinks: true,
+                reputationToPostImages: 10,
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                    ,immediatelyShowMarkdownHelp:true
+                    });
+                
+
+        }
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor js-post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="a13af72b54e2677d414be5d78af7b54f">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+							<div style="position: relative;">
+								
+								            <div class="form-item dno new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="/users/login?ssrc=question_page&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f252780%2fwhy-should-we-typedef-a-struct-so-often-in-c%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Email and Password</span></p>
+                        </div>
+                    </div>
+                    <input type="hidden" name="manual-openid" class="manual-openid" />
+                    <input type="hidden" name="use-facebook" class="use-facebook" value="false" />
+                    <input type="hidden" name="use-google" class="use-google" value="false" />
+                    <input type="button" class="submit-openid" value="Submit" style="display:none" />
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', 'http%3a%2f%2fstackoverflow.com%2fquestions%2f252780%2fwhy-should-we-typedef-a-struct-so-often-in-c%23new-answer', 'question_page');
+                    }
+                );
+            </script>
+            <noscript>
+                        <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+            </noscript>
+
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" type="submit" value="Post Your Answer" tabindex="110">
+									<a href="#" class="btn-clear discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href='http://stackexchange.com/legal/privacy-policy' target='_blank'>privacy policy</a> and <a href='http://stackexchange.com/legal/terms-of-service' target='_blank'>terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1" />								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you&#39;re looking for?							Browse other questions tagged <a href="/questions/tagged/c" class="post-tag" title="show questions tagged &#39;c&#39;" rel="tag">c</a> <a href="/questions/tagged/struct" class="post-tag" title="show questions tagged &#39;struct&#39;" rel="tag">struct</a> <a href="/questions/tagged/typedef" class="post-tag" title="show questions tagged &#39;typedef&#39;" rel="tag">typedef</a>  or <a href="/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2008-10-31 07:14:03Z"><b>7 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>259377 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="?lastactivity" class="lastactivity-link" title="2016-03-18 01:28:49Z">1 month ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </table>
+			    </div>
+			<div class="module community-bulletin" data-tracker="cb=1">
+    <div class="related">
+                <div class="bulletin-title">
+                    Blog
+                </div>
+                <hr />
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <a href="http://blog.stackoverflow.com/2016/05/welcoming-stack-overflows-new-cmo-adrianna-burrows/" class="question-hyperlink">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>                </a>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://blog.stackoverflow.com/2016/05/welcoming-stack-overflows-new-cmo-adrianna-burrows/" class="question-hyperlink">Welcoming Stack Overflow’s New CMO – Adrianna Burrows</a>
+                </div>
+                <br class="cbt" />
+            </div>
+    </div>
+</div>			
+			<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk2112065118",[5,17,2221]).setZone(45); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk2112065118">
+            </div>
+        <div id="hireme">
+            <script>
+;"use strict";(function(n){function it(n,i,r){var u=t.createElement("script"),e="onreadystatechange",o="onload",f="readyState",s=!1;u.async=!0;u.src=n;typeof i=="function"&&(u[o]=u[e]=function(){s||u[f]&&u[f]!=="loaded"&&u[f]!=="complete"||(s=!0,typeof i=="function"&&i(u),u[o]=u[e]=null,r&&u.parentNode.removeChild(u))});ft.appendChild(u)}function rt(n){var i=t.createElement("link");i.type="text/css";i.rel="stylesheet";i.href=n;et.appendChild(i)}function ct(){var n=i.StackExchange,t="options",r="user";return n&&n[t]&&n[t][r]&&n[t][r].accountId}function lt(n){var t,i;return n=ot(f.hash?f.hash.substr(1):"",n||{}),t=n.ac||n.accountId||ct(),t&&(n.ac=t),n.tags||(i=tt(),i.length>0&&(n.tags=i.join(";"))),n.host=f.host.replace(/\.internal$/,""),n}function at(n,t,i,u){var c=h(n);if(c===null)return function(){};var e=null,f=null,l=r(),a=function a(){g(c)?(s(e),u(!1,r()-l)):f=o(a,t)};return f=o(a,t),i!==undefined&&(e=o(function(){s(f);u(!0,r()-l)},i)),function(){s(f);s(e)}}function vt(n){var u=f.hash.indexOf("large=1")!==-1,e=y(),o=u||!e||n,s=o?1:2,h=a(["hireme","clc-sb"],v),t=[s+"="+h],r=a(["careers1","clc-tlb"],v),i;return r&&t.push("5="+r),i=a(["careers3","clc-mlb"],v),i&&t.push("6="+i),t.join("&")}function ut(n,t){var e=!!h("#careersadsdoublehigh"),s=k({},u,{zones:u.zones||vt(e)}),f=lt(s),o;n&&(f.azt=1);t&&(f.lw=t);typeof i.innerWidth=="number"&&(f.bw=i.innerWidth);b&&(f.ver=b);o=p()-(e+0);o>0&&(f.az="1");var c=st(f,["zones","ip","ac","eng","prov","tags","theme","at","remote","seed","lw","azt","sysadmin","bw","nocpm","jobview","cpview","ver","host","cp","az"]),a=w+"?"+c;l=r();it(a)}function yt(n){function h(){f.forEach(rt);e.forEach(function(n){return pt(n,t[n],s,o)});typeof i.clc_after_load=="function"&&i.clc_after_load()}var t=n.cr,u=n.h,f=n.st,e=Object.keys(t),o=l?r()-l:0,s="//"+u+"/ct";h()}function pt(n,t,i,r){var s=t.cl,c=t.cn,f=t.an,l=t.tr,o=(s||[]).join(" "),u=h("#"+n);u&&(o&&(u.className+=" "+o),u.innerHTML=c.replace("&pt=0","&pt="+(r||0)),u.onmousedown=function(n){for(var t=n.target,r,o,s;t.tagName!=="A"&&t!==u;)t=t.parentNode;t!==u&&(r=[],f&&r.push("an="+f),o=[].filter.call(t.attributes,function(n){return/^data-/.test(n.name)}),o.length>0&&o.forEach(function(n){var t=n.name.replace(/^data-/,"");r.push(e(t)+"="+e(n.value))}),r.push("tr="+l),s="",r.length>0&&(s="?"+r.join("&")),t.href=i+s)})}function wt(n){var i=t.createElement("a");return i.href=n,i.host}function bt(){var i,n;y()?(n=at("#sidebar "+c,20,i,ut),o(function(){var r=h(c),i;g(r)||(r.parentNode.removeChild(r),typeof n=="function"&&n(),i=t.createElement("img"),i.src="//"+wt(w)+"/to.gif",i.style.display="none",t.body.appendChild(i))},2e3)):ut()}var w=n.u,u=n.o,b=n.c,y,p;u=u||{};var k=Object.assign||function(n){for(var i,r,t=1;t<arguments.length;t++){i=arguments[t];for(r in i)Object.prototype.hasOwnProperty.call(i,r)&&(n[r]=i[r])}return n},i=window,f=i.location,e=i.encodeURIComponent,d=i.decodeURIComponent,t=i.document,ft=t.body,et=t.getElementsByTagName("head")[0],o=i.setTimeout,s=i.clearTimeout,c="[id^=adzerk].everyonelovesstackoverflow",l=0,r=function(){return(new Date).getTime()},ot=function(n,t){return n.split(/\&/g).reduce(function(n,t){var i=t.split("=");return n[d(i[0])]=d(i[1]),n},t||{})},st=function(n,t){return Object.keys(n).filter(function(n){return t.indexOf(n)!==-1}).map(function(t){return e(t)+"="+e(n[t])}).join("&")},g=function(n){return n.innerHTML.replace(/\s+$/g,"")},nt=t.querySelectorAll.bind(t),h=t.querySelector.bind(t),ht=t.getElementById.bind(t),a=function(n,t){return n.filter(t)[0]},tt=function(){return[].map.call(nt(".post-taglist .post-tag"),function(n){return n.textContent})},v=function(n){return!!ht(n)};y=function(){return p()>0};p=function(){return nt(c).length};i.clc=k(window.clc||{},{init:yt,load:bt,ls:it,as:rt,tags:tt})}).call(null, {"c":"955d59b","u":"//clc.stackoverflow.com/p.js"});"use strict";var allowedHosts=["stackoverflow.com","serverfault.com"];(allowedHosts[0]==="*"||allowedHosts.indexOf(location.hostname)!==-1)&&window.clc.load();            </script>
+        </div>
+			<div class="module" id="chat-feature">
+    
+
+    
+<h4><a href="http://chat.stackoverflow.com" id="h-chat-link">Visit Chat</a></h4>
+
+<div class="related" id="ad502-rooms"></div>
+<script>
+// <!--
+    StackExchange.ready(
+    function () {
+        var options = {
+            chatUrl: 'http://chat.stackoverflow.com',
+            reloadUrl: '/api/recent-chat',
+            preloadData: {"activeUsers":132,"activeRooms":40,"rooms":[{"name":"JavaScript","id":17,"lastPost":1462468559,"posts":3355820,"users":[{"name":"Todo Pertin","id":5992646,"emailhash":"!https://i.stack.imgur.com/pbsDy.jpg?s=128\u0026g=1","lastPost":1462468503},{"name":"Krush","id":3842561,"emailhash":"73e749f3bb4ecd64ab41127406c891e4","lastPost":1462468498},{"name":"Kendall Frey","id":785745,"emailhash":"f9fc3249a341a64ee2721637915cd301","lastPost":1462468492},{"name":"Jacque Goupil","id":2813263,"emailhash":"fa58c516577bcbd4ef082553dedad4a5","lastPost":1462468081},{"name":"ssube","id":129032,"emailhash":"e8bea8f9e6972dfd3113d67da68e6933","lastPost":1462468063},{"name":"corvid","id":1150599,"emailhash":"!https://i.stack.imgur.com/ndWQ0.jpg?s=128\u0026g=1","lastPost":1462467822},{"name":"ton.yeung","id":860947,"emailhash":"!https://i.stack.imgur.com/WLi8a.png?s=128\u0026g=1","lastPost":1462467813}],"messages":[{"date":1462468559,"user":"Todo Pertin","userid":5992646}],"singleImage":false,"tags":["ecmascript","es6","javascript","nodejs","promises"]},{"name":"PHP","id":11,"lastPost":1462468560,"posts":2322232,"users":[{"name":"DaveRandom","id":889949,"emailhash":"8609c7056e725f9e8c03c594b831353e","lastPost":1462468560},{"name":"PeeHaa","id":508666,"emailhash":"!https://i.stack.imgur.com/0dpOE.png?s=128\u0026g=1","lastPost":1462468553},{"name":"Jeeves","id":5764893,"emailhash":"!https://i.stack.imgur.com/dINlb.png?s=128\u0026g=1","lastPost":1462468506},{"name":"Anmol Raghuvanshi Version 2.0","id":3605516,"emailhash":"!https://i.stack.imgur.com/lXtaD.jpg?s=128\u0026g=1","lastPost":1462468472},{"name":"Saitama","id":4332216,"emailhash":"!https://i.stack.imgur.com/FvoEN.jpg?s=128\u0026g=1","lastPost":1462468285},{"name":"bwoebi","id":2153758,"emailhash":"3659fff22e890aaa5d7b03e799f9047f","lastPost":1462468263},{"name":"Paul Crovella","id":3942918,"emailhash":"!https://i.stack.imgur.com/Rup3Y.jpg?s=128\u0026g=1","lastPost":1462468133}],"messages":[{"date":1462468560,"user":"DaveRandom","userid":889949}],"singleImage":false,"tags":["php"]}]} 
+        };
+
+        StackExchange.chatAd.init(options);
+    });
+// -->
+</script>
+
+</div>  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="/q/1166729" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">1</div>
+	</a>
+	<a href="/questions/1166729/what-is-the-difference-when-using-typdef-when-declaring-a-struct" class="question-hyperlink">What is the difference when using typdef when declaring a struct?</a>
+</div><div class="spacer">
+	<a href="/q/18171457" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/18171457/is-there-any-reason-not-to-typedef-a-structure" class="question-hyperlink">Is there any reason not to typedef a structure?</a>
+</div><div class="spacer">
+	<a href="/q/33968167" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/33968167/whats-the-difference-between-the-structure-tag-and-what-comes-after-the-curly-b" class="question-hyperlink">What&#39;s the difference between the structure tag and what comes after the curly brace?</a>
+</div><div class="spacer">
+	<a href="/q/29517074" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">0</div>
+	</a>
+	<a href="/questions/29517074/why-typedef-struct-in-a-header-file-in-c" class="question-hyperlink">why typedef struct in a header file in C?</a>
+</div><div class="spacer">
+	<a href="/q/34251367" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/34251367/convention-for-declaring-structs-in-c" class="question-hyperlink">Convention for declaring structs in C</a>
+</div><div class="spacer">
+	<a href="/q/1675351" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted large">396</div>
+	</a>
+	<a href="/questions/1675351/typedef-struct-vs-struct-definitions" class="question-hyperlink">typedef struct vs struct definitions</a>
+</div><div class="spacer">
+	<a href="/q/612328" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted large">474</div>
+	</a>
+	<a href="/questions/612328/difference-between-struct-and-typedef-struct-in-c" class="question-hyperlink">Difference between &#39;struct&#39; and &#39;typedef struct&#39; in C++?</a>
+</div><div class="spacer">
+	<a href="/q/4824342" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">21</div>
+	</a>
+	<a href="/questions/4824342/returning-a-local-variable-from-function-in-c" class="question-hyperlink">returning a local variable from function in C</a>
+</div><div class="spacer">
+	<a href="/q/1154709" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">8</div>
+	</a>
+	<a href="/questions/1154709/how-can-i-hide-the-declaration-of-a-struct-in-c" class="question-hyperlink">How can I hide the declaration of a struct in C?</a>
+</div><div class="spacer">
+	<a href="/q/1110944" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">9</div>
+	</a>
+	<a href="/questions/1110944/c-typedef-and-struct-question" class="question-hyperlink">C Typedef and Struct Question</a>
+</div>					<div class="spacer more">
+				<a href="/questions/linked/252780">see more linked questions…</a>
+			</div>
+	</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer">
+<a href="/q/612328" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">474
+    </div>
+</a><a href="/questions/612328/difference-between-struct-and-typedef-struct-in-c" class="question-hyperlink">Difference between &#39;struct&#39; and &#39;typedef struct&#39; in C++?</a>
+</div>
+<div class="spacer">
+<a href="/q/1541464" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="/questions/1541464/typedefs-of-structs-not-seeming-to-go-through-in-header-files" class="question-hyperlink">typedefs of structs not seeming to go through in header files?</a>
+</div>
+<div class="spacer">
+<a href="/q/2483304" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">4
+    </div>
+</a><a href="/questions/2483304/typedef-and-struct-in-c-and-h-files" class="question-hyperlink">Typedef and Struct in C and H files</a>
+</div>
+<div class="spacer">
+<a href="/q/2605681" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">9
+    </div>
+</a><a href="/questions/2605681/why-should-structure-names-have-a-typedef" class="question-hyperlink">Why should structure names have a typedef?</a>
+</div>
+<div class="spacer">
+<a href="/q/3371169" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">9
+    </div>
+</a><a href="/questions/3371169/why-using-a-typedef-after-struct-definition" class="question-hyperlink">Why using a typedef *after* struct definition?</a>
+</div>
+<div class="spacer">
+<a href="/q/9296492" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">8
+    </div>
+</a><a href="/questions/9296492/when-should-i-typedef-struct-vs-pointer-to-struct" class="question-hyperlink">When should I typedef struct vs. pointer to struct?</a>
+</div>
+<div class="spacer">
+<a href="/q/18658438" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">22
+    </div>
+</a><a href="/questions/18658438/what-is-forward-declaration-and-the-difference-between-typedef-struct-x-and" class="question-hyperlink">What is &#39;forward declaration&#39; and the difference between &#39;typedef struct X&#39; and &#39;struct X&#39;?</a>
+</div>
+<div class="spacer">
+<a href="/q/28047197" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="/questions/28047197/c-put-typedef-into-struct" class="question-hyperlink">c put typedef into struct</a>
+</div>
+<div class="spacer">
+<a href="/q/30103485" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">3
+    </div>
+</a><a href="/questions/30103485/typedef-struct-unknown-type-name" class="question-hyperlink">Typedef struct unknown type name</a>
+</div>
+<div class="spacer">
+<a href="/q/35808996" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">1
+    </div>
+</a><a href="/questions/35808996/why-hasnt-typedef-struct-been-made-optional-in-c" class="question-hyperlink">Why hasn&#39;t &#39;typedef struct&#39; been made optional in C?</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="//stackexchange.com/questions?tab=hot" 
+           class="js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/31999/thing-that-does-not-dry-in-sunlight" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Thing that does not dry in sunlight
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/127119/what-is-the-first-work-of-fantasy-myth-legend-to-feature-a-magic-sword" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is the first work of fantasy, myth, legend to feature a magic sword?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/40949/whats-the-smallest-change-to-physics-required-to-allow-magic" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What&#39;s the smallest change to physics required to allow magic?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/89101/in-on-or-at-github" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    (In, On or At) GitHub?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/1769475/how-to-debug-math" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to debug math?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/1773110/is-there-another-way-to-compute-this-limit" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is there another way to compute this limit?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-serverfault" title="Server Fault"></div><a href="http://serverfault.com/questions/774930/trusting-an-untrustworthy-ca" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:2 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Trusting an untrustworthy CA
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-english" title="English Language &amp; Usage Stack Exchange"></div><a href="http://english.stackexchange.com/questions/323707/heard-a-native-saying-did-you-see-where-she-had-a-baby-refering-to-facebook" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:97 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Heard a native saying: &quot;did you see where she had a baby??&quot; refering to Facebook
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="http://physics.stackexchange.com/questions/253944/if-we-threw-a-baseball-from-the-iss-could-we-deorbit-the-ball" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    If we threw a baseball from the ISS, could we deorbit the ball?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-gaming" title="Arqade"></div><a href="http://gaming.stackexchange.com/questions/264667/what-does-the-first-number-mean-on-a-wand" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:41 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What does the first number mean on a wand?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/31772/my-strange-hotel-room-neighbours" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    My strange hotel room neighbours
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/1769127/has-there-ever-been-an-application-of-dividing-by-zero" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Has there ever been an application of dividing by zero?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-skeptics" title="Skeptics Stack Exchange"></div><a href="http://skeptics.stackexchange.com/questions/32763/is-leicester-city-winning-the-english-football-premiership-the-most-improbable-s" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:212 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is Leicester City winning the English Football premiership the most improbable single event in betting history?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-history" title="History Stack Exchange"></div><a href="http://history.stackexchange.com/questions/28604/why-didnt-incan-empire-use-iron" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:324 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why didn&#39;t Incan Empire use iron?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="http://rpg.stackexchange.com/questions/79691/aside-from-flavor-is-there-any-benefit-to-a-monk-striking-multiple-targets" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Aside from flavor, is there any benefit to a Monk striking multiple targets?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-dba" title="Database Administrators Stack Exchange"></div><a href="http://dba.stackexchange.com/questions/137599/union-all-or-other-ways-to-return-first-row-of-result-set" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:182 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    UNION ALL or other ways to return first row of result-set
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/127069/who-else-has-worn-tony-starks-armor" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Who Else Has Worn Tony Stark&#39;s Armor?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/307795/how-to-create-nonbreaking-arbitrary-length-snakes-for-full-width-justification" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to create nonbreaking arbitrary length snakes for full-width justification?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/79436/remove-unnecessary-parentheses" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Remove unnecessary parentheses
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="http://aviation.stackexchange.com/questions/27328/how-can-an-airliner-make-up-for-time-lost" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can an airliner make up for time lost?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/68191/why-dont-researchers-request-payment-for-refereeing" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why don&#39;t researchers request payment for refereeing?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-travel" title="Travel Stack Exchange"></div><a href="http://travel.stackexchange.com/questions/67702/as-a-tourist-can-i-try-firearms-in-california" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:273 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    As a tourist, can I try firearms in California?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="http://rpg.stackexchange.com/questions/79752/sutra-of-tranquil-thoughts-unclear-how-much-xp" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Sutra of Tranquil thoughts, unclear how much XP
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-money" title="Personal Finance &amp; Money Stack Exchange"></div><a href="http://money.stackexchange.com/questions/63737/the-price-dropped-on-an-item-i-purchased-8-days-ago-what-can-i-do" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:93 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    The price dropped on an item I purchased 8 days ago. What can I do?
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="/feeds/question/252780" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/252780/ivc/1eca');});
+</script>
+<noscript>
+    <div><img src="/posts/252780/ivc/1eca" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang">lang-c</div></div>
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                    <a href="http://stackoverflow.com/company/about">about us</a>
+                        <a href="/tour">tour</a>
+                    <a href="/help">help</a>
+                    <a href="http://blog.stackoverflow.com?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com">chat</a>
+                    <a href="http://data.stackexchange.com">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackoverflow.com/company/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tr>
+            <th colspan=3>
+                Technology
+            </th>
+            <th >
+                Life / Arts
+            </th>
+            <th >
+                Culture / Recreation
+            </th>
+            <th >
+                Science
+            </th>
+            <th >
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="//stackoverflow.com" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="//serverfault.com" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="//superuser.com" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="//webapps.stackexchange.com" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="//askubuntu.com" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="//webmasters.stackexchange.com" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="//gamedev.stackexchange.com" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="//tex.stackexchange.com" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//programmers.stackexchange.com" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="//unix.stackexchange.com" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                        <li><a href="//apple.stackexchange.com" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="//wordpress.stackexchange.com" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="//gis.stackexchange.com" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="//electronics.stackexchange.com" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="//android.stackexchange.com" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="//security.stackexchange.com" title="information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//dba.stackexchange.com" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="//drupal.stackexchange.com" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="//sharepoint.stackexchange.com" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="//ux.stackexchange.com" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="//mathematica.stackexchange.com" title="users of Mathematica">Mathematica</a></li>
+                        <li><a href="//salesforce.stackexchange.com" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                        <li><a href="//expressionengine.stackexchange.com" title="administrators, end users, developers and designers for ExpressionEngine&#174; CMS">ExpressionEngine&#174; Answers</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (13)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//photo.stackexchange.com" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="//scifi.stackexchange.com" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="//graphicdesign.stackexchange.com" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="//movies.stackexchange.com" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                        <li><a href="//cooking.stackexchange.com" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="//diy.stackexchange.com" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="//money.stackexchange.com" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="//academia.stackexchange.com" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (9)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//english.stackexchange.com" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="//skeptics.stackexchange.com" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="//judaism.stackexchange.com" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="//travel.stackexchange.com" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="//christianity.stackexchange.com" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="//gaming.stackexchange.com" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="//bicycles.stackexchange.com" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="//rpg.stackexchange.com" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//math.stackexchange.com" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="//stats.stackexchange.com" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="//cstheory.stackexchange.com" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="//physics.stackexchange.com" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="//mathoverflow.net" title="professional mathematicians">MathOverflow</a></li>
+                        <li><a href="//chemistry.stackexchange.com" title="scientists, academics, teachers and students">Chemistry</a></li>
+                        <li><a href="//biology.stackexchange.com" title="biology researchers, academics, and students">Biology</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (5)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//stackapps.com" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="//meta.stackexchange.com" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="//area51.stackexchange.com" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="//careers.stackoverflow.com">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</table>
+                </div>
+            </div>
+            <div id="copyright">
+                site design / logo &#169; 2016 Stack Exchange Inc; user contributions licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2016.5.5.3547
+            </div>
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Stack Overflow works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    
+    
+        
+        ados.run.push(function () {
+                setTimeout(function () { $("#adzerk-user-match").remove(); }, window.AUMIframeDone ? 0 : 2000);
+                ados_setKeywords('c,struct,typedef');; ados_load();
+        });   
+        
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-1');
+                        ga('set', 'dimension2', '|c|struct|typedef|');         ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>
+        
+    
+    </body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub:Help" />
+  <title>
+  
+    
+      Configuring two-factor authentication via FIDO U2F - User Documentation
+    
+  
+  </title>
+  
+<link rel="icon" type="image/x-icon" href="/assets/images/site/favicon.ico">
+<link rel="stylesheet" href="/assets/stylesheets/application.css">
+<script src="/assets/javascripts/application.js"></script>
+
+<meta name="Description" content="After you configure 2FA [via a TOTP mobile app](/articles/configuring-two-factor-authentication-via-a-totp-mobile-app) or [via SMS](/articles/configuring-two-factor-authentication-via-text-message), you can add a security key that supports [the FIDO U2F standard](https://fidoalliance.org/) to use for two-factor authentication on GitHub.
+…">
+
+<script type="text/javascript">
+  $(function() {
+    $('#quicksearch-query').lunrSearch({
+      
+      indexUrl: '/search/search.json',
+      
+      quickSearchResults:  '.autocomplete-results',
+      quickSearchEntries:  '.result-group',
+      quickSearchTemplate: '#quicksearch-results-template',
+
+      searchResults: '.search-container',
+      searchEntries: '.search-results',
+      searchTemplate: '#search-results-template'
+    });
+  });
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-3769691-27']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+</head>
+
+<body id="com">
+
+<div id="not-footer">
+  
+
+
+  <div id="header">
+    <div class="clearfix">
+      <h1 class="site-logo"><a href="/">GitHub Help</a></h1>
+
+      <ul class="top-nav">
+        
+<li>
+  <button class="js-dropdown-button dropdown-button">Version <div class="dropdown-caret"></div></button>
+  <div class="dropdown-menu js-dropdown-menu">
+    <a href="/">GitHub.com</a>
+    
+    <a href="/enterprise/2.6/">GitHub Enterprise 2.6</a>
+    
+    <a href="/enterprise/2.5/">GitHub Enterprise 2.5</a>
+    
+    <a href="/enterprise/2.4/">GitHub Enterprise 2.4</a>
+    
+    <a href="/enterprise/2.3/">GitHub Enterprise 2.3</a>
+    
+    <a href="/enterprise/2.2/">GitHub Enterprise 2.2</a>
+    
+  </div>
+</li>
+
+
+        
+        <li><a href="https://github.com/contact">Contact Support</a></li>
+        <li><a href="https://github.com/">Return to GitHub</a></li>
+        
+      </ul>
+    </div>
+  </div>
+
+  <div id="content-wrapper">
+
+    <div class="site">
+      
+
+
+
+
+      <div class="content-header small">
+        <h6 class="breadcrumbs">
+          
+          <a href="/categories/setting-up-and-managing-your-github-user-account">Setting up and managing your GitHub user account</a>
+          /
+          
+          Configuring two-factor authentication via FIDO U2F
+        </h6>
+        <div class="search-form small right">
+          
+  
+
+
+<script id="quicksearch-results-template" type="text/mustache">
+  <div class="header">
+    <a class="initial quicksearch-seemore" href="/search?q=">See more results</a>
+  </div>
+  [[#entries]]
+    <tr class="article">
+      <td class="info">
+        <a href="[[url]]" class="js-articles-quicksearch-link">[[title]]</a>
+      </td>
+    </tr>
+  [[/entries]]
+</script>
+
+<form accept-charset="UTF-8" action="/search" id="articles-search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+  <div class="outer">
+    <div class="inner fade-label">
+      <input type="text" name="q" id="quicksearch-query" class="js-articles-quicksearch"
+      placeholder="How can we help?" />
+      <div class="search-form-btn">
+        <button><span class="octicon octicon-search"></span></button>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="autocomplete-results" style="display: none;">
+  <table class="result-group" border="0" cellpadding="0" cellspacing="0">
+  </table>
+</div>
+
+        </div>
+      </div>
+
+      <div class="article js-hide-during-search">
+
+        <h2>Configuring two-factor authentication via FIDO U2F</h2>
+
+        <div id="article-platform-nav">
+  <ul>
+    <li class="platform-mac">
+      <a href="#platform-mac" data-platform="mac">
+        mac
+      </a>
+    </li>
+    <li class="platform-windows">
+      <a href="#platform-windows" data-platform="windows">
+        windows
+      </a>
+    </li>
+    <li class="platform-linux">
+      <a href="#platform-linux" data-platform="linux">
+        linux
+      </a>
+    </li>
+    <li class="platform-all">
+      <a href="#platform-all" data-platform="all">
+        all
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+        <div class="article-body content-body wikistyle markdown-format">
+          <div class='intro'>
+
+          <p>After you configure 2FA <a href="/articles/configuring-two-factor-authentication-via-a-totp-mobile-app">via a TOTP mobile app</a> or <a href="/articles/configuring-two-factor-authentication-via-text-message">via SMS</a>, you can add a security key that supports <a href="https://fidoalliance.org/">the FIDO U2F standard</a> to use for two-factor authentication on GitHub.</p>
+
+          </div>
+
+          <div class="alert tip">
+
+<p><strong>Note:</strong> FIDO U2F authentication is currently only available for the Chrome browser.</p>
+
+</div>
+
+<ol>
+<li>You must have already configured 2FA <a href="/articles/configuring-two-factor-authentication-via-a-totp-mobile-app">via a TOTP mobile app</a> or <a href="/articles/configuring-two-factor-authentication-via-text-message">via SMS</a>.</li>
+<li>Ensure that you have a FIDO U2F compatible security key inserted into your computer.</li>
+<li>In the top right corner of any page, click your profile photo, then click <strong>Settings</strong>. <img src="/assets/images/help/settings/userbar-account-settings.png" alt="Settings icon in the user bar">
+</li>
+<li><p>In the user settings sidebar, click <strong>Security</strong>.
+<img src="/assets/images/help/settings/settings-sidebar-security.png" alt="Security settings sidebar"></p></li>
+<li><p>Under Two-Factor Authentication, click <strong>Edit</strong>.
+<img src="/assets/images/help/2fa/2fa-edit-methods.png" alt="Edit 2FA methods"></p></li>
+<li><p>Under Security Keys, click <strong>Register new device</strong>.
+<img src="/assets/images/help/2fa/register_new_fido_u2f_device.png" alt="Registering a new FIDO U2F device"></p></li>
+<li>Type a nickname for the security key, then click <strong>Add</strong>.
+<img src="/assets/images/help/2fa/fido_u2f_nickname.png" alt="Providing a nickname for a FIDO U2F device">
+</li>
+<li>When prompted, touch your security key to have it authenticate against GitHub.
+<img src="/assets/images/help/2fa/fido_u2f_prompt_key.png" alt="Prompt for a FIDO U2F device">
+</li>
+</ol>
+        </div>
+
+        <div class="support-footer">
+          <ul class="article-footer button-nav">
+            
+              <li><a href="https://github.com/contact" class="minibutton">
+                  <span class="octicon octicon-comment-discussion"></span>
+                  Contact a human
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar">
+  <h3>Article versions</h3>
+  <ul>
+    <li><a href="#" skip-conversion data-proofer-ignore>GitHub.com</a></li>
+
+    
+      <li class="muted">
+        <a data-proofer-ignore>GitHub Enterprise 2.6</a>
+      </li>
+    
+      <li class="muted">
+        <a data-proofer-ignore>GitHub Enterprise 2.5</a>
+      </li>
+    
+      <li class="muted">
+        <a data-proofer-ignore>GitHub Enterprise 2.4</a>
+      </li>
+    
+      <li class="muted">
+        <a data-proofer-ignore>GitHub Enterprise 2.3</a>
+      </li>
+    
+      <li class="muted">
+        <a data-proofer-ignore>GitHub Enterprise 2.2</a>
+      </li>
+    
+
+  </ul>
+</div>
+
+
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  <div class="inner">
+    <a href="https://github.com" class="invertocat">
+      <img alt="The GitHub Logo" src="/assets/images/site/invertocat.png" width="24" height="24" />
+    </a>
+    <p class="left">
+      &copy; <span id="year">2016</span> GitHub Inc. All rights reserved.
+    </p>
+      <ul class="links right">
+        <li><a href="/terms-of-service">Terms of Service</a></li>
+        <li><a href="/privacy-policy">Privacy</a></li>
+        <li><a href="/security">Security</a></li>
+        
+          <li><a href="https://github.com/contact">Support</a></li>
+        
+      </ul>
+  </div>
+</div>
+
+
+<div class="fullscreen-overlay"></div>
+</body>
+</html>

@@ -1,0 +1,834 @@
+<!DOCTYPE html> 
+<html class="no-js" lang="ru-RU">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Поиск бэкдоров и шеллов(backdoor, remview, phpshell)</title>
+
+	<link rel="pingback" href="http://fstrange.ru/coder/xmlrpc.php">
+	<link href='http://fstrange.ru/coder/wp-content/themes/fhueman/fonts/marta/marta.css' rel='stylesheet' type='text/css'>
+	
+	<script>document.documentElement.className = document.documentElement.className.replace("no-js","js");</script>
+
+<!-- All in One SEO Pack 2.3.4 by Michael Torbert of Semper Fi Web Design[164,225] -->
+<meta name="description"  content="Как найти php backdoor на сайте? После поиска зловреда на сайте заказчика решил систематизировать свои знания по этому вопросу..." />
+
+<meta name="keywords"  content="php backdoor,бэкдор,шелл,secure,php" />
+
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="Записки веб разработчика fStrange &raquo; Лента" href="http://fstrange.ru/coder/feed" />
+<link rel="alternate" type="application/rss+xml" title="Записки веб разработчика fStrange &raquo; Лента комментариев" href="http://fstrange.ru/coder/comments/feed" />
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+<link rel="alternate" type="application/rss+xml" title="Записки веб разработчика fStrange &raquo; Лента комментариев к &laquo;Поиск бэкдоров и шеллов(backdoor, remview, phpshell)&raquo;" href="http://fstrange.ru/coder/php/backdoor-shell-remview.html/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/fstrange.ru\/coder\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.5.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;if(!g||!g.fillText)return!1;switch(g.textBaseline="top",g.font="600 32px Arial",a){case"flag":return g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3;case"diversity":return g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,d=c[0]+","+c[1]+","+c[2]+","+c[3],g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e;case"simple":return g.fillText(h(55357,56835),0,0),0!==g.getImageData(16,16,1,1).data[0];case"unicode8":return g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='yarppWidgetCss-css'  href='http://fstrange.ru/coder/wp-content/plugins/yet-another-related-posts-plugin/style/widget.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-css'  href='http://fstrange.ru/coder/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=_2.7.2_beta' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-twilight-css'  href='http://fstrange.ru/coder/wp-content/plugins/crayon-syntax-highlighter/themes/twilight/twilight.css?ver=_2.7.2_beta' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-consolas-css'  href='http://fstrange.ru/coder/wp-content/plugins/crayon-syntax-highlighter/fonts/consolas.css?ver=_2.7.2_beta' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='http://fstrange.ru/coder/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=4.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='fancybox-style-css'  href='http://fstrange.ru/coder/wp-content/plugins/light/css/jquery.fancybox.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='style-css'  href='http://fstrange.ru/coder/wp-content/themes/fhueman/style.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-css'  href='http://fstrange.ru/coder/wp-content/themes/fhueman/responsive.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-css'  href='http://fstrange.ru/coder/wp-content/themes/fhueman/fonts/font-awesome.min.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css'  href='http://fstrange.ru/coder/wp-content/plugins/wordpress-popular-posts/style/wpp.css?ver=3.3.3' type='text/css' media='all' />
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-includes/js/jquery/jquery.js?ver=1.12.3'></script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"http:\/\/fstrange.ru\/coder\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"\u041d\u0430\u0436\u043c\u0438\u0442\u0435 %s \u0434\u043b\u044f \u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f, %s \u0434\u043b\u044f \u0432\u0441\u0442\u0430\u0432\u043a\u0438","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=_2.7.2_beta'></script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-content/themes/fhueman/js/jquery.flexslider.min.js?ver=4.5.1'></script>
+<link rel='https://api.w.org/' href='http://fstrange.ru/coder/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://fstrange.ru/coder/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://fstrange.ru/coder/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.5.1" />
+<link rel="canonical" href="http://fstrange.ru/coder/php/backdoor-shell-remview.html" />
+<link rel='shortlink' href='http://fstrange.ru/coder/?p=447' />
+<link rel="alternate" type="application/json+oembed" href="http://fstrange.ru/coder/wp-json/oembed/1.0/embed?url=http%3A%2F%2Ffstrange.ru%2Fcoder%2Fphp%2Fbackdoor-shell-remview.html" />
+<link rel="alternate" type="text/xml+oembed" href="http://fstrange.ru/coder/wp-json/oembed/1.0/embed?url=http%3A%2F%2Ffstrange.ru%2Fcoder%2Fphp%2Fbackdoor-shell-remview.html&#038;format=xml" />
+
+<!-- Added by Quoter plugin v1.1 -->
+<script type="text/javascript" src="http://fstrange.ru/coder/wp-content/plugins/quoter/quoter.php?js=1"></script>
+<style type="text/css" media="screen">
+.commentlist blockquote cite { /* Fix for Kubrik theme */
+	display: inline;
+}
+</style>
+
+
+<!-- Protected by WP-SpamFree :: JS BEGIN -->
+<script type="text/javascript" src="http://fstrange.ru/coder/wp-content/plugins/wp-spamfree/js/wpsfv2-js.php"></script> 
+<!-- Protected by WP-SpamFree :: JS END -->
+
+<!--[if lt IE 9]>
+<script src="http://fstrange.ru/coder/wp-content/themes/fhueman/js/ie/html5.js"></script>
+<script src="http://fstrange.ru/coder/wp-content/themes/fhueman/js/ie/selectivizr.js"></script>
+<![endif]-->
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+						<!-- WordPress Popular Posts v3.3.3 -->
+				<script type="text/javascript">//<![CDATA[
+
+					var sampling_active = 0;
+					var sampling_rate   = 100;
+					var do_request = false;
+
+					if ( !sampling_active ) {
+						do_request = true;
+					} else {
+						var num = Math.floor(Math.random() * sampling_rate) + 1;
+						do_request = ( 1 === num );
+					}
+
+					if ( do_request ) {
+
+						// Create XMLHttpRequest object and set variables
+						var xhr = ( window.XMLHttpRequest )
+						  ? new XMLHttpRequest()
+						  : new ActiveXObject( "Microsoft.XMLHTTP" ),
+						url = 'http://fstrange.ru/coder/wp-admin/admin-ajax.php',
+						params = 'action=update_views_ajax&token=1d8191ae73&wpp_id=447';
+						// Set request method and target URL
+						xhr.open( "POST", url, true );
+						// Set request header
+						xhr.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
+						// Hook into onreadystatechange
+						xhr.onreadystatechange = function() {
+							if ( 4 === xhr.readyState && 200 === xhr.status ) {
+								if ( window.console && window.console.log ) {
+									window.console.log( xhr.responseText );
+								}
+							}
+						};
+						// Send request
+						xhr.send( params );
+
+					}
+
+				//]]></script>
+				<!-- End WordPress Popular Posts v3.3.3 -->
+				<style type="text/css">
+/* Dynamic CSS: For no styles in head, copy and put the css below in your child theme's style.css, disable dynamic styles */
+body { font-family: "PT Serif", serif; }
+
+::selection { background-color: #cc3535; }
+::-moz-selection { background-color: #cc3535; }
+
+a,
+.themeform label .required,
+#flexslider-featured .flex-direction-nav .flex-next:hover,
+#flexslider-featured .flex-direction-nav .flex-prev:hover,
+.post-hover:hover .post-title a,
+.post-title a:hover,
+.s1 .post-nav li a:hover i,
+.content .post-nav li a:hover i,
+.post-related a:hover,
+.s1 .widget_rss ul li a,
+#footer .widget_rss ul li a,
+.s1 .widget_calendar a,
+#footer .widget_calendar a,
+.s1 .alx-tab .tab-item-category a,
+.s1 .alx-posts .post-item-category a,
+.s1 .alx-tab li:hover .tab-item-title a,
+.s1 .alx-tab li:hover .tab-item-comment a,
+.s1 .alx-posts li:hover .post-item-title a,
+#footer .alx-tab .tab-item-category a,
+#footer .alx-posts .post-item-category a,
+#footer .alx-tab li:hover .tab-item-title a,
+#footer .alx-tab li:hover .tab-item-comment a,
+#footer .alx-posts li:hover .post-item-title a,
+.comment-tabs li.active a,
+.comment-awaiting-moderation,
+.child-menu a:hover,
+.child-menu .current_page_item > a,
+.wp-pagenavi a { color: #cc3535; }
+
+.themeform input[type="submit"],
+.themeform button[type="submit"],
+.s1 .sidebar-top,
+.s1 .sidebar-toggle,
+#flexslider-featured .flex-control-nav li a.flex-active,
+.post-tags a:hover,
+.s1 .widget_calendar caption,
+#footer .widget_calendar caption,
+.author-bio .bio-avatar:after,
+.commentlist li.bypostauthor > .comment-body:after,
+.commentlist li.comment-author-admin > .comment-body:after { background-color: #cc3535; }
+
+.post-format .format-container { border-color: #cc3535; }
+
+.s1 .alx-tabs-nav li.active a,
+#footer .alx-tabs-nav li.active a,
+.comment-tabs li.active a,
+.wp-pagenavi a:hover,
+.wp-pagenavi a:active,
+.wp-pagenavi span.current { border-bottom-color: #cc3535!important; }				
+				
+
+.s2 .post-nav li a:hover i,
+.s2 .widget_rss ul li a,
+.s2 .widget_calendar a,
+.s2 .alx-tab .tab-item-category a,
+.s2 .alx-posts .post-item-category a,
+.s2 .alx-tab li:hover .tab-item-title a,
+.s2 .alx-tab li:hover .tab-item-comment a,
+.s2 .alx-posts li:hover .post-item-title a { color: #470101; }
+
+.s2 .sidebar-top,
+.s2 .sidebar-toggle,
+.post-comments,
+.jp-play-bar,
+.jp-volume-bar-value,
+.s2 .widget_calendar caption { background-color: #470101; }
+
+.s2 .alx-tabs-nav li.active a { border-bottom-color: #470101; }
+.post-comments span:before { border-right-color: #470101; }				
+				
+</style>
+</head>
+
+<body class="single single-post postid-447 single-format-standard col-2cl full-width mobile-sidebar-hide-s1 chrome">
+
+<div id="wrapper">
+
+	<header id="header">
+	
+				
+		<div class="container group">
+			<div class="container-inner">
+				
+				<div class="group pad">
+					<p class="site-title"><a href="http://fstrange.ru/coder/" rel="home">Записки веб разработчика fStrange</a></p>
+					<p class="site-description"></p>				</div>
+				
+								
+			</div><!--/.container-inner-->
+		</div><!--/.container-->
+		
+	</header><!--/#header-->
+	
+	<div class="container" id="page">
+		<div class="container-inner">
+			<div class="main">
+				<div class="main-inner group">
+<section class="content">
+	
+	<div class="page-title pad group">
+
+			<ul class="meta-single group">
+			<li class="category"><a href="http://fstrange.ru/coder/topics/php" rel="category tag">php</a></li>
+						<li class="comments"><a href="http://fstrange.ru/coder/php/backdoor-shell-remview.html#comments"><i class="fa fa-comments-o"></i><span class="dsq-postid" data-dsqidentifier="447 http://fstrange.ru/coder/?p=447">1</span></a></li>
+					</ul>
+		
+	
+</div><!--/.page-title-->	
+	<div class="pad group">
+		
+					<article class="post-447 post type-post status-publish format-standard hentry category-php tag-secure">	
+				<div class="post-inner group">
+					
+					<h1 class="post-title">Поиск бэкдоров и шеллов(backdoor, remview, phpshell)</h1>
+					<p class="post-byline">by <a href="http://fstrange.ru/coder/author/admin" title="Записи admin" rel="author">admin</a> &middot; 4 Апрель 2012</p>
+					
+										
+					<div class="clear"></div>
+					
+					<div class="entry">	
+						<div class="entry-inner">
+							<p>Как найти php backdoor&nbsp; на сайте? После поиска зловреда на сайте заказчика решил систематизировать свои знания по этому вопросу.</p>
+<p>Самый короткий пример позволяющий исполнить произвольный php код удаленно:</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-572af28c58504473586758" class="crayon-syntax crayon-theme-twilight crayon-font-consolas crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Включить/Отключить нумерацию строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Включить/Отключить подсветку кода"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Включить/Отключить перенос строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Показать код в новом окне"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2; font-size: 12px !important; line-height: 15px !important;">
+eval($_REQUEST['phpshell']);</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-572af28c58504473586758-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2;"><div class="crayon-line" id="crayon-572af28c58504473586758-1"><span class="crayon-e">eval</span><span class="crayon-sy">(</span><span class="crayon-sy">$</span><span class="crayon-v">_REQUEST</span><span class="crayon-sy">[</span><span class="crayon-s">'phpshell'</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p><strong>1. Поискать на сайте &quot;опасные&quot; функции:</strong><br />
+	а) eval() &#8212; исполняем php код<br />
+	б) passthru(), exec()&nbsp; и им подобные &#8212; испололняем команду ОС<br />
+	в) fopen(), chmod(), touch(), &#8230; &#8212; функции для работы с файловой системой<br />
+	&nbsp;</p>
+<p>Для того чтобы искать, понадобится шелл доступ и некоторые знания *nix комманд. Пример, как найти в текущей директории рекурсивно все *.php файлы содержащие функцию eval()</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-572af28c58515159222914" class="crayon-syntax crayon-theme-twilight crayon-font-consolas crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Включить/Отключить нумерацию строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Включить/Отключить подсветку кода"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Включить/Отключить перенос строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Показать код в новом окне"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2; font-size: 12px !important; line-height: 15px !important;">
+find ./ -name "*.php" -print | xargs grep "eval("</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-572af28c58515159222914-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2;"><div class="crayon-line" id="crayon-572af28c58515159222914-1"><span class="crayon-i">find</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-o">/</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-i">name</span><span class="crayon-h"> </span><span class="crayon-s">"*.php"</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-v">print</span><span class="crayon-h"> </span><span class="crayon-o">|</span><span class="crayon-h"> </span><span class="crayon-e">xargs </span><span class="crayon-i">grep</span><span class="crayon-h"> </span><span class="crayon-s">"eval("</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>Пример, как найти последние измененные файлы за неделю:</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-572af28c5851a369759738" class="crayon-syntax crayon-theme-twilight crayon-font-consolas crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Включить/Отключить нумерацию строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Включить/Отключить подсветку кода"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Включить/Отключить перенос строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Показать код в новом окне"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2; font-size: 12px !important; line-height: 15px !important;">
+find ./ -mtime  -7 -name "*.php" -prune  -print</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-572af28c5851a369759738-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2;"><div class="crayon-line" id="crayon-572af28c5851a369759738-1"><span class="crayon-i">find</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-o">/</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-v">mtime</span><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">-</span><span class="crayon-cn">7</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-i">name</span><span class="crayon-h"> </span><span class="crayon-s">"*.php"</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-v">prune</span><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">-</span><span class="crayon-v">print</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p>find &#8212; великолепная утилита для поиска в никсах, но синтаксис сложно запомнить, для ленивых есть отличный <a href="http://find.unixpin.com/ru/">онлайн find помощник</a> .</p>
+<p><strong>2. Проверить .htaccess файлы</strong> на наличие чего нибудь подозрительного. Например можно засунуть php код в *.html так</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-572af28c58520126487273" class="crayon-syntax crayon-theme-twilight crayon-font-consolas crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Включить/Отключить нумерацию строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Включить/Отключить подсветку кода"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Включить/Отключить перенос строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Показать код в новом окне"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2; font-size: 12px !important; line-height: 15px !important;">
+RewriteEngine on
+RewriteRule ^(.*)\.html $1\.php</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-572af28c58520126487273-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-572af28c58520126487273-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2;"><div class="crayon-line" id="crayon-572af28c58520126487273-1"><span class="crayon-e">RewriteEngine </span><span class="crayon-e">on</span></div><div class="crayon-line crayon-striped-line" id="crayon-572af28c58520126487273-2"><span class="crayon-v">RewriteRule</span><span class="crayon-h"> </span><span class="crayon-o">^</span><span class="crayon-sy">(</span><span class="crayon-sy">.</span><span class="crayon-o">*</span><span class="crayon-sy">)</span><span class="crayon-sy">\</span><span class="crayon-sy">.</span><span class="crayon-i">html</span><span class="crayon-h"> </span><span class="crayon-sy">$</span><span class="crayon-cn">1</span><span class="crayon-sy">\</span><span class="crayon-sy">.</span><span class="crayon-v">php</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p>Или даже в css и jpg, чтоб никто не догадался!</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-572af28c58525461616416" class="crayon-syntax crayon-theme-twilight crayon-font-consolas crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Включить/Отключить нумерацию строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Включить/Отключить подсветку кода"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Включить/Отключить перенос строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Показать код в новом окне"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2; font-size: 12px !important; line-height: 15px !important;">
+AddHandler application/x-httpd-php .php .css .jpg</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-572af28c58525461616416-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2;"><div class="crayon-line" id="crayon-572af28c58525461616416-1"><span class="crayon-e">AddHandler </span><span class="crayon-v">application</span><span class="crayon-o">/</span><span class="crayon-v">x</span><span class="crayon-o">-</span><span class="crayon-v">httpd</span><span class="crayon-o">-</span><span class="crayon-i">php</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-i">php</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-i">css</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-v">jpg</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p><strong>3. Анализируем логи</strong>. Если известно примерное время, после которого замечен бэкдор, то можно поискать подозрительное в логах. Хотя на сайте с высокой посещаемостью это будет нелегко.<br />
+	Пример:</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-572af28c5852a431555145" class="crayon-syntax crayon-theme-twilight crayon-font-consolas crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" mouseover overlay hide delay" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Включить/Отключить нумерацию строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Включить/Отключить подсветку кода"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Включить/Отключить перенос строк"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Показать код в новом окне"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2; font-size: 12px !important; line-height: 15px !important;">
+"GET /path/footer.inc.php?act=edit&amp;file=&lt;span style="background-color:#ffff00;"&gt;/home/account/public_html/.htaccess&lt;/span&gt; HTTP/1.1"
+200 4795 "http://website/path/footer.inc.php?act=filemanager" "Mozilla/5.0..."</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-572af28c5852a431555145-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-572af28c5852a431555145-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:2; -o-tab-size:2; -webkit-tab-size:2; tab-size:2;"><div class="crayon-line" id="crayon-572af28c5852a431555145-1"><span class="crayon-s">"GET /path/footer.inc.php?act=edit&amp;file=&lt;span style="</span><span class="crayon-v">background</span><span class="crayon-o">-</span><span class="crayon-v">color</span><span class="crayon-o">:</span><span class="crayon-p">#ffff00;"&gt;/home/account/public_html/.htaccess&lt;/span&gt; HTTP/1.1"</span></div><div class="crayon-line crayon-striped-line" id="crayon-572af28c5852a431555145-2"><span class="crayon-cn">200</span><span class="crayon-h"> </span><span class="crayon-cn">4795</span><span class="crayon-h"> </span><span class="crayon-s">"http://website/path/footer.inc.php?act=filemanager"</span><span class="crayon-h"> </span><span class="crayon-s">"Mozilla/5.0..."</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>Многие наивно думают, что не используя самописные скрипты &#8212; застрахованы от зловредов. Это не так. Шелл-код нередко встречается и в CMS и форумах. Обычно этим грешат нулленые версии. А иногда и в плагинах.</p>
+<p>Ну и наконец полезные ссылки по теме:<br />
+	Бэкдоры: <a href="http://php.spb.ru/remview/">PhpRemoteView</a> , <a href="http://www.securitylab.ru/software/234092.php">r57shell</a><br />
+	<a href="https://github.com/Neohapsis/NeoPI">NeoPI</a> скрипт на Питоне для поиска &quot;опасного&quot; кода<br />
+	<a href="http://www.securitylab.ru/analytics/421791.php">Статья</a> на securitylab.ru<br />
+	&nbsp;</p>
+<span style="clear:both;display:none;"><img src="http://fstrange.ru/coder/wp-content/plugins/wp-spamfree/img/wpsf-img.php" width="0" height="0" alt="" style="border-style:none;width:0px;height:0px;display:none;" /></span><div class='yarpp-related yarpp-related-none'>
+</div>
+													</div>
+						<div class="clear"></div>				
+					</div><!--/.entry-->
+					
+				</div><!--/.post-inner-->	
+			</article><!--/.post-->				
+				
+		<div class="clear"></div>
+
+		
+		<p class="post-tags"><span>Tags:</span> <a href="http://fstrange.ru/coder/tags/secure" rel="tag">secure</a></p>		
+
+
+
+				
+				
+
+		
+
+<h4 class="heading">
+	<i class="fa fa-hand-o-right"></i>You may also like...</h4>
+
+<ul class="related-posts group">
+	
+		<li class="related post-hover">
+		<article class="post-365 post type-post status-publish format-standard hentry category-php category-about_all tag-wordpress">
+
+			<div class="post-thumbnail">
+				<a href="http://fstrange.ru/coder/about_all/tag_wordpress.html" title="Уменьшить количество тегов(wordpress)">
+																								</a>
+									<a class="post-comments" href="http://fstrange.ru/coder/about_all/tag_wordpress.html#comments"><span><i class="fa fa-comments-o"></i><span class="dsq-postid" data-dsqidentifier="365 http://fstrange.ru/coder/?p=365">1</span></span></a>
+							</div><!--/.post-thumbnail-->
+			
+			<div class="related-inner">
+				
+				<h4 class="post-title">
+					<a href="http://fstrange.ru/coder/about_all/tag_wordpress.html" rel="bookmark" title="Уменьшить количество тегов(wordpress)">Уменьшить количество тегов(wordpress)</a>
+				</h4><!--/.post-title-->
+				
+				<div class="post-meta group">
+					<p class="post-date">5 Июл, 2011</p>
+				</div><!--/.post-meta-->
+			
+			</div><!--/.related-inner-->
+
+		</article>
+	</li><!--/.related-->
+		<li class="related post-hover">
+		<article class="post-14 post type-post status-publish format-standard hentry category-php tag-denwer tag-eclipse tag-php">
+
+			<div class="post-thumbnail">
+				<a href="http://fstrange.ru/coder/php/denver-eclipse-xdebug.html" title="denwer + eclipse + xdebug">
+																								</a>
+									<a class="post-comments" href="http://fstrange.ru/coder/php/denver-eclipse-xdebug.html#respond"><span><i class="fa fa-comments-o"></i><span class="dsq-postid" data-dsqidentifier="14 http://fstrange.ru/coder/2009_08_26/denver-eclipse-xdebug/">0</span></span></a>
+							</div><!--/.post-thumbnail-->
+			
+			<div class="related-inner">
+				
+				<h4 class="post-title">
+					<a href="http://fstrange.ru/coder/php/denver-eclipse-xdebug.html" rel="bookmark" title="denwer + eclipse + xdebug">denwer + eclipse + xdebug</a>
+				</h4><!--/.post-title-->
+				
+				<div class="post-meta group">
+					<p class="post-date">26 Авг, 2009</p>
+				</div><!--/.post-meta-->
+			
+			</div><!--/.related-inner-->
+
+		</article>
+	</li><!--/.related-->
+		<li class="related post-hover">
+		<article class="post-697 post type-post status-publish format-standard hentry category-js category-php tag-virus tag-lechenie">
+
+			<div class="post-thumbnail">
+				<a href="http://fstrange.ru/coder/php/stranichka-404-virus.html" title="Страничка 404 с вирусом от хостера">
+																								</a>
+									<a class="post-comments" href="http://fstrange.ru/coder/php/stranichka-404-virus.html#respond"><span><i class="fa fa-comments-o"></i><span class="dsq-postid" data-dsqidentifier="697 http://fstrange.ru/coder/?p=697">0</span></span></a>
+							</div><!--/.post-thumbnail-->
+			
+			<div class="related-inner">
+				
+				<h4 class="post-title">
+					<a href="http://fstrange.ru/coder/php/stranichka-404-virus.html" rel="bookmark" title="Страничка 404 с вирусом от хостера">Страничка 404 с вирусом от хостера</a>
+				</h4><!--/.post-title-->
+				
+				<div class="post-meta group">
+					<p class="post-date">23 Дек, 2015</p>
+				</div><!--/.post-meta-->
+			
+			</div><!--/.related-inner-->
+
+		</article>
+	</li><!--/.related-->
+	
+</ul><!--/.post-related-->
+
+		
+		
+<div id="disqus_thread">
+            <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-1934">
+        <div id="dsq-comment-header-1934" class="dsq-comment-header">
+            <cite id="dsq-cite-1934">
+                <span id="dsq-author-user-1934">tronindenis</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1934" class="dsq-comment-body">
+            <div id="dsq-comment-message-1934" class="dsq-comment-message"><p>Не так давно заметил активность на своих сайтах, спасибо за статью find ./ помог как нельзя лучше ) Висел шелл на одном из доменов.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+var disqus_url = 'http://fstrange.ru/coder/php/backdoor-shell-remview.html';
+var disqus_identifier = '447 http://fstrange.ru/coder/?p=447';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'fstrange';
+var disqus_title = "Поиск бэкдоров и шеллов(backdoor, remview, phpshell)";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=447';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+		
+	</div><!--/.pad-->
+	
+</section><!--/.content-->
+
+
+	<div class="sidebar s1">
+		
+		<a class="sidebar-toggle" title="Expand Sidebar"><i class="fa icon-sidebar-toggle"></i></a>
+		
+		<div class="sidebar-content">
+			
+			<div class="sidebar-top group">
+				<p>Follow:</p>
+				<ul class="social-links"><li><a rel="nofollow" class="social-tooltip" title="Vkontakte" href="http://vk.com" ><i class="fa fa-vk" ></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Facebook" href="http://fb.com" ><i class="fa fa-facebook" ></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Twitter" href="http://twitter.com" ><i class="fa fa-twitter" ></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Google" href="https://plus.google.com/" ><i class="fa fa-google-plus" ></i></a></li></ul>			</div>
+			
+				<ul class="post-nav group">
+		<li class="next"><a href="http://fstrange.ru/coder/programs-to-work/firefox-kvadratikami.html" rel="next"><i class="fa fa-chevron-right"></i><strong>Next story</strong> <span>Firefox отображает текст квадратиками</span></a></li>
+		<li class="previous"><a href="http://fstrange.ru/coder/about_all/imagemagick-resize-only-if-larger.html" rel="prev"><i class="fa fa-chevron-left"></i><strong>Previous story</strong> <span>ImageMagick resize. Только бОльшие картинки</span></a></li>
+	</ul>
+			
+						
+			<div id="pages-2" class="widget widget_pages"><h3>Страницы</h3>		<ul>
+			<li class="page_item page-item-679"><a href="http://fstrange.ru/coder/fscure-script-dlya-poiska-i-udaleniya-virusov-na-sajtax">fscure &#8212; скрипт для поиска и удаления вирусов на сайтах</a></li>
+<li class="page_item page-item-588"><a href="http://fstrange.ru/coder/cure_site_virus">Лечение сайтов от вирусов</a></li>
+<li class="page_item page-item-2"><a href="http://fstrange.ru/coder/about">Обо мне</a></li>
+		</ul>
+		</div>		<div id="recent-posts-2" class="widget widget_recent_entries">		<h3>Свежие записи</h3>		<ul>
+					<li>
+				<a href="http://fstrange.ru/coder/news/sweb-preduprezhdaet-o-virusax-i.html">sweb предупреждает о вирусах и&#8230;</a>
+						</li>
+					<li>
+				<a href="http://fstrange.ru/coder/js/yandeks-zhaluetsya-klikdzheking.html">Яндекс.Webmaster жалуется на кликджекинг</a>
+						</li>
+					<li>
+				<a href="http://fstrange.ru/coder/about_all/internet-planshet-xs-ot-megafona.html">Интернет Планшет XS от мегафона</a>
+						</li>
+					<li>
+				<a href="http://fstrange.ru/coder/php/hosting-1gb-ru.html">Хостинг 1gb.ru</a>
+						</li>
+					<li>
+				<a href="http://fstrange.ru/coder/programs-to-work/skype-tormozit.html">Skype тормозит</a>
+						</li>
+				</ul>
+		</div>		<div id="tag_cloud-2" class="widget widget_tag_cloud"><h3>Метки</h3><div class="tagcloud"><a href='http://fstrange.ru/coder/tags/htaccess' class='tag-link-29 tag-link-position-1' title='4 записи' style='font-size: 14.021505376344pt;'>.htaccess</a>
+<a href='http://fstrange.ru/coder/tags/cheat-sheet' class='tag-link-95 tag-link-position-2' title='1 запись' style='font-size: 8pt;'>cheat sheet</a>
+<a href='http://fstrange.ru/coder/tags/css' class='tag-link-85 tag-link-position-3' title='2 записи' style='font-size: 10.709677419355pt;'>css</a>
+<a href='http://fstrange.ru/coder/tags/curl' class='tag-link-73 tag-link-position-4' title='3 записи' style='font-size: 12.516129032258pt;'>curl</a>
+<a href='http://fstrange.ru/coder/tags/debug' class='tag-link-51 tag-link-position-5' title='3 записи' style='font-size: 12.516129032258pt;'>debug</a>
+<a href='http://fstrange.ru/coder/tags/eclipse' class='tag-link-41 tag-link-position-6' title='2 записи' style='font-size: 10.709677419355pt;'>eclipse</a>
+<a href='http://fstrange.ru/coder/tags/ffmpeg' class='tag-link-59 tag-link-position-7' title='2 записи' style='font-size: 10.709677419355pt;'>ffmpeg</a>
+<a href='http://fstrange.ru/coder/tags/firefox' class='tag-link-19 tag-link-position-8' title='14 записей' style='font-size: 21.247311827957pt;'>firefox</a>
+<a href='http://fstrange.ru/coder/tags/fscure' class='tag-link-98 tag-link-position-9' title='1 запись' style='font-size: 8pt;'>fscure</a>
+<a href='http://fstrange.ru/coder/tags/howto' class='tag-link-34 tag-link-position-10' title='2 записи' style='font-size: 10.709677419355pt;'>howto</a>
+<a href='http://fstrange.ru/coder/tags/imagemagick' class='tag-link-62 tag-link-position-11' title='3 записи' style='font-size: 12.516129032258pt;'>imagemagick</a>
+<a href='http://fstrange.ru/coder/tags/javascript' class='tag-link-77 tag-link-position-12' title='3 записи' style='font-size: 12.516129032258pt;'>javascript</a>
+<a href='http://fstrange.ru/coder/tags/joomla' class='tag-link-94 tag-link-position-13' title='6 записей' style='font-size: 16.279569892473pt;'>joomla</a>
+<a href='http://fstrange.ru/coder/tags/js' class='tag-link-101 tag-link-position-14' title='5 записей' style='font-size: 15.225806451613pt;'>js</a>
+<a href='http://fstrange.ru/coder/tags/miranda' class='tag-link-40 tag-link-position-15' title='2 записи' style='font-size: 10.709677419355pt;'>miranda</a>
+<a href='http://fstrange.ru/coder/tags/mobile-2' class='tag-link-54 tag-link-position-16' title='2 записи' style='font-size: 10.709677419355pt;'>mobile</a>
+<a href='http://fstrange.ru/coder/tags/mp3' class='tag-link-66 tag-link-position-17' title='2 записи' style='font-size: 10.709677419355pt;'>mp3</a>
+<a href='http://fstrange.ru/coder/tags/mysql' class='tag-link-99 tag-link-position-18' title='9 записей' style='font-size: 18.537634408602pt;'>mysql</a>
+<a href='http://fstrange.ru/coder/tags/php' class='tag-link-100 tag-link-position-19' title='16 записей' style='font-size: 22pt;'>php</a>
+<a href='http://fstrange.ru/coder/tags/phpstorm' class='tag-link-57 tag-link-position-20' title='3 записи' style='font-size: 12.516129032258pt;'>phpstorm</a>
+<a href='http://fstrange.ru/coder/tags/secure' class='tag-link-90 tag-link-position-21' title='8 записей' style='font-size: 17.784946236559pt;'>secure</a>
+<a href='http://fstrange.ru/coder/tags/seo' class='tag-link-47 tag-link-position-22' title='5 записей' style='font-size: 15.225806451613pt;'>seo</a>
+<a href='http://fstrange.ru/coder/tags/sqlite' class='tag-link-20 tag-link-position-23' title='2 записи' style='font-size: 10.709677419355pt;'>Sqlite</a>
+<a href='http://fstrange.ru/coder/tags/tricks' class='tag-link-68 tag-link-position-24' title='5 записей' style='font-size: 15.225806451613pt;'>tricks</a>
+<a href='http://fstrange.ru/coder/tags/video' class='tag-link-60 tag-link-position-25' title='2 записи' style='font-size: 10.709677419355pt;'>video</a>
+<a href='http://fstrange.ru/coder/tags/vkontakte' class='tag-link-74 tag-link-position-26' title='3 записи' style='font-size: 12.516129032258pt;'>vkontakte</a>
+<a href='http://fstrange.ru/coder/tags/wap' class='tag-link-13 tag-link-position-27' title='3 записи' style='font-size: 12.516129032258pt;'>wap</a>
+<a href='http://fstrange.ru/coder/tags/watermark' class='tag-link-50 tag-link-position-28' title='4 записи' style='font-size: 14.021505376344pt;'>watermark</a>
+<a href='http://fstrange.ru/coder/tags/webdev' class='tag-link-49 tag-link-position-29' title='2 записи' style='font-size: 10.709677419355pt;'>webdev</a>
+<a href='http://fstrange.ru/coder/tags/windows' class='tag-link-56 tag-link-position-30' title='2 записи' style='font-size: 10.709677419355pt;'>windows</a>
+<a href='http://fstrange.ru/coder/tags/wordpress' class='tag-link-5 tag-link-position-31' title='4 записи' style='font-size: 14.021505376344pt;'>wordpress</a>
+<a href='http://fstrange.ru/coder/tags/xhtml' class='tag-link-78 tag-link-position-32' title='2 записи' style='font-size: 10.709677419355pt;'>xhtml</a>
+<a href='http://fstrange.ru/coder/tags/avtorizaciya' class='tag-link-75 tag-link-position-33' title='2 записи' style='font-size: 10.709677419355pt;'>авторизация</a>
+<a href='http://fstrange.ru/coder/tags/verstka' class='tag-link-53 tag-link-position-34' title='1 запись' style='font-size: 8pt;'>верстка</a>
+<a href='http://fstrange.ru/coder/tags/virus' class='tag-link-97 tag-link-position-35' title='9 записей' style='font-size: 18.537634408602pt;'>вирус</a>
+<a href='http://fstrange.ru/coder/tags/vordpress' class='tag-link-15 tag-link-position-36' title='1 запись' style='font-size: 8pt;'>вордпресc</a>
+<a href='http://fstrange.ru/coder/tags/zarabotok' class='tag-link-69 tag-link-position-37' title='2 записи' style='font-size: 10.709677419355pt;'>заработок</a>
+<a href='http://fstrange.ru/coder/tags/kodirovka' class='tag-link-46 tag-link-position-38' title='3 записи' style='font-size: 12.516129032258pt;'>кодировка</a>
+<a href='http://fstrange.ru/coder/tags/konvertirovanie' class='tag-link-67 tag-link-position-39' title='2 записи' style='font-size: 10.709677419355pt;'>конвертирование</a>
+<a href='http://fstrange.ru/coder/tags/lechenie' class='tag-link-96 tag-link-position-40' title='8 записей' style='font-size: 17.784946236559pt;'>лечение</a>
+<a href='http://fstrange.ru/coder/tags/optimizaciya' class='tag-link-22 tag-link-position-41' title='9 записей' style='font-size: 18.537634408602pt;'>оптимизация</a>
+<a href='http://fstrange.ru/coder/tags/plaginy' class='tag-link-10 tag-link-position-42' title='2 записи' style='font-size: 10.709677419355pt;'>плагины</a>
+<a href='http://fstrange.ru/coder/tags/podsvetka-sintaksisa' class='tag-link-11 tag-link-position-43' title='1 запись' style='font-size: 8pt;'>подсветка синтаксиса</a>
+<a href='http://fstrange.ru/coder/tags/regulyarnye-vyrazheniya' class='tag-link-18 tag-link-position-44' title='2 записи' style='font-size: 10.709677419355pt;'>регулярные выражения</a>
+<a href='http://fstrange.ru/coder/tags/shablonizatory' class='tag-link-35 tag-link-position-45' title='2 записи' style='font-size: 10.709677419355pt;'>шаблонизаторы</a></div>
+</div>
+<!-- WordPress Popular Posts Plugin v3.3.3 [W] [all] [views] [regular] -->
+<div id="wpp-3" class="widget popular-posts">
+<h3>Популярно</h3>
+<ul class="wpp-list">
+<li><a href="http://fstrange.ru/coder/about_all/optimizaciya-firefox.html" title="Оптимизация работы Firefox" class="wpp-post-title" target="_self">Оптимизация работы Firefox</a>  <span class="post-stats"><span class="wpp-views">18 952 views</span></span> </li>
+<li><a href="http://fstrange.ru/coder/mysql/kodirovka-krakozyably.html" title="Кодировка, кракозяблы" class="wpp-post-title" target="_self">Кодировка, кракозяблы</a>  <span class="post-stats"><span class="wpp-views">16 157 views</span></span> </li>
+<li><a href="http://fstrange.ru/coder/php/yml-script-yandex-market.html" title="yml скрипт для Яндекс Маркета" class="wpp-post-title" target="_self">yml скрипт для Яндекс Маркета</a>  <span class="post-stats"><span class="wpp-views">12 580 views</span></span> </li>
+<li><a href="http://fstrange.ru/coder/about_all/social_buttons_wordpress.html" title="AddThis &#8212; социальные кнопки" class="wpp-post-title" target="_self">AddThis &#8212; социальные кнопки</a>  <span class="post-stats"><span class="wpp-views">11 996 views</span></span> </li>
+<li><a href="http://fstrange.ru/coder/about_all/kak-nastroit-mtu.html" title="Как настроить MTU" class="wpp-post-title" target="_self">Как настроить MTU</a>  <span class="post-stats"><span class="wpp-views">11 581 views</span></span> </li>
+<li><a href="http://fstrange.ru/coder/php/vkontakte-avtorizaciya.html" title="Vkontakte авторизация на php" class="wpp-post-title" target="_self">Vkontakte авторизация на php</a>  <span class="post-stats"><span class="wpp-views">11 303 views</span></span> </li>
+
+</ul>
+</div>
+<!-- End WordPress Popular Posts Plugin v3.3.3 -->
+<div id="recent-comments-3" class="widget widget_recent_comments"><h3>Свежие комментарии</h3><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">хуй</span> к записи <a href="http://fstrange.ru/coder/php/vkontakte-avtorizaciya.html#comment-2017">Vkontakte авторизация на php</a></li><li class="recentcomments"><span class="comment-author-link">хуй</span> к записи <a href="http://fstrange.ru/coder/php/vkontakte-avtorizaciya.html#comment-2016">Vkontakte авторизация на php</a></li><li class="recentcomments"><span class="comment-author-link">Sergey Volvich</span> к записи <a href="http://fstrange.ru/coder/php/yml-script-yandex-market.html#comment-2015">yml скрипт для Яндекс Маркета</a></li><li class="recentcomments"><span class="comment-author-link">Volodymyr Lysenko</span> к записи <a href="http://fstrange.ru/coder/about_all/javascript_input_numbers_only.html#comment-2014">javascript input, только числа</a></li><li class="recentcomments"><span class="comment-author-link"><a href='http://fstrange.ru' rel='external nofollow' class='url'>fStrange</a></span> к записи <a href="http://fstrange.ru/coder/about_all/internet-planshet-xs-ot-megafona.html#comment-2013">Интернет Планшет XS от мегафона</a></li></ul></div><div id="linkcat-2" class="widget widget_links"><h3>Blogroll</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://a-stor.ru/" title="Ремонт мобильных устройств в Ростове" target="_blank">Ремонт мобильных устройств в Ростове</a></li>
+
+	</ul>
+</div>
+<div id="meta-3" class="widget widget_meta"><h3>Мета</h3>			<ul>
+						<li><a href="http://fstrange.ru/coder/4admin">Войти</a></li>
+			<li><a href="http://fstrange.ru/coder/feed"><abbr title="Really Simple Syndication">RSS</abbr> записей</a></li>
+			<li><a href="http://fstrange.ru/coder/comments/feed"><abbr title="Really Simple Syndication">RSS</abbr> комментариев</a></li>
+			<li><a href="https://ru.wordpress.org/" title="Сайт работает на WordPress &#8212; современной персональной платформе для публикаций.">WordPress.org</a></li>			</ul>
+			</div>			
+		</div><!--/.sidebar-content-->
+		
+	</div><!--/.sidebar-->
+
+		
+
+<!-- addthis -->
+<!--<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4de6d2ba4c2aebdc"></script>-->
+<!-- end addthis -->
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4de6d2ba4c2aebdc" async="async"></script>
+
+				</div><!--/.main-inner-->
+			</div><!--/.main-->
+		</div><!--/.container-inner-->
+	</div><!--/.container-->
+
+	<footer id="footer">	
+				
+				
+		<section class="container" id="footer-bottom">
+			<div class="container-inner">
+				
+				<a id="back-to-top" href="#"><i class="fa fa-angle-up"></i></a>
+				
+				<div class="pad group">
+					
+					<div class="grid one-half">
+						
+												
+						<div id="copyright">
+															<p>Записки веб разработчика fStrange &copy; 2016. All Rights Reserved.</p>
+													</div><!--/#copyright-->
+						
+												
+					</div><!--/.pad-->
+					
+					<div class="grid one-half last">	
+						<ul class="social-links"><li><a rel="nofollow" class="social-tooltip" title="Vkontakte" href="http://vk.com" ><i class="fa fa-vk" ></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Facebook" href="http://fb.com" ><i class="fa fa-facebook" ></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Twitter" href="http://twitter.com" ><i class="fa fa-twitter" ></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Google" href="https://plus.google.com/" ><i class="fa fa-google-plus" ></i></a></li></ul>					</div>
+				
+				</div>
+				
+			</div><!--/.container-inner-->
+		</section><!--/.container-->
+		
+	</footer><!--/#footer-->
+
+</div><!--/#wrapper-->
+
+        <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'fstrange';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1) {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        
+<!--
+TPC! Memory Usage (http://webjawns.com)
+Memory Usage: 37747356Memory Peak Usage: 37872464WP Memory Limit: 40MPHP Memory Limit: 32MCheckpoints: 13-->
+
+<link rel='stylesheet' id='yarppRelatedCss-css'  href='http://fstrange.ru/coder/wp-content/plugins/yet-another-related-posts-plugin/style/related.css?ver=4.5.1' type='text/css' media='all' />
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.51.0-2014.06.20'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var _wpcf7 = {"loaderUrl":"http:\/\/fstrange.ru\/coder\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","recaptchaEmpty":"Please verify that you are not a robot.","sending":"\u041e\u0442\u043f\u0440\u0430\u0432\u043a\u0430...","cached":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=4.4.1'></script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-content/plugins/light/js/jquery.fancybox.pack.js?ver=4.5.1'></script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-content/plugins/light/js/light.js?ver=4.5.1'></script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-content/themes/fhueman/js/jquery.jplayer.min.js?ver=4.5.1'></script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-content/themes/fhueman/js/scripts.js?ver=4.5.1'></script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-includes/js/comment-reply.min.js?ver=4.5.1'></script>
+<script type='text/javascript' src='http://fstrange.ru/coder/wp-includes/js/wp-embed.min.js?ver=4.5.1'></script>
+<!--[if lt IE 9]>
+<script src="http://fstrange.ru/coder/wp-content/themes/fhueman/js/ie/respond.js"></script>
+<![endif]-->
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//fstrange.ru/cp/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//fstrange.ru/cp/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter26061894 = new Ya.Metrika({id:26061894,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/26061894" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>
+<!-- Dynamic page generated in 0.696 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2016-05-05 10:13:16 -->
+
+<!-- super cache -->

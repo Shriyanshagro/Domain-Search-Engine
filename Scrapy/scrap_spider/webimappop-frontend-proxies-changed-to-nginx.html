@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="A while back, we changed our frontend IMAP/POP proxy from perdition to nginx. Perdition uses a traditional unix "one process per connection" model to manage the proxying of IMAP/POP requests. Because of the long lived nature of IMAP connections, perdition was using over 8,000 processes on each of our frontend machines. Even with Linux 2.6 and the O(1) scheduler, the machines were beginning to struggle with the large number of processes, creating a sluggish feeling to IMAP connections.">
+<title>Web/IMAP/POP frontend proxies changed to nginx | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Web/IMAP/POP frontend proxies changed to nginx">
+<meta property="og:description" content="A while back, we changed our frontend IMAP/POP proxy from perdition to nginx. Perdition uses a traditional unix "one process per connection" model to manage the proxying of IMAP/POP requests. Because of the long lived nature of IMAP connections, perdition was using over 8,000 processes on each of our frontend machines. Even with Linux 2.6 and the O(1) scheduler, the machines were beginning to struggle with the large number of processes, creating a sluggish feeling to IMAP connections.">
+<meta property="og:url" content="https://blog.fastmail.com/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">
+<meta name="twitter:title" content="Web/IMAP/POP frontend proxies changed to nginx">
+<meta name="twitter:description" content="A while back, we changed our frontend IMAP/POP proxy from perdition to nginx. Perdition uses a traditional unix "one process per connection" model to manage the proxying of IMAP/POP requests. Because of the long lived nature of IMAP connections, perdition was using over 8,000 processes on each of our frontend machines. Even with Linux 2.6 and the O(1) scheduler, the machines were beginning to struggle with the large number of processes, creating a sluggish feeling to IMAP connections.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/'>Web/IMAP/POP frontend proxies changed to nginx</a></h1>
+<p class="blog-author">Rob Mueller &ndash;  4 January 2007</p>
+<p>A <a href="http://blog.fastmail.fm/?p=506">while back</a>, we changed our frontend
+IMAP/POP proxy from
+<a href="http://www.vergenet.net/linux/perdition/">perdition</a> to
+<a href="http://nginx.net/">nginx</a>. Perdition uses a traditional unix "one
+process per connection" model to manage the proxying of IMAP/POP
+requests. Because of the long lived nature of IMAP connections,
+perdition was using over 8,000 processes on each of our frontend
+machines. Even with Linux 2.6 and the <a href="http://www-128.ibm.com/developerworks/linux/library/l-scheduler/index.html">O(1)
+scheduler</a>,
+the machines were beginning to struggle with the large number of
+processes, creating a sluggish feeling to IMAP connections.</p>
+
+<p>Instead of a process per connection, nginx uses a small fixed process
+pool and non-blocking code with
+<a href="http://lse.sourceforge.net/epoll/index.html">epoll</a> (on linux) to
+provide much higher scalability. At the time we first looked at nginx,
+it only supported HTTP proxying, but we realised the underlying
+architecture would be a good one for IMAP/POP proxying as well. With
+that in mind, we contacted the author of nginx (<a href="http://sysoev.ru/">Igor
+Sysoev</a> who we were already familiar with due to
+<a href="http://sysoev.ru/en/">mod_accel</a>) to implement an IMAP/POP proxy in
+nginx. We agreed to pay him for this, and to allow the code to be
+included in the regular nginx distribution. Over the next couple of
+months he implemented it, and after some testing and bug fixing, we
+rolled it out to our frontend proxy servers in Sep 2005. The results for
+us were dramatic. Load on our frontend servers dropped dramatically, and
+IMAP/POP responsiveness improved noticeably.</p>
+
+<p>Because web connections aren't as long lived as IMAP connections, we
+stayed with Apache for our frontends for a while longer. However we've
+now switched over to using nginx for our frontend web proxy as well,
+which has also allowed us to increase the keep-alive timeout for HTTP
+connections to 5 minutes, which should result in a small perceptible
+improvement when moving between pages.</p>
+
+<p>The net result of all this is that each frontend proxy server currently
+maintains over 10,000 simultaneous IMAP, POP, Web &amp; SMTP connections
+(including many SSL ones) using only about 10% of the available CPU on
+3.20GHz Netburst Xeon based CPUs.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2007/01/02/on-beta-actions-performed-on-intersection-of-searched-view-selected/">Actions performed on intersection of searched & view & selected</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2007/01/04/pdf-xss-attack-protection/">PDF XSS attack protection</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

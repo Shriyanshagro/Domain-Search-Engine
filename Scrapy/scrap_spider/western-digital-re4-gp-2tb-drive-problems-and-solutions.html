@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="We recently upgraded the drives in a few of our servers to new WD RE4-GP 2TB drives. Initially these drives worked really well, but after a little time, we noticed that the RAID controller they were connected to (an ARECA based controller) was reporting a significantly higher number of "read timeout" errors for these drives (a few per day, rather than "every now and then" as for all other drives).">
+<title>Western Digital RE4-GP 2TB drive problems and solutions | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Western Digital RE4-GP 2TB drive problems and solutions">
+<meta property="og:description" content="We recently upgraded the drives in a few of our servers to new WD RE4-GP 2TB drives. Initially these drives worked really well, but after a little time, we noticed that the RAID controller they were connected to (an ARECA based controller) was reporting a significantly higher number of "read timeout" errors for these drives (a few per day, rather than "every now and then" as for all other drives).">
+<meta property="og:url" content="https://blog.fastmail.com/2009/11/06/western-digital-re4-gp-2tb-drive-problems-and-solutions/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2009/11/06/western-digital-re4-gp-2tb-drive-problems-and-solutions/">
+<meta name="twitter:title" content="Western Digital RE4-GP 2TB drive problems and solutions">
+<meta name="twitter:description" content="We recently upgraded the drives in a few of our servers to new WD RE4-GP 2TB drives. Initially these drives worked really well, but after a little time, we noticed that the RAID controller they were connected to (an ARECA based controller) was reporting a significantly higher number of "read timeout" errors for these drives (a few per day, rather than "every now and then" as for all other drives).">
+
+<link rel="canonical" href="https://blog.fastmail.com/2009/11/06/western-digital-re4-gp-2tb-drive-problems-and-solutions/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2009/11/06/western-digital-re4-gp-2tb-drive-problems-and-solutions/'>Western Digital RE4-GP 2TB drive problems and solutions</a></h1>
+<p class="blog-author">Rob Mueller &ndash;  6 November 2009</p>
+<p>We recently upgraded the drives in a few of our servers to new <a href="http://www.wdc.com/en/products/Products.asp?DriveID=610">WD
+RE4-GP 2TB</a>
+drives. Initially these drives worked really well, but after a little
+time, we noticed that the RAID controller they were connected to (an
+<a href="http://www.areca.com.tw/products/main.htm">ARECA</a> based controller) was
+reporting a significantly higher number of "read timeout" errors for
+these drives (a few per day, rather than "every now and then" as for all
+other drives).</p>
+
+<p>Looking around, we found <a href="http://blog.insanegenius.com/2009/09/western-digital-re4-gp-2tb-drive.html">other
+reports</a>
+of problems with these drives and RAID controllers, although ours
+weren't as serious as the other reports, drives weren't "dropping" out
+of our arrays, just more read timeouts. In one of the <a href="http://blog.insanegenius.com/2009/09/western-digital-re4-gp-2tb-drive.html?showComment=1255551170684#c6798270576134643027">comments posted
+on that
+blog</a>,
+a user notes there's an upgraded firmware for the WD drives that helped
+him.</p>
+
+<p>Searching around, I also found out about the firmware update in the
+<a href="http://3ware.com/KB/article.aspx?id=15592">knowledge base on the 3ware
+site</a>, from 04.05G04 to
+04.05G05. It seems they are also recommending it for compatibility with
+their RAID controllers, and include a copy of the new firmware there
+(with all the usual disclaimers of course). Unfortunately the process to
+upgrade the firmware requires attaching the drive directly to a
+motherboard SATA controller and running a DOS only utility. To do that
+for the 24 drives would be a slow and annoying process.</p>
+
+<p>Fortunately it turns out that modern SATA drives now have a standard
+process for upgrading the firmware, so it's actually possible for this
+to be done via the RAID controller rather than requiring a custom
+upgrade program. With some help from our vendor (thanks Hao Zhang at e23
+Inc) and ARECA, they were able to build the new firmware file into a
+format suitable for upload to their RAID controllers. So we did that,
+rebooted the unit, and a few minutes later, all the drives in the unit
+had been upgraded to the newer 04.05G05 firmware. Nice and quick and
+easy. (Sorry, we can't distribute this file, so please don't ask us.
+Contact your vendor to get it if you need it)</p>
+
+<p>Since then, there's been no read timeout errors reported by any of the
+drives, and they've continued to work really well.</p>
+
+<p>So if you're using the WD RE4-GP 2TB drives and having problems, make
+sure you upgrade them to the latest firmware version.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2009/11/02/special-upgrade-price-3-years-for-the-price-of-2-on-ad-free-full-and-enhanced-accounts/">Special upgrade price, 3 years for the price of 2 on Ad Free, Full and Enhanced accounts</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2009/11/13/iphone-how-to-create-multiple-from-personalities/">iPhone - How to create multiple From Personalities</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="This post contains some technical information mostly useful for people that host email for their own domain at FastMail.">
+<title>Change of default MX records for domains | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Change of default MX records for domains">
+<meta property="og:description" content="This post contains some technical information mostly useful for people that host email for their own domain at FastMail.">
+<meta property="og:url" content="https://blog.fastmail.com/2012/01/06/change-of-default-mx-records-for-domains/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2012/01/06/change-of-default-mx-records-for-domains/">
+<meta name="twitter:title" content="Change of default MX records for domains">
+<meta name="twitter:description" content="This post contains some technical information mostly useful for people that host email for their own domain at FastMail.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2012/01/06/change-of-default-mx-records-for-domains/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2012/01/06/change-of-default-mx-records-for-domains/'>Change of default MX records for domains</a></h1>
+<p class="blog-author">Rob Mueller &ndash;  5 January 2012</p>
+<p>This post contains some technical information mostly useful for people
+that host email for their own domain at FastMail.</p>
+
+<p><a href="http://www.urbandictionary.com/define.php?term=tl%3Bdr">TL;DR</a>: If you
+host email for your domain at FastMail, but host the DNS for your domain
+at an external DNS provider, we recommend you login to your DNS provider
+and change the two MX records for your domain from
+in[12].smtp.messagingengine.com to in[12]-smtp.messagingengine.com. i.e.
+replace the first dot ('.') with a dash ('-')</p>
+
+<p>If you host email for your domain at FastMail, and you host the DNS for
+your domain at FastMail, no change is required, it's all automatically
+been done.</p>
+
+<p>More details: For many years, the default MX records for domains hosted
+at FastMail have been <strong>in1.smtp.messagingengine.com</strong> and
+<strong>in2.smtp.messagingengine.com</strong>.</p>
+
+<p>However it turns out there's a small problem with this. The hostnames
+in[12].smtp.messagingengine.com don't match the
+wildcard *.messagingengine.com SSL certificate we have (similar to
+<a href="http://blog.fastmail.fm/2009/08/26/proxy-server-names-changed/">this previous
+issue</a>).
+So if a remote system uses <a href="http://blog.fastmail.fm/2009/04/16/opportunistic-ssltls-encryption-on-incoming-emails/">opportunistic TLS encryption to send email
+to
+us</a>,
+the connection will be encrypted, but it may be reported as "Untrusted"
+because the certificate doesn't match.</p>
+
+<p>This isn't disastrous, but it is annoying and exposes a potential
+man-in-the-middle attack.</p>
+
+<p>So we've gone and changed the DNS MX records for all domains hosted at
+FastMail to default to <strong>in1-smtp.messagingengine.com</strong> and
+<strong>in2-smtp.messagingengine.com</strong>.</p>
+
+<p>For users that use us to host DNS for their domains, no change is
+required on your behalf, all of this has been automatically updated.</p>
+
+<p>For users that use an external DNS provider, we recommend you update the
+MX records for your domains at your DNS hosting provider. We'll continue
+to support the old in[12].smtp values for some time and alert users
+if/when we discontinue it, but the sooner you make the change, the
+better it is for the secure transmission of email to your domain.</p>
+
+<p>We've <a href="http://www.fastmail.fm/help/domain_management_setup.html">updated our
+documentation</a>
+to reflect these new values.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2011/12/23/new-webmail-user-interface-being-tested-on-beta-server/">New webmail user interface being tested on beta server</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2012/01/09/building-the-new-ajax-mail-ui-part-1-instant-notifications-of-new-emails-via-eventsourceserver-sent-events/">Building the new AJAX mail UI part 1: Instant notifications of new emails via eventsource/server-sent events</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

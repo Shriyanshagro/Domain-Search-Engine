@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.5 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="description" content="Your description goes here">
+	<meta name="keywords" content="TLS DTLS Lucky 13">
+	<meta name="Nadhem AlFardan" content="By Nadhem AlFardan">
+	<link rel="stylesheet" type="text/css" href="configurations.css" title="configurations" media="all">
+	<title>Lucky Thirteen: Breaking the TLS and DTLS Record Protocols</title>
+</head>
+
+<body>
+<div id="container980"><!-- Use"containerfull" for 100% width. For fixed width, use "container980", "container760" or "container600" (the number is the layout width in pixels). -->
+	<div id="header">
+		<h1><a href="http://www.isg.rhul.ac.uk/tls">Lucky Thirteen: Breaking the TLS and DTLS Record Protocols</a></h1> <p></p>
+		<h2>4th February 2013</h2>
+	</div>
+	
+		<div id="header">
+
+	<div id="sidebar">
+			<div class="sidebarbox">
+				<ul class="sidemenu">
+			<li><a href="#TLSseverity">How severe are the attacks?</a></li>
+			<li><a href="#Patches">Patches, advisories and press</a></li> 
+			<li><a href="#Moreinfo">For more information</a></li> 
+				</ul>
+			</div>
+		</div>
+		<div id="sidebar">
+			<div class="sidebarbox">
+				<ul class="sidemenu">
+			<li><a href="#Version">What is affected?</a></li>
+			<li><a href="#Countermeasures">What are the countermeasures?</a></li> 
+			<li><a href="#Disclosure">Responsible disclosure</a></li> 
+
+				</ul>
+			</div>
+		</div>
+		<div id="sidebar">
+			<div class="sidebarbox">
+				<ul class="sidemenu">
+			<li><a href="#Team">Who are we?</a></li>
+			<li><a href="#Name">Why are the attacks called "Lucky Thirteen"?</a></li> 
+			<li><a href="#Source">Source code</a></li> 
+
+				</ul>
+			</div>
+
+		</div>
+		<div id="sidebar">
+			<div class="sidebarbox">
+				<ul class="sidemenu">
+			<li><a herf="#Introduction">Introduction</a></li>
+			<li><a href="#Knownresults">How does this work relate to known attacks?</a></li>
+			<li><a href="#TLSsafe">Is it still safe to use TLS?</a></li> 
+				</ul>
+			</div>
+
+		</div>
+		</div>
+
+	
+		<div id="main">
+		<div id="sidebar">
+			<div class="sidebarbox">
+               <h2>Lucky 13</h2>
+				<ul class="sidemenu">
+					<li><a href="http://www.isg.rhul.ac.uk/tls/TLStiming.pdf">Research paper (pdf)</a></li>
+					<li><a href="http://www.isg.rhul.ac.uk/tls/index.html">RC4 in TLS</a></li>
+					<li><a href="#Moreinfo">Contact</a></li> 
+				</ul>
+			</div>
+			
+			
+			
+				<div class="sidebarbox">
+               <h2>Supported by</h2>
+				<ul class="sidemenu">
+				<a href="http://www.rhul.ac.uk/"><img src="rhul.png" alt="CCIS" height="60" width="230"> </a> 	
+				<a href="http://www.epsrc.ac.uk/"><img src="EPSRC.jpg" alt="CCIS" height="100" width="230"> </a>
+				</ul>
+			</div>
+			
+		</div>
+		
+		<div id="content">
+			<a name="Introduction"></a>
+			<h2>Introduction:</h2>
+			<p align="justify">
+			</p>
+			
+			<p>
+			<b>This page is about the Lucky 13 attack on CBC-mode encryption in TLS. For details on the security of RC4 encryption in TLS, click <a href="http://www.isg.rhul.ac.uk/tls/index.html">here.</a></b>
+			</p>
+
+			
+				
+			<p> 
+			The Transport Layer Security (TLS) protocol aims to provide 
+confidentiality and integrity of data in transit across untrusted 
+networks like the Internet. It is widely used to secure web traffic and 
+e-commerce transactions on the Internet. Datagram TLS (DTLS) is a 
+variant of TLS that is growing in importance. 
+
+We have found new attacks against TLS and DTLS that allow a 
+Man-in-the-Middle attacker to recover plaintext from a TLS/DTLS 
+connection when CBC-mode encryption is used. The attacks arise from a 
+flaw in the TLS specification rather than as a bug in specific 
+implementations. 
+
+We have carried out experiments to demonstrate the feasibility of the 
+attacks against the OpenSSL and GnuTLS implementations of TLS, and we 
+have studied the source code of other implementations to determine 
+whether they are likely to be vulnerable. 
+
+There are effective countermeasures against our attacks and we have 
+worked with a number of TLS and DTLS software developers to prepare 
+patches and security advisories. 
+			 </p>
+			 
+			 <a name="Team"></a>
+			<h2>Who are we?</h2>
+			<p>
+			The team behind this research comprises Nadhem AlFardan and <a href="http://www.isg.rhul.ac.uk/%7Ekp">
+Kenny Paterson</a>. Nadhem is a PhD student in the <a href="http://www.isg.rhul.ac.uk/">Information Security Group</a> at <a href="http://www.rhul.ac.uk/">Royal Holloway, University of London</a>.
+ Kenny is a Professor of Information Security and an EPSRC Leadership 
+Fellow in the Information Security Group. We have previous experience in
+ analysing secure network protocols, including IPsec, SSH, SSL/TLS and 
+DTLS.
+			</p>
+			
+			<a name="Version"></a>
+			<h2>What is affected?</h2>
+			<h3>Which versions of TLS and DTLS are affected?</h3>
+			<p>The attacks apply to all TLS and DTLS implementations that are 
+compliant with TLS 1.1 or 1.2, or with DTLS 1.0 or 1.2. They also apply 
+to implementations of SSL 3.0 and TLS 1.0 that incorporate 
+countermeasures to previous padding oracle attacks. Variant attacks may 
+also apply to non-compliant implementations. </p>
+			
+			<h3>Which TLS and DTLS ciphersuites are affected?</h3>
+			<p>All TLS and DTLS ciphersuites which include CBC-mode encryption are potentially vulnerable to our attacks.</p>
+			
+			<h3>Which TLS and DTLS implementations are affected?</h3>
+			<p>We have tested our attacks against OpenSSL and GnuTLS. For 
+OpenSSL, a full plaintext recovery attack is possible. For GnuTLS, a 
+partial plaintext recovery attack is possible, recovering up to 4 bits 
+of the last byte in any block of plaintext. We have examined the source 
+code of the NSS, PolarSSL, yaSSL, BouncyCastle and OpenJDK 
+implementations of TLS. They are all potentially vulnerable to our 
+attacks. We have not studied any closed-source implementations of TLS.
+</p>
+			
+			<a name="TLSseverity"></a>
+			<h2>How severe are the attacks?</h2>
+			<p>We have discovered a variety of attacks, each having different 
+complexity and severity. For TLS, our attacks are multi-session attacks,
+ which means that we require the target plaintext to be repeatedly sent 
+in the same position in the plaintext stream in multiple TLS sessions. 
+The attacks involve detecting small differences in the time at which TLS
+ error messages appear on the network in response to attacker-generated 
+ciphertexts. Because of network jitter and other effects, the times 
+observed by the attacker are noisy, and multiple samples of each time 
+are needed to make the attacks reliable. 
+
+In their simplest form, our attacks can reliably recover a complete 
+block of TLS-encrypted plaintext using about 2<sup>23</sup> TLS 
+sessions, assuming the attacker is located on the same LAN as the 
+machine being attacked and HMAC-SHA1 is used as TLS's MAC algorithm. 
+This can be reduced to 2<sup>19</sup> TLS sessions if the plaintext is known to be base64 encoded. This can be further reduced to 2<sup>13</sup>
+ sessions per byte if a byte of plaintext in one of the last two 
+positions in a block is already known. The attack complexities are 
+different for different MAC algorithms. Further details can be found in 
+our  <a href="http://www.isg.rhul.ac.uk/tls/TLStiming.pdf">research paper</a>.</p>
+
+<p>The sessions needed for our attacks on TLS can be generated in 
+various ways. The attacks cause the TLS session to be terminated, and 
+some applications running over TLS automatically reconnect and 
+retransmit a cookie or password. In a web environment, the sessions may 
+also be generated by client-side malware, in a similar way to the BEAST 
+attack. Unlike BEAST, no exploit is needed to bypass the same origin 
+policy in the web browser, since the attacker does not require the 
+ability to inject plaintext blocks into the TLS session. And, with the 
+BEAST-style enhancements, the attacker no longer needs to know one out 
+of two bytes of plaintext at the end of the block, so that full 
+plaintext recovery of the full base64 encoded plaintext is possible 
+using 2<sup>13</sup> sessions per byte.</p>
+
+<p>For DTLS, the attacks can be carried out in a single session, and 
+known amplification techniques can be used to boost the timing signals 
+relative to the noise. (Further details of these techniques can be found
+ in <a href="http://www.isg.rhul.ac.uk/%7Ekp/dtls.pdf">our NDSS12 paper</a>.) The attacks are fully practical for DTLS. For further details, see the <a href="http://www.isg.rhul.ac.uk/tls/TLStiming.pdf">research paper</a>.
+</p>
+			
+			<a name="Knownresults"></a>
+			<h2>	How does this work relate to known attacks, like BEAST and CRIME?</h2>
+			<p>TLS in CBC-mode has been the subject of several attacks over the 
+years, most notably padding oracle attacks and the BEAST attack. For 
+more details of prior attacks, see our  <a href="http://www.isg.rhul.ac.uk/tls/TLStiming.pdf">research paper</a>.
+ However, there are countermeasures for both of these attacks, and TLS 
+in CBC-mode was believed to be secure once these countermeasures were 
+applied. Our research shows that this is not the case. In particular, 
+the advice to implementors in the TLS RFCs concerning how to avoid 
+padding oracle attacks does not remove all possible timing side 
+channels. 
+</p>
+
+			<h3>Wasn't TLS in CBC-mode recently proven to be secure?</h3>
+
+			<p>Yes, a recent <a href="http://www.isg.rhul.ac.uk/%7Ekp/mee-comp.pdf">paper</a>
+ of Paterson, Ristenpart and Shrimpton (Asiacrypt 2011) showed that the 
+TLS Record Protocol meets a strong notion of cryptographic security, but
+ their proof holds under the assumption that an attacker cannot discern 
+the cause of TLS decryption failures. Our new research shows that this 
+assumption is not met by TLS implementations, even when they follow the 
+implementation advice in the TLS RFCs.</p>
+			
+			<h3>How do the attacks relate to BEAST and CRIME?</h3>
+
+			<p>The attacks are quite different from BEAST and CRIME. BEAST 
+exploits the inadvisable use of chained IVs in CBC-mode in SSL and TLS 
+1.0. CRIME cleverly exploits the use of compression in TLS. Our attacks 
+are based on analysing how decryption processing is carried out in TLS. 
+However, our attacks can be enhanced by combining them with BEAST-style 
+techniques.</p>
+
+
+			<h3>How do the attacks relate to padding oracle attacks?</h3>
+			<p>At a high level, the attacks can be seen as an advanced form of 
+padding oracle attack. In more detail, the attacks rely on the fact 
+that, for certain carefully chosen message lengths and when the 
+HMAC-SHA1 MAC algorithm is used, then TLS messages containing at least 
+two bytes of correct padding will be processed slightly faster than TLS 
+messages containing one byte of correct padding or padding that is 
+incorrectly formatted. This is because of a fortuitous alignment of TLS 
+header bytes, plaintext bytes and MAC tag bytes with the block cipher's 
+block boundary and the hash compression function's block boundary. The 
+timing difference corresponds to the time taken for a single hash 
+function compression function evaluation, on the order of a few hundred 
+clock cycles on a modern processor. This timing difference is detected 
+over the network in our attack, by timing the arrival of TLS error 
+messages. By repeating the attack sufficiently often and using careful 
+statistical processing, the noise arising from network jitter and other 
+sources can be overcome and the different padding conditions can be 
+differentiated from one another. Thus an attacker can distinguish 
+messages containing at least two bytes of correct padding from all other
+ patterns. At this point, a variant of the standard padding oracle 
+attack can be carried out. For further details, please see our  <a href="http://www.isg.rhul.ac.uk/tls/TLStiming.pdf">research paper</a>.</p>
+
+			
+			<a name="Name"></a>
+			<h2>Why are the attacks called "Lucky Thirteen"?</h2>
+			<p>In Western culture, 13 is considered an unlucky number. However, 
+the fact that the TLS MAC calculation includes 13 bytes of header 
+information (5 bytes of TLS header plus 8 bytes of TLS sequence number) 
+is, in part, what makes the attacks possible. So, in the context of our 
+attacks, 13 is lucky - from the attacker's perspective at least. This is
+ what passes for humour amongst cryptographers. </p>
+					
+			<a name="Countermeasures"></a>
+			<h2>What are the countermeasures?</h2>
+			<p>There are several possible countermeasures against our attacks, some of which are more effective than others:</p>
+			<ul>
+			<li><b>Add random time delays to CBC-mode decryption processing.</b> As we explain in more detail in our <a href="http://www.isg.rhul.ac.uk/tls/TLStiming.pdf">research paper</a>, this is ineffective, since the effect of the delays can be averaged out by taking more timing samples.</li>
+
+			<li><b>Switch to using RC4 ciphersuites.</b> This should only be seen
+ as a temporary measure, since RC4 has significant cryptographic 
+weaknesses when it is used in TLS. This option is not available for 
+DTLS.</li>
+	 
+	 		<li><b>Switch to using AEAD ciphersuites, such as AES-GCM.</b> 
+Support for AEAD ciphersuites was specified in TLS 1.2, but this version
+ of TLS is not yet widely supported. We hope that our research will spur
+ support for TLS 1.2 in client and server implementations. </li>
+			
+			<li><b>Modify TLS's CBC-mode decryption procedure so as to remove the timing side channel</b> Our  <a href="http://www.isg.rhul.ac.uk/tls/TLStiming.pdf">research paper</a>
+ describes one method for doing this that is being adopted by some 
+vendors. Other approaches are also possible. However, some care is 
+needed in implementations to completely remove the timing side channel 
+that our attacks exploit. Our recommendation for the long term is to 
+avoid using TLS in CBC-mode and to switch to using AEAD algorithms.</li></ul>
+			
+			<a name="Patches"></a>
+			<h2>Patches, advisories and press</h2>
+			<p>We have worked closely with the IETF TLS Working Group to disclose
+ our attacks. OpenSSL, NSS, GnuTLS, yaSSL, PolarSSL, Opera, and 
+BouncyCastle have released patches to protect TLS in CBC-mode against 
+our attacks. We have advised on patch development and, in several cases,
+ we have tested patches on behalf of the individual vendors. We have 
+also informed several other vendors about our work, including Apple, 
+Cisco, Microsoft and Oracle. Further details:
+	</p><ul>
+	<li><b>OpenSSL</b>: the attacks are addressed in <a href="http://www.openssl.org/news/secadv_20130205.txt">versions 1.0.1d, 1.0.0k and 0.9.8y</a>, released 05/02/2013.</li>
+	<li><b>NSS</b>: the attacks are addressed in <a href="https://developer.mozilla.org/en-US/docs/NSS/NSS_3.14.3_release_notes">version 3.14.3</a>, released 15/02/2013.</li>
+	<li><b>GnuTLS</b>: the attacks are addressed in <a href="http://www.gnutls.org/news.html">versions 2.12.23, 3.0.28 and 3.1.7</a>, released 04/02/13.</li>		
+	<li><b>PolarSSL</b>:  the attacks are addressed in <a href="https://polarssl.org/tech-updates/releases/polarssl-1.2.5-released">version 1.2.5</a>, released 03/02/13.</li>
+	<li><b>CyaSSL</b>:  the attacks are addressed in <a href="http://www.yassl.com/yaSSL/Docs-cyassl-changelog.html">version 2.5.0</a>, released 04/02/2013.</li>
+	<li><b>MatrixSSL</b>:  the attacks are addressed in <a href="http://matrixssl.org/news.html">version 3.4.1</a>, released 06/02/13.</li>
+	<li><b>Opera</b>: the attacks are addressed in Opera <a href="http://www.opera.com/docs/changelogs/unified/1213/">version 12.13</a>, released 30/01/2013.</li>
+	<li><b>F5</b>: have informed us that their TLS dataplane traffic is not
+ vulnerable due to cryptographic offload, but that local management 
+ports and virtual editions may be vulnerable. For more details, see the 
+<a href="http://support.f5.com/kb/en-us/solutions/public/14000/100/sol14190.html">F5 security advisory</a>.</li>
+	<li><b>BouncyCastle</b>: the attacks are addressed in <a href="http://www.bouncycastle.org/latest_releases.html">version 1.48</a> of  the Java library, released 10/02/2013. The C# version 
+of BouncyCastle will be fixed in CVS at a similar time, and included in 
+release 1.8 at a later date.</li>
+	<li><b>Oracle (Java)</b>: the attacks are addressed in <a href ="http://www.oracle.com/technetwork/topics/security/javacpufeb2013update-1905892.html">a special critical patch update</a> of JavaSE, released 19/02/2013.</li>
+	</ul><p></p>
+
+	<p>We will add more information here about individual vendor's advisories as they become available. </p>
+	
+	<p>Selected press coverage:
+	</p><ul>
+	<li><a href="http://arstechnica.com/security/2013/02/lucky-thirteen-attack-snarfs-cookies-protected-by-ssl-encryption/">Ars Technica</a></li>
+	<li><a href="http://www.theregister.co.uk/2013/02/04/unlucky_13_crypto_attack/">The Register</a></li>
+	<li><a href="http://it.slashdot.org/story/13/02/06/2337228/researchers-devise-new-attack-techniques-against-ssl">Slashdot</a></li>
+	<li><a href="http://www.wired.co.uk/news/archive/2013-02/05/weakness-in-tsl-protocol">Wired</a></li>
+	<li><a href="http://nakedsecurity.sophos.com/2013/02/07/boffins-crack-https-encryptionin-lucky-thirteen-attack">nakedsecurity</a> (boffin alert!)</li>
+	<li><a href="http://www.securityweek.com/researchers-attack-tls-dtls-protocol-vulnerability">Security Week</a></li>
+	<li><a href="http://www.infosecurity-magazine.com/view/30632/lucky-13-a-new-attack-against-ssltls">InfoSecurity Magazine</a></li>
+	<li><a href="http://searchsecurity.techtarget.com/news/2240177755/TLS-security-Background-on-the-Lucky-Thirteen-attack">SearchSecurity</a></li>
+	<li><a href="http://threatpost.com/en_us/blogs/theoretical-lucky-thirteen-tls-attacks-could-turn-practical-021113">threatpost</a></li>
+	<li><a href="http://timesofindia.indiatimes.com/tech/personal-tech/computing/Why-your-Google-Facebook-accounts-may-be-unsafe/articleshow/18333810.cms">Times of India</a></li>
+	<li><a href="http://en.wikipedia.org/wiki/Lucky_Thirteen_attack">Wikipedia</a></li>
+	</ul><p></p>			
+			
+			<a name="TLSsafe"></a>
+			<h2>Is it still safe to use TLS?</h2>
+			<p>The attacks can only be carried out by a determined attacker who 
+is located close to the machine being attacked and who can generate 
+sufficient sessions for the attacks. In this sense, the attacks do not 
+pose a significant danger to ordinary users of TLS in their current 
+form. However, it is a truism that attacks only get better with time, 
+and we cannot anticipate what improvements to our attacks, or entirely 
+new attacks, may yet to be discovered. In addition, because of its 
+extremely widespread use, any attack against TLS requires careful 
+evaluation. In this context, it is notable that the leading TLS 
+implementations are deploying countermeasures to our attacks. </p>
+			
+
+			<a name="Source"></a>
+			<h2>Source code</h2>
+			<p>We have no plans to make the source code generally available. If 
+you are a researcher interested in replicating or extending our work, 
+then please contact us.</p>
+
+			<a name="Disclosure"></a>
+			<h2>Isn't it irresponsible to publish attacks on such important protocols?</h2>
+			
+			<p>In short, no. Our long-term aim is to ensure that weak encryption 
+options are eliminated from TLS, to the eventual benefit of all users of
+ TLS. Experience shows that the only way to make this happen is to make 
+the attacks as powerful as possible and build proof-of-concept 
+implementations of them. We have expended significant research effort to
+ develop and prototype our attacks. We disclosed the attacks to affected
+ vendors well in advance of making our research public, and we worked 
+with any vendor who requested our assistance in assessing the attacks 
+and implementing countermeasures.</p>
+
+			<a name="Moreinfo"></a>
+			<h2>For more information</h2>
+			<p>Please read our  <a href="http://www.isg.rhul.ac.uk/tls/TLStiming.pdf">research paper</a>
+ describing the attacks and mitigations. If you have remaining questions
+ after having read the paper, please contact us via e-mail.</p>
+
+									
+     <div class="clear">&nbsp;</div>
+		</div>
+		<div class="clear">&nbsp;</div>
+	</div>
+
+	<div id="footer">
+		<div id="footersections">
+			<div class="half">				
+				<h2>Contact:</h2>
+				                Nadhem AlFardan<br> 
+               				<a href="mailto:na%64hem%2E%61lfard%61n%2E2%300%39@live.rhul.ac.%75k">nadhem.alfardan.2009@live.rhul.ac.uk</a>
+		                             <p></p>
+					Kenny Paterson<br> 
+							<a href="mailto:%6Ben%6Ey.%70%61%74%65%72son@rhul.ac.uk">kenny.paterson@rhul.ac.uk</a>	 
+               							</div>
+			
+			 <div class="half">
+				<h2></h2>
+	
+				
+				
+			</div> 
+            
+			<div class="clear">&nbsp;</div> 
+Template based on a design by Andreas Viklund
+		</div>
+	</div>   
+
+	
+	</div>  
+	
+
+
+
+</body></html>

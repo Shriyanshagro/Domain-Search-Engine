@@ -1,0 +1,2142 @@
+<!doctype html><html lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <title>CSS Snapshot 2015</title>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <meta content="exploring" name="csswg-work-status">
+  <meta content="NOTE" name="w3c-status">
+  <link href="../default.css" rel="stylesheet" type="text/css">
+  <link href="../csslogo.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-NOTE" rel="stylesheet" type="text/css">
+  <meta content="Bikeshed 1.0.0" name="generator">
+<style>/* style-md-lists */
+
+            /* This is a weird hack for me not yet following the commonmark spec
+               regarding paragraph and lists. */
+            [data-md] > :first-child {
+                margin-top: 0;
+            }
+            [data-md] > :last-child {
+                margin-bottom: 0;
+            }</style>
+<style>/* style-counters */
+
+            .issue:not(.no-marker)::before {
+                content: "Issue " counter(issue);
+            }
+
+            .example:not(.no-marker)::before {
+                content: "Example";
+                content: "Example " counter(example);
+            }
+            .invalid.example:not(.no-marker)::before,
+            .illegal.example:not(.no-marker)::before {
+                content: "Invalid Example";
+                content: "Invalid Example" counter(example);
+            }</style>
+<style>/* style-dfn-panel */
+
+        .dfn-panel {
+            display: inline-block;
+            position: absolute;
+            z-index: 35;
+            height: auto;
+            width: -webkit-fit-content;
+            max-width: 300px;
+            max-height: 500px;
+            overflow: auto;
+            padding: 0.5em 0.75em;
+            font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+            background: #DDDDDD;
+            color: black;
+            border: outset 0.2em;
+        }
+        .dfn-panel:not(.on) { display: none; }
+        .dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+        .dfn-panel > b { display: block; }
+        .dfn-panel a { color: black; }
+        .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+        .dfn-panel > b + b { margin-top: 0.25em; }
+        .dfn-panel > span { display: list-item; list-style: inside; }
+        .dfn-panel.activated {
+            display: inline-block;
+            position: fixed;
+            left: .5em;
+            bottom: .5em;
+            margin: 0 auto;
+            max-width: calc(100vw - 1.5em - .4em - .5em);
+            max-height: 30vh;
+        }
+
+        .dfn-paneled { cursor: pointer; }
+        </style>
+<style>/* style-selflinks */
+
+            .heading, .issue, .note, .example, li, dt {
+                position: relative;
+            }
+            a.self-link {
+                position: absolute;
+                top: 0;
+                left: calc(-1 * (3.5rem - 26px));
+                width: calc(3.5rem - 26px);
+                height: 2em;
+                text-align: center;
+                border: none;
+                transition: opacity .2s;
+                opacity: .5;
+            }
+            a.self-link:hover {
+                opacity: 1;
+            }
+            .heading > a.self-link {
+                font-size: 83%;
+            }
+            li > a.self-link {
+                left: calc(-1 * (3.5rem - 26px) - 2em);
+            }
+            dfn > a.self-link {
+                top: auto;
+                left: auto;
+                opacity: 0;
+                width: 1.5em;
+                height: 1.5em;
+                background: gray;
+                color: white;
+                font-style: normal;
+                transition: opacity .2s, background-color .2s, color .2s;
+            }
+            dfn:hover > a.self-link {
+                opacity: 1;
+            }
+            dfn > a.self-link:hover {
+                color: black;
+            }
+
+            a.self-link::before            { content: "¶"; }
+            .heading > a.self-link::before { content: "§"; }
+            dfn > a.self-link::before      { content: "#"; }</style>
+<style>/* style-autolinks */
+
+            .css.css, .property.property, .descriptor.descriptor {
+                color: #005a9c;
+                font-size: inherit;
+                font-family: inherit;
+            }
+            .css::before, .property::before, .descriptor::before {
+                content: "‘";
+            }
+            .css::after, .property::after, .descriptor::after {
+                content: "’";
+            }
+            .property, .descriptor {
+                /* Don't wrap property and descriptor names */
+                white-space: nowrap;
+            }
+            .type { /* CSS value <type> */
+                font-style: italic;
+            }
+            pre .property::before, pre .property::after {
+                content: "";
+            }
+            [data-link-type="property"]::before,
+            [data-link-type="propdesc"]::before,
+            [data-link-type="descriptor"]::before,
+            [data-link-type="value"]::before,
+            [data-link-type="function"]::before,
+            [data-link-type="at-rule"]::before,
+            [data-link-type="selector"]::before,
+            [data-link-type="maybe"]::before {
+                content: "‘";
+            }
+            [data-link-type="property"]::after,
+            [data-link-type="propdesc"]::after,
+            [data-link-type="descriptor"]::after,
+            [data-link-type="value"]::after,
+            [data-link-type="function"]::after,
+            [data-link-type="at-rule"]::after,
+            [data-link-type="selector"]::after,
+            [data-link-type="maybe"]::after {
+                content: "’";
+            }
+
+            [data-link-type].production::before,
+            [data-link-type].production::after,
+            .prod [data-link-type]::before,
+            .prod [data-link-type]::after {
+                content: "";
+            }
+
+            [data-link-type=element],
+            [data-link-type=element-attr] {
+                font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+                font-size: .9em;
+            }
+            [data-link-type=element]::before { content: "<" }
+            [data-link-type=element]::after  { content: ">" }
+
+            [data-link-type=biblio] {
+                white-space: pre;
+            }</style>
+ <script type='text/javascript'>
+<!--
+/*******************************************************************************
+ *
+ *  Copyright © 2013 Hewlett-Packard Development Company, L.P.
+ *
+ *  This work is distributed under the W3C® Software License [1]
+ *  in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ *  [1] http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+ *
+ ******************************************************************************/
+
+
+/**
+ * JSON Stream client
+ */
+
+
+Stream = function(uri, params, callback)
+{
+  this.xhr = new XMLHttpRequest();
+  this.callback = callback;
+  this.persist = false; // set true to reconnect if dropped
+  
+  if (! params) {
+    params = {};
+  }
+  var loginKey = system.getCookie('loginkey');
+  if (loginKey) {
+    params['loginkey'] = loginKey;
+  }
+  // force uri to be different for each stream so browser will accept multiple connections
+  params['stream'] = ++this.gStreamId;
+  this.uri = (params ? uri + '?' + system.encodeParams(params) : uri);
+  
+  var stream = this;
+  this.xhr.onreadystatechange = function() {
+    if ((200 == stream.xhr.status) &&
+        ((3 == stream.xhr.readyState) || (4 == stream.xhr.readyState))) {
+      var message = stream.xhr.responseText.substring(stream.processed);
+
+      if (-1 != message.indexOf("\uEE00\uEEFF\uEE00")) {
+        var messages = message.split("\uEE00\uEEFF\uEE00");
+        for (var index = 0; index < (messages.length - 1); index++) {
+          message = messages[index];
+          stream.processed += (message.length + 3);
+          try {
+            response = JSON.parse(message.trim());
+          }
+          catch (err) {
+            console.log("stream parse error: " + message.trim());
+            console.log(err);
+            continue;
+          }
+          stream.callback(response.message, response.data);
+        }
+      }
+      if (4 == stream.xhr.readyState) {
+        if (stream.persist && (! stream.closed)) {
+          setTimeout(function () { if (! stream.closed) { stream.connect(); } }, 10);
+        }
+        stream.closed = true;
+      }
+    }
+  };
+
+  this.connect();
+  return this;
+};
+
+Stream.prototype = {
+  gStreamId: Math.floor(Math.random() * 0xFFFFFFFF),
+
+  connect: function() {
+    this.processed = 0;
+    this.closed = false;
+    this.xhr.open('GET', this.uri, true);
+    this.xhr.setRequestHeader('Accept', 'application/json');
+    this.xhr.send();
+  },
+
+  close: function()
+  {
+    this.closed = true;
+    if ((4 != this.xhr.readyState) && (0 != this.xhr.readyState)) {
+      this.xhr.abort();
+    }
+  },
+
+  setTimeout: function(callback, timeoutMS)
+  {
+    this.xhr.timeout = timeoutMS;
+    var stream = this;
+    this.xhr.ontimeout = function() {
+      stream.closed = true;
+      callback(stream);
+    };
+  },
+};
+
+// -->
+</script>
+<script type='text/javascript'>
+<!--
+var gDraftAPIURI = "https:\/\/drafts.csswg.org\/api\/drafts\/";
+var gCookiePrefix = "drafts_";
+var gRepo = "csswg";
+var gDate = false;
+var gBranch = null;
+var gHead = null;
+var gRepoPath = "css-2015\/Overview.bs";
+/*******************************************************************************
+ *
+ *  Copyright © 2014 Hewlett-Packard Development Company, L.P.
+ *
+ *  This work is distributed under the W3C® Software License [1]
+ *  in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ *  [1] http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+ *
+ ******************************************************************************/
+
+
+/**
+ * Script to be injected into spec drafts
+ */
+
+
+/**
+ * IE 7/8 Shim Code
+ */
+if (! Array.indexOf) {
+  Array.prototype.indexOf = function(obj) {
+    for (var index = 0; index < this.length; index++) {
+      if (this[index] == obj) {
+        return index;
+      }
+    }
+    return -1;
+  }
+}
+if (! Date.now) {
+  Date.now = function() { return new Date().getTime(); }
+}
+try {
+  if (1 != Node.ELEMENT_NODE) {
+    throw true;
+  }
+}
+catch (exc) {
+  var Node = {
+    ELEMENT_NODE:   1,
+    ATTRIBUTE_NODE: 2,
+    TEXT_NODE:      3
+  };
+}
+
+var system = {  // stripped version of system to support stream class
+  getCookie: function(name)
+  {
+    var cookies = document.cookie.split(';');
+    name += '=';
+    var prefixedName = gCookiePrefix + name;
+    for (var index = 0; index < cookies.length; index++) {
+      cookie = cookies[index].trim();
+      if (prefixedName == cookie.substring(0, prefixedName.length)) {
+        return unescape(cookie.substring(prefixedName.length));
+      }
+      if (name == cookie.substring(0, name.length)) {
+        return unescape(cookie.substring(name.length));
+      }
+    }
+    return null;
+  },
+
+  encodeParams: function(params, arrayName)
+  {
+    var paramString = '';
+    for (param in params) {
+      if (params.hasOwnProperty(param)) {
+        if (paramString) {
+          paramString += '&';
+        }
+        var name = param;
+        if (arrayName) {
+          name = arrayName + '[' + param + ']';
+        }
+        if (Array.isArray(params[param])) {
+          for (var index = 0; index < params[param].length; index++) {
+            paramString += name + '[]=' + params[param][index];
+          }
+        }
+        else if ('object' == typeof(params[param])) {
+          paramString += this.encodeParams(params[param], param);
+        }
+        else if ('boolean' == typeof(params[param])) {
+          paramString += name + '=' + (params[param] + 0);
+        }
+        else {
+          paramString += name + '=' + encodeURIComponent(params[param]);
+        }
+      }
+    }
+    return paramString;
+  },
+
+  addLoadEvent: function(onLoad)
+  {
+    try {
+      var oldOnLoad = window.onload;
+      if ('function' != typeof(window.onload)) {
+        window.onload = onLoad;
+      }
+      else {
+        window.onload = function () {
+          if (oldOnLoad) {
+            oldOnLoad();
+          }
+          onLoad();
+        }
+      }
+    }
+    catch (err) {
+    }
+  }
+};
+
+
+var updateCount = 0;
+var maxStreamListenTime = 5 * 60 * 1000;
+var minStreamListenTime = 10 * 1000;
+var streamInterval = 20 * 60 * 1000;
+var streamListenTime = maxStreamListenTime;
+var streamStartTime = 0;
+
+function updateBikeshed(message, data)
+{
+    var bikeshedIcon = document.getElementById('bikeshed');
+    if (bikeshedIcon) {
+        bikeshedIcon.setAttribute('class', data.status);
+        switch (data.status) {
+            case 'pending' :
+            case 'generating': bikeshedIcon.setAttribute('title', 'Bikeshed Pending'); break;
+            case 'success' : bikeshedIcon.setAttribute('title', 'Bikeshed Succeeded'); break;
+            case 'warning' : bikeshedIcon.setAttribute('title', 'Bikeshed Warnings'); break;
+            case 'fatal'   : bikeshedIcon.setAttribute('title', 'Bikeshed Errors'); break;
+            case 'previous':
+            case 'error'   : bikeshedIcon.setAttribute('title', 'Bikeshed Failed'); break;
+        }
+    }
+
+    updateCount++;
+
+    if ((1 < updateCount) || (gDate && (data.date != gDate))) {
+        streamListenTime = maxStreamListenTime;
+        gUpdateStream.setTimeout(streamTimeout, (Date.now() - streamStartTime) + streamListenTime);
+//console.log("received message " + message + ": " + data.status + " - " + data.date + ", resetting timeout " + new Date().toTimeString());
+
+        if ((gDate < data.date) && (('committed' == data.status) || ('success' == data.status) || ('warning' == data.status))) {
+            window.location.reload();
+//console.log('Reload');
+        }
+    }
+    gDate = data.date;
+}
+
+function streamTimeout(stream)
+{
+//console.log("stream timeout " + new Date().toTimeString());
+    streamListenTime = minStreamListenTime;
+    setTimeout(function() {
+      startStream();
+    }, streamInterval);
+}
+
+function startStream()
+{
+    updateCount = 0;
+    streamStartTime = Date.now();
+    gUpdateStream = new Stream(gDraftAPIURI,
+                               { 'repo': gRepo, 'date': gDate,
+                                 'branch': gBranch, 'head': gHead,
+                                 'path': gRepoPath },
+                                 updateBikeshed);
+    gUpdateStream.persist = true;
+    gUpdateStream.setTimeout(streamTimeout, streamListenTime);
+//console.log("starting stream for " + (streamListenTime / 1000) + " seconds " + new Date().toTimeString());
+}
+
+function setupPage()
+{
+    var bikeshedIcon = document.getElementById('bikeshed');
+    if (bikeshedIcon) {
+        bikeshedIcon.onclick = function(domEvent) {
+            if (domEvent.shiftKey) {
+                var url = bikeshedIcon.getAttribute('href').replace('/bikeshed/', '/static/') + window.location.hash;
+                window.location.href = url;
+                if (domEvent) {
+                    (domEvent.preventDefault) ? domEvent.preventDefault() : domEvent.returnValue = false;
+                }
+            }
+        };
+    }
+    startStream();
+}
+
+system.addLoadEvent(setupPage);
+
+// -->
+</script>
+<style type='text/css'><!-- a#bikeshed { width: 32px; height: 32px; display: block; position: fixed; right: 0; top: 0;
+ border-bottom-left-radius: 5px; background: #f4f4f4; box-shadow: 2px 0px 3px #444;
+ background-image: linear-gradient(to bottom, #eee, #fff 15%, #ededed 80%, #e0e0e0);
+}
+a#bikeshed:focus { outline: none;}
+a#bikeshed svg { position: absolute; right: 3px; top: 3px; }
+@keyframes fill {
+0%, 100% { fill: blue; }
+16% { fill: purple; }
+33% { fill: hsl(0, 100%, 60%); }
+50% { fill: orange; }
+67% { fill: gold; }
+83% { fill: hsl(120, 100%, 25%); }
+}
+@keyframes stroke {
+0%, 100% { stroke: blue; }
+16% { stroke: purple; }
+33% { stroke: hsl(0, 100%, 60%); }
+50% { stroke: orange; }
+67% { stroke: gold; }
+83% { stroke: hsl(120, 100%, 25%); }
+}
+a#bikeshed.fatal [fill=blue], a#bikeshed.error [fill=blue], .previous [fill=blue] { fill: #d00; }
+a#bikeshed.fatal [stroke=blue], a#bikeshed.error [stroke=blue], .previous [stroke=blue] { stroke: #d00; }
+a#bikeshed.warning [fill=blue] { fill: #0df; }
+a#bikeshed.warning [stroke=blue] { stroke: #0df; }
+a#bikeshed.link-error [fill=blue] { fill: #cc0; }
+a#bikeshed.link-error [stroke=blue] { stroke: #cc0; }
+a#bikeshed.success [fill=blue] { fill: #0b0; }
+a#bikeshed.success [stroke=blue] { stroke: #0b0; }
+a#bikeshed [fill=blue], [stroke=blue] { animation: n 5s infinite linear; transition: fill 1s, stroke 1s; }
+a#bikeshed.pending [stroke=blue] { animation-name: stroke; }
+a#bikeshed.pending [fill=blue] { animation-name: fill; }
+a#bikeshed.generating [stroke=blue] { animation-name: stroke; }
+a#bikeshed.generating [fill=blue] { animation-name: fill; } --></style>
+<body class="h-entry">
+  <div class="head">
+   <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <h1 class="p-name no-ref" id="title">CSS Snapshot 2015</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">W3C Working Group Note, <time class="dt-updated" datetime="2016-02-03">3 February 2016</time></span></h2>
+   <div data-fill-with="spec-metadata">
+    <dl>
+     <dt>This version:
+     <dd><a class="u-url" href="http://www.w3.org/TR/2016/NOTE-css-2015-0-20160203/">http://www.w3.org/TR/2016/NOTE-css-2015-0-20160203/</a>
+     <dt>Latest published version:
+     <dd><a href="https://www.w3.org/TR/CSS/">https://www.w3.org/TR/CSS/</a>
+     <dt>Editor's Draft:
+     <dd><a href="https://drafts.csswg.org/css-2015/">https://drafts.csswg.org/css-2015/</a>
+     <dt>Previous Versions:
+     <dd><a href="https://www.w3.org/TR/2015/NOTE-css-2015-0-20151007/" rel="previous">https://www.w3.org/TR/2015/NOTE-css-2015-0-20151007/</a>
+     <dt>Feedback:
+     <dd><span><a href="mailto:www-style@w3.org?subject=%5Bcss-2015%5D%20YOUR%20TOPIC%20HERE">www-style@w3.org</a> with subject line “<kbd>[css-2015] <i data-lt="">… message topic …</i></kbd>” (<a href="http://lists.w3.org/Archives/Public/www-style/" rel="discussion">archives</a>)</span>
+     <dt>Issue Tracking:
+     <dd><a href="#issues-index">Inline In Spec</a>
+     <dt class="editor">Editors:
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="http://xanthir.com/">Tab Atkins Jr.</a> (<span class="p-org org">Google</span>)
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="http://fantasai.inkedblade.net/contact">Elika J. Etemad / fantasai</a> (<span class="p-org org">Invited Expert</span>)
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="http://vivliostyle.com">Florian Rivoal</a> (<span class="p-org org">Vivliostyle</span>) <a class="u-email email" href="mailto:florian@rivoal.net">florian@rivoal.net</a>
+    </dl>
+   </div>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2016 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <hr title="Separator for header">
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+  <div class="p-summary" data-fill-with="abstract">
+   <p>This document collects together into one definition all the specs that
+
+together form the current state of Cascading Style Sheets (CSS) as of 2015.
+The primary audience is CSS implementers, not CSS authors, as this definition
+includes modules by specification stability, not Web browser adoption rate.</p>
+    <a href="http://www.w3.org/TR/CSS/">CSS</a> is a language for describing the rendering of structured documents 
+(such as HTML and XML) 
+on screen, on paper, in speech, etc.
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status"> This document represents the state of CSS as of 2015.
+	The CSS Working Group does not expect any further changes to this document:
+	new snapshots will be published at <a href="https://www.w3.org/TR/CSS/">https://www.w3.org/TR/CSS/</a> as CSS advances. </div>
+  <div data-fill-with="at-risk"></div>
+  <nav data-fill-with="table-of-contents" id="toc">
+   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
+   <ol class="toc" role="directory">
+    <li>
+     <a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+     <ol class="toc">
+      <li><a href="#w3c-process"><span class="secno">1.1</span> <span class="content"> Background: The W3C Process and CSS</span></a>
+     </ol>
+    <li>
+     <a href="#css"><span class="secno">2</span> <span class="content">Cascading Style Sheets (CSS) — The Official Definition</span></a>
+     <ol class="toc">
+      <li><a href="#css-levels"><span class="secno">2.1</span> <span class="content"> CSS Levels</span></a>
+      <li><a href="#profiles"><span class="secno">2.2</span> <span class="content"> CSS Profiles</span></a>
+     </ol>
+    <li>
+     <a href="#responsible"><span class="secno">3</span> <span class="content"> Requirements for Responsible Implementation of CSS</span></a>
+     <ol class="toc">
+      <li><a href="#partial"><span class="secno">3.1</span> <span class="content">Partial Implementations</span></a>
+      <li>
+       <a href="#future-proofing"><span class="secno">3.2</span> <span class="content">Implementations of Unstable and Proprietary Features</span></a>
+       <ol class="toc">
+        <li><a href="#experimental"><span class="secno">3.2.1</span> <span class="content"> Experimentation and Unstable Features</span></a>
+        <li><a href="#proprietary"><span class="secno">3.2.2</span> <span class="content"> Proprietary and Non-standardized Features</span></a>
+        <li><a href="#de-facto"><span class="secno">3.2.3</span> <span class="content"> Market Pressure and De Facto Standards</span></a>
+       </ol>
+      <li><a href="#testing"><span class="secno">3.3</span> <span class="content">Implementations of CR-level Features</span></a>
+     </ol>
+    <li>
+     <a href="#indices"><span class="secno">4</span> <span class="content">Indices</span></a>
+     <ol class="toc">
+      <li><a href="#terms"><span class="secno">4.1</span> <span class="content">Terms Index</span></a>
+      <li><a href="#selectors"><span class="secno">4.2</span> <span class="content">Selector Index</span></a>
+      <li><a href="#at-rules"><span class="secno">4.3</span> <span class="content"> At-Rule Index</span></a>
+      <li><a href="#properties"><span class="secno">4.4</span> <span class="content">Property Index</span></a>
+      <li><a href="#values"><span class="secno">4.5</span> <span class="content">Values Index</span></a>
+     </ol>
+    <li><a href="#acks"><span class="secno">5</span> <span class="content">Acknowledgements</span></a>
+    <li>
+     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
+     <ol class="toc">
+      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
+      <li><a href="#index-defined-elsewhere"><span class="secno"></span> <span class="content">Terms defined by reference</span></a>
+     </ol>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+     </ol>
+    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
+   </ol>
+  </nav>
+  <main>
+   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
+   <p>When the first CSS specification was published,
+	all of CSS was contained in one document that defined CSS Level 1.
+	CSS Level 2 was defined also by a single, multi-chapter document.
+	However for CSS beyond Level 2,
+	the CSS Working Group chose to adopt a modular approach,
+	where each module defines a part of CSS,
+	rather than to define a single monolithic specification.
+	This breaks the specification into more manageable chunks
+	and allows more immediate, incremental improvement to CSS.</p>
+   <p>Since different CSS modules are at different levels of stability,
+	the CSS Working Group has chosen to publish this profile
+	to define the current scope and state of Cascading Style Sheets as of late 2015.
+	This profile includes only specifications that we consider stable <em>and</em> for which we have enough implementation experience that we are sure of that stability.</p>
+   <p class="note" role="note">Note: This is not intended to be a CSS Desktop Browser Profile:
+	inclusion in this profile is based on feature stability only
+	and not on expected use or Web browser adoption.
+	This profile defines CSS in its most complete form.</p>
+   <p class="note" role="note">Note: Although we don’t anticipate significant changes to the specifications that form this snapshot,
+	their inclusion does not mean they are frozen.
+	The Working Group will continue to address problems as they are found in these specs.
+	Implementers should monitor <a href="http://lists.w3.org/Archives/Public/www-style/">www-style</a> and/or the <a href="http://www.w3.org/blog/CSS">CSS Working Group Blog</a> for any resulting changes, corrections, or clarifications.</p>
+   <h3 class="heading settled" data-level="1.1" id="w3c-process"><span class="secno">1.1. </span><span class="content"> Background: The W3C Process and CSS</span><a class="self-link" href="#w3c-process"></a></h3>
+   <p><em>This section is non-normative.</em></p>
+   <p>In the <a href="http://www.w3.org/Consortium/Process/">W3C Process</a>,
+	a Recommendation-track document passes through three levels of stability,
+	summarized below:</p>
+   <dl>
+    <dt>Working Draft (WD) 
+    <dd>
+     <p>This is the design phase of a W3C spec.
+			The WG iterates the spec in response to internal and external feedback.</p>
+     <p>The first official Working Draft is designated the “First Public Working Draft” (FPWD).
+			In the CSSWG, publishing FPWD indicates that the Working Group as a whole has agreed to work on the module,
+			roughly as scoped out and proposed in the editor’s draft.</p>
+     <p>The transition to the next stage is sometimes called “Last Call Working Draft” (LCWD) phase.
+ 			The CSSWG transitions Working Drafts once we have resolved all known issues,
+ 			and can make no further progress without feedback from building tests and implementations.</p>
+     <p>This ”Last Call for Comments” sets a deadline for reporting any outstanding issues,
+			and requires the WG to specially track and address incoming feedback.
+			The comment-tracking document is the Disposition of Comments (DoC).
+			It is submitted along with an updated draft for the Director’s approval,
+			to demonstrate wide review and acceptance.</p>
+    <dt>Candidate Recommendation (CR) 
+    <dd>
+      This is the testing phase of a W3C spec.
+			Notably, this phase is about using tests and implementations to test the specification:
+			it is not about testing the implementations.
+			This process often reveals more problems with the spec,
+			and so a Candidate Recommendation will morph over time in response to implementation and testing feedback,
+			though usually less so than during the design phase (WD). 
+     <p>Demonstration of two correct, independent implementations of each feature is required to exit CR,
+			so in this phase the WG builds a test suite and generates implementation reports.</p>
+     <p>The transition to the next stage is “Proposed Recommendation” (PR).
+			During this phase the W3C Advisory Committee must approve the transition to REC.</p>
+    <dt>Recommendation (REC) 
+    <dd> This is the completed state of a W3C spec and represents a maintainance phase.
+			At this point the WG only maintains an errata document
+			and occasionally publishes an updated edition that incorporates the errata back into the spec. 
+   </dl>
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="Editor’s Draft" id="editors-draft">Editor’s Draft<span class="dfn-panel" data-deco=""><b><a href="#editors-draft">#editors-draft</a></b><b>Referenced in:</b><span><a href="#ref-for-editors-draft-1">1.1. 
+Background: The W3C Process and CSS</a> <a href="#ref-for-editors-draft-2">(2)</a></span></span></dfn> is effectively a live copy of the editors’ own working copy.
+	It may or may not reflect Working Group consensus,
+	and can at times be in a self-inconsistent state.
+	(Because the publishing process at W3C is time-consuming and onerous,
+	the <a data-link-type="dfn" href="#editors-draft" id="ref-for-editors-draft-1">Editor’s Draft</a> is usually the best (most up-to-date) reference for a spec.
+	Efforts are currently underway to reduce the friction of publishing,
+	so that official drafts will be regularly up-to-date
+	and <a data-link-type="dfn" href="#editors-draft" id="ref-for-editors-draft-2">Editor’s Drafts</a> can return to their original function as scratch space.)</p>
+   <h2 class="heading settled" data-level="2" id="css"><span class="secno">2. </span><span class="content">Cascading Style Sheets (CSS) — The Official Definition</span><a class="self-link" href="#css"></a></h2>
+   <p>As of 2015, <dfn data-dfn-type="dfn" data-noexport="" id="cascading-style-sheets-css">Cascading Style Sheets (CSS)<a class="self-link" href="#cascading-style-sheets-css"></a></dfn> is defined by the following
+	specifications.</p>
+   <dl>
+    <dt><a href="https://www.w3.org/TR/CSS2/">CSS Level 2, latest revision</a> (including errata) <a data-link-type="biblio" href="#biblio-css2">[CSS2]</a> 
+    <dd> This defines the core of CSS, parts of which are overridden by later specifications.
+				We recommend in particular reading <a href="https://www.w3.org/TR/CSS2/intro.html">Chapter 2</a>,
+				which introduces some of the basic concepts of CSS
+				and its design principles. 
+    <dt><a href="https://www.w3.org/TR/css-syntax-3/">CSS Syntax Level 3</a> <a data-link-type="biblio" href="#biblio-css-syntax-3">[CSS-SYNTAX-3]</a> 
+    <dd> Replaces CSS2§4.1, CSS2§4.1, CSS2§4.2, CSS2§4.4, and CSS2§G,
+			defining how CSS is parsed. 
+    <dt><a href="https://www.w3.org/TR/css-style-attr/">CSS Style Attributes</a> <a data-link-type="biblio" href="#biblio-css-style-attr">[CSS-STYLE-ATTR]</a> 
+    <dd> Defines how CSS declarations can be embedded in markup attributes. 
+    <dt><a href="https://www.w3.org/TR/css3-mediaqueries/">Media Queries Level 3</a> <a data-link-type="biblio" href="#biblio-css3-mediaqueries">[CSS3-MEDIAQUERIES]</a> 
+    <dd> Replaces CSS2§7.3 and expands on the syntax for media-specific styles. 
+    <dt><a href="https://www.w3.org/TR/css3-conditional/">CSS Conditional Rules Level 3</a> <a data-link-type="biblio" href="#biblio-css3-conditional">[CSS3-CONDITIONAL]</a> 
+    <dd> Replaces CSS2§7.2, updating the definition of <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a> rules to allow nesting,
+			and introduces <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-supports">@supports</a> rules for feature-support queries. 
+    <dt><a href="https://www.w3.org/TR/css3-namespace/">CSS Namespaces</a> <a data-link-type="biblio" href="#biblio-css3-namespace">[CSS3-NAMESPACE]</a> 
+    <dd> Introduces an <span class="css">@namespace</span> rule to allow namespace-prefixed selectors. 
+    <dt><a href="https://www.w3.org/TR/css3-selectors/">Selectors Level 3</a> <a data-link-type="biblio" href="#biblio-select">[SELECT]</a> 
+    <dd> Replaces CSS2§5 and CSS2§6.4.3, defining an extended range of selectors. 
+    <dt><a href="https://www.w3.org/TR/css3-cascade/">CSS Cascading and Inheritance Level 3</a> <a data-link-type="biblio" href="#biblio-css-cascade-3">[CSS-CASCADE-3]</a> 
+    <dd> Replaces CSS2§1.4.3 and CSS2§6 
+    <dt><a href="https://www.w3.org/TR/css3-values/">CSS Values and Units Level 3</a> <a data-link-type="biblio" href="#biblio-css-values-3">[CSS-VALUES-3]</a> 
+    <dd> Replaces CSS2§1.4.2.1, CSS2§4.3, and CSS2§A.2.1–3,
+			defining CSS’s property definition syntax
+			and expanding its set of units. 
+    <dt><a href="https://www.w3.org/TR/css3-color/">CSS Color Level 3</a> <a data-link-type="biblio" href="#biblio-css3-color">[CSS3-COLOR]</a> 
+    <dd> Replaces CSS2§4.3.6, CSS2§14.1, and CSS2§18.2,
+			defining an extended range of color values.
+			Also introduces the <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-color-4/#propdef-opacity">opacity</a> property. 
+    <dt><a href="https://www.w3.org/TR/css3-background/">CSS Backgrounds and Borders Level 3</a> <a data-link-type="biblio" href="#biblio-css3-background">[CSS3-BACKGROUND]</a> 
+    <dd> Replaces CSS2§8.5 and CSS2§14.2,
+			providing more control of backgrounds and borders,
+			including layered background images,
+			image borders,
+			and drop shadows. 
+    <dt><a href="https://www.w3.org/TR/css3-images/">CSS Image Values and Replaced Content Level 3</a> <a data-link-type="biblio" href="#biblio-css3-images">[CSS3-IMAGES]</a> 
+    <dd> Provides a new foundation text for the sizing of replaced elements (such as images),
+			adds additional controls to their sizing and orientation,
+			and introduces syntax for gradients as images in CSS. 
+    <dt><a href="https://www.w3.org/TR/css-fonts-3/">CSS Fonts Level 3</a> <a data-link-type="biblio" href="#biblio-css-fonts-3">[CSS-FONTS-3]</a> 
+    <dd> Replaces CSS2§15
+			and provides more control over font choice and feature selection. 
+    <dt><a href="https://www.w3.org/TR/css3-multicol/">CSS Multi-column Layout Level 1</a> <a data-link-type="biblio" href="#biblio-css3-multicol">[CSS3-MULTICOL]</a> 
+    <dd> Introduces multi-column flows to CSS layout. 
+    <dt><a href="https://www.w3.org/TR/css3-ui/">CSS User Interface Module Level 3</a> <a data-link-type="biblio" href="#biblio-css-ui-3">[CSS-UI-3]</a> 
+    <dd> Replaces CSS2§18.1 and CSS2§18.4,
+			defining <a class="property" data-link-type="propdesc" href="https://www.w3.org/TR/css3-ui/#propdef-cursor">cursor</a>, <a class="property" data-link-type="propdesc" href="https://www.w3.org/TR/css3-ui/#propdef-outline">outline</a>, and several new CSS features that also enhance the user interface. 
+    <dt><a href="https://www.w3.org/TR/compositing-1/">CSS Compositing and Blending Level 1</a> <a data-link-type="biblio" href="#biblio-compositing">[COMPOSITING]</a> 
+    <dd> Defines the compositing and blending of overlaid content
+			and introduces features to control their modes. 
+   </dl>
+   <p class="issue" id="issue-d34d1161"><a class="self-link" href="#issue-d34d1161"></a> Add will-change once it’s pushed to CR</p>
+   <div class="note" role="note">
+     The following modules are widely deployed with <a data-link-type="dfn" href="#rough-interoperability" id="ref-for-rough-interoperability-1">rough interoperability</a>,
+		but the details are not fully worked out
+		and they need more testing and bugfixing. 
+    <dl>
+     <dt><a href="https://www.w3.org/TR/css3-transitions/">CSS Transitions Level 1</a> <a data-link-type="biblio" href="#biblio-css3-transitions">[CSS3-TRANSITIONS]</a> and <a href="https://www.w3.org/TR/css3-animations/">CSS Animations Level 1</a> <a data-link-type="biblio" href="#biblio-css3-animations">[CSS3-ANIMATIONS]</a> 
+     <dd> Define mechanisms for transitioning the computed values of CSS properties over time. 
+     <dt><a href="https://www.w3.org/TR/css-flexbox-1/">CSS Flexible Box Module Level 1</a> <a data-link-type="biblio" href="#biblio-css-flexbox-1">[CSS-FLEXBOX-1]</a> 
+     <dd> Introduces a flexible linear layout model for CSS. 
+     <dt><a href="https://www.w3.org/TR/css3-transforms/">CSS Transforms Level 1</a> <a data-link-type="biblio" href="#biblio-css3-transforms">[CSS3-TRANSFORMS]</a> 
+     <dd> Introduces graphical transformations to CSS. 
+    </dl>
+   </div>
+   <div class="note" role="note">
+     The following modules have completed design work,
+		and are fairly stable,
+		but have not received much testing and implementation experience yet: 
+    <dl>
+     <dt><a href="https://www.w3.org/TR/css-counter-styles-3/">CSS Counter Styles Level 3</a> <a data-link-type="biblio" href="#biblio-css-counter-styles-3">[CSS-COUNTER-STYLES-3]</a> 
+     <dd> Expands the possible values of <a class="production css" data-link-type="type" href="https://www.w3.org/TR/css-counter-styles-3/#typedef-counter-style" title="Expands to: japanese-formal | japanese-formal | simp-chinese-informal | simp-chinese-informal | japanese-informal | japanese-informal | trad-chinese-formal | trad-chinese-formal | cjk-ideographic | cjk-ideographic | simp-chinese-formal | simp-chinese-formal | trad-chinese-informal | trad-chinese-informal">&lt;counter-style></a> and provides an <a class="css" data-link-type="maybe" href="https://www.w3.org/TR/css-counter-styles-3/#at-ruledef-counter-style">@counter-style</a> syntax for customized counter styles. 
+     <dt><a href="https://www.w3.org/TR/css-masking-1/">CSS Masking Level 1</a> <a data-link-type="biblio" href="#biblio-css-masking-1">[CSS-MASKING-1]</a> 
+     <dd> Replaces CSS2§11.1.2
+				and introduces more powerful ways of clipping and masking content. 
+     <dt><a href="https://www.w3.org/TR/css-shapes-1/">CSS Shapes Module Level 1</a> <a data-link-type="biblio" href="#biblio-css-shapes-1">[CSS-SHAPES-1]</a> 
+     <dd> Extends floats to effect non-rectangular wrapping shapes. 
+     <dt><a href="https://www.w3.org/TR/css-text-decor-3/">CSS Text Decoration Level 3</a> <a data-link-type="biblio" href="#biblio-css-text-decor-3">[CSS-TEXT-DECOR-3]</a> 
+     <dd> Replaces CSS2§16.3,
+				providing more control over text decoration lines
+				and adding the ability to specify text emphasis marks
+				and text shadows. 
+     <dt><a href="https://www.w3.org/TR/css3-speech/">CSS Speech Module Level 1</a> <a data-link-type="biblio" href="#biblio-css3-speech">[CSS3-SPEECH]</a> 
+     <dd> Replaces CSS2§A,
+				overhauling the (non-normative) speech rendering chapter. 
+    </dl>
+    <p>We hope to incorporate them into a future snapshot.</p>
+   </div>
+    <strong class="advisement"> A list of all CSS modules, stable and in-progress,
+	and their statuses
+	can be found at the <a href="http://www.w3.org/Style/CSS/current-work">CSS Current Work page</a>.</strong> 
+   <h3 class="heading settled" data-level="2.1" id="css-levels"><span class="secno">2.1. </span><span class="content"> CSS Levels</span><a class="self-link" href="#css-levels"></a></h3>
+   <p>Cascading Style Sheets does not have versions in the traditional sense;
+	instead it has <dfn data-dfn-type="dfn" data-noexport="" id="levels">levels<a class="self-link" href="#levels"></a></dfn>. Each level of CSS builds on the previous,
+	refining definitions and adding features. The feature set of each higher
+	level is a superset of any lower level, and the behavior allowed for a given
+	feature in a higher level is a subset of that allowed in the lower levels.
+	A user agent conforming to a higher level of CSS is thus also conformant to
+	all lower levels.</p>
+   <dl>
+    <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="CSS Level 1" id="css-level-1">CSS Level 1<span class="dfn-panel" data-deco=""><b><a href="#css-level-1">#css-level-1</a></b><b>Referenced in:</b><span><a href="#ref-for-css-level-1-1">2.1. 
+CSS Levels</a></span></span></dfn> 
+    <dd> The CSS Working Group considers the <a href="https://www.w3.org/TR/2008/REC-CSS1-20080411/">CSS1 specification</a> to be
+			obsolete. <a data-link-type="dfn" href="#css-level-1" id="ref-for-css-level-1-1">CSS Level 1</a> is defined as all the features defined
+			in the CSS1 specification (properties, values, at-rules, etc), but using
+			the syntax and definitions in the <a href="https://www.w3.org/TR/CSS2/">CSS2.1 specification</a>. <a href="https://www.w3.org/TR/css-style-attr/">CSS Style Attributes</a> defines its inclusion in element-specific style attributes. 
+    <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="CSS Level 2" id="css-level-2">CSS Level 2<span class="dfn-panel" data-deco=""><b><a href="#css-level-2">#css-level-2</a></b><b>Referenced in:</b><span><a href="#ref-for-css-level-2-1">2.1. 
+CSS Levels</a> <a href="#ref-for-css-level-2-2">(2)</a> <a href="#ref-for-css-level-2-3">(3)</a></span></span></dfn> 
+    <dd>
+      Although the <a href="https://www.w3.org/TR/2008/REC-CSS2-20080411/">CSS2 specification</a> is technically a W3C Recommendation, it passed into the Recommendation stage
+			before the W3C had defined the Candidate Recommendation stage. Over time
+			implementation experience and further review has brought to light many problems
+			in the CSS2 specification, so instead of expanding an already <a href="http://www.w3.org/Style/css2-updates/REC-CSS2-19980512-errata.html">unwieldy
+			errata list</a>, the CSS Working Group chose to define <cite>CSS Level 2
+			Revision 1</cite> (CSS2.1). In case of any conflict between the two specs
+			CSS2.1 contains the definitive definition. 
+     <p>Once CSS2.1 became Candidate Recommendation—effectively though not
+			officially the same level of stability as CSS2—obsoleted the CSS2
+			Recommendation.  Features in CSS2 that were dropped from CSS2.1 should be
+			considered to be at the Candidate Recommendation stage, but note that many
+			of these have been or will be pulled into a CSS Level 3 working draft, in
+			which case that specification will, once it reaches CR, obsolete the
+			definitions in CSS2.</p>
+     <p>The <a href="https://www.w3.org/TR/CSS2/">CSS2.1 specification</a> defines <a data-link-type="dfn" href="#css-level-2" id="ref-for-css-level-2-1">CSS Level 2</a> and the <a href="https://www.w3.org/TR/css-style-attr/">CSS
+			Style Attributes specification</a> defines its inclusion in
+			element-specific style attributes.</p>
+    <dt><dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="CSS Level 3" id="css-level-3">CSS Level 3<span class="dfn-panel" data-deco=""><b><a href="#css-level-3">#css-level-3</a></b><b>Referenced in:</b><span><a href="#ref-for-css-level-3-1">2.1. 
+CSS Levels</a></span></span></dfn> 
+    <dd>
+      <a data-link-type="dfn" href="#css-level-3" id="ref-for-css-level-3-1">CSS Level 3</a> builds on CSS Level 2 module by module, using the CSS2.1
+			specification as its core. Each module adds functionality and/or
+			replaces part of the CSS2.1 specification. The CSS Working Group
+			intends that the new CSS modules will not contradict the CSS2.1
+			specification: only that they will add functionality and refine
+			definitions. As each module is completed, it will be plugged in to
+			the existing system of CSS2.1 plus previously-completed modules. 
+     <p>From this level on modules are levelled independently: for example
+			Selectors Level 4 may well be completed before CSS Line Module Level 3.
+			Modules with no <a data-link-type="dfn" href="#css-level-2" id="ref-for-css-level-2-2">CSS Level 2</a> equivalent start at Level 1;
+			modules that update features that existed in <a data-link-type="dfn" href="#css-level-2" id="ref-for-css-level-2-3">CSS Level 2</a> start at Level 3.</p>
+    <dt><dfn data-dfn-type="dfn" data-export="" id="css-level-4">CSS Level 4<a class="self-link" href="#css-level-4"></a></dfn> and beyond 
+    <dd> There is no CSS Level 4.
+			Independent modules can reach level 4 or beyond,
+			but CSS the language no longer has levels.
+			("CSS Level 3" as a term is used only to differentiate it from the previous monolithic versions.) 
+   </dl>
+   <h3 class="heading settled" data-level="2.2" id="profiles"><span class="secno">2.2. </span><span class="content"> CSS Profiles</span><a class="self-link" href="#profiles"></a></h3>
+   <p>Not all implementations will implement all functionality defined in CSS.
+	For example, an implementation may choose to implement only the functionality required by a CSS Profile.
+	Profiles define a subset of CSS considered fundamental for a specific class of CSS implementations.
+	The W3C CSS Working Group defines the following CSS profiles:</p>
+   <ul>
+    <li><a href="https://www.w3.org/TR/css-mobile/">CSS Mobile Profile 2.0</a> 
+    <li><a href="https://www.w3.org/TR/css-print/">CSS Print Profile 1.0</a> 
+    <li><a href="https://www.w3.org/TR/css-tv">CSS TV Profile 1.0</a> 
+   </ul>
+   <p class="note" role="note">Note: Partial implementations of CSS, even if that subset is an official profile,
+	must follow the forward-compatible parsing rules for <a href="#partial">partial implementations</a>.</p>
+   <h2 class="heading settled" data-level="3" id="responsible"><span class="secno">3. </span><span class="content"> Requirements for Responsible Implementation of CSS</span><a class="self-link" href="#responsible"></a></h2>
+   <p>The following sections define several conformance requirements
+	for implementing CSS responsibly,
+	in a way that promotes interoperability in the present and future.</p>
+   <h3 class="heading settled" data-level="3.1" id="partial"><span class="secno">3.1. </span><span class="content">Partial Implementations</span><a class="self-link" href="#partial"></a></h3>
+   <p>So that authors can exploit the forward-compatible parsing rules to assign fallback values, <strong>CSS renderers <em>must</em> treat as invalid
+	(and <a href="https://www.w3.org/TR/CSS2/conform.html#ignore">ignore as appropriate</a>)
+	any at-rules, properties, property values, keywords, and other syntactic constructs
+	for which they have no usable level of support</strong>.
+	In particular, user agents <em>must not</em> selectively ignore
+	unsupported property values and honor supported values in a single multi-value property declaration:
+	if any value is considered invalid (as unsupported values must be),
+	CSS requires that the entire declaration be ignored.</p>
+   <h3 class="heading settled" data-level="3.2" id="future-proofing"><span class="secno">3.2. </span><span class="content">Implementations of Unstable and Proprietary Features</span><a class="self-link" href="#future-proofing"></a></h3>
+   <p>To avoid clashes with future stable CSS features,
+	the CSSWG recommends the following best practices for the implementation of <a data-link-type="dfn" href="#unstable" id="ref-for-unstable-1">unstable</a> features and <a data-link-type="dfn" href="#proprietary-extension" id="ref-for-proprietary-extension-1">proprietary extensions</a> to CSS:</p>
+   <h4 class="heading settled" data-level="3.2.1" id="experimental"><span class="secno">3.2.1. </span><span class="content"> Experimentation and Unstable Features</span><a class="self-link" href="#experimental"></a></h4>
+   <p>Implementations of <a data-link-type="dfn" href="#unstable" id="ref-for-unstable-2">unstable</a> features
+	that are described in W3C specifications
+	but are not interoperable
+	should not be released broadly for general use;
+	but may be released for limited, experimental use in controlled environments.</p>
+   <details class="why">
+    <summary>Why?</summary>
+     We want to allow both authors and implementors to experiment with the feature and give feedback,
+		but prevent authors from relying on them in production websites
+		and thereby accidentally "locking in" (through content dependence)
+		certain syntax or behavior that might change later. 
+   </details>
+   <div class="example" id="example-3fb930ea"><a class="self-link" href="#example-3fb930ea"></a> For example,
+		a UA could release an <a data-link-type="dfn" href="#unstable" id="ref-for-unstable-3">unstable</a> features for experimentation
+		through beta or other testing-stage builds;
+		behind a hidden configuration flag;
+		behind a switch enabled only for specific testing partners;
+		or through some other means of limiting dependent use. </div>
+   <p>A CSS feature is considered <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="unstable" data-noexport="" id="unstable">unstable<span class="dfn-panel" data-deco=""><b><a href="#unstable">#unstable</a></b><b>Referenced in:</b><span><a href="#ref-for-unstable-1">3.2. Implementations of Unstable and Proprietary Features</a></span><span><a href="#ref-for-unstable-2">3.2.1. 
+Experimentation and Unstable Features</a> <a href="#ref-for-unstable-3">(2)</a></span><span><a href="#ref-for-unstable-4">3.2.3. 
+Market Pressure and De Facto Standards</a> <a href="#ref-for-unstable-5">(2)</a></span><span><a href="#ref-for-unstable-6">3.2.3.1. 
+Vendor-prefixing Unstable Features</a> <a href="#ref-for-unstable-7">(2)</a></span></span></dfn> until
+	its specification has reached the Candidate Recommendation (CR) stage in the W3C process.
+	In exceptional cases,
+	the CSSWG may additionally, by an officially-recorded resolution,
+	add pre-CR features to the set that are considered safe to release for broad use.</p>
+   <p class="note" role="note">Note: Vendors should consult the WG explicitly and not make assumptions on this point,
+	as a pre-CR spec that hasn’t changed in awhile is usually more out-of-date than stable.</p>
+   <h4 class="heading settled" data-level="3.2.2" id="proprietary"><span class="secno">3.2.2. </span><span class="content"> Proprietary and Non-standardized Features</span><a class="self-link" href="#proprietary"></a></h4>
+   <p>To avoid clashes with future CSS features,
+	the CSS2.1 specification reserves a <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="vendor prefix | vendor-prefixed | prefixed | unprefixed" data-noexport="" id="vendor-prefix"><a href="https://www.w3.org/TR/CSS21/syndata.html#vendor-keywords">prefixed syntax</a><span class="dfn-panel" data-deco=""><b><a href="#vendor-prefix">#vendor-prefix</a></b><b>Referenced in:</b><span><a href="#ref-for-vendor-prefix-1">3.2.2. 
+Proprietary and Non-standardized Features</a></span><span><a href="#ref-for-vendor-prefix-2">3.2.3. 
+Market Pressure and De Facto Standards</a></span><span><a href="#ref-for-vendor-prefix-3">3.2.3.1. 
+Vendor-prefixing Unstable Features</a> <a href="#ref-for-vendor-prefix-4">(2)</a> <a href="#ref-for-vendor-prefix-5">(3)</a></span><span><a href="#ref-for-vendor-prefix-6">3.3. Implementations of CR-level Features</a></span></span></dfn> <a data-link-type="biblio" href="#biblio-css2">[CSS21]</a> for proprietary and experimental extensions to CSS.
+	A CSS feature is a <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="proprietary extension" data-noexport="" id="proprietary-extension">proprietary extension<span class="dfn-panel" data-deco=""><b><a href="#proprietary-extension">#proprietary-extension</a></b><b>Referenced in:</b><span><a href="#ref-for-proprietary-extension-1">3.2. Implementations of Unstable and Proprietary Features</a></span><span><a href="#ref-for-proprietary-extension-2">3.2.2. 
+Proprietary and Non-standardized Features</a> <a href="#ref-for-proprietary-extension-3">(2)</a> <a href="#ref-for-proprietary-extension-4">(3)</a></span></span></dfn> if it is meant for use
+	in a closed environment accessible only to a single vendor’s user agent(s).
+	A UA should support such <a data-link-type="dfn" href="#proprietary-extension" id="ref-for-proprietary-extension-2">proprietary extensions</a> only through a vendor-<a data-link-type="dfn" href="#vendor-prefix" id="ref-for-vendor-prefix-1">prefixed</a> syntax
+	and not expose them to open (multi-UA) environments such as the World Wide Web.</p>
+   <details class="why">
+    <summary>Why?</summary>
+     The prefixing requirement allows shipping specialized features in closed environments
+		without conflicting with future additions to standard CSS.
+		The restriction on exposure to open systems is to prevent
+		accidentally causing the public CSS environment
+		to depend on an unstandardized <a data-link-type="dfn" href="#proprietary-extension" id="ref-for-proprietary-extension-3">proprietary extensions</a>. 
+   </details>
+   <div class="example" id="example-b1dbbf69"><a class="self-link" href="#example-b1dbbf69"></a> For example,
+		Firefox’s XUL-based UI, Apple’s iTunes UI, and Microsoft’s Universal Windows Platform app
+		use extensions to CSS implemented by their respective UAs.
+		So long as these UAs do not allow Web content to access these features,
+		they do not provide an opportunity for such content
+		to become dependent on their <a data-link-type="dfn" href="#proprietary-extension" id="ref-for-proprietary-extension-4">proprietary extensions</a>. </div>
+   <p>Even if a feature is intended to eventually be used in the Web,
+	if it hasn’t yet been standardized
+	it should still not be exposed to the Web.</p>
+   <h4 class="heading settled" data-level="3.2.3" id="de-facto"><span class="secno">3.2.3. </span><span class="content"> Market Pressure and De Facto Standards</span><a class="self-link" href="#de-facto"></a></h4>
+   <p>If a feature is <a data-link-type="dfn" href="#unstable" id="ref-for-unstable-4">unstable</a> (i.e. the spec has not stabilized yet), yet</p>
+   <ul>
+    <li data-md="">
+     <p>at least three UAs implement the feature
+(<em>or</em> a UA has broken the other rules and shipped for broad use
+an <a data-link-type="dfn" href="#unstable" id="ref-for-unstable-5">unstable</a> or otherwise non-standard feature in a production release),</p>
+    <li data-md="">
+     <p><em>and</em> the implementations have rough interoperability,</p>
+    <li data-md="">
+     <p><em>and</em> the CSS Working Group has recorded consensus
+that this feature should exist and be released,</p>
+   </ul>
+   <p>implementers may ship that feature <a data-link-type="dfn" href="#vendor-prefix" id="ref-for-vendor-prefix-2">unprefixed</a> in broad-release builds. <dfn class="dfn-paneled" data-dfn-type="dfn" data-lt="Rough interoperability" data-noexport="" id="rough-interoperability">Rough interoperability<span class="dfn-panel" data-deco=""><b><a href="#rough-interoperability">#rough-interoperability</a></b><b>Referenced in:</b><span><a href="#ref-for-rough-interoperability-1">2. Cascading Style Sheets (CSS) — The Official Definition</a></span><span><a href="#ref-for-rough-interoperability-2">3.2.3. 
+Market Pressure and De Facto Standards</a></span></span></dfn> is satisfied by a subjective judgment
+	that even though there may be differences,
+	the implementations are sufficiently similar
+	to be used in production websites for a substantial number of use cases.</p>
+   <p class="note" role="note">Note that the CSSWG must still be consulted to ensure coordination across vendors
+		and to ensure sanity review by the CSS experts from each vendor.
+		Note also that <a data-link-type="dfn" href="#rough-interoperability" id="ref-for-rough-interoperability-2">rough interoperability</a> still usually means
+		painful lack of interop in edge (or not-so-edge) cases,
+		particularly because details have not been ironed out through the standards review process. </p>
+   <details class="why">
+    <summary>Why?</summary>
+     If a feature is sufficiently popular that three or more browsers have implemented it before it’s finished standardization,
+		this clause allows releasing the pressure to ship.
+		Also, if a feature has already escaped into the wild and sites have started depending on it,
+		pretending it’s still “experimental” doesn’t help anyone.
+		Allowing others to ship unprefixed recognizes that the feature is now de facto standardized
+		and encourages authors to write cross-platform code. 
+   </details>
+   <h5 class="no-toc heading settled" data-level="3.2.3.1" id="unstable-syntax"><span class="secno">3.2.3.1. </span><span class="content"> Vendor-prefixing Unstable Features</span><a class="self-link" href="#unstable-syntax"></a></h5>
+   <p>When exposing such a standards-track <a data-link-type="dfn" href="#unstable" id="ref-for-unstable-6">unstable</a> feature to the Web in a production release,
+	implementations should support <em>both</em> <a data-link-type="dfn" href="#vendor-prefix" id="ref-for-vendor-prefix-3">vendor-prefixed</a> and unprefixed syntaxes
+	for the feature.
+	Once the feature has stabilized and the implementation is updated to match interoperable behavior,
+	support for the <a data-link-type="dfn" href="#vendor-prefix" id="ref-for-vendor-prefix-4">vendor-prefixed</a> syntax should be removed. </p>
+   <details class="why">
+    <summary>Why?</summary>
+     This is recommended so that authors can use the unprefixed syntax to target all implementations,
+		but when necessary, can target specific implementations
+		to work around incompatibilities among implementations
+		as they get ironed out through the standards/bugfixing process. 
+    <p>The lack of a phase
+		where only the prefixed syntax is supported
+		greatly reduces the risk of stylesheets
+		being written with only the vendor-prefixed syntax.
+		This in turn allows UA vendors to retire
+		their prefixed syntax once the feature is stable,
+		with a lower risk of breaking existing content.
+		It also reduces the need occasionally felt by by some vendors
+		to support a feature with the prefix of another vendor,
+		due to content depending on that syntax.</p>
+   </details>
+   <p>Anyone promoting <a data-link-type="dfn" href="#unstable" id="ref-for-unstable-7">unstable</a> features to authors
+	should document them using their standard unprefixed syntax,
+	and avoid encouraging the use of the <a data-link-type="dfn" href="#vendor-prefix" id="ref-for-vendor-prefix-5">vendor-prefixed</a> syntax
+	for any purpose other than working around implementation differences.</p>
+   <h5 class="no-toc heading settled" data-level="3.2.3.2" id="open-technology"><span class="secno">3.2.3.2. </span><span class="content"> Preserving the Openness of CSS</span><a class="self-link" href="#open-technology"></a></h5>
+   <p>In order to preserve the open nature of CSS as a technology,
+	vendors should make it possible for other implementors
+	to freely implement any features that they do ship.
+	To this end, they should provide spec-editing and testing resources
+	to complete standardization of such features,
+	and avoid other obstacles (e.g., platform dependency, licensing restrictions)
+	to their competitors shipping the feature.</p>
+   <h3 class="heading settled" data-level="3.3" id="testing"><span class="secno">3.3. </span><span class="content">Implementations of CR-level Features</span><a class="self-link" href="#testing"></a></h3>
+   <p>Once a specification reaches the Candidate Recommendation stage,
+	implementers should release an <a data-link-type="dfn" href="#vendor-prefix" id="ref-for-vendor-prefix-6">unprefixed</a> implementation
+	of any CR-level feature they can demonstrate
+	to be correctly implemented according to spec,
+	and should avoid exposing a prefixed variant of that feature.</p>
+   <p>To establish and maintain the interoperability of CSS across
+	implementations, the CSS Working Group requests that non-experimental
+	CSS renderers submit an implementation report (and, if necessary, the
+	testcases used for that implementation report) to the W3C before
+	releasing an unprefixed implementation of any CSS features. Testcases
+	submitted to W3C are subject to review and correction by the CSS
+	Working Group.</p>
+   <p>Further information on submitting testcases and implementation reports
+	can be found from on the CSS Working Group’s website at <a href="http://www.w3.org/Style/CSS/Test/">http://www.w3.org/Style/CSS/Test/</a>.
+	Questions should be directed to the <a href="http://lists.w3.org/Archives/Public/public-css-testsuite">public-css-testsuite@w3.org</a> mailing list.</p>
+   <h2 class="heading settled" data-level="4" id="indices"><span class="secno">4. </span><span class="content">Indices</span><a class="self-link" href="#indices"></a></h2>
+   <p><em>These sections are non-normative.</em></p>
+   <h3 class="heading settled" data-level="4.1" id="terms"><span class="secno">4.1. </span><span class="content">Terms Index</span><a class="self-link" href="#terms"></a></h3>
+   <div data-link-status="TR" type="dfn">
+    <ul class="index">
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#actual-value">actual value</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#length-advance-measure">advance measure</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#after-change-style">after-change style</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#anb">an+b</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#anonymous">anonymous</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#anonymous">anonymous box</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#atomic-inline">atomic inline</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#atomic-inline">atomic inline box</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#at-rule">at-rule</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#min-width-automatic-minimum-size">automatic minimum size</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#backdrop">backdrop</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#bearing-angle">bearing angle</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#before-change-style">before-change style</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#bfc">bfc</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#block">block</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#block-box">block box</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#block-container">block container</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#block-container">block container box</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#block-formatting-context">block formatting context</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#blockify">blockification</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#blockify">blockify</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#block-level">block-level</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#block-level">block-level content</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#box">box</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#box-tree">box tree</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-cancel">cancel</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#cascade">cascade</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#cascaded-value">cascaded value</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#ch">ch</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#cm">cm</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#code-point">code point</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#color-stop">color stop</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#color-stop-list">color stop list</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-combined-duration">combined duration</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#dfn-complete">complete</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#completed-transition">completed transition</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#component-value">component value</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#computed-value">computed value</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#concrete-object-size">concrete object size</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#constraint-rectangle">constraint rectangle</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#contain-constraint">contain constraint</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#containing-block">containing block</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#containing-block-chain">containing block chain</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#cover-constraint">cover constraint</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-axis">cross axis</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-axis">cross-axis</a>
+     <li><a href="https://www.w3.org/TR/css-flexbox-1/#cross-axis-baseline">cross-axis baseline</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-axis-baseline">cross-axis baseline set</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-dimension">cross dimension</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-end">cross-end</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-size">cross size</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-size">cross-size</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-size-property">cross size property</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-start">cross-start</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#css-wide-keywords">css-wide keywords</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#current-input-code-point">current input code point</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#current-value">current value</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#declaration">declaration</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#declared-value">declared value</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#default-object-size">default object size</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#default-sizing-algorithm">default sizing algorithm</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#deg">deg</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#digit">digit</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#display-type">display type</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#dpcm">dpcm</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#dpi">dpi</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#dppx">dppx</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#element">element</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#element">element tree</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#em">em</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-end-time">end time</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-end-value">end value</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#environment-encoding">environment encoding</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#eof-code-point">eof code point</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#ex">ex</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-axis-baseline">first cross-axis baseline set</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-axis-baseline">first main-axis baseline set</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#flex-container">flex container</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#flex-formatting-context">flex formatting context</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#flex-item">flex item</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#flex-layout">flex layout</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#flex-line">flex line</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#font-relative-length">font-relative lengths</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#formatting-context">formatting context</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#function">function</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#get-an-encoding">get an encoding</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#grad">grad</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#gradient-box">gradient box</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#gradient-line">gradient line</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#hex-digit">hex digit</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#hz">hz</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#identifier">identifier</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#css-ignored">ignored</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#image-resolution">image resolution</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#bang-important">!important</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#important">important</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#in">in</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#in-flow">in-flow</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#inheritance">inherit</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#inheritance">inheritance</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#inherited-property">inherited property</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#inherited-value">inherited value</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#initial-containing-block">initial containing block</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#initial-value">initial value</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#inline">inline</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#inline">inline box</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#inline-formatting-context">inline formatting context</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#inline-level">inline-level</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#inline-level">inline-level content</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#inlinify">inlinification</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#inlinify">inlinify</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#inner-display-type">inner display type</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#integer">integer</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#intrinsic-aspect-ratio">intrinsic aspect ratio</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#intrinsic-dimensions">intrinsic dimensions</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#intrinsic-height">intrinsic height</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#intrinsic-resolution">intrinsic resolution</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#intrinsic-width">intrinsic width</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#css-invalid">invalid</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#invalid-image">invalid image</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#khz">khz</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-axis-baseline">last cross-axis baseline set</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-axis-baseline">last main-axis baseline set</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#letter">letter</a>
+     <li><a href="https://drafts.csswg.org/css-transforms-1/#local-coordinate-system">local coordinate system</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#longhand">longhand</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#longhand">longhand property</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#lowercase-letter">lowercase letter</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-axis">main axis</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-axis">main-axis</a>
+     <li><a href="https://www.w3.org/TR/css-flexbox-1/#main-axis-baseline">main-axis baseline</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-axis-baseline">main-axis baseline set</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-dimension">main dimension</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-end">main-end</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-size">main-size</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-size">main size</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-size-property">main size property</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-start">main-start</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#matching-transition-delay">matching transition delay</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#matching-transition-duration">matching transition duration</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#matching-transition-property-value">matching transition-property value</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#matching-transition-timing-function">matching transition timing function</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-size-property">max cross size property</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#maximum-allowed-code-point">maximum allowed code point</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-size-property">max main size property</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#cross-size-property">min cross size property</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#main-size-property">min main size property</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#mm">mm</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#ms">ms</a>
+     <li><a href="https://drafts.csswg.org/css-multicol-1/#multi-column-element">multicol element</a>
+     <li><a href="https://drafts.csswg.org/css-multicol-1/#multi-column-element">multi-column element</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#name-code-point">name code point</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#name-start-code-point">name-start code point</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#newline">newline</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#next-input-code-point">next input code point</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#non-ascii-code-point">non-ascii code point</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#non-printable-code-point">non-printable code point</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#number">number</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#object-size-negotiation">object size negotiation</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#order-modified-document-order">order-modified document order</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#origin">origin</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#outer-display-type">outer display type</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#out-of-flow">out-of-flow</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-comma-separated-list-of-component-values">parse a comma-separated list of component values</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-component-value">parse a component value</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-declaration">parse a declaration</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-component-values">parse a list of component values</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-declarations">parse a list of declarations</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules">parse a list of rules</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-rule">parse a rule</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet">parse a stylesheet</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-something-according-to-a-css-grammar">parse something according to a css grammar</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#pc">pc</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#percentage">percentage</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#px">pixel unit</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#pt">pt</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#px">px</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#q">q</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#qualified-rule">qualified rule</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#rad">rad</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#reconsume-the-current-input-code-point">reconsume the current input code point</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#reference-pixel">reference pixel</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#rem">rem</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-reversing-adjusted-start-value">reversing-adjusted start value</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-reversing-shortening-factor">reversing shortening factor</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#run-in">run-in</a>
+     <li><a href="https://drafts.csswg.org/css-display-3/#run-in">run-in box</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#running-transition">running transition</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#s">s</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#scoped">scoped</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#scoping-element">scoping element</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#serialize-an-anb-value">serialize an &lt;an+b> value</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#shorthand-property">shorthand</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#shorthand-property">shorthand property</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#simple-block">simple block</a>
+     <li><a href="https://drafts.csswg.org/css-multicol-1/#spanner">spanner</a>
+     <li><a href="https://drafts.csswg.org/css-multicol-1/#spanning-element">spanning element</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#specified-size">specified size</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#specified-value">specified value</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-start-time">start time</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-start-value">start value</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#string">string</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#style-change-event">style change event</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#longhand">sub-property</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#surrogate-code-point">surrogate code point</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#turn">turn</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#uppercase-letter">uppercase letter</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#used-value">used value</a>
+     <li><a href="https://drafts.csswg.org/css-transforms-1/#user-coordinate-system">user coordinate system</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#invalid-image">valid image</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#vh">vh</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#viewport-percentage-lengths">viewport-percentage lengths</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#vmax">vmax</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#vmin">vmin</a>
+     <li><a href="https://www.w3.org/TR/css3-values/#vw">vw</a>
+     <li><a href="https://drafts.csswg.org/css-syntax-3/#whitespace">whitespace</a>
+    </ul>
+   </div>
+   <p class="issue" id="issue-3d7adb53"><a class="self-link" href="#issue-3d7adb53"></a> Export terms from animations, backgrounds, selectors, style-attr, conditional, namespaces, ui, css21, and color
+	so we can fully generate this index.
+	Also, republish stuff that doesn’t have a stable link yet so we can link it here.</p>
+   <h3 class="heading settled" data-level="4.2" id="selectors"><span class="secno">4.2. </span><span class="content">Selector Index</span><a class="self-link" href="#selectors"></a></h3>
+   <table class="data">
+    <thead>
+     <tr>
+      <th class="pattern">Pattern 
+      <th>Meaning 
+      <th>Described in section 
+      <th>First defined in level 
+    <tbody>
+     <tr>
+      <th scope="row">
+       <ul>
+        <li data-md="">
+       </ul>
+      <td>any element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#universal-selector">Universal selector</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E 
+      <td>an element of type E 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#type-selectors">Type selector</a> 
+      <td>1 
+     <tr>
+      <th scope="row"> E[foo] 
+      <td>an E element with a "foo" attribute 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#attribute-selectors">Attribute selectors</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E[foo="bar"] 
+      <td>an E element whose "foo" attribute value is exactly
+			equal to "bar" 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#attribute-selectors">Attribute
+			selectors</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E[foo~="bar"] 
+      <td>an E element whose "foo" attribute value is a list of
+			whitespace-separated values, one of which is exactly equal to "bar" 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#attribute-selectors">Attribute
+			selectors</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E[foo^="bar"] 
+      <td>an E element whose "foo" attribute value begins
+			exactly with the string "bar" 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#attribute-selectors">Attribute
+			selectors</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E[foo$="bar"] 
+      <td>an E element whose "foo" attribute value ends exactly
+			with the string "bar" 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#attribute-selectors">Attribute
+			selectors</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E[foo*="bar"] 
+      <td>an E element whose "foo" attribute value contains the
+			substring "bar" 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#attribute-selectors">Attribute
+			selectors</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E[foo|="en"] 
+      <td>an E element whose "foo" attribute has a
+			hyphen-separated list of values beginning (from the left) with "en" 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#attribute-selectors">Attribute
+			selectors</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E:root 
+      <td>an E element, root of the document 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:nth-child(n) 
+      <td>an E element, the n-th child of its parent 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:nth-last-child(n) 
+      <td>an E element, the n-th child of its parent, counting
+			from the last one 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:nth-of-type(n) 
+      <td>an E element, the n-th sibling of its type 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:nth-last-of-type(n) 
+      <td>an E element, the n-th sibling of its type, counting
+			from the last one 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:first-child 
+      <td>an E element, first child of its parent 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E:last-child 
+      <td>an E element, last child of its parent 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:first-of-type 
+      <td>an E element, first sibling of its type 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:last-of-type 
+      <td>an E element, last sibling of its type 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:only-child 
+      <td>an E element, only child of its parent 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:only-of-type 
+      <td>an E element, only sibling of its type 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:empty 
+      <td>an E element that has no children (including text
+			nodes) 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#structural-pseudos">Structural
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:link<br> E:visited 
+      <td>an E element being the source anchor of a hyperlink of
+			which the target is not yet visited (:link) or already visited
+			(:visited) 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#link">The link pseudo-classes</a> 
+      <td>1 
+     <tr>
+      <th scope="row"> E:active<br> E:hover<br> E:focus 
+      <td>an E element during certain user actions 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#useraction-pseudos">The user action
+			pseudo-classes</a> 
+      <td>1 and 2 
+     <tr>
+      <th scope="row"> E:target 
+      <td>an E element being the target of the referring URI 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#target-pseudo">The target pseudo-class</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:lang(fr) 
+      <td>an element of type E in language "fr" (the document
+			language specifies how language is determined) 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#lang-pseudo">The :lang() pseudo-class</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E:enabled<br> E:disabled 
+      <td>a user interface element E which is enabled or
+			disabled 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#UIstates">The UI element states
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E:checked 
+      <td>a user interface element E which is
+			checked
+ (for instance a
+			radio-button or checkbox) 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#UIstates">The UI element states
+			pseudo-classes</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E::first-line 
+      <td>the first formatted line of an E element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#first-line">The ::first-line
+			pseudo-element</a> 
+      <td>1 
+     <tr>
+      <th scope="row"> E::first-letter 
+      <td>the first formatted letter of an E element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#first-letter">The ::first-letter
+			pseudo-element</a> 
+      <td>1 
+     <tr>
+      <th scope="row"> E::before 
+      <td>generated content before an E element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#gen-content">The ::before
+			pseudo-element</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E::after 
+      <td>generated content after an E element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#gen-content">The ::after
+			pseudo-element</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E.warning 
+      <td>an E element whose class is "warning" (the document
+			language specifies how class is determined). 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#class-html">Class selectors</a> 
+      <td>1 
+     <tr>
+      <th scope="row"> E#myid 
+      <td>an E element with ID equal to "myid". 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#id-selectors">ID selectors</a> 
+      <td>1 
+     <tr>
+      <th scope="row"> E:not(s) 
+      <td>an E element that does not match simple selector s 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#negation">Negation pseudo-class</a> 
+      <td>3 
+     <tr>
+      <th scope="row"> E F 
+      <td>an F element descendant of an E element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#descendant-combinators">Descendant
+			combinator</a> 
+      <td>1 
+     <tr>
+      <th scope="row"> E > F 
+      <td>an F element child of an E element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#child-combinators">Child combinator</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E + F 
+      <td>an F element immediately preceded by an E element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#adjacent-sibling-combinators">Adjacent
+			sibling combinator</a> 
+      <td>2 
+     <tr>
+      <th scope="row"> E ~ F 
+      <td>an F element preceded by an E element 
+      <td><a href="https://www.w3.org/TR/css3-selectors/#general-sibling-combinators">General
+			sibling combinator</a> 
+      <td>3 
+   </table>
+   <h3 class="heading settled" data-level="4.3" id="at-rules"><span class="secno">4.3. </span><span class="content"> At-Rule Index</span><a class="self-link" href="#at-rules"></a></h3>
+   <ul>
+    <li><a href="https://www.w3.org/TR/css-syntax-3/#charset-rule">@charset</a> 
+    <li><a href="https://www.w3.org/TR/css-fonts-3/#font-face-rule">@font-face</a> 
+    <li><a href="https://www.w3.org/TR/css-cascade-3/#at-import">@import</a> 
+    <li><a href="https://www.w3.org/TR/css3-conditional/#at-media">@media</a> 
+    <li><a href="https://www.w3.org/TR/CSS2/page.html#page-box">@page</a> 
+   </ul>
+   <h3 class="heading settled" data-level="4.4" id="properties"><span class="secno">4.4. </span><span class="content">Property Index</span><a class="self-link" href="#properties"></a></h3>
+   <p class="issue" id="issue-b27f825f"><a class="self-link" href="#issue-b27f825f"></a> Bikeshed should be amended shortly to allow auto-genning the propdef index.</p>
+   <h3 class="heading settled" data-level="4.5" id="values"><span class="secno">4.5. </span><span class="content">Values Index</span><a class="self-link" href="#values"></a></h3>
+   <p class="issue" id="issue-156dad38"><a class="self-link" href="#issue-156dad38"></a> Cross-linking from CSS Backgrounds and Borders is kinda broken atm...</p>
+   <div data-link-status="TR" type="value">
+    <ul class="index">
+     <li>
+      all
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-span-all">in css-multicol-1, for column-span</a>
+       <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-property-all">in css-transitions-1, for transition-property</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-direction-alternate">alternate</a>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-direction-alternate-reverse">alternate-reverse</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-orientation-angle">&lt;angle></a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-orientation-angle-flip">&lt;angle>? flip</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-armenian">armenian</a>
+     <li>
+      auto
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-min-width-auto">in css-flexbox-1, for min-width, min-height</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-basis-auto">in css-flexbox-1, for flex-basis</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-self-auto">in css-flexbox-1, for align-self</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-rendering-auto">in css-images-3, for image-rendering</a>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-width-auto">in css-multicol-1, for column-width</a>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-count-auto">in css-multicol-1, for column-count</a>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-fill-auto">in css-multicol-1, for column-fill</a>
+       <li><a href="https://drafts.csswg.org/css-will-change-1/#valdef-will-change-auto">in css-will-change-1, for will-change</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#auto0">''auto''!!'border-image-width' value</a>
+     <li>
+      'background-clip' value
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#border-box">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#content-box">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#padding-box">in css-backgrounds-3</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#none">'background-image' value</a>
+     <li>
+      'background-origin' value
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#border-box0">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#padding-box0">in css-backgrounds-3</a>
+      </ul>
+     <li>
+      'background-position' value
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#bottom">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#center">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#left">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#right">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#top">in css-backgrounds-3</a>
+      </ul>
+     <li>
+      'background-repeat' value
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#no-repeat">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#repeat">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#round">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#space">in css-backgrounds-3</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-fill-mode-backwards">backwards</a>
+     <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-fill-balance">balance</a>
+     <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-fill-balance-all">balance-all</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-items-baseline">baseline</a>
+     <li><a href="https://drafts.csswg.org/css2/visuren.html#value-def-block">block</a>
+     <li>
+      border-box
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-transform-box-border-box">in css-transforms-1, for transform-box</a>
+       <li><a href="https://drafts.csswg.org/css-ui-3/#valdef-box-sizing-border-box">in css-ui-3, for box-sizing</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#border-box">''border-box''!!'background-clip' value</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#border-box0">''border-box''!!'background-origin' value</a>
+     <li>
+      'border-image-repeat' value
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#repeat0">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#round0">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#space0">in css-backgrounds-3</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#auto0">'border-image-width' value</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#none0">'border-style' value</a>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-fill-mode-both">both</a>
+     <li>
+      bottom
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-transform-origin-bottom">in css-transforms-1, for transform-origin</a>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-perspective-origin-bottom">in css-transforms-1, for perspective-origin</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#bottom">''bottom''!!'background-position' value</a>
+     <li>
+      center
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-justify-content-center">in css-flexbox-1, for justify-content</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-items-center">in css-flexbox-1, for align-items, align-self</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-content-center">in css-flexbox-1, for align-content</a>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-transform-origin-center">in css-transforms-1, for transform-origin</a>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-perspective-origin-center">in css-transforms-1, for perspective-origin</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#center">''center''!!'background-position' value</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-ch">ch</a>
+     <li>
+      circle
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-ending-shape-circle">in css-images-3, for &lt;ending-shape></a>
+       <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-circle">in css21</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-close-quote">close-quote</a>
+     <li>
+      closest-corner
+      <ul>
+       <li><a href="https://www.w3.org/TR/css3-images/#radial-closest-corner">in css-images-3</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-size-closest-corner">in css-images-3, for &lt;size></a>
+      </ul>
+     <li>
+      closest-side
+      <ul>
+       <li><a href="https://www.w3.org/TR/css3-images/#radial-closest-side">in css-images-3</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-size-closest-side">in css-images-3, for &lt;size></a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-cm">cm</a>
+     <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-rule-color-color">&lt;color></a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-color">color</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-color-burn">color-burn</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-color-dodge">color-dodge</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-direction-column">column</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-direction-column-reverse">column-reverse</a>
+     <li>
+      contain
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#contain">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-object-fit-contain">in css-images-3, for object-fit</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-basis-content">content</a>
+     <li>
+      content-box
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#content-box0">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-ui-3/#valdef-box-sizing-content-box">in css-ui-3, for box-sizing</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#content-box">''content-box''!!'background-clip' value</a>
+     <li><a href="https://drafts.csswg.org/css-will-change-1/#valdef-will-change-contents">contents</a>
+     <li>
+      cover
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#cover">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-object-fit-cover">in css-images-3, for object-fit</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-rendering-crisp-edges">crisp-edges</a>
+     <li>
+      &lt;custom-ident>
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-name-custom-ident">in css-animations-1, for animation-name</a>
+       <li><a href="https://drafts.csswg.org/css-will-change-1/#valdef-will-change-custom-ident">in css-will-change-1, for will-change</a>
+      </ul>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-darken">darken</a>
+     <li>
+      dashed
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#dashed">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-dashed">in css21</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-decimal">decimal</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-decimal-leading-zero">decimal-leading-zero</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-angle-deg">deg</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-difference">difference</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-disc">disc</a>
+     <li>
+      dotted
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#dotted">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-dotted">in css21</a>
+      </ul>
+     <li>
+      double
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#double">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-double">in css21</a>
+      </ul>
+     <li>
+      dpcm
+      <ul>
+       <li><a href="https://www.w3.org/TR/css3-images/#dpcm">in css-images-3</a>
+       <li><a href="https://drafts.csswg.org/css-values-3/#valdef-frequency-dpcm">in css-values-3, for &lt;frequency></a>
+      </ul>
+     <li>
+      dpi
+      <ul>
+       <li><a href="https://www.w3.org/TR/css3-images/#dpi">in css-images-3</a>
+       <li><a href="https://drafts.csswg.org/css-values-3/#valdef-frequency-dpi">in css-values-3, for &lt;frequency></a>
+      </ul>
+     <li>
+      dppx
+      <ul>
+       <li><a href="https://www.w3.org/TR/css3-images/#dppx">in css-images-3</a>
+       <li><a href="https://drafts.csswg.org/css-values-3/#valdef-frequency-dppx">in css-values-3, for &lt;frequency></a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-timing-function-ease">ease</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-timing-function-ease-in">ease-in</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-timing-function-ease-in-out">ease-in-out</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-timing-function-ease-out">ease-out</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-ending-shape-ellipse">ellipse</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-em">em</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-steps-end">end</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-radial-gradient-ending-shape">&lt;ending-shape></a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-ex">ex</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-exclusion">exclusion</a>
+     <li>
+      farthest-corner
+      <ul>
+       <li><a href="https://www.w3.org/TR/css3-images/#radial-farthest-corner">in css-images-3</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-size-farthest-corner">in css-images-3, for &lt;size></a>
+      </ul>
+     <li>
+      farthest-side
+      <ul>
+       <li><a href="https://www.w3.org/TR/css3-images/#radial-farthest-side">in css-images-3</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-size-farthest-side">in css-images-3, for &lt;size></a>
+      </ul>
+     <li>
+      fill
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#border-image-slice-fill">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-object-fit-fill">in css-images-3, for object-fit</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-transform-box-fill-box">fill-box</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#fixed">fixed</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-display-flex">flex</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-flex-basis">&lt;‘flex-basis’></a>
+     <li>
+      flex-end
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-justify-content-flex-end">in css-flexbox-1, for justify-content</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-items-flex-end">in css-flexbox-1, for align-items, align-self</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-content-flex-end">in css-flexbox-1, for align-content</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-flex-grow">&lt;‘flex-grow’></a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-flex-shrink">&lt;‘flex-shrink’></a>
+     <li>
+      flex-start
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-justify-content-flex-start">in css-flexbox-1, for justify-content</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-items-flex-start">in css-flexbox-1, for align-items, align-self</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-content-flex-start">in css-flexbox-1, for align-content</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-fonts-3/#font-feature-settings-normal-value">font-feature-settings</a>
+     <li>
+      font-variant
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-fonts-3/#font-variant-none-value">in css-fonts-3</a>
+       <li><a href="https://drafts.csswg.org/css-fonts-3/#font-variant-normal-value">in css-fonts-3</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-fill-mode-forwards">forwards</a>
+     <li>
+      from-image
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-resolution-from-image">in css-images-3, for image-resolution</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-orientation-from-image">in css-images-3, for image-orientation</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-georgian">georgian</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-angle-grad">grad</a>
+     <li>
+      groove
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#groove">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-groove">in css21</a>
+      </ul>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-hard-light">hard-light</a>
+     <li>
+      hidden
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#hidden">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-hidden">in css21</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-rendering-high-quality">high-quality</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-hue">hue</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-frequency-hz">hz</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-in">in</a>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-iteration-count-infinite">infinite</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#valdef-all-inherit">inherit</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#valdef-all-initial">initial</a>
+     <li><a href="https://drafts.csswg.org/css2/visuren.html#value-def-inline">inline</a>
+     <li><a href="https://drafts.csswg.org/css2/visuren.html#value-def-inline-block">inline-block</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-display-inline-flex">inline-flex</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-inline-table">inline-table</a>
+     <li>
+      inset
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#inset">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#shadow-inset">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-inset">in css21</a>
+      </ul>
+     <li>
+      &lt;integer>
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-order-integer">in css-flexbox-1, for order</a>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-count-integer">in css-multicol-1, for column-count</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css2/ui.html#value-def-invert">invert</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-frequency-khz">khz</a>
+     <li>
+      left
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-transform-origin-left">in css-transforms-1, for transform-origin</a>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-perspective-origin-left">in css-transforms-1, for perspective-origin</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#left">''left''!!'background-position' value</a>
+     <li>
+      &lt;length>
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-size-length">in css-images-3, for &lt;size></a>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-width-length">in css-multicol-1, for column-width</a>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-gap-length">in css-multicol-1, for column-gap</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-size--length--percentage-2">[ &lt;length> | &lt;percentage> ]{2}</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-lighten">lighten</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-timing-function-linear">linear</a>
+     <li><a href="https://drafts.csswg.org/css2/visuren.html#value-def-list-item">list-item</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#local">local</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-lower-greek">lower-greek</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-lower-latin">lower-latin</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-lower-roman">lower-roman</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-luminosity">luminosity</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-mm">mm</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-time-ms">ms</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-multiply">multiply</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-no-close-quote">no-close-quote</a>
+     <li>
+      none
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-name-none">in css-animations-1, for animation-name</a>
+       <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-fill-mode-none">in css-animations-1, for animation-fill-mode</a>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#box-shadow-none">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-none">in css-flexbox-1, for flex</a>
+       <li><a href="https://drafts.csswg.org/css-images-3/#valdef-object-fit-none">in css-images-3, for object-fit</a>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-span-none">in css-multicol-1, for column-span</a>
+       <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-property-none">in css-transitions-1, for transition-property</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-bo-none">in css21</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#none">''none''!!'background-image' value</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#none0">''none''!!'border-style' value</a>
+     <li><a href="https://drafts.csswg.org/css-fonts-3/#font-variant-none-value">none!!font-variant</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-no-open-quote">no-open-quote</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#no-repeat">''no-repeat''!!'background-repeat' value</a>
+     <li>
+      normal
+      <ul>
+       <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-normal">in compositing-1, for &lt;blend-mode></a>
+       <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-direction-normal">in css-animations-1, for animation-direction</a>
+       <li><a href="https://drafts.csswg.org/css-multicol-1/#valdef-column-gap-normal">in css-multicol-1, for column-gap</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-fonts-3/#font-feature-settings-normal-value">normal!!font-feature-settings</a>
+     <li><a href="https://drafts.csswg.org/css-fonts-3/#font-variant-normal-value">normal!!font-variant</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-wrap-nowrap">nowrap</a>
+     <li>
+      &lt;number>
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-iteration-count-number">in css-animations-1, for animation-iteration-count</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-grow-number">in css-flexbox-1, for flex-grow</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-shrink-number">in css-flexbox-1, for flex-shrink</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-open-quote">open-quote</a>
+     <li>
+      outset
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#outset">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-outset">in css21</a>
+      </ul>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-overlay">overlay</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#padding-box">''padding-box''!!'background-clip' value</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#padding-box0">''padding-box''!!'background-origin' value</a>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-play-state-paused">paused</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-pc">pc</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-rendering-pixelated">pixelated</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-px">pixel unit</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-radial-gradient-position">&lt;position></a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-pt">pt</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-px">px</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-q">q</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-angle-rad">rad</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-rem">rem</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#repeat">''repeat''!!'background-repeat' value</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#repeat0">''repeat''!!'border-image-repeat' value</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#repeat-x">repeat-x</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#repeat-y">repeat-y</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-resolution-resolution">&lt;resolution></a>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-direction-reverse">reverse</a>
+     <li>
+      ridge
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#ridge">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-ridge">in css21</a>
+      </ul>
+     <li>
+      right
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-transform-origin-right">in css-transforms-1, for transform-origin</a>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-perspective-origin-right">in css-transforms-1, for perspective-origin</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#right">''right''!!'background-position' value</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#round">''round''!!'background-repeat' value</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#round0">''round''!!'border-image-repeat' value</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-direction-row">row</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-direction-row-reverse">row-reverse</a>
+     <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-play-state-running">running</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-time-s">s</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-saturation">saturation</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-object-fit-scale-down">scale-down</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-screen">screen</a>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#scroll">scroll</a>
+     <li><a href="https://drafts.csswg.org/css-will-change-1/#valdef-will-change-scroll-position">scroll-position</a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-radial-gradient-size">&lt;size></a>
+     <li><a href="https://drafts.csswg.org/css-images-3/#valdef-image-resolution-snap">snap</a>
+     <li><a href="https://drafts.fxtf.org/compositing-1/#valdef-blend-mode-soft-light">soft-light</a>
+     <li>
+      solid
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#solid">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css2/box.html#value-def-solid">in css21</a>
+      </ul>
+     <li>
+      space-around
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-justify-content-space-around">in css-flexbox-1, for justify-content</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-content-space-around">in css-flexbox-1, for align-content</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#space">''space''!!'background-repeat' value</a>
+     <li>
+      space-between
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-justify-content-space-between">in css-flexbox-1, for justify-content</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-content-space-between">in css-flexbox-1, for align-content</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#space0">''space''!!'border-image-repeat' value</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-square">square</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-steps-start">start</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-timing-function-step-end">step-end</a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#valdef-transition-timing-function-step-start">step-start</a>
+     <li>
+      stretch
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-backgrounds-3/#stretch">in css-backgrounds-3</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-items-stretch">in css-flexbox-1, for align-items, align-self</a>
+       <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-align-content-stretch">in css-flexbox-1, for align-content</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table">table</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table-caption">table-caption</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table-cell">table-cell</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table-column">table-column</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table-column-group">table-column-group</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table-footer-group">table-footer-group</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table-header-group">table-header-group</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table-row">table-row</a>
+     <li><a href="https://drafts.csswg.org/css2/tables.html#value-def-table-row-group">table-row-group</a>
+     <li>
+      &lt;time>
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-duration-time">in css-animations-1, for animation-duration</a>
+       <li><a href="https://drafts.csswg.org/css-animations-1/#valdef-animation-delay-time">in css-animations-1, for animation-delay</a>
+      </ul>
+     <li>
+      top
+      <ul>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-transform-origin-top">in css-transforms-1, for transform-origin</a>
+       <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-perspective-origin-top">in css-transforms-1, for perspective-origin</a>
+      </ul>
+     <li><a href="https://drafts.csswg.org/css-backgrounds-3/#top">''top''!!'background-position' value</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-angle-turn">turn</a>
+     <li><a href="https://drafts.csswg.org/css-cascade-3/#valdef-all-unset">unset</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-upper-latin">upper-latin</a>
+     <li><a href="https://drafts.csswg.org/css2/generate.html#value-def-upper-roman">upper-roman</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-vh">vh</a>
+     <li><a href="https://drafts.csswg.org/css-transforms-1/#valdef-transform-box-view-box">view-box</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-vmax">vmax</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-vmin">vmin</a>
+     <li><a href="https://drafts.csswg.org/css-values-3/#valdef-length-vw">vw</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-wrap-wrap">wrap</a>
+     <li><a href="https://drafts.csswg.org/css-flexbox-1/#valdef-flex-wrap-wrap-reverse">wrap-reverse</a>
+    </ul>
+   </div>
+   <h2 class="heading settled" data-level="5" id="acks"><span class="secno">5. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acks"></a></h2>
+   <p>Special thanks to Florian Rivoal for creating the initial draft of the <a href="#experimental">§3.2.1 Experimentation and Unstable Features</a> recommendations.</p>
+  </main>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+  <ul class="index">
+   <li><a href="#cascading-style-sheets-css">Cascading Style Sheets (CSS)</a><span>, in §2</span>
+   <li><a href="#css-level-1">CSS Level 1</a><span>, in §2.1</span>
+   <li><a href="#css-level-2">CSS Level 2</a><span>, in §2.1</span>
+   <li><a href="#css-level-3">CSS Level 3</a><span>, in §2.1</span>
+   <li><a href="#css-level-4">CSS Level 4</a><span>, in §2.1</span>
+   <li><a href="#editors-draft">Editor’s Draft</a><span>, in §1.1</span>
+   <li><a href="#levels">levels</a><span>, in §2.1</span>
+   <li><a href="#vendor-prefix">prefixed</a><span>, in §3.2.2</span>
+   <li><a href="#proprietary-extension">proprietary extension</a><span>, in §3.2.2</span>
+   <li><a href="#rough-interoperability">Rough interoperability</a><span>, in §3.2.3</span>
+   <li><a href="#vendor-prefix">unprefixed</a><span>, in §3.2.2</span>
+   <li><a href="#unstable">unstable</a><span>, in §3.2.1</span>
+   <li><a href="#vendor-prefix">vendor prefix</a><span>, in §3.2.2</span>
+   <li><a href="#vendor-prefix">vendor-prefixed</a><span>, in §3.2.2</span>
+  </ul>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
+  <ul class="index">
+   <li>
+    <a data-link-type="biblio">[css-color-4]</a> defines the following terms:
+    <ul>
+     <li><a href="https://drafts.csswg.org/css-color-4/#propdef-opacity">opacity</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[css-conditional-3]</a> defines the following terms:
+    <ul>
+     <li><a href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-media">@media</a>
+     <li><a href="https://drafts.csswg.org/css-conditional-3/#at-ruledef-supports">@supports</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[CSS-COUNTER-STYLES-3]</a> defines the following terms:
+    <ul>
+     <li><a href="https://www.w3.org/TR/css-counter-styles-3/#typedef-counter-style">&lt;counter-style></a>
+     <li><a href="https://www.w3.org/TR/css-counter-styles-3/#at-ruledef-counter-style">@counter-style</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[CSS-UI-3]</a> defines the following terms:
+    <ul>
+     <li><a href="https://www.w3.org/TR/css3-ui/#propdef-cursor">cursor</a>
+     <li><a href="https://www.w3.org/TR/css3-ui/#propdef-outline">outline</a>
+    </ul>
+  </ul>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <dl>
+   <dt id="biblio-compositing">[COMPOSITING]
+   <dd>Rik Cabanier; Nikos Andronikos. <a href="http://www.w3.org/TR/compositing-1/">Compositing and Blending Level 1</a>. 13 January 2015. CR. URL: <a href="http://www.w3.org/TR/compositing-1/">http://www.w3.org/TR/compositing-1/</a>
+   <dt id="biblio-css-cascade-3">[CSS-CASCADE-3]
+   <dd>Elika Etemad; Tab Atkins Jr.. <a href="http://www.w3.org/TR/css-cascade-3/">CSS Cascading and Inheritance Level 3</a>. 16 April 2015. CR. URL: <a href="http://www.w3.org/TR/css-cascade-3/">http://www.w3.org/TR/css-cascade-3/</a>
+   <dt id="biblio-css-color-4">[CSS-COLOR-4]
+   <dd>CSS Color Module Level 4 URL: <a href="https://drafts.csswg.org/css-color-4/">https://drafts.csswg.org/css-color-4/</a>
+   <dt id="biblio-css-conditional-3">[CSS-CONDITIONAL-3]
+   <dd>CSS Conditional Rules Module Level 3 URL: <a href="https://drafts.csswg.org/css-conditional-3/">https://drafts.csswg.org/css-conditional-3/</a>
+   <dt id="biblio-css-fonts-3">[CSS-FONTS-3]
+   <dd>John Daggett. <a href="http://www.w3.org/TR/css-fonts-3/">CSS Fonts Module Level 3</a>. 3 October 2013. CR. URL: <a href="http://www.w3.org/TR/css-fonts-3/">http://www.w3.org/TR/css-fonts-3/</a>
+   <dt id="biblio-css-style-attr">[CSS-STYLE-ATTR]
+   <dd>Tantek Çelik; Elika Etemad. <a href="http://www.w3.org/TR/css-style-attr">CSS Style Attributes</a>. 7 November 2013. REC. URL: <a href="http://www.w3.org/TR/css-style-attr">http://www.w3.org/TR/css-style-attr</a>
+   <dt id="biblio-css-syntax-3">[CSS-SYNTAX-3]
+   <dd>Tab Atkins Jr.; Simon Sapin. <a href="http://www.w3.org/TR/css-syntax-3/">CSS Syntax Module Level 3</a>. 20 February 2014. CR. URL: <a href="http://www.w3.org/TR/css-syntax-3/">http://www.w3.org/TR/css-syntax-3/</a>
+   <dt id="biblio-css-ui-3">[CSS-UI-3]
+   <dd>Tantek Çelik; Florian Rivoal. <a href="http://dev.w3.org/csswg/css-ui/">CSS Basic User Interface Module Level 3 (CSS3 UI)</a>. 7 July 2015. CR. URL: <a href="http://dev.w3.org/csswg/css-ui/">http://dev.w3.org/csswg/css-ui/</a>
+   <dt id="biblio-css-values-3">[CSS-VALUES-3]
+   <dd>Tab Atkins Jr.; Elika Etemad. <a href="http://www.w3.org/TR/css-values/">CSS Values and Units Module Level 3</a>. 11 June 2015. CR. URL: <a href="http://www.w3.org/TR/css-values/">http://www.w3.org/TR/css-values/</a>
+   <dt id="biblio-css2">[CSS2]
+   <dd>Bert Bos; et al. <a href="http://www.w3.org/TR/CSS2">Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</a>. 7 June 2011. REC. URL: <a href="http://www.w3.org/TR/CSS2">http://www.w3.org/TR/CSS2</a>
+   <dt id="biblio-css3-background">[CSS3-BACKGROUND]
+   <dd>Bert Bos; Elika Etemad; Brad Kemper. <a href="http://www.w3.org/TR/css3-background/">CSS Backgrounds and Borders Module Level 3</a>. 9 September 2014. CR. URL: <a href="http://www.w3.org/TR/css3-background/">http://www.w3.org/TR/css3-background/</a>
+   <dt id="biblio-css3-color">[CSS3-COLOR]
+   <dd>Tantek Çelik; Chris Lilley; David Baron. <a href="http://www.w3.org/TR/css3-color">CSS Color Module Level 3</a>. 7 June 2011. REC. URL: <a href="http://www.w3.org/TR/css3-color">http://www.w3.org/TR/css3-color</a>
+   <dt id="biblio-css3-conditional">[CSS3-CONDITIONAL]
+   <dd>David Baron. <a href="http://www.w3.org/TR/css3-conditional/">CSS Conditional Rules Module Level 3</a>. 4 April 2013. CR. URL: <a href="http://www.w3.org/TR/css3-conditional/">http://www.w3.org/TR/css3-conditional/</a>
+   <dt id="biblio-css3-images">[CSS3-IMAGES]
+   <dd>Elika Etemad; Tab Atkins Jr.. <a href="http://www.w3.org/TR/css3-images/">CSS Image Values and Replaced Content Module Level 3</a>. 17 April 2012. CR. URL: <a href="http://www.w3.org/TR/css3-images/">http://www.w3.org/TR/css3-images/</a>
+   <dt id="biblio-css3-mediaqueries">[CSS3-MEDIAQUERIES]
+   <dd>Florian Rivoal; et al. <a href="http://www.w3.org/TR/css3-mediaqueries/">Media Queries</a>. 19 June 2012. REC. URL: <a href="http://www.w3.org/TR/css3-mediaqueries/">http://www.w3.org/TR/css3-mediaqueries/</a>
+   <dt id="biblio-css3-multicol">[CSS3-MULTICOL]
+   <dd>Håkon Wium Lie. <a href="http://www.w3.org/TR/css3-multicol">CSS Multi-column Layout Module</a>. 12 April 2011. CR. URL: <a href="http://www.w3.org/TR/css3-multicol">http://www.w3.org/TR/css3-multicol</a>
+   <dt id="biblio-css3-namespace">[CSS3-NAMESPACE]
+   <dd>Elika Etemad. <a href="http://www.w3.org/TR/css-namespaces-3/">CSS Namespaces Module Level 3</a>. 20 March 2014. REC. URL: <a href="http://www.w3.org/TR/css-namespaces-3/">http://www.w3.org/TR/css-namespaces-3/</a>
+   <dt id="biblio-select">[SELECT]
+   <dd>Tantek Çelik; et al. <a href="http://www.w3.org/TR/css3-selectors/">Selectors Level 3</a>. 29 September 2011. REC. URL: <a href="http://www.w3.org/TR/css3-selectors/">http://www.w3.org/TR/css3-selectors/</a>
+  </dl>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-css-counter-styles-3">[CSS-COUNTER-STYLES-3]
+   <dd>Tab Atkins Jr.. <a href="http://dev.w3.org/csswg/css-counter-styles/">CSS Counter Styles Level 3</a>. 11 June 2015. CR. URL: <a href="http://dev.w3.org/csswg/css-counter-styles/">http://dev.w3.org/csswg/css-counter-styles/</a>
+   <dt id="biblio-css-flexbox-1">[CSS-FLEXBOX-1]
+   <dd>Tab Atkins Jr.; Elika Etemad; Rossen Atanassov. <a href="http://www.w3.org/TR/css-flexbox-1/">CSS Flexible Box Layout Module Level 1</a>. 1 March 2016. CR. URL: <a href="http://www.w3.org/TR/css-flexbox-1/">http://www.w3.org/TR/css-flexbox-1/</a>
+   <dt id="biblio-css-masking-1">[CSS-MASKING-1]
+   <dd>Dirk Schulze; Brian Birtles; Tab Atkins Jr.. <a href="http://www.w3.org/TR/css-masking-1/">CSS Masking Module Level 1</a>. 26 August 2014. CR. URL: <a href="http://www.w3.org/TR/css-masking-1/">http://www.w3.org/TR/css-masking-1/</a>
+   <dt id="biblio-css-shapes-1">[CSS-SHAPES-1]
+   <dd>Vincent Hardy; Rossen Atanassov; Alan Stearns. <a href="http://www.w3.org/TR/css-shapes-1/">CSS Shapes Module Level 1</a>. 20 March 2014. CR. URL: <a href="http://www.w3.org/TR/css-shapes-1/">http://www.w3.org/TR/css-shapes-1/</a>
+   <dt id="biblio-css-text-decor-3">[CSS-TEXT-DECOR-3]
+   <dd>Elika Etemad; Koji Ishii. <a href="http://www.w3.org/TR/css-text-decor-3/">CSS Text Decoration Module Level 3</a>. 1 August 2013. CR. URL: <a href="http://www.w3.org/TR/css-text-decor-3/">http://www.w3.org/TR/css-text-decor-3/</a>
+   <dt id="biblio-css3-animations">[CSS3-ANIMATIONS]
+   <dd>Dean Jackson; et al. <a href="http://www.w3.org/TR/css3-animations/">CSS Animations</a>. 19 February 2013. WD. URL: <a href="http://www.w3.org/TR/css3-animations/">http://www.w3.org/TR/css3-animations/</a>
+   <dt id="biblio-css3-speech">[CSS3-SPEECH]
+   <dd>Daniel Weck. <a href="http://www.w3.org/TR/css3-speech/">CSS Speech Module</a>. 20 March 2012. CR. URL: <a href="http://www.w3.org/TR/css3-speech/">http://www.w3.org/TR/css3-speech/</a>
+   <dt id="biblio-css3-transforms">[CSS3-TRANSFORMS]
+   <dd>Simon Fraser; et al. <a href="http://www.w3.org/TR/css-transforms-1/">CSS Transforms Module Level 1</a>. 26 November 2013. WD. URL: <a href="http://www.w3.org/TR/css-transforms-1/">http://www.w3.org/TR/css-transforms-1/</a>
+   <dt id="biblio-css3-transitions">[CSS3-TRANSITIONS]
+   <dd>Dean Jackson; et al. <a href="http://www.w3.org/TR/css3-transitions/">CSS Transitions</a>. 19 November 2013. WD. URL: <a href="http://www.w3.org/TR/css3-transitions/">http://www.w3.org/TR/css3-transitions/</a>
+  </dl>
+  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
+  <div style="counter-reset:issue">
+   <div class="issue"> Add will-change once it’s pushed to CR<a href="#issue-d34d1161"> ↵ </a></div>
+   <div class="issue"> Export terms from animations, backgrounds, selectors, style-attr, conditional, namespaces, ui, css21, and color
+	so we can fully generate this index.
+	Also, republish stuff that doesn’t have a stable link yet so we can link it here.<a href="#issue-3d7adb53"> ↵ </a></div>
+   <div class="issue"> Bikeshed should be amended shortly to allow auto-genning the propdef index.<a href="#issue-b27f825f"> ↵ </a></div>
+   <div class="issue"> Cross-linking from CSS Backgrounds and Borders is kinda broken atm...<a href="#issue-156dad38"> ↵ </a></div>
+  </div>
+<script>/* script-dfn-panel */
+
+        document.body.addEventListener("click", function(e) {
+            var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+            // Find the dfn element or panel, if any, that was clicked on.
+            var el = e.target;
+            var target;
+            while(el.parentElement) {
+                if(el.tagName == "A") {
+                    // Clicked on a link; intercept this early in case it was nested in a <dfn>
+                    return true;
+                }
+                if(el.tagName == "DFN") {
+                    target = "dfn";
+                    break;
+                }
+                if(/H\d/.test(el.tagName) && el.getAttribute('data-dfn-type') != null) {
+                    target = "dfn";
+                    break;
+                }
+                if(el.classList.contains("dfn-panel")) {
+                    target = "dfn-panel";
+                    break;
+                }
+                el = el.parentElement;
+            }
+            if(target != "dfn-panel") {
+                // Turn off any currently "on" or "activated" panels.
+                queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+                    el.classList.remove("on");
+                    el.classList.remove("activated");
+                });
+            }
+            if(target == "dfn") {
+                // open the panel
+                var dfnPanel = el.querySelector(".dfn-panel");
+                if(dfnPanel) {
+                    dfnPanel.classList.add("on");
+                }
+            } else if(target == "dfn-panel") {
+                // Switch it to "activated" state, which pins it.
+                el.classList.add("activated");
+            }
+
+        });
+        </script><a class='fatal' href='/bikeshed/css-2015/' id='bikeshed' title='Bikeshed Errors'><svg height='24' viewbox='0 0 100 100' width='24'><g stroke="blue" stroke-width="6" fill="none"><path fill="blue" stroke="none" d="M 5 95 L 5 35 L 50 10 L 50 95"/><path ad="M 1 37 L 54 8"/><path fill="blue" stroke="none" d="M 1 40 v -6 l 60 -32 v 6 z" /><circle cx="75" cy="79" r="15" /><circle fill="blue" stroke="none" cx="75" cy="79" r="4" /><path d="M 75 79 L 65 49 L 55 49" /><path d="M 67 55 L 48 69" /></g></svg></a>

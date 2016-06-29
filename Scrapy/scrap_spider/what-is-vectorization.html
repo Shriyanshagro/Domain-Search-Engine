@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="pingback" href="https://blogs.msdn.microsoft.com/nativeconcurrency/xmlrpc.php">
+		<!--[if lt IE 9]>
+	<script src="https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft/js/html5.js"></script>
+	<![endif]-->
+	<title>What is Vectorization? | Parallel Programming in Native Code</title>
+<link rel="alternate" type="application/rss+xml" title="Parallel Programming in Native Code &raquo; What is Vectorization? Comments Feed" href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/feed/" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds-ratings-css'  href='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/plugins/wds-ratings/wds-ratings.css?ver=4.1.5' type='text/css' media='all' />
+<link rel='stylesheet' id='microsoft-parent-style-css'  href='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft/style.css?ver=04152016' type='text/css' media='all' />
+<link rel='stylesheet' id='microsoft-child-style-css'  href='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft-msdn/style.css?ver=04152016' type='text/css' media='all' />
+<script type='text/javascript' src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft/js/single.js?ver=04152016'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft/js/social-counts.js?ver=04152016'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/nativeconcurrency/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/nativeconcurrency/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/' />
+<link rel='shortlink' href='https://blogs.msdn.microsoft.com/nativeconcurrency/?p=1343' />
+<meta name='robots' content='noindex,follow' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+						</style><!-- End Custom CSS -->
+			    <link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft-msdn/images/favicon-msdn.png">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="What is Vectorization?" />
+<meta property="og:url" content="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/" />
+<meta property="og:site_name" content="Parallel Programming in Native Code" />
+<meta property="og:description" content="Hi, I am Jim Hogg, a Program Manager in the Visual C++ compiler team. This short post explains &ldquo;What is vectorization?&rdquo;. It provides background for an upcoming sequence of posts on a new feature within the Visual Studio 2012 C++ compiler, called &ldquo;auto-vectorization&rdquo;. Modern, 64-bit processors, such as the Intel 64 and AMD64, include a..." />
+<meta property="og:image" content="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/04/99/1258.Registers.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="What is Vectorization?" />
+<meta name="twitter:url" content="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/" />
+<meta name="twitter:description" content="Hi, I am Jim Hogg, a Program Manager in the Visual C++ compiler team. This short post explains &ldquo;What is vectorization?&rdquo;. It provides background for an upcoming sequence of posts on a new feature within the Visual Studio 2012 C++ compiler, called &ldquo;auto-vectorization&rdquo;. Modern, 64-bit processors, such as the Intel 64 and AMD64, include a..." />
+<meta name="twitter:image" content="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/04/99/1258.Registers.jpg" />
+</head>
+
+<body class="single single-post postid-1343 single-format-standard">
+<div id="page" class="site container-fluid">
+
+	<header id="site-header" class="site-header row" role="banner">
+		<div id="site-header-global-wrapper" class="site-header-global-wrapper">
+			<div id="site-header-global" class="site-header-global">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#site-profile-menu">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div id="site-logo" class="col-sm-5 row navbar-header">
+					<div id="header-microsoft-logo">
+						<a id="home-link" href="https://www.microsoft.com/">
+							<img id="header-microsoft-logo-svg" src="https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft/images/ms-logo-gray.svg">
+							<span id="brand">
+								<span id="brand-separator">|</span>
+								<span id="brand-name"></span>
+							</span>
+						</a>
+					</div>
+				</div>
+				<div id="site-header-global-right" class="col-sm-7">
+					<div id="site-profile-menu" class="navbar-collapse collapse">
+						<div id="search-form-wrapper">
+														<form id="search-form" role="search" action="https://social.msdn.microsoft.com/search/en-US" home-url="https://blogs.msdn.microsoft.com/nativeconcurrency" autocomplete="off">
+								<div class="input-group">
+																			<input name="rq" value="site:blogs.msdn.microsoft.com/nativeconcurrency" type="hidden">
+										<input name="rn" value="nativeconcurrency" type="hidden">
+																		<input type="text" class="form-control" placeholder="Search" name="query" id="srch-term">
+									<div class="input-group-btn">
+										<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+									</div>
+								</div>
+							</form>
+							<div id="search-option">
+								<div class="search-filter" id="search-filter-site">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									<span class="search-text">Search MSDN</span>
+								</div>
+								<div class="search-filter" id="search-filter-all-blogs">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									<span class="search-text">Search all blogs</span>
+								</div>
+																	<div class="search-filter selected" id="search-filter-this-blog">
+										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										<span class="search-text">Search this blog</span>
+									</div>
+															</div>
+						</div>
+						<div id="me-control">
+															<a href="https://blogs.msdn.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a>
+													</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<div id="site-header-blog-wrapper" class="site-header-blog-wrapper ms-blog-header clear-both">
+			<div id="site-header-blog" class="site-header-blog">
+				<nav class="navbar navbar-inverse">
+					<div id="blog-logo-area" class="navbar-header">
+						<div id="blog-logo" data-toggle="collapse" data-target="#blog-menu">
+														<div id="blog-logo-text">
+				<h1 class="site-title ms-blog-title">
+					<a href="https://blogs.msdn.microsoft.com/nativeconcurrency" class="for-desktop">
+						Parallel Programming in Native Code					</a>
+					<a href="https://blogs.msdn.microsoft.com/nativeconcurrency" class="for-mobile">
+						Parallel Programming in Native Code					</a>
+				</h1>
+				<p class="site-description ms-blog-description">Parallel programming using C++ AMP, PPL and Agents libraries.</p>
+			</div>
+									</div>
+					</div>
+									</nav>
+			</div>
+		</div>
+		<div id="site-header-image-wrapper" class="ms-blog-banner">
+			<div id="site-header-image">
+											</div>
+		</div>
+	</header>
+
+	<div id="site-content" class="site-content row">
+
+	<div id="primary" class="content-area col-sm-9">
+		<div id="single-content" class="div-content">
+
+			
+				
+<article id="post-1343" class="post-1343 post type-post status-publish format-standard hentry category-uncategorized tag-auto-vectorization">
+
+	<header class="entry-header single">
+		<h1 class="entry-title">What is Vectorization?</h1>		<div class="rating-wrap">
+		<div id="star-rating-1343" class="wds-ratings" data-rating="0" data-userrating="0" data-postid="1343">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		<div class="clear-both"></div>
+		<div class="entry-meta">
+			<span class="posted-on"><span class="screen-reader-text"> </span><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/" rel="bookmark"><time class="entry-date published updated" datetime="2012-04-12T06:00:00+00:00">April 12, 2012</time></a></span><span class="byline">By <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="e016208a409741efb04da4ffd205c330" href="https://social.msdn.microsoft.com/profile/Jim+Hogg">Jim Hogg</a></span></span><span class="comments-link"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/#comments" title="Comment on What is Vectorization?">7</a></span>				<span class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/", "text": "What is Vectorization?"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/", "text": "What is Vectorization?"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/", "text": "What is Vectorization?"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</span><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+		<hr>
+	</header><!-- .entry-header -->
+
+	<div class="entry-content single">
+		<p>Hi, I am Jim Hogg, a Program Manager in the Visual C++ compiler team. This short post explains &ldquo;What is vectorization?&rdquo;. It provides background for an upcoming sequence of posts on a new feature within the Visual Studio 2012 C++ compiler, called &ldquo;auto-vectorization&rdquo;.</p>
+<p>Modern, 64-bit processors, such as the Intel 64 and AMD64, include a set of 16 registers that perform arithmetic operations on integers. [Think of a register as a cell, 64-bits wide, in ultra-fast memory &ndash; so fast, it can be accessed in a single machine cycle &ndash; a nanosecond, or less]. These registers are called RAX, RBX, RCX and so on. They are called <i>scalar </i>registers because they hold just one value at any time. We can write C++ code that adds two integer variables together. That compiler may transform the program to add those two values, using the RAX and RBX registers. If we have 1000 pairs of integers to add together, we need to execute 1000 such additions.</p>
+<p>However, for several years, these chips have included an additional set of 16 registers, each 128 bits wide. Rather than hold a single, 128-bit wide value, they can hold a collection of smaller values; for example, 4 integers, each 32 bits wide. These registers are called XMM0, XMM1 and so on. They are called <i>vector </i>registers because they can hold several values at any one time. The chips also provide new instructions to perform arithmetic on these 4 <i>packed </i>integers. So we can add 4 pairs of integers with a single instruction, in the same time that it took to add just 1 pair of integers when using the scalar registers. [These new instructions are called SSE, which stands for &ldquo;Streaming SIMD Extensions&rdquo;]</p>
+<p>Suppose we want to add array <i>b </i>into array <i>a </i>with the following code:</p>
+<div style="margin: 20px 0px 10px; padding: 4px; border: 1px solid silver; width: 97.5%; text-align: left; line-height: 12pt; overflow: auto; font-family: 'Courier New', courier, monospace; font-size: 8pt; cursor: text; direction: ltr; max-height: 200px; background-color: #f4f4f4;" id="codeSnippetWrapper">
+<div style="padding: 0px; width: 100%; text-align: left; color: black; line-height: 12pt; overflow: visible; font-family: 'Courier New', courier, monospace; font-size: 8pt; direction: ltr; background-color: #f4f4f4;" id="codeSnippet">
+<pre style="margin: 0em; padding: 0px; width: 100%; text-align: left; color: black; line-height: 12pt; overflow: visible; font-family: 'Courier New', courier, monospace; font-size: 8pt; direction: ltr; background-color: white;"><span style="color: #606060;" id="lnum1"> 1:</span> 1    <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">int</span> N = 1000;</pre>
+<!--CRLF-->
+<pre style="margin: 0em; padding: 0px; width: 100%; text-align: left; color: black; line-height: 12pt; overflow: visible; font-family: 'Courier New', courier, monospace; font-size: 8pt; direction: ltr; background-color: #f4f4f4;"><span style="color: #606060;" id="lnum2"> 2:</span> 2    <span style="color: #0000ff;">float</span> a[N], b[N];</pre>
+<!--CRLF-->
+<pre style="margin: 0em; padding: 0px; width: 100%; text-align: left; color: black; line-height: 12pt; overflow: visible; font-family: 'Courier New', courier, monospace; font-size: 8pt; direction: ltr; background-color: white;"><span style="color: #606060;" id="lnum3"> 3:</span> 3    <span style="color: #008000;">// Initialize a[i] = i; b[i] = 100 + i</span></pre>
+<!--CRLF-->
+<pre style="margin: 0em; padding: 0px; width: 100%; text-align: left; color: black; line-height: 12pt; overflow: visible; font-family: 'Courier New', courier, monospace; font-size: 8pt; direction: ltr; background-color: #f4f4f4;"><span style="color: #606060;" id="lnum4"> 4:</span> 4    <span style="color: #0000ff;">int</span> main() {</pre>
+<!--CRLF-->
+<pre style="margin: 0em; padding: 0px; width: 100%; text-align: left; color: black; line-height: 12pt; overflow: visible; font-family: 'Courier New', courier, monospace; font-size: 8pt; direction: ltr; background-color: white;"><span style="color: #606060;" id="lnum5"> 5:</span> 5        <span style="color: #0000ff;">for</span> (<span style="color: #0000ff;">int</span> n = 0; n &lt; N; ++n) a[n] += b[n];</pre>
+<!--CRLF-->
+<pre style="margin: 0em; padding: 0px; width: 100%; text-align: left; color: black; line-height: 12pt; overflow: visible; font-family: 'Courier New', courier, monospace; font-size: 8pt; direction: ltr; background-color: #f4f4f4;"><span style="color: #606060;" id="lnum6"> 6:</span> 6    }</pre>
+<!--CRLF--></div>
+</div>
+<p>The compiler will transform this code into a loop that uses registers to perform the required additions.</p>
+<p>Here is a diagram that illustrates the situation. We see the calculation at the point where the loop variable <i>n</i> holds 4, and is performing the operation a[4] += b[4]. This is transformed into adding register RAX (holding 4) into RBX (holding 104) yielding 108, which is stored back into RAX. Because <i>a</i> and <i>b</i> each holds 1000 elements, we must carry out this addition operation 1000 times.</p>
+<p>On the right, we see that same calculation, but now performed not just for <i>b[4]</i>, but for <i>b[4]</i> thru <i>b[7]</i> in parallel, in a single step. We add the vector register called XMM0 into the other vector register called XMM1, storing the result back into XMM0. So instead of yielding the single result of 108, we obtain 4 results: 108, 110, 112 and 114. We have done 4 iterations of the loop in a single operation.</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/04/99/1258.Registers.jpg" original-url="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-04-99/1258.Registers.jpg"><img border="0" alt="" src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/04/99/1258.Registers.jpg" original-url="http://blogs.msdn.com/resized-image.ashx/__size/550x0/__key/communityserver-blogs-components-weblogfiles/00-00-01-04-99/1258.Registers.jpg" /></a></p>
+<p>Vectorization, then, is the process of using these vector registers, instead of scalar registers, in an attempt to make the program run faster. In a perfect world, our example&nbsp;loop would execute 4 times faster.</p>
+<p>Vectorization can be performed in two ways:</p>
+<ul>
+<li>Manually, by you, the programmer. You need to write in assembly language, or call built-in functions (called &ldquo;intrinsics&rdquo;), from your C++ program. This gives you low-level control, but is difficult. You don&rsquo;t want to be doing this.</li>
+<li>Automatically, on your behalf, by the compiler. This relies upon the compiler being smart enough to recognize loops that can be safely vectorized, and doing so.</li>
+</ul>
+<p>This is enough background to understand the upcoming series on auto-vectorization, but here is <a href="http://en.wikipedia.org/wiki/Automatic_vectorization#Techniques">another article</a> if you want to dig deeper.</p>
+	</div><!-- .entry-content -->
+
+
+	<footer class="entry-footer single">
+					<div class="tags">
+				<span>Tags </span>
+				<span>
+					<a href="https://blogs.msdn.microsoft.com/nativeconcurrency/tag/auto-vectorization/" rel="tag">auto-vectorization</a>				</span>
+			</div>
+				<hr>
+	</footer><!-- .entry-footer -->
+
+</article><!-- #post-## -->
+
+			
+		</div><!-- #single-content -->
+
+		
+<div id="comments" class="comments-area">
+	<div class="comments-title">
+		Comments (7)	</div>
+
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow" id="cancel-comment-reply-link" href="/nativeconcurrency/2012/04/12/what-is-vectorization/#respond">Cancel reply</a></small></h3>
+									<form action="https://blogs.msdn.microsoft.com/nativeconcurrency/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="4" aria-required="true"></textarea></p>												<p class="form-submit">
+							<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='1343' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='3663' />
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="1e5ea96cbe" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="37"/></p>					</form>
+							</div><!-- #respond -->
+			
+			<div class="navigation pagination clear-both">
+					</div>
+
+		<ol class="comment-list">
+					<li class="comment even thread-even depth-1" id="comment-3663">
+				<div id="div-comment-3663" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/67898edea474197906d20f0e961091e4?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn"><a href='http://blogs.msdn.com/myrmecophagavir_4000_hotmail.com/ProfileUrlRedirect.ashx' rel='external nofollow' class='url'>myrmecophagavir@hotmail.com</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/#comment-3663">
+			April 12, 2012 at 7:17 am</a>		</div>
+
+		<p>Does VS11&#39;s auto-vectorisation extend beyond loops? i.e. will mathematical vectors implemented as a struct of floats become nice SSE code without the need for explicit vector classes now?</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=3663#respond' onclick='return addComment.moveForm( "div-comment-3663", "3663", "respond", "1343" )' aria-label='Reply to myrmecophagavir@hotmail.com'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-3673">
+				<div id="div-comment-3673" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/dfd0418165e998517c1eb6bb48f078f0?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn"><a href='http://blogs.msdn.com/jim.hogg.7_4000_hotmail.com/ProfileUrlRedirect.ashx' rel='external nofollow' class='url'>jim.hogg.7@hotmail.com</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/#comment-3673">
+			April 12, 2012 at 9:34 am</a>		</div>
+
+		<p>@Andrew. &nbsp;It will (try to) vectorize a loop that accesses a field (int, float or double) in an array-of-structs. &nbsp;Or perhaps you&#39;re asking about vectorizing operations on a struct whose fields are the x/y/z coordinates of a point? &nbsp;I&#39;ll cover those topics in one of the upcoming posts</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=3673#respond' onclick='return addComment.moveForm( "div-comment-3673", "3673", "respond", "1343" )' aria-label='Reply to jim.hogg.7@hotmail.com'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-3683">
+				<div id="div-comment-3683" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/67898edea474197906d20f0e961091e4?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn"><a href='http://blogs.msdn.com/myrmecophagavir_4000_hotmail.com/ProfileUrlRedirect.ashx' rel='external nofollow' class='url'>myrmecophagavir@hotmail.com</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/#comment-3683">
+			April 13, 2012 at 9:48 am</a>		</div>
+
+		<p>Yeah, I was talking about (x,y,z) style vectors; adding them together, matrix operations, dot product etc. I&#39;ll wait for the upcoming post.</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=3683#respond' onclick='return addComment.moveForm( "div-comment-3683", "3683", "respond", "1343" )' aria-label='Reply to myrmecophagavir@hotmail.com'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-3763">
+				<div id="div-comment-3763" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Jeff</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/#comment-3763">
+			April 20, 2012 at 8:55 am</a>		</div>
+
+		<p>It&#39;s good to finally see Microsoft invest in a vectorizer. My question is: what are your plans to support AVX, AVX2 (will you?), in either a service pack or in a future release? </p>
+<p>Do you have a way to produce reports about why vectorization was not considered like other vectorizing compilers?</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=3763#respond' onclick='return addComment.moveForm( "div-comment-3763", "3763", "respond", "1343" )' aria-label='Reply to Jeff'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-3793">
+				<div id="div-comment-3793" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/dfd0418165e998517c1eb6bb48f078f0?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn"><a href='http://blogs.msdn.com/jim.hogg.7_4000_hotmail.com/ProfileUrlRedirect.ashx' rel='external nofollow' class='url'>jim.hogg.7@hotmail.com</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/#comment-3793">
+			April 23, 2012 at 10:57 am</a>		</div>
+
+		<p>Yes, support for AVX is on our todo list. &nbsp;(And upcoming FMA instructions also look interesting)</p>
+<p>We will report what loops were vectorized. &nbsp;This isn&#39;t in the Beta release, &nbsp;It was added since, and will show up in the next drop.</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=3793#respond' onclick='return addComment.moveForm( "div-comment-3793", "3793", "respond", "1343" )' aria-label='Reply to jim.hogg.7@hotmail.com'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-5603">
+				<div id="div-comment-5603" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">shekar</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/#comment-5603">
+			August 16, 2012 at 6:07 am</a>		</div>
+
+		<p>Is this applicaple to all Intel64 process family?</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=5603#respond' onclick='return addComment.moveForm( "div-comment-5603", "5603", "respond", "1343" )' aria-label='Reply to shekar'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-5613">
+				<div id="div-comment-5613" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/dfd0418165e998517c1eb6bb48f078f0?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn"><a href='http://blogs.msdn.com/jim.hogg.7_4000_hotmail.com/ProfileUrlRedirect.ashx' rel='external nofollow' class='url'>jim.hogg.7@hotmail.com</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.msdn.microsoft.com/nativeconcurrency/2012/04/12/what-is-vectorization/#comment-5613">
+			August 16, 2012 at 8:25 am</a>		</div>
+
+		<p>@shekar:</p>
+<p>Yes, works on x86 and x64 families. &nbsp;(Not Itanium)</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=5613#respond' onclick='return addComment.moveForm( "div-comment-5613", "5613", "respond", "1343" )' aria-label='Reply to jim.hogg.7@hotmail.com'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		<div class="navigation pagination">
+					</div>
+
+	
+	
+</div><!-- .comments-area -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="sidebar col-sm-3">
+
+					<div id="sidebar-widget-area" class="sidebar-widget-area" role="complementary">
+					<aside id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title">Popular Tags</h2><div class="tagcloud"><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/c-amp/' class='tag-link-13' title='187 topics' style='font-size: 14px;'>C++ AMP</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/concurrency-runtime/' class='tag-link-73' title='32 topics' style='font-size: 14px;'>Concurrency Runtime</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/agents-and-message-blocks/' class='tag-link-103' title='25 topics' style='font-size: 14px;'>Agents and Message Blocks</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/parallel-patterns-library-ppl/' class='tag-link-83' title='25 topics' style='font-size: 14px;'>Parallel Patterns Library (PPL)</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/c0x/' class='tag-link-3' title='15 topics' style='font-size: 14px;'>C++0x</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/auto-vectorization/' class='tag-link-23' title='11 topics' style='font-size: 14px;'>auto-vectorization</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/async/' class='tag-link-43' title='5 topics' style='font-size: 14px;'>Async</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/samplepack/' class='tag-link-93' title='4 topics' style='font-size: 14px;'>SamplePack</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/win7/' class='tag-link-123' title='4 topics' style='font-size: 14px;'>Win7</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/resource-manager/' class='tag-link-113' title='4 topics' style='font-size: 14px;'>Resource Manager</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/case-study/' class='tag-link-33' title='2 topics' style='font-size: 14px;'>case study</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/ppl/' class='tag-link-53' title='1 topic' style='font-size: 14px;'>PPL</a>
+<a href='https://blogs.msdn.microsoft.com/nativeconcurrency/tag/casablanca/' class='tag-link-63' title='1 topic' style='font-size: 14px;'>Casablanca</a></div>
+</aside><aside id="msdn-archive-widget-2" class="widget msdn-archive-widget"><h2 class="widget-title">Archives</h2>	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2014/11/'>November 2014</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2014/09/'>September 2014</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2014/03/'>March 2014</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2013/12/'>December 2013</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2013/11/'>November 2013</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2014/'>All of 2014</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2013/'>All of 2013</a>&nbsp;(39)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2012/'>All of 2012</a>&nbsp;(154)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2011/'>All of 2011</a>&nbsp;(56)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2010/'>All of 2010</a>&nbsp;(13)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2009/'>All of 2009</a>&nbsp;(24)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/nativeconcurrency/2008/'>All of 2008</a>&nbsp;(6)</li>
+</aside>				</div>
+			
+</div><!-- #secondary -->
+</div><!-- .site-content -->
+
+<footer id="site-footer" class="site-footer row" role="contentinfo">
+	<div id="site-info" class="site-info">
+		<div id="footer-text" class="col-sm-4 col-sm-offset-6">
+			<span>
+				<a href="https://msdn.microsoft.com/dn529288">Privacy & Cookies</a>
+			</span>
+			<span>
+				<a href="https://msdn.microsoft.com/cc300389">Terms of Use</a>
+			</span>
+			<span>
+				<a href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx">Trademarks</a>
+			</span>
+		</div>
+		<div id="footer-far" class="col-sm-2">
+			<div id="footer-microsoft-logo">
+				<a href="https://www.microsoft.com">
+					<img id="footer-microsoft-logo-svg" src="https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft/images/ms-logo-white-text.svg">
+				</a>
+			</div>
+			<div id="copyright">
+				© 2016 Microsoft
+			</div>
+		</div>
+	</div><!-- .site-info -->
+</footer><!-- .site-footer -->
+
+</div><!-- .site -->
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=3663' );
+			$.cookie( 'aadsso-redirect', '/nativeconcurrency/2012/04/12/what-is-vectorization/?replytocom=3663', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='62113' post-id='1343'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.msdn.microsoft.com/nativeconcurrency/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/plugins/akismet/_inc/form.js?ver=3.1.5'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/nativeconcurrency\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/nativeconcurrency\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://code.jquery.com/jquery-migrate-1.3.0.min.js'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft/js/theme-merged.js?ver=04152016'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/nativeconcurrency/wp-content/themes/microsoft/js/vendor/jquery.cookie.js?ver=11092015'></script>
+
+</body>
+</html>

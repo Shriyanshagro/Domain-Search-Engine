@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="Note: The SSD market is moving quickly, so I'm sure by the time you read this, it's probably out of date :)">
+<title>The state of SSD storage for a database server | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="The state of SSD storage for a database server">
+<meta property="og:description" content="Note: The SSD market is moving quickly, so I'm sure by the time you read this, it's probably out of date :)">
+<meta property="og:url" content="https://blog.fastmail.com/2009/10/27/the-state-of-ssd-storage-for-a-database-server/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2009/10/27/the-state-of-ssd-storage-for-a-database-server/">
+<meta name="twitter:title" content="The state of SSD storage for a database server">
+<meta name="twitter:description" content="Note: The SSD market is moving quickly, so I'm sure by the time you read this, it's probably out of date :)">
+
+<link rel="canonical" href="https://blog.fastmail.com/2009/10/27/the-state-of-ssd-storage-for-a-database-server/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2009/10/27/the-state-of-ssd-storage-for-a-database-server/'>The state of SSD storage for a database server</a></h1>
+<p class="blog-author">Rob Mueller &ndash; 27 October 2009</p>
+<p>Note: The SSD market is moving quickly, so I'm sure by the time you read
+this, it's probably out of date :)</p>
+
+<p>As mentioned in <a href="http://blog.fastmail.fm/2009/10/19/ibm-x3550-m2-or-x3650-m2-and-debianubuntu/">another
+post</a>,
+we're looking for some new servers. These are to replace our existing
+database servers, which have had a long and productive life (over 6
+years). They're still running fine, but they're starting to get a little
+more loaded than we'd like during backup runs. As an FYI, our database
+requirements are much smaller than you'd expect for our size. Our
+database holds information like the user list, domains, aliases, user
+address book, personalities, signatures, etc, but most of our storage
+space is used by emails and files, and those aren't stored in the
+database at all. Because of that, we only need about 20G of storage now.</p>
+
+<p>I'd really like to get some machines that will last at least 3 years,
+and scale to at least 20x what the existing servers can. To do that, I
+think we need to look at using SSD technology for storage. Unfortunately
+the SSD storage market currently presents a whole range of choices, all
+with their own annoying pros and cons. For the 20x scale, I'm looking at
+about 200-400G of storage. Looking over them I've found these.</p>
+
+<h4>Intel X-25e</h4>
+
+<ul>
+<li><a href="http://www.intel.com/design/flash/nand/extreme/index.htm">http://www.intel.com/design/flash/nand/extreme/index.htm</a></li>
+<li>SATA interface, so doesn't need a separate driver</li>
+<li>Cheap (~$800 for 64G = $12.50/G). At that price, you can get a
+couple and RAID10 them fairly easily though, and doubling the
+price/G still leaves it the cheapest</li>
+<li>Slow compared to other SSD solutions (1000's IOPS rather than
+10,000's or 100,000's)</li>
+<li>Questions about performance when you disable write cache, put them
+in a RAID array, and do lots of writes over time. Some initial
+analysis here: <a href="http://www.bigdbahead.com/?p=518">http://www.bigdbahead.com/?p=518</a>,
+<a href="http://www.bigdbahead.com/?p=532">http://www.bigdbahead.com/?p=532</a>,
+<a href="http://www.bigdbahead.com/?p=555">http://www.bigdbahead.com/?p=555</a>,
+<a href="http://www.bigdbahead.com/?p=557">http://www.bigdbahead.com/?p=557</a></li>
+</ul>
+
+<h4>Fusion-IO</h4>
+
+<ul>
+<li><a href="http://www.fusionio.com/Products.aspx">http://www.fusionio.com/Products.aspx</a></li>
+<li>PCI-e interface, needs a driver for Linux that previously was of
+questionable quality
+(<a href="http://archives.postgresql.org/pgsql-performance/2008-07/msg00010.php">http://archives.postgresql.org/pgsql-performance/2008-07/msg00010.php</a>),
+I haven't seen any recent user reports about use and stability, so I
+don't know where it's at for production use</li>
+<li>Reasonably expensive (~$3000 for 80G = $37.5/G)</li>
+<li>In theory fast. Data sheet claims "IOPS 89,549 (75/25 r/w mix 4k
+packet size)" for 80G version. But when used in actual database
+system, increase over SAS RAID systems is only about 400% maximum
+(<a href="http://www.kennygorman.com/wordpress/?p=398">http://www.kennygorman.com/wordpress/?p=398</a>,
+<a href="http://www.mysqlperformanceblog.com/2009/05/01/raid-vs-ssd-vs-fusionio/">http://www.mysqlperformanceblog.com/2009/05/01/raid-vs-ssd-vs-fusionio/</a>)</li>
+<li>There's also questions about the durability of storage, or the
+performance if you enable durable mode
+(<a href="http://www.mysqlperformanceblog.com/2009/03/02/ssd-xfs-lvm-fsync-write-cache-barrier-and-lost-transactions/">http://www.mysqlperformanceblog.com/2009/03/02/ssd-xfs-lvm-fsync-write-cache-barrier-and-lost-transactions/</a>,
+<a href="http://www.mysqlperformanceblog.com/2009/06/15/testing-fusionio-strict_sync-is-too-strict/">http://www.mysqlperformanceblog.com/2009/06/15/testing-fusionio-strict_sync-is-too-strict/</a>)</li>
+</ul>
+
+<h4>RamSan-10/20</h4>
+
+<ul>
+<li><a href="http://www.ramsan.com/products/ramsan-20.htm">http://www.ramsan.com/products/ramsan-20.htm</a></li>
+<li>PCI-e interface, there's only a binary only driver for RH/SUSE at
+the moment, but apparently they're working on an open source driver</li>
+<li>Reasonably expensive (~$20,000 for 450G = $44/G, I'm guessing the
+225G is about half that)</li>
+<li>In theory fast. Claims "120,000 sustained IOPS", but I haven't seen
+anyone use them in a database benchmark</li>
+<li>The RamSan and Fusion IO superficially appear very similar.
+According to TMS, here's some claimed benefits over Fusion-IO.
+<ol>
+<li>CPU and memory resources - Fusion-IO uses system CPU + RAM for
+flash management (up to 30-40% CPU + 5.5G RAM per 80G of flash),
+RamSan has onboard CPU + DRAM. "The RamSan-20 has an onboard
+processor and four FPGA controllers while the cards from Fusion
+use the server’s processor and memory to run and manage the
+card. The write management software that we have programmed into
+the RamSan-20 is far superior to the write management software
+on the cards from Fusion I/O. This is why our sustained
+performance is dramatically better"</li>
+<li>All SLC. Higher capacity Fusion-IO devices use MLC, which is
+slower and has lower lifetime</li>
+<li>Claim Fusion-IO IOPS are "burst" numbers, while theirs are
+"sustained"</li>
+<li>Super Capacitors - are battery back-ups on the RamSan-20 that
+provide enough power to shut down the card gracefully in the
+event of an unmanaged server shutdown. Fusion's card does not
+have Supercaps. Data is not lost but the recovery time is
+incredibly long. After the server is rebooted, the Fusion card
+needs to rebuild their index tables showing where the data is
+located. The RamSan-20 data is immediately available after the
+server reboot, the Fusion card will take about 10 minutes to
+reload</li>
+</ol></li>
+<li>There's some benchmarks of a RamSan-500 (external flash based unit)
+here: <a href="http://www.bigdbahead.com/?p=139">http://www.bigdbahead.com/?p=139</a>,
+<a href="http://www.bigdbahead.com/?p=140">http://www.bigdbahead.com/?p=140</a>,
+<a href="http://www.bigdbahead.com/?p=141">http://www.bigdbahead.com/?p=141</a></li>
+</ul>
+
+<h4>Sun F5100</h4>
+
+<ul>
+<li><a href="http://www.sun.com/storage/disk_systems/sss/f5100/">http://www.sun.com/storage/disk_systems/sss/f5100/</a></li>
+<li>Multiple SAS interfaces, so doesn't need a separate driver</li>
+<li>Separate 1U rack mount box</li>
+<li>Very expensive (~$45,000 for 480G = $93.75/G)</li>
+<li>Fast, and the massive 2T system claims >1.6M IOPS</li>
+<li>Seems a nice idea, but with a minimum price of $45k for one box, you
+need to be able to justify the amount and cost of that storage. For
+larger database users, this might be really interesting to try out</li>
+</ul>
+
+<h4>Violin Memory</h4>
+
+<ul>
+<li><a href="http://www.violin-memory.com/">http://www.violin-memory.com/</a></li>
+<li>Multiple interfaces is seems: "Fibre Channel and Ethernet network
+attachments are supported via a network head and direct attachment
+through a low latency PCI Express (PCIe) connection. Operating
+systems supported via an open source PCIe driver include: Major
+Linux releases and distributions, Windows 32 and 64-bit Operating
+Systems, OpenSolaris"</li>
+<li>I can't find price information anywhere, I'm guessing it's "if you
+have to ask, you can't afford it" school of products? With up to 4TB
+support, it seems it's aiming for a particularly high end market
+compared to what we're looking for (100+G of storage)</li>
+<li>Very fast. Interesting that you can choose between DRAM or Flash
+memory to vary performance/durability
+(<a href="http://violin-memory.com/Memory_Flexibility">http://violin-memory.com/Memory_Flexibility</a>). But if you go DRAM,
+you need to be extra careful about power, because if power goes, you
+lose it all.</li>
+<li>There's some benchmarks here: <a href="http://www.bigdbahead.com/?p=334">http://www.bigdbahead.com/?p=334</a></li>
+</ul>
+
+<h4> </h4>
+
+<h4>Conclusion</h4>
+
+<p>There doesn't appear to be a clear "winning" solution, as usual, it
+depends on your storage, IO, and cost requirements. When I first heard
+about Fusion IO, I was initially very excited about what it seemed to
+offer, but over time, I've become a bit more circumspect given the
+concerns over durability, system overhead (RAM + CPU), and recovery time
+requirements. The Sun and Violin options seem designed at considerably
+higher end (both storage space and cost) systems than what we're looking
+for. I really wish the RamSan-10/20 had an open source Linux driver.
+Given TMS have a long history with NVRAM systems, I have a gut feeling
+of "they know what they're doing", but for us, an open source driver is
+mandatory. That really just leaves Intel drives in a RAID array at the
+moment, which is probably what we'll aim for now. By starting with just
+2 drives now (very cheap), we can at least replace them in the future
+with either more, or newer and faster drives, or another solution
+altogether if it comes along.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2009/10/26/captcha-now-required-on-all-personal-account-signups/">Captcha now required on all personal account signups</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2009/10/30/how-to-configure-iphone-to-communicate-with-fastmail/">How To Configure iPhone to Communicate with FastMail</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

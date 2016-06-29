@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>
+		  Building Apps for Windows		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset="UTF-8"/>
+		<link rel="shortcut icon" href="https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/images/favicon.ico" />
+				<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"https:\/\/blogs.windows.com\/buildingapps\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
+			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='wb-css'  href='https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/assets/css/windows-blogs.min.css?ver=0.1.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='https://blogs.windows.com/buildingapps/wp-content/plugins/jetpack/css/jetpack.css?ver=3.8.1' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/includes/announcement/js/jquery.cookies.js?ver=4.4.2'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/includes/announcement/js/cookie-helper.js?ver=4.4.2'></script>
+<link rel='https://api.w.org/' href='https://blogs.windows.com/buildingapps/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.windows.com/buildingapps/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.windows.com/buildingapps/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.4.2" />
+
+ <!-- OneAll.com / Social Login for WordPress / v5.0 -->
+<script data-cfasync="false" type="text/javascript">
+ (function() {
+  var oa = document.createElement('script'); oa.type = 'text/javascript';
+  oa.async = true; oa.src = 'https://windows.api.oneall.com/socialize/library.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(oa, s);
+ })();
+</script>
+<style type='text/css'>img#wpstats{display:none}</style><link type="text/plain" rel="author" href="https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/humans.txt" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Building Apps for Windows" />
+<meta property="og:url" content="https://blogs.windows.com/buildingapps/" />
+<meta property="og:site_name" content="Building Apps for Windows" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@windowsblog" />
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+
+	</head>
+	<body class="home blog blog-id-3">
+
+	<header class="main-header" id="main-header" role="banner" aria-label="Header">
+		<div class="top-bar">
+			<div class="branding container">
+				<a href="https://blogs.windows.com/" rel="home" class="logo-link">
+					<img src="https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/images/logo.svg" alt="Windows Logo" class="logo">
+					<!-- .logo -->
+				</a>
+				<div id="toggle-mobile-menu" class="toggle-mobile-menu" role="button" aria-label="Navigation Menu" aria-controls="Navigation">
+					<a href="#"><span class="hidden-text">Menu</span></a>
+				</div>
+				<div class="top-bar-right">
+					<a href="https://blogs.windows.com/feed" class="rss-link" target="_blank"><i class="icon icon-rss"></i> <span class="hidden-mobile">RSS</span></a>
+					<a href="https://www.facebook.com/windows" class="social-link facebook" target="_blank"><i class="icon icon-facebook"></i> <span class="screen-reader-text">Facebook</span></a>
+					<a href="https://twitter.com/windowsblog" class="social-link twitter" target="_blank"><i class="icon icon-twitter"></i> <span class="screen-reader-text">Twitter</span></a>
+					<form role="search" method="get" class="search-form" action="https://blogs.windows.com/" aria-label="Search">
+	<label for="search-form-input">
+		<span class="screen-reader-text">Search for:</span>
+		<i class="icon icon-search"></i>
+		<input type="search" class="search-field" placeholder="Search …" value="" id="search-form-input" name="s" title="Search for:" />
+		<button type="submit" class="search-submit">Submit</button>
+	</label>
+</form>
+				</div>
+			</div>
+		</div>
+		<!-- .branding -->
+		<div id="bottom-bar" class="bottom-bar">
+			<nav class="main-nav container" role="navigation" aria-label="Primary Navigation">
+				<a href="https://blogs.windows.com/" rel="home" id="logo-scroll" class="logo-scroll">
+					<img src="https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/images/logo.svg" alt="Windows Logo">
+				</a>
+
+				<ul id="menu-main-menu" class="menu"><li id="menu-item-15443" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-15443"><a href="#">Building Apps for Windows</a>
+<ul class="sub-menu">
+	<li id="menu-item-20723" class="blog-id-2 menu-item menu-item-type-custom menu-item-object-custom menu-item-20723"><a href="http://blogs.windows.com/windowsexperience">Windows Experience Blog</a></li>
+	<li id="menu-item-20704" class="devices-gray menu-item menu-item-type-custom menu-item-object-custom menu-item-20704"><a href="http://blogs.windows.com/devices">Microsoft Devices Blog</a></li>
+	<li id="menu-item-20713" class="xbox-green menu-item menu-item-type-custom menu-item-object-custom menu-item-20713"><a href="http://news.xbox.com/">Xbox Wire</a></li>
+	<li id="menu-item-15454" class="blog-id-3 menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-15454"><a href="http://blogs.windows.com/buildingapps">Building Apps for Windows</a></li>
+	<li id="menu-item-15464" class="blog-id-4 menu-item menu-item-type-custom menu-item-object-custom menu-item-15464"><a href="http://blogs.windows.com/business">Windows For Your Business</a></li>
+	<li id="menu-item-15484" class="blog-id-33 menu-item menu-item-type-custom menu-item-object-custom menu-item-15484"><a href="http://blogs.windows.com/msedgedev">Microsoft Edge Dev Blog</a></li>
+	<li id="menu-item-15494" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15494"><a href="http://blogs.windows.com/windows-blog-directory/">Other Blogs</a></li>
+</ul>
+</li>
+<li id="menu-item-15513" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15513"><a href="http://blogs.windows.com/buildingapps/tag/windows-10/">Windows 10</a></li>
+</ul>
+				<div class="bing-translate-wrap">
+					<div id='MicrosoftTranslatorWidget' class='Dark' style='border:0px!important;color:white;background-color:#b5b5b5'></div>
+				</div>
+				<script type='text/javascript'>setTimeout(function(){{var s=document.createElement('script');s.type='text/javascript';s.charset='UTF-8';s.src=((location && location.href && location.href.indexOf('https') == 0)?'https://ssl.microsofttranslator.com':'http://www.microsofttranslator.com')+'/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**&ctf=False&ui=true&settings=Manual&from=en';var p=document.getElementsByTagName('head')[0]||document.documentElement;p.insertBefore(s,p.firstChild); }},0);</script>
+			</nav>
+		</div>
+		<!-- .main-nav -->
+	</header>
+	<!-- .main-header -->
+
+	
+	<div class="container">
+
+		
+		<article class="superfeature type-post  post-34324 post status-publish format-standard hentry category-mobile category-pc category-tablet tag-library tag-uwp-controls tag-uwp-data-providers tag-uwp-libraries tag-uwp-samples-app tag-windows-app-studio tag-windows-app-studio-data-sources">
+			<a href="https://blogs.windows.com/buildingapps/2016/03/30/windows-10-anniversary-sdk-is-bringing-exciting-opportunities-to-developers/">
+									<img srcset="https://az648995.vo.msecnd.net/win/2016/03/windowHomeForDevelopers1.png 1x, https://az648995.vo.msecnd.net/win/2016/03/windowHomeForDevelopers1.png 2x" alt="" class="superfeature-image" width="640" height="310">							</a>
+			<div class="superfeature-content">
+				<header class="post-header">
+					<span class="date">March 30, 2016</span>
+					<span class="category"><a href="https://blogs.windows.com/buildingapps/category/holographic/" rel="category tag">Holographic</a>, <a href="https://blogs.windows.com/buildingapps/category/iot/" rel="category tag">IoT</a>, <a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+					<h1 class="post-title"><a
+							href="https://blogs.windows.com/buildingapps/2016/03/30/windows-10-anniversary-sdk-is-bringing-exciting-opportunities-to-developers/">Windows 10 Anniversary SDK is bringing exciting opportunities to developers</a>
+					</h1>
+										
+	<div class="author">
+		By Kevin Gallo	</div>
+
+									</header>
+				<!-- .post-header -->
+				<div class="post-footer">
+											<a href="https://blogs.windows.com/buildingapps/2016/03/30/windows-10-anniversary-sdk-is-bringing-exciting-opportunities-to-developers/" class="read-more">Read more</a>
+									</div>
+				<!-- .post-footer -->
+			</div>
+			<!-- .superfeature-content -->
+		</article>
+		<!-- .superfeature -->
+
+		
+		<div class="archive-container iso-height" role="main" aria-label="Main Content">
+
+							<div class="posts-list column">
+
+					
+<div id="active-posts-filter" class="posts-filter">
+	Show:
+	<ul id="menu-post-filters" class="menu"><li id="menu-item-15321" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15321"><a href="/">All</a></li>
+<li id="menu-item-15403" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15403"><a href="https://blogs.windows.com/buildingapps/category/pc/">PC</a></li>
+<li id="menu-item-15423" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15423"><a href="https://blogs.windows.com/buildingapps/category/mobile/">Mobile</a></li>
+<li id="menu-item-15433" class="custom-case menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15433"><a href="https://blogs.windows.com/buildingapps/category/iot/">IoT</a></li>
+<li id="menu-item-21743" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-21743"><a href="https://blogs.windows.com/buildingapps/category/holographic/">Holographic</a></li>
+</ul>	<a href="https://blogs.windows.com/buildingapps/" class="subscribe-link" id="subscribe-link"><i class="icon icon-rss"></i> <span>Subscribe</span></a>
+
+</div>
+<!-- .posts-filter -->
+
+					<div id="filtered-post-container">
+						<article class="post-archive post-34324 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-library tag-uwp-controls tag-uwp-data-providers tag-uwp-libraries tag-uwp-samples-app tag-windows-app-studio tag-windows-app-studio-data-sources">
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">May 5, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/05/05/kickstart-uwp-app-creation-with-windows-app-studios-open-source-uwp-libraries-and-samples-app/">Kickstart UWP app creation with Windows App Studio’s open source UWP libraries and Samples App</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>Windows App Studio is all about making it as easy as possible to build apps for   The online tool&hellip; <a href="https://blogs.windows.com/buildingapps/2016/05/05/kickstart-uwp-app-creation-with-windows-app-studios-open-source-uwp-libraries-and-samples-app/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-34223 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-app-runtime tag-app-termination tag-first-time-data-load tag-offline-data tag-roaming-app-data tag-roaming-data-change tag-sync">
+
+	
+		<a href="https://blogs.windows.com/buildingapps/2016/05/04/roaming-app-data-and-the-user-experience/" class="fixed-ratio ratio--thumbnail">
+
+			
+			<img srcset="https://az648995.vo.msecnd.net/win/2016/05/HERO_RoamingData_pt2_FINAL-01-320x305.png 1x, https://az648995.vo.msecnd.net/win/2016/05/HERO_RoamingData_pt2_FINAL-01-640x610.png 2x" alt="" class="fixed-ratio-content" width="320" height="305">
+		</a>
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">May 4, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/05/04/roaming-app-data-and-the-user-experience/">Roaming app data and the user experience</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>The user experience for roaming app data is similar to a magic Work is done behind the scenes to create&hellip; <a href="https://blogs.windows.com/buildingapps/2016/05/04/roaming-app-data-and-the-user-experience/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-34003 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-local-data-storage tag-sql tag-sqlite tag-sqlite-api tag-windows-10-anniversary">
+
+	
+		<a href="https://blogs.windows.com/buildingapps/2016/05/03/data-access-in-universal-windows-platform-uwp-apps/" class="fixed-ratio ratio--thumbnail">
+
+			
+			<img srcset="https://az648995.vo.msecnd.net/win/2016/05/SQLite-Hero-FINAL-320x305.png 1x, https://az648995.vo.msecnd.net/win/2016/05/SQLite-Hero-FINAL-640x610.png 2x" alt="" class="fixed-ratio-content" width="320" height="305">
+		</a>
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">May 3, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/05/03/data-access-in-universal-windows-platform-uwp-apps/">Data Access in Universal Windows Platform (UWP) Apps</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>SQLite version is shipping with the Windows 10 Anniversary edition as part of the Universal Windows Platform (UWP) and is&hellip; <a href="https://blogs.windows.com/buildingapps/2016/05/03/data-access-in-universal-windows-platform-uwp-apps/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-34133 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-applicationdata tag-roaming-app-data tag-roamingsettings">
+
+	
+		<a href="https://blogs.windows.com/buildingapps/2016/05/03/getting-started-with-roaming-app-data/" class="fixed-ratio ratio--thumbnail">
+
+			
+			<img srcset="https://az648995.vo.msecnd.net/win/2016/05/hero_image-320x305.png 1x, https://az648995.vo.msecnd.net/win/2016/05/hero_image-640x610.png 2x" alt="" class="fixed-ratio-content" width="320" height="305">
+		</a>
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">May 3, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/05/03/getting-started-with-roaming-app-data/">Getting Started with Roaming App Data</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>Users today are mobile, transitioning from one device to the next throughout the Increasingly, these same users expect (or even&hellip; <a href="https://blogs.windows.com/buildingapps/2016/05/03/getting-started-with-roaming-app-data/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-33873 post type-post status-publish format-standard hentry category-holographic category-iot category-mobile category-pc tag-preview-sdk tag-sdk tag-windows-10-sdk tag-windows-sdk">
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">April 28, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/holographic/" rel="category tag">Holographic</a>, <a href="https://blogs.windows.com/buildingapps/category/iot/" rel="category tag">IoT</a>, <a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/04/28/windows-10-anniversary-sdk-preview-build-14332-released/">Windows 10 Anniversary SDK Preview Build 14332 Released</a></h1>
+			
+	<div class="author">
+		By Clint Rutkas	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>Today, we released a new Windows 10 Anniversary SDK Preview to be used in conjunction with Windows 10 Insider Preview&hellip; <a href="https://blogs.windows.com/buildingapps/2016/04/28/windows-10-anniversary-sdk-preview-build-14332-released/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-28233 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-app-lifecycle tag-lifecycle-management tag-uwp-lifecycle">
+
+	
+		<a href="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/" class="fixed-ratio ratio--thumbnail">
+
+			
+			<img srcset="https://az648995.vo.msecnd.net/win/2016/02/Lifecycle_Hero_Final-320x305.png 1x, https://az648995.vo.msecnd.net/win/2016/02/Lifecycle_Hero_Final-640x610.png 2x" alt="" class="fixed-ratio-content" width="320" height="305">
+		</a>
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">April 28, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/">The Lifecycle of a UWP App</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>Lifecycle management in a Universal Windows Platform (UWP) app is critical for the efficient use of battery power and When&hellip; <a href="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-33763 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-app-design tag-design-thinking tag-inspiration tag-ui-design tag-ux-design">
+
+	
+		<a href="https://blogs.windows.com/buildingapps/2016/04/27/design-thinking-finding-your-inspiration/" class="fixed-ratio ratio--thumbnail">
+
+			
+			<img srcset="https://az648995.vo.msecnd.net/win/2016/04/Hero_FINAL-2-320x305.png 1x, https://az648995.vo.msecnd.net/win/2016/04/Hero_FINAL-2-640x610.png 2x" alt="" class="fixed-ratio-content" width="320" height="305">
+		</a>
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">April 27, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/04/27/design-thinking-finding-your-inspiration/">Design thinking: finding your inspiration</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>One of the biggest differences between developers and designers is that development is something developers do while design is something&hellip; <a href="https://blogs.windows.com/buildingapps/2016/04/27/design-thinking-finding-your-inspiration/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-33683 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-accelerate-framework tag-intel tag-windows-bridge-for-ios">
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">April 25, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/04/25/intels-contributions-to-the-windows-bridge-for-ios-the-accelerate-framework/">Intel&#8217;s contributions to the Windows Bridge for iOS: The Accelerate Framework</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>Intel® is committed to ensuring that developers have the best experience on Intel platforms to meet the diverse needs of&hellip; <a href="https://blogs.windows.com/buildingapps/2016/04/25/intels-contributions-to-the-windows-bridge-for-ios-the-accelerate-framework/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-33613 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-audio tag-figure tag-propellerhead tag-rest tag-uwp tag-xaml">
+
+	
+		<a href="https://blogs.windows.com/buildingapps/2016/04/25/propellerhead-and-uwp-make-beautiful-music-together-with-the-figure-app/" class="fixed-ratio ratio--thumbnail">
+
+			
+			<img srcset="https://az648995.vo.msecnd.net/win/2016/04/Hero_FINAL-FigureDevStory-320x305.png 1x, https://az648995.vo.msecnd.net/win/2016/04/Hero_FINAL-FigureDevStory-640x610.png 2x" alt="" class="fixed-ratio-content" width="320" height="305">
+		</a>
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">April 25, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/04/25/propellerhead-and-uwp-make-beautiful-music-together-with-the-figure-app/">Propellerhead and UWP Make Beautiful Music Together with the Figure App</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>&nbsp; Swedish developers Propellerhead Software know a lot about They have been creating software synthesizers, samplers, and sequencers since the&hellip; <a href="https://blogs.windows.com/buildingapps/2016/04/25/propellerhead-and-uwp-make-beautiful-music-together-with-the-figure-app/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+<article class="post-archive post-33523 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-bluetooth tag-cortana tag-extended-splash-screen tag-phillips-hue tag-uwp">
+
+	
+	<div class="post-wrapper">
+		<header class="post-header">
+			<span class="date">April 20, 2016</span>
+			<span class="category"><a href="https://blogs.windows.com/buildingapps/category/mobile/" rel="category tag">Mobile</a>, <a href="https://blogs.windows.com/buildingapps/category/pc/" rel="category tag">PC</a>, <a href="https://blogs.windows.com/buildingapps/category/tablet/" rel="category tag">Tablet</a></span>
+
+			<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/04/20/adding-cortana-and-bluetooth-to-a-uwp-app-for-phillips-hue/">Adding Cortana and Bluetooth to a UWP app for Phillips Hue</a></h1>
+			
+	<div class="author">
+		By Windows Apps Team	</div>
+
+		</header>
+		<!-- .post-header -->
+		<p>Smart devices are becoming increasingly One great device is the Phillips Hue lightbulb – a colorful, internet-connected light you can&hellip; <a href="https://blogs.windows.com/buildingapps/2016/04/20/adding-cortana-and-bluetooth-to-a-uwp-app-for-phillips-hue/" class="read-more-inline">Read more</a></p>
+	</div>
+	<!-- .post-wrapper -->
+</article>
+<!-- .post-vertical -->
+					</div>
+				</div>
+				<!-- .posts -->
+			
+			<div class="sidebar column" role="complementary" aria-label="Sidebar">
+	<div id="popular_posts-2" class="widget widget_popular_posts"><h3>Popular Articles</h3>
+				<a href="https://blogs.windows.com/buildingapps/2016/03/30/run-bash-on-ubuntu-on-windows/" class="related-article">
+					<img width="70" height="70" src="http://az648995.vo.msecnd.net/win/2016/03/windowHomeForDevelopersWithBash-70x70.png" class="related-thumbnail wp-post-image" alt="windowHomeForDevelopersWithBash" />
+					<h4 class="post-title">Run Bash on Ubuntu on Windows</h4>
+					<!-- 1844 -->
+					<span class="read-more">Read more</span>
+				</a>
+
+			
+				<a href="https://blogs.windows.com/buildingapps/2016/05/03/data-access-in-universal-windows-platform-uwp-apps/" class="related-article">
+					
+					<h4 class="post-title">Data Access in Universal Windows Platform (UWP) Apps</h4>
+					<!-- 1167 -->
+					<span class="read-more">Read more</span>
+				</a>
+
+			
+				<a href="https://blogs.windows.com/buildingapps/2016/02/29/windows-10-iot-core-support-for-raspberry-pi-3/" class="related-article">
+					
+					<h4 class="post-title">Windows 10 IoT Core support for Raspberry Pi 3</h4>
+					<!-- 745 -->
+					<span class="read-more">Read more</span>
+				</a>
+
+			
+				<a href="https://blogs.windows.com/buildingapps/2016/05/03/getting-started-with-roaming-app-data/" class="related-article">
+					
+					<h4 class="post-title">Getting Started with Roaming App Data</h4>
+					<!-- 432 -->
+					<span class="read-more">Read more</span>
+				</a>
+
+			
+				<a href="https://blogs.windows.com/buildingapps/2016/05/04/roaming-app-data-and-the-user-experience/" class="related-article">
+					
+					<h4 class="post-title">Roaming app data and the user experience</h4>
+					<!-- 259 -->
+					<span class="read-more">Read more</span>
+				</a>
+
+			</div><!-- from cache --></div>
+<!-- .sidebar -->
+		</div>
+		<!-- .archive-container -->
+
+		<div class="pagination">
+			<span class='page-numbers current'>1</span>
+<a class='page-numbers' href='https://blogs.windows.com/buildingapps/page/2/'>2</a>
+<a class='page-numbers' href='https://blogs.windows.com/buildingapps/page/3/'>3</a>
+<span class="page-numbers dots">&hellip;</span>
+<a class='page-numbers' href='https://blogs.windows.com/buildingapps/page/76/'>76</a>		</div>
+		<!-- .pagination -->
+
+	</div>
+	<!-- .container -->
+
+
+<footer class="main-footer" role="contentinfo" aria-label="Footer">
+	<div class="container">
+		<a href="http://www.microsoft.com/" target="_blank" class="footer-logo">
+			<svg enable-background="new 0 0 93 20" viewBox="0 0 93 20" x="0px" y="0px" width="93px" height="20px" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+				<title>Microsoft SVG Logo</title>
+				<g id="Type">
+					<g>
+						<path fill="#ffffff" d="M 14.834 19 V 8.747 c 0 -0.779 0.045 -1.932 0.135 -3.459 h -0.045 c -0.15 0.809 -0.303 1.408 -0.46 1.797 L 9.59 19 H 7.849 L 2.941 7.197 C 2.814 6.8 2.661 6.164 2.481 5.288 H 2.414 C 2.436 5.49 2.46 6.018 2.486 6.871 c 0.026 0.854 0.04 1.591 0.04 2.212 V 19 H 0.044 V 2.896 h 3.818 L 7.961 13.07 c 0.389 0.98 0.632 1.723 0.73 2.224 h 0.067 l 0.854 -2.246 l 4.211 -10.152 h 3.661 V 19 H 14.834 Z"></path>
+						<path fill="#ffffff" d="M 23.281 3.435 c 0 0.427 -0.155 0.782 -0.466 1.067 c -0.311 0.285 -0.687 0.427 -1.128 0.427 c -0.442 0 -0.816 -0.142 -1.123 -0.427 c -0.307 -0.285 -0.46 -0.64 -0.46 -1.067 c 0 -0.434 0.155 -0.797 0.466 -1.089 c 0.311 -0.292 0.683 -0.438 1.118 -0.438 c 0.457 0 0.836 0.15 1.14 0.449 S 23.281 3.015 23.281 3.435 Z M 20.361 19 V 7.5 h 2.594 V 19 H 20.361 Z"></path>
+						<path fill="#ffffff"
+						      d="M 33.91 18.518 c -0.883 0.509 -1.973 0.764 -3.268 0.764 c -1.107 0 -2.094 -0.24 -2.959 -0.719 c -0.865 -0.479 -1.539 -1.161 -2.021 -2.045 c -0.483 -0.883 -0.724 -1.871 -0.724 -2.965 c 0 -1.25 0.249 -2.354 0.747 -3.313 c 0.498 -0.958 1.221 -1.701 2.167 -2.229 c 0.947 -0.527 2.046 -0.792 3.296 -0.792 c 0.486 0 0.992 0.054 1.516 0.163 c 0.523 0.109 0.939 0.249 1.246 0.421 v 2.459 c -0.846 -0.614 -1.729 -0.921 -2.65 -0.921 c -1.078 0 -1.951 0.361 -2.622 1.084 c -0.67 0.723 -1.005 1.686 -1.005 2.892 c 0 1.198 0.322 2.138 0.966 2.819 c 0.644 0.681 1.516 1.021 2.616 1.021 c 0.398 0 0.844 -0.086 1.338 -0.258 c 0.494 -0.173 0.947 -0.408 1.357 -0.708 V 18.518 Z"></path>
+						<path fill="#ffffff" d="M 42.771 10.027 c -0.135 -0.097 -0.355 -0.187 -0.663 -0.27 c -0.307 -0.083 -0.588 -0.124 -0.842 -0.124 c -0.757 0 -1.366 0.322 -1.831 0.966 c -0.464 0.645 -0.696 1.482 -0.696 2.516 V 19 h -2.594 V 7.5 h 2.594 v 2.235 h 0.045 c 0.255 -0.771 0.641 -1.37 1.157 -1.797 s 1.111 -0.64 1.785 -0.64 c 0.449 0 0.798 0.052 1.045 0.157 V 10.027 Z"></path>
+						<path fill="#ffffff"
+						      d="M 55.17 13.138 c 0 1.864 -0.539 3.354 -1.617 4.47 s -2.542 1.674 -4.391 1.674 c -1.774 0 -3.188 -0.53 -4.239 -1.59 s -1.578 -2.495 -1.578 -4.307 c 0 -1.909 0.539 -3.414 1.617 -4.515 s 2.571 -1.651 4.48 -1.651 c 1.797 0 3.201 0.526 4.212 1.578 C 54.665 9.849 55.17 11.296 55.17 13.138 Z M 52.475 13.228 c 0 -1.272 -0.282 -2.239 -0.848 -2.897 s -1.342 -0.988 -2.33 -0.988 c -1.019 0 -1.815 0.344 -2.393 1.033 c -0.576 0.689 -0.864 1.662 -0.864 2.92 c 0 1.221 0.288 2.169 0.864 2.847 c 0.577 0.678 1.382 1.017 2.415 1.017 c 1.04 0 1.826 -0.333 2.358 -1 C 52.209 15.492 52.475 14.516 52.475 13.228 Z"></path>
+						<path fill="#ffffff"
+						      d="M 64.486 15.709 c 0 1.071 -0.412 1.934 -1.235 2.589 c -0.824 0.655 -1.939 0.983 -3.347 0.983 c -0.457 0 -0.976 -0.061 -1.556 -0.18 c -0.58 -0.12 -1.064 -0.27 -1.454 -0.449 V 16.17 c 0.479 0.345 1.003 0.61 1.572 0.797 c 0.569 0.188 1.082 0.281 1.538 0.281 c 1.243 0 1.864 -0.412 1.864 -1.235 c 0 -0.292 -0.062 -0.526 -0.185 -0.702 c -0.124 -0.176 -0.337 -0.352 -0.641 -0.527 c -0.303 -0.176 -0.772 -0.395 -1.409 -0.657 c -0.749 -0.321 -1.305 -0.633 -1.668 -0.933 c -0.363 -0.299 -0.633 -0.65 -0.809 -1.055 s -0.264 -0.877 -0.264 -1.416 c 0 -1.033 0.408 -1.875 1.224 -2.527 c 0.816 -0.651 1.872 -0.977 3.167 -0.977 c 0.397 0 0.849 0.047 1.354 0.14 c 0.506 0.094 0.915 0.208 1.229 0.343 v 2.347 c -0.352 -0.24 -0.768 -0.432 -1.246 -0.579 c -0.479 -0.146 -0.955 -0.219 -1.427 -0.219 c -0.517 0 -0.924 0.116 -1.224 0.348 s -0.449 0.528 -0.449 0.887 c 0 0.404 0.118 0.721 0.354 0.949 c 0.236 0.228 0.792 0.519 1.668 0.87 c 1.078 0.434 1.838 0.917 2.279 1.449 C 64.266 14.287 64.486 14.938 64.486 15.709 Z"></path>
+						<path fill="#ffffff"
+						      d="M 77.858 13.138 c 0 1.864 -0.539 3.354 -1.617 4.47 s -2.542 1.674 -4.391 1.674 c -1.774 0 -3.188 -0.53 -4.239 -1.59 s -1.578 -2.495 -1.578 -4.307 c 0 -1.909 0.539 -3.414 1.617 -4.515 s 2.571 -1.651 4.48 -1.651 c 1.797 0 3.201 0.526 4.212 1.578 C 77.354 9.849 77.858 11.296 77.858 13.138 Z M 75.163 13.228 c 0 -1.272 -0.282 -2.239 -0.848 -2.897 s -1.342 -0.988 -2.33 -0.988 c -1.019 0 -1.815 0.344 -2.393 1.033 c -0.576 0.689 -0.864 1.662 -0.864 2.92 c 0 1.221 0.288 2.169 0.864 2.847 c 0.577 0.678 1.382 1.017 2.415 1.017 c 1.04 0 1.826 -0.333 2.358 -1 C 74.897 15.492 75.163 14.516 75.163 13.228 Z"></path>
+						<path fill="#ffffff" d="M 85.838 4.097 c -0.419 -0.187 -0.831 -0.281 -1.235 -0.281 c -0.568 0 -1.011 0.182 -1.325 0.545 c -0.314 0.363 -0.472 0.896 -0.472 1.6 V 7.5 h 2.572 v 2.089 h -2.572 V 19 h -2.628 V 9.589 h -1.932 V 7.5 h 1.932 V 5.815 c 0 -0.801 0.175 -1.514 0.522 -2.14 c 0.349 -0.625 0.839 -1.11 1.472 -1.454 c 0.632 -0.344 1.349 -0.517 2.15 -0.517 c 0.636 0 1.142 0.067 1.516 0.202 V 4.097 Z"></path>
+						<path fill="#ffffff" d="M 92.395 18.888 c -0.157 0.09 -0.437 0.178 -0.837 0.264 s -0.788 0.13 -1.162 0.13 c -2.254 0 -3.381 -1.213 -3.381 -3.639 V 9.589 h -1.909 V 7.5 h 1.909 V 4.85 l 2.605 -0.797 V 7.5 h 2.774 v 2.089 H 89.62 v 5.57 c 0 0.727 0.131 1.241 0.394 1.544 c 0.262 0.304 0.674 0.455 1.235 0.455 c 0.149 0 0.339 -0.032 0.567 -0.096 c 0.228 -0.063 0.421 -0.147 0.578 -0.252 V 18.888 Z"></path>
+					</g>
+				</g>
+			</svg>
+		</a>
+
+		<div class="footer-bar-right">
+			<nav class="sub-nav" role="navigation" aria-label="Footer Navigation">
+				<ul id="menu-site-footer-menu" class="menu"><li> <a href="http://go.microsoft.com/?linkid=2028351">Contact Us</a> </li><li> <a href="http://msdn.microsoft.com/en-US/cc300389">Terms of Use</a> </li><li> <a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a> </li><li> <a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy Statement</a> </li></ul>			</nav>
+			<span class="copyright">
+				&copy; 2016 Microsoft
+			</span>
+		</div>
+	</div>
+</footer>
+<!-- .main-footer -->
+
+<script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName('script')[0];
+a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0031/9413.js";
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+	<script type="text/javascript">
+		(function () {
+			var s = document.createElement('script');
+			s.type = 'text/javascript';
+			s.async = true;
+			s.src = ('https:' == document.location.protocol ? 'https://s' : 'http://i')
+			+ '.po.st/static/v4/post-widget.js#publisherKey=7gba9703183o3oq9jfd8';
+			var x = document.getElementsByTagName('script')[0];
+			x.parentNode.insertBefore(s, x);
+		})();
+	</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201618'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/underscore.min.js?ver=1.6.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var Windows_Blogs = {"ajaxurl":"https:\/\/blogs.windows.com\/buildingapps\/wp-admin\/admin-ajax.php","nonce_filter":"bf8beba462","action_filter_posts":"wb_ajax_filter_posts","template":"archive","debug":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/assets/js/windows-blogs.js?ver=0.1.2'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/wp-embed.min.js?ver=4.4.2'></script>
+<script type='text/javascript' src='https://stats.wp.com/e-201618.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.8.1',blog:'72186895',post:'0',tz:'-7',srv:'blogs.windows.com'} ]);
+	_stq.push([ 'clickTrackerInit', '72186895', '0' ]);
+</script>
+<script type="text/JavaScript">
+	var varSegmentation = 0;
+	var varClickTracking = 1;
+	var varCustomerTracking = 1;
+	var varAutoFirePV = 1;
+	var Route = "23470";
+	var Ctrl = "";
+	document.write( "<script type='text/javascript' src='" + (
+		window.location.protocol
+	) + "//c.microsoft.com/ms.js'" + "'><\/script>" );
+</script>
+<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5591c9b53780a6e1" async="async"></script>
+</body>
+</html>
+<!--
+	generated 260 seconds ago
+	generated in 1.176 seconds
+	served from batcache in 0.024 seconds
+	expires in 40 seconds
+-->

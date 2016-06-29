@@ -1,0 +1,558 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="verify-webtopay" content="ed4663dbc13ed199d5cd1dfc7e755082">
+<base href="http://www.opera.lt/" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title> Start - Lithuanian National Opera and Ballet Theatre </title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<link rel="SHORTCUT ICON" href="http://www.opera.lt/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="http://www.opera.lt/static/css/jquery.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.opera.lt/static/css/jquery.fancybox-1.3.1.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.opera.lt/static/css/validationEngine.jquery.css"/>
+<script type="text/javascript" src="http://www.opera.lt/static/js/jquery-1.4.2.min.js"></script> 
+<script type="text/javascript" src="http://www.opera.lt/static/js/jquery.bxSlider.min.js"></script> 
+<script type="text/javascript" src="http://www.opera.lt/static/js/jquery.fancybox-1.3.1.js"></script> 
+<script type="text/javascript" src="http://www.opera.lt/static/js/jquery-ui.min.js"></script> 
+<script type="text/javascript" src="http://www.opera.lt/static/js/jquery.tooltip.js"></script> 
+<script type="text/javascript" src="http://www.opera.lt/static/js/jquery.ui.accordion.js"></script> 
+<script type="text/javascript" src="http://www.opera.lt/static/js/jquery.validationEngine-en.js"></script> 
+<script type="text/javascript" src="http://www.opera.lt/static/js/jquery.validationEngine.js"></script> 
+<script type="text/javascript" src="http://www.opera.lt/static/js/swfobject.js"></script> 
+<link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+<script type="text/javascript">
+$(function(){
+$("#formID").validationEngine();
+  $('#events, #page_slider').bxSlider({
+    auto: true,
+	pause: 5000,
+	speed: 1000
+  });
+    $('#gallery').bxSlider({
+    auto: false,
+	speed: 600
+  });
+
+
+  $("a[rel=example_group]").fancybox({
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none',
+				'titlePosition' 	: 'over',
+				'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+					return '<span id="fancybox-title-over">'+title+'</span>';
+				}
+  });
+			
+	$('.nl').click(function(){
+		var val = $('#mailas').val();
+		if( val.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/g) ) {
+		var url= '/ajax/naujienlaiskis.php?email='+val;
+		$.get(url,
+			function(data){
+					alert('You have ordered a newsletter');
+			});	
+		return false;
+		}
+		else {
+		alert('E-mail address is invalid')
+		return false;	
+		}		
+	});		
+	
+
+	
+//------------------------------------------kalendorius----------------------------
+var currentTime = new Date()
+var month = currentTime.getMonth() + 1
+var day = currentTime.getDate()
+var valanda = currentTime.getHours()
+var year = currentTime.getFullYear()
+
+
+$.ajax({
+    url: "/ajax/dates.php",
+    data: "action=showdates&id=1&kalba=en",
+    dataType: "json",
+    success: function(calendarEvents){
+        $("#datepicker").datepicker({
+            disabled: true,
+            firstDay: 1,
+                        monthNames:["January","February","March","April","May","June","July","August","September","October","November","December"],
+            dayNamesMin:["Sun","Mo","Tue","Wed","Thu","Fri","Sat"],
+                        onSelect: function(dateText, inst) { return false; },
+            beforeShowDay: function (date){
+                for (i = 0; i < calendarEvents.length; i++) {
+                    if (date.getMonth() == calendarEvents[i][0] - 1 && date.getDate() == calendarEvents[i][1] && date.getFullYear() == calendarEvents[i][2]) {
+                        return [true,"ui-state-active1", '..'+ calendarEvents[i][3]];
+                    }
+                }
+                return [true, ""];
+            },
+            onSelect: function(dateText, inst) {
+                console.dir(arguments);
+                //return false;
+                $.ajax({
+                    type: "GET",
+                    url: "/ajax/renginiai.php",
+                    data: "date="+dateText+"&kalba=lt",
+                    success: function(result)
+                    {
+                        var  obj = $.parseJSON(result);
+                        if (obj.data){
+                            var temp = '';
+                            console.dir(obj.data);
+                            for (var i = 0; i < obj.data.length; i++) {
+                                console.dir(obj.data[i]);
+                                temp = temp + '<a href="'+obj.data[i].url+'">'+obj.data[i].title + ' ('+obj.data[i].autorius+')</a><br/>';
+                            }
+                            $('#datepicker-tooltip div').html(temp);
+
+                            $('#datepicker-tooltip').show();
+                        } else if (obj.href){
+                            window.location = obj.href;
+                        } else {
+                            $('#datepicker-tooltip').hide();
+                        }
+
+                    }
+                });
+            }
+
+        });
+    }
+});
+
+//--------------------------------------------------------------------------------
+	
+
+$('#nuolaidos_kodas').keyup(function () { 
+	var kodas=this.value;
+	var url= 'ajax/kodai.php?kodas='+ kodas;
+	$.get(url,function(data){
+		$('#kodo_galiojimas').text(data);	
+	});
+});
+
+/*
+$('#nuolaidos_kodas_paprastas').keyup(function () { 
+	var kodas=this.value;
+	var type=$('#tb_type').val();
+	var url= 'ajax/nuolaidos_kodas.php?kodas='+ kodas+'&type='+type;
+	$.get(url,function(data){
+		$('#kodo_galiojimas_paprastas').text(data);	
+	});
+});	
+*/
+
+$('#nuolaidos_kodas_paprastas').bind('input', function() { 
+    var kodas=this.value;
+	var type=$('#tb_type').val();
+	var url= 'ajax/nuolaidos_kodas.php?kodas='+ kodas+'&type='+type;
+	$.get(url,function(data){
+		$('#kodo_galiojimas_paprastas').text(data);	
+	});
+});
+
+  
+}); 
+
+
+function get_lozes() {
+var zona=$('#zona').val();
+var sale=$('#sales_id').val();
+var renginio_id=$('#renginio_id').val();
+var url= '/ajax/lozes.php?zona='+zona+'&sale='+sale+'&renginys='+renginio_id+'&linkas=en/start///';
+		$.get(url,
+			function(data){
+					$('#loze').html(data);
+					$('#vietos').html('');
+			});	
+}
+function get_vietos() {
+var zona=$('#zona').val();
+var sale=$('#sales_id').val();
+var renginio_id=$('#renginio_id').val();
+var loze=$('#lozee').val();
+var url= '/ajax/vietos.php?zona='+zona+'&sale='+sale+'&renginys='+renginio_id+'&loze='+loze+'&linkas=en/start///';
+		$.get(url,
+			function(data){
+					$('#vietos').html(data);
+			});	
+}
+
+function funkcija() {
+var url= 'ajax/destroy.php?sesija=3b3da35e5225943a26a7ca393b0320c7';
+$.get(url,
+   function(data){
+	if(data=='ok') {
+		//document.myForm.submit();
+		
+		document.forms["myForm"].submit();
+		//document.getElementById("myForm").submit();
+	}
+	else {
+		//rezervacijos-klaida
+	    window.location="http://www.opera.lt/rezervacijos-klaida";
+		return false;
+	}
+   });
+}
+
+function funkcija1(formaName) {
+var url= 'ajax/destroy.php?sesija=3b3da35e5225943a26a7ca393b0320c7';
+$.get(url,
+   function(data){
+	if(data=='ok') {
+		//document.myForm.submit();
+		document.forms[""+formaName+""].submit();
+	}
+	else {
+	    window.location="http://www.opera.lt/rezervacijos-klaida";
+		return false;
+	}
+   });
+}
+
+
+function funkcija1_paypal() {
+var url= 'ajax/destroy.php?sesija=3b3da35e5225943a26a7ca393b0320c7';
+$.get(url,
+   function(data){
+	if(data=='ok') {
+		//document.myForm.submit();
+		//document.forms[""+formaName+""].submit();
+	}
+	else {
+	    window.location="http://www.opera.lt/rezervacijos-klaida";
+		return false;
+	}
+   });
+}
+
+
+
+function funkcija_kuponas(formaName) {
+var url= 'ajax/simple_destroy.php?sesija=3b3da35e5225943a26a7ca393b0320c7';
+$.get(url,
+   function(data){
+		document.forms[""+formaName+""].submit();
+   });
+}
+
+function funkcija_abonimentas() {
+var url= 'ajax/destroy_abonimentas.php?sesija=3b3da35e5225943a26a7ca393b0320c7';
+$.get(url,
+   function(data){
+	if(data=='ok') {
+		document.myForm.submit();
+	}
+	else {
+		//rezervacijos-klaida
+	    window.location="http://www.opera.lt/rezervacijos-klaida";
+		return false;
+	}
+   });
+}
+
+
+function funkcija_abonimentas1(formaName) {
+var url= 'ajax/destroy_abonimentas.php?sesija=3b3da35e5225943a26a7ca393b0320c7';
+$.get(url,
+   function(data){
+	if(data=='ok') {
+		document.forms[""+formaName+""].submit();
+		//document.myForm.submit();
+	}
+	else {
+		//rezervacijos-klaida
+	    window.location="http://www.opera.lt/rezervacijos-klaida";
+		return false;
+	}
+   });
+}
+function funkcija_abonimentas1_paypal() {
+var url= 'ajax/destroy_abonimentas.php?sesija=3b3da35e5225943a26a7ca393b0320c7';
+$.get(url,
+   function(data){
+	if(data=='ok') {
+		//document.forms[""+formaName+""].submit();
+		//document.myForm.submit();
+	}
+	else {
+		//rezervacijos-klaida
+	    window.location="http://www.opera.lt/rezervacijos-klaida";
+		return false;
+	}
+   });
+}
+
+</script>
+
+</head>
+<body>
+<div class="wrapper">
+	
+    <div class="header">
+    	<div class="logo"><a href="/en"><img src="/static/img/logo.jpg" width="345" height="54" alt="" /></a></div>
+        
+		
+		
+		<div class="languages">
+
+        	<ul>
+            					<li class="active"><a href="en?neigalus=1" title="Versija neįgaliems" ><img src="/static/img/neigalus.png"></a></li>
+												<li  class="active"><a href="/en">En</a></li>
+                <li ><a href="/">Lt</a></li>
+            </ul>
+        </div>
+
+		<div class='paieska' style="float:right;  padding: 10px 0 0; margin-right:20px;">
+				<form method="get" action="/en/search">
+		<table>
+		<tr>
+		<td><input type="text" name="s" class="input" value="Search" style="width:200px; " onfocus="if(this.value == 'Search') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search';}" /></td>
+		<td><input name="" type="submit" class="subscribe" value="Search" /></td>
+		</tr>
+		</table>
+		</form>
+		</div>
+		<br /><br />
+		
+		<div class="abonentas" style="margin-left:580px;">
+				&nbsp;&nbsp;&nbsp;
+		
+		  &nbsp;&nbsp;&nbsp;<a  href="/vilniaus-festivalis-2016" style="text-decoration:underline;">VILNIAUS FESTIVALIS 2016</a> 
+		<br />
+		
+		</div>
+		
+		
+		
+		</div><!--/.header-->
+    
+    <div class="navigation">
+  <ul><li  class="first" ><a href="en/about-the-theatre" title="About the Theatre">About the Theatre<span>&nbsp;</span></a></li><li  ><a href="en/repertoire" title="Repertoire">Repertoire<span>&nbsp;</span></a></li><li  ><a href="/en/performances/opera" title="Productions">Productions<span>&nbsp;</span></a></li><li  ><a href="en/magazine" title="Magazine">Magazine<span>&nbsp;</span></a></li><li  ><a href="/en/education/production-rental1" title="Education">Education<span>&nbsp;</span></a></li><li  ><a href="en/the-press" title="For the Press">For the Press<span>&nbsp;</span></a></li><li  ><a href="en/information-for-visitors" title="Information for Visitors">Information for Visitors<span>&nbsp;</span></a></li><li  ><a href="en/discussion" title="Archive">Archive<span>&nbsp;</span></a></li><li  ><a href="en/blogs" title="Blogs">Blogs<span>&nbsp;</span></a></li><li  class="last" ><a href="en/contacts" title="Contacts">Contacts<span>&nbsp;</span></a></li></ul>    </div><!--/.navigation-->
+<div class="content">
+    
+	        <div class="col-set">
+        	<div class="col1">
+                <div id="events" class="recent_events">
+						<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201203215226cropas.jpg"  alt="THE BLUE DANUBE" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-05 , 2016-06-16 </div>
+                            <div class="author">pagal Johanno Strausso muz.</div>
+                            <div class="title"><a href="en/repertoire/ballet/the-blue-danube" style="text-decoration:none; color:white">THE BLUE DANUBE</a></div>
+                            31st performance at LNOBT Conductor Alvydas &Scaron;ulčys Cast: Inga Cibulskytė, Romas Ceizaris, Greta Gylytė, Martynas Rimeikis, Igoris Zaripovas, Julija Turkina, Gediminas Bubelis, Laimis Roslekas, Jelena Lebedeva, Valerijus Fadejevas, Gohar Mkrtchyan, Haruka Ohno, Ignas Armalis, Jeronimas Krivickas, Evelina Kir&scaron;ytė, Ernestas Barčaitis
+                            <!--<p class="price">Price: 17 - 90 Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/ballet/the-blue-danube" title="THE BLUE DANUBE">Buy tickets</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201604142252cropas.jpg"  alt="DON CARLO" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-06 , 2016-06-18 </div>
+                            <div class="author">Giuseppe Verdi</div>
+                            <div class="title"><a href="en/repertoire/opera/don-carlo" style="text-decoration:none; color:white">DON CARLO</a></div>
+                            5th performance at LNOBT Conductor Martynas Sta&scaron;kus Cast: Luciano Batinic (Croatia), Eric Fennell (USA), Eugenijus Chrebtovas, Viktorija Mi&scaron;kūnaitė, Eglė &Scaron;idlauskaitė, Liudas Mikalauskas, Gunta Gelgotė, Vladas Bagdonas, Žygimantas Galinis, Arūnas Malikėnas, Deividas Staponkus, &Scaron;arūnas &Scaron;apalas, Rokas &Scaron;veisteris, Česlovas Nau...
+                            <!--<p class="price">Price:  -  Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/opera/don-carlo" title="DON CARLO">Buy tickets</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201403283036cropas.jpg"  alt="CARMEN ballet" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-07 </div>
+                            <div class="author"></div>
+                            <div class="title"><a href="en/repertoire/ballet/carmen-ballet" style="text-decoration:none; color:white">CARMEN ballet</a></div>
+                            19th performance at LNOBT  Conductor Modestas Barkauskas Cast: Greta Gylytė, Martynas Rimeikis, Rūta Juodzevičiūtė, Eligijus Butkus, Julija Turkina, Haruka Ohno, Mantas Dara&scaron;kevičius, Romas Ceizaris Standby tickets available at&nbsp;6 &euro;
+                            <!--<p class="price">Price:  -  Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/ballet/carmen-ballet" title="CARMEN ballet">Sold out!</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201605032844cropas.jpg"  alt="THE TINY LINGONBERRY" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-08 </div>
+                            <div class="author">Jonas Tamulionis</div>
+                            <div class="title"><a href="en/repertoire/for-children/the-tiny-lingonberry" style="text-decoration:none; color:white">THE TINY LINGONBERRY</a></div>
+                            25th&nbsp;performance at LNOBT  Conductor Alvydas &Scaron;ulčys Cast: Julija Stupnianek, Rafailas Karpis, Inesa Linaburgytė, Jovita Va&scaron;kevičiūtė, Liudas Norvai&scaron;as, Egidijus Dauskurdis, Rokas &Scaron;veisteris, Vladas Bagdonas, Eugenija Klivickaitė, Mindaugas Jankauskas, Regina &Scaron;ilinskaitė Standby tick...
+                            <!--<p class="price">Price: 15 - 90 Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/for-children/the-tiny-lingonberry" title="THE TINY LINGONBERRY">Buy tickets</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201603182843cropas.jpg"  alt="MANON" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-11 , 2016-06-12 </div>
+                            <div class="author">Jules Massenet</div>
+                            <div class="title"><a href="en/repertoire/opera/manon" style="text-decoration:none; color:white">MANON</a></div>
+                            8th&nbsp;performance at LNOBT&nbsp; Conductor Cyril Diederich (France) Cast: Viktorija Mi&scaron;kūnaitė. Michael Spadaccini (Belgium), Eugenijus Chrebtovas, Rita Petrauskaitė, Vilhelma Mončytė, Joana Stanelytė, Liudas Mikalauskas, &Scaron;arūnas &Scaron;apalas, Rafailas K...
+                            <!--<p class="price">Price:  -  Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/opera/manon" title="MANON">Buy tickets</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201305273022cropas.jpg"  alt="ČIURLIONIS" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-12 </div>
+                            <div class="author">Giedrius Kuprevičius</div>
+                            <div class="title"><a href="en/repertoire/ballet/ciurlionis" style="text-decoration:none; color:white">ČIURLIONIS</a></div>
+                            16th performance at LNOBT Conductor Juozas Mantas Jauni&scaron;kis Cast: Martynas Rimeikis, Genadij Žukovskij, Olga Kono&scaron;enko, Inga Cibulskytė, Rūta Juodzevičiūtė, Mantas Dara&scaron;kevičius, Kipras Chlebinskas, Urtė Barei&scaron;ytė, Ernestas Barčaitis, Daniel Dolan
+                            <!--<p class="price">Price:  -  Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/ballet/ciurlionis" title="ČIURLIONIS">Buy tickets</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201605034257cropas.jpg"  alt="DON QUIXOTE" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-13 </div>
+                            <div class="author">Ludwig Alois Minkus</div>
+                            <div class="title"><a href="en/repertoire/ballet/don-quixote" style="text-decoration:none; color:white">DON QUIXOTE</a></div>
+                            PREMIERE 3rd&nbsp;performance at LNOBT&nbsp; Conductor Martynas Sta&scaron;kus Cast: Maia Makhateli, Artur Shesterikov (Dutch National Ballet), Aleksandras Molodovas, Andrius Žužžalkinas, Olga Kono&scaron;enko, Martynas Rimeikis, Igoris Zaripovas, Voicech...
+                            <!--<p class="price">Price: 25 - 130 Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/ballet/don-quixote" title="DON QUIXOTE">Buy tickets</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201505191026cropas.jpg"  alt="FIDELIO" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-14 </div>
+                            <div class="author">Ludwig van Beethoven</div>
+                            <div class="title"><a href="en/repertoire/opera/fidelio" style="text-decoration:none; color:white">FIDELIO</a></div>
+                            6th performance at LNOBT&nbsp; Conductor Martynas Sta&scaron;kus Cast: Irena Zelenkauskaitė, Markus Ahme, Egidijus Dauskurdis, Dainius Stumbras, Julija Stupnianek, Audrius Rubežius, Liudas Mikalauskas
+                            <!--<p class="price">Price:  -  Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/opera/fidelio" title="FIDELIO">Buy tickets</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201604250136cropas.jpg"  alt="CINDERELLA" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-15 </div>
+                            <div class="author">Sergej Prokofjev</div>
+                            <div class="title"><a href="en/repertoire/for-children/cinderella" style="text-decoration:none; color:white">CINDERELLA</a></div>
+                            Ballet department of The National M.K.Čiurlionis School of Art  Conductor Alvydas &Scaron;ulčys Standby tickets available at&nbsp;4 &euro;
+                            <!--<p class="price">Price: 10 - 100 Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/for-children/cinderella" title="CINDERELLA">Sold out!</a></div>     
+                        </div>                   
+                    </div>		<div class="item">
+                    	<div class="slide_img"><img src="/static/uploads/201511302553cropas.jpg"  alt="EGLĖ THE QUEEN OF GRASS SNAKES" /></div>
+                    	<div class="slide_cont">
+                            <div class="date">2016-05-18 , 2016-06-08 </div>
+                            <div class="author">Eduardas Balsys</div>
+                            <div class="title"><a href="en/repertoire/ballet/egle-the-queen-of-grass-snakes" style="text-decoration:none; color:white">EGLĖ THE QUEEN OF GRASS SNAKES</a></div>
+                            4th&nbsp;performance at LNOBT Conductor&nbsp;Martynas Sta&scaron;kus Cast: Kristina Gudžiūnaitė, Genadij Žukovskij, Haruka Ohno, Daniel Dolan, Voicechas Žuromskas, Inga Cibulskytė, Maja Dolidzė Standby tickets available at&nbsp;6 &euro;
+                            <!--<p class="price">Price:  -  Lt.</p>-->
+                            <div class="buy"><a href="en/repertoire/ballet/egle-the-queen-of-grass-snakes" title="EGLĖ THE QUEEN OF GRASS SNAKES">Buy tickets</a></div>     
+                        </div>                   
+                    </div>                </div>
+            </div><!--/.col1-->
+            
+            <div class="col2">
+            	<div class="soon_block">
+                	<h4>Recent</h4>
+                    <ul>
+                   <li>
+<span>2016-05-06 18:30</span>
+<h3><a href="en/repertoire/opera/don-carlo" title="DON CARLO">Giuseppe Verdi "DON CARLO"</a> </h3>
+</li><li>
+<span>2016-05-07 18:30</span>
+<h3><a href="en/repertoire/ballet/carmen-ballet" title="CARMEN ballet"> "CARMEN ballet"</a> &nbsp;<span style="color:#B2363B; font-size:12px; font-weight:bold">(Sold out!)</span><br /></h3>
+</li><li>
+<span>2016-05-08 12:00</span>
+<h3><a href="en/repertoire/for-children/the-tiny-lingonberry" title="THE TINY LINGONBERRY">Jonas Tamulionis "THE TINY LINGONBERRY"</a> </h3>
+</li><li>
+<span>2016-05-11 18:30</span>
+<h3><a href="en/repertoire/opera/manon" title="MANON">Jules Massenet "MANON"</a> </h3>
+</li><li>
+<span>2016-05-12 18:30</span>
+<h3><a href="en/repertoire/ballet/ciurlionis" title="ČIURLIONIS">Giedrius Kuprevičius "ČIURLIONIS"</a> </h3>
+</li>                    </ul>
+                        					<div class="all"><a href="en/repertoire">All repertoire</a></div>
+                    
+            	</div>
+                    
+            </div><!--/.col2-->
+            
+        <div class="clear"></div></div><!--/.col-set-->
+        
+        <div class="col-set2">
+        	<div class="col1">
+            	
+                <div class="recent_news">
+                	<h4>News</h4>
+                    <ul>
+						<li>
+<h3><a href="en/news/european-opera-days-2016-at-the-lnobt">European Opera Days 2016 at the LNOBT</a></h3>
+<p>The first European Opera Forum brought together over 600 participants &ndash; around ...</p>
+<a href="en/news/european-opera-days-2016-at-the-lnobt" title="More">More</a>
+</li><li>
+<h3><a href="en/news/premiere-ofdon-quixote-feast-of-classical-ballet">Premiere of “Don Quixote”: Feast of Classical Ballet</a></h3>
+<p>On 29 and 30 April Lithuanian National Opera and Ballet Theatre shall present its bra...</p>
+<a href="en/news/premiere-ofdon-quixote-feast-of-classical-ballet" title="More">More</a>
+</li>                    </ul>
+                    					<div class="all"><a href="en/news">All news</a></div>
+                </div><!--/.recent_news-->
+                
+                <div class="newsletter">
+                	
+                    <span>NEWSLETTER</span>
+                    <input name="" id="mailas" type="text" value="Enter e-mail address" onfocus="if(this.value == 'Enter e-mail address') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Enter e-mail address';}"  class="input" />
+                    <input name="" type="submit" class="subscribe nl" value="Order" />
+                
+                </div><!--/.newsletter-->
+            
+            </div><!--/.col1-->
+
+            <div class="col2">
+            	
+              <div class="calendar">
+               	<h4>Events calendar</h4>
+                <!--<div id="datepicker"></div>-->
+                <div id="datepicker" style="position:relative;"><div id="datepicker-tooltip" style="z-index: 999;display:none;position: absolute; right: -324px; border: 1px solid #000000; width: 300px;  background: #F5F5F5;padding:10px;"><span style="position:absolute;cursor:pointer;right:10px; top:0;" onclick="$('#datepicker-tooltip').hide();">X</span><div></div></div></div>
+                </div><!--/.calendar-->
+                
+                <div class="buy_ticket"><a href="en/repertoire">Buy tickets on-line</a></div>
+            
+            </div><!--/.col2-->
+
+            <div class="col3">
+
+            	<div class="recent_video">
+                <a href="en/repertoire/ballet/don-quixote" class="play">&nbsp;</a>
+<a href="en/repertoire/ballet/don-quixote"><img src="/static/uploads/cache/240x198//donkichotas_pr1_dsc_3121_160429_029.jpg"  alt="DON QUIXOTE" /></a>
+<p>Ballet - DON QUIXOTE</p>              
+                </div><!--/.recent_video-->
+                
+                <!--<div class="abonentas"><a href="en">&nbsp;</a></div>-->
+				<div style="text-align:center; margin-left:60px; margin-top:10px;">
+				<a class="fb footer-icon" target="_blank" href="http://www.facebook.com/pages/Lietuvos-nacionalinis-operos-ir-baleto-teatras/139945343453"> </a>
+				<a class="linked footer-icon" target="_blank" href="http://www.linkedin.com/company/lithuanian-national-opera-and-ballet-theatre"> </a>
+				<a class="youtube footer-icon" target="_blank" href="http://www.youtube.com/user/LTNationalOpera"> </a>
+				</div>
+				
+				
+            </div><!--/.col3-->
+            
+        <div class="clear"></div></div><!--/.col-set2-->
+ </div><!--/.content-->
+    
+    <div class="footer">
+    	<div class="copy">Address: A. Vienuolio 1, 01104 Vilnius 	Ticket booking Tel. (+370 5) 262 07 27 Mob.tel. (+370) 615 51000.<br />
+2011 Lithuanian National Opera and Ballet Theatre &nbsp;&nbsp;&nbsp;E-solution: <a href="http://www.lexita.lt" target="_blank" title="Lexita">Lexita</a></div>
+	
+    	<div class="foot_logo"><a href="/en"><img src="/static/img/foot_logo.png" width="167" height="26" alt="" /></a></div>
+    
+    <div class="clear"></div></div><!--/.footer-->
+
+    
+</div><!--/.wrapper-->        
+     <script type="text/javascript">
+ 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26200374-9']);
+  _gaq.push(['_trackPageview']);
+ 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+ 
+</script>
+                                                                        
+</body>
+</html>  

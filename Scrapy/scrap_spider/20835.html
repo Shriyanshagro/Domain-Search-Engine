@@ -1,0 +1,287 @@
+
+<!doctype html><head>
+    <title>Forensicating Docker, Part 1 - SANS Internet Storm Center </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Cache-control" content="no-cache" />
+    <meta property="og:site_name" content="SANS Internet Storm Center" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="DESCRIPTION" content="SANS Internet Storm Center - A global cooperative cyber threat / internet security monitor and alert system. Featuring daily handler diaries with summarizing and analyzing new threats to networks and internet security events."/>
+    <meta name="AUTHOR" content="SANS Internet Storm Center"/>
+    <meta name="KEYWORDS" content="isc, sans, internet, security, threat, worm, virus, phishing, hacking, vulnerability"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/iscfavicon.ico" />
+    <link rel="canonical" href="https://isc.sans.edu%2Fforums%2Findex.html" />
+    <link type="text/css" rel="stylesheet" href="/css/screen.css" /><!-- this is not the comment you are looking for 9a1d04a987f6575 -->
+</head><body class="isc">
+<div id="container">
+  <div id="topWrapper">
+    <div class="g">
+      <span class="threatLevel">
+        Threat Level: <a href="/infocon.html">green</a>
+      </span>
+      <span class="currentHandler">
+        Handler on Duty: <a title="Brad Duncan" href="/handler_list.html#brad-duncan">Brad Duncan</a>
+      </span>
+    </div>
+
+  </div>
+	<h1>
+    <a href="/">SANS ISC: Forensicating Docker, Part 1 - SANS Internet Storm Center  <span></span></a>
+    <ul class="site-selector">
+      <li class="site-switcher"><a href="#"><span class="hidden">SANS Site Network</span></a>
+        <ul class="sites">
+          <li class="current-site">Current Site</li>
+          <li class="isc"><a href="https://isc.sans.edu">
+            <span></span>
+            Internet Storm Center
+          </a></li>
+          <li class="selector-help">Other SANS Sites
+            <a href="https://www.sans.org/help/site-network"><span class="hidden">Help</span></a>
+          </li>
+          <li class="sti"><a href="http://www.sans.edu">
+            <span></span>
+            Graduate Degree Programs
+          </a></li>
+          <li class="sans"><a href="http://www.sans.org">
+            <span></span>
+            Security Training
+          </a></li>
+          <li class="giac"><a href="http://www.giac.org">
+            <span></span>
+            Security Certification
+          </a></li>
+          <li class="awareness"><a href="http://www.securingthehuman.org">
+            <span></span>
+            Security Awareness Training
+          </a></li>
+          <li class="pentest"><a href="http://pen-testing.sans.org">
+            <span></span>
+            Penetration Testing
+          </a></li>
+          <li class="ics"><a href="http://ics.sans.org">
+            <span></span>
+            Industrial Control Systems
+          </a></li>
+          <li class="cyber-defense"><a href="http://cyber-defense.sans.org">
+            <span></span>
+            Cyber Defense Foundations
+          </a></li>
+          <li class="forensics"><a href="http://computer-forensics.sans.org">
+            <span></span>
+            Computer Forensics
+          </a></li>
+          <li class="ssi"><a href="http://software-security.sans.org">
+            <span></span>
+            Software Security
+          </a></li>
+          <li class="sic"><a href="http://sic.sans.org">
+            <span></span>
+            Government OnSite Training
+          </a></li>
+        </ul>
+      </li>
+    </ul>
+    SANS ISC InfoSec Forums
+	</h1>
+	<form id="headerSearch" name="searchform" action="/search.html" method="post">
+        <input type="text" name="q" placeholder="Keyword, Domain, Port, IP or Header" />
+        <input type="submit" value="Search" />
+	</form>
+    <form id="headerLogin" method="post" action="/login.html" name="loginform">
+        <input type="hidden" name="token" value="dea921df6a0f3cae1c57c0c1de8735651e8acf85" />
+        <input type="text" name="email" placeholder="Email" />
+        <input type="password" name="pw" autocomplete="off" placeholder="Password" />
+        <input type="submit" value="Log In" /><br />
+        <a href="/register.html">Sign Up for Free!</a> &nbsp; <a href="/resetpassword.html">Forgot Password?</a>
+	</form>
+	<div id="smallHeaderLogin">
+	    <a href="/login.html">Log In</a> or <a href="/register.html">Sign Up for Free</a>!
+	</div>
+	<div id="content">
+		<div class="wrapper">
+                                <div class="beforeForumWrapper">
+                                    <ul class="threadNav">
+                                        <li><a href="/forums/diary/How+to+hack/20093/">&larr; Next Thread</a></li>
+                                        <li><a href="/forums/diary/Why+Users+Fall+For+Ransomware/20867/">Previous Thread &rarr;</a></li>
+                                    </ul>
+                                </div>
+                                <table class="postList">
+                                <caption>Forensicating Docker, Part 1</caption>
+                                        <tr class="postWrapper">
+                                            <td class="content">
+                                                <div class="ss-container">
+                                                    <ul class="ss-share">
+                                                        <li class="ss-share-item">
+                                                            <a class="ss-share-link ico-facebook" title="Share on Facebook" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fisc.sans.edu%2Fforums%2Fdiary%2F20835" rel="nofollow" target="_blank"></a>
+                                                        </li>
+                                                        <li class="ss-share-item">
+                                                            <a class="ss-share-link ico-twitter" title="Share on Twitter" href="http://twitter.com/share?text=Forensicating%20Docker%2C%20Part%201&amp;url=https%3A%2F%2Fisc.sans.edu%2Fforums%2Fdiary%2F20835&amp;via=SANS_ISC" rel="nofollow" target="_blank"></a>
+                                                        </li>
+                                                        <li class="ss-share-item">
+                                                            <a class="ss-share-link ico-google" title="Share on Google+" href="http://plus.google.com/share?url=https%3A%2F%2Fisc.sans.edu%2Fforums%2Fdiary%2F20835" rel="nofollow" target="_blank"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div><p>By now you&#39;ve probably heard about <a href="https://www.docker.com/">Docker</a>, the application containerization tool. &nbsp;Lenny Zeltser has <a href="https://zeltser.com/docker-application-distribution/">talked about</a> using it for <a href="https://digital-forensics.sans.org/blog/2014/12/10/running-malware-analysis-apps-as-docker-containers">malware analysis</a>, for example, and also looked at the <a href="https://zeltser.com/security-risks-and-benefits-of-docker-application/">security implications</a>. &nbsp;Last week, however, I ran across my first incident where the system I needed to examine was running Docker. &nbsp;I hadn&#39;t used Docker, myself, so I didn&#39;t know what difficulties this might introduce into my investigation. &nbsp;I threw a quick note out on the SANS DFIR list to see if anyone else had had to deal with Docker during a forensic investigation and got a couple of responses, but not a lot of usable info, so after a phone call with Derek Armstrong, who was one of the folks who responded to the e-mail, I set out to figure out how Docker was going to complicate my life. &nbsp;What follows is what I&#39;ve learned in the last week. &nbsp;I know there is much more that can be done here and hopefully before this is all said and done, I&#39;ll write a few scripts that might be helpful in future investigations (hence, titling the post &#39;Part 1&#39;). &nbsp;So, when I began this investigation, I had a memory image and a disk image. &nbsp;I did not have access to the live system.</p>
+
+<h3>Memory Forensics</h3>
+
+<p>On first look at the memory image, my fear was that Docker was actually virtualization rather than containerization and that the process details were somewhere inside the process memory of the docker process. &nbsp;When I ran volatility and saw that the docker process didn&#39;t have any child processes, I was even more concerned. &nbsp;It turns out, I was worrying needlessly, however. &nbsp;It turns out that on this particular image, there weren&#39;t any docker containers running at the time the memory image was taken. &nbsp;To test things, I installed docker on a Ubuntu VM that I had and then ran this little experiment</p>
+
+<p><img alt="" src="https://isc.sans.edu/diaryimages/files/2016-03-11%2013_24_18-XUbuntu%2064-bit%20-%20VMware%20Workstation.jpg" /></p>
+
+<p>I fired up bash in a container, then I fired up top within that bash</p>
+
+<p><img alt="" src="https://isc.sans.edu/diaryimages/images/2016-03-11%2013_26_06-XUbuntu%2064-bit%20-%20VMware%20Workstation.jpg" style="width: 648px; height: 276px;" /></p>
+
+<p>Then looked at pstree and verified that I could see both bash and top</p>
+
+<p><img alt="" src="https://isc.sans.edu/diaryimages/images/2016-03-11%2013_27_03-XUbuntu%2064-bit%20-%20VMware%20Workstation.jpg" style="width: 451px; height: 343px;" /></p>
+
+<p>Unfortunately, the linux_pstree volatility plugin doesn&#39;t show those processes as being offspring of the docker process (note this is still using Volatility 2.4 I encountered problems with my Linux profiles for 2.5 and haven&#39;t had time to figure out how to fix them yet).</p>
+
+<p><code>$ vol.py --plugins ~investigator/.zrk_cache -f XUbuntu\ 64-bit-Snapshot3\ -\ Copy.vmem --profile=Linux3_13_0_79_generic__123_Ubuntu_SMP_Fri_Feb_19_14_27_58_UTC_2016_x86_64x64 linux_pstree&nbsp;<br />
+Volatility Foundation Volatility Framework 2.4<br />
+Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Pid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+init &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+.upstart-udev-br &nbsp; &nbsp; 589 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+.systemd-udevd &nbsp; &nbsp; &nbsp; 593 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+.upstart-socket- &nbsp; &nbsp; 745 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+.dbus-daemon &nbsp; &nbsp; &nbsp; &nbsp; 924 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 102 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+.ModemManager &nbsp; &nbsp; &nbsp; &nbsp;976 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+.systemd-logind &nbsp; &nbsp; &nbsp;992 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+&lt;...snip...?<br />
+.docker &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;51914 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+&lt;...snip...&gt;<br />
+bash &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 52102 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+.top &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 52144 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</code></p>
+
+<p>Even though ps clearly shows the PPID of that bash is PID 51914. &nbsp;However, it is possible to find all the descendants of the docker process using the linux_psenv plugin and grep-ing for the HOSTNAME environment variable. &nbsp;All docker offspring will have that present and set to the short id of the docker image it is running under.</p>
+
+<p><img alt="" src="https://isc.sans.edu/diaryimages/images/2016-03-11%2014_59_11-screen(1).jpg" style="width: 1122px; height: 211px;" /></p>
+
+<p>You can also see that there is a docker layered filesystem mounted, but you can&#39;t actually see which one with linux_mounts</p>
+
+<p><img alt="" src="https://isc.sans.edu/diaryimages/images/2016-03-11%2015_02_58-screen.jpg" style="width: 819px; height: 299px;" /></p>
+
+<p>Note that mount of /var/lib/docker/aufs/aufs, that won&#39;t be present if thre isn&#39;t a docker image running and the line for / will be different (showing the /dev/disk/... and ext4 instead of none and aufs). &nbsp;Also, if you do have access to the live system, it is interesting to note that df -h run as an unprivileged user won&#39;t show the layered filesystem that docker uses, but it will show if run as root.</p>
+
+<p><img alt="" src="https://isc.sans.edu/diaryimages/images/2016-03-11%2015_14_00-XUbuntu%2064-bit%20-%20VMware%20Workstation.jpg" style="width: 905px; height: 317px;" /></p>
+
+<p>The last snippet I want to look at is the output from the volatility linux_lsof plugin. &nbsp;This one shows some useful places we&#39;ll need to look at on disk once we start poking around there.</p>
+
+<p><img alt="" src="https://isc.sans.edu/diaryimages/images/2016-03-11%2015_18_19-screen.jpg" style="width: 1121px; height: 124px;" /></p>
+
+<p>That json log looks like something that could be very interesting. &nbsp;We&#39;ll pick this up there in our next installment.</p>
+
+<p>In the meantime, I&#39;m still just getting started trying to figure out how to deal with Docker artifacts, so if you have thoughts or suggestions, I&#39;d love to hear them. &nbsp;Feel free to comment here, or use our <a href="https://isc.sans.edu/contact.html">feedback form</a>, or e-mail me (the address is below). Thanx.</p>
+
+<h3>References</h3>
+
+<p><a href="https://www.docker.com/">https://www.docker.com/</a><br />
+<a href="https://zeltser.com/security-risks-and-benefits-of-docker-application/">https://zeltser.com/security-risks-and-benefits-of-docker-application/</a><br />
+<a href="https://zeltser.com/docker-application-distribution/">https://zeltser.com/docker-application-distribution/</a><br />
+<a href="https://digital-forensics.sans.org/blog/2014/12/10/running-malware-analysis-apps-as-docker-containers">https://digital-forensics.sans.org/blog/2014/12/10/running-malware-analysis-apps-as-docker-containers</a></p>
+
+<p>---------------<br />
+Jim Clausing, GIAC GSE #26<br />
+jclausing --at-- isc [dot] sans (dot) edu</p>
+</div>
+                                                <div>Tags: docker, forensics</div>
+                                            </td><td class="user">
+                                            Jim<br />
+                                                <img src="/gravatar_cache/cache/isc/c863dccaa7873d6a1e28639683f9b8be" /><br />
+                                                <span>384 Posts</span><br /><span>ISC Handler</span></td>
+                                        </tr>
+                                        <tr class="postFooter">
+                                            <td class="actions">
+                                                <a href="/forums/diary/reply/20835/">Reply</a>
+                                        <a href="/forums/diary/subscribe/20835/">Subscribe</a>
+                                            </td>
+                                            <td class="time">
+                                                1 month  ago
+                                            </td>
+                                        </tr>
+                                </table>
+                                <div class="afterForumWrapper">
+                                    <ul class="threadNav">
+                                        <li><a href="/forums/diary/How+to+hack/20093/">&larr; Next Thread</a></li>
+                                        <li><a href="/forums/diary/Why+Users+Fall+For+Ransomware/20867/">Previous Thread &rarr;</a></li>
+                                    </ul>
+                                </div><p><a href="/register.html">Sign Up for Free</a> or <a href="/login.html">Log In</a> to start participating in the conversation!</p>
+        </div>
+    </div>
+    <div id="navigation">
+        <ul>
+            <li><a href="/contact.html">Contact Us</a>
+                <ul>
+                    <li class="first"><a href="/about.html">About Us</a></li>
+                    <li><a href="/handler_list.html">Handlers</a></li>
+                    <li><a href="/events">Events</a></li>
+                </ul>
+            </li>
+            <li><a href="/diaryarchive.html">Diary</a></li>
+            <li><a href="/podcast.html">Podcasts</a></li>
+            <li><a href="/jobs">Jobs</a></li>
+            <li><a href="/newssummary.html">News</a></li>
+            <li><a href="/tools/">Tools</a>
+                <ul>
+                    <li class="first"><a href="/howto.html">DShield Sensor</a></li>
+                    <li><a href="/404project/">404Project</a></li>
+                    <li><a href="/glossary.html">InfoSec Glossary</a></li>
+                    <li><a href="/webhoneypot/index.html">Webhoneypot</a></li>
+                    <li><a href="/fightback.html">Fightback</a></li>
+                </ul>
+            </li>
+            <li><a href="/reports.html">Data</a>
+                <ul>
+                    <li><a href="/ssh.html">SSH Scanning Activity</a></li>
+                    <li><a href="/crls.html">SSL CRL Activity</a></li>
+                    <li><a href="/port.html">TCP/UDP Port Activity</a></li>
+                    <li><a href="/httpheaders/">HTTP Header Activity</a></li>
+                    <li><a href="/threatfeed.html">Threat Feeds Activity</a></li>
+                    <li><a href="/threatmap.html">Threat Feeds Map</a></li>
+                    <li><a href="/suspicious_domains.html">Suspicious Domains</a></li>
+                    <li><a href="/presentations/">Presentations &amp; Papers</a></li>
+                    <li><a href="/links.html">Useful InfoSec Links</a></li>
+                    <li><a href="/poll.html">InfoSec Poll Results</a></li>
+                </ul>
+            </li>
+            <li class="active"><a href="/forums/">Forums</a>
+                <ul>
+                    <li><a href="/forums/Auditing/">Auditing</a></li>
+                    <li><a href="/forums/Diary+Discussions/">Diary Discussions</a></li>
+                    <li><a href="/forums/Forensics/">Forensics</a></li>
+                    <li><a href="/forums/General+Discussion/">General Discussions</a></li>
+                    <li><a href="/forums/Industry+News/">Industry News</a></li>
+                    <li><a href="/forums/Network+Security/">Network Security</a></li>
+                    <li><a href="/forums/Penetration+Testing/">Penetration Testing</a></li>
+                    <li><a href="/forums/Software+Security/">Software Security</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="sidebar">
+        <p>Does your organization have an InfoSec opening? <a href="/jobs/new">Post a job listing</a> with the SANS Internet Storm Center</p>
+        <iframe width="160" height="600" src="https://www.sans.org/banners/isc_ss.php" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+	</div>
+</div>
+<div id="footer">
+	<ul id="socialIconsFoot">
+        <li><a href="https://www.youtube.com/channel/UCfbOsqPmWg1H_34hTjKEW2A">YouTube<span></span></a></li>
+        <li class="twitter"><a href="http://twitter.com/sans_isc">Twitter<span></span></a></li>
+        <li class="linkedin"><a href="http://www.linkedin.com/groups?gid=35470">LinkedIn<span></span></a></li>
+        <li class="rss"><a href="/xml.html">ISC Feed<span></span></a></li>
+	</ul>
+	<a class="sans" href="https://www.sans.edu/"><span></span></a>
+	<ul id="footLinks">
+        <li><a href="http://www.cafepress.com/stormcenter">Shop</a></li>
+        <li><a href="/linkback.html">Link To Us</a></li>
+        <li><a href="/about.html">About Us</a></li>
+        <li><a href="/handler_list.html">Handlers</a></li>
+        <li><a href="/privacy.html">Privacy Policy</a></li>
+        <li><a href="#top">Back To Top</a></li>
+	</ul>
+	<strong>Developers:</strong> We have an <a href="/api/">API</a> for you! &nbsp; <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" src="/images/cc.png" /></a>
+</div>
+</body></html>

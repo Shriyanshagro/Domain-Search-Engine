@@ -1,0 +1,3276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+
+
+
+
+
+
+
+<head>
+
+    <title>Partner Locator-Partner Central - Cisco Systems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=9">
+<!-- new --> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script language="javascript">
+var PROCESS_REQUEST ="Processing request ...";
+var POINT_NOT_IN_MAP="Couldn't locate on map.";
+var GOOGEL_MESSAGE="Sorry, we were unable to find address.";
+var KEYWORD_MESSAGE="Please enter keyword";
+var COUNTRY_MESSAGE="Select a Country";
+var SHOWING="Showing";
+var PARTNER_INFO = "Partner Info";
+var HTTP_FAILURE = "Browser does not support HTTP Request";
+var APPLICATION_SESSION = "Application session";
+var AUTHORIZATION = "Authorizations";
+var errMsgCountryMandatory = "Select a Country" ;
+var errMsgMultiCountry= "Select at least a Country" ;
+var msg = "An error occured while getting autocomplete results";
+var DRIVING_DIRECTION= "click here to go to driving direction page";
+var CLICK_HERE="Click Here";
+var GET_DIRECTIONS="to get directions";
+var AJAX_FALURE="AJAX Failure!";
+var cityLblInnerHTML2="City/State/Zip:";
+var cityLblInnerHTML="City:";
+var OF="of";
+</script>
+ 
+<script src="https://maps.googleapis.com/maps/api/js?v=3&client=gme-ciscopartnerlocator&sensor=false" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquery.min.js" ></script>  
+<script type="text/javascript" src="scripts/jQuery/ui/js/jquery-migrate-1.2.1.js"></script>
+<!-- <script type="text/javascript" src="scripts/jQuery/ui/js/jquery-1.8.3.js"></script> -->
+<link rel="STYLESHEET" href="https://www.cisco.com/swa/c/tabs.css" type="text/css" />
+<script language="javascript" type="text/javascript">
+    $j = jQuery.noConflict();
+</script> 
+<script  src="scripts/GMapLocator.js"></script> 
+<script  src="scripts/AdvanceSearch.js"></script>
+<style type="text/css">
+ .optiontext{
+	font-weight: Regular;
+	font-size: 10px;
+}
+
+ .sectionHeader {
+	font-size: 13px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #999999; 
+	padding: 3px;
+}
+ .formtext{
+	font-weight: Bold;
+	font-size: 16px;
+}
+
+
+ .hintlabel{
+	font-weight: Regular;
+	font-size: 11px;
+	color: #999999;
+}
+ 
+ .sectionHeader2 {
+	font-size: 13px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #C0C0C0; 
+	padding: 3px;
+}
+ .companyText{
+	font-weight:Bold;
+	font-size: 12px;
+	 
+}
+ .addresstext{
+	font-weight:Regular;
+	font-size: 13px;
+}
+.contacttext{
+	font-weight:Regular;
+	font-size: 12px;
+}
+
+ .sorttext{
+	font-weight:Regular;
+	font-size: 12px;
+	color: #336666;
+}
+ 
+</style>
+
+ <script type="text/javascript" src="js/responsive.top.min.js"></script>
+<script type="text/javascript" src="scripts/json2.js"></script>
+<script type="text/javascript" src="js/jquery.min.js" ></script> 
+<script type="text/javascript" src="scripts/jQuery/ui/js/jquery-migrate-1.2.1.js"></script>
+<!-- <script type="text/javascript" src="scripts/jQuery/ui/js/jquery-1.8.3.js"></script> --> 
+<script type="text/javascript" src="scripts/jQuery/ui/js/jquery-ui-1.9.2.custom.js"></script>
+<script type="text/javascript" src="js/jquery.tablePagination.0.5.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="js/respond.js" ></script>
+<script type="text/javascript" src="js/jquery.fancybox-1.3.4.js"></script>
+
+<!-- <script type="text/javascript" src="scripts/AutocompleteControl.js"></script> -->
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="scripts/childParent.js"></script>
+<script type="text/javascript" src="scripts/AdvanceSearch.js"></script>
+
+<link rel="stylesheet" href="css/responsive.min.css" />
+<link type="text/css" rel="stylesheet" href="css/masterbrand.min.css" >
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="css/bootstrap-theme-cisco.css">
+<link type="text/css" rel="stylesheet" href="css/bootstrap-glyphicons.css">
+<link type="text/css" rel="stylesheet" href="css/pex.css">
+<link type="text/css" rel="stylesheet" href="css/pexfhv6.css">
+<link type="text/css" rel="stylesheet" href="css/jquery.dataTables.css" />
+<link type="text/css" rel="stylesheet" href="css/jquery.fancybox-1.3.4.css" media="screen" />
+<link type="text/css" rel="stylesheet" href="scripts/jQuery/ui/css/smoothness/jquery-ui-1.9.2.custom.min.css"/>
+<link type="text/css" rel="stylesheet" href="https://www.cisco.com/web/fw/c/rootpage.css" /> 
+
+
+ <style>
+.ui-autocomplete {
+width: 290px!important;
+font-size: 11px;
+max-height: 100px;
+overflow-y: auto;
+/* prevent horizontal scrollbar */
+overflow-x: hidden;
+}
+/* IE 6 doesn't support max-height
+* we use height instead, but this forces the menu to always be this tall
+*/
+* html .ui-autocomplete {
+height: 100px;
+}
+
+#cIcon
+{
+float: right;
+margin-top:13px;
+vertical-align: middle;
+}
+.subHeading {
+    background: url("images/heading-border-bg-.jpg") repeat-x scroll 0 bottom rgba(0, 0, 0, 0);
+    color: #1770AB;
+    float: left;
+    margin: 0;
+    padding: 0 0 3px;
+    width: 100%;
+}
+</style>
+<!-- <script type="text/javascript" src="/WWChannels/GETLOG/j/render_navbar.js"></script>  -->
+<script type="text/javascript" charset="UTF-8" src="/WWChannels/newpos/navbar/js/app/scripts/render_navbar.js"></script>
+<!-- nav bar code start -->
+<script type="text/javascript">
+
+ jQuery(function() {
+	 var userID ='oam-anonymous.gen';
+
+
+
+//alert(userID);
+//alert(userID === null);
+//alert(userID);
+ if((userID=='null')||(userID=="oam-anonymous.gen"))
+{
+
+} 
+ else
+{
+
+if (jQuery.isFunction(window.loadNavBar))
+	{
+	loadNavBar('1103');
+jQuery("#navBarDiv").show();
+	}
+}
+} );
+</script>
+ <!-- nav bar code end -->
+ 
+ 
+
+ <script type="text/javascript">
+jQuery(function() {
+	
+	
+	
+	var Jslocale="en_US"; 
+	//alert(Jslocale);
+	var lang_cd = new Array();
+	lang_cd = Jslocale.split('_'); 	
+    if(lang_cd[0] =="ja" ||lang_cd[0] =="JA") 
+	
+	{
+		//alert("inside if");
+		jQuery("#adcerticate").attr('href','http://www.cisco.com/web/JP/reseller/program/specialization/index.html#~two');
+	    jQuery("#adspecialization").attr('href','http://www.cisco.com/web/JP/reseller/program/specialization/index.html#~three');
+	    jQuery("#adreseller").attr('href','http://www.cisco.com/web/JP/partners/program/cmsp/reseller.html');
+	    jQuery("#adcloud").attr('href','http://www.cisco.com/web/JP/partners/program/cmsp/index.html');
+	    jQuery("#ciscoauth").attr('href','http://www.cisco.com/web/JP/reseller/program/registered_partner/index.html');
+	    
+		}
+	else
+		{
+	//	alert("inside else");
+		jQuery("#adcerticate").attr('href','http://www.cisco.com/web/partners/tools/partnerlocator/partner_program_overview.html');
+	    jQuery("#adspecialization").attr('href','http://www.cisco.com/web/partners/tools/partnerlocator/partner_program_overview.html');
+	    jQuery("#adreseller").attr('href','http://www.cisco.com/web/partners/tools/partnerlocator/mscp_ov.html');
+	    jQuery("#adcloud").attr('href','http://www.cisco.com/web/partners/tools/partnerlocator/mscp_ov.html');
+	    jQuery("#ciscoauth").attr('href','http://www.cisco.com/web/partners/tools/partnerlocator/mscp_ov.html');
+	   
+		}
+		
+$("#product").autocomplete({
+    minLength: 1,
+    source :  function (request, response) {
+    	var searchString = jQuery('#product').val().trim();
+
+    	if (searchString.length > 1) {
+    		tempString=searchString.split(",");
+    		wordCount=tempString.length;
+    		var qString=tempString[wordCount-1].trim();
+    		if (qString.length<=1)
+    			return false;
+    
+    			var url="getKeywordsList.do?text="+encodeURI(qString);
+    			
+    			
+    		jQuery.get(url, function (data) {
+                data=JSON.parse(data);
+             
+               response(jQuery.map(data,function (value) {
+           
+                    return {
+                        label: value.label,
+                        value: value.value
+                    }}));
+            });	
+    	}
+    } 
+});
+
+$("#advanceProduct").autocomplete({
+    minLength: 1,
+    source :  function (request, response) {
+    	var searchString = jQuery('#advanceProduct').val().trim();
+
+    	if (searchString.length > 1) {
+    		tempString=searchString.split(",");
+    		wordCount=tempString.length;
+    		var qString=tempString[wordCount-1].trim();
+    		if (qString.length<=1)
+    			return false;
+    		var url = "getCompanyList.do?text="+encodeURI(qString);
+    		    			
+    		jQuery.get(url, function (data) {
+                data=JSON.parse(data);
+             
+               response(jQuery.map(data,function (value) {
+           
+                    return {
+                        label: value.label,
+                        value: value.value
+                    }}));
+            });	
+    	}
+    } 
+});
+
+jQuery('#advanceCloseBtn').click(function() {	
+	jQuery("#advancedsearchpopup").css('display','');
+
+	});
+
+ 
+	
+
+});
+</script>
+
+
+<!-- <script type="text/javascript" src="https://www.cisco.com/cdc_content_elements/visualsciences/visualsciences.js"></script> -->
+<!-- <script src="//www.cisco.com/web/fw/m/metrics.min.js" type="text/javascript"></script> -->
+ <script src="//www.cisco.com/web/fw/m/metrics.min.js" type="text/javascript"></script>
+ <script type="text/javascript">
+ try
+ {
+jQuery("input[value='Search']").bind("mouseup", function(){
+    trackEvent.event('link', {element_type: "flash", element_name: jQuery("input[id='product']").attr("value"), content_container: "pl" + jQuery(this).attr("value"), campaign_page: jQuery("input[name='address']").attr("value") + " , " + jQuery("input[name='country']").attr("value")});
+});
+ }
+ catch(e)
+ {
+	 //console.log(e);
+ }
+</script>
+ 
+ 
+<script type="text/javascript" src="scripts/c2c_standalone_v1_0.js"></script>   
+
+
+<script type="text/javascript">
+//Existing start
+var map;
+var mygrid;
+var internalLocator=false; 
+var cityLblInnerHTML="Enter City";
+var cityLblInnerHTML2= "Enter City / State / Zip";
+var gsupportcountry ='AU,ES,DE,IT,US,FR,GB,CA,NL,CH,PL,SE,LI,LU,CZ,BR,FI,SG,BE,DK,HU,JP,PT,HR';
+var zipsuppcountry ='PL,SE,AU,FR,DE,IT,ES,US,GB,CA,NL,LI,CZ,FI,BE,DK,HU,JP,PT';
+var usercountry ='IN';
+var userlong ='79';
+var userlat ='21';
+var zoomlevel=2;
+function load() {  
+
+	jQuery("#country").val(usercountry);
+	/* alert(userlong);
+	alert(userlat); */
+		   	//if (gsupportcountry.match(usercountry)!= null){
+		   		if(usercountry!="")
+		   			{
+		   			if (gsupportcountry.match(usercountry)!= null)
+		   				zoomlevel = 4;
+		   			else
+		   			{
+		   			userlong=0;
+		   			userlat=0;
+		   			}
+		   			
+		   			}
+		   		
+		   			   			
+		      	       map = new google.maps.Map
+		      	    		(document.getElementById("map"),
+			      	    		{
+		      	    			 mapTypeControl: true,
+		      	    			 center: new google.maps.LatLng(userlat, userlong),
+		      	    			 zoom: zoomlevel,
+			      	             mapTypeId: google.maps.MapTypeId.ROADMAP
+			      	    		}		
+		      	    		);      
+		     //}   
+		    
+  } 
+/* function onChangeHeight()
+{
+	 alert("inside onchange");
+
+var height3=$("#advanceAddress").height();
+alert(height3);
+//$("#advanceCountry").attr("height",height3);
+$("#advanceCountry").height(height3);
+var height4=$("#advanceCountry").height();
+alert(height4);
+} */
+  
+function onSelectCountryNew(selectCountry,type)
+{
+	if(type == 0)
+		var cityLbl = document.getElementById("cityLabel") ;
+	else
+		var cityLbl = document.getElementById("cityLabelAd") ;
+	
+	var selectedCountry = selectCountry.value ;	
+//	var prox = document.getElementById("proximityspan") ;
+	//var address= document.plSearchForm.address.value;
+	if(selectedCountry != "" && gsupportcountry.match(selectedCountry) != null)
+	{
+		//prox.style.visibility="visible";
+		if (zipsuppcountry.match(selectedCountry) != null)
+		{
+			cityLbl.innerHTML="City, State or Zip";
+		}
+		else 
+		{
+			cityLbl.innerHTML="City:";
+		}
+	}
+	else 
+	{
+		cityLbl.innerHTML="City:";
+		//prox.style.visibility="hidden";
+		 
+	}
+	
+	/*  if(selectedCountry=="JP")
+	{
+		// alert("inside jp");
+	
+	jQuery("#adcerticate").attr('href','http://www.cisco.com/web/JP/reseller/program/specialization/index.html#~two');
+			
+    jQuery("#adspecialization").attr('href','http://www.cisco.com/web/JP/reseller/program/specialization/index.html#~three');
+	}
+else
+	{
+	jQuery("#adcerticate").attr('href','http://www.cisco.com/web/partners/tools/partnerlocator/partner_program_overview.html');
+    jQuery("#adspecialization").attr('href','http://www.cisco.com/web/partners/tools/partnerlocator/partner_program_overview.html');
+	
+			
+	}  */
+}
+function onSelectCountryValNew(adCountry)
+{
+var cityLbl = document.getElementById("cityLabelAd") ;
+
+if(adCountry != "" && gsupportcountry.match(adCountry) != null)
+{
+	if (zipsuppcountry.match(adCountry) != null)
+	{
+		cityLbl.innerHTML="City, State or Zip";
+	}
+	else 
+	{
+		cityLbl.innerHTML="City:";
+	}
+}
+else 
+{
+	cityLbl.innerHTML="City:";
+}
+}
+</script>
+
+
+ 
+</head>
+
+
+
+
+
+
+
+<!-- <script type="text/javascript">
+var showmapMsg="Show Map";
+var hidemapMsg="Hide Map";
+</script> -->
+   
+ <header id="fw-masthead">
+	    <div style="max-width:956px" id="fw-banner">
+		   <button id="fw-treenavbutton" class="">
+		      <span></span>
+		      <span></span>
+		      <span></span>
+		    </button>
+	      <div id="fw-logo">
+	        <a href="http://www.cisco.com">Cisco.com Worldwide Home</a>
+	      </div>
+	      <nav id="fw-areanav">
+	        <ul>
+	        
+	          <li><a data-url="AREA_PRODUCTS_SERVICES_URL_GUEST" href="http://www.cisco.com/en/US/partner/products/index.html" data-text="AREA_PRODUCTS_SERVICES">Products &amp; Services</a></li>
+	          <li><a data-url="AREA_TAC_URL_GUEST" href="http://www.cisco.com/cisco/web/support/index.html" data-text="AREA_TAC">Support</a></li>
+	          <li><a data-url="AREA_ORDERING_URL_GUEST" href="http://www.cisco.com/web/ordering/root/index.html" data-text="AREA_ORDERING">How to buy</a></li>
+	          <li><a data-url="AREA_LEARNING_EVENTS_URL" href="http://www.cisco.com/web/learning/index.html" data-text="AREA_LEARNING_EVENTS">Training &amp; Events</a></li>
+	          <li><a data-url="AREA_PARTNERS_RESELLERS_URL" href="http://www.cisco.com/web/partners/index.html" data-text="AREA_PARTNERS_RESELLERS">Partners</a></li>
+	        
+	        </ul>
+	      </nav>
+	      <span class="search-entitlement">Guest</span>
+	      <section id="fw-search" role="search">
+	        <form  name="sitewidesearch" action="http://tools.cisco.com/search/JSP/search-results.get" data-action="http://tools.cisco.com/search/JSP/search-results.get" data-mobileaction="http://m.mcisco.com/search.paper" method="get" id="sitewidesearch" class="tabs-searchResultsForm searchGlobal">
+	        
+	         
+	        
+	        <div>
+	       
+	          <label for="searchPhrase" name="search" id="search">Search</label>
+	          <input type="search" style="margin-bottom: -3px;" tabindex="2" name="strQueryText" class="inputSearchGlobal" id="searchPhrase" value="" autocomplete="off">
+	          <input type="search" name="ihq" class="inputSearchGlobal" id="mobile-search-input" value="" autocomplete="off">
+	          <button value="Submit" type="submit" id="fw-search-button" tabindex="3"></button>
+	        </div>
+	        <input type="hidden" value="cisco.com" name="Search All cisco.com">
+	        <input type="hidden" value="en" name="language">
+	        <input type="hidden" value="US" name="country">
+	        <input type="hidden" value="f" name="thissection">
+	        <input type="hidden" value="Guest" name="accessLevel">
+	        </form>
+	      </section>
+	      <button id="fw-searchbutton" tabindex="1"></button>
+	    </div>
+	  </header>
+
+<body>
+<div id="navBarDiv"></div>
+<form name="plSearchForm" method="post"  action="performBasicSearch.do" enctype="multipart/form-data">
+<div style="max-width:935px" class="container">
+<div class="titletext">
+    <h3 class="text-primary  topmargin20 marginbottom15">Locate a Cisco Partner</h3>
+</div>
+<br>
+
+<!-- Begin c2c Button Div -->
+            <div class="c2c-component" style="float:right;" data-c2c-keycode="000386821">
+                <div class="c2c-active">                 
+                    <a class="cta c2c-button" href="javascript:void(0);"><img src="https://www.cisco.com/c/dam/assets/pilot/c43/chatNow_partner.gif" border="0"></a>
+                </div>
+                <div class="c2c-inactive" style="display: none;">
+                </div>
+                <div class="c2c-proactive-modal">
+                            <img src="https://www.cisco.com/web/siteassets/images/proactive_invite/400x200/ProactiveChat_animated_2015.gif" usemap="#proactive" border="0" alt="Clickable image of a chat invitation" title="Clickable image of a chat invitation">
+                            <map name="proactive">
+                            <area shape="rect" coords="169,152,269,186" href="javascript:void(0);" alt="Decline the chat invitation" title="Decline the chat invitation" class="c2c-proactive-dismiss">
+                            <area shape="rect" coords="278,150,380,189" href="javascript:void(0);" alt="Accept the chat invitation" title="Accept the chat invitation" class="c2c-proactive-agree">
+                            </map>
+                        </div>
+            </div> 
+          
+            
+              <!-- End c2c Button Div -->
+<!-- <div class="subHeading"></div> -->
+
+<input type="hidden" name="latitude" value="" id="latitude">
+<input type="hidden" name="city" value="" id="city">
+<input type="hidden" name="zip" value="" id="zip">
+<input type="hidden" name="longitude" value="" id="longitude">
+<input type="hidden" name="state" value="" id="state">
+<input type="hidden" name="lonlatRequired" value="N" id="lonlatRequired">
+<input type="hidden" name="companyNameSearchType" value="M">
+<input type="hidden" name="showMultiCountry" value="N" id="showMultiCountry">
+
+<br>
+<!---------------------------------------------------------- Basic Search Section Start --------------------------------------------------->
+<div class="subHeading"></div>
+<div class="searchbox">
+      <ul class="orderInfoList">
+        <li class="configureSetName firstList select"><span style="display:table-cell" class="">
+            <h5 style="font-size: 12px;font-weight: bold;margin-top: 15px">Product, Category or Company
+            </h5>
+             <h3 class="dealID">   
+            <p>
+           <input type="text" name="keyWord" size="40" value="" id="product" style="width:223px;height:31px">
+				</p>
+				</h3>
+        </li>
+        <li class="quoteIDList">
+                  <h5 style="font-size: 12px;font-weight: bold;margin-top: 15px" class="quoteIcon"><span id="cityLabel">City, State or Zip</span></h5>
+                  <h3 class="dealID"><input type="text" name="address" size="35" value="" id="address" style="width:223px;height:31px"></h3>
+        </li>
+            
+        <li class="quoteIDList">
+                   <h5 style="font-size: 12px;font-weight: bold;margin-top: 15px">Country<font color="red">*</font></h5>
+              	<h3 class="dealID">        
+						<select name="country" onchange="javascript:onSelectCountryNew(this,0);" id="country" style="width: 223px;height:31px" class="optiontext"><option value="">Select Country</option>
+							<option value="AF">AFGHANISTAN</option>
+<option value="AL">ALBANIA</option>
+<option value="DZ">ALGERIA</option>
+<option value="AS">AMERICAN SAMOA</option>
+<option value="AD">ANDORRA</option>
+<option value="AO">ANGOLA</option>
+<option value="AI">ANGUILLA</option>
+<option value="AQ">ANTARCTICA</option>
+<option value="AG">ANTIGUA AND BARBUDA</option>
+<option value="AR">ARGENTINA</option>
+<option value="AM">ARMENIA</option>
+<option value="AW">ARUBA</option>
+<option value="AU">AUSTRALIA</option>
+<option value="AT">AUSTRIA</option>
+<option value="AZ">AZERBAIJAN</option>
+<option value="BS">BAHAMAS</option>
+<option value="BH">BAHRAIN</option>
+<option value="BD">BANGLADESH</option>
+<option value="BB">BARBADOS</option>
+<option value="BY">BELARUS</option>
+<option value="BE">BELGIUM</option>
+<option value="BZ">BELIZE</option>
+<option value="BJ">BENIN</option>
+<option value="BM">BERMUDA</option>
+<option value="BT">BHUTAN</option>
+<option value="BO">BOLIVIA</option>
+<option value="BA">BOSNIA AND HERZEGOVINA</option>
+<option value="BW">BOTSWANA</option>
+<option value="BV">BOUVET ISLAND</option>
+<option value="BR">BRAZIL</option>
+<option value="IO">BRITISH INDIAN OCEAN TERRITORY</option>
+<option value="BN">BRUNEI DARUSSALAM</option>
+<option value="BG">BULGARIA</option>
+<option value="BF">BURKINA FASO</option>
+<option value="BI">BURUNDI</option>
+<option value="KH">CAMBODIA</option>
+<option value="CM">CAMEROON</option>
+<option value="CA">CANADA</option>
+<option value="CV">CAPE VERDE</option>
+<option value="KY">CAYMAN ISLANDS</option>
+<option value="CF">CENTRAL AFRICAN REPUBLIC</option>
+<option value="TD">CHAD</option>
+<option value="CL">CHILE</option>
+<option value="CN">CHINA</option>
+<option value="CX">CHRISTMAS ISLAND</option>
+<option value="CC">COCOS (KEELING) ISLANDS</option>
+<option value="CO">COLOMBIA</option>
+<option value="KM">COMOROS</option>
+<option value="CG">CONGO</option>
+<option value="CD">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
+<option value="CK">COOK ISLANDS</option>
+<option value="CR">COSTA RICA</option>
+<option value="CI">COTE D&#39;IVOIRE</option>
+<option value="HR">CROATIA</option>
+<option value="CU">CUBA</option>
+<option value="CY">CYPRUS</option>
+<option value="CZ">CZECH REPUBLIC</option>
+<option value="DK">DENMARK</option>
+<option value="DJ">DJIBOUTI</option>
+<option value="DM">DOMINICA</option>
+<option value="DO">DOMINICAN REPUBLIC</option>
+<option value="EC">ECUADOR</option>
+<option value="EG">EGYPT</option>
+<option value="SV">EL SALVADOR</option>
+<option value="GQ">EQUATORIAL GUINEA</option>
+<option value="ER">ERITREA</option>
+<option value="EE">ESTONIA</option>
+<option value="ET">ETHIOPIA</option>
+<option value="FK">FALKLAND ISLANDS (MALVINAS)</option>
+<option value="FO">FAROE ISLANDS</option>
+<option value="FJ">FIJI</option>
+<option value="FI">FINLAND</option>
+<option value="FR">FRANCE</option>
+<option value="GF">FRENCH GUIANA</option>
+<option value="PF">FRENCH POLYNESIA</option>
+<option value="TF">FRENCH SOUTHERN TERRITORIES</option>
+<option value="GA">GABON</option>
+<option value="GM">GAMBIA</option>
+<option value="GE">GEORGIA</option>
+<option value="DE">GERMANY</option>
+<option value="GH">GHANA</option>
+<option value="GI">GIBRALTAR</option>
+<option value="GR">GREECE</option>
+<option value="GL">GREENLAND</option>
+<option value="GD">GRENADA</option>
+<option value="GP">GUADELOUPE</option>
+<option value="GU">GUAM</option>
+<option value="GT">GUATEMALA</option>
+<option value="GG">GUERNSEY</option>
+<option value="GN">GUINEA</option>
+<option value="GW">GUINEA-BISSAU</option>
+<option value="GY">GUYANA</option>
+<option value="HT">HAITI</option>
+<option value="HM">HEARD ISLAND AND MCDONALD ISLANDS</option>
+<option value="VA">HOLY SEE (VATICAN CITY STATE)</option>
+<option value="HN">HONDURAS</option>
+<option value="HK">HONG KONG</option>
+<option value="HU">HUNGARY</option>
+<option value="IS">ICELAND</option>
+<option value="IN" selected="selected">INDIA</option>
+<option value="ID">INDONESIA</option>
+<option value="IR">IRAN, ISLAMIC REPUBLIC OF</option>
+<option value="IQ">IRAQ</option>
+<option value="IE">IRELAND</option>
+<option value="IM">ISLE OF MAN</option>
+<option value="IL">ISRAEL</option>
+<option value="IT">ITALY</option>
+<option value="JM">JAMAICA</option>
+<option value="JP">JAPAN</option>
+<option value="JE">JERSEY</option>
+<option value="JO">JORDAN</option>
+<option value="KZ">KAZAKHSTAN</option>
+<option value="KE">KENYA</option>
+<option value="KI">KIRIBATI</option>
+<option value="KP">KOREA, DEMOCRATIC PEOPLE&#39;S REPUBLIC OF</option>
+<option value="KR">KOREA, REPUBLIC OF</option>
+<option value="KW">KUWAIT</option>
+<option value="KG">KYRGYZSTAN</option>
+<option value="LA">LAO PEOPLE&#39;S DEMOCRATIC REPUBLIC</option>
+<option value="LV">LATVIA</option>
+<option value="LB">LEBANON</option>
+<option value="LS">LESOTHO</option>
+<option value="LR">LIBERIA</option>
+<option value="LY">LIBYAN ARAB JAMAHIRIYA</option>
+<option value="LI">LIECHTENSTEIN</option>
+<option value="LT">LITHUANIA</option>
+<option value="LU">LUXEMBOURG</option>
+<option value="MO">MACAO</option>
+<option value="MK">MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</option>
+<option value="MG">MADAGASCAR</option>
+<option value="MW">MALAWI</option>
+<option value="MY">MALAYSIA</option>
+<option value="MV">MALDIVES</option>
+<option value="ML">MALI</option>
+<option value="MT">MALTA</option>
+<option value="MH">MARSHALL ISLANDS</option>
+<option value="MQ">MARTINIQUE</option>
+<option value="MR">MAURITANIA</option>
+<option value="MU">MAURITIUS</option>
+<option value="YT">MAYOTTE</option>
+<option value="MX">MEXICO</option>
+<option value="FM">MICRONESIA, FEDERATED STATES OF</option>
+<option value="MD">MOLDOVA, REPUBLIC OF</option>
+<option value="MC">MONACO</option>
+<option value="MN">MONGOLIA</option>
+<option value="MS">MONTSERRAT</option>
+<option value="MA">MOROCCO</option>
+<option value="MZ">MOZAMBIQUE</option>
+<option value="MM">MYANMAR</option>
+<option value="NA">NAMIBIA</option>
+<option value="NR">NAURU</option>
+<option value="NP">NEPAL</option>
+<option value="NL">NETHERLANDS</option>
+<option value="AN">NETHERLANDS ANTILLES</option>
+<option value="NC">NEW CALEDONIA</option>
+<option value="NZ">NEW ZEALAND</option>
+<option value="NI">NICARAGUA</option>
+<option value="NE">NIGER</option>
+<option value="NG">NIGERIA</option>
+<option value="NU">NIUE</option>
+<option value="NF">NORFOLK ISLAND</option>
+<option value="MP">NORTHERN MARIANA ISLANDS</option>
+<option value="NO">NORWAY</option>
+<option value="OM">OMAN</option>
+<option value="PK">PAKISTAN</option>
+<option value="PW">PALAU</option>
+<option value="PS">PALESTINIAN TERRITORY, OCCUPIED</option>
+<option value="PA">PANAMA</option>
+<option value="PG">PAPUA NEW GUINEA</option>
+<option value="PY">PARAGUAY</option>
+<option value="PE">PERU</option>
+<option value="PH">PHILIPPINES</option>
+<option value="PN">PITCAIRN</option>
+<option value="PL">POLAND</option>
+<option value="PT">PORTUGAL</option>
+<option value="PR">PUERTO RICO</option>
+<option value="QA">QATAR</option>
+<option value="RE">REUNION</option>
+<option value="RO">ROMANIA</option>
+<option value="RU">RUSSIAN FEDERATION</option>
+<option value="RW">RWANDA</option>
+<option value="SH">SAINT HELENA</option>
+<option value="KN">SAINT KITTS AND NEVIS</option>
+<option value="LC">SAINT LUCIA</option>
+<option value="PM">SAINT PIERRE AND MIQUELON</option>
+<option value="VC">SAINT VINCENT AND THE GRENADINES</option>
+<option value="WS">SAMOA</option>
+<option value="SM">SAN MARINO</option>
+<option value="ST">SAO TOME AND PRINCIPE</option>
+<option value="SA">SAUDI ARABIA</option>
+<option value="SN">SENEGAL</option>
+<option value="CS">SERBIA AND MONTENEGRO</option>
+<option value="SC">SEYCHELLES</option>
+<option value="SL">SIERRA LEONE</option>
+<option value="SG">SINGAPORE</option>
+<option value="SK">SLOVAKIA</option>
+<option value="SI">SLOVENIA</option>
+<option value="SB">SOLOMON ISLANDS</option>
+<option value="SO">SOMALIA</option>
+<option value="ZA">SOUTH AFRICA</option>
+<option value="GS">SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</option>
+<option value="SS">SOUTH SUDAN</option>
+<option value="ES">SPAIN</option>
+<option value="LK">SRI LANKA</option>
+<option value="SD">SUDAN</option>
+<option value="SR">SURINAME</option>
+<option value="SJ">SVALBARD AND JAN MAYEN</option>
+<option value="SZ">SWAZILAND</option>
+<option value="SE">SWEDEN</option>
+<option value="CH">SWITZERLAND</option>
+<option value="SY">SYRIAN ARAB REPUBLIC</option>
+<option value="TW">TAIWAN, REPUBLIC OF CHINA</option>
+<option value="TJ">TAJIKISTAN</option>
+<option value="TZ">TANZANIA, UNITED REPUBLIC OF</option>
+<option value="TH">THAILAND</option>
+<option value="TL">TIMOR-LESTE</option>
+<option value="TG">TOGO</option>
+<option value="TK">TOKELAU</option>
+<option value="TO">TONGA</option>
+<option value="TT">TRINIDAD AND TOBAGO</option>
+<option value="TN">TUNISIA</option>
+<option value="TR">TURKEY</option>
+<option value="TM">TURKMENISTAN</option>
+<option value="TC">TURKS AND CAICOS ISLANDS</option>
+<option value="TV">TUVALU</option>
+<option value="UG">UGANDA</option>
+<option value="UA">UKRAINE</option>
+<option value="AE">UNITED ARAB EMIRATES</option>
+<option value="GB">UNITED KINGDOM</option>
+<option value="US">UNITED STATES</option>
+<option value="UM">UNITED STATES MINOR OUTLYING ISLANDS</option>
+<option value="UY">URUGUAY</option>
+<option value="UZ">UZBEKISTAN</option>
+<option value="VU">VANUATU</option>
+<option value="VE">VENEZUELA</option>
+<option value="VN">VIET NAM</option>
+<option value="VG">VIRGIN ISLANDS, BRITISH</option>
+<option value="VI">VIRGIN ISLANDS, U.S.</option>
+<option value="WF">WALLIS AND FUTUNA</option>
+<option value="EH">WESTERN SAHARA</option>
+<option value="YE">YEMEN</option>
+<option value="YU">YUGOSLAVIA</option>
+<option value="ZM">ZAMBIA</option>
+<option value="ZW">ZIMBABWE</option></select>
+				</h3>	 
+        </li>
+      <li class="configurationTotal">
+                  <h3 class="dealID gobutton">
+                      <input type="button" class="btn btn-primary" style="height:30px;margin-top: 5px; padding: 1px; text-align: center;width: 70px;" name="go" value="Search" onClick="javscript:submitBasicSearch()" />
+                  </h3>
+        </li>
+       <li id="cIcon">
+            <img src="images/CiscoPartner.gif" width="67" height="67" alt="Cisco Partner logo">
+          </li>
+          
+      <li id="advancedsearch" ><h4 style="margin-top: 3px;"class="dealID"><a class="companydetails strongtext" data-toggle="modal" data-target="#advancedsearchpopup">Advanced Search Criteria </a></h4></li>
+ </ul>          
+      <br clear="all" />
+    <p> </p>
+ </div> 
+<!---------------------------------------------------------- Basic Search Section End ----------------------------------------------------------->
+<!----------------------------------------------------------- Map Section Start ----------------------------------------------------------------->
+<div class="partnersmap" id="partnermap">
+<div id="map" style="border: gray 0px solid;width:100%; height: 540px"></div>
+</div>
+<!----------------------------------------------------------- Map Section End ------------------------------------------------------------------->
+   
+<br class="clear-all" />
+
+</div>   
+    
+
+
+
+
+ <script type="text/javascript">
+var showmapMsg="Show Map";
+var hidemapMsg="Hide Map";
+</script> 
+
+ <footer style="max-width:953px" id="fw-footer" class="container">
+	    <nav id="fw-footer-nav">
+	      <ul>
+	        
+			 <li><a data-url="FOOTER_CONTACTS_URL" href="//www.cisco.com/web/siteassets/contacts/index.html" data-text="FOOTER_CONTACTS">Contacts</a></li>
+	        <li>
+	        <img id="fw_feedback_img" border="0" title="Feedback" src="https://www.cisco.com/web/fw/i/sm_0000EE_oo1.gif" target="feedback_window">
+	        <a data-url="FOOTER_FEEDBACK_URL" href="https://secure.opinionlab.com/ccc01/o.asp?id=jBjOhqOJ" data-text="FOOTER_FEEDBACK">Feedback</a>
+	        </li>
+	        <li><a data-url="FOOTER_HELP_URL" href="//www.cisco.com/web/help/index.html" data-text="FOOTER_HELP">Help</a></li>
+	        <li><a data-url="FOOTER_SITEMAP_URL" href="//www.cisco.com/web/siteassets/sitemap/index.html" data-text="FOOTER_SITEMAP">Site Map</a></li>
+	        <li><a data-url="FOOTER_TERMS_CONDITIONS_URL" href="//www.cisco.com/web/siteassets/legal/terms_condition.html" data-text="FOOTER_TERMS_CONDITIONS">Terms &amp; Conditions</a></li>
+            <li><a data-url="FOOTER_PRIVACY_STATEMENT_URL" href="//www.cisco.com/web/siteassets/legal/privacy.html"><span data-text="FOOTER_PRIVACY_STATEMENT_SHORT">Privacy</span><span data-text="FOOTER_PRIVACY_STATEMENT">Privacy Statement</span></a></li>
+            <li><a data-url="FOOTER_COOKIE_POLICY_URL" href="//www.cisco.com/web/siteassets/legal/privacy.html#cookies"><span data-text="FOOTER_COOKIE_POLICY_SHORT">Cookie</span><span data-text="FOOTER_COOKIE_POLICY">Cookie Policy</span></a></li>
+	        <li><a data-url="FOOTER_TRADEMARKS_URL" href="//www.cisco.com/web/siteassets/legal/trademark.html" data-text="FOOTER_TRADEMARKS">Trademarks of Cisco Systems Inc.</a></li>
+			
+	     </ul>
+	    </nav>
+</footer> 
+  
+ <!-- Modal -->
+ <div id="advancedsearchpopup" class="modal fade in" aria-hidden="true" aria-labelledby="advancedsearchLabel" role="dialog" tabindex="-1" style="display: none;">
+ <div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button  id="advanceCloseBtn" class="close modalclosebutton2" aria-hidden="true" data-dismiss="modal" type="button">x</button>
+<h3 id="advancedsearchLabel" class="modal-title">Advanced Search Criteria</h3>
+<ul class="orderInfoList">
+        <li class="configureSetName firstList select"><span style="display:table-cell" class="">
+            <h5>Company</h5>
+                  <h3 class="dealID">
+                  <p>
+               <input type="text" name="companyName" size="40" value="" id="advanceProduct" style="width:160px;height:31px">
+                  </p>
+                  </h3>
+               
+                  </span>
+                  <div class="clear"></div>
+        </li>
+        <li class="quoteIDList">
+                  <h5 class="quoteIcon" ><span id="cityLabelAd">City, State or Zip</span></h5>
+                  <h3 class="dealID"><input type="text" name="advanceAddress" size="35" value="" id="advanceAddress" style="width:160px;height:31px"></h3>
+        </li>
+
+        <li class="quoteIDList">
+                  <h5>Country<font color="red">*</font></h5>
+              <h3 class="dealID">
+             <select name="advanceCountry" onchange="javascript:onSelectCountryNew(this,1);" id="advanceCountry" style="width:160px;height:31px" class="optiontext"><option value="">Select Country</option>
+							<option value="AF">AFGHANISTAN</option>
+<option value="AL">ALBANIA</option>
+<option value="DZ">ALGERIA</option>
+<option value="AS">AMERICAN SAMOA</option>
+<option value="AD">ANDORRA</option>
+<option value="AO">ANGOLA</option>
+<option value="AI">ANGUILLA</option>
+<option value="AQ">ANTARCTICA</option>
+<option value="AG">ANTIGUA AND BARBUDA</option>
+<option value="AR">ARGENTINA</option>
+<option value="AM">ARMENIA</option>
+<option value="AW">ARUBA</option>
+<option value="AU">AUSTRALIA</option>
+<option value="AT">AUSTRIA</option>
+<option value="AZ">AZERBAIJAN</option>
+<option value="BS">BAHAMAS</option>
+<option value="BH">BAHRAIN</option>
+<option value="BD">BANGLADESH</option>
+<option value="BB">BARBADOS</option>
+<option value="BY">BELARUS</option>
+<option value="BE">BELGIUM</option>
+<option value="BZ">BELIZE</option>
+<option value="BJ">BENIN</option>
+<option value="BM">BERMUDA</option>
+<option value="BT">BHUTAN</option>
+<option value="BO">BOLIVIA</option>
+<option value="BA">BOSNIA AND HERZEGOVINA</option>
+<option value="BW">BOTSWANA</option>
+<option value="BV">BOUVET ISLAND</option>
+<option value="BR">BRAZIL</option>
+<option value="IO">BRITISH INDIAN OCEAN TERRITORY</option>
+<option value="BN">BRUNEI DARUSSALAM</option>
+<option value="BG">BULGARIA</option>
+<option value="BF">BURKINA FASO</option>
+<option value="BI">BURUNDI</option>
+<option value="KH">CAMBODIA</option>
+<option value="CM">CAMEROON</option>
+<option value="CA">CANADA</option>
+<option value="CV">CAPE VERDE</option>
+<option value="KY">CAYMAN ISLANDS</option>
+<option value="CF">CENTRAL AFRICAN REPUBLIC</option>
+<option value="TD">CHAD</option>
+<option value="CL">CHILE</option>
+<option value="CN">CHINA</option>
+<option value="CX">CHRISTMAS ISLAND</option>
+<option value="CC">COCOS (KEELING) ISLANDS</option>
+<option value="CO">COLOMBIA</option>
+<option value="KM">COMOROS</option>
+<option value="CG">CONGO</option>
+<option value="CD">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
+<option value="CK">COOK ISLANDS</option>
+<option value="CR">COSTA RICA</option>
+<option value="CI">COTE D&#39;IVOIRE</option>
+<option value="HR">CROATIA</option>
+<option value="CU">CUBA</option>
+<option value="CY">CYPRUS</option>
+<option value="CZ">CZECH REPUBLIC</option>
+<option value="DK">DENMARK</option>
+<option value="DJ">DJIBOUTI</option>
+<option value="DM">DOMINICA</option>
+<option value="DO">DOMINICAN REPUBLIC</option>
+<option value="EC">ECUADOR</option>
+<option value="EG">EGYPT</option>
+<option value="SV">EL SALVADOR</option>
+<option value="GQ">EQUATORIAL GUINEA</option>
+<option value="ER">ERITREA</option>
+<option value="EE">ESTONIA</option>
+<option value="ET">ETHIOPIA</option>
+<option value="FK">FALKLAND ISLANDS (MALVINAS)</option>
+<option value="FO">FAROE ISLANDS</option>
+<option value="FJ">FIJI</option>
+<option value="FI">FINLAND</option>
+<option value="FR">FRANCE</option>
+<option value="GF">FRENCH GUIANA</option>
+<option value="PF">FRENCH POLYNESIA</option>
+<option value="TF">FRENCH SOUTHERN TERRITORIES</option>
+<option value="GA">GABON</option>
+<option value="GM">GAMBIA</option>
+<option value="GE">GEORGIA</option>
+<option value="DE">GERMANY</option>
+<option value="GH">GHANA</option>
+<option value="GI">GIBRALTAR</option>
+<option value="GR">GREECE</option>
+<option value="GL">GREENLAND</option>
+<option value="GD">GRENADA</option>
+<option value="GP">GUADELOUPE</option>
+<option value="GU">GUAM</option>
+<option value="GT">GUATEMALA</option>
+<option value="GG">GUERNSEY</option>
+<option value="GN">GUINEA</option>
+<option value="GW">GUINEA-BISSAU</option>
+<option value="GY">GUYANA</option>
+<option value="HT">HAITI</option>
+<option value="HM">HEARD ISLAND AND MCDONALD ISLANDS</option>
+<option value="VA">HOLY SEE (VATICAN CITY STATE)</option>
+<option value="HN">HONDURAS</option>
+<option value="HK">HONG KONG</option>
+<option value="HU">HUNGARY</option>
+<option value="IS">ICELAND</option>
+<option value="IN">INDIA</option>
+<option value="ID">INDONESIA</option>
+<option value="IR">IRAN, ISLAMIC REPUBLIC OF</option>
+<option value="IQ">IRAQ</option>
+<option value="IE">IRELAND</option>
+<option value="IM">ISLE OF MAN</option>
+<option value="IL">ISRAEL</option>
+<option value="IT">ITALY</option>
+<option value="JM">JAMAICA</option>
+<option value="JP">JAPAN</option>
+<option value="JE">JERSEY</option>
+<option value="JO">JORDAN</option>
+<option value="KZ">KAZAKHSTAN</option>
+<option value="KE">KENYA</option>
+<option value="KI">KIRIBATI</option>
+<option value="KP">KOREA, DEMOCRATIC PEOPLE&#39;S REPUBLIC OF</option>
+<option value="KR">KOREA, REPUBLIC OF</option>
+<option value="KW">KUWAIT</option>
+<option value="KG">KYRGYZSTAN</option>
+<option value="LA">LAO PEOPLE&#39;S DEMOCRATIC REPUBLIC</option>
+<option value="LV">LATVIA</option>
+<option value="LB">LEBANON</option>
+<option value="LS">LESOTHO</option>
+<option value="LR">LIBERIA</option>
+<option value="LY">LIBYAN ARAB JAMAHIRIYA</option>
+<option value="LI">LIECHTENSTEIN</option>
+<option value="LT">LITHUANIA</option>
+<option value="LU">LUXEMBOURG</option>
+<option value="MO">MACAO</option>
+<option value="MK">MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</option>
+<option value="MG">MADAGASCAR</option>
+<option value="MW">MALAWI</option>
+<option value="MY">MALAYSIA</option>
+<option value="MV">MALDIVES</option>
+<option value="ML">MALI</option>
+<option value="MT">MALTA</option>
+<option value="MH">MARSHALL ISLANDS</option>
+<option value="MQ">MARTINIQUE</option>
+<option value="MR">MAURITANIA</option>
+<option value="MU">MAURITIUS</option>
+<option value="YT">MAYOTTE</option>
+<option value="MX">MEXICO</option>
+<option value="FM">MICRONESIA, FEDERATED STATES OF</option>
+<option value="MD">MOLDOVA, REPUBLIC OF</option>
+<option value="MC">MONACO</option>
+<option value="MN">MONGOLIA</option>
+<option value="MS">MONTSERRAT</option>
+<option value="MA">MOROCCO</option>
+<option value="MZ">MOZAMBIQUE</option>
+<option value="MM">MYANMAR</option>
+<option value="NA">NAMIBIA</option>
+<option value="NR">NAURU</option>
+<option value="NP">NEPAL</option>
+<option value="NL">NETHERLANDS</option>
+<option value="AN">NETHERLANDS ANTILLES</option>
+<option value="NC">NEW CALEDONIA</option>
+<option value="NZ">NEW ZEALAND</option>
+<option value="NI">NICARAGUA</option>
+<option value="NE">NIGER</option>
+<option value="NG">NIGERIA</option>
+<option value="NU">NIUE</option>
+<option value="NF">NORFOLK ISLAND</option>
+<option value="MP">NORTHERN MARIANA ISLANDS</option>
+<option value="NO">NORWAY</option>
+<option value="OM">OMAN</option>
+<option value="PK">PAKISTAN</option>
+<option value="PW">PALAU</option>
+<option value="PS">PALESTINIAN TERRITORY, OCCUPIED</option>
+<option value="PA">PANAMA</option>
+<option value="PG">PAPUA NEW GUINEA</option>
+<option value="PY">PARAGUAY</option>
+<option value="PE">PERU</option>
+<option value="PH">PHILIPPINES</option>
+<option value="PN">PITCAIRN</option>
+<option value="PL">POLAND</option>
+<option value="PT">PORTUGAL</option>
+<option value="PR">PUERTO RICO</option>
+<option value="QA">QATAR</option>
+<option value="RE">REUNION</option>
+<option value="RO">ROMANIA</option>
+<option value="RU">RUSSIAN FEDERATION</option>
+<option value="RW">RWANDA</option>
+<option value="SH">SAINT HELENA</option>
+<option value="KN">SAINT KITTS AND NEVIS</option>
+<option value="LC">SAINT LUCIA</option>
+<option value="PM">SAINT PIERRE AND MIQUELON</option>
+<option value="VC">SAINT VINCENT AND THE GRENADINES</option>
+<option value="WS">SAMOA</option>
+<option value="SM">SAN MARINO</option>
+<option value="ST">SAO TOME AND PRINCIPE</option>
+<option value="SA">SAUDI ARABIA</option>
+<option value="SN">SENEGAL</option>
+<option value="CS">SERBIA AND MONTENEGRO</option>
+<option value="SC">SEYCHELLES</option>
+<option value="SL">SIERRA LEONE</option>
+<option value="SG">SINGAPORE</option>
+<option value="SK">SLOVAKIA</option>
+<option value="SI">SLOVENIA</option>
+<option value="SB">SOLOMON ISLANDS</option>
+<option value="SO">SOMALIA</option>
+<option value="ZA">SOUTH AFRICA</option>
+<option value="GS">SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</option>
+<option value="SS">SOUTH SUDAN</option>
+<option value="ES">SPAIN</option>
+<option value="LK">SRI LANKA</option>
+<option value="SD">SUDAN</option>
+<option value="SR">SURINAME</option>
+<option value="SJ">SVALBARD AND JAN MAYEN</option>
+<option value="SZ">SWAZILAND</option>
+<option value="SE">SWEDEN</option>
+<option value="CH">SWITZERLAND</option>
+<option value="SY">SYRIAN ARAB REPUBLIC</option>
+<option value="TW">TAIWAN, REPUBLIC OF CHINA</option>
+<option value="TJ">TAJIKISTAN</option>
+<option value="TZ">TANZANIA, UNITED REPUBLIC OF</option>
+<option value="TH">THAILAND</option>
+<option value="TL">TIMOR-LESTE</option>
+<option value="TG">TOGO</option>
+<option value="TK">TOKELAU</option>
+<option value="TO">TONGA</option>
+<option value="TT">TRINIDAD AND TOBAGO</option>
+<option value="TN">TUNISIA</option>
+<option value="TR">TURKEY</option>
+<option value="TM">TURKMENISTAN</option>
+<option value="TC">TURKS AND CAICOS ISLANDS</option>
+<option value="TV">TUVALU</option>
+<option value="UG">UGANDA</option>
+<option value="UA">UKRAINE</option>
+<option value="AE">UNITED ARAB EMIRATES</option>
+<option value="GB">UNITED KINGDOM</option>
+<option value="US">UNITED STATES</option>
+<option value="UM">UNITED STATES MINOR OUTLYING ISLANDS</option>
+<option value="UY">URUGUAY</option>
+<option value="UZ">UZBEKISTAN</option>
+<option value="VU">VANUATU</option>
+<option value="VE">VENEZUELA</option>
+<option value="VN">VIET NAM</option>
+<option value="VG">VIRGIN ISLANDS, BRITISH</option>
+<option value="VI">VIRGIN ISLANDS, U.S.</option>
+<option value="WF">WALLIS AND FUTUNA</option>
+<option value="EH">WESTERN SAHARA</option>
+<option value="YE">YEMEN</option>
+<option value="YU">YUGOSLAVIA</option>
+<option value="ZM">ZAMBIA</option>
+<option value="ZW">ZIMBABWE</option></select>
+              </h3>
+        </li>
+    <br class="clear-all" />  
+</ul>   
+<br class="clear-all" />
+</div>
+<div class="modal-body">
+
+<div id="searchlists">
+<div id="advsearchlist" data-spy="affix">
+<ul>
+<li class="mainlist"><span class="twoline">
+<a id="adcerticate" href="http://www.cisco.com/web/partners/tools/partnerlocator/partner_program_overview.html" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="certtrigger" class="mainlistlabel">Resale Certification</span></li>
+<li class="mainlist"><span class="twoline"><a href="http://www.cisco.com/go/cloud" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="cloudtrigger" class="mainlistlabel">Cloud Partner</span></li>
+<li class="mainlist"><span class="twoline">
+<a id="adcloud" href="http://www.cisco.com/web/partners/tools/partnerlocator/mscp_ov.html" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="managedtrigger" class="mainlistlabel">Cloud and Managed Services</span></li>
+<li class="mainlist">
+<span class="twoline">
+<a id="adreseller" href="http://www.cisco.com/web/partners/tools/partnerlocator/mscp_ov.html" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="resellertrigger" class="mainlistlabel">Services Reseller</span></li>
+<li class="mainlist"><span class="twoline"><a href="http://www.cisco.com/web/partners/tools/partnerlocator/mscp_ov.html" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="poweredtrigger" class="mainlistlabel">Cisco Powered Services</span></li>
+<li class="mainlist"><span class="twoline">
+<a id="ciscoauth" href="http://www.cisco.com/web/partners/tools/partnerlocator/mscp_ov.html" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a>
+</span>&nbsp;<span id="ciscoauthtrigger" class="mainlistlabel">Cisco Authorized Partners</span></li>
+<li class="mainlist"><span class="twoline">
+<a id="adspecialization" href="http://www.cisco.com/web/partners/tools/partnerlocator/partner_program_overview.html" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="spectrigger" class="mainlistlabel">
+Specialization</span></li>
+<li class="mainlist"><span class="twoline"><a href="http://www.cisco.com/web/partners/tools/partnerlocator/industry_solutions_partner_ov.html" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="isptrigger" class="mainlistlabel">Industry Solutions Partners</span></li>
+<li class="mainlist"><span class="twoline"><a href="http://www.cisco.com/go/app/" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="apptrigger" class="mainlistlabel">Additional Partner Programs</span></li>
+<li class="mainlist"><span class="twoline"><a href="http://www.cisco.com/go/atp/" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="atptrigger" class="mainlistlabel">Authorized Technology Provider</span></li>
+<li class="mainlist"><span class="twoline"><a href="http://www.cisco.com/go/learningpartner" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="lptrigger" class="mainlistlabel">Learning Partner</span></li>
+<li class="mainlist"><span class="twoline"><a href="http://www.cisco.com/web/about/ac50/ac142/sdbd/index.html" target="_blank"><img src="images/help.gif" width="15" height="15" alt="Click for more info"></a></span>&nbsp;<span id="divparttrigger" class="mainlistlabel">Diversity Partners</span></li>
+
+</ul>
+</div>
+<div id="certificationfh" class="subadvsearchlist">
+<ul>
+
+<li>
+<input type="checkbox" name="certifiedPartner" value="GOLD" id="certifiedPartner" class="certClass">
+Gold Certified Partner
+</li>
+
+<li>
+<input type="checkbox" name="certifiedPartner" value="PREMIER" id="certifiedPartner" class="certClass">
+Premier Certified Partner
+</li>
+
+<li>
+<input type="checkbox" name="certifiedPartner" value="SELECT" id="certifiedPartner" class="certClass">
+Select Certified Partner
+</li>
+
+</ul>
+</div>
+
+<div id="cloudpanel" class="subadvsearchlist">
+<ul>
+
+<li>
+
+<div id="cloud_div_LevelStr_1_LevelEnd_parentStrId__parentEndId_idStr_CB_INFRA_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="CB_INFRA" onclick="showhidequals(this);" id="" class="cloudClass">
+ Cloud Infrastructure Partner
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_INFRA_parentEndId_idStr_STOONE_EMC_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="STOONE_EMC" onclick="showhidequals(this);" id="" class="cloudClass">
+ Storage : EMC
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_INFRA_parentEndId_idStr_STOONE_NAP_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="STOONE_NAP" onclick="showhidequals(this);" id="" class="cloudClass">
+ Storage : NetApp
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_INFRA_parentEndId_idStr_STOONE_HDS_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="STOONE_HDS" onclick="showhidequals(this);" id="" class="cloudClass">
+ Storage : Hitachi Data Systems
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_INFRA_parentEndId_idStr_VIRONE_VMW_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="VIRONE_VMW" onclick="showhidequals(this);" id="" class="cloudClass">
+ Virtualization : VMware
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_INFRA_parentEndId_idStr_VIRONE_RH_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="VIRONE_RH" onclick="showhidequals(this);" id="" class="cloudClass">
+ Virtualization : Redhat
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_INFRA_parentEndId_idStr_VIRONE_CIT_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="VIRONE_CIT" onclick="showhidequals(this);" id="" class="cloudClass">
+ Virtualization : Citrix
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_1_LevelEnd_parentStrId__parentEndId_idStr_CB_BLDR_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="CB_BLDR" onclick="showhidequals(this);" id="" class="cloudClass">
+ Cloud Builder-Infrastructure, Management and Services
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_STOTWO_EMC_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="STOTWO_EMC" onclick="showhidequals(this);" id="" class="cloudClass">
+ Storage : EMC
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_STOTWO_NAP_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="STOTWO_NAP" onclick="showhidequals(this);" id="" class="cloudClass">
+ Storage : NetApp
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_STOTWO_HDS_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="STOTWO_HDS" onclick="showhidequals(this);" id="" class="cloudClass">
+ Storage : Hitachi Data Systems
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_VIRTWO_VMW_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="VIRTWO_VMW" onclick="showhidequals(this);" id="" class="cloudClass">
+ Virtualization : VMware
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_VIRTWO_RH_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="VIRTWO_RH" onclick="showhidequals(this);" id="" class="cloudClass">
+ Virt: Redhat-Premier/SI
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_VIRTWO_CIT_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="VIRTWO_CIT" onclick="showhidequals(this);" id="" class="cloudClass">
+ Virtualization : Citrix
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_MGTTWO_CSC_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="MGTTWO_CSC" onclick="showhidequals(this);" id="" class="cloudClass">
+ Cloud  Management : Cisco
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_MGTTWO_BMC_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="MGTTWO_BMC" onclick="showhidequals(this);" id="" class="cloudClass">
+ Mgmt App-BMC CLM
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_MGTTWO_VMW_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="MGTTWO_VMW" onclick="showhidequals(this);" id="" class="cloudClass">
+ Cloud Management : VMware
+</div>
+<li>
+
+<li>
+
+<div id="cloud_div_LevelStr_2_LevelEnd_parentStrId_CB_BLDR_parentEndId_idStr_SVCSTWO_CPS_idEnd"
+class="cloudPartnerElementCl">
+<input type="checkbox" name="cloudPartners" value="SVCSTWO_CPS" onclick="showhidequals(this);" id="" class="cloudClass">
+ Cloud Professional Services
+</div>
+<li>
+
+</ul>
+</div>
+
+<div id="managedpanel" class="subadvsearchlist">
+<ul>
+
+<li>
+<input type="checkbox" name="cloudAndManagedServices" value="MSCP-LONE" id="cloudAndManagedServices" class="cloudAndManagedServicesClass">
+Cloud and Managed Services Master								
+</li>
+
+<li>
+<input type="checkbox" name="cloudAndManagedServices" value="MSCP-LTWO" id="cloudAndManagedServices" class="cloudAndManagedServicesClass">
+Cloud and Managed Services Advanced								
+</li>
+
+<li>
+<input type="checkbox" name="cloudAndManagedServices" value="MSCP-LTHREE" id="cloudAndManagedServices" class="cloudAndManagedServicesClass">
+Cloud and Managed Services Express								
+</li>
+
+</ul>
+</div>
+
+<div id="resellerpanel" class="subadvsearchlist">
+<ul>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_Hybrid" id="servicesReseller" class="servicesResellerClass">
+Cisco Hybrid Cloud Bundle
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSRBYODAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered BYOD as a Service - BYODaaS
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSRSAPHANA" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Cloud Cell Architecture for SAP HANA
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_HCS_CC" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Contact Center as a Service Based on HCS
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MSR_DSOS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Data Services over Satellite -DSoS
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_DAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Desktop as a Service
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_DRAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Disaster Recovery as a Service
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_FNSAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Foundation for SaaS
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_HSS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Hosted Security as a Service - HSS
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_IAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Infrastructure as a Service
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAGIWANAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Intelligent WAN as a Service-IWANaaS
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSRIWANAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Intelligent WAN as a Service-IWANaaS
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MSRMPLSVPN" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered MPLS VPN
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MSR_IPT" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Managed IP Trunking
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MSR_IS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Managed Internet Service
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MSR_SECUTM" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Managed Security
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MSR_ME" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Metro Ethernet - ME
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MSR_SPWIFI" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Service Provider WiFi
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_HCS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered UC as a Service Based on HCS
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CSR_TPAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Video and TelePresence as a Service
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MNPLNGTAIL" id="servicesReseller" class="servicesResellerClass">
+Managed Network Provider SP
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CR_SRES" id="servicesReseller" class="servicesResellerClass">
+Cloud Services Reseller
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="MR_SRES" id="servicesReseller" class="servicesResellerClass">
+Managed Services Reseller
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_AXAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Application Experience as a Service - CAG
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAGBYODAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered BYOD as a Service - BYODaaS(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_DAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Desktop as a Service(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_DRAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Disaster Recovery as a Service(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_FNSAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Foundation for SaaS(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_HCS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered UC as a Service Based on HCS(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_HCS_CC" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Contact Center as a Service Based on HCS(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_HSS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Hosted Security as a Service - HSS(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_IAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Infrastructure as a Service(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAGSAPHANA" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Cloud Cell Architecture for SAP HANA(CAG)
+</li>
+
+<li>
+<input type="checkbox" name="servicesReseller" value="CAG_TPAAS" id="servicesReseller" class="servicesResellerClass">
+Cisco Powered Video and TelePresence as a Service(CAG)
+</li>
+
+</ul>
+</div>
+
+<div id="poweredpanel" class="subadvsearchlist">
+<ul>
+<li>
+<div id="cisco_pow_LevelStr_1_LevelEnd_parentStrId__parentEndId_idStr_CPCS-CS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CPCS-CS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cloud Services
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_CCAMCP_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_CCAMCP" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Arch for the Microsoft Cloud Platform-CCA_MCP
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_HSS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_HSS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Hosted Security as a Service - HSS
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_IAAS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_IAAS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Infrastructure as a Service
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_ICP_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_ICP" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Integrated Cloud Platform (ICP)
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_IWAN_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_IWAN" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Intelligent WAN as a Service
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_SAPHANA_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_SAPHANA" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Cloud Cell Architecture for SAP HANA
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_HCS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_HCS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered UC as a Service Based on HCS
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_HCS_CC_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_HCS_CC" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Contact Center as a Service Based on HCS
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_TPAAS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_TPAAS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Video and TelePresence as a Service
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_DAAS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_DAAS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Desktop as a Service
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_DRAAS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_DRAAS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Disaster Recovery as a Service
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_AXAAS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_AXAAS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Application Experience as a Service - AxaaS
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_BYODAAS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_BYODAAS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered BYOD as a Service - BYODaaS
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPCS-CS_parentEndId_idStr_CP_FNSAAS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CP_FNSAAS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Foundation for SaaS
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_1_LevelEnd_parentStrId__parentEndId_idStr_CPMS-SEC_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="CPMS-SEC" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Managed Services
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_MPLSVPN_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_MPLSVPN" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered MPLS VPN
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_UCC_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_UCC" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Managed Unified Contact Center - UCC
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_BV_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_BV" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Managed Business Video- BV
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_FMW_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_FMW" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered First Mile Wireless - FMW
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_DC_APM_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_DC_APM" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Application Performance Management - APM
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_DSOS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_DSOS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Data Services over Satellite -DSoS
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_SP_WIFI_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_SP_WIFI" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Service Provider WiFi
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_ME_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_ME" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Metro Ethernet - ME
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_IS_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_IS" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Managed Internet Service
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_IPT_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_IPT" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Managed IP Trunking
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_TPNC_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_TPNC" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered TelePresence Network Connection - TPNC
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_DCI_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_DCI" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Data Center Interconnect - DCI
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_SEC_UTM_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_SEC_UTM" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Managed Security
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_PCI_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_PCI" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Payment Card Industry - PCI
+</div>
+
+</li>
+<li>
+<div id="cisco_pow_LevelStr_2_LevelEnd_parentStrId_CPMS-SEC_parentEndId_idStr_MP_BC_idEnd"
+										class="ciscoPoweredElementCl">
+										<input type="checkbox" name="ciscoPoweredServices" value="MP_BC" onchange="showhideall(this);" id="" class="ciscoPoweredServices">
+										Cisco Powered Managed Business Communications - BC
+</div>
+
+</li>
+
+</ul>
+</div>
+
+<div id="ciscoauthpanel" class="subadvsearchlist">
+<ul>
+
+<li>
+									<input type="checkbox" name="ciscoAuthPartners" value="CACGP" id="ciscoAuthPartners" class="ciscoAuthPartnersClass">
+									Cisco Authorized Connected Grid Partner Program
+									</li>
+								
+<li>
+									<input type="checkbox" name="ciscoAuthPartners" value="FSI" id="ciscoAuthPartners" class="ciscoAuthPartnersClass">
+									Federal Systems Integrator
+									</li>
+								
+<li>
+									<input type="checkbox" name="ciscoAuthPartners" value="GSPI" id="ciscoAuthPartners" class="ciscoAuthPartnersClass">
+									Global Specialty Integrator
+									</li>
+								
+<li>
+									<input type="checkbox" name="ciscoAuthPartners" value="RACE" id="ciscoAuthPartners" class="ciscoAuthPartnersClass">
+									Refresh Accredited Circular Economy
+									</li>
+								
+<li>
+									<input type="checkbox" name="ciscoAuthPartners" value="SIRP" id="ciscoAuthPartners" class="ciscoAuthPartnersClass">
+									Authorized Security Incumbency Renewals
+									</li>
+								
+</ul>
+</div>
+
+<div id="specpanel" class="subadvsearchlist">
+<ul>
+
+						<li>
+									<input type="checkbox" name="specialization" value="BNAS" id="specialization" class="specializationClass">
+									Advanced Borderless Network Architecture Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="CAS" id="specialization" class="specializationClass">
+									Advanced Collaboration Architecture Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="ACSS" id="specialization" class="specializationClass">
+									Advanced Content Security Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="ACWS" id="specialization" class="specializationClass">
+									Advanced Core and WAN Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="DCAS" id="specialization" class="specializationClass">
+									Advanced Data Center Architecture Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="AENAS" id="specialization" class="specializationClass">
+									Advanced Enterprise Networks Architecture Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="IOTCSS" id="specialization" class="specializationClass">
+									Advanced IoT - Connected Safety and Security Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="IOTIE" id="specialization" class="specializationClass">
+									Advanced IoT - Industry Expert Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="IOTMFG" id="specialization" class="specializationClass">
+									Advanced IoT - Manufacturing Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="ARTG-SWTCH" id="specialization" class="specializationClass">
+									Advanced Routing &amp; Switching
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="SPAS" id="specialization" class="specializationClass">
+									Advanced SP Architecture Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="SPMT" id="specialization" class="specializationClass">
+									Advanced SP Mobility Technology Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="SPOT" id="specialization" class="specializationClass">
+									Advanced SP Optical Technology Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="SPRT" id="specialization" class="specializationClass">
+									Advanced SP Routing Technology Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="ASEC" id="specialization" class="specializationClass">
+									Advanced Security
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="ASAS" id="specialization" class="specializationClass">
+									Advanced Security Architecture Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="AUAS" id="specialization" class="specializationClass">
+									Advanced Unified Access Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="UCT" id="specialization" class="specializationClass">
+									Advanced Unified Computing Technology Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="UFT" id="specialization" class="specializationClass">
+									Advanced Unified Fabric Technology Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="AVS" id="specialization" class="specializationClass">
+									Advanced Video Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="AWL" id="specialization" class="specializationClass">
+									Advanced Wireless LAN
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="ECS" id="specialization" class="specializationClass">
+									Express Collaboration Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="FND-EXP" id="specialization" class="specializationClass">
+									Express Foundation
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="EESS" id="specialization" class="specializationClass">
+									Express Security Specialization - Email
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="IPSESS" id="specialization" class="specializationClass">
+									Express Security Specialization - IPS
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="NGFWESS" id="specialization" class="specializationClass">
+									Express Security Specialization - NGFW
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="WESS" id="specialization" class="specializationClass">
+									Express Security Specialization - Web
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="EVS" id="specialization" class="specializationClass">
+									Express Video Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="GLBCOMMRC" id="specialization" class="specializationClass">
+									Global Commerce Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="MCB" id="specialization" class="specializationClass">
+									Master Cloud Builder Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="MSIPC" id="specialization" class="specializationClass">
+									Master Collaboration Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="MSSEC" id="specialization" class="specializationClass">
+									Master Security Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="specialization" value="SMBS" id="specialization" class="specializationClass">
+									Small and Midsize Business Specialization
+							</li>
+
+</ul>
+</div>
+
+<div id="isppanel" class="subadvsearchlist">
+<ul>
+ 
+ 
+
+									<li>
+									<input type="checkbox" name="industrySolPartners" value="Auth-FLXPD" id="industrySolPartners" class="industrySolPartnersClass">
+									Flexpod Premium Partner
+									</li>
+ 
+ 
+
+									<li>
+									<input type="checkbox" name="industrySolPartners" value="HSP_approv" id="industrySolPartners" class="industrySolPartnersClass">
+									Hospitality_Solutions_Partner
+									</li>
+ 
+ 
+
+									<li>
+									<input type="checkbox" name="industrySolPartners" value="Auth-VXI" id="industrySolPartners" class="industrySolPartnersClass">
+									Unified Workspace with Citrix
+									</li>
+
+</ul>
+</div>
+
+<div id="apppanel" class="subadvsearchlist">
+<ul>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="ANP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Academy Network Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="ATTAB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Accelerated TelePresence Try And Buy
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CUWP-PROF" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Active CUWP Registration Profile
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AWP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									AireSpace Wireless Partner Program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CMR-Hybrid" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Authorized CMR Hybrid reseller
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AGPLUS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Avant Garde Plus-FY12
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AGSTART" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Avant Garde Start-FY12
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="BYOD" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									BYOD Smart Solution Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CONESubPSS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									C1 Subscription PSS Pilot
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CMSP_SPTWO" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									CMSP Simplified Pricing-Advanced
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CMSP_SPONE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									CMSP Simplified Pricing-Master
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CSCFC" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco Capital Financing
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CCRE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco Certified Refurbished Equipment
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="Auth-DV-C" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco Desktop Virtualization with Citrix Xen Desktop
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="Auth-DV-V" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco Desktop Virtualization with VMware Horizon View
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CDNCPM" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco Developer Network Cisco Products  Marketplace
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CISPRPTWOZEROONEFIVE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco Intercloud Services Partner Resale
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CONE_ACCESS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco ONE - Access
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CONE_DC" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco ONE - Data Center
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CONE_WAN" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco ONE - WAN
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="RemExpONETWOTHREE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco Remote Expert Solution Reseller
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="TPV-ELP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cisco TelePresence Video SMB Program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MGTTWO_CA" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Cloud Management : CA Technologies
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AGEACUSCOL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Collab AGELA Customer Collab
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AGELAHCSLE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Collab AGELA HCS-LE MGMT
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AGELAGEN" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Collab AGELA UCMP PC and WBX On-Premises
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="EA_CUSCOL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Collab ELA Cust Collab
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="EA_HCSLE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Collab ELA HCS-LE
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="EA_UCWXTP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Collab ELA UC WBX OnPrem TP PC
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="EA_WXOP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Collab ELA WBX OnPrem PC
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="Conn-Grid" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Connected Grid
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CSWF" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Connected Stadium WiFi Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CRP_PTNR" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Consultant Referral Program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CSRPTWO" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Content Security Rebate Program2
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CSAT-E" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Customer Satisfaction Excellence
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="Digi-Media" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Digital Media
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="ETDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Education Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="FSTDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Financial Services Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="Auth-FLXPD" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Flexpod Premium Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MSCP_HOST" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									GPN Cloud and Managed Services (CMSP) Host
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="DISTI" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									GPN Distributor Agent
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AGENT" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									GPN Partner Agent
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="RESL_HOST" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									GPN Resale Host
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="SUBSIDIARY" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									GPN Subsidiary Agent
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="GETDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Gas &amp; Energy Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="GLOBAL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Global Certified Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="GLBIAS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Global Integrated Architectures Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AGENT-RESL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Global Resale Agent
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="GTDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Government Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="HCS_MIG" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									HCS Migrations Compliant
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="HTDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Healthcare Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="HSP_approv" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Hospitality_Solutions_Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="ISDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Indirect Service Discount Promo
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CISS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Industrial Smart Solution Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="ISS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Integrated Services Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="INT" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Integrator
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="INT-ACI" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Integrator for Cisco ACI
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="INT-METAPO" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Integrator for Cisco Metapod
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="INT-ONEECS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Integrator for Cisco ONE ECS
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="INT-SPARKT" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Integrator for Cisco Spark Tropo Platform
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="IRPBRO" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									IronPort Bronze Certified
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="IRPGOL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									IronPort Gold Certified
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="IRPSIL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									IronPort Silver Certified
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="IRPTAB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									IronPort-Offering  via Try And Buy program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="IRP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									IronPort: Content Security Rebate Program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="LCA" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Lifecycle Advisor
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="LCA-COLLAB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Lifecycle Advisor for Cisco Collaboration
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="LCA-ONE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Lifecycle Advisor for Cisco ONE
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="LCA-SPARK" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Lifecycle Advisor for Cisco Spark
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="LCA-WEBEX" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Lifecycle Advisor for Cisco Webex
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="LIAS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Local Integrated Architectures Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBCLD_CLM" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Cloud Management - BMC Cloud Lifecycle Management (CLM)
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBCLD_AST" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Cloud Management - CA AutoSuite
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBCLD_UCS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Cloud Management - Cisco UCS Director
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBCLD_CP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Cloud Management - Citrix Cloud Platform
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBCLD_IAC" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Cloud Management - Intelligent Automation for Cloud
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBCLD_SS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Cloud Management - Microsoft Systems Center 2012
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBCLD_VCL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Cloud Management - VMware vCloud Director
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBDV_CIT" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Desktop Virtualization - Citrix
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBDV_VMW" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Desktop Virtualization - VMware
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBHYP_CIT" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Hypervisor Virtualization - Citrix 
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBHYP_MS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Hypervisor Virtualization - Microsoft 
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBHYP_RHT" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Hypervisor Virtualization - Redhat
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBHYP_VMW" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Hypervisor Virtualization - VMware
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBII_EXD" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Integrated Infrastructure - ExpressPod 
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBII_FXD" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Integrated Infrastructure - FlexPod
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBII_VIA" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Integrated Infrastructure - HDS VIA
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBII_VBL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Integrated Infrastructure - Vblock
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBSTO_EMC" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Storage - EMC
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBSTO_HDS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Storage - Hitachi 
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MCBSTO_NAP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MCB Storage - NetApp
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="AGENT-MSCP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									MSCP Agent Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MR_SRES" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Managed Services Reseller
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MTDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Manufacturing Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MedExpAna" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Media Experience &amp; Analytics
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MULTINL" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Multinational Certified Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="MNIAS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Multinational Integrated Architectures Specialization
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="OSCP_AGENT" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									OSCP Agent Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP_PS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP - Public Sector Track
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-CGOV" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP Central Government
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-DEF" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP Defence
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-EDU" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP Education    
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="SMBPS_EMER" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP Emerging-Small Business Public Sector
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-HLTH" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP Healthcare
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-LGOV" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP Local
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-SEDU" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP SMB-Education
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-SHLTH" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP SMB-Healthcare
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-SLGOV" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP SMB-Local Govt
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-PSNC" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP UK PSN Connectivity
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-PSNGC" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP UK PSN G-Cloud
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPP-PSNS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP UK PSN Services
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPPTWO-CGOV" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP_Central Government
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPPTWO-DEF" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP_Defence
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPPTWO-EDU" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP_Education
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPPTWO-HLTH" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP_Healthcare
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPPTWO-LGOV" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP_Local Government
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPPTWO-PS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP_Public Sector Track
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PSPPTWO-SB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									PSPP_Small Business Public Sector
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PTWOP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Partner 2 Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PYGTAB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Pay As You Grow-Try and Buy service model
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="Phy-Sec" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Physical Security
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CDNTWO" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Preferred Solution Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="PLSTAB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Pulse-Try and Buy directory/locator solution
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="SPMOB_Prtn" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Qualified Service Provider Mobility Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="RETDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Real Estate Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="TAB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Regular Try And Buy
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="RESS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Remote Expert Smart Solution Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="RTDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Retail Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="SaaS-IG-P" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									SaaS-Incremental Growth - Annuity Pilot
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="SPPP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Service Provider Partner Program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="SPTDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Service Provider Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CSCCQUOTER" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Smart Care Registered Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CSCS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Smart Care Registered Partner - Weight-Based
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CDNONE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Solution Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="STI" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Solutions Technology Integrator
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="SETDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Sports &amp; Entertainment Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="SVD" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Stadium Vision Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="CDNTHREE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Strategic Solution Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="TNDTAB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Tandberg products Try And Buy program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="TDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Technology Developer Partner
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="TLP-CLW" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									TelePresence Callway Pilot Program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="TAA-CFT" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									TelePresence Commercial Field Trial
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="TTDP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Transportation Technology Developer
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="UCATAB" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									UCS Capacity Assurance-Try and Buy
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="USFed_Auth" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									US Federal Authorization
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="Auth-VXI" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Unified Workspace with Citrix
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="Auth-VXIv" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Unified Workspace with VMware
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="VIPEXPSBF" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									VIP-Express SMB Foundation
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="VBLOCKZERO" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Vblock Qualified Partner (Vblock 0)
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="VBLOCKONE" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Vblock Qualified Partner (Vblock 1)
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="VBLOCKTWO" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Vblock Qualified Partner (Vblock 2)
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="VEC" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Virtual Engineering Entitled Canada
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="VIRONE_MS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Virtualization : Microsoft
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="VIRTWO_MS" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Virtualization : Microsoft
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="WX-Comm" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									WebEx Commission Pilot Program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="WBX-TLP" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									WebEx Telepresence Program
+							</li>
+
+						<li>
+									<input type="checkbox" name="additionalPartnerPrograms" value="WX-ResaleC" id="additionalPartnerPrograms" class="additionalPartnerProgramsClass">
+									Webex Resale Authorization
+							</li>
+
+</ul>
+</div>
+
+<div id="atppanel" class="subadvsearchlist">
+<ul>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-ACI" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco Application Centric Infrastructure
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-ACI-S" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco Application Centric Infrastructure Satellite
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-EMSPI" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco Enterprise Mobility Services Platform Integrator
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-EMSPP" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco Enterprise Mobility Services Platform Provider
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-TVM" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco TelePresence Video Master
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-TVMRMS" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco TelePresence Video Master - MS Remote
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-TVM-G" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco TelePresence Video Master Global
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-TVMMS" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco TelePresence Video Master Multi-National
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-TVM-S" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Cisco TelePresence Video Master Satellite
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-CKI" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Collaborative Knowledge Integrator
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-DVI" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Data Virtualization Integrator
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-JXI" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Energy Management Suite Integrator
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-JXP" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Energy Management Suite Provider
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-IPICS" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - IP Interoperability and Collaboration Systems
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-ISE" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Identity Services Engine
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-ISE-S" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Identity Services Engine Satellite
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-MIT" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Mobile Internet Technology
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-MIT-S" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Mobile Internet Technology Satellite
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-NSO" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Network Services Orchestrator
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-NSO-S" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Network Services Orchestrator Satellite
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-SAAS" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - SaaS Conferencing and EIM Resale
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-SGI" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - ServiceGrid Integrator
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-SGP" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - ServiceGrid Provider
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-THI" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Telehealth Integrator
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-THR" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Telehealth Reseller
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-IPCCEV" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Unified Contact Center Enterprise
+									</li>
+
+									<li>
+									<input type="checkbox" name="advanceTechnologyProvider" value="ATP-UCCE-S" id="advanceTechnologyProvider" class="advanceTechnologyProviderClass">
+									ATP - Unified Contact Center Enterprise Satellite
+									</li>
+
+</ul>
+</div>
+
+<div id="lptpanel" class="subadvsearchlist">
+<ul>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="TAND" id="learningPartner" class="learningPartnerClass">
+									Cisco Tandberg Specialized
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="IRONP" id="learningPartner" class="learningPartnerClass">
+									Cisco Ironport Specialized
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="LPA" id="learningPartner" class="learningPartnerClass">
+									Learning Partner - Associate
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-ADCNI" id="learningPartner" class="learningPartnerClass">
+									Education Qualified - Advanced Data Center
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-ADDCSN" id="learningPartner" class="learningPartnerClass">
+									Education Qualified- Advanced Data Center Storage Networking
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-ADRS" id="learningPartner" class="learningPartnerClass">
+									Education Qualified - Advanced Routing and Switching
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-ADS" id="learningPartner" class="learningPartnerClass">
+									Education Qualified - Advanced Security
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-ADUC" id="learningPartner" class="learningPartnerClass">
+									Education Qualified - Advanced Unified Communication
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-ADWL" id="learningPartner" class="learningPartnerClass">
+									Education Qualified - Advanced Wireless LAN
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-BAP" id="learningPartner" class="learningPartnerClass">
+									Cisco Business Learning Partner(BLP)
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-BNA" id="learningPartner" class="learningPartnerClass">
+									Learning Partner - Specialized (Borderless Architecture)
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-CA" id="learningPartner" class="learningPartnerClass">
+									Learning Partner - Specialized - Collaboration Architecture
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-DCA" id="learningPartner" class="learningPartnerClass">
+									Learning Partner - Specialized (Data Center Architecture)
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-ENA" id="learningPartner" class="learningPartnerClass">
+									Learning Partner-Specialized-Ent Networks Architecture
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-IPNGN" id="learningPartner" class="learningPartnerClass">
+									LP Specialized IP Next-Generation Network (EDS-IPNGN)
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-SE" id="learningPartner" class="learningPartnerClass">
+									Learning Partner-Specialized-Security Architecture
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="EDS-SPR" id="learningPartner" class="learningPartnerClass">
+									Learning Partner-Specialized-Service Provider Routing Tech
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="SPP-CCIEV" id="learningPartner" class="learningPartnerClass">
+									Cisco 360 Learning Program for CCIE Voice
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="CTHREESIXZERO" id="learningPartner" class="learningPartnerClass">
+									Cisco 360 Learning Program for CCIE R&amp;S
+							</li>
+
+						<li>
+									<input type="checkbox" name="learningPartner" value="CTHREESIXZERO-CCIEC" id="learningPartner" class="learningPartnerClass">
+									Cisco 360 Learning Program for CCIE Collaboration
+							</li>
+
+</ul>
+</div>
+
+<div id="divpartpanel" class="subadvsearchlist">
+<ul>
+
+						<li>
+									<input type="checkbox" name="diversePartner" value="DIV-DVBE" id="diversePartner" class="diversePartnerClass">
+									Disabled Veteran Business Enterprise 
+							</li>
+
+						<li>
+									<input type="checkbox" name="diversePartner" value="DIV-HUBZon" id="diversePartner" class="diversePartnerClass">
+									Hubzone Small Business
+							</li>
+
+						<li>
+									<input type="checkbox" name="diversePartner" value="DIV-MBE" id="diversePartner" class="diversePartnerClass">
+									Minority Business Enterprise 
+							</li>
+
+						<li>
+									<input type="checkbox" name="diversePartner" value="DIV-SDVB" id="diversePartner" class="diversePartnerClass">
+									Small Disadvantaged Business Enterprise
+							</li>
+
+						<li>
+									<input type="checkbox" name="diversePartner" value="DIV-SDVBE" id="diversePartner" class="diversePartnerClass">
+									Service Disabled Veteran Business Enterprise 
+							</li>
+
+						<li>
+									<input type="checkbox" name="diversePartner" value="DIV-WBE" id="diversePartner" class="diversePartnerClass">
+									Women Business Enterprise 
+							</li>
+
+</ul>
+</div>
+
+</div>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary pull-left" data-dismiss="modal" type="button" id="clearBtn">Clear Search Criteria</button>
+<button class="btn btn-primary" data-dismiss="modal" type="button" onclick="javascript:getAdvanceSearch();">Search</button>
+</div>
+</div>
+</div>
+
+</div>
+</form>
+</body>
+<script type="text/javascript"> 
+delete Array.prototype.toJSON; 
+</script>
+<script language="javascript">
+
+	var Jslocale="en_US";   
+	var lang_cd = new Array();
+	lang_cd = Jslocale.split('_'); 	
+    if(lang_cd[0] =="zh" ||lang_cd[0] =="ZH"){  
+    	
+	    var selectObj = document.getElementById("country");
+	   	if(selectObj.options[selectObj.selectedIndex].value=="CN"){        
+			selectObj.options[selectObj.selectedIndex].text='CHINA 中国';
+		}else{ 
+	    if(selectObj.options[44].value=="CN"){ 	            
+			selectObj.options[44].text='CHINA 中国';
+			}	 	
+	 	}
+	   	// for ad search
+	   	
+	 var adSelectObj = document.getElementById("advanceCountry");
+		if (adSelectObj.options[adSelectObj.selectedIndex].value == "CN") {
+			adSelectObj.options[adSelectObj.selectedIndex].text = 'CHINA 中国';
+		} else {
+			if (adSelectObj.options[44].value == "CN") {
+				adSelectObj.options[44].text = 'CHINA 中国';
+			}
+		}
+	   		
+	}
+    
+    
+    //added for korean
+    
+    if(lang_cd[0] =="ko" ||lang_cd[0] =="KO")
+  {  
+  	
+	    var selectObj = document.getElementById("country");
+	   	if(selectObj.options[selectObj.selectedIndex].value=="KR")
+	   	{        
+			selectObj.options[selectObj.selectedIndex].text='KOREA,REPUBLIC OF 한국';
+		}else
+		{ 
+	    if(selectObj.options[113].value=="KR")
+	    {
+	    	
+			selectObj.options[113].text='KOREA,REPUBLIC OF 한국­';
+			}	 	
+	 	}
+	   	// for ad search
+	   	
+	 var adSelectObj = document.getElementById("advanceCountry");
+		if (adSelectObj.options[adSelectObj.selectedIndex].value == "KR") {
+			adSelectObj.options[adSelectObj.selectedIndex].text = 'KOREA,REPUBLIC OF 한국';
+		} else {
+			if (adSelectObj.options[113].value == "KR") {
+				adSelectObj.options[113].text = 'KOREA,REPUBLIC OF 한국';
+			}
+		}
+	   		
+	}
+  //added for korean end
+  
+  //added for japanese
+    if(lang_cd[0] =="ja" ||lang_cd[0] =="JA")
+    {  
+    	
+	    var selectObj = document.getElementById("country");
+	   	if(selectObj.options[selectObj.selectedIndex].value=="JP")
+	   	{        
+			selectObj.options[selectObj.selectedIndex].text='JAPAN 日本';
+		}else
+		{ 
+	    if(selectObj.options[107].value=="JP")
+	    {
+	    	
+			selectObj.options[107].text='JAPAN 日本';
+			}	 	
+	 	}
+	   	// for ad search
+	   	
+	 var adSelectObj = document.getElementById("advanceCountry");
+		if (adSelectObj.options[adSelectObj.selectedIndex].value == "JP") {
+			adSelectObj.options[adSelectObj.selectedIndex].text = 'JAPAN 日本';
+		} else {
+			if (adSelectObj.options[107].value == "JP") {
+				adSelectObj.options[107].text = 'JAPAN 日本';
+			}
+		}
+	   		
+	}
+    //added for japanese end 
+
+if (document.layers) {
+	document.captureEvents(Event.KEYPRESS);
+	var adSrchFlag = jQuery("#advancedsearchpopup").attr('display');
+	if(adSrchFlag=='none')
+		document.onmousedown = basicSearchOnEnter;
+	else
+		document.onmousedown = searchOnEnter;
+}
+
+
+document.onkeypress = fnOnEnter;
+
+
+function fnOnEnter(e)
+{
+ if(jQuery("#advancedsearchpopup").css('display')=='none')
+		basicSearchOnEnter(e);
+    else
+    	searchOnEnter(e);
+}
+
+function basicSearchOnEnter(e) {
+	if(!e) e=window.event;
+	var customTarget=e.target||e.srcElement;
+	var keyCode=e.keyCode||e.which;
+	if( keyCode == 13 &&   (customTarget.type != "select-one")  &&   (customTarget.id != "product")) {
+			submitBasicSearch('AU,ES,DE,IT,US,FR,GB,CA,NL,CH,PL,SE,LI,LU,CZ,BR,FI,SG,BE,DK,HU,JP,PT,HR');
+		}
+	}
+
+function searchOnEnter(e) {
+	if (!e)
+		e = window.event;
+	var customTarget = e.target || e.srcElement;
+	var keyCode = e.keyCode || e.which;
+	if (keyCode == 13 && (customTarget.type != "select-one")
+			&& (customTarget.id != "advanceProduct")) {
+		getAdvanceSearch();
+
+		
+	}
+}
+
+window.onload=load;
+</script>
+</html>
+
+<!-- /.modal -->

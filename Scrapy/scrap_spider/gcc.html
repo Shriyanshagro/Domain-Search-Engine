@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://developers.redhat.com/blog/xmlrpc.php">
+<link rel="shortcut icon" href="https://s0.wp.com/wp-content/themes/vip/rh-parent/favicon.ico">
+<title>gcc &#8211; Red Hat Developer Blog</title>
+<meta name="google-site-verification" content="Ocoat8blfz5Jot2ko7o8Ya8nwQ0w93U2TXYgbYAN6ss" />
+		<script src='https://r-login.wordpress.com/remote-login.php?action=js&amp;host=developers.redhat.com/blog&amp;id=43520001&amp;t=1462468797&amp;back=https%3A%2F%2Fdevelopers.redhat.com/blog%2Ftag%2Fgcc%2F' type="text/javascript"></script>
+		<script type="text/javascript">
+		/* <![CDATA[ */
+			if ( 'function' === typeof WPRemoteLogin ) {
+				document.cookie = "wordpress_test_cookie=test; path=/";
+				if ( document.cookie.match( /(;|^)\s*wordpress_test_cookie\=/ ) ) {
+					WPRemoteLogin();
+				}
+			}
+		/* ]]> */
+		</script>
+		<link rel="dns-prefetch" href="//connect.facebook.net" />
+<link rel="alternate" type="application/rss+xml" title="Red Hat Developer Blog &raquo; Feed" href="http://developers.redhat.com/blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Red Hat Developer Blog &raquo; Comments Feed" href="http://developers.redhat.com/blog/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Red Hat Developer Blog &raquo; gcc Tag Feed" href="http://developers.redhat.com/blog/tag/gcc/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+	<link rel='stylesheet' id='all-css-0' href='https://s2.wp.com/_static/??-eJx9kNEOgjAMRX/I2aho9MH4LTDKqK5bw4qEv3dI1EQNL017c06aFgYxNgbFoMC9Ed87CgkGsZFNYvI4fk1rm9IK/muebpjgiiqlvZnn9INXPrqPEJ3DOvZqmuh9HGCg2qEu7aDQUCAd380SbGOHOWcpdSIYayrRI2dsSWM5vKypbfM1i3fPD6oq6TAlkytTz0bbvOjXm2O4k0DXGim7KcwQJB09rpnCpFz4vCn2p22xOe2O1wdp0568' type='text/css' media='all' />
+<link rel='stylesheet' id='static-red-hat-css'  href='https://static.jboss.org/rhd/1.2-build-1865/stylesheets/app.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rh-fontawesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='all-css-4' href='https://s0.wp.com/_static/??-eJx9j9EOgjAMRX/I0YiovBi/Zcw6Srp12QbEvxfEaDSBl+be5pykhTEoIz6jz5BbdJhgoACxVUHHeWlSgpQfjIUjX0xtB6vKDQfVsNi38A+7XgXuLfkE6KSjZS4YgZdME5k+Ycu3KIrF6Ezif4q6s6a4pUacT5yiff32rWvPtRVYlkbzDFzdZV+dyrI+Hw919wRZCnWc' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyNkGFOwzAMhS9EmhWNiT+Is6Sp57k4cUicdeP0SzUmwagAyVKs589PL7ZzMhQ91xGKnVq9V8jnz6ebyoP9DTCBMDuFLlC8wV6iQtSFDTIQg6kFssOmNaO9rHBJigYopUEr0++RKB4J5j+xCTQ5/2YyFPr44TqwoElckWKxrUcYparZC7PMdqYRQe939AAtoz1SsrfNNkURbF900fFZya9q/3BiwoMOclpCfTlz54UlL/r1wK/hpd/u+s1z/7h7mi5poacu'></script>
+<script type='text/javascript' src='http://static.jboss.org/rhd/1.2-build-1865/javascripts/vendor/modernizr-custom.js?ver=4.5.1'></script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??/wp-includes/js/spin.js,/wp-includes/js/jquery/jquery.spin.js?m=1370534259j'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://rhdevelopers.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel='openid.server' href='https://rhdevelopers.wordpress.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://rhdevelopers.wordpress.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://developers.redhat.com/blog/osd.xml" title="Red Hat Developer Blog" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<script type="text/javascript">
+jQuery(function($){
+  $.fn.colorbox.settings.transition = "elastic";
+  $.fn.colorbox.settings.speed = 350;
+  $.fn.colorbox.settings.maxWidth = "45%";
+  $.fn.colorbox.settings.maxHeight = "false";
+  $.fn.colorbox.settings.resize = true;
+  $.fn.colorbox.settings.opacity = 0.8;
+  $.fn.colorbox.settings.preloading = true;
+  $.fn.colorbox.settings.current = "Image {current} of {total}";
+  $.fn.colorbox.settings.previous = "previous";
+  $.fn.colorbox.settings.next = "next";
+  $.fn.colorbox.settings.close = "close";
+  $.fn.colorbox.settings.overlayClose = true;
+  $.fn.colorbox.settings.slideshow = false;
+  $.fn.colorbox.settings.slideshowAuto = true;
+  $.fn.colorbox.settings.slideshowSpeed = 2500;
+  $.fn.colorbox.settings.slideshowStart =  "start";
+  $.fn.colorbox.settings.slideshowStop = "stop";
+  $("a[rel*='lightbox']").colorbox();
+});
+</script>
+<link rel="stylesheet" type="text/css" href="https://s0.wp.com/wp-content/themes/vip/plugins/lightbox-plus//css/shadowed/colorbox.css" media="screen" />
+<!--[if IE]>
+     <link type="text/css" media="screen" rel="stylesheet" href="https://s0.wp.com/wp-content/themes/vip/plugins/lightbox-plus//css/shadowed/colorbox-ie.css" title="IE fixes" />
+<![endif]-->
+<link rel="stylesheet" href="https://s-ssl.wordpress.com/wp-content/themes/vip/plugins/wp-page-numbers/default/wp-page-numbers.css?m=1276404093h" type="text/css" media="screen" />		<style type="text/css" media="screen">
+			.widget_author_grid ul { overflow: hidden; }
+			.widget_author_grid ul li { background: none !important; clear: none !important; float: left !important; margin: 0 -5px -3px 0 !important; padding: 0 8px 6px 0 !important; border: none !important; list-style: none !important; }
+			.widget_author_grid ul li a { background: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
+			.widget_author_grid .avatar { vertical-align: middle; }
+		</style>
+				<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Red Hat Developer Blog" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Insights and news on Red Hat developer tools, platforms and more" /><meta name="msapplication-task" content="name=Subscribe;action-uri=http://developers.redhat.com/blog/feed/;icon-uri=https://secure.gravatar.com/blavatar/2c55814562d7bc9c275292b4e4f4eb81?s=16" /><style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+</script>
+</head>
+
+<body class="archive tag tag-gcc tag-185469 mp6 customizer-styles-applied group-blog highlander-enabled highlander-light infinite-scroll">
+<header class="main clearfix"><div class="row header-wrap">
+<nav class="accounts"><ul>
+<li class="login"><a>Log In</a></li>
+<li class="register"><a>Register</a></li>
+<li class="logged-in"><a class="logged-in-name" href="#"></a></li>
+<li class="logged-in"><a class="logout" href="http://developers.redhat.com">Logout</a></li>
+</ul></nav><div class="logo-wrap">
+<h1 class="logo"><a href="http://developers.redhat.com" title="Red Hat Developers"><img src="//static.jboss.org/rhd/fonts/images_design_RHD-logo-2.svg" alt="Red Hat Developers"></a></h1>
+<a class="nav-toggle" href="#">Menu<i class="fa fa-angle-down"></i></a>
+</div>
+<nav class="mega-menu"><ul>
+<li class="has-sub-nav">
+<a href="#">Topics<i class="fa fa-angle-down"></i></a><div class="sub-nav" id="sub-nav-topics">
+<a href="http://developers.redhat.com/containers">Containers</a><a href="http://developers.redhat.com/mobile">Mobile</a><a href="http://developers.redhat.com/devops">DevOps</a><a href="http://developers.redhat.com/web-and-api-development">Web and API Development</a><a href="http://developers.redhat.com/enterprise-java">Enterprise Java</a><a href="http://developers.redhat.com/dotnet">.NET</a>
+</div>
+</li>
+<li class="has-sub-nav">
+<a href="#">Technologies<i class="fa fa-angle-down"></i></a><div class="sub-nav" id="sub-nav-technologies">
+<div class="sub-nav-group">
+<a class="heading" href="http://developers.redhat.com/products#infrastructure_management">Infrastructure</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/rhel/overview/">Red Hat Enterprise Linux</a><a class="hide-on-mobile indent" href="http://developers.redhat.com/products/developertoolset/overview/">Red Hat Developer Toolset</a><a class="hide-on-mobile indent" href="http://developers.redhat.com/products/softwarecollections/overview/">Red Hat Software Collections</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/cdk/overview/">Red Hat Container Development Kit</a>
+</div>
+<div class="sub-nav-group">
+<a class="heading" href="http://developers.redhat.com/products#cloud_products">Cloud</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/openshift/overview/">OpenShift Enterprise by Red Hat</a>
+</div>
+<div class="sub-nav-group">
+<a class="heading" href="http://developers.redhat.com/products#mobile">Mobile</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/mobileplatform/overview/">Red Hat Mobile Application Platform</a>
+</div>
+<div class="sub-nav-group">
+<a class="heading" href="http://developers.redhat.com/products#jboss_development_and_management">Middleware</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/devstudio/overview/">Red Hat JBoss Developer Studio</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/eap/overview/">Red Hat JBoss Enterprise Application Platform</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/fuse/overview/">Red Hat JBoss Fuse</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/webserver/overview/">Red Hat JBoss Web Server</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/bpmsuite/overview/">Red Hat JBoss BPM Suite</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/brms/overview/">Red Hat JBoss BRMS</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/datagrid/overview/">Red Hat JBoss Data Grid</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/amq/overview/">Red Hat JBoss A-MQ</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/datavirt/overview/">Red Hat JBoss Data Virtualization</a>
+</div>
+</div>
+</li>
+<li class="has-sub-nav">
+<a href="#">Community<i class="fa fa-angle-down"></i></a><div class="sub-nav pull-right" id="sub-nav-community">
+<a href="http://developers.redhat.com/blog">Developers Blog<span class="page-description">Insights &amp; news on Red Hat developer tools, platforms and more</span></a><a href="http://developers.redhat.com/events">Events<span class="page-description">Find the latest conferences, meetups, and virtual seminars</span></a><div class="sub-nav-group"><a href="http://developers.redhat.com/projects">Open Source Communities<span class="page-description">Community Projects that Red Hat participates in</span></a></div>
+<a href="http://developers.redhat.com/community/contributor/">Content Contributors<span class="page-description">Share your knowledge. Contribute content to Red Hat Developers.</span></a>
+</div>
+</li>
+<li><a href="http://developers.redhat.com/resources/">Resources</a></li>
+<li><a href="http://developers.redhat.com/downloads/">Downloads</a></li>
+</ul></nav>
+</div></header><div id="page" class="hfeed site">
+	<a class="skip-link visuallyhidden" href="#content">Skip to content</a>
+  
+ <!-- RED HAT BLOG MARQUEE -->
+  <div class="row blog-header">
+    <div class=" blog-marquee">
+        <h1>Blog</h1>
+        <h2>Insights and news on Red Hat developer tools, platforms and more</h2>
+    </div>
+  </div>
+    <!-- /RED HAT BLOG MARQUEE -->
+  
+  	<nav id="site-navigation" class="main-navigation" role="navigation">
+		<div class="container">
+			<div class="menu-primary-container"><ul id="primary-menu" class="primary-nav"><li id="menu-item-415820" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-415820"><a href="http://developers.redhat.com/blog">Home</a></li>
+<li id="menu-item-421642" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-421642"><a href="#">Articles &amp; Topics</a>
+<ul class="sub-menu">
+	<li id="menu-item-420733" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420733"><a href="http://developers.redhat.com/blog/category/red-hat-enterprise-linux/">RHEL</a></li>
+	<li id="menu-item-420734" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420734"><a href="http://developers.redhat.com/blog/category/jboss/">JBoss</a></li>
+	<li id="menu-item-420736" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420736"><a href="http://developers.redhat.com/blog/category/openshift/">OpenShift</a></li>
+	<li id="menu-item-421831" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-421831"><a href="http://developers.redhat.com/blog/category/mobile/">Mobile</a></li>
+	<li id="menu-item-421022" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-421022"><a href="http://developers.redhat.com/blog/category/java/">Java</a></li>
+	<li id="menu-item-420738" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420738"><a href="http://developers.redhat.com/blog/category/net/">.NET</a></li>
+	<li id="menu-item-420737" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420737"><a href="http://developers.redhat.com/blog/category/containers/">Containers</a></li>
+	<li id="menu-item-420739" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420739"><a href="http://developers.redhat.com/blog/category/devops/">DevOps</a></li>
+	<li id="menu-item-420741" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420741"><a href="http://developers.redhat.com/blog/category/performance-2/">Performance</a></li>
+</ul>
+</li>
+</ul></div>		</div>
+	</nav><!-- #site-navigation -->
+
+    <div id="navDropdownContainer" class="blog-nav-dropdown">
+
+    </div><!-- / .blog-nav-dropdown -->
+  
+	<div id="content" class="site-content">
+		<div class="container main-body-container">
+			<div class="row">
+	<div id="primary" class="content-area col-sm-12 col-md-8">
+		<main id="main" class="site-main" role="main">
+
+		
+			<header class="page-header">
+				<h1 class="page-title">Tag: gcc</h1>			</header><!-- .page-header -->
+
+						<div class="archive-list">
+				
+					
+<article id="post-419633" class="post-419633 post type-post status-publish format-standard has-post-thumbnail hentry category-news category-open-source category-other-languages tag-c tag-gcc tag-openmp tag-parallel-computing">
+
+    <div class="entry-content">
+                    <a href="http://developers.redhat.com/blog/2016/03/22/what-is-new-in-openmp-4-5-3/" class="featured-post-image-permalink">
+                <img src="https://rhdevelopers.files.wordpress.com/2016/03/openmp_lg_transparent.gif?w=640" class="featured-post-image wp-post-image" alt="openmp_lg_transparent" />            </a>
+        		<h1 class="entry-title"><a href="http://developers.redhat.com/blog/2016/03/22/what-is-new-in-openmp-4-5-3/" rel="bookmark">What is new in OpenMP&nbsp;4.5</a></h1>
+					<div class="entry-meta">
+				<div class="posted-on">Posted  by <a href="http://developers.redhat.com/blog/author/rhjakub/">Jakub Jelínek</a> on <time class="entry-date published" datetime="2016-03-22T10:00:50+00:00">March 22, 2016</time><time class="updated" datetime="2016-03-22T10:00:51+00:00">March 22, 2016</time></div>			</div><!-- .entry-meta -->
+		
+
+		<p>A new version of the OpenMP standard, 4.5, has been released in November 2015 and brings several new constructs to the users. OpenMP is an API consisting of compiler directives and library routines for high level parallelism in C, C++ and Fortran programs. The upcoming version of GCC adds support for this newest version of the standard.</p>
+<p>This post highlights some of the latest features, changes, and &#8220;gotcha&#8217;s&#8221; to look out for. <a href="http://developers.redhat.com/blog/2016/03/22/what-is-new-in-openmp-4-5-3/#more-419633" class="more-link">
+<p class="read-more">Continue reading <span class="screen-reader-text">&#8220;What is new in OpenMP&nbsp;4.5&#8221;</span></p>
+<p></a></p>
+<div class="category-template-wrap">
+<hr>
+<span style="color:#999999;"><strong>Join <a href="http://developers.redhat.com/products/rhel/overview/">Red Hat Developers</a>, a developer program for you to learn, share, and code faster – and get access to Red Hat software for your development.  The developer program and software are both free!</strong></span>
+</div>
+<p></p>
+<div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Rate this:</h3><div class="pd-rating" id="pd_rating_holder_6530569_post_419633"></div></div></div>
+			</div><!-- .entry-content -->
+</article><!-- #post-## -->
+
+				
+					
+<article id="post-419395" class="post-419395 post type-post status-publish format-standard has-post-thumbnail hentry category-general category-programming tag-gcc">
+
+    <div class="entry-content">
+                    <a href="http://developers.redhat.com/blog/2016/03/10/testing-gcc-in-the-wild/" class="featured-post-image-permalink">
+                <img src="https://rhdevelopers.files.wordpress.com/2014/08/gnu-logo.png?w=145" class="featured-post-image wp-post-image" alt="gnu logo" />            </a>
+        		<h1 class="entry-title"><a href="http://developers.redhat.com/blog/2016/03/10/testing-gcc-in-the-wild/" rel="bookmark">Testing GCC in the&nbsp;wild</a></h1>
+					<div class="entry-meta">
+				<div class="posted-on">Posted  by <a href="http://developers.redhat.com/blog/author/rhpolacek/">Marek Polacek</a> on <time class="entry-date published" datetime="2016-03-10T17:26:40+00:00">March 10, 2016</time><time class="updated" datetime="2016-03-10T17:26:42+00:00">March 10, 2016</time></div>			</div><!-- .entry-meta -->
+		
+
+		<p>Currently, the GCC testsuite contains more than fifty thousand tests which make up to two million lines of code. Since we, the GCC developers, try hard to avoid regressions in the compiler, almost every change to the compiler or to a related library requires a new test or a set of tests to be added. Hence the internal testsuite keeps growing at a rapid pace. It goes without saying that a new change should not break any existing test.</p>
+<p>Despite all this effort, new bugs still creep in. Because it is best to discover as many bugs as possible before a particular version of the compiler is released, many distribution maintainers try to rebuild all the packages in the distro with a still unreleased compiler. They file bug reports if they find any bugs to the upstream Bugzilla so that the compiler is up to snuff when it is released. This rebuild typically happens once a year in regression fixes-only stage of the development, i.e. a stage when no new features are being introduced and the development revolves around fixing bugs.</p>
+<p>While a new version of GCC is usually released in April, the Fedora project performs a mass rebuild of all the Fedora packages in January or February. Due to limited resources, this mass rebuild is only done on x86_64 architecture.<br />
+Since the point is to test GCC, this is a mass rebuild of so-called first order.</p>
+<p>We are looking for several classes of bugs here. These include: <a href="http://developers.redhat.com/blog/2016/03/10/testing-gcc-in-the-wild/#more-419395" class="more-link">
+<p class="read-more">Continue reading <span class="screen-reader-text">&#8220;Testing GCC in the&nbsp;wild&#8221;</span></p>
+<p></a></p>
+<div class="category-template-wrap">
+<hr>
+<span style="color:#999999;"><strong>Join <a href="http://developers.redhat.com/products/rhel/overview/">Red Hat Developers</a>, a developer program for you to learn, share, and code faster – and get access to Red Hat software for your development.  The developer program and software are both free!</strong></span>
+</div>
+<p></p>
+<div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Rate this:</h3><div class="pd-rating" id="pd_rating_holder_6530569_post_419395"></div></div></div>
+			</div><!-- .entry-content -->
+</article><!-- #post-## -->
+
+				
+					
+<article id="post-419348" class="post-419348 post type-post status-publish format-standard has-post-thumbnail hentry category-general category-programming tag-gcc">
+
+    <div class="entry-content">
+                    <a href="http://developers.redhat.com/blog/2016/03/03/curing-a-legacy-header-ache/" class="featured-post-image-permalink">
+                <img src="https://rhdevelopers.files.wordpress.com/2014/08/gnu-logo.png?w=145" class="featured-post-image wp-post-image" alt="gnu logo" />            </a>
+        		<h1 class="entry-title"><a href="http://developers.redhat.com/blog/2016/03/03/curing-a-legacy-header-ache/" rel="bookmark">Curing a legacy&nbsp;header-ache.</a></h1>
+					<div class="entry-meta">
+				<div class="posted-on">Posted  by <a href="http://developers.redhat.com/blog/author/doelcam/">Andrew MacLeod</a> on <time class="entry-date published" datetime="2016-03-03T08:56:36+00:00">March 3, 2016</time><time class="updated" datetime="2016-03-03T08:56:39+00:00">March 3, 2016</time></div>			</div><!-- .entry-meta -->
+		
+
+		<p>To the best of my knowledge the Gnu Compiler Collection (GCC) never enforced a formal organization for header files. They were created as desired to export elements of a source file, and over time became convenient places to put lots of miscellaneous things. No one seemed to think we needed to dictate what they should contain, nor how they should be included.  For the most part it never really mattered&#8230; A source file included whatever list of headers it required to compile, and reorganization was rare.</p>
+<p>So why does it matter now? The header file <em>“tree.h”</em> defines the most ubiquitous data structure in GCC&#8230; the <em>tree_node</em>. Most core objects are a <em>tree_nod</em>e of some sort&#8230; identifiers, expressions, types, variables, lists&#8230; you name it, it&#8217;s rooted in a <em>tree_node</em>.  As part of a project to help modernize the code base, I wanted to split this<em> tree_node</em> so that types became a new <em>type_node</em>. Then I wanted to create a<em> type_node</em> for the compiler&#8217;s optimizers that did not share the implementation used by the language parsers. I needed to be able to pull a few of these data structures apart.</p>
+<p>I also knew the header files were quite unorganized, and when I went to prototype my changes I discovered the terrible truth&#8230; There were so many unrelated header files intertwined with<em> tree.h</em> that it was virtually impossible to separate anything, let alone the significant parts I wanted. I could feel the header-ache beginning&#8230; <a href="http://developers.redhat.com/blog/2016/03/03/curing-a-legacy-header-ache/#more-419348" class="more-link">
+<p class="read-more">Continue reading <span class="screen-reader-text">&#8220;Curing a legacy&nbsp;header-ache.&#8221;</span></p>
+<p></a></p>
+<div class="category-template-wrap">
+<hr>
+<span style="color:#999999;"><strong>Join <a href="http://developers.redhat.com/products/rhel/overview/">Red Hat Developers</a>, a developer program for you to learn, share, and code faster – and get access to Red Hat software for your development.  The developer program and software are both free!</strong></span>
+</div>
+<p></p>
+<div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Rate this:</h3><div class="pd-rating" id="pd_rating_holder_6530569_post_419348"></div></div></div>
+			</div><!-- .entry-content -->
+</article><!-- #post-## -->
+
+				
+					
+<article id="post-418851" class="post-418851 post type-post status-publish format-standard has-post-thumbnail hentry category-programming tag-c tag-c11 tag-gcc tag-standards">
+
+    <div class="entry-content">
+                    <a href="http://developers.redhat.com/blog/2016/02/29/why-cstdlib-is-more-complicated-than-you-might-think/" class="featured-post-image-permalink">
+                <img src="https://rhdevelopers.files.wordpress.com/2014/08/gnu-logo.png?w=145" class="featured-post-image wp-post-image" alt="gnu logo" />            </a>
+        		<h1 class="entry-title"><a href="http://developers.redhat.com/blog/2016/02/29/why-cstdlib-is-more-complicated-than-you-might-think/" rel="bookmark">Why &lt; cstdlib &gt; is more complicated than you might&nbsp;think</a></h1>
+					<div class="entry-meta">
+				<div class="posted-on">Posted  by <a href="http://developers.redhat.com/blog/author/jwakely/">jwakely</a> on <time class="entry-date published" datetime="2016-02-29T11:52:32+00:00">February 29, 2016</time><time class="updated" datetime="2016-03-02T06:58:03+00:00">March 2, 2016</time></div>			</div><!-- .entry-meta -->
+		
+
+		<p>One of the reasons that C++ has been so successful and become so widely used is that it was (at least initially) compatible with C, which was already very popular. C++ programs were able to make use of lots of pre-existing C code, and in particular to make use of the C Standard Library. Although the C and C++ languages have diverged, the C++ Standard Library incorporates most of the C99 library by reference.</p>
+<p>This article explains some of the difficulties that arise when implementing the parts of the C++ standard library that are shared with C. Some of the difficulties were the cause of longstanding bugs in the GNU C++ standard library, bugs which have only recently been fixed for the forthcoming GCC 6 release. Understanding these issues involves some history of the relevant standards, and some gory details of how a C++ standard library interacts with a C standard library. The gory details will be kept to a minimum though, only referring to them from a high level. <a href="http://developers.redhat.com/blog/2016/02/29/why-cstdlib-is-more-complicated-than-you-might-think/#more-418851" class="more-link">
+<p class="read-more">Continue reading <span class="screen-reader-text">&#8220;Why &lt; cstdlib &gt; is more complicated than you might&nbsp;think&#8221;</span></p>
+<p></a></p>
+<div class="category-template-wrap">
+<hr>
+<span style="color:#999999;"><strong>Join <a href="http://developers.redhat.com/products/rhel/overview/">Red Hat Developers</a>, a developer program for you to learn, share, and code faster – and get access to Red Hat software for your development.  The developer program and software are both free!</strong></span>
+</div>
+<p></p>
+<div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Rate this:</h3><div class="pd-rating" id="pd_rating_holder_6530569_post_418851"></div></div></div>
+			</div><!-- .entry-content -->
+</article><!-- #post-## -->
+
+				
+					
+<article id="post-417907" class="post-417907 post type-post status-publish format-standard hentry category-community category-programming tag-gcc">
+
+    <div class="entry-content">
+        		<h1 class="entry-title"><a href="http://developers.redhat.com/blog/2016/02/26/gcc-6-wmisleading-indentation-vs-goto-fail/" rel="bookmark">GCC 6: -Wmisleading-indentation vs &#8220;goto&nbsp;fail;&#8221;</a></h1>
+					<div class="entry-meta">
+				<div class="posted-on">Posted  by <a href="http://developers.redhat.com/blog/author/rhdmalcolm/">rhdmalcolm</a> on <time class="entry-date published" datetime="2016-02-26T08:40:07+00:00">February 26, 2016</time><time class="updated" datetime="2016-02-26T08:40:09+00:00">February 26, 2016</time></div>			</div><!-- .entry-meta -->
+		
+
+		<p>I work at Red Hat on <a href="https://gcc.gnu.org/">GCC, the GNU Compiler Collection</a>. The next major release of GCC, <a href="https://gcc.gnu.org/gcc-6/changes.html">GCC 6</a>, is just around the corner, so I thought I&#8217;d post about a new compiler warning I&#8217;ve contributed to it:<br />
+<code>-Wmisleading-indentation</code>.</p>
+<p><img class="aligncenter" src="https://rhdevelopers.files.wordpress.com/2014/08/gnu-logo.png?w=640" alt="GNU logo" /></p>
+<p>One of the more common &#8220;gotchas&#8221; in C and C++ programming relates to missing braces. For example, in the following:</p>
+<pre>  if (some_condition ())
+    do_foo ();
+    do_bar ();
+ <a href="http://developers.redhat.com/blog/2016/02/26/gcc-6-wmisleading-indentation-vs-goto-fail/#more-417907" class="more-link"><p class="read-more">Continue reading <span class="screen-reader-text">"GCC 6: -Wmisleading-indentation vs &#8220;goto&nbsp;fail;&#8221;"</span></p></a></pre>
+<div class="category-template-wrap">
+<hr>
+<span style="color:#999999;"><strong>Join <a href="http://developers.redhat.com/products/rhel/overview/">Red Hat Developers</a>, a developer program for you to learn, share, and code faster – and get access to Red Hat software for your development.  The developer program and software are both free!</strong></span>
+</div>
+<p></p>
+<div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Rate this:</h3><div class="pd-rating" id="pd_rating_holder_6530569_post_417907"></div></div></div>
+			</div><!-- .entry-content -->
+</article><!-- #post-## -->
+
+				
+					
+<article id="post-418926" class="post-418926 post type-post status-publish format-standard has-post-thumbnail hentry category-community category-programming tag-gcc">
+
+    <div class="entry-content">
+                    <a href="http://developers.redhat.com/blog/2016/02/25/new-asm-flags-feature-for-x86-in-gcc-6/" class="featured-post-image-permalink">
+                <img src="https://rhdevelopers.files.wordpress.com/2014/08/gnu-logo.png?w=145" class="featured-post-image wp-post-image" alt="gnu logo" />            </a>
+        		<h1 class="entry-title"><a href="http://developers.redhat.com/blog/2016/02/25/new-asm-flags-feature-for-x86-in-gcc-6/" rel="bookmark">New asm flags feature for x86 in GCC&nbsp;6</a></h1>
+					<div class="entry-meta">
+				<div class="posted-on">Posted  by <a href="http://developers.redhat.com/blog/author/rth99/">Richard Henderson</a> on <time class="entry-date published" datetime="2016-02-25T11:53:50+00:00">February 25, 2016</time><time class="updated" datetime="2016-02-25T11:53:53+00:00">February 25, 2016</time></div>			</div><!-- .entry-meta -->
+		
+
+		<p>Following a <a href="http://lkml.iu.edu/hypermail/linux/kernel/1505.0/00756.html">discussion on the Linux Kernel Mailing List</a>, and further <a href="http://gcc.gnu.org/ml/gcc/2015-05/msg00006.html">discussion about the design</a>, we added a new feature to the extended inline assembly supported by GCC.</p>
+<p>The problem was that that there was no way to tell GCC that the inline assembly produces useful information in the <code>eflags</code> register. To work around this, programs must either copy the data from the <code>eflags</code> register to a general register, or re-test whatever condition was contained within the flags.</p>
+<p>For instance, the linux kernel has the following function:</p>
+<blockquote>
+<pre>int variable_test_bit(long n, volatile const unsigned long *addr)
+{
+    int oldbit;
+    asm volatile("bt %2,%1\n\t"
+                 "sbb %0,%0"
+                 : "=r" (oldbit)
+                 : "m" (*(unsigned long *)addr), "Ir" (n));
+    return oldbit;
+}</pre>
+</blockquote>
+<p> <a href="http://developers.redhat.com/blog/2016/02/25/new-asm-flags-feature-for-x86-in-gcc-6/#more-418926" class="more-link">
+<p class="read-more">Continue reading <span class="screen-reader-text">&#8220;New asm flags feature for x86 in GCC&nbsp;6&#8221;</span></p>
+<p></a></p>
+<div class="category-template-wrap">
+<hr>
+<span style="color:#999999;"><strong>Join <a href="http://developers.redhat.com/products/rhel/overview/">Red Hat Developers</a>, a developer program for you to learn, share, and code faster – and get access to Red Hat software for your development.  The developer program and software are both free!</strong></span>
+</div>
+<p></p>
+<div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Rate this:</h3><div class="pd-rating" id="pd_rating_holder_6530569_post_418926"></div></div></div>
+			</div><!-- .entry-content -->
+</article><!-- #post-## -->
+
+							</div>
+
+			<div id='wp_page_numbers'>
+<ul><li class="page_info">Page 1 of 8</li><li class="active_page"><a href="http://developers.redhat.com/blog/tag/gcc/">1</a></li>
+<li><a href="http://developers.redhat.com/blog/tag/gcc/page/2/">2</a></li>
+<li><a href="http://developers.redhat.com/blog/tag/gcc/page/3/">3</a></li>
+<li><a href="http://developers.redhat.com/blog/tag/gcc/page/4/">4</a></li>
+<li><a href="http://developers.redhat.com/blog/tag/gcc/page/5/">5</a></li>
+<li><a href="http://developers.redhat.com/blog/tag/gcc/page/6/">6</a></li>
+<li><a href="http://developers.redhat.com/blog/tag/gcc/page/7/">7</a></li>
+<li><a href="http://developers.redhat.com/blog/tag/gcc/page/8/">8</a></li>
+<li><a href="http://developers.redhat.com/blog/tag/gcc/page/2/">&gt;</a></li>
+</ul>
+<div style='float: none; clear: both;'></div>
+</div>
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="widget-area col-sm-12 col-md-4" role="complementary">
+	<aside id="search-12" class="widget widget_search"><form class="search-form" role="search" method="get" id="searchform" action="https://developers.redhat.com/blog/">
+    <div class="form-group">
+    	<label class="sr-only" for="s">Search Blog</label>
+        <input type="text" placeholder="Search Blog" name="s" id="s" />
+    </div>
+        <button type="submit" class="btn">Search</button>
+</form></aside><aside id="text-2" class="widget widget_text">			<div class="textwidget"><p style="font-size:1.2em;font-weight:bold;margin-bottom:1em;">Follow us:</p>
+<ul style="list-style:none outside none;padding-bottom:30px;">
+	<li style="float:left;"><a href="https://twitter.com/#!/rheldevelop"><img src="https://rhdevelopers.files.wordpress.com/2012/12/twitter-24x24.png" alt="Twitter"></a></li>
+	<li style="float:left;"><a href="http://www.facebook.com/rheldevelop"><img style="padding-left:15px;" src="https://rhdevelopers.files.wordpress.com/2012/12/facebook-24x24.png" alt="Facebook"></a></li>
+	<li style="float:left;"><a href="https://www.linkedin.com/in/rheldevelop"><img style="padding-left:15px;" src="https://rhdevelopers.files.wordpress.com/2012/12/linkedin-24x24.png" alt="LinkedIn"></a></li>
+	<li style="float:left;"><a href="https://rhdevelopers.wordpress.com/feed/"><img style="padding-left:15px;" src="https://rhdevelopers.files.wordpress.com/2013/01/rss-02-24x24.png" alt="RSS"></a></li>
+       <li style="float:left;"><a href="https://plus.google.com/s/rhel%20develop"><img style="padding-left:15px;" src="https://rhdevelopers.files.wordpress.com/2014/02/g24x24b.png" alt="Google+"></a></li>
+</ul></div>
+		</aside><aside id="text-3" class="widget widget_text">			<div class="textwidget"><a target="_blank" class="dev-newsletter" href="https://developers.redhat.com/register"><img src="https://rhdevelopers.files.wordpress.com/2016/02/rhdev_registration_2016_310x140.png" alt="Sign up for the Developer newsletter"></a></div>
+		</aside><aside id="twitter_timeline-2" class="widget widget_twitter_timeline"><a class="twitter-timeline" data-widget-id="717445754370060288" data-theme="light" data-link-color="#f96e5b" data-border-color="#e8e8e8" data-tweet-limit="5" height="400" lang="EN">My Tweets</a></aside><aside id="linkcat-1356" class="widget widget_links"><h1 class="widget-title">Other Red Hat Blogs</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://cloudformsblog.redhat.com"><img src="https://cloudformsredhat.files.wordpress.com/2016/02/cloudforms.jpg"  alt="Cloudforms Blog"  /> Cloudforms Blog</a></li>
+<li><a href="http://middlewareblog.redhat.com"><img src="https://redhatmiddleware.files.wordpress.com/2016/02/middleware.jpg"  alt="Middleware Blog"  /> Middleware Blog</a></li>
+<li><a href="http://redhat.com/blog/mobile"><img src="https://redhatmobile.files.wordpress.com/2016/02/mobile.jpg"  alt="Mobile Blog"  /> Mobile Blog</a></li>
+<li><a href="http://redhatstackblog.redhat.com/"><img src="https://redhatstackblog.files.wordpress.com/2016/02/rhstackblog.jpg"  alt="Red Hat Stack Blog"  /> Red Hat Stack Blog</a></li>
+<li><a href="http://rhelblog.wordpress.com"><img src="https://rhelblog.files.wordpress.com/2016/02/rhel.jpg"  alt="RHEL Blog"  /> RHEL Blog</a></li>
+<li><a href="http://servicesblog.redhat.com"><img src="https://rhservices.files.wordpress.com/2016/02/services.jpg"  alt="Services Speak"  /> Services Speak</a></li>
+<li><a href="http://redhatstorage.redhat.com"><img src="https://rhstorage.files.wordpress.com/2016/02/storage.jpg"  alt="Storage Blog"  /> Storage Blog</a></li>
+<li><a href="http://redhat.com/blog/verticalindustries"><img src="https://rhverticalindustries.files.wordpress.com/2016/02/vertical-industries.jpg"  alt="Vertical Industries Blog"  /> Vertical Industries Blog</a></li>
+
+	</ul>
+</aside>
+<aside id="wp_tag_cloud-3" class="widget wp_widget_tag_cloud"><h1 class="widget-title">Popular Tags</h1><div style="overflow:hidden"><ul class='wp-tag-cloud'>
+	<li><a href='http://developers.redhat.com/blog/tag/containers/' class='tag-link-182564 tag-link-position-1' title='60 topics' style='font-size: 1em;'>containers</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/devnation/' class='tag-link-141044838 tag-link-position-2' title='40 topics' style='font-size: 1em;'>DevNation</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/devops/' class='tag-link-28070474 tag-link-position-3' title='75 topics' style='font-size: 1em;'>DevOps</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/docker/' class='tag-link-4504191 tag-link-position-4' title='41 topics' style='font-size: 1em;'>Docker</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/gcc/' class='tag-link-185469 tag-link-position-5' title='47 topics' style='font-size: 1em;'>gcc</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/jboss/' class='tag-link-12943 tag-link-position-6' title='39 topics' style='font-size: 1em;'>JBoss</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/openshift/' class='tag-link-56495631 tag-link-position-7' title='47 topics' style='font-size: 1em;'>OpenShift</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/python/' class='tag-link-832 tag-link-position-8' title='39 topics' style='font-size: 1em;'>python</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/rhel/' class='tag-link-566306 tag-link-position-9' title='62 topics' style='font-size: 1em;'>RHEL</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/software-collections/' class='tag-link-3111206 tag-link-position-10' title='79 topics' style='font-size: 1em;'>software collections</a></li>
+</ul>
+</div></aside><aside id="author_grid-3" class="widget widget_author_grid"><h1 class="widget-title">Contributors</h1><ul><li><a href="http://developers.redhat.com/blog/author/abonas2014/"> <img alt='' src='https://2.gravatar.com/avatar/848a2c849a1826512f9f7970cf891d7a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/aldyh/"> <img alt='' src='https://1.gravatar.com/avatar/7010a53d59b7a361dfaaa566f869fef8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/am1tshah/"> <img alt='' src='https://1.gravatar.com/avatar/45c31b7256e3a6c9a6da8d1d846dcaeb?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/andrewdinn/"> <img alt='' src='https://0.gravatar.com/avatar/3e70cdde8644d2a2053db24a642ce36d?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/andrewphaley/"> <img alt='' src='https://2.gravatar.com/avatar/5518cce22ff81bc78092b2c8d8ab9092?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/aphredhat/"> <img alt='' src='https://2.gravatar.com/avatar/265128b5ae2022512da16832a1eaf3d8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/atwong/"> <img alt='' src='https://0.gravatar.com/avatar/c63c138b43f03d630a43d50744f424a9?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/bbaude/"> <img alt='' src='https://0.gravatar.com/avatar/380abcf63cb23393e8374b0f39f07af5?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/bconoboy/"> <img alt='' src='https://2.gravatar.com/avatar/b69c8e37d455818dc105f4902d908fe1?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/bean2k14/"> <img alt='' src='https://0.gravatar.com/avatar/61906a9cf42a94a212b70bb842571b2b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/billvt/"> <img alt='' src='https://2.gravatar.com/avatar/ea1ac5bbf4562a2316a76e78fe5d839a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/bkabrda/"> <img alt='' src='https://0.gravatar.com/avatar/60d06f7560160f3ce7aa3877596da63f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/brianatkisson/"> <img alt='' src='https://0.gravatar.com/avatar/004e1e260e9bb66eff7a26d728b5ee24?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/burrsutter/"> <img alt='' src='https://1.gravatar.com/avatar/4f91e291208ba2a4940d7849bf98c601?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/christianhoge/"> <img alt='' src='https://1.gravatar.com/avatar/4a4242ef535bd01441fa03b9cbb9dd2b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/christineflood/"> <img alt='' src='https://1.gravatar.com/avatar/dd84c39606a10cb3584ff11da4c3d209?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/chugrolke/"> <img alt='' src='https://0.gravatar.com/avatar/0de3a6da69eed4baa902533ec3bcbd5c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/cianclarke/"> <img alt='' src='https://0.gravatar.com/avatar/017e4d47ca2362f17f7fe50e4a45422b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/codonell/"> <img alt='' src='https://1.gravatar.com/avatar/db6432077c16aa59f1e061a9356be2aa?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/coneillredhat/"> <img alt='' src='https://1.gravatar.com/avatar/423c95cf9b27ded18f244d5a4a8b5eb2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/cooktheryan/"> <img alt='' src='https://0.gravatar.com/avatar/95bdd88591e977e265804ee974a93a24?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/dankenigsberg/"> <img alt='' src='https://1.gravatar.com/avatar/13da8a91de2c06db4dbec962d9f97411?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/dbhole/"> <img alt='' src='https://0.gravatar.com/avatar/3ca2b11035ba3b5d41e870a2e2bc645c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/djdelorie/"> <img alt='' src='https://1.gravatar.com/avatar/1c35b9e837e7a0266d14da7a5c36e85b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/doelcam/"> <img alt='' src='https://0.gravatar.com/avatar/ca7fc96c68309e057238d7d83a43e088?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/dseketeli/"> <img alt='' src='https://0.gravatar.com/avatar/ccd7b8ade8dc6a84d1b1a019eca54d73?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/dzickus/"> <img alt='' src='https://0.gravatar.com/avatar/0c66dddc78a5db753c8b7e9b0ddb1653?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/ecurleyredhat/"> <img alt='' src='https://1.gravatar.com/avatar/aba89c66cec5593532b74e47a95387f1?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/eiselem/"> <img alt='' src='https://1.gravatar.com/avatar/a8b195bb2287928a48b364974187216c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/eschabell/"> <img alt='' src='https://1.gravatar.com/avatar/4d9c8fd5af7fb084d948ab81ba561572?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/estrenger/"> <img alt='' src='https://1.gravatar.com/avatar/dfc34dd899ce4473cef0bb7cae9efc60?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/evanshortiss/"> <img alt='' src='https://0.gravatar.com/avatar/67b27a125974039ed8446178ff0d0c7e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/fatherlinux/"> <img alt='' src='https://0.gravatar.com/avatar/983b48fd25d27360ee91ead46c0c912e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/fgiloux/"> <img alt='' src='https://2.gravatar.com/avatar/ea7e2d4b4828b2afd6a18f8740aa4ed1?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/florianweimer/"> <img alt='' src='https://1.gravatar.com/avatar/4ece77be874172309e7b5c44ff0281e2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/fozzmoo/"> <img alt='' src='https://2.gravatar.com/avatar/bbe930847faba79706eaa6e358a1fbb2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/gjbianco/"> <img alt='' src='https://1.gravatar.com/avatar/77a1a37d2146221dbbc45aed9f0b68e9?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/gladiac/"> <img alt='' src='https://0.gravatar.com/avatar/ff2f1e3c638391229f288e9449c387f3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/gvijayar/"> <img alt='' src='https://1.gravatar.com/avatar/47f38abec07342a73d1afc6d85885ad8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/harrymower/"> <img alt='' src='https://2.gravatar.com/avatar/2f86eb1186fc3c29c15bf0aed1cea26e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/honzahorakrh/"> <img alt='' src='https://1.gravatar.com/avatar/1caabb383d82f627eb427cc6c3231431?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/hruppredhat/"> <img alt='' src='https://0.gravatar.com/avatar/f38e7120585ab71eb3e63c1552e9463b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jamesfalkner0/"> <img alt='' src='https://0.gravatar.com/avatar/0295b91cac6981b8bb87bf0d73dc0621?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/japerezredhatcom/"> <img alt='' src='https://0.gravatar.com/avatar/6bdaeaeb098a22605c225a6ba46dd040?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jasonmarley/"> <img alt='' src='https://1.gravatar.com/avatar/daac41372925bcc7fa2d7d40603a2433?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jayunit100/"> <img alt='' src='https://0.gravatar.com/avatar/024d1da9fad214ca44af8fcc649ebb86?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jbressers/"> <img alt='' src='https://1.gravatar.com/avatar/add013cf591925737c3e8d7e17853574?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jcajka/"> <img alt='' src='https://1.gravatar.com/avatar/d3995dac164e1a2ca68f4a821cf6b072?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jdoyleoss/"> <img alt='' src='https://1.gravatar.com/avatar/a958b14de092fbd053c43d4cb8d4da9d?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jeffreyalaw/"> <img alt='' src='https://0.gravatar.com/avatar/fd457b0cdf04552cdb5a19ffb225bda7?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jeremyeder/"> <img alt='' src='https://2.gravatar.com/avatar/ef9a8dd74813696f53a543ae7cb590b5?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jgalar/"> <img alt='' src='https://2.gravatar.com/avatar/8689763327e5bbda7dec9f18846b60ae?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jkrieger550/"> <img alt='' src='https://2.gravatar.com/avatar/e8d912ff2f130eb18a8c4d6da3045311?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/joemario4/"> <img alt='' src='https://0.gravatar.com/avatar/0471f362b2675110465e32382bbdf814?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jonmasters/"> <img alt='' src='https://2.gravatar.com/avatar/e50536dd234dab5418c2b273d862ef7a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jorton42/"> <img alt='' src='https://2.gravatar.com/avatar/29803e00bd984c00b620240c9aa8aad3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jplesnik/"> <img alt='' src='https://2.gravatar.com/avatar/2b2d7f9b88b5228d6dc257c4e855a023?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jsomara/"> <img alt='' src='https://0.gravatar.com/avatar/0ea48d01a9fbb9df0d198be357c381a4?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jstribny/"> <img alt='' src='https://1.gravatar.com/avatar/105003fa131519686e59e7d4ad54bef3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jtclark48/"> <img alt='' src='https://2.gravatar.com/avatar/545ec662f1c34118bc5c07e1b9ab646d?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jwakely/"> <img alt='' src='https://2.gravatar.com/avatar/8ef724d341328072bcc7bdee90e7e78c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/kirk10kirk/"> <img alt='' src='https://1.gravatar.com/avatar/dfda0a7a4705745e5ba50c6ec5d927cc?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/kovariadam/"> <img alt='' src='https://2.gravatar.com/avatar/27ef7990cbd7e97294aee03226b9d6ef?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/langdonwhite/"> <img alt='' src='https://1.gravatar.com/avatar/a18d075e58019278eec247656fd1f208?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/licortes/"> <img alt='' src='https://0.gravatar.com/avatar/042c13bea785621bce87c2b1f3248d64?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lincolnredhat/"> <img alt='' src='https://0.gravatar.com/avatar/07baa725cf5b72160fb65370cd226be6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lufimtse/"> <img alt='' src='https://2.gravatar.com/avatar/b40b8648f8508172c5254a5e054e8c1a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lukasberk/"> <img alt='' src='https://1.gravatar.com/avatar/d42d057846165c3ae255a4d3d30f081d?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lulinqing/"> <img alt='' src='https://0.gravatar.com/avatar/0fcbb48dcc141cbf1444480eefc09a99?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lwang8redhat/"> <img alt='' src='https://2.gravatar.com/avatar/573dfe5470c93453c42080bffe9939d6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lxoliva/"> <img alt='' src='https://0.gravatar.com/avatar/c667f0bdadc7f47e0b0e573af4d3cecc?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mairin/"> <img alt='' src='https://0.gravatar.com/avatar/6538a2e21a4f5358c628382dd63e5be5?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/matbooth/"> <img alt='' src='https://2.gravatar.com/avatar/2c95afb6d7a2f20a997de29fba615ccb?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mikeguerette/"> <img alt='' src='https://2.gravatar.com/avatar/5620321ddd2a92bb260e052eeb01130f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mkcochran/"> <img alt='' src='https://1.gravatar.com/avatar/45a16f05307222d2cb5be148bff34ffb?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mlichvar/"> <img alt='' src='https://0.gravatar.com/avatar/64a706b299e8307793da5be8786d667f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mmaslano/"> <img alt='' src='https://0.gravatar.com/avatar/99cc6e73344194234ce7b7c498187a98?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mmcgrath2015/"> <img alt='' src='https://1.gravatar.com/avatar/dd3d70c4727fd84b9aa2fdb7cc4b5647?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mrgarybenson/"> <img alt='' src='https://2.gravatar.com/avatar/b840fdff833fab9b0454f85c31ea4d83?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/msebor/"> <img alt='' src='https://2.gravatar.com/avatar/e3e950b2ba2c27e5142995a6eeff9751?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mskalick/"> <img alt='' src='https://2.gravatar.com/avatar/e3a0334d457fb4c2fc67b6e6cdc86b7f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/msuchyredhat/"> <img alt='' src='https://0.gravatar.com/avatar/02ac1dfec0751143ab861d47ae5a69e0?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mwernerrht/"> <img alt='' src='https://0.gravatar.com/avatar/fef31627dfab28f70b0849c79feb391b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mykrandal/"> <img alt='' src='https://0.gravatar.com/avatar/6a4497d7be826bde6f7b79e1dd19d51e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/natoscott/"> <img alt='' src='https://1.gravatar.com/avatar/71410ab7ab8279092a34e0acc0806397?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/ncoghlandev/"> <img alt='' src='https://0.gravatar.com/avatar/31dcffc1c493b18e971f5136aede06e3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/nickclifton/"> <img alt='' src='https://0.gravatar.com/avatar/cd16507dadba18594aa5b348cd21748a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/nmcl2001/"> <img alt='' src='https://2.gravatar.com/avatar/80e992afe5349ceb8ea6718ff238f276?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/oourfali/"> <img alt='' src='https://1.gravatar.com/avatar/70d78f78478c9fa3a757f369abe22792?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/patsyfranklin/"> <img alt='' src='https://1.gravatar.com/avatar/76ce3018272a0c537d21c57bde491f8e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/peterpawelski/"> <img alt='' src='https://1.gravatar.com/avatar/42a2712e60b73a0430f34e6b215874ba?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/phracek/"> <img alt='' src='https://2.gravatar.com/avatar/b5ef1fd94cd03dd9a962dac0e9c44b88?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/plmuir/"> <img alt='' src='https://1.gravatar.com/avatar/4ebf34d2cbe74a29138a6d1e477ab4c8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/pmachata/"> <img alt='' src='https://2.gravatar.com/avatar/b32dc242d69b599e26d95ac64ad35898?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/ppisar/"> <img alt='' src='https://2.gravatar.com/avatar/8b1adcd7b129abb30ee50ba70ff24774?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rafabene/"> <img alt='' src='https://0.gravatar.com/avatar/087b923821c70dc1f8965b036d6aa6e2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rayploski/"> <img alt='' src='https://2.gravatar.com/avatar/ec95e60c6326a66b7f6129541703356c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/realgenekim/"> <img alt='' src='https://0.gravatar.com/avatar/9d4d49daf55896d961bb4dcf380ec7c0?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/redhattoolchainblog/"> <img alt='' src='https://0.gravatar.com/avatar/06a9cd8cf496732f507c405e144a248e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/remicollet/"> <img alt='' src='https://2.gravatar.com/avatar/5be85c2ed440ab3a9be900a2def9bb82?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rgrunber/"> <img alt='' src='https://2.gravatar.com/avatar/2c974ec82ee265ab6f65ec36f2790a11?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhatdan/"> <img alt='' src='https://1.gravatar.com/avatar/75d88487c07b14b6c7aa0599fce600bf?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhcrob/"> <img alt='' src='https://1.gravatar.com/avatar/df09397edec40d5ef9072ad25590b299?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhdmalcolm/"> <img alt='' src='https://0.gravatar.com/avatar/07409edb3a1ad06230bdd725369ed675?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhenness/"> <img alt='' src='https://1.gravatar.com/avatar/a31a9c961e4374050a90fa0c34f59a09?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhjakub/"> <img alt='' src='https://0.gravatar.com/avatar/9585d34bb20a1b352761442eb6ea824e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhjason/"> <img alt='' src='https://0.gravatar.com/avatar/fcd9519b99b0fce399db68d2acc024d7?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhpolacek/"> <img alt='' src='https://2.gravatar.com/avatar/8037e14855b9bacea1d52274f396bd59?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhtghoelzer/"> <img alt='' src='https://2.gravatar.com/avatar/2c49c26fca754224c3aa68b42c6615a3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rickjwagner/"> <img alt='' src='https://2.gravatar.com/avatar/583441bede37dda7dd62eff35dfe536c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rkratky/"> <img alt='' src='https://1.gravatar.com/avatar/af3cfad6c50ea4fc0cc2912f42d5f10e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rpelisse/"> <img alt='' src='https://0.gravatar.com/avatar/689ae751348d260f7b19d7320df96507?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rth99/"> <img alt='' src='https://2.gravatar.com/avatar/b95a00a6a8c7316f8ee7580d21c53553?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/ryry/"> <img alt='' src='https://2.gravatar.com/avatar/b5a7007067c6ba69ca1b0c7d57b2760a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/sabre1041/"> <img alt='' src='https://1.gravatar.com/avatar/4f3fb70381ae0f60e68c9412a4d62e81?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/scollierrh/"> <img alt='' src='https://1.gravatar.com/avatar/45904edfc18589f747d87dcd3553af7f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/shadowman2016/"> <img alt='' src='https://2.gravatar.com/avatar/277d74c88d896f4aeb5b43c1e78c0fa7?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/sjclark2/"> <img alt='' src='https://2.gravatar.com/avatar/b923f53c2629fad3dec57bf31a381bc6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/smilnerrh/"> <img alt='' src='https://1.gravatar.com/avatar/a4a025afd6d295bf173b8fa43d864869?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/sosiouxme/"> <img alt='' src='https://0.gravatar.com/avatar/c06920ae028c4a242ef7102ddc9aa9e6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/spoyarek/"> <img alt='' src='https://0.gravatar.com/avatar/0ef703927cf85f436f8e73b9fb919554?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/stianth/"> <img alt='' src='https://0.gravatar.com/avatar/cbdd5a0ed9f8a18af9e777a2fa7d4680?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/strategymatt/"> <img alt='' src='https://2.gravatar.com/avatar/ee7437a537275164a9369bc8ccc3e628?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/sumantrorht/"> <img alt='' src='https://1.gravatar.com/avatar/a4190156da1283ee25557a89e7c1e9c0?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/swengineersamuel/"> <img alt='' src='https://1.gravatar.com/avatar/d614b7a37a87a897488cc6b8442398d6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/tbielawa/"> <img alt='' src='https://0.gravatar.com/avatar/0f8b523b3f9aa79dea4ded65d470d758?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/thesteve0/"> <img alt='' src='https://0.gravatar.com/avatar/f74c021b6f76e58e44cab9d426e30985?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/thildred/"> <img alt='' src='https://0.gravatar.com/avatar/0c42bffa0705ab2673c0bbcb844cb4a6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/thozza88/"> <img alt='' src='https://1.gravatar.com/avatar/1a565958723ca056322820ccdd2d8817?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/tomastomecek/"> <img alt='' src='https://2.gravatar.com/avatar/86a332a848dc6260af0575f55ce1f499?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/tqvarnst/"> <img alt='' src='https://1.gravatar.com/avatar/d1e436103d0ce4dcecc798ea19f540e8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/triegelrh/"> <img alt='' src='https://2.gravatar.com/avatar/ba2d2d94a22b3e455c6fccdc98ecfb83?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/w4otn/"> <img alt='' src='https://0.gravatar.com/avatar/6e86fd3a4b63c34a73bbb08740a6e7b0?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/wcohen2013/"> <img alt='' src='https://1.gravatar.com/avatar/d1413fade5f6d17a9fb054abb3fe26f2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/yf2014/"> <img alt='' src='https://0.gravatar.com/avatar/3eeb72f6677dbe523ff396f4980c5608?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li></ul></aside><aside id="follow_button_widget-2" class="widget widget_follow_button_widget">
+		<a class="wordpress-follow-button" href="https://developers.redhat.com/blog" data-blog="https://developers.redhat.com/blog" data-lang="en" data-show-follower-count="true">Follow Red Hat Developer Blog on WordPress.com</a>
+		<script type="text/javascript">(function(d){var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');p.type = 'text/javascript';p.async = true;p.src = '//widgets.wp.com/platform.js';f.parentNode.insertBefore(p,f);}(document));</script>
+
+		</aside></div><!-- #secondary --><script type='text/javascript'>
+								var _gaq = _gaq || [];
+								_gaq.push(['_setAccount', 'UA-43021562-1']);
+_gaq.push(['_setCustomVar', 1, 'author', '']);
+_gaq.push(['_setCustomVar', 2, 'category', '']);
+_gaq.push(['_setCustomVar', 3, 'context', 'post_tag']);
+_gaq.push(['_setCustomVar', 4, 'pub-date', '']);
+_gaq.push(['_setCustomVar', 5, 'tags', 'gcc']);
+_gaq.push(['_trackPageview']);
+
+								(function() {
+									var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+									ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+									var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+								})();
+							</script>
+			</div><!-- .row -->
+		</div><!-- .container.main-body-container -->
+	</div><!-- #content -->
+
+<footer class="bottom"><div class="row">
+<div class="large-5 columns"><a href="https://www.redhat.com" target="_blank"><img src="//static.jboss.org/rhd/fonts/images_branding_RHLogo_white-5.svg" class="rh-logo" alt="Red Hat"></a></div>
+<div class="large-5 columns">
+<h3>Helpful Links</h3>
+<ul class="quick-links">
+<li><a href="https://access.redhat.com/security/team/contact/" target="_blank">Report a security problem<i class="fa fa-external-link"></i></a></li>
+<li><a href="http://www.redhat.com/en/services/consulting" target="_blank">Consulting solutions<i class="fa fa-external-link"></i></a></li>
+<li><a href="http://www.redhat.com/en/services/training" target="_blank">Training<i class="fa fa-external-link"></i></a></li>
+</ul>
+</div>
+<div class="large-5 columns">
+<h3>Related Sites</h3>
+<ul class="quick-links">
+<li><a href="https://www.redhat.com" target="_blank">Red Hat Corporate<i class="fa fa-external-link"></i></a></li>
+<li><a href="https://access.redhat.com/" target="_blank">Customer Portal<i class="fa fa-external-link"></i></a></li>
+<li><a href="https://www.openshift.com/" target="_blank">OpenShift<i class="fa fa-external-link"></i></a></li>
+</ul>
+</div>
+<div class="large-9 columns">
+<h3>Red Hat Developers</h3>
+<p>We provide a complete experience to enable enterprise developers and software builders to envision, create and maintain high-value enterprise software.</p>
+<div class="row">
+<div class="large-12 columns"><ul class="inline-list">
+<li><a href="http://developers.redhat.com/about">About us</a></li>
+<li><a href="mailto:developer@redhat.com">Contact us</a></li>
+</ul></div>
+<div class="large-12 columns"><ul class="social-nav">
+<li><a href="https://plus.google.com/103877536668756379905/posts" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+<li><a href="https://www.youtube.com/channel/UC7noUdfWp-ukXUlAsJnSm-Q" target="_blank"><i class="fa fa-youtube"></i></a></li>
+<li><a href="https://www.facebook.com/RedHatDeveloperProgram" target="_blank"><i class="fa fa-facebook"></i></a></li>
+<li><a href="https://twitter.com/rhdevelopers" target="_blank"><i class="fa fa-twitter"></i></a></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="row legal">
+<div class="large-5 medium-24 right columns">
+<a class="devnation-logo" href="http://www.devnation.org/" target="_blank"><img src="//static.jboss.org/rhd/images/images_design_logo_devnation_footer-5.png" alt="Red Hat Summit"></a><a class="summit-logo" href="http://www.redhat.com/summit/" target="_blank"><img src="//static.jboss.org/rhd/images/images_design_logo-summit-4.png" alt="Red Hat Summit"></a>
+</div>
+<div class="large-19 columns"><ul class="inline-list">
+<li><a class="copyright">Copyright © 2016 Red Hat Inc.</a></li>
+<li><a href="http://www.redhat.com/en/about/privacy-policy" target="_blank">Privacy statement    |</a></li>
+<li><a href="http://www.redhat.com/en/about/terms-use" target="_blank">Terms of use    |</a></li>
+<li><a href="http://www.redhat.com/en/about/all-policies-guidelines" target="_blank">All policies and guidelines</a></li>
+</ul></div>
+</div></footer>
+</div><!-- #page -->
+
+
+
+
+<!-- SiteCatalyst code version: H.21.
+Copyright 1996-2010 Adobe, Inc. All Rights Reserved
+More info available at http://www.omniture.com -->
+ 
+<div id="oTags">
+	<script type="text/javascript" src="http://www.redhat.com/assets/js/noncms_s_code.js"></script>
+	<script type="text/javascript"><!--
+	//get php vars
+		 
+	var omniPageName = '"rh | blog | rhdevelopers |   gcc"';
+	var omniFMS = 'null';
+	var omniContentType = '"blog"';
+
+        //then get js vars
+	var wlh = window.location.href;
+	var sectionName = ["","",""];
+	if (omniFMS.length > 0) {
+	sectionName[0] = omniFMS;
+	} else {
+	sectionName = wlh.slice(wlh.indexOf('.com/')).replace('.com/','');
+	sectionName = sectionName.slice(0,sectionName.lastIndexOf('/')).split('/');
+	if (sectionName[1] == undefined) { sectionName[1] = ""; }
+	if (sectionName[2] == undefined) { sectionName[2] = ""; }
+	}
+	if (wlh.indexOf('?') > -1) {
+	    ev18=wlh.slice(0,wlh.indexOf('?'));
+	    pp21=wlh.slice(0,wlh.indexOf('?'));
+	} else {
+	    ev18=wlh;
+	    pp21=wlh;
+	};
+	/* You may give each page an identifying name, server, and channel on
+	the next lines. */
+	var wlh = window.location.href;
+	s.pageName=omniPageName
+	s.server=""
+	s.channel=omniContentType
+	s.pageType=""
+	s.prop1=""
+	s.prop2="en"
+	s.prop3="us"
+	s.prop4=wlh
+	s.prop21=pp21
+	s.prop14=sectionName[0]
+	s.prop15=sectionName[1]
+	s.prop16=sectionName[2]
+	/* E-commerce Variables */
+	s.campaign=""
+	s.eVar1=""
+	s.eVar3=""
+	s.eVar18=ev18
+	s.eVar19="us"
+	s.eVar22="en"
+	s.eVar23=wlh
+	s.eVar27=sectionName[0]
+	s.eVar28=sectionName[1]
+	s.eVar29=sectionName[2]
+	s.events=""
+	s.products=""
+	s.state=""
+	s.zip=""
+	s.purchaseID=""
+	--></script>
+	 
+	<script type="text/javascript" src="http://www.redhat.com/j/rh_omni_footer.js"></script>
+	<script language="JavaScript" type="text/javascript"><!--
+	if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+	//--></script><noscript><a href="http://www.omniture.com" title="Web Analytics"><img
+	src="https://smtrcs.redhat.com/b/ss/redhatcom,redhatglobal/1/H.21--NS/0?[AQB]&cdp=3&[AQE]"
+	height="1" width="1" border="0" alt="" /></a></noscript><!--/DO NOT REMOVE/-->
+	<!-- End SiteCatalyst code version: H.21. -->
+</div>   
+
+		<script type="text/javascript">
+		//<![CDATA[
+		var infiniteScroll = {"settings":{"id":"main","ajaxurl":"https:\/\/developers.redhat.com/blog\/?infinity=scrolling","type":"click","wrapper":true,"wrapper_class":"infinite-wrap","footer":"page","click_handle":"1","text":"Older posts","totop":"Scroll back to top","currentday":"25.02.16","order":"DESC","scripts":[],"styles":[],"google_analytics":false,"offset":0,"history":{"host":"developers.redhat.com/blog","path":"\/tag\/gcc\/page\/%d\/","use_trailing_slashes":true,"parameters":""},"query_args":{"tag":"gcc","error":"","m":"","p":0,"post_parent":"","subpost":"","subpost_id":"","attachment":"","attachment_id":0,"name":"","static":"","pagename":"","page_id":0,"second":"","minute":"","hour":"","day":0,"monthnum":0,"year":0,"w":0,"category_name":"","cat":"","tag_id":185469,"author":"","author_name":"","feed":"","tb":"","paged":0,"meta_key":"","meta_value":"","preview":"","s":"","sentence":"","title":"","fields":"","menu_order":"","embed":"","category__in":[],"category__not_in":[],"category__and":[],"post__in":[],"post__not_in":[],"post_name__in":[],"tag__in":[],"tag__not_in":[],"tag__and":[],"tag_slug__in":["gcc"],"tag_slug__and":[],"post_parent__in":[],"post_parent__not_in":[],"author__in":[],"author__not_in":[],"posts_per_page":6,"ignore_sticky_posts":false,"suppress_filters":false,"cache_results":false,"update_post_term_cache":true,"update_post_meta_cache":true,"post_type":"","nopaging":false,"comments_per_page":"50","no_found_rows":false,"order":"DESC"},"last_post_date":"2016-02-25 11:53:50","stats":"blog=43520001&v=wpcom&tz=-4&user_id=0&subd=rhdevelopers&x_pagetype=infinite-click"}};
+		//]]>
+		</script>
+		<!-- wpcom_wp_footer -->
+		<script type="text/javascript">
+			!function(d,s,id){
+				var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+				if(!d.getElementById(id)){
+					js=d.createElement(s);
+					js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+					fjs.parentNode.insertBefore(js,fjs);
+				}
+			}(document,"script","twitter-wjs");
+		</script>
+			<div style="display:none">
+	</div>
+
+	<div id="bit" class="loggedout-follow-normal">
+		<a class="bsub" href="javascript:void(0)"><span id='bsub-text'>Follow</span></a>
+		<div id="bitsubscribe">
+
+					<h3><label for="loggedout-follow-field">Follow &ldquo;Red Hat Developer Blog&rdquo;</label></h3>
+
+			<form action="https://subscribe.wordpress.com" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Get every new post delivered to your Inbox.</p>
+
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+						<p class="bit-follow-count">Join 6,624 other followers</p>
+			<p><input type="email" name="email" placeholder="Enter your email address" id="loggedout-follow-field"/></p>
+
+			<input type="hidden" name="action" value="subscribe"/>
+			<input type="hidden" name="blog_id" value="43520001"/>
+			<input type="hidden" name="source" value="https://developers.redhat.com/blog/tag/gcc/"/>
+			<input type="hidden" name="sub-type" value="loggedout-follow"/>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="efae6fc368" /><input type="hidden" name="_wp_http_referer" value="/tag/gcc/" />
+			<p id='bsub-subscribe-button'><input type="submit" value="Sign me up" /></p>
+			</form>
+					<div id='bsub-credit'><a href="https://wordpress.com/?ref=lof">Build a website with WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+<script type='text/javascript' charset='UTF-8' id='polldaddyRatings'><!--//--><![CDATA[//><!--
+PDRTJS_settings_6530569_post_419633={"id":6530569,"unique_id":"wp-post-419633","title":"What%20is%20new%20in%20OpenMP%26nbsp%3B4.5","permalink":"http:\/\/developers.redhat.com\/blog\/2016\/03\/22\/what-is-new-in-openmp-4-5-3\/","item_id":"_post_419633"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_6530569_post_419633 == 'undefined' ){PDRTJS_6530569_post_419633 = new PDRTJS_RATING( PDRTJS_settings_6530569_post_419633 );}}PDRTJS_settings_6530569_post_419395={"id":6530569,"unique_id":"wp-post-419395","title":"Testing%20GCC%20in%20the%26nbsp%3Bwild","permalink":"http:\/\/developers.redhat.com\/blog\/2016\/03\/10\/testing-gcc-in-the-wild\/","item_id":"_post_419395"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_6530569_post_419395 == 'undefined' ){PDRTJS_6530569_post_419395 = new PDRTJS_RATING( PDRTJS_settings_6530569_post_419395 );}}PDRTJS_settings_6530569_post_419348={"id":6530569,"unique_id":"wp-post-419348","title":"Curing%20a%20legacy%26nbsp%3Bheader-ache.","permalink":"http:\/\/developers.redhat.com\/blog\/2016\/03\/03\/curing-a-legacy-header-ache\/","item_id":"_post_419348"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_6530569_post_419348 == 'undefined' ){PDRTJS_6530569_post_419348 = new PDRTJS_RATING( PDRTJS_settings_6530569_post_419348 );}}PDRTJS_settings_6530569_post_418851={"id":6530569,"unique_id":"wp-post-418851","title":"Why%20%26lt%3B%20cstdlib%20%26gt%3B%20is%20more%20complicated%20than%20you%20might%26nbsp%3Bthink","permalink":"http:\/\/developers.redhat.com\/blog\/2016\/02\/29\/why-cstdlib-is-more-complicated-than-you-might-think\/","item_id":"_post_418851"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_6530569_post_418851 == 'undefined' ){PDRTJS_6530569_post_418851 = new PDRTJS_RATING( PDRTJS_settings_6530569_post_418851 );}}PDRTJS_settings_6530569_post_417907={"id":6530569,"unique_id":"wp-post-417907","title":"GCC%206%3A%20-Wmisleading-indentation%20vs%20%26%238220%3Bgoto%26nbsp%3Bfail%3B%26%238221%3B","permalink":"http:\/\/developers.redhat.com\/blog\/2016\/02\/26\/gcc-6-wmisleading-indentation-vs-goto-fail\/","item_id":"_post_417907"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_6530569_post_417907 == 'undefined' ){PDRTJS_6530569_post_417907 = new PDRTJS_RATING( PDRTJS_settings_6530569_post_417907 );}}PDRTJS_settings_6530569_post_418926={"id":6530569,"unique_id":"wp-post-418926","title":"New%20asm%20flags%20feature%20for%20x86%20in%20GCC%26nbsp%3B6","permalink":"http:\/\/developers.redhat.com\/blog\/2016\/02\/25\/new-asm-flags-feature-for-x86-in-gcc-6\/","item_id":"_post_418926"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_6530569_post_418926 == 'undefined' ){PDRTJS_6530569_post_418926 = new PDRTJS_RATING( PDRTJS_settings_6530569_post_418926 );}}
+//--><!]]></script><script type='text/javascript' charset='UTF-8' src='https://polldaddy.com/js/rating/rating.js'></script>
+	<div id="carousel-reblog-box">
+		<form action="" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="" class="cancel">Cancel</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="43520001" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://developers.redhat.com/blog" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Red Hat Developer Blog" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="c809868c27" /><input type="hidden" name="_wp_http_referer" value="/tag/gcc/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+<link rel='stylesheet' id='all-css-0' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1458924076h' type='text/css' media='all' />
+<!--[if lte IE 8]>
+<link rel='stylesheet' id='jetpack-carousel-ie8fix-css'  href='https://s1.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel-ie8fix.css?m=1412618825h&#038;ver=20121024' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='all-css-2' href='https://s1.wp.com/wp-content/mu-plugins/tiled-gallery/tiled-gallery.css?m=1443731146h' type='text/css' media='all' />
+<script type='text/javascript' src='https://s1.wp.com/_static/??-eJx9j8EOwjAMQ3+ILgyhAQfEt0xdWFPaLDRtgb9nB0AIod0s+9mS4SbGTpyRM3iFAStZlHvjdQVfUSxGQhmJFQJdUOFasKDreQiYFmDiMzHlx0f8stlhnOcqCbw7CVUmVqpoKPbjnPo/5sJQckb69HqkNpFkbSLxXDnFY7vt2vX+sOs2/gnDB16T'></script>
+<script type='text/javascript' src='http://static.jboss.org/rhd/1.2-build-1865/javascripts/foundation/foundation.js?ver=4.5.1'></script>
+<script type='text/javascript' src='https://developers.redhat.com/auth/js/keycloak.js?ver=4.5.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wpcomVipAnalytics = {"is_404":"0","is_home":"0","is_single":"0","is_front_page":"0","is_archive":"1","percentToTrack":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var JetpackEmojiSettings = {"base_url":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/emoji\/twemoji\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyNjEsOwjAMRC+EsQi/bhBnCcFqYvIjTlr19lAkFrCArkYzem9wzGBSrBQrVkuBBAeXsVi40gAXn3pkQZG0ZlnhIrjYZyOfMpV5Ar43KtO3Hxpk33oXBRXML/w6Ax21n6oz8kOgkNhhHT/yL89UszY3WEa/qXM4bXYHpbrjftvxAzSab9g='></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var FB_WP=FB_WP||{};FB_WP.queue={_methods:[],flushed:false,add:function(fn){FB_WP.queue.flushed?fn():FB_WP.queue._methods.push(fn)},flush:function(){for(var fn;fn=FB_WP.queue._methods.shift();){fn()}FB_WP.queue.flushed=true}};window.fbAsyncInit=function(){FB.init({"channelUrl":"https:\/\/rhdevelopers.wordpress.com\/wp-content\/themes\/vip\/plugins\/facebook\/channel.php","xfbml":true,"appId":"1099297616762136"});if(FB_WP && FB_WP.queue && FB_WP.queue.flush){FB_WP.queue.flush()}}
+/* ]]> */
+</script>
+<div id="fb-root"></div><script type="text/javascript">(function(d){var id="facebook-jssdk";if(!d.getElementById(id)){var js=d.createElement("script"),ref=d.getElementsByTagName("script")[0];js.id=id,js.async=true,js.src="https:\/\/connect.facebook.net\/en_US\/all.js",ref.parentNode.insertBefore(js,ref)}})(document)</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/developers.redhat.com/blog\/wp-admin\/admin-ajax.php","nonce":"d4ef35298b","display_exif":"1","display_geo":"1","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/rhdevelopers.wordpress.com\/wp-login.php?redirect_to=http%3A%2F%2Fdevelopers.redhat.com%2Fblog%2F2016%2F02%2F25%2Fnew-asm-flags-feature-for-x86-in-gcc-6%2F","local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=43520001&v=wpcom&tz=-4&user_id=0&subd=rhdevelopers","is_public":"1","reblog_enabled":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s1.wp.com/_static/??/wp-includes/js/swfobject.js,/wp-content/plugins/video/assets/js/videopress.js,/wp-content/mu-plugins/carousel/jetpack-carousel.js?m=1459374577j'></script>
+<script type='text/javascript' src='https://platform.twitter.com/widgets.js?ver=20111117'></script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVy7EOQEAMANAfUnViYBDfgmsupepyivh7VpMY3/DwjDCuaqSGyw5R9sC6oZ1sRgkG6cd54OQhMqHSQYnUs4Z82jL8c+P3YyEPoRehdL31rG5pXVXUTVO70k03DU5D1g=='></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script type="text/javascript">
+			jQuery.extend( infiniteScroll.settings.scripts, ["jquery","jquery-core","jquery-migrate","mobile-useragent-info","postmessage","jquery_inview","jetpack_resize","loggedout-subscribe","wp-google-analytics","lightbox","rh-vendor-modernizr","spin","jquery.spin","devicepx","jetpack_likes_queuehandler","the-neverending-homepage","responsive-images","rh_parent-main-scripts","rh-vendor-foundation","rh-keycloak","rh-keycloak-sso","rh-blog-custom-js","wpcom-vip-analytics","twemoji","jetpack-emoji","jetpack-emoji-init","facebook-jssdk","swfobject","videopress","jetpack-carousel","twitter-widgets","twitter-widgets-infinity","twitter-widgets-pending","tiled-gallery"] );
+			jQuery.extend( infiniteScroll.settings.styles, ["wpcom-smileys","jetpack_likes","loggedout-subscribe","the-neverending-homepage","wpcom-core-compat-playlist-styles","mp6hacks","wpcom-bbpress2-staff-css","rh-parent-style","rh_parent-style-main","rh_parent-style","jetpack-emoji-css","noticons","geo-location-flair","reblogging","h4-global","static-red-hat","rh-fontawesome","jetpack-carousel","tiled-gallery","jetpack-carousel-ie8fix"] );
+		</script><script src="//stats.wp.com/w.js?52" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'43520001','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'43520001','v':'wpcom','tz':'-4','user_id':'0','subd':'rhdevelopers'}]);
+function st_vt() {var x=document.createElement("img");x.src="https://pixel.wp.com/g.gif?blog=43520001&v=wpcomvt&tz=-4&user_id=0&subd=rhdevelopers&rand="+Math.random();}
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1BNmNJfGhxNCVxUDExYmtXRThKbHcwXTdETWI1alhvb1oseHImN101ZFpEakVpYjlQYVFLYzBaVHRtPz0wXS9bMnBuM2J1PXlzK3hMUHpbbGgxRGx3aiZDeXQvKzhDP35mZ3omWzBFWFYzeEV2eHprOHR0ZHp3PzAybkkmW2Y1ZEUwL1VKMm9YV0k/WU1vaEJrOT1JMF1lalFVc1hqUmViP0h6US1ZSmV3Jm8zY2l8aWo2SmNWa0pGalsyZDd2RlZPVi4sPXJ6azNzQiU0JTRJTHZ8aFB8bFRQTi5dd1AwX0tkS2ZDL0psd25fY000V2QzWTNnbm5JNnJEQjc/NHImRFo5'}]);
+_stq.push([ 'clickTrackerInit', '43520001', '0' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<!-- Red Hat Developers JS -->
+  <script>
+  $(document).foundation();
+  </script>
+
+  <script>
+  
+  mobileNav = function() {
+    $('.nav-toggle').on('click touchend',function(e) {
+        e.preventDefault(),$('body').toggleClass('nav-open');
+    });
+    $(".has-sub-nav > a").on("click", function(e) {
+           if(920 >= window.innerWidth) {
+               e.preventDefault(),
+               $(".sub-nav-open").not($(this).parent()).removeClass("sub-nav-open"),
+               $(this).parent().toggleClass("sub-nav-open");
+           }
+    });
+    };
+
+
+    mobileNav();
+  
+  </script>
+<!-- End Red Hat Developers JS -->
+</body>
+</html>

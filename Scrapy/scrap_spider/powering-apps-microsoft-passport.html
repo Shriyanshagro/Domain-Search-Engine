@@ -1,0 +1,573 @@
+<!doctype html>
+<!--[if lt IE 7]><html id="html" class="ie oldie ie6" lang="en"><![endif]-->
+<!--[if IE 7]><html id="html" class="ie oldie ie7" lang="en"><![endif]-->
+<!--[if IE 8]><html id="html" class="ie oldie ie8" lang="en"><![endif]-->
+<!--[if IE 9]><html id="html" class="ie ie9" lang="en"><![endif]-->
+<!--[if !IE]>--><html id="html" lang="en"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Biometric Authentication with Microsoft Passport -Telerik Developer Network</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="http://developer.telerik.com/wp-content/themes/tdnv2/style.css?1446758485" rel="stylesheet" />
+   
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://developer.telerik.com/feed/" />
+	<link rel="pingback" href="http://developer.telerik.com/xmlrpc.php" />
+	<link rel="shortcut icon" href="http://developer.telerik.com/wp-content/themes/tdnv2/assets/img/favicon.ico" />
+    <script async="" defer="" src="//survey.g.doubleclick.net/async_survey?site=l2o5nmhmescld5tf6mvsjxeb6m"></script>
+    
+<!-- This site is optimized with the Yoast SEO plugin v3.2.4 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Sam Basu explains how to use Microsoft Passport for implementing biometric security within a Universal Windows Application."/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="http://developer.telerik.com/featured/powering-apps-microsoft-passport/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Biometric Authentication with Microsoft Passport -" />
+<meta property="og:description" content="Sam Basu explains how to use Microsoft Passport for implementing biometric security within a Universal Windows Application." />
+<meta property="og:url" content="http://developer.telerik.com/featured/powering-apps-microsoft-passport/" />
+<meta property="og:site_name" content="Telerik Developer Network" />
+<meta property="article:section" content=".NET" />
+<meta property="article:published_time" content="2016-03-22T06:00:48-04:00" />
+<meta property="article:modified_time" content="2016-03-21T19:11:13-04:00" />
+<meta property="og:updated_time" content="2016-03-21T19:11:13-04:00" />
+<meta property="og:image" content="http://developer.telerik.com/wp-content/uploads/2016/03/ms_passpor_header.jpg" />
+<meta property="og:image:width" content="1170" />
+<meta property="og:image:height" content="297" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Telerik Developer Network &raquo; Biometric Authentication with Microsoft Passport Comments Feed" href="http://developer.telerik.com/featured/powering-apps-microsoft-passport/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/developer.telerik.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.5.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;if(!g||!g.fillText)return!1;switch(g.textBaseline="top",g.font="600 32px Arial",a){case"flag":return g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3;case"diversity":return g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,d=c[0]+","+c[1]+","+c[2]+","+c[3],g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e;case"simple":return g.fillText(h(55357,56835),0,0),0!==g.getImageData(16,16,1,1).data[0];case"unicode8":return g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='kendo-common-css'  href='http://cdn.kendostatic.com/2014.3.1119/styles/kendo.common.min.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='kendo-default-css'  href='http://cdn.kendostatic.com/2014.3.1119/styles/kendo.default.min.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-line-numbers-css'  href='http://developer.telerik.com/wp-content/plugins/prism-wp/libs/prism/plugins/line-numbers/prism-line-numbers.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='open-sans-css'  href='https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&#038;subset=latin%2Clatin-ext&#038;ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='minqueue-b4790aa0-5053ca30-css'  href='http://developer.telerik.com/wp-content/uploads/minqueue-cache/minqueue-b4790aa0-5053ca30.css' type='text/css' media='all' />
+<script>var cmac_data = {"ajaxurl":"http:\/\/developer.telerik.com\/wp-admin\/admin-ajax.php"};</script><script type='text/javascript' src='http://developer.telerik.com/wp-includes/js/jquery/jquery.js?ver=1.12.3'></script><script>jQueryWP = jQuery;</script>
+<script type='text/javascript' src='http://developer.telerik.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.0'></script>
+<script type='text/javascript' src='http://developer.telerik.com/wp-content/uploads/minqueue-cache/minqueue-422b54eb-65738456.js'></script>
+<link rel='https://api.w.org/' href='http://developer.telerik.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://developer.telerik.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://developer.telerik.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='shortlink' href='http://developer.telerik.com/?p=69501' />
+<link rel="alternate" type="application/json+oembed" href="http://developer.telerik.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdeveloper.telerik.com%2Ffeatured%2Fpowering-apps-microsoft-passport%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://developer.telerik.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdeveloper.telerik.com%2Ffeatured%2Fpowering-apps-microsoft-passport%2F&#038;format=xml" />
+</head>
+<body>
+
+<!-- Google Tag Manager -->
+<noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+</noscript>
+<script>(function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+<!-- End Google Tag Manager -->
+
+  <div class="Bar">
+    <div class="container">
+      <div class="row">
+        <div class="col-3">
+            <a href="http://developer.telerik.com/" class="Bar-Logo"><img src="http://developer.telerik.com/wp-content/themes/tdnv2/assets/img/logo.png" /></a>
+            <div class="Bar-Nav">
+<div class='Bar-Dropdown icon-menu'><a href='#'>Topics</a><ul>
+<li><a href='http://developer.telerik.com/category/topics/web-development/'>Web</a></li>
+
+<li><a href='http://developer.telerik.com/category/topics/mobile-development/'>Mobile</a></li>
+
+<li><a href='http://developer.telerik.com/category/topics/net/'>.NET</a></li>
+
+<li><a href='http://developer.telerik.com/category/topics/cloud/'>Cloud</a></li>
+
+<li><a href='http://developer.telerik.com/category/topics/testing/'>Testing</a></li>
+
+<li><a href='http://developer.telerik.com/category/topics/desktop/'>Desktop</a></li>
+</ul></div>
+
+<a href='http://developer.telerik.com/community/' class='Bar-Link icon-community'>Community</a>
+
+<a href='/feed' class='Bar-Link icon-rss'>RSS</a>
+
+<a href='http://www.telerik.com' class='Bar-Link icon-external'>Telerik.com</a>
+</div>          <!--<div class="Bar-Nav">
+              
+            <div class="Bar-Dropdown icon-menu">
+              Topics
+              <ul>
+                <li><a href="#">Cloud</a></li>
+                <li><a href="#">.NET</a></li>
+                <li><a href="#">Mobile</a></li>
+                <li><a href="#">Desktop</a></li>
+                <li><a href="#">Web</a></li>
+                <li><a href="#">Testing</a></li>
+              </ul>
+            </div>
+            <a href="#" class="Bar-Link icon-community">Community</a>
+            <a href="#" class="Bar-Link icon-rss-alt">RSS</a>
+            <a href="#" class="Bar-Link icon-external">Telerik.com</a>
+          </div>-->
+        </div>
+        <div class="col-1">
+          <div class="Bar-Search">
+            <form action="http://developer.telerik.com/" role="search" name="searchForm" method="get">
+            <input name="s" type="text">
+            <button type="submit" class="icon-search"></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container u-tac u-pb1">
+    <div class="u-oh u-pt2">
+            <div class="Label Label--l Label--net"><a href="http://developer.telerik.com/category/topics/net/">.NET</a></div>
+        </div>
+    <h1 class="u-mb1">Biometric Authentication with Microsoft Passport</h1>
+    <ul class="Meta u-mb1">
+          <li><a href="http://developer.telerik.com/category/topics/net/">.NET</a> by
+        <img src="http://developer.telerik.com/wp-content/uploads/userphoto/161.jpg" alt="Sam Basu" width="143" height="150" class="photo" style="margin-right:0px;" />&nbsp;
+        <a href="http://developer.telerik.com/author/sbasu/" class="author">Sam Basu</a>
+      </li>
+      <li class="icon-time">March 22, 2016</li>
+      <li class="icon-comment"><a href="http://developer.telerik.com/featured/powering-apps-microsoft-passport/#disqus_thread">Comments</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="row Content">
+      <div class="col-3 Content-main">
+
+        <img width="1170" height="297" src="http://developer.telerik.com/wp-content/uploads/2016/03/ms_passpor_header.jpg" class="attachment-full size-full wp-post-image" alt="ms_passpor_header" srcset="http://developer.telerik.com/wp-content/uploads/2016/03/ms_passpor_header.jpg 1170w, http://developer.telerik.com/wp-content/uploads/2016/03/ms_passpor_header-300x76.jpg 300w, http://developer.telerik.com/wp-content/uploads/2016/03/ms_passpor_header-768x195.jpg 768w, http://developer.telerik.com/wp-content/uploads/2016/03/ms_passpor_header-1024x260.jpg 1024w" sizes="(max-width: 1170px) 100vw, 1170px" />
+        <div class="Nav">
+          <div class="container">
+            <div class="row">
+              <div class="col-3">
+                              <div class="Label Label--l Label--net"><a href="http://developer.telerik.com/category/topics/net/">.NET</a></div>
+                            <h2>Biometric Authentication with Microsoft Passport</h2>
+              </div>
+              <div class="col-1">
+                <div class="SocialIcons">
+                  <a onclick="window.open('http://www.facebook.com/share.php?u=http://developer.telerik.com/featured/powering-apps-microsoft-passport/','facebook','width=450,height=300,left='+(screen.availWidth/2-375)+',top='+(screen.availHeight/2-150)+'');return false;" href="http://www.facebook.com/share.php?u=http://developer.telerik.com/featured/powering-apps-microsoft-passport/" title="Biometric Authentication with Microsoft Passport" target="blank" class="icon-facebook"></a>
+                  <a onclick="window.open('http://twitter.com/home?status=Biometric+Authentication+with+Microsoft+Passport - http://developer.telerik.com/featured/powering-apps-microsoft-passport/','twitter','width=450,height=300,left='+(screen.availWidth/2-375)+',top='+(screen.availHeight/2-150)+'');return false;" href="http://twitter.com/home?status=Biometric+Authentication+with+Microsoft+Passport - http://developer.telerik.com/featured/powering-apps-microsoft-passport/" title="Biometric Authentication with Microsoft Passport" target="blank" class="icon-twitter"></a>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://developer.telerik.com/featured/powering-apps-microsoft-passport/&title=Biometric+Authentication+with+Microsoft+Passport&source=Telerik Developer Network" target="_blank" class="icon-linkedin"></a>
+                  <a href="https://plus.google.com/share?url=http://developer.telerik.com/featured/powering-apps-microsoft-passport/" onclick="window.open('https://plus.google.com/share?url=http://developer.telerik.com/featured/powering-apps-microsoft-passport/','gplusshare','width=450,height=300,left='+(screen.availWidth/2-375)+',top='+(screen.availHeight/2-150)+'');return false;" class="icon-google"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="Article">
+          <div class="SocialIcons">
+            <a onclick="window.open('http://www.facebook.com/share.php?u=http://developer.telerik.com/featured/powering-apps-microsoft-passport/','facebook','width=450,height=300,left='+(screen.availWidth/2-375)+',top='+(screen.availHeight/2-150)+'');return false;" href="http://www.facebook.com/share.php?u=http://developer.telerik.com/featured/powering-apps-microsoft-passport/" title="Biometric Authentication with Microsoft Passport" target="blank" class="icon-facebook"></a>
+            <a onclick="window.open('http://twitter.com/home?status=Biometric+Authentication+with+Microsoft+Passport - http://developer.telerik.com/featured/powering-apps-microsoft-passport/','twitter','width=450,height=300,left='+(screen.availWidth/2-375)+',top='+(screen.availHeight/2-150)+'');return false;" href="http://twitter.com/home?status=Biometric+Authentication+with+Microsoft+Passport - http://developer.telerik.com/featured/powering-apps-microsoft-passport/" title="Biometric Authentication with Microsoft Passport" target="blank" class="icon-twitter"></a>
+            <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://developer.telerik.com/featured/powering-apps-microsoft-passport/&title=Biometric+Authentication+with+Microsoft+Passport&source=Telerik Developer Network" target="_blank" class="icon-linkedin"></a>
+            <a href="https://plus.google.com/share?url=http://developer.telerik.com/featured/powering-apps-microsoft-passport/" onclick="window.open('https://plus.google.com/share?url=http://developer.telerik.com/featured/powering-apps-microsoft-passport/','gplusshare','width=450,height=300,left='+(screen.availWidth/2-375)+',top='+(screen.availHeight/2-150)+'');return false;" class="icon-google"></a>
+          </div>
+
+          <p>Information security is hard. Managing user authentication and authorization in apps/services usually gives developers an additional layer of headache on top of making applications actually work. Windows Hello and Microsoft Passport promise to be solid options for solving these issues.</p>
+<p><a href="http://developer.telerik.com/featured/say-hello-to-windows-hello/">Windows Hello</a> offers easy biometric authentication that is integrated into Windows 10, taking away much of the pain around managing user credentials. But user authentication is just the first step of the problem. How do developers leverage biometrics to authorize users to apps/services?</p>
+<p>That responsibility falls on <a href="https://technet.microsoft.com/en-us/library/dn985839%28v=vs.85%29.aspx">Microsoft Passport</a> &#8211; a seamless <a href="https://en.wikipedia.org/wiki/Two-factor_authentication">2 Factor Authentication</a> (2FA) system using device and user biometrics. Reusable user credentials can finally be replaced by biometrics and hardware-level security, thus enabling apps/services to offer robust built-in security.</p>
+<p>This article unpacks Microsoft Passport and offers a walkthrough of how to utilize Microsoft Passport to power your apps. Seamless biometric security is wonderful, especially when you have the ability to leverage it in your apps. Let&#8217;s dive in.</p>
+<h2>All about Microsoft Passport</h2>
+<h3>What is it?</h3>
+<p>Microsoft released a detailed video to unveil Microsoft Passport. I suggest you take a few minutes and watch it. And no, the new Microsoft Passport has absolutely nothing to do with the ill-fated and much hated <a href="https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/passport_about.mspx?mfr=true">.NET Passport</a>.</p>
+<p><iframe width="500" height="281" src="https://www.youtube.com/embed/XtWk9Ff7lh8?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+<h3>How does it work?</h3>
+<p>Microsoft Passport works in conjunction with Windows Hello &#8211; the integrated biometric authentication system in Windows 10 devices. There are three types of <em>Hello</em> authenticators available &#8211; PIN, Facial Recognition and FingerPrint Recognition.</p>
+<p>When the user <a href="http://developer.telerik.com/featured/say-hello-to-windows-hello/">sets up Windows Hello</a> on his or her device, Microsoft Passport starts up in the background and generates a new public–private key pair. This is the same as the Asymmetric Key technology that is used in smart cards. On-device, tamper-resistant <a href="https://en.wikipedia.org/wiki/Trusted_Platform_Module">TPM</a> hardware generates and protects the private key. If the device does not have a TPM, the private key is encrypted and protected programmatically by Windows.</p>
+<p>Once the keys are generated, Microsoft Passport allows the user to sign in seamlessly to third party apps or services. User biometric information never leaves the device; instead it &#8216;releases&#8217; the keys on the device so that Microsoft Passport APIs could be then used to authorize the user.</p>
+<p>Any app, leveraging Microsoft Passport, can never use the keys from another app, nor can someone ever use the keys from another user. Applications can use Passport APIs to have the keys sign requests/responses that are exchanged with the <a href="https://en.wikipedia.org/wiki/Identity_provider">Identity Provider or IDP</a>, seeking user access to specified resources.</p>
+<p>Which IDPs does Microsoft Passport support? Turns out, a lot &#8211; Passport works with Microsoft Account, Active Directory accounts, any Azure AD or any IDP under the <a href="https://fidoalliance.org/">FIDO Alliance</a> banner.</p>
+<h2>Microsoft Passport in Action</h2>
+<h3>Authorization through Keys</h3>
+<p>So, how do you leverage Microsoft Passport in your app? Quite simply actually, if you follow the recommended pattern:</p>
+<ol>
+<li>Check if the user&#8217;s device supports biometric credentials;</li>
+<li>If not, prompt user to set up Windows Hello or fail graciously;</li>
+<li>If Windows Hello is set up, authenticate user and enroll for app/service;</li>
+<li>Then, check if Passport keys exist for given app;</li>
+<li>If keys exist, let user in and sign server communication with key;</li>
+<li>If no keys exist, create Passport keys for given app;</li>
+<li>Optionally, send and store public Passport key on server for future authorizations.</li>
+</ol>
+<p><img src="http://developer.telerik.com/wp-content/uploads/2016/03/PassportFlow.jpg" alt="PassportFlow" width="800" height="597" class="alignnone size-full wp-image-69551" srcset="http://developer.telerik.com/wp-content/uploads/2016/03/PassportFlow.jpg 800w, http://developer.telerik.com/wp-content/uploads/2016/03/PassportFlow-300x224.jpg 300w, http://developer.telerik.com/wp-content/uploads/2016/03/PassportFlow-768x573.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" /></p>
+<p><em>Image courtesy of Microsoft</em></p>
+<h3>Create or Utilize Keys</h3>
+<p>Say, you want to leverage Microsoft Passport in your new UWP app and corresponding web service. Let&#8217;s start a new app to put it all together and write some code to follow the steps, like below:</p>
+<p><img src="http://developer.telerik.com/wp-content/uploads/2016/03/NewUWP.jpg" alt="NewUWP" width="800" height="556" class="alignnone size-full wp-image-69561" srcset="http://developer.telerik.com/wp-content/uploads/2016/03/NewUWP.jpg 800w, http://developer.telerik.com/wp-content/uploads/2016/03/NewUWP-300x209.jpg 300w, http://developer.telerik.com/wp-content/uploads/2016/03/NewUWP-768x534.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" /></p>
+<pre><code class="language-csharp">using Windows.Security.Credentials;
+using Windows.Security.Cryptography;
+
+private async void DoPassportStuff()
+{
+    // Does device support biometric credentials?
+    var bioCredentialsAvailable = await KeyCredentialManager.IsSupportedAsync();
+
+    if (!bioCredentialsAvailable)
+    {
+        // User has not set up Windows Hello PIN.
+        var messageDialog = new MessageDialog("Please set up your Windows Hello PIN.");
+        await messageDialog.ShowAsync();
+    }
+    else
+    {
+        // User has Windows Hello set up. Check if credentials exist for App.
+        KeyCredentialRetrievalResult credentialCheckResult = await KeyCredentialManager.OpenAsync("PassportDemoKey");
+
+  if (credentialCheckResult.Credential != null)
+  {
+    // If credentials exist, sign service requests/responses with Key.  
+      KeyCredentialOperationResult signResult = await credentialCheckResult.Credential.
+                                                    RequestSignAsync(CryptographicBuffer.ConvertStringToBinary("PassportDemoKey", BinaryStringEncoding.Utf8));
+      if (signResult.Status == KeyCredentialStatus.Success)
+      {
+          // All set.
+      }
+  }
+  else
+  {
+    // No credentials. Go ahead with Key creation for App.
+          var keyCreationResult = await KeyCredentialManager.RequestCreateAsync("PassportDemoKey", KeyCredentialCreationOption.ReplaceExisting);
+
+          if (keyCreationResult.Status == KeyCredentialStatus.Success)
+          {
+            // All set. Retrieve the Public Key, if desired.
+              var userKey = keyCreationResult.Credential;
+              IBuffer publicKeyBuffer = userKey.RetrievePublicKey();
+
+              DataReader keyDataReader = DataReader.FromBuffer(publicKeyBuffer);
+              byte[] KeyBytes = new byte[publicKeyBuffer.Length];
+              keyDataReader.ReadBytes(KeyBytes);
+              string publicKey = System.Text.Encoding.UTF8.GetString(KeyBytes);
+          }
+        }
+    }
+}</code></pre>
+<p><code>KeyCredentialManager.RequestCreateAsync</code> creates the public and private Passport keys for the given app on the given device. If the device has a TPM chip, the APIs will request the TPM chip to create and store the keys; if there is no TPM chip available, the OS will create the key pair in code. There is no way for the app to access the created private keys directly, but programmatically, developers can read the public keys, as shown in the code.</p>
+<h3>Signed Communication for Authorization</h3>
+<p>When the app attempts to access a protected cloud/backend resource, the service sends a challenge to the app, in an attempt to authorize the user. The app uses the Passport key from the user to sign the challenge and sends it back to the server. With the public key for that user already on the server, standard crypto APIs can be used to make sure the message was indeed signed with the correct private key. All is good once a match is in place.</p>
+<p>These steps are best depicted through the following flow diagram:</p>
+<p><img src="http://developer.telerik.com/wp-content/uploads/2016/03/ServerFlow.jpg" alt="ServerFlow" width="649" height="477" class="alignnone size-full wp-image-69571" srcset="http://developer.telerik.com/wp-content/uploads/2016/03/ServerFlow.jpg 649w, http://developer.telerik.com/wp-content/uploads/2016/03/ServerFlow-300x220.jpg 300w" sizes="(max-width: 649px) 100vw, 649px" /></p>
+<p><em>Image courtesy Microsoft</em></p>
+<p><code>KeyCredentialManager.OpenAsync</code> asks the OS to open the key handle. If that is done successfully, the developer can sign the server challenge message with the <code>KeyCredentialRetrievalResult.RequestSignAsync</code> method. Windows may request user&#8217;s PIN or biometrics before this signing happens, but the private keys are always locked up behind the APIs.</p>
+<p>In all honestly, the cloud or backend service sending the challenge to the app and verifying message signing through crypto APIs is not for the faint hearted. The server must validate the message signature using Crypt32 functions and hash algorithms; the process however is <a href="https://msdn.microsoft.com/en-us/windows/uwp/security/microsoft-passport">well documented</a> from Microsoft &#8211; both in <a href="https://technet.microsoft.com/library/mt589441.aspx">theory</a> and in <a href="https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/MicrosoftPassport">code</a>. Once the message signature matches the stored public RSA key on the server, the user and the corresponding client app is authorized for further requests.</p>
+<h3>Authenticate On-Demand</h3>
+<p>At any point from your app, you may also trigger a re-checking of user biometrics. This can be especially helpful for sensitive operations, like In-App Purchases or actions that modify a user&#8217;s subscription within your service. If the user is already set up with Windows Hello and Microsoft Passport keys, the re-authentication is easy. Here&#8217;s the code:</p>
+<pre><code class="language-csharp">public async void TriggerBiometricAuthentication()
+{
+    try
+    {
+        // Check the availability of biometric authentication.
+        var bioAvailability = await Windows.Security.Credentials.UI.UserConsentVerifier.CheckAvailabilityAsync();
+
+        switch (bioAvailability)
+        {
+            case Windows.Security.Credentials.UI.UserConsentVerifierAvailability.Available:
+
+                // Biometric device is available and ready.
+                // Ask for user authentication.
+
+                var consentResult = await Windows.Security.Credentials.UI.UserConsentVerifier.RequestVerificationAsync("Please provide biometric verification.");
+
+                if (consentResult == Windows.Security.Credentials.UI.UserConsentVerificationResult.Verified)
+                {
+                    // All good to go.
+                }
+              break;          
+            case Windows.Security.Credentials.UI.UserConsentVerifierAvailability.DeviceBusy:
+                // Biometric device is available, but busy.
+              break;
+            case Windows.Security.Credentials.UI.UserConsentVerifierAvailability.DeviceNotPresent:
+                // No biometric device found. Fail gracefully.
+              break;
+        }
+    }
+    catch (Exception ex)
+    {
+        // Do exception handling.
+    }
+}</code></pre>
+<p>Once a biometric input device is available, a simple <code>UserConsentVerifier.RequestVerificationAsync</code> method call triggers Windows to prompt the user for entering his/her biometrics again. From a UWP app, you can trigger this re-authentication at will &#8211; the user gets prompted for their PIN or biometric data, as shown below.</p>
+<p><img src="http://developer.telerik.com/wp-content/uploads/2016/03/BiometricAuth.jpg" alt="BiometricAuth" width="800" height="474" class="alignnone size-full wp-image-69581" srcset="http://developer.telerik.com/wp-content/uploads/2016/03/BiometricAuth.jpg 800w, http://developer.telerik.com/wp-content/uploads/2016/03/BiometricAuth-300x178.jpg 300w, http://developer.telerik.com/wp-content/uploads/2016/03/BiometricAuth-768x455.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" /></p>
+<h3>Polished UI for UWP Apps</h3>
+<p>Microsoft Passport authorization works seamlessly from 3rd party apps/services, as long as Microsoft Passport APIs are used from the Windows 10 SDK that matches the OS the app will be used on. For practical purposes, most Windows Hello authentication and Microsoft Passport authorization usage will come from UWP apps.</p>
+<p>If you are building your dream UWP app to run on any Windows device, don&#8217;t re-invent the wheel &#8211; use polished UI controls out-of-the-box. <a href="http://www.telerik.com/universal-windows-platform-ui">Telerik UI for UWP</a> suite gets you performant UI that is responsive on any Windows device and has a consistent XAML API stack.</p>
+<p>Telerik UI for UWP suite offers a lot of benefits out of the box. For example, if you need data visualization controls, it comes with polished <a href="http://docs.telerik.com/windows-universal/controls/radchart/overview">Charts</a>, <a href="http://docs.telerik.com/windows-universal/controls/radgauge/overview">Gauges</a> and <a href="http://docs.telerik.com/windows-universal/controls/radbulletgraph/bulletgraph-overview">BulletGraphs</a>, including a wide range of output types and robust data binding. There are also must-have controls like the ListView, DataForm, Map and a variety of visual input elements to light up your apps.</p>
+<p><img src="http://developer.telerik.com/wp-content/uploads/2016/03/Dataviz.jpg" alt="Dataviz" width="549" height="427" class="alignnone size-full wp-image-69591" srcset="http://developer.telerik.com/wp-content/uploads/2016/03/Dataviz.jpg 549w, http://developer.telerik.com/wp-content/uploads/2016/03/Dataviz-300x233.jpg 300w" sizes="(max-width: 549px) 100vw, 549px" /></p>
+<p>No matter which UI controls you use, it is nice that your UWP apps do not ever have to manage user security &#8211; that is a problem best outsourced to Windows and established IDPs. Windows Hello and Microsoft Passport are wonderful ammunition in the UWP developer&#8217;s arsenal.</p>
+<h2>Conclusion</h2>
+<p>Windows Hello offers easy biometric authentication that is integrated into Windows 10, taking away much of the pain around managing user credentials. And Microsoft Passport makes user authorization easy for 3rd party apps/services. This is done by leveraging a combination of specific device keys and user biometrics. Developers are relieved from the stresses of managing user credentials and Microsoft Passport makes sure to carefully orchestrate user privacy through top notch security measures. Happiness all around.</p>
+<p><em>Header image courtesy of <a href="https://flic.kr/p/8JG5ga">Damian Bariexca</a></em></p>
+<a  data-banner_id="151" data-campaign_id="71" href="http://www.telerik.com/download/windows-universal-ui" target="_blank" class="acc_banner_link "><img src="http://developer.telerik.com/wp-content/uploads/ac_uploads/5350860.png" alt="UI for Windows Universal" title="UI for Windows Universal"width="570" height="100" /></a>
+
+            
+        </div>
+
+        <div class="Article-NextPrev">
+          <div class="row">
+            <div class="col-2">
+                          <a href="http://developer.telerik.com/featured/unleashing-power-kendo-uis-router/" class="Article-Prev">
+                <img src="http://developer.telerik.com/wp-content/themes/tdnv2/assets/img/arrow-left.png" />
+                <h6>Prev</h6>
+                <span>Unleashing the Power of Kendo UI's Router</span>
+              </a>
+                        </div>
+            <div class="col-2">
+                          <a href="http://developer.telerik.com/featured/left-pad-indicative-fragile-javascript-ecosystem/" class="Article-Next">
+                <img src="http://developer.telerik.com/wp-content/themes/tdnv2/assets/img/arrow-right.png" />
+                <h6>Next</h6>
+                <span>Is left-pad Indicative of a Fragile JavaScript Ecosystem?</span>
+              </a>
+                        </div>
+          </div>
+        </div>
+
+            <div class="Article-AuthorBox">
+          <img src="http://developer.telerik.com/wp-content/uploads/userphoto/161.jpg" alt="Sam Basu" width="143" height="150" class="avatar" />          <a href="http://developer.telerik.com/author/sbasu/" class="author">Sam Basu</a><br>
+          Samidip Basu (<a href="https://twitter.com/samidip">@samidip</a>) is a technologist, Apress/Pluralsight author, speaker, Microsoft MVP, believer in software craftsmanship, gadget-lover and Developer Advocate for Telerik.<!--more--> With a long developer background, he now spends much of my time advocating modern web/mobile/cloud development platforms on Microsoft/Telerik stacks. His spare times call for travel and culinary adventures with the wife. Find out more at <a href="http://samidipbasu.com/">http://samidipbasu.com</a>.        </div>
+    
+        <h3 class="above-list">Comments</h3>
+                    
+<div id="disqus_thread">
+            <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="post pingback">
+        <p>Pingback: <a href='http://www.alvinashcraft.com/2016/03/22/dew-drop-march-22-2016-2213/' rel='external nofollow' class='url'>Dew Drop &#8211; March 22, 2016 (#2213) | Morning Dew</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-37001">
+        <div id="dsq-comment-header-37001" class="dsq-comment-header">
+            <cite id="dsq-cite-37001">
+                <a id="dsq-author-user-37001" href="http://t.co/wkLIf7VDsO" target="_blank" rel="nofollow">Lance McCarthy</a>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-37001" class="dsq-comment-body">
+            <div id="dsq-comment-message-37001" class="dsq-comment-message"><p>Great post Sam!</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='http://www.alvinashcraft.com/2016/03/23/dew-drop-march-23-2016-2214/' rel='external nofollow' class='url'>Dew Drop &#8211; March 23, 2016 (#2214) | Morning Dew</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+    <li class="post pingback">
+        <p>Pingback: <a href='https://blogs.msdn.microsoft.com/dotnet/2016/04/12/the-week-in-net-4122016/' rel='external nofollow' class='url'>The week in .NET &#8211; 4/12/2016 | .NET Blog</a>()</p>
+    </li>
+    </li><!-- #comment-## -->
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+var disqus_url = 'http://developer.telerik.com/featured/powering-apps-microsoft-passport/';
+var disqus_identifier = '69501 http://developer.telerik.com/?p=69501';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'telerikdev';
+var disqus_title = "Biometric Authentication with Microsoft Passport";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=69501';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+              </div>
+      <div class="col-1">
+        <div class="Content-sidebar">
+                  <div id="banner" style="text-align:center;margin-bottom: 20px;">
+            <div class="widget"><div id="ACWidget"><a  data-banner_id="701" data-campaign_id="21" href="http://www.telerik.com/platform/nativescript/nativescript2webinar?utm_medium=banner&#038;utm_source=tdn&#038;utm_campaign=nativescript-webinar-q216" target="_blank" class="acc_banner_link "><img src="http://developer.telerik.com/wp-content/uploads/ac_uploads/2554016.jpeg" alt="You know Angular. Now you know mobile." title="You know Angular. Now you know mobile."width="240" height="400" /></a></div></div>          </div>
+        <h4>Telerik Developer Digest</h4>
+<p class="newsletter-sidebar">Software development articles from the Telerik Developer Network
+and around the web.</p>
+<div class="List">
+    <span id="newsletterNotification"></span>
+    <script>
+        jQuery(document).ready(function() {
+            var newsletterNotification = jQuery("#newsletterNotification").kendoNotification({
+                    autoHideAfter: 0
+                }).data("kendoNotification");
+            });
+    </script>
+    <form method="post" action="http://digest.telerik.com/subscribe">
+        <input type="hidden" name="redirectTo" value="http://developer.telerik.com/featured/powering-apps-microsoft-passport/">
+        <input type="email" name="email" placeholder="Email">
+        <input type="submit" value="Sign Up">
+    </form>
+    <br>
+    <p class="newsletter-sidebar"><a href="http://digest.telerik.com/latest">Click here</a> to sample the latest issue.</p>
+</div>          <h4>Featured Opinions</h4>
+          <div class="List">
+            <div>
+              <h5><a href="http://developer.telerik.com/category/topics/mobile-development/">Mobile</a></h5>
+              <a href="http://developer.telerik.com/featured/10-developer-takeaways-xamarin-evolve/">10 Developer Takeaways from Xamarin Evolve</a>
+              <h6>May 4, 2016</h6>
+            </div>
+            <div>
+              <h5><a href="http://developer.telerik.com/category/topics/net/">.NET</a></h5>
+              <a href="http://developer.telerik.com/featured/how-to-web-asp-net/">How to Web with ASP.NET</a>
+              <h6>May 3, 2016</h6>
+            </div>
+          </div><h4 class="u-pt4">Telerik Announcements</h4>
+          <div class="List">
+            <div>
+              <!--<img src="http://placehold.it/40x40" class="Thumb" />-->
+              <a href="https://www.nativescript.org/blog/nativescript-2.0---the-best-way-to-build-cross-platform-native-mobile-apps">NativeScript 2.0 &#8211; the best way to build cross-platform native mobile apps</a>
+            </div>
+            <div>
+              <!--<img src="http://placehold.it/40x40" class="Thumb" />-->
+              <a href="http://developer.telerik.com/announcements/73891/">Telerik @ Evolve – Have Stuff. Will Code!</a>
+            </div>
+          </div>        <h4>Follow Us</h4>
+          <div class="SocialIcons">
+            <a href="https://www.facebook.com/Telerik" class="icon-facebook"></a>
+            <a href="https://twitter.com/telerik" class="icon-twitter"></a>
+            <a href="https://plus.google.com/+telerik" class="icon-google"></a>
+            <a href="https://github.com/telerik" class="icon-github"></a>
+            <a href="https://www.linkedin.com/company/telerik" class="icon-linkedin"></a>
+            <a href="http://developer.telerik.com/feed" class="icon-rss"></a>
+          </div>        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+          <h4>Browse by Topic</h4>
+          <a href="http://developer.telerik.com/category/topics/net/">.NET</a>
+          <a href="http://developer.telerik.com/category/topics/cloud/">Cloud</a>
+          <a href="http://developer.telerik.com/category/topics/desktop/">Desktop</a>
+          <a href="http://developer.telerik.com/category/topics/iot/">IoT</a>
+          <a href="http://developer.telerik.com/category/topics/mobile-development/">Mobile</a>
+          <a href="http://developer.telerik.com/category/topics/testing/">Testing</a>
+          <a href="http://developer.telerik.com/category/topics/web-development/">Web</a>
+        </div>
+        <div class="col-1">
+          <h4>Browse by Content Type</h4>
+          <a href="http://developer.telerik.com/category/content-types/opinion/">Opinion</a>
+          <a href="http://developer.telerik.com/category/content-types/podcast/">Podcast</a>
+          <a href="http://developer.telerik.com/category/content-types/slackchats/">Slack Chats</a>
+          <a href="http://developer.telerik.com/category/content-types/tutorials/">Tutorials</a>
+          <a href="http://developer.telerik.com/category/content-types/video/">Video</a>
+        </div>
+        <div class="col-1 col--offset-1">
+          <h4>Contact</h4>
+          <ul class="ListClean">
+            <li><span>USA: </span>+1 888 365 2779</li>
+            <li><span>UK: </span>+44 20 7382 4450</li>
+            <li><span>India: </span>+91 124 4300987</li>
+            <li><span>Germany: </span>+49 89 2441642-70</li>
+            <li><span>Denmark: </span>+45 70 208 875</li>
+            <li><span>Bulgaria: </span>+359 2 8099850</li>
+            <li><span>Australia: </span>+61 3 9805 8670</li>
+            <li><a href="mailto:sales@telerik.com">sales@telerik.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="Footer-Info">
+        <img src="http://developer.telerik.com/wp-content/themes/tdnv2/assets/img/logo-footer.png">
+        <a href="http://www.telerik.com/company/terms-of-use">Terms of Use</a>|<a href="http://www.telerik.com/company/feedback">Site Feedback</a>|<a href="http://www.telerik.com/company/privacy-policy">Privacy Policy</a>
+        <p>Copyright © 2002-2014 Telerik. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'telerikdev';
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+        <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'telerikdev';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1) {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        <script type='text/javascript' src='http://developer.telerik.com/wp-content/uploads/minqueue-cache/minqueue-d6bfbe77-a0e32db9.js'></script>
+<script type='text/javascript' src='http://developer.telerik.com/wp-content/plugins/prism-wp/libs/prism/plugins/line-numbers/prism-line-numbers.min.js?ver=1.0.0'></script>
+<script type='text/javascript' src='http://developer.telerik.com/wp-includes/js/wp-embed.min.js?ver=4.5.1'></script>
+<script>
+window.onload = function() {
+    Gifffer();
+}
+</script>
+</body>
+</html>

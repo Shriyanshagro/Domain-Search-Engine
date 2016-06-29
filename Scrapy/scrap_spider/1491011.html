@@ -1,0 +1,530 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+	<meta name="WT.qs_dlk" content="Vyt6aArIZ70AAEyXl7cAAAAe"/>
+
+	<meta name="WT.qs_shmv" content="hv20150423-tillis.sf.quinstreet.net"/>
+
+	<meta name="inject_params" content="WT.qs_dlk=Vyt6aArIZ70AAEyXl7cAAAAe&"/>
+
+	<meta http-equiv="Set-Cookie" content="inject_params=WT.qs_dlk=Vyt6aArIZ70AAEyXl7cAAAAe&; path=/;  domain=databasejournal.com;"/>
+	<meta http-equiv="Set-Cookie" content="WMUUID=Vyt6aArIZ70AAEyXl7cAAAAe; path=/;  domain=databasejournal.com;"/>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>ODBC DSN-Less Connection Tutorial &mdash; DatabaseJournal.com</title>
+<meta name="description" content="In a previous article, Problematic or Programmatic ODBC, I described the various ways I have used to distribute a DSN (ODBC Data Source Name) to users of my client/server applications. Towards the end of that article, I mentioned an Access Database Application I created to serve as a tutorial for people with questions about reconnecting linked MS Access tables to SQL Server using DSN-Less ODBC. This article will focus on the details of that tutorial, which is available for download.">
+<meta name="keywords" content="MS , application">
+<meta name="channel" content="IT">
+<meta name="authors" content="Danny Lesandrini">
+<meta name="date" content="20010807">
+<meta name="robots" content="noindex,nofollow">
+<meta name='qs.quad.keywords'  content='{keywords:"109070,936323,109120|97360|935613|95850",nodes:"97360,109070,109120,936323"}'>
+<script language="javascript" src="http://e1.cdn.qnsr.com/cgi/b/109070,936323,109120/97360/935613/95850/tx.js"></script>
+<link rel="alternate"  type="application/rss+xml" title="Database Journal RSS Feed" href="/icom_includes/feeds/dbjournal/xml_front-10.xml">
+
+<link type="text/css" rel="stylesheet" name="min-css" media="screen" href="/hqx/min/?b=css&f=text.css&v=3"/>
+
+<script type='text/javascript' src="/icom_includes/dfp/js/dfp-common-min.js"></script>
+
+	<script type='text/javascript' src="/icom_includes/dfp/js/dfp-sync-min.js"></script>
+
+<!-- BEGIN ML/CCM Tag -->
+<script type='text/javascript'>var mlCLID="50417";</script>
+<script type='text/javascript' src="/icom_includes/dfp/js/dfp-ml_ccm2-min.js"></script>
+<!-- END ML/CCM Tag -->
+
+	<!-- BEGIN Krux Tag -->
+	<script type='text/javascript' src="/icom_includes/dfp/js/dfp-krux-min.js"></script>
+	<script class="kxct" data-id="Jd_Jsceg" data-timing="async" data-version="1.9" type="text/javascript">
+		window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
+		(function(){
+			var k=document.createElement('script');k.type='text/javascript';k.async=true;
+			var m,src=(m=location.href.match(/\bkxsrc=([^&]+)/))&&decodeURIComponent(m[1]);
+			k.src = /^https?:\/\/([a-z0-9_\-\.]+\.)?krxd\.net(:\d{1,5})?\//i.test(src) ? src : src === "disable" ? "" : (location.protocol==="https:"?"https:":"http:")+"//cdn.krxd.net/controltag?confid=Jd_Jsceg";
+			var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
+		}());
+	</script>
+	<!-- END Krux Tag -->
+
+<meta NAME="DCSext.tax" content="product it" /><meta NAME="DCSext.qse_b2b_tax" content="product it" />
+<script type="text/javascript">
+	eval(function(p,a,c,k,e,d){e=function(c){return c};if(!''.replace(/^/,String)){while(c--){d[c]=k[c]||c}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('0 2=1(\'2\');0 3=1(\'3\');0 6=1(\'6\');0 4=1(\'4\');0 5=1(\'5\');',7,7,'var|gDFPC|dn|jf|ir|noer|dr'.split('|'),0,{}));
+
+		googletag.defineSlot('/5055/b2b/it/databasejournal/ciu',[[600,200],[300,200]],'ciu-1').addService(googletag.pubads()).setTargeting('pos','top');
+		googletag.defineSlot('/5055/b2b/it/databasejournal/ciu',[[600,200],[300,200]],'ciu-2').addService(googletag.pubads()).setTargeting('pos','low');
+		googletag.defineSlot('/5055/b2b/it/databasejournal/imu',[[300,250],[300,600],[300,1050]],'imu-1').addService(googletag.pubads()).setTargeting('pos','top');
+		googletag.defineSlot('/5055/b2b/it/databasejournal/imu',[[300,250],[300,600]],'imu-2').addService(googletag.pubads()).setTargeting('pos','mid');
+		googletag.defineSlot('/5055/b2b/it/databasejournal/imu',[300,250],'imu-3').addService(googletag.pubads()).setTargeting('pos','low');
+		googletag.defineSlot('/5055/b2b/it/databasejournal/lb',[728,90],'lb-1').addService(googletag.pubads()).setTargeting('pos','top');
+		googletag.defineSlot('/5055/b2b/it/databasejournal/lb',[728,90],'lb-2').addService(googletag.pubads()).setTargeting('pos','low');
+		googletag.defineSlot('/5055/b2b/it/databasejournal/sky',[160,600],'sky-1').addService(googletag.pubads()).setTargeting('pos','top');
+		googletag.defineOutOfPageSlot('/5055/b2b/it/databasejournal/wa','wa-1').addService(googletag.pubads());
+		if(mbw>1049){googletag.defineOutOfPageSlot('/5055/b2b/it/databasejournal/hero','hero-1').addService(googletag.pubads());}
+
+		googletag.pubads().setTargeting('kw',['MS','application']);
+		googletag.pubads().setTargeting('tax',['product it']);
+		googletag.pubads().setTargeting('path',['feedback.php','http:','','www.databasejournal.com','features','mssql','article.php','1491011','ODBC-DSN-Less-Connection-Tutorial.htm']);
+		googletag.pubads().setTargeting('pagetype','other');
+		googletag.pubads().setTargeting('url','http://www.databasejournal.com/feedback.php/http://www.databasejournal.com/features/mssql/article.php/1491011/ODBC-DSN-Less-Connection-Tutorial.htm');
+		if(mbw<641){googletag.pubads().setTargeting('pfm','mob');}else{googletag.pubads().setTargeting('pfm','des');}
+		googletag.pubads().setTargeting('env','prod');
+		googletag.pubads().setTargeting('wtdlk',''+myWTDLK+'');
+		if(typeof _ml!='undefined'&&_ml.us){if(_ml.us.tp&&_ml.us.tp.length>0){googletag.pubads().setTargeting('mlt',''+_ml.us.tp+'');}}
+		googletag.pubads().setTargeting('ksg',Krux.segments);
+		googletag.pubads().setTargeting('kuid',Krux.user);
+
+		eval(function(p,a,c,k,e,d){e=function(c){return c};if(!''.replace(/^/,String)){while(c--){d[c]=k[c]||c}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('0(5!=\'\'&&5!=\'2\'){1.3().4(\'5\',\'\'+5+\'\')}0(6!=\'\'&&6!=\'2\'){1.3().4(\'6\',\'\'+6+\'\')}0(9!=\'\'&&9!=\'2\'){1.3().4(\'9\',\'\'+9+\'\')}0(7!=\'\'&&7!=\'2\'){1.3().4(\'7\',\'\'+7+\'\')}0(8!=\'\'&&8!=\'2\'){1.3().4(\'8\',\'\'+8+\'\')}',10,10,'if|googletag|null|pubads|setTargeting|dn|jf|ir|noer|dr'.split('|'),0,{}))
+
+		googletag.pubads().enableSingleRequest();
+		googletag.pubads().collapseEmptyDivs();
+		googletag.pubads().enableSyncRendering();
+		googletag.disablePublisherConsole();
+
+		googletag.enableServices();
+</script><!--BEGIN FIRSTIMPRESSION TAG -->
+  <script data-cfasync='false' type='text/javascript'>
+   window.apd_options = { 'websiteId': 5660, 'runFromFrame': false };
+   (function() {
+    var w = window.apd_options.runFromFrame ? window.top : window;
+    if(window.apd_options.runFromFrame && w!=window.parent) w=window.parent;
+    if (w.location.hash.indexOf('apdAdmin') != -1){if(typeof(Storage) !== 'undefined') {w.localStorage.apdAdmin = 1;}}
+    var adminMode = ((typeof(Storage) == 'undefined') || (w.localStorage.apdAdmin == 1));
+    w.apd_options=window.apd_options;
+    var apd = w.document.createElement('script'); apd.type = 'text/javascript'; apd.async = true;
+    apd.src = '//' + (adminMode ? 'cdn' : 'ecdn') + '.firstimpression.io/' + (adminMode ? 'apd.js?id=' + window.apd_options.websiteId : 'apd_client.js') ;
+    var s = w.document.getElementsByTagName('head')[0]; s.appendChild(apd);
+   })();</script>
+<!-- END FIRSTIMPRESSION TAG -->
+
+
+<!-- Begin comScore Tag -->
+<script>
+  var _comscore = _comscore || [];
+  _comscore.push({ c1: "2", c2: "17199065" });
+  (function() {
+    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+    s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+    el.parentNode.insertBefore(s, el);
+  })();
+</script>
+<noscript>
+  <img src="http://b.scorecardresearch.com/p?c1=2&c2=17199065&cv=2.0&cj=1" alt=""/>
+</noscript>
+<!-- End comScore Tag -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+<meta name="cache-creation-time" content="Thu May 5 0:58:40 PDT 2016" />
+
+    <script>
+    window.webtrendsAsyncInit=function(){
+        var dcs=new Webtrends.dcs().init({
+            dcsid:"dcsjcs4c610000k30qdw5a2wa_2d9q",
+            domain:"www.qsstats.com",
+            timezone:-8,
+            i18n:true,
+            onsitedoms:"databasejournal.com",
+            fpcdom:".databasejournal.com",
+            plugins:{
+                //hm:{src:"//s.webtrends.com/js/webtrends.hm.js"}
+            }
+            }).track();
+    };
+    (function(){
+        var s=document.createElement("script"); s.async=true; s.src="/imageserver/common/v10/webtrends.min.js";    
+        var s2=document.getElementsByTagName("script")[0]; s2.parentNode.insertBefore(s,s2);
+    }());
+    </script>
+    <noscript><img alt="dcsimg" id="dcsimg" width="1" height="1" src="//www.qsstats.com/dcsjcs4c610000k30qdw5a2wa_2d9q/njs.gif?dcsuri=/index.php/feedback.php/http:/www.databasejournal.com/features/mssql/article.php/1491011/ODBC-DSN-Less-Connection-Tutorial.htm&amp;WT.js=No&amp;WT.tv=10.4.1&amp;dcssip=www.databasejournal.com&amp;WT.qs_dlk=Vyt6aArIZ70AAEyXl7cAAAAe&"/></noscript>
+</head>
+<body>
+<div id="page">
+<!-- QUAD send start -->
+<!-- QS-AD: 'wa' start -->
+<script language="JavaScript">
+	var t=displayDFPTag("wa");
+	document.write(t);
+
+</script>
+<!-- QS-AD: 'wa' end --><!-- QUAD send end -->
+<style type="text/css">
+<!--
+body { margin: 0; padding: 0;}
+.brandLogo a img { border: none;}
+.globalHeader { font: 100%/1.4 Arial, Helvetica, sans-serif; height: 25px; background-color: #111; background-image: url(/icom_includes/toolbars/globaltoolbar/img/header-bg.jpg); background-repeat: repeat-x;	background-position: center top;}
+.globalHeader .brandLogo { padding: 4px 0 0 .5em; float: left; }
+.globalHeader .brandLogo p { color: #666; font-family: Arial, sans-serif; font-size: 11px; padding: 0; margin: 0;}
+.globalHeader .login-register { text-align: right; padding: 4px .5em 0 .5em; /*float: right;*/}
+.globalHeader .login-register img{ cursor:pointer;}
+.globalHeader .logout { text-align: right;  }
+.globalHeader .logout .greeting span{ color: #797979; font-family: Arial, sans-serif; font-size: 13px; padding: 0; margin: 0;}
+.globalHeader .logout .greeting a{ color: #797979 !important; font-family: Arial, sans-serif; padding: 0; font-size: 13px; margin: 0;}
+.logout-link img{ cursor:pointer;margin-top:3px; margin-right:5px;}
+.clearfloat { clear:both; height:0;	font-size: 1px;	line-height: 0px;} 
+-->
+</style>
+<div class="globalHeader" id="ITBE-ACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="ITBE-NonACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="Developer.com-ACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="Developer.com-NonACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="Developer.com-CustomToolbar" style="display:none;"></div>
+<div class="globalHeader" id="developerBrandForum" style="display:none;"></div>
+<div class="globalHeader" id="itbeBrandForum-CustomToolbar" style="display:none;"></div>
+<div class="globalHeader" id="itbeBrandForum" style="display:none;"></div>
+<div class="globalHeader" id="ZDE-ACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="ZDE-NonACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="BASELINE-ACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="BASELINE-NonACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="CINSIDER-ACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="CINSIDER-NonACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="CIOINSIGHT-ACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="CIOINSIGHT-NonACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="EWEEK-ACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="EWEEK-NonACLHeader" style="display:none;"></div>
+<div class="globalHeader" id="WBG-ACLHeader" style="display:none;"></div>
+<script async language="Javascript" src="/icom_includes/toolbars/globaltoolbar/scripts/brandingcode_new.js">
+</script>    <!--[if IE]>
+    <div id="ewgtcontainer" style="height: 20px;"></div>
+    <![endif]-->
+
+<!-- Top Navigation Start -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" data-original="/img/top-bg2.gif" background="" class="konafilter deferload">
+	<tr>
+		<td width="100%" data-original="/img/top-bg2.gif" background="" valign="top" class="deferload">
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td width="35" valign="top">
+						<span class="sprite sprite-logo-left"/></span>
+					</td>
+					<td width="357" data-original="/img/top-bg2.gif" background="" valign="top" class="deferload">
+						<a href="/">
+						<img width="307" height="113" border="0" alt="Database Journal" data-original="/img/logo.gif" src="" class="deferload"></a>
+					</td>
+					<td align="center" background="/img/top-bg2.gif" class="deferload">
+						<!--Top ad start-->
+						<div class="konafilter topad">
+							<!-- QS-AD: 'lb' start -->
+<script language="JavaScript">
+	var t=displayDFPTag("lb");
+	document.write(t);
+
+</script>
+<!-- QS-AD: 'lb' end -->						</div>
+						<!--Top ad end-->
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#000000">
+			<table bgcolor="#000000" cellspacing="1" cellpadding="8" border="0" width="100%">
+				<tr>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/features/mssql/" class="topnav">MS SQL</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/features/oracle/" class="topnav">Oracle</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/features/db2/" class="topnav">DB2</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/features/msaccess/" class="topnav">Access</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/features/mysql/" class="topnav">MySQL</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/features/postgresql/" class="topnav">PostgreSQL</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/features/sybase/" class="topnav">Sybase</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/features/php/" class="topnav">PHP</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/sqletc/" class="topnav">SQL Etc</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/scripts/" class="topnav">SQL Scripts & Samples</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://www.databasejournal.com/links/" class="topnav">Links</a></td>
+					<td bgcolor="#FFFF99"  align="center"><a href="http://forums.databasejournal.com" class="topnav">Database Forum</a></td>
+					<!--<td bgcolor="#FFFF99"  align="center"></td>-->
+					<td bgcolor="#FFFF99"  align="center"><a href="/icom_includes/feeds/dbjournal/dbjournal-features-10.xml" class="noborder"><span class="sprite sprite-rss"></span></a></td>					
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<!-- Top Navigation End --><table width="100%" cellspacing="0" cellpadding="0" border="0">
+	<tbody>
+		<tr>
+			<td width="1%" bgcolor="#ffcc00" data-original="/img/nav-bg.gif" class="deferload" background="" valign="top">
+				<table width="193" cellspacing="0" cellpadding="0" border="0" data-original="/img/nav-bg.gif" class="deferload" background=""
+       bgcolor="#ffcc00">
+    <tr>
+        <td align="center"></td>
+    </tr>
+    <tr>
+        <td align="left" class="konafilter"><span class="sprite sprite-space"></span><br>
+            <table width="179" cellspacing="1" cellpadding="2" border="0" bgcolor="#ffcc00" class="left_nav">
+                <tbody>
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong> <img src="http://www.databasejournal.com/img/space.gif"  width="3"  height="1"  border="0" />                            &raquo; <a href="http://www.databasejournal.com/" class="topnav">Database Journal Home</a>                        </strong></td>
+                </tr>
+                <!--<tr>
+						<td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="3"  height="1"  border="0" />						&raquo; <a href="http://www.databasejournal.com/video/" class="topnav">DBA Videos</a>						</strong>
+						</td>
+					</tr>-->
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="3"  height="1"  border="0" />                            &raquo; <a href="http://www.databasejournal.com/features/" class="topnav">Database Articles</a>                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="3"  height="1"  border="0" />                            &raquo; <a href="http://www.databasejournal.com/features/article.php/3585206/DBJ-Series-Articles.htm" class="topnav">Database Tutorials</a>                        </strong>
+                    </td>
+                </tr>
+                                    <tr>
+                        <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="24"  height="1"  border="0" />                                <a href="http://www.databasejournal.com/features/article.php/3593466/MS-SQL-Series.htm" class="topnav2">MS SQL</a>                            </strong>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="24"  height="1"  border="0" />                                <a href="http://www.databasejournal.com/features/article.php/3593471/Oracle-Series.htm" class="topnav2">Oracle</a>                            </strong>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="24"  height="1"  border="0" />                                <a href="http://www.databasejournal.com/features/article.php/3593431/DB2-Series.htm" class="topnav2">DB2</a>                            </strong>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="24"  height="1"  border="0" />                                <a href="http://www.databasejournal.com/features/article.php/3593436/MS-Access-Series.htm" class="topnav2">MS Access</a>                            </strong>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="24"  height="1"  border="0" />                                <a href="http://www.databasejournal.com/features/article.php/3593441/MySQL-Series.htm" class="topnav2">MySQL</a>                            </strong>
+                        </td>
+                    </tr>
+                
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="3"  height="1"  border="0" />                            &raquo; <span style="color: #666; font-size: 8pt; font-family: Verdana,Helvetica,sans-serif">RESOURCES</span></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="24"  height="1"  border="0" />                            <a href="http://products.databasejournal.com/" class="topnav2">Database Tools</a>                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="24"  height="1"  border="0" />                            <a href="http://www.databasejournal.com/scripts/" class="topnav2">SQL Scripts &amp; Samples</a>                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="24"  height="1"  border="0" />                            <a href="http://www.databasejournal.com/links/" class="topnav2">Links</a>                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="3"  height="1"  border="0" />                            &raquo; <a href="http://forums.databasejournal.com/" class="topnav">Database Forum</a>                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="3"  height="1"  border="0" />                            &raquo; <a href="http://www.databasejournal.com/slideshows/" class="topnav">Slideshows</a>                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffff99" align="left"><strong><img src="http://www.databasejournal.com/img/space.gif"  width="3"  height="1"  border="0" />                            &raquo; <a href="http://www.databasejournal.com/sitemap.php" class="topnav">Sitemap</a>                        </strong>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <img src="http://www.databasejournal.com/img/space.gif"  width="1"  height="6"  border="0" />            <table width="179" cellspacing="1" cellpadding="4" border="0" bgcolor="#ffff99">
+                <tr>
+					<form action="/accountManagement?formType=registrationForm" method="POST">
+						<td valign="top">
+							<span class="small1"><strong>Free Newsletters:</strong></span><br>
+							<span class="small1"><input	type="checkbox" name="list_names[]" value="it-database-daily-html" checked>
+								<a href="/"><strong>Database</strong>Daily</a>&nbsp;&nbsp;<br>
+							</span>
+							<input type="hidden" name="Action" value="subscribe">
+							<input type="image" class="sprite sprite-subscribe" align="middle" vspace="4" hspace="0" border=0 alt="">
+						</td>
+					</form>
+                </tr>
+            </table>
+            <img width="1" height="6" border="0" class="deferload" data-original="/img/space.gif" src="" alt=""/>
+            <table width="179" cellspacing="1" cellpadding="4" border="0" bgcolor="#ffff99">
+                <tr>
+                    <td><center><span><strong>News Via RSS Feed</strong></span></center><br>
+                        <center><a href="/icom_includes/feeds/dbjournal/dbjournal-features-10.xml"
+                                   rel="nofollow" target="_blank"><span class="sprite sprite-xml"></span><span class="sprite sprite-rss"></span></a></center>
+                        <br>
+                        <center>
+                            <a href="http://twitter.com/DatabaseJournal" target="_blank" rel="nofollow">
+                                <img width="125" height="38" border="0"
+                                     alt="follow us on Twitter"
+                                     class="deferload" data-original="/img/twitterfollow-125x38.png" src="" alt="">
+                            </a></center></td>
+                </tr>
+            </table>
+            <img width="1" height="6" border="0" class="deferload" data-original="/img/space.gif" src="" alt=""/>
+            <table width="179" cellspacing="1" cellpadding="4" border="0" bgcolor="#ffff99">
+                <tr>
+                    <td align="center"><!-- QS-AD: 'sky' start -->
+<script language="JavaScript">
+	var t=displayDFPTag("sky");
+	document.write(t);
+
+</script>
+<!-- QS-AD: 'sky' end --></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>			</td>
+			<td width="99%" valign="top" bgcolor="#ffffff">
+				<table width="100%" data-original="/img/subnav-bg.gif" class="deferload" background="" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+			<a href="http://www.databasejournal.com/" class="brands" target="_blank" rel="nofollow" >Database Journal</a> |<a href="http://www.dbasupport.com/" class="brands" target="_blank" rel="nofollow">DBA Support</a> |<a href="http://www.sqlcourse.com/" class="brands" target="_blank" rel="nofollow">SQLCourse</a> |<a href="http://www.sqlcourse2.com/" class="brands" target="_blank" rel="nofollow">SQLCourse2</a>		</td>
+		<td width="250">
+			<div style="position: relative;">
+				<div style="position:absolute; margin-top: -12px;">
+					<form rel="nofollow" method="post" action="/postsearch" onsubmit="return validate_search(document.getElementById('search_query').value);" name="solrsearch">
+						<input type="text" id="search_query" name="search_query" style="float: left;margin-right: 10px;" value="" size="20" maxlength="50">&nbsp;
+						<input type="image" class="sprite sprite-search" style="float: left;" align="top" vspace=0 hspace=0 border=0 name="submit" value="">
+					</form>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>				<table width="97%" cellspacing="0" cellpadding="5" border="0" align="center" class="content">
+					<tbody>
+						<tr>
+							<td valign="top">
+								<div class="ciuad"><!-- QS-AD: 'ciu' start -->
+<script language="JavaScript">
+	var t=displayDFPTag("ciu");
+	document.write(t);
+
+</script>
+<!-- QS-AD: 'ciu' end --></div>
+								<div style="clear:both;"></div>
+								<h1 id="feedbacktitle">Feedback on DatabaseJournal.com article...</h1>
+								<hr>
+								<form onsubmit="return validate();" method="POST" name="feedbackform" action="/feedback/post" id="feedbackform">
+									Note: <span>Your feedback will be delivered directly to
+									the article's author and JupiterWeb management. We will use
+									your email address only in the event a reply is necessary;
+									it will not be saved or added to any list.</span>
+									<p>Your Name:<br>
+										<input type="TEXT" size="50,1" name="realname"> <br> Your E-mail Reply Address:<br>
+										<input type="TEXT" size="50,1" name="email"> <br> Article:<br>
+										<input type="TEXT" value="http://www.databasejournal.com/features/mssql/article.php/1491011/ODBC-DSN-Less-Connection-Tutorial.htm" size="50,1" name="url"> <br> Subject:<br>
+										<input type="TEXT" value="ODBC DSN-Less Connection Tutorial" size="50,1" name="subject"> <br> Message:<br>
+										<textarea rows="15" cols="40" name="comments"></textarea> <br>
+										<input type="HIDDEN" value="http://www.databasejournal.com/features/mssql/article.php/1491011/ODBC-DSN-Less-Connection-Tutorial.htm" name="redirect">
+										<script type="text/javascript" src="http://api.recaptcha.net/challenge?k=6LcGycMSAAAAABCZvhPV7XiK5twSGp6lwOJ9_w3b">
+</script>
+
+	<noscript>
+  		<iframe src="http://api.recaptcha.net/noscript?k=6LcGycMSAAAAABCZvhPV7XiK5twSGp6lwOJ9_w3b" height="300" width="500" frameborder="0"></iframe><br/>
+  		<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+  		<input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+	</noscript>										<input type="SUBMIT" value="Send Feedback" name="Submit">
+									</p>
+								</form>
+								<br />
+								<div class="ciuad"></div>
+								<div style="clear:both;"></div>
+							</td>
+						</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+</table><!-- DatabaseJournal: Begin Rocket Fuel Conversion Action Tracking Code Version 7 -->
+<script language="javascript">
+    function callImpressionTracker(img_url) {
+        var trackingPixel = new Image();
+        cachebuster=parseInt(Math.random()*99999999);  // cache buster
+        trackingPixel.src = img_url + "&ra=" + cachebuster;
+        document.body.appendChild(trackingPixel);
+    }
+    // Code for Action: DatabaseJournal - Quinstreet - Tracking
+    callImpressionTracker("http://20514677p.rfihub.com/ca.gif?rb=3335&ca=20514677")
+
+</script>
+<!-- End Rocket Fuel Conversion Action Tracking Code Version 7 -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td width="100%" data-original="/img/btm-bg.gif" class="deferload" background=""><span class="sprite sprite-nav-btm"></span>
+		</td>
+    </tr>
+</table><br><br>
+<div class="konafilter">
+    <CENTER>
+        <!-- OBJECT:index.footer -->
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td align="center"><br/>
+                    <!-- QS-AD: 'lb' start -->
+<script language="JavaScript">
+	var t=displayDFPTag("lb");
+	document.write(t);
+
+</script>
+<!-- QS-AD: 'lb' end -->                    <br/><br/>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                                    </td>
+            </tr>
+        </table><br><br>
+		<!-- Google Analytics -->
+		<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-48210401-1', 'auto');
+		ga('send', 'pageview');
+		
+</script>
+		<!-- End Google Analytics -->		
+        <font size="-1" face="arial, helvetica"><style type="text/css">
+#developerBrand-footer{text-align:center;margin:0 auto}
+#footerlinks{font-size:12px;word-spacing:1px}
+#footerlinks a{color:#000;margin:5px 0 0}
+#itbeBrand-footer{text-align:center;margin:0 auto}
+#itbusinessedge-footer{text-align:center;margin:0 auto}
+#footercopyright{font-size:12px;margin:5px 0 0}
+#developerBrandForum-footer{text-align:center;margin:0 auto}
+#itbeBrandForum-footer{text-align:center;margin:0 auto}
+#eweek-truste-footer{text-align:center;margin:0 auto}
+#developerBrand-truste-footer{text-align:center;margin:0 auto}
+#itbeBrand-truste-footer{text-align:center;margin:0 auto}
+#itbusinessedge-truste-footer{text-align:center;margin:0 auto}
+.footerLogoClass{text-align:center;margin:0 auto}
+</style>
+<div id="developerBrand-footer" style="display:none"></div>
+<div id="itbeBrand-footer" style="display:none"></div>
+<div id="itbusinessedge-footer" style="display:none"></div>
+<div id="zde-footer" style="display:none" class="footerLogoClass"></div>
+<div id="baseline-footer" style="display:none" class="footerLogoClass"></div>
+<div id="cinsider-footer" style="display:none" class="footerLogoClass"></div>
+<div id="cioinsight-footer" style="display:none" class="footerLogoClass"></div>
+<div id="eweek-footer" style="display:none" class="footerLogoClass"></div>
+<div id="enterpriseappstoday-footer" style="display:none" class="footerLogoClass"></div>
+<div id="eseminar-footer" style="display:none" class="footerLogoClass"></div>
+<div id="wbg-footer" style="display:none" class="footerLogoClass"></div>
+<div id="developerBrandForum-footer" style="display:none"></div>
+<div id="itbeBrandForum-footer" style="display:none"></div>
+<div id="eweek-truste-footer" style="display:none" class="footerLogoClass"></div>
+<div id="developerBrand-truste-footer" style="display:none"></div>
+<div id="itbeBrand-truste-footer" style="display:none"></div>
+<div id="itbusinessedge-truste-footer" style="display:none"></div>
+<script async language="Javascript" src="/icom_includes/footers/scripts/footerbrandingcode.js">
+</script></font>
+    </center>
+</div>
+<br><br>
+<div style="margin:0px auto 0px auto;">
+    <!-- QS-AD: 'hero' start -->
+<script language="JavaScript">
+	var t=displayDFPTag("hero");
+	document.write(t);
+
+</script>
+<!-- QS-AD: 'hero' end --></div>
+<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<div id="newuserregistrationpopup">
+</div>
+</div>
+		<script type="text/javascript" src="/hqx/min/?b=js&f=feedback.js,lightbox_me.js,lazyload-min.js,common.js&v=3" defer async>
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>WS-MessageDelivery : W3C Team Comment</title>
+  <link href="/StyleSheets/base.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<p><a href="/"><img alt="W3C" height="48" width="72" src="/Icons/w3c_home"
+/></a> | <a href="/Submission/">Submissions</a></p>
+
+<h2 id="comment">Team Comment on the WS-MessageDelivery Submission</h2>
+
+    <p>
+      W3C is pleased to receive the <a
+      href="http://www.w3.org/Submission/2004/SUBM-ws-messagedelivery-20040426/">WS-MessageDelivery
+      Version 1.0</a> submission from 
+      <a href="http://www.oracle.com/">Oracle Corporation</a>,
+      <a href="http://www.arjuna.com/">Arjuna Technologies Limited</a>,
+      <a href="http://www.cyclonecommerce.com/">Cyclone Commerce
+      Inc.</a>,
+      <a href='http://www.enigmatec.net/'>Enigmatec Corporation, Ltd.</a>,
+      <a href='http://www.iona.com/'>IONA Technologies</a>,
+      <a href='http://www.nokia.com/'>Nokia Corporation</a>,
+      <a href='http://www.seebeyond.com/'>SeeBeyond Technology Corporation</a>,
+      and
+      <a href="http://www.sun.com/">Sun Microsystems Inc.</a>
+    </p>
+
+    <p>
+      The WS-MessageDelivery specification fills in a portion of the <a
+      href='http://www.w3.org/TR/2004/NOTE-ws-arch-20040211/'>Web
+      Services architecture</a> by presenting a simple mechanism to
+      deliver and correlate <a
+      href="http://www.w3.org/TR/2004/NOTE-ws-arch-20040211/#message">messages</a>
+      in the context of <a
+      href="http://www.w3.org/TR/2004/NOTE-ws-arch-20040211/#mep">message
+      exchange patterns</a> (MEPs), found in the <a
+      href="http://www.w3.org/TR/2004/NOTE-ws-arch-20040211/#service_description">service
+      description</a>. It is especially useful when more than two <a
+      href="http://www.w3.org/TR/2004/NOTE-ws-arch-20040211/#agent">agents</a>
+      are in use.
+    </p>
+
+<p>WS-MessageDelivery can be used with the Web Services Description
+Language (WSDL), and the MEPs introduced in <a
+href="http://www.w3.org/TR/2001/NOTE-wsdl-20010315.html#_service">WSDL
+1.1</a> and <a href="http://www.w3.org/TR/wsdl20-patterns">WSDL
+2.0</a>. It also defines the concept of Web Services references by
+reusing the WSDL 1.1 <code>service</code> element. For example, using
+WS-MessageDelivery, one can indicate that the destination of an 'Out'
+message when using the MEP <a
+href="http://www.w3.org/TR/wsdl20-patterns/#in-out">In-Out</a> should be
+different from the sender of the message 'In'. Another example would be
+the use of WSDL MEPs for asynchronous exchanges. WSDL 2.0 also
+introduces the concept of <a
+href="http://www.w3.org/TR/2004/WD-wsdl20-20040326/#Service_XMLRep">service
+reference</a>, but this is still work in progress.</p>
+
+<h2>Concepts</h2>
+
+<h3>Web Service Reference</h3>
+
+<p>When more than two <a
+href="http://www.w3.org/TR/2004/NOTE-ws-arch-20040211/#agent">agents</a> are
+involved in a message exchange, one needs a mechanism to reference an agent.
+A <em class="term">Web Service Reference</em> could be:</p>
+<ul>
+  <li>an <a
+    href="http://www.w3.org/TR/2003/WD-webarch-20031209/#identification">identifier</a>,
+    i.e. a Uniform Resource Identifiers (URI) representing the address of an
+    agent;</li>
+  <li>a <a href="http://www.w3.org/TR/ws-desc-reqs/#EndPoint">service
+    endpoint</a>;</li>
+  <li>or a subset of a service endpoint, when the <a
+    href="http://www.w3.org/TR/ws-desc-reqs/#Interface">interface</a> and/or
+    the <a
+    href="http://www.w3.org/TR/ws-desc-reqs/#InterfaceBinding">interface
+    binding</a> are not determined.</li>
+</ul>
+
+<h3>Delivering messages</h3>
+
+<p>Multiplexing messages in Web Services is very analog to delivering emails
+using SMTP. Thus, WS-MessageDelivery introduces similar notions:</p>
+<dl>
+  <dt><code>MessageOriginator</code></dt>
+    <dd>equivalent to the SMTP header <code>From:</code>. This is a Web
+      Service Reference.</dd>
+  <dt><code>MessageDestination</code></dt>
+    <dd>equivalent to the SMTP header <code>To:</code>. This is a Web Service
+      Reference.</dd>
+  <dt><code>ReplyDestination</code></dt>
+    <dd>equivalent to the SMTP header <code>Reply-To:</code>. This is a Web
+      Service Reference.</dd>
+  <dt><code>FaultDestination</code></dt>
+    <dd>in SMTP, an error, if any, is always returned to the agent who sent
+      or relayed the email. WS-MessageDelivery allows <em>a fault</em> to be
+      sent to a different destination.</dd>
+  <dt><code>MessageId</code></dt>
+    <dd>equivalent to the SMTP header <code>Message-ID:</code>. The
+      identifier is a URI.</dd>
+  <dt><code>MessageReference</code></dt>
+    <dd>equivalent to the SMTP header <code>References:</code>. However,
+      WS-MessageDelivery gives the ability to correlate the messages.</dd>
+      <dt><code>OperationName</code></dt>
+    <dd>This has no equivalence in SMTP.</dd>
+</dl>
+
+<h3 id="nextsteps">Next Steps</h3>
+
+    <p>
+      Web Service references and delivering messages are important concepts.
+    </p>
+
+    <p>
+      This proposal is along the lines of the <a
+      href="http://msdn.microsoft.com/library/en-us/dnglobspec/html/ws-addressing.asp">WS-Addressing</a>
+      proposal.  However, while addressing the same scope as the
+      WS-Addressing document, WS-MessageDelivery is more fully
+      integrated with WSDL, by defining its relations with the WSDL
+      Message Exchange Patterns or by introducing a WSMD description for
+      WSDL. It also follows the current work of the <a
+      href="http://www.w3.org/2002/ws/desc/">Web Services Description
+      Working Group</a>, and the service references introduced in WSDL
+      2.0. WS-Addressing, while relying on the WSDL concepts, does not
+      use the WSDL service element as a service
+      reference. WS-MessageDelivery relies on the implicit open content
+      model of WSDL for extensions, while WS-Addressing has an explicit
+      extension mechanism (the reference properties).
+    </p>
+
+    <p>
+      WS-MessageDelivery is linked to SOAP and doesn't provide a
+      complete abstraction of the protocol layer. It does not rely on
+      the SOAP Action mechanism and embed the operation name separately.
+    </p>
+
+    <p>
+      The WS-MessageDelivery approach suggests a strategy for possible
+      standardization:
+    </p>
+    <ul>
+      <li>
+	ensure that we have consensus on the relation between WSDL
+	and the service references, as used to deliver messages;</li>
+    <li>allow the use of such service references for the WSDL 2.0
+	Message Exchange Patterns;</li>
+      <li>define
+	the abstract component to allow delivery;</li>
+      <li>and provide the necessary
+	extensions for SOAP 1.2 and WSDL 2.0.</li>
+    </ul>
+    <p>
+      Such work should be developed in a separate group (i.e. different
+      from the XMLP, WSD, or WS Choreography WGs).
+    </p>
+<hr />
+<address>
+  <a href="/People/LeHegaret/" name="staff-contact"
+  id="staff-contact">Philippe Le H&eacute;garet</a>, Architecture Domain Leader.
+</address>
+
+<div align="right">
+<p><a href="http://validator.w3.org/check/referer"><img
+src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!"
+height="31" width="88" /></a></p>
+</div>
+
+<p><small>$Id: Comment.html,v 1.17 2004/04/26 17:28:14 plehegar Exp $</small></p>
+</body>
+</html>

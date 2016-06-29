@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Performance Comparison from Delphi 2010 to XE6 (Part 2) | Words from a Delphi CodeSmith</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://riversoftavg.com/blogs/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="http://riversoftavg.com/blogs/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="Words from a Delphi CodeSmith &raquo; Feed" href="http://riversoftavg.com/blogs/index.php/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Words from a Delphi CodeSmith &raquo; Comments Feed" href="http://riversoftavg.com/blogs/index.php/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Words from a Delphi CodeSmith &raquo; Performance Comparison from Delphi 2010 to XE6 (Part 2) Comments Feed" href="http://riversoftavg.com/blogs/index.php/2014/05/12/performance-comparison-from-delphi-2010-to-xe6-part-2/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/riversoftavg.com\/blogs\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.5.1"}};
+			!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;if(!g||!g.fillText)return!1;switch(g.textBaseline="top",g.font="600 32px Arial",a){case"flag":return g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3;case"diversity":return g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,d=c[0]+","+c[1]+","+c[2]+","+c[3],g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e;case"simple":return g.fillText(h(55357,56835),0,0),0!==g.getImageData(16,16,1,1).data[0];case"unicode8":return g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='http://riversoftavg.com/blogs/wp-content/themes/twentytwelve/style.css?ver=4.5.1' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='http://riversoftavg.com/blogs/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<script type='text/javascript' src='http://riversoftavg.com/blogs/wp-includes/js/jquery/jquery.js?ver=1.12.3'></script>
+<script type='text/javascript' src='http://riversoftavg.com/blogs/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.0'></script>
+<link rel='https://api.w.org/' href='http://riversoftavg.com/blogs/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://riversoftavg.com/blogs/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://riversoftavg.com/blogs/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Performance Comparison from Delphi 2010 to Delphi XE6 (Introduction)' href='http://riversoftavg.com/blogs/index.php/2014/05/12/performance-comparison-from-delphi-2010-to-delphi-xe6-introduction/' />
+<link rel='next' title='Performance Comparison from Delphi 2010 to Delphi XE6 (Part 3)' href='http://riversoftavg.com/blogs/index.php/2014/05/19/performance-comparison-from-delphi-2010-to-delphi-xe6-part-3/' />
+<meta name="generator" content="WordPress 4.5.1" />
+<link rel="canonical" href="http://riversoftavg.com/blogs/index.php/2014/05/12/performance-comparison-from-delphi-2010-to-xe6-part-2/" />
+<link rel='shortlink' href='http://riversoftavg.com/blogs/?p=147' />
+<link rel="alternate" type="application/json+oembed" href="http://riversoftavg.com/blogs/wp-json/oembed/1.0/embed?url=http%3A%2F%2Friversoftavg.com%2Fblogs%2Findex.php%2F2014%2F05%2F12%2Fperformance-comparison-from-delphi-2010-to-xe6-part-2%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://riversoftavg.com/blogs/wp-json/oembed/1.0/embed?url=http%3A%2F%2Friversoftavg.com%2Fblogs%2Findex.php%2F2014%2F05%2F12%2Fperformance-comparison-from-delphi-2010-to-xe6-part-2%2F&#038;format=xml" />
+<link rel="stylesheet" type="text/css" href="http://riversoftavg.com/blogs/wp-content/plugins/wp-code-highlight/css/wp-code-highlight.css" media="screen" />
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+			<style type="text/css" id="twentytwelve-header-css">
+			.site-header h1 a,
+		.site-header h2 {
+			color: #444;
+		}
+		</style>
+	</head>
+
+<body class="single single-post postid-147 single-format-standard custom-font-enabled single-author">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner">
+		<hgroup>
+			<h1 class="site-title"><a href="http://riversoftavg.com/blogs/" title="Words from a Delphi CodeSmith" rel="home">Words from a Delphi CodeSmith</a></h1>
+			<h2 class="site-description">When you have the Delphi Hammer, every coding problem starts to look like a nail :-)</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle">Menu</button>
+			<a class="assistive-text" href="#content" title="Skip to content">Skip to content</a>
+			<div class="nav-menu"><ul><li ><a href="http://riversoftavg.com/blogs/">Home</a></li><li class="page_item page-item-12"><a href="http://riversoftavg.com/blogs/index.php/welcome-to-the-delphi-codesmith-blog/">Welcome to the Delphi Codesmith blog!</a></li></ul></div>
+		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-147" class="post-147 post type-post status-publish format-standard hentry category-coding">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">Performance Comparison from Delphi 2010 to XE6 (Part 2)</h1>
+										<div class="comments-link">
+					<a href="http://riversoftavg.com/blogs/index.php/2014/05/12/performance-comparison-from-delphi-2010-to-xe6-part-2/#respond"><span class="leave-reply">Leave a reply</span></a>				</div><!-- .comments-link -->
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<h2>Compilation Tests</h2>
+<p>For our first tests, I wanted to see how much Embarcadero has been improving the various compilers (Win32, Win64, OSX, iOS, and Android) for each version of Delphi, both in terms of compilation speed and final executable size.  I know that this is a trivial part of the performance comparison but I thought it is important to look at every aspect of the application making process.  I took the Hello World project described in the <a href="http://blogs.riversoftavg.com/index.php/2014/05/12/performance-comparison-from-delphi-2010-to-delphi-xe6-introduction/">introduction</a> and ran it through the various Delphi compilers: 2010 to XE6, Win32, Win64, OSX, iOS, and Android.</p>
+<h3>Hello World, VCL, Win32</h3>
+<div id="attachment_150" style="width: 493px" class="wp-caption alignright"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldCompileWin32.jpg"><img class="size-full wp-image-150" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldCompileWin32.jpg" alt="Comparison of compilation times for VCL Hello World Application (Win32) with Delphi 2010 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldCompileWin32.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldCompileWin32-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of compilation times for VCL Hello World Application (Win32) with Delphi 2010 to XE6</p></div>
+<p>For the Win32 test, all compilers from Delphi 2010-XE6 were used.  Every compiler was blazingly fast and with such a small application (101 lines of code), <strong>compilation was performed so fast (less than 1/4 of a second) that the difference between compilers looks like system noise.  <em>It must also be noted that the Delphi 2010 and Delphi XE compilers were run from the IDE which explains their slower execution.</em></strong>  The interesting result, however, is EXE size.  It has been apparent for a long time that each version of Delphi has been increasing the EXE size (i.e., code bloat).  The results are backed up with our tests.  <strong>Every version has increased the resulting EXE in size from 914KB in Delphi 2010 to over 2 MB (2258KB) in Delphi XE6.  The biggest jumps were from XE to XE2 and XE2 to XE3.  </strong>Note that this code bloat is not unexpected as every version of Delphi has been adding to the run-time library.  Whether you find this code bloat good or bad is a matter of opinion as adding features is IMO a good thing.  However, it is a shame that the Delphi linker has not kept pace with development and been aggressive in discarding unused code.</p>
+<div id="attachment_152" style="width: 493px" class="wp-caption alignright"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldEXESizeWin32.jpg"><img class="size-full wp-image-152" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldEXESizeWin32.jpg" alt="Comparison of EXE Sizes for VCL Hello World Application (Win32) with Delphi 2010 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldEXESizeWin32.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldEXESizeWin32-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of EXE Sizes for VCL Hello World Application (Win32) with Delphi 2010 to XE6</p></div>
+<h3>Hello World, VCL, Win64</h3>
+<div id="attachment_151" style="width: 493px" class="wp-caption alignright"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldCompileWin64.jpg"><img class="size-full wp-image-151" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldCompileWin64.jpg" alt="Comparison of compilation times for VCL Hello World Application (Win64) with Delphi 2010 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldCompileWin64.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldCompileWin64-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of compilation times for VCL Hello World Application (Win64) with Delphi 2010 to XE6</p></div>
+<p>With the introduction of Delphi XE2, both Win64 and OSX support were added.  For my next tests, I compiled the Hello World application with the Delphi Win64 compilers.  Again, compilation was blazingly fast (less than 1/4 second) though each version of the compiler is very slightly slower than the previous one.  However, EXE size has ballooned to about a MB more than the Win32 version so compilation differences are probably just hard drive limited.  Again, <strong>the EXE sizes are increasing with every version of Delphi.  Delphi XE did not have a Win64 compiler so we cannot see the EXE size increase between those versions, but the jump from XE2 to XE3 is bad.</strong></p>
+<div id="attachment_153" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldEXESizeWin64.jpg"><img class="size-full wp-image-153" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldEXESizeWin64.jpg" alt="Comparison of EXE Sizes for VCL Hello World Application (Win64) with Delphi 2010 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldEXESizeWin64.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLHelloWorldEXESizeWin64-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of EXE Sizes for VCL Hello World Application (Win64) with Delphi 2010 to XE6</p></div>
+<h3>Hello World, FMX, Win32</h3>
+<div id="attachment_158" style="width: 493px" class="wp-caption alignright"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileWin32.jpg"><img class="size-full wp-image-158" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileWin32.jpg" alt="Comparison of compilation times for FMX Hello World Application (Win32) with Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileWin32.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileWin32-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of compilation times for FMX Hello World Application (Win32) with Delphi XE2 to XE6</p></div>
+<p>The compilers for Win32 and Win64 are the same as that used for the VCL application.  The difference is the visual component library used (FMX instead of VCL).  The Hello World FMX application uses TListBox, TMemo, TEdit, TCheckBox, etc, but instead of using Windows managed controls, FMX does all of the work itself.  <strong>As expected, FMX EXEs are significantly larger than their VCL counterparts.  The surprise is by how much (over 2x as large) and how bad Delphi XE3 EXE sizes are (almost 4x larger).  Delphi XE4 dramatically improved EXE sizes over XE3 but was not able to reduce the EXE size to XE2 levels.  Since then, the EXE size has been slowly creeping up.</strong> Compilation speeds seem to track very closely to the EXE size so my guess is that we are seeing HD read/write times.</p>
+<div id="attachment_160" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeWin32.jpg"><img class="size-full wp-image-160" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeWin32.jpg" alt="Comparison of EXE Sizes for FMX Hello World Application (Win32) with Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeWin32.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeWin32-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of EXE Sizes for FMX Hello World Application (Win32) with Delphi XE2 to XE6</p></div>
+<div id="attachment_156" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLtoFMXHelloWorldEXESizeWin32.jpg"><img class="size-full wp-image-156" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLtoFMXHelloWorldEXESizeWin32.jpg" alt="EXE Size increase between VCL and FMX Hello World applications (Win32) for Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLtoFMXHelloWorldEXESizeWin32.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLtoFMXHelloWorldEXESizeWin32-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">EXE Size increase between VCL and FMX Hello World applications (Win32) for Delphi XE2 to XE6</p></div>
+<h3>Hello World, FMX, Win64</h3>
+<p>The Win64 results closely mirror the Win32 results.</p>
+<div id="attachment_159" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileWin64.jpg"><img class="size-full wp-image-159" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileWin64.jpg" alt="Comparison of compilation times for FMX Hello World Application (Win64) with Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileWin64.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileWin64-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of compilation times for FMX Hello World Application (Win64) with Delphi XE2 to XE6</p></div>
+<div id="attachment_161" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeWin64.jpg"><img class="size-full wp-image-161" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeWin64.jpg" alt="Comparison of EXE Sizes for FMX Hello World Application (Win64) with Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeWin64.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeWin64-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of EXE Sizes for FMX Hello World Application (Win64) with Delphi XE2 to XE6</p></div>
+<div id="attachment_157" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLtoFMXHelloWorldEXESizeWin64.jpg"><img class="size-full wp-image-157" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLtoFMXHelloWorldEXESizeWin64.jpg" alt="EXE Size increase between VCL and FMX Hello World applications (Win64) for Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLtoFMXHelloWorldEXESizeWin64.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/VCLtoFMXHelloWorldEXESizeWin64-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">EXE Size increase between VCL and FMX Hello World applications (Win64) for Delphi XE2 to XE6</p></div>
+<h3>Hello World, FMX, OSX</h3>
+<div id="attachment_162" style="width: 493px" class="wp-caption alignright"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileOSX.jpg"><img class="size-full wp-image-162" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileOSX.jpg" alt="Comparison of compilation times for FMX Hello World Application (OSX) with Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileOSX.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldCompileOSX-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of compilation times for FMX Hello World Application (OSX) with Delphi XE2 to XE6</p></div>
+<p>Finally, we get to compare a completely new platform!  With the release of Delphi XE2, OSX support was added.  <strong>We see the same growth pattern of EXE size from Delphi XE2 to XE6, with Delphi XE3 again being the outlier.  In this case, Delphi XE6 is very slightly faster than XE5 though I wouldn&#8217;t read too much into it.</strong>  An interesting comparision is to compare the size of Delphi FMX applications on OSX (Win32) to their Windows counterparts (Win32).  OSX applications are even larger than their Windows versions, approximately 1.5x to 2x larger.  However, the OSX version from XE3 is not as comparatively huge as other Delphi versions. Also, it is interesting to see that the OSX compiler is as fast as the WinXX compilers.  I believe that this is because the compiler was written by Embarcadero and does not use LLVM.</p>
+<div id="attachment_163" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeOSX.jpg"><img class="size-full wp-image-163" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeOSX.jpg" alt="Comparison of EXE Sizes for FMX Hello World Application (OSX) with Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeOSX.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/FMXHelloWorldEXESizeOSX-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of EXE Sizes for FMX Hello World Application (OSX) with Delphi XE2 to XE6</p></div>
+<div id="attachment_164" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32ToOSXHelloWorldEXESize.jpg"><img class="size-full wp-image-164" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32ToOSXHelloWorldEXESize.jpg" alt="EXE Size increase between Win32 and OSX Hello World applications for Delphi XE2 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32ToOSXHelloWorldEXESize.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32ToOSXHelloWorldEXESize-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">EXE Size increase between Win32 and OSX Hello World applications for Delphi XE2 to XE6</p></div>
+<h3>Hello World, Mobile, iOSSim and iOSDevice</h3>
+<p>In Delphi XE4, support was added for compiling and deploying apps to an iOS device (I am going to ignore the free pascal compiler from XE2).  This next generation compiler creates ARM code and then uses XCode running on the Mac to deploy to an iOS device.  I had difficultly compiling a release version of the Hello World Mobile app for my iPod Touch as I did not want to create a certificate for the app; I had to settle for compiling in debug for Delphi XE4.  <strong>Note that these tests do NOT include the XCode part of the compile and deploy equation.</strong></p>
+<div id="attachment_170" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldCompileiOS.jpg"><img class="size-full wp-image-170" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldCompileiOS.jpg" alt="Compilation time increase between Win32 and iOS Hello World apps for Delphi XE4 to XE6" width="483" height="289" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldCompileiOS.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldCompileiOS-300x179.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Compilation time increase between Win32 and iOS Hello World apps for Delphi XE4 to XE6</p></div>
+<div id="attachment_168" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldEXESizeiOS.jpg"><img class="size-full wp-image-168" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldEXESizeiOS.jpg" alt="Comparison of EXE Sizes for Mobile FMX Hello World App (iOS) with Delphi XE4 to XE6" width="483" height="292" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldEXESizeiOS.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldEXESizeiOS-300x181.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of EXE Sizes for Mobile FMX Hello World App (iOS) with Delphi XE4 to XE6</p></div>
+<p><strong>As predicted and even without the deployment step, iOS apps take significantly longer to compile than Win32, Win64, and OSX. </strong>While it is awesome that we can finally compile iOS apps, the compilation process is much slower (over 10x slower than compiling the same app for Win32) and much, much, MUCH slower when you finally deploy to device.<strong>  The move to XE6 (ignoring the spurious XE4 results) has not reduced compilation time or EXE size.</strong></p>
+<div id="attachment_169" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32toiOSMobileHelloWorldCompile.jpg"><img class="size-full wp-image-169" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32toiOSMobileHelloWorldCompile.jpg" alt="Comparison of compilation times for Mobile FMX Hello World App (iOS) with Delphi XE4 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32toiOSMobileHelloWorldCompile.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32toiOSMobileHelloWorldCompile-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of compilation times for Mobile FMX Hello World App (iOS) with Delphi XE4 to XE6</p></div>
+<h3>Hello World, Mobile, Android</h3>
+<p>In Delphi XE5, support was finally added for compiling and deploying apps to an Android device.  This next generation compiler creates ARM code and an APK file and then directly deploys it to an Android device.  <strong>Note these tests do not include the deployment times.  They are also executed directly in the IDE instead of the command line.</strong></p>
+<div id="attachment_173" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldCompileAndroid.jpg"><img class="size-full wp-image-173" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldCompileAndroid.jpg" alt="Comparison of compilation times for Mobile FMX Hello World App (Android) with Delphi XE5 to XE6" width="483" height="289" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldCompileAndroid.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldCompileAndroid-300x179.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of compilation times for Mobile FMX Hello World App (Android) with Delphi XE5 to XE6</p></div>
+<div id="attachment_171" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldEXESizeAndroid.jpg"><img class="size-full wp-image-171" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldEXESizeAndroid.jpg" alt="Comparison of EXE Sizes for Mobile FMX Hello World App (Android) with Delphi XE5 to XE6" width="483" height="288" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldEXESizeAndroid.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/MobileHelloWorldEXESizeAndroid-300x178.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Comparison of EXE Sizes for Mobile FMX Hello World App (Android) with Delphi XE5 to XE6</p></div>
+<p>Interestingly, without the deployment step (a big caveat admittedly 🙂 ), iOS and Android EXE/APK sizes are comparable and compile in the same amount of time.  <strong>Like the iOS compilations, Android apps take significantly longer (almost 12x) to compile than Win32, Win64, and OSX. </strong><strong>The move to XE6 has not reduced compilation time or EXE size over XE5.</strong></p>
+<div id="attachment_172" style="width: 493px" class="wp-caption aligncenter"><a href="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32toAndroidMobileHelloWorldCompile.jpg"><img class="size-full wp-image-172" src="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32toAndroidMobileHelloWorldCompile.jpg" alt="Compilation time increase between Win32 and Android Hello World apps for Delphi XE5 to XE6" width="483" height="291" srcset="http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32toAndroidMobileHelloWorldCompile.jpg 483w, http://riversoftavg.com/blogs/wp-content/uploads/2014/05/Win32toAndroidMobileHelloWorldCompile-300x180.jpg 300w" sizes="(max-width: 483px) 100vw, 483px" /></a><p class="wp-caption-text">Compilation time increase between Win32 and Android Hello World apps for Delphi XE5 to XE6</p></div>
+<h3>Test Results Conclusion</h3>
+<p>Embarcadero has not been doing a lot of work in increasing compilation speed or reducing EXE size.  Except for Delphi XE3 which seems an outlier, EXE sizes have been going up slowly but steadily as more is added to the RTL.  The addition of FMX greatly increases EXE sizes.  The ARM compilers are 10x-12x slower than the Win32 compiler even without the lengthy deployment step. Delphi XE6 does not improve either compilation speed or EXE size.  However, this is not the most important of Delphi performance.</p>
+<p>That is all for this week.  Next week, we will get to the real speed comparisons and see how Hello World execution speed compares between the different Delphi versions.</p>
+<p>Happy CodeSmithing!</p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			This entry was posted in <a href="http://riversoftavg.com/blogs/index.php/category/coding/" rel="category tag">Coding</a> on <a href="http://riversoftavg.com/blogs/index.php/2014/05/12/performance-comparison-from-delphi-2010-to-xe6-part-2/" title="2:46 am" rel="bookmark"><time class="entry-date" datetime="2014-05-12T02:46:13+00:00">May 12, 2014</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="http://riversoftavg.com/blogs/index.php/author/tgrubb/" title="View all posts by tgrubb" rel="author">tgrubb</a></span></span>.								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">Post navigation</h3>
+					<span class="nav-previous"><a href="http://riversoftavg.com/blogs/index.php/2014/05/12/performance-comparison-from-delphi-2010-to-delphi-xe6-introduction/" rel="prev"><span class="meta-nav">&larr;</span> Performance Comparison from Delphi 2010 to Delphi XE6 (Introduction)</a></span>
+					<span class="nav-next"><a href="http://riversoftavg.com/blogs/index.php/2014/05/19/performance-comparison-from-delphi-2010-to-delphi-xe6-part-3/" rel="next">Performance Comparison from Delphi 2010 to Delphi XE6 (Part 3) <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+					<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/index.php/2014/05/12/performance-comparison-from-delphi-2010-to-xe6-part-2/#respond" style="display:none;">Cancel reply</a></small></h3>				<form action="http://riversoftavg.com/blogs/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+					<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" aria-required='true' required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" aria-required='true' required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='147' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><input type="hidden" name="token" value="f9cd36396707ca50f29d7be43ca374f2">				</form>
+					</div><!-- #respond -->
+		
+</div><!-- #comments .comments-area -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+			<aside id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="http://riversoftavg.com/blogs/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s" />
+					<input type="submit" id="searchsubmit" value="Search" />
+				</div>
+			</form></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+					<li>
+				<a href="http://riversoftavg.com/blogs/index.php/2016/04/25/riversoftavg-products-now-support-delphi-10-1-berlin/">RiverSoftAVG Products now support Delphi 10.1 Berlin</a>
+						</li>
+					<li>
+				<a href="http://riversoftavg.com/blogs/index.php/2016/03/27/bad-delphi-code/">Bad Delphi Code</a>
+						</li>
+					<li>
+				<a href="http://riversoftavg.com/blogs/index.php/2016/03/13/world-wide-web-of-svgs/">World Wide Web of SVGs</a>
+						</li>
+					<li>
+				<a href="http://riversoftavg.com/blogs/index.php/2016/03/06/rscl-v2-release-deep-dive/">RSCL v2 Release Deep Dive</a>
+						</li>
+					<li>
+				<a href="http://riversoftavg.com/blogs/index.php/2016/02/29/tsequential-for-a-happy-leap-day/">TSequential.For A Happy Leap Day</a>
+						</li>
+				</ul>
+		</aside>		<aside id="recent-comments-2" class="widget widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href='http://www.kernow-software.co.uk' rel='external nofollow' class='url'>Graham Murt</a></span> on <a href="http://riversoftavg.com/blogs/index.php/2014/02/03/creating-icons-and-launchers-for-delphi-mobile-applications/#comment-87442">Creating Icons and Launchers for Delphi Mobile Applications</a></li><li class="recentcomments"><span class="comment-author-link"><a href='http://www.RiverSoftAVG.com' rel='external nofollow' class='url'>tgrubb</a></span> on <a href="http://riversoftavg.com/blogs/index.php/2013/09/28/delphi-for-ios-and-android-the-natives-are-restless/#comment-134">Delphi for iOS and Android: The Natives are restless</a></li><li class="recentcomments"><span class="comment-author-link">Michael Justin</span> on <a href="http://riversoftavg.com/blogs/index.php/2013/09/28/delphi-for-ios-and-android-the-natives-are-restless/#comment-133">Delphi for iOS and Android: The Natives are restless</a></li><li class="recentcomments"><span class="comment-author-link">Rob</span> on <a href="http://riversoftavg.com/blogs/index.php/2013/09/28/delphi-for-ios-and-android-the-natives-are-restless/#comment-132">Delphi for iOS and Android: The Natives are restless</a></li></ul></aside><aside id="archives-2" class="widget widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://riversoftavg.com/blogs/index.php/2016/04/'>April 2016</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2016/03/'>March 2016</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2016/02/'>February 2016</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2016/01/'>January 2016</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2015/12/'>December 2015</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2015/04/'>April 2015</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2015/02/'>February 2015</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2015/01/'>January 2015</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2014/07/'>July 2014</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2014/06/'>June 2014</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2014/05/'>May 2014</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2014/02/'>February 2014</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2013/12/'>December 2013</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2013/09/'>September 2013</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2013/08/'>August 2013</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2013/07/'>July 2013</a></li>
+	<li><a href='http://riversoftavg.com/blogs/index.php/2013/06/'>June 2013</a></li>
+		</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-2"><a href="http://riversoftavg.com/blogs/index.php/category/coding/" >Coding</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://riversoftavg.com/blogs/index.php/category/installers/" >Installers</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://riversoftavg.com/blogs/index.php/category/uncategorized/" >Uncategorized</a>
+</li>
+		</ul>
+</aside><aside id="meta-2" class="widget widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://riversoftavg.com/blogs/wp-login.php">Log in</a></li>
+			<li><a href="http://riversoftavg.com/blogs/index.php/feed/">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://riversoftavg.com/blogs/index.php/comments/feed/">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>			</ul>
+			</aside>		</div><!-- #secondary -->
+		<!--WP Code Highlight_start-->
+	<script type="text/javascript">
+		window.onload = function(){prettyPrint();};
+	</script>
+	<script type="text/javascript" src="http://riversoftavg.com/blogs/wp-content/plugins/wp-code-highlight/js/wp-code-highlight.js"></script>
+	<!--WP Code Highlight_end-->
+	</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.org/" title="Semantic Personal Publishing Platform">Proudly powered by WordPress</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type='text/javascript' src='http://riversoftavg.com/blogs/wp-includes/js/comment-reply.min.js?ver=4.5.1'></script>
+<script type='text/javascript' src='http://riversoftavg.com/blogs/wp-content/themes/twentytwelve/js/navigation.js?ver=20140711'></script>
+<script type='text/javascript' src='http://riversoftavg.com/blogs/wp-includes/js/wp-embed.min.js?ver=4.5.1'></script>
+</body>
+</html>

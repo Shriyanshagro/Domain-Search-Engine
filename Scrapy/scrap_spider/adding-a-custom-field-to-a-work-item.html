@@ -1,0 +1,2951 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>Adding a custom field to a work item | Microsoft Application Lifecycle Management</title>
+
+	<meta name="description" content="Learn to use Visual Studio, Visual Studio Team Services, Application Insights and Team Foundation Server to decrease rework, increase transparency into your application and increase the rate at which you can ship high quality software throughout the application lifecycle">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.msdn.microsoft.com/visualstudioalm/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Comments Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Adding a custom field to a work item Comments Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Adding a custom field to a work item" />
+<meta property="og:url" content="https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Adding a custom field to a work item" />
+<meta name="twitter:url" content="https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/" />
+<meta name="twitter:description" content="" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/js/social-counts.min.js?ver=4.1.5'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/visualstudioalm/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/' />
+<link rel='shortlink' href='https://blogs.msdn.microsoft.com/visualstudioalm/?p=10652' />
+<meta name='robots' content='noindex,follow' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('http://i.technet.microsoft.com/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #68217a;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+  text-align: center;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 0 !important;
+	display: inline-block !important;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	color: #fff;
+        border: 0 !important;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+}
+@media (min-width:60em){ 
+
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #442059;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 35px;
+	display: table-cell;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	border-right: 10px solid transparent; 
+	color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/cloud-platform/images/favicon-msdn.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="single single-post postid-10652 single-format-standard msdn-46023 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.msdn.microsoft.com/developer-tools">Developer Tools Blogs</a> > Microsoft Application Lifecycle Management</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.msdn.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-developer-tools-blogs-main-menu-container"><ul id="menu-developer-tools-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Executive Bloggers</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="http://weblogs.asp.net/scottgu/">Scott Guthrie</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-133"><a href="http://blogs.msdn.microsoft.com/stevengu/">Steve Guggenheimer</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Visual Studio</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="http://blogs.msdn.microsoft.com/visualstudio">Visual Studio</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="http://blogs.msdn.microsoft.com/vscode/">Visual Studio Code</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-723"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-163"><a href="http://blogs.msdn.microsoft.com/lightswitch/">LightSwitch</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-383"><a href="http://blogs.msdn.microsoft.com/heaths/">Setup &amp; Install by Heath Stewart</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Application Lifecycle Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/insights/">Application Insights</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-393"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/release-management/">Release Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-server/">Team Foundation Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-412"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/testing/">Testing</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="http://www.visualstudio.com/news/release-archive-vso">Visual Studio Team Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/">All</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Languages</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-453"><a href="http://blogs.msdn.microsoft.com/vcblog/">Visual C++</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="http://blogs.msdn.microsoft.com/fsharpteam/">Visual F#</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.msdn.microsoft.com/visualstudio/tag/javascript/">JavaScript</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="http://blogs.msdn.microsoft.com/typescript/">TypeScript</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1075"><a href="https://blogs.msdn.microsoft.com/pythonengineering/">Python</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">.NET</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="http://blogs.msdn.microsoft.com/dotnet/">.NET</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1052"><a href="http://blogs.msdn.microsoft.com/bethmassi/tag/devcenter/">.NET with Beth Massi</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1071"><a href="http://blogs.msdn.com/b/pfxteam/">.NET Parallel Programming</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-503"><a href="http://blogs.msdn.com/b/adonet/">ADO.NET (Managed Providers, DataSet &amp; EF)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-513"><a href="http://www.hanselman.com/blog/CategoryView.aspx?category=ASP.NET">ASP.NET by Scott Hanselman</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-724"><a href="http://blogs.msdn.com/b/odatateam/">Odata Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-533"><a href="http://blogs.msdn.microsoft.com/wpf/">WPF</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Platform Development</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-273"><a href="http://blogs.windows.com/buildingapps/">Apps for Windows</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1032"><a href="http://blogs.msdn.com/b/bingdevcenter/">Bing</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1063"><a href="http://blogs.windows.com/msedgedev/">Edge</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-553"><a href="http://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-563"><a href="http://blogs.msdn.microsoft.com/vsto/">Office</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-573"><a href="http://blogs.office.com/dev?filter=true&#038;filter-product=sharepoint">Office 365 Development</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-583"><a href="http://blogs.msdn.microsoft.com/webdev/">Web</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+			<aside id="text-6" class="widget widget_text">			<div class="textwidget"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ 
+  ga('create', 'UA-62780441-3', 'auto');
+  ga('send', 'pageview');
+ 
+</script></div>
+		</aside>		</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm">Microsoft Application Lifecycle Management</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description">Learn to use Visual Studio, Visual Studio Team Services, Application Insights and Team Foundation Server to decrease rework, increase transparency into your application and increase the rate at which you can ship high quality software throughout the application lifecycle </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+					<a href=https://blogs.msdn.microsoft.com/visualstudioalm/ title="Microsoft Application Lifecycle Management" rel="home"><img src="http://msdnshared.blob.core.windows.net/media/2015/05/8814.VisualStudioClean11.png" alt="Microsoft Application Lifecycle Management" /></a>				</div>
+
+			</div>
+
+			<aside id="text-6" class="widget widget_text">			<div class="textwidget"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ 
+  ga('create', 'UA-62780441-3', 'auto');
+  ga('send', 'pageview');
+ 
+</script></div>
+		</aside>
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Comments Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Adding a custom field to a work item Comments Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Adding a custom field to a work item" />
+<meta property="og:url" content="https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Adding a custom field to a work item" />
+<meta name="twitter:url" content="https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/" />
+<meta name="twitter:description" content="" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/visualstudioalm/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/' />
+<link rel='shortlink' href='https://blogs.msdn.microsoft.com/visualstudioalm/?p=10652' />
+<meta name='robots' content='noindex,follow' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('http://i.technet.microsoft.com/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #68217a;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+  text-align: center;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 0 !important;
+	display: inline-block !important;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	color: #fff;
+        border: 0 !important;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+}
+@media (min-width:60em){ 
+
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #442059;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 35px;
+	display: table-cell;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	border-right: 10px solid transparent; 
+	color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/cloud-platform/images/favicon-msdn.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+				
+				<article id="post-10652" class="post-10652 post type-post status-publish format-standard hentry category-uncategorized category-visual-studio-team-services tag-alm tag-customizing tag-process tag-process-templates tag-tfs tag-visual-studio-online tag-work-items">
+	<header class="entry-header">
+		<h1 class="entry-title">Adding a custom field to a work item</h1>
+		<div class="rating-wrap">
+		<div id="star-rating-10652" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="10652">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>	</header><!-- .entry-header -->
+
+	<div class="entry-meta row">
+		<div class="post-info">
+			<span class="posted-on"><time class="entry-date published" datetime="2015-12-10T10:40:00+00:00">December 10, 2015</time><time class="updated" datetime="2016-02-29T21:15:12+00:00">February 29, 2016</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="9c64a4e9368341c397d01619cc6116aa" href="https://social.msdn.microsoft.com/profile/Justin+Marks+%28MSFT%29">Justin Marks (MSFT)</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/#comments">29 Comments</a>		</div>
+
+		<div class="row">
+			<div class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/", "text": "Adding a custom field to a work item"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/", "text": "Adding a custom field to a work item"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.msdn.microsoft.com/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/", "text": "Adding a custom field to a work item"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</div><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+	</div><!-- .entry-meta -->
+
+	
+	<div class="entry-content">
+		<div>
+<p>Thank you everyone for your patience, but the wait is finally over.  Today begins our journey delivering process customization to Visual Studio Team Services (VSTS)!  We’re releasing the first stage of the rollout plan I described back <a href="http://blogs.msdn.com/b/visualstudioalm/archive/2015/07/27/visual-studio-online-process-customization-update.aspx">in July</a>, the ability to add custom fields &amp; modify layout for existing work item types.  Before jumping into the details I want to talk about the goals we have set for ourselves while delivering customization to VSTS.</p>
+<ol>
+<li>Processes can be shared across multiple projectsWe’ve seen customers with multiple team projects struggle to keep them all aligned when managing process updates.  In VSTS, processes are stored at the collection level and when a process changes, all team projects referencing that process see the change.  This is a change from our current model in TFS where the process is stored in each team project.</li>
+<li>Updates to the product will work on any processMost customers want to use our “out of the box” processes (Agile, Scrum, CMMI) but want to make a few tweaks to make the process fit well with their organization.  In VSTS, you can use our processes as a base and create an inherited process to store your own customizations.  As we move our processes forward with updates and enhancements, you can expect to inherit all new changes while preserving your own customizations.</li>
+<li>UX built into the productYou shouldn’t need a PHD in TFS to make customizations!  We have built experiences into our web portal to allow process administrators to make the changes they want through a simple and approachable UI without having to muck with XML files or additional tools.</li>
+</ol>
+</div>
+<div>
+<p>With that in mind, let’s see how you can customize your team projects…</p>
+<h2>Shared and inherited process<a name="Process"></a></h2>
+<p>As discussed above and in the last <a href="http://blogs.msdn.com/b/visualstudioalm/archive/2015/07/27/visual-studio-online-process-customization-update.aspx#SharedInheritedProcess">2 posts on customization</a>, the first change from the existing TFS process customization is moving to a shared process model.  Customizations will no longer be scoped to a team project.  Rather, process will be its own entity and team projects will reference a process to get the definition of work item types, fields, links, etc.  In addition, we will allow a one-level inheritance tree where an inherited process can augment and override the choices made by the process it&#8217;s inheriting from.</p>
+<p>&nbsp;</p>
+</div>
+<table border="0">
+<tbody>
+<tr>
+<td> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/2728.Figure%201.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/2728.Figure%201.png" alt="" border="0" /></a></td>
+</tr>
+<tr>
+<td style="vertical-align: top">Figure 1. In TFS today, projects make a copy of process templates to define their initial process.  The project is then the target of all customizations.  In the new world, projects reference a process and the process is the target of all customizations.</td>
+</tr>
+</tbody>
+</table>
+<p>On the admin site at the collection level, we have a new Process page (figure 3) that allows you to view and interact with all the processes in the collection.</p>
+<table border="0">
+<tbody>
+<tr>
+<td> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/7411.Figure%203.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/7411.Figure%203.png" alt="" border="0" /></a></td>
+</tr>
+<tr>
+<td>Figure 2. Process overview admin site.  Custom Agile is the default process used when creating new projects.  Agile and CMMI are disabled so new projects cannot be created using these processes.</td>
+</tr>
+</tbody>
+</table>
+<p>You can easily create new team projects from the context menu.  When creating a project, a user can only use processes which are enabled… so if you want to enforce that all new projects are “Custom Agile”, just disable the rest!  You can also drill into a process to view and modify the types, fields, etc. that are defined inside the process.  Over time we’ll be adding more customizations but right now you can modify the fields on work item types.  But before you can do that, you need to create an inherited process.</p>
+<h2>Creating an inherited process<a name="Inheritance"></a></h2>
+<p>The first step to enable customization is creating an inherited process.  Inherited processes can be created from any of the “out of the box” system processes. As shown in Figure 3 above, right clicking on a system process shows a context menu with “Create inherited process”.  This action opens a wizard (figure 3) where you create the inherited process which is the container for all customizations.  Once you have created the inherited process, you can create new projects or start customizing it.</p>
+<p>You may be wondering how you can customize existing projects since they were created using system processes.  Project migration is your answer.  As part of the create process wizard, you can optionally migrate a project to use the inherited processes (figure 4).  Once a project is migrated all customizations in the inherited process will immediately be seen in that project.  This process is 100% reversible, simply migrate the project back to the system process.  You can migrate projects between system and its inherited processes at any time by right clicking on the current process the projects are using and choosing “Migrate projects” from the context menu.  History for existing work item types is preserved so there is no data loss.</p>
+<p>Currently there is no way to migrate team projects laterally, i.e. you can’t convert an Agile project to Scrum, but that’s on our long term backlog.</p>
+<table border="0">
+<tbody>
+<tr>
+<td style="width: 50%"> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/7080.Figure%204.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/7080.Figure%204.png" alt="" border="0" /></a></td>
+<td style="width: 50%"> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/5482.Figure%205.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/5482.Figure%205.png" alt="" border="0" /></a></td>
+</tr>
+<tr>
+<td style="vertical-align: top">Figure 3. Creating an inherited process is as simple as choosing a name and optionally providing a description.</td>
+<td style="vertical-align: top">Figure 4. Once the new inherited process is created, you are offered the chance to migrate existing projects to the new process. In this example, we’re taking an existing project “Chatter” and enabling customization by migrating it to the newly created inherited process “My Scrum”. This action is reversible and the project will lose the customizations.</td>
+</tr>
+</tbody>
+</table>
+<h2>Process security<a name="ProcessSecurity"></a></h2>
+<p>We’ve made some improvements to the security model around process as well.  Each process is a securable unit and has individual ACLs for creating inherited processes, editing the process and deleting the process.  At the collection level, team project collection administrators can choose which processes can be inherited from and by whom.  When a new inherited process is created, the creator of the process, as well as team project collection administrators, has full control of the process and can also set individual ACLs for which users and groups can edit and delete the process (figure 5).</p>
+<table border="0">
+<tbody>
+<tr>
+<td> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/5327.Figure%206.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/5327.Figure%206.png" alt="" border="0" /></a></td>
+</tr>
+<tr>
+<td>Figure 5. Justin Marks is the owner of “My Scrum” process and has full control but he has also granted Derrick Fu the ability to edit the process.</td>
+</tr>
+</tbody>
+</table>
+<p>Now the moment you’ve all been waiting for, let’s add a field…</p>
+<h2>Add custom fields to existing work item types<a name="AddFields"></a></h2>
+<p>When we talk to customers about process customization, the most common ask we hear is something like, “Why can’t I add a ‘Date due’ field to the Scrum bug?”  Now you can! Let&#8217;s go through that exact scenario and add a date field called &#8220;Date due&#8221; to the bug work item type (figure 6)&#8230;</p>
+<table border="0">
+<tbody>
+<tr>
+<td> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/8713.Figure%206%20(2).png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/8713.Figure%206%20(2).png" alt="" border="0" /></a></td>
+</tr>
+<tr>
+<td>Figure 6. I want to add a “date due” field to the bug work item type.</td>
+</tr>
+</tbody>
+</table>
+<p>We have provided the beginnings of a full process editor as part of the admin site (figure 7).  You can navigate to the admin site by clicking the customize button on the work item toolbar (figure 6) or by clicking on a process name from the process overview page (figure 2).</p>
+<table border="0">
+<tbody>
+<tr>
+<td> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/8726.Figure%2012.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/8726.Figure%2012.png" alt="" border="0" /></a></td>
+</tr>
+<tr>
+<td>Figure 7. The process admin site shows all fields included on each work item.</td>
+</tr>
+</tbody>
+</table>
+<p>The process editor allows you to see all fields on each work item type and access the add a field experience by clicking the &#8220;New field&#8221; button in the toolbar. This opens the “Add a field” dialog (figure 8) where users can create a brand new field or use an existing field that’s not already associated with the work item type.  When you add a new field, you have to provide a name for the field, choose the type (e.g. integer, date/time, string, etc.) and optionally provide a description for what the field is.  Clicking the “add field” button will add the field to the work item type and display the field on the form (figure 11).  It’s that easy!</p>
+<p>In addition to defining the field itself, you can use the Layout and Options tabs to provide more options:</p>
+<ul>
+<li>The Layout tab allows you choose how the field will appear on the work item form.  You can hide the field from the form, customize the field label, and choose which group the field appears in (figure 9).</li>
+<li>The Options tab allows you provide additional options about the field such as whether the field is required and its default value (figure 10).</li>
+</ul>
+<p>These options are also available from the process editor by right clicking on a field in the grid.  You can also see a rollup of all fields across the process by clicking on the Fields tab at the top of the page.</p>
+<p>These added fields have all the same functionality of any other field: you can query for them, set alerts on them, use them as pivots in charts, show them on the backlog, etc.</p>
+<table border="0">
+<tbody>
+<tr>
+<td style="width: 33%"> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/2043.Figure%208.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/2043.Figure%208.png" alt="" border="0" /></a></td>
+<td style="width: 33%"> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/1323.Figure%209.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/1323.Figure%209.png" alt="" border="0" /></a></td>
+<td style="width: 33%"> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/2451.Figure%2010.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/2451.Figure%2010.png" alt="" border="0" /></a></td>
+</tr>
+<tr>
+<td style="vertical-align: top">Figure 8. The “Define Field” tab of the add a field dialog allows you to choose from existing fields or create a new custom field.</td>
+<td style="vertical-align: top">Figure 9. The “Layout” tab of the add a field dialog allows you to choose whether the work item appears on the form, with what label, and in which group.</td>
+<td style="vertical-align: top">Figure 10. The “Options” tab of the add a field dialog allows you to optionally make the field required or set a default value for the field.</td>
+</tr>
+</tbody>
+</table>
+<table border="0">
+<tbody>
+<tr>
+<td> <a href="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/3683.Figure%2011.png"><img src="https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/45/92/3683.Figure%2011.png" alt="" border="0" /></a></td>
+</tr>
+<tr>
+<td>Figure 11. The bug work item with the newly created “Date due” field added to it (highlighted in orange).  The field has the default value provided in the add a field dialog.</td>
+</tr>
+</tbody>
+</table>
+<p>That wraps it up for our first phase of process customization.  Check out our <a href="http://blogs.msdn.com/b/visualstudioalm/">customization futures</a> blog post to stay up to date with what’s coming next and our overall rollout plan.</p>
+<p>Happy Customizing!</p>
+<p>-Justin Marks</p>
+<h2>Q&amp;A</h2>
+<p><strong>Q: How can I make process changes to a single project?</strong></p>
+<p>A: If you wish to have a project have its own process, simply create an inherited process and migrate the project to use it.  Just because processes are shared doesn’t mean you need multiple projects using it J</p>
+<p>&nbsp;</p>
+<p><strong>Q: When I migrate a project from “Agile” to “My custom agile”, what happens?</strong></p>
+<p>A: Once a project is migrated, the work item appears in the UI no differently than if it was created that process all along; the newly added fields will simply appear on the work item form.  If any new required fields have been added, the work item will be in an invalid state and won’t be able to be saved until the required fields are populated.</p>
+<p>&nbsp;</p>
+<p><strong>Q: What happens to the work item data when it’s migrated from an inherited process “My custom agile” back to the system process “Agile”?</strong></p>
+<p>A: All data is retained in the work item history so looking at the history tab will show you all the changes made regardless of the current process.  Some fields may not be on the form since they are not part of the process but the data is still accessible through REST APIs and Query.  These fields are essentially locked from changes and appear as read-only values.</p>
+<p>&nbsp;</p>
+<p><strong>Q: Can I change the name or type of a field?</strong></p>
+<p>A: The type can never be changed but the name of user defined fields can be changed from the process fields page but note that this affects all instances of the field across all work item types.</p>
+<p>&nbsp;</p>
+<p><strong>Q: What types of fields can I create?</strong></p>
+<p>A: Currently, we support the following field types: Decimal, Date/Time, Integer, String (single-line).  While this is a small list, we are working to add more to this list over the next couple sprints.  We’ll have Boolean, HTML, and String (multi-line) very soon after release and we’re working to bring picklist/drop downs right after the holidays.</p>
+<p>&nbsp;</p>
+<p><strong>Q: Can I remove fields from OOB templates that we don’t use?</strong></p>
+<p>A: Inherited processes don’t allow you to remove fields from the system process they inherit from.  You will be able to hide the fields from the form next sprint.</p>
+<p>&nbsp;</p>
+<p><strong>Q: What should I do if I have more questions or need help?</strong></p>
+<p>A: If you run into trouble, feel free to email <a href="mailto:vsocustpt@microsoft.com">VSTS Customization Help</a> and we’ll be happy to help you out!</p>
+				<div class="back-to-top-wrap"><a href="#top-link" class="back-to-top">Back to<br>top</a></div>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+				
+			
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="text-5" class="widget widget_text">			<div class="textwidget"><div class="sidebar-btn sidebar-btn-purple">
+    <a href="http://www.microsoft.com/click/services/Redirect2.ashx?CR_CC=200657580" title="Visual Studio" onclick="window.appInsights && window.appInsights.logEvent('leave_to/download_visual_studio'); return true;">Download Visual Studio</a>
+</div>
+
+<div class="sidebar-btn sidebar-btn-green">
+    <a href="http://www.microsoft.com/click/services/Redirect2.ashx?CR_CC=200657581" title="Visual Studio" onclick="window.appInsights && window.appInsights.logEvent('leave_to/download_visual_studio'); return true;">Download TFS 2015</a>
+</div>
+
+<div class="sidebar-btn sidebar-btn-cyan">
+    <a href="http://www.microsoft.com/click/services/Redirect2.ashx?CR_CC=200657582" title="Visual Studio" onclick="window.appInsights && window.appInsights.logEvent('leave_to/download_visual_studio'); return true;">Use Visual Studio Online</a>
+</div>
+
+<ul class="sidebar-tiles">
+  <li class="first">
+    <a href="https://blogs.msdn.microsoft.com/visualstudioalm/feed/" class="sidebar-tile-subscribe">Subscribe</a>
+  </li>
+<!--  <li class="mid">
+    <a href="#" class="sidebar-tile-comments">Comments</a>  </li>
+  <li class="last">
+    <a href="#" class="sidebar-tile-contact">Contact</a>
+  </li>-->
+</ul></div>
+		</aside><aside id="msdn_bing_social_search-5" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=Microsoft%2BApplication%2BLifecycle%2BManagement&rq=site%3Ahttp%3A%2F%2Fblogs.msdn.com%2Fb%2Fvisualstudioalm" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="msdn-sharing-4" class="widget msdn-sharing"><h2 class="widget-title color-highlight-bg">Share This Post</h2><div class='social-share-icons-wrap'><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-facebook facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fvisualstudioalm%2F2015%2F12%2F10%2Fadding-a-custom-field-to-a-work-item%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-twitter twitter" href="https://twitter.com/intent/tweet/?text=Adding+a+custom+field+to+a+work+item&url=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fvisualstudioalm%2F2015%2F12%2F10%2Fadding-a-custom-field-to-a-work-item%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-linkedin linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.msdn.microsoft.com%2Fvisualstudioalm%2F2015%2F12%2F10%2Fadding-a-custom-field-to-a-work-item%2F&title=Adding+a+custom+field+to+a+work+item&source=https://blogs.msdn.microsoft.com/visualstudioalm">Share</a><a onclick="" class="social-sharing social-sharing-email email" href="mailto:?subject=Adding a custom field to a work item&body=Adding a custom field to a work item https%3A%2F%2Fblogs.msdn.microsoft.com%2Fvisualstudioalm%2F2015%2F12%2F10%2Fadding-a-custom-field-to-a-work-item%2F">Share</a><a onclick="" class="social-sharing social-sharing-rss rss" href="https://blogs.msdn.microsoft.com/visualstudioalm/feed/">Share</a></div></aside><aside id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/administration/' class='tag-link-653' title='16 topics' style='font-size: 9.6842105263158pt;'>Administration</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/agile/' class='tag-link-473' title='38 topics' style='font-size: 14.610526315789pt;'>Agile</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/alm/' class='tag-link-213' title='120 topics' style='font-size: 21.315789473684pt;'>ALM</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/announcement/' class='tag-link-23' title='81 topics' style='font-size: 18.989473684211pt;'>Announcement</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/automated-testing/' class='tag-link-413' title='25 topics' style='font-size: 12.147368421053pt;'>Automated Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/azure/' class='tag-link-323' title='18 topics' style='font-size: 10.368421052632pt;'>Azure</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/build-process/' class='tag-link-533' title='14 topics' style='font-size: 9pt;'>Build Process</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/coded-ui-test/' class='tag-link-733' title='26 topics' style='font-size: 12.421052631579pt;'>Coded UI Test</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/coded-ui-testing/' class='tag-link-513' title='28 topics' style='font-size: 12.831578947368pt;'>Coded UI Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/code-visualization/' class='tag-link-423' title='17 topics' style='font-size: 10.094736842105pt;'>Code Visualization</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/customizing/' class='tag-link-673' title='20 topics' style='font-size: 10.915789473684pt;'>Customizing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/debugging/' class='tag-link-363' title='36 topics' style='font-size: 14.336842105263pt;'>Debugging</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/devops/' class='tag-link-63' title='55 topics' style='font-size: 16.8pt;'>DevOps</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/' class='tag-link-33' title='134 topics' style='font-size: 22pt;'>Diagnostics</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/extensibility/' class='tag-link-953' title='24 topics' style='font-size: 12.010526315789pt;'>Extensibility</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/feedback/' class='tag-link-943' title='16 topics' style='font-size: 9.6842105263158pt;'>Feedback</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/git/' class='tag-link-353' title='35 topics' style='font-size: 14.2pt;'>Git</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/guidance/' class='tag-link-183' title='37 topics' style='font-size: 14.473684210526pt;'>Guidance</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/insights/' class='tag-link-93' title='55 topics' style='font-size: 16.8pt;'>insights</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/intellitrace/' class='tag-link-153' title='26 topics' style='font-size: 12.421052631579pt;'>IntelliTrace</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/load-testing/' class='tag-link-43' title='26 topics' style='font-size: 12.421052631579pt;'>Load Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/managing-technical-debt/' class='tag-link-1221' title='19 topics' style='font-size: 10.642105263158pt;'>Managing Technical Debt</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/manual-testing/' class='tag-link-683' title='18 topics' style='font-size: 10.368421052632pt;'>Manual Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/' class='tag-link-73' title='15 topics' style='font-size: 9.2736842105263pt;'>Performance</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/process-templates/' class='tag-link-563' title='21 topics' style='font-size: 11.189473684211pt;'>Process Templates</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/rangers/' class='tag-link-483' title='49 topics' style='font-size: 16.115789473684pt;'>Rangers</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/release-management/' class='tag-link-13' title='46 topics' style='font-size: 15.705263157895pt;'>Release Management</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/sharepoint/' class='tag-link-913' title='14 topics' style='font-size: 9pt;'>SharePoint</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/sonarqube/' class='tag-link-1542' title='20 topics' style='font-size: 10.915789473684pt;'>SonarQube</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-build/' class='tag-link-783' title='28 topics' style='font-size: 12.831578947368pt;'>Team Foundation Build</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-sdk/' class='tag-link-793' title='16 topics' style='font-size: 9.6842105263158pt;'>Team Foundation SDK</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-server/' class='tag-link-463' title='112 topics' style='font-size: 20.905263157895pt;'>Team Foundation Server</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/testing/' class='tag-link-293' title='76 topics' style='font-size: 18.715789473684pt;'>Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/test-management/' class='tag-link-693' title='29 topics' style='font-size: 13.105263157895pt;'>Test Management</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/tfs/' class='tag-link-193' title='69 topics' style='font-size: 18.168421052632pt;'>TFS</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/tfservice/' class='tag-link-813' title='30 topics' style='font-size: 13.242105263158pt;'>TFService</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/unit-testing/' class='tag-link-253' title='25 topics' style='font-size: 12.147368421053pt;'>Unit Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/version-control/' class='tag-link-603' title='23 topics' style='font-size: 11.736842105263pt;'>Version Control</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio/' class='tag-link-263' title='41 topics' style='font-size: 15.021052631579pt;'>Visual Studio</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2010/' class='tag-link-873' title='29 topics' style='font-size: 13.105263157895pt;'>Visual Studio 2010</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2012/' class='tag-link-623' title='26 topics' style='font-size: 12.421052631579pt;'>Visual Studio 2012</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2013/' class='tag-link-303' title='35 topics' style='font-size: 14.2pt;'>Visual studio 2013</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-alm/' class='tag-link-243' title='88 topics' style='font-size: 19.536842105263pt;'>Visual Studio ALM</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-online/' class='tag-link-3' title='68 topics' style='font-size: 18.031578947368pt;'>Visual Studio Online</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/work-items/' class='tag-link-553' title='42 topics' style='font-size: 15.157894736842pt;'>Work Items</a></div>
+</aside><aside id="msdn-archive-widget-3" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/05/'>May 2016</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/04/'>April 2016</a>&nbsp;(18)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/03/'>March 2016</a>&nbsp;(24)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/02/'>February 2016</a>&nbsp;(13)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/01/'>January 2016</a>&nbsp;(22)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/'>All of 2016</a>&nbsp;(79)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2015/'>All of 2015</a>&nbsp;(186)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2014/'>All of 2014</a>&nbsp;(173)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2013/'>All of 2013</a>&nbsp;(154)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2012/'>All of 2012</a>&nbsp;(207)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2011/'>All of 2011</a>&nbsp;(81)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2010/'>All of 2010</a>&nbsp;(28)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2009/'>All of 2009</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2008/'>All of 2008</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2007/'>All of 2007</a>&nbsp;(30)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2006/'>All of 2006</a>&nbsp;(76)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2005/'>All of 2005</a>&nbsp;(22)</li>
+</aside><aside id="blog_subscription-4" class="widget msdn_subscription_widget"><h2 class="widget-title color-highlight-bg">Subscribe Blog via Email</h2>
+<div class="msdn-subscribe-text"><p>Subscribe to this blog and receive notifications of new posts by email.</p></div>        <div>
+            <p>
+                <input type="hidden" id="_msdn_subscribe_nonce" name="_msdn_subscribe_nonce" value="6f57997be0" />                    <input type="email" name="email" class="msdn-subscribe-email" value=""
+                           placeholder="Email Address"/>
+                    <button type="button" class="msdn-subscribe-button unregistered-user">
+                        Subscribe!
+                    </button>
+                    <button type="button" class="msdn-unsubscribe-button unregistered-user">
+                        Unsubscribe
+                    </button>
+                
+                <label class="msdn-subscribe-message" style="display: none;"></label>
+            </p>
+
+        </div>
+        
+</aside>
+	</div><!-- #secondary -->
+
+	<div id="tag-wrap"><h2 class="color-highlight-bg">Tags</h2><ul class="tag-list"><li><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/alm/">ALM</a></li><li><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/customizing/">Customizing</a></li><li><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/process/">Process</a></li><li><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/process-templates/">Process Templates</a></li><li><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/tfs/">TFS</a></li><li><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-online/">Visual Studio Online</a></li><li><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/work-items/">Work Items</a></li></ul></div>
+	
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+					<h3 class="comments-title color-highlight-bg">
+				Join the conversation			</h3>
+			<a href="#" class="add-comment-button button">Add Comment</a>
+			</div>
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow" id="cancel-comment-reply-link" href="/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/#respond">Cancel</a></small></h3>
+									<form action="https://blogs.msdn.microsoft.com/visualstudioalm/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>												<p class="form-submit">
+							<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='10652' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='55402' />
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="53ebfbc9a3" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="247"/></p>					</form>
+							</div><!-- #respond -->
+			
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-55462" class="comment byuser comment-author-jeroen-janssenoce-com even thread-even depth-1">
+			<article id="div-comment-55462" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-11T00:38:15+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55462#respond' onclick='return addComment.moveForm( "div-comment-55462", "55462", "respond", "10652" )' aria-label='Reply to Jeroen Janssen'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/90a778456b38680d0e2aac6d8598463e?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Jeroen Janssen</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hello, wonderful progress indeed! </p>
+<p>Would the inherited process allow the definition of a &#39;company specific&#39; process that multiple teams use and can tune for their needs? If I look at our current on premise TFS use of process customization, most of the tricky part involves maintaining (and referencing) the picklists (since the witd xml files contain the choices to pick from, either directly or by referencing a global list), so I am very interested what your thoughts and plans for solving that will be.</p>
+<p>One other things comes to mind: I am with a small team in a big organisation so I have customized the System.AssignedTo to only allow ProjectContributors instead of the default VALIDUSER, is this something you are also considering to be allowed?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-55412" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-55412" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-11T07:29:31+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55412#respond' onclick='return addComment.moveForm( "div-comment-55412", "55412", "respond", "10652" )' aria-label='Reply to Danny Crone'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/923e04c2d3a133a80b529047be6b459c?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Danny Crone</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Justin, </p>
+<p>We don&#39;t see the context menu &quot;Create inherited process&quot; will it take a while for this to filter to our account?</p>
+<p>Danny</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-55402" class="comment byuser comment-author-justmarks bypostauthor even thread-even depth-1">
+			<article id="div-comment-55402" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-11T07:36:27+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55402#respond' onclick='return addComment.moveForm( "div-comment-55402", "55402", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Jeroen, You ask some great questions and rest assured this add a field experience is only the first step <img src="https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley" /> &nbsp;All of your asks are on our roadmap and we&#39;re planning on continuing to deliver this value incrementally. &nbsp;Our next deliverably will be allowing custom picklists. &nbsp;Fully custom processes is the last step of the roadmap as we need to provide custom types, states, etc. before we can give you the full process. &nbsp;We also have plans to deliver a much richer identity field and rules to manage them so while you can&#39;t tune the AssignedTo field today, you&#39;ll be able to do that in the future. &nbsp;I can&#39;t give exact dates yet but I am planning a &quot;futures&quot; blog post to talk about the overall roadmap.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-55392" class="comment byuser comment-author-justmarks bypostauthor odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-55392" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-11T07:36:52+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55392#respond' onclick='return addComment.moveForm( "div-comment-55392", "55392", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Danny, the deployment isn&#39;t completed yet so please be patient and the feature should light up in your account in the next couple days.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-55232" class="comment even thread-even depth-1">
+			<article id="div-comment-55232" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-14T04:05:43+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55232#respond' onclick='return addComment.moveForm( "div-comment-55232", "55232", "respond", "10652" )' aria-label='Reply to James Travers'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">James Travers</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Great! &nbsp;Thank you!</p>
+<p>A couple of points though, there has been a lot of disquiet form my team about the enforced change to the new layout; its a shame that we can&#39;t (yet) customise inherited fields in terms of their locations. &nbsp;I did try hiding them and re-inserting them where I needed but found that the second step was not available. &nbsp;Will this be added and do you know when please?</p>
+<p>Also given that &quot;The type can never be changed&quot; whilst I appreciate the current capabilities for custom fields I need to weigh up the pro&#39;s of using the free-form types v the con of waiting for the picklist/drop downs. &nbsp;Any idea on how soon after the Holiday&#39;s please? &nbsp;Some time in January?</p>
+<p>Thanks again</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-55222" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-55222" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-14T05:15:10+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55222#respond' onclick='return addComment.moveForm( "div-comment-55222", "55222", "respond", "10652" )' aria-label='Reply to Shailendra Birthare'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Shailendra Birthare</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>These changes are nice and welcome. I would also like to know how can I add a new work item type e.g. Requirement. I need to capture requirements as a work item type so that I can link it to test case as well as a task. I had earlier achieved it by modifying the process template with custom work items type like Requirement, Issue, etc.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-55162" class="comment byuser comment-author-justmarks bypostauthor even thread-even depth-1">
+			<article id="div-comment-55162" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-14T11:08:50+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55162#respond' onclick='return addComment.moveForm( "div-comment-55162", "55162", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@James, I&#39;d love to dig into your feedback on the form more offline, can you please email me directly so we can setup a quick phone discussion, <a href="mailto:jmarks@microsoft.com">jmarks@microsoft.com</a></p>
+<p>We don&#39;t have a hard deadline but our goal is having picklists in March and Types in April but we&#39;re going to look at our progress and plan when everyone&#39;s back from vacation in the new year and update our plan.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-55152" class="comment byuser comment-author-justmarks bypostauthor odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-55152" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-14T11:11:58+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55152#respond' onclick='return addComment.moveForm( "div-comment-55152", "55152", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Shailendra, as I mentioned in my previous comment, we&#39;re hoping to give you the ability to add custom work item types in April but that&#39;s just a guesstimate. &nbsp;We know it&#39;s an important scenario but we need the ability to add custom states first.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-55022" class="comment even thread-even depth-1">
+			<article id="div-comment-55022" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-16T05:40:58+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55022#respond' onclick='return addComment.moveForm( "div-comment-55022", "55022", "respond", "10652" )' aria-label='Reply to James Travers'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">James Travers</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks Justin,</p>
+<p>I&#39;ve sent you a mail.</p>
+<p>When I mentioned types in my initial comment I meant changing a field type from, say, Sting (single line) to String (multi-line). &nbsp;Given your response to @Shailendra I think you might have thought I was after custom work item types&#8230;</p>
+<p>Thanks for keeping the information forthcoming. &nbsp;It helps manage my teams expectations!</p>
+<p>James </p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-54912" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-54912" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-16T17:06:22+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=54912#respond' onclick='return addComment.moveForm( "div-comment-54912", "54912", "respond", "10652" )' aria-label='Reply to Ben'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Ben</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I was able to create an inherited process but when attempting to migrate a team project to it I get the following error: VS402371: Can&#39;t find process with id &#39;00000000-0000-0000-0000-000000000000.</p>
+<p>Help?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-54902" class="comment byuser comment-author-justmarks bypostauthor even thread-even depth-1">
+			<article id="div-comment-54902" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-16T18:29:36+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=54902#respond' onclick='return addComment.moveForm( "div-comment-54902", "54902", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Ben, thanks for reporting the issue! &nbsp;I&#39;m going to get the engineering team to look at this ASAP and we&#39;ll deploy a hotfix to the service when we have it figured out. &nbsp;Stay tuned and I&#39;ll reply back when we have this resolved.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-54892" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-54892" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-12-16T19:28:25+00:00">
+							5 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=54892#respond' onclick='return addComment.moveForm( "div-comment-54892", "54892", "respond", "10652" )' aria-label='Reply to Amit '>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Amit </span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Ben, thanks for reporting the issue! &nbsp;Can you please drop me a mail @ AmitGup&lt;at&gt;Microsoft.com with your account info to help accelerate debugging the issue?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57232" class="comment even thread-even depth-1">
+			<article id="div-comment-57232" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-03T18:49:16+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57232#respond' onclick='return addComment.moveForm( "div-comment-57232", "57232", "respond", "10652" )' aria-label='Reply to TFS Man'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/91acd8153579a28c8fff369be4e9a8c8?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">TFS Man</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>hi Justin</p>
+<p> is the new addition of &quot;Add custom fields to existing work item types&quot; been deployed?</p>
+<p>I don&#39;t seem to see it at all, even when I create a new project</p>
+<p>thanks</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57222" class="comment byuser comment-author-justmarks bypostauthor odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-57222" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-03T19:32:20+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57222#respond' onclick='return addComment.moveForm( "div-comment-57222", "57222", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@TFS Man, Yes, it has fully been deployed and should be available on your account. &nbsp;If you navigate to <a rel="nofollow" target="_new" href="https://ACCOUNT.visualstudio.com/DefaultCollection/_admin/_process">account.visualstudio.com/&#8230;/_process</a> (replace ACCOUNT with your account name), you should see a list of processes and be able to right click and create a new inherited process as described in this blog post. &nbsp;Let me know if you have further issues.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57212" class="comment even thread-even depth-1">
+			<article id="div-comment-57212" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-03T20:18:13+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57212#respond' onclick='return addComment.moveForm( "div-comment-57212", "57212", "respond", "10652" )' aria-label='Reply to TFS Man'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/91acd8153579a28c8fff369be4e9a8c8?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">TFS Man</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Justin</p>
+<p>thanks for the reply</p>
+<p>definitely don&#39;t see the inherit process option</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57202" class="comment byuser comment-author-justmarks bypostauthor odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-57202" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-03T20:39:34+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57202#respond' onclick='return addComment.moveForm( "div-comment-57202", "57202", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@TFS man, can you email me directly &#8211; <a href="mailto:jmarks@microsoft.com">jmarks@microsoft.com</a> and I can help diagnose the issue you&#39;re seeing.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57122" class="comment even thread-even depth-1">
+			<article id="div-comment-57122" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-04T16:38:14+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57122#respond' onclick='return addComment.moveForm( "div-comment-57122", "57122", "respond", "10652" )' aria-label='Reply to TFS On Prem'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">TFS On Prem</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Justin, we&#39;re running TFS On Prem and we haven&#39;t customized our process locally yet. &nbsp;The inheritance approach you&#39;ve outlined above seems easier than modifying processes at the project level like we have to do with TFS on Prem. &nbsp;Is there any plan to offer this as an option to on premise customers?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57092" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-57092" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-05T03:17:07+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57092#respond' onclick='return addComment.moveForm( "div-comment-57092", "57092", "respond", "10652" )' aria-label='Reply to Adam Londero'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Adam Londero</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Justin, any idea on where on the roadmap the ability to allow more configuration around states and state transitions? We&#39;d like to better represent our workflows of code reviews and any internal manual testing as states of a work item. Currently we use a work around of creating separate tasks but feel that discourages team collaboration and makes WIP limits hard to enforce.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57082" class="comment byuser comment-author-justmarks bypostauthor even thread-even depth-1">
+			<article id="div-comment-57082" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-05T08:49:49+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57082#respond' onclick='return addComment.moveForm( "div-comment-57082", "57082", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@TFS On Prem, We&#39;re targeting bringing some level of the new functionality to Dev15, the next full version of the on premises TFS product, but we won&#39;t know exactly what that will look like until we get further along our roadmap. &nbsp;For TFS on prem, we&#39;ll continue to support the existing customization scenarios for at least one more release.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57072" class="comment byuser comment-author-justmarks bypostauthor odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-57072" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-05T08:53:07+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57072#respond' onclick='return addComment.moveForm( "div-comment-57072", "57072", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Adam, as I discussed in my previous blog post, States will be the next area of investment after we complete picklists. &nbsp;I&#39;m hoping we&#39;ll have state customization available by 2016Q2. &nbsp;With the new year, we&#39;re in the midst of our planning for the next 6 months so I hope to have something more concrete to share in the next few weeks.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-57042" class="comment even thread-even depth-1">
+			<article id="div-comment-57042" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-06T13:34:23+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=57042#respond' onclick='return addComment.moveForm( "div-comment-57042", "57042", "respond", "10652" )' aria-label='Reply to Dave Kolb'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/068b4b7c6d4350f7af29735964e29edc?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Dave Kolb</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Please add custom states next. We can&#39;t use VSTS without that. Thx.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-58002" class="comment byuser comment-author-justmarks bypostauthor odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-58002" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-11T12:44:40+00:00">
+							4 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=58002#respond' onclick='return addComment.moveForm( "div-comment-58002", "58002", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#39;ve just written a new blog post outlining the roadmap and timeline for process customization. &nbsp;Hopefully that will give more clarity to the asks I&#39;ve seen here: <a rel="nofollow" target="_new" href="http://blogs.msdn.com/b/visualstudioalm/archive/2016/01/11/process-customization-futures.aspx">blogs.msdn.com/&#8230;/process-customization-futures.aspx</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-58431" class="comment even thread-even depth-1">
+			<article id="div-comment-58431" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-29T22:16:57+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=58431#respond' onclick='return addComment.moveForm( "div-comment-58431", "58431", "respond", "10652" )' aria-label='Reply to Oscar'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Oscar</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi guys, a general question about the board: are there any prevision to do it reactive/real time across sessions? </p>
+<p>We use it in our (remote) daily meetings so during the meeting people move cards to explain what is done and what is next. Problem is that rest of the team dont see in real time what card is moving the person who is speaking so its annoying. We use skype and try to sharing screen but at the end its so slow.</p>
+<p>Any tips?</p>
+<p>Regards.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-58421" class="comment byuser comment-author-justmarks bypostauthor odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-58421" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-01-30T09:01:20+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=58421#respond' onclick='return addComment.moveForm( "div-comment-58421", "58421", "respond", "10652" )' aria-label='Reply to justmarks'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/96e303bd38de88ed7a6b0b51e5e82aad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">justmarks</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Oscar, We have plans to add realtime support to the board, I don&#39;t have a specific delivery date but I believe it&#39;s in progress already <img src="https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley" /></p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-60021" class="comment even thread-even depth-1">
+			<article id="div-comment-60021" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-05T15:22:20+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=60021#respond' onclick='return addComment.moveForm( "div-comment-60021", "60021", "respond", "10652" )' aria-label='Reply to Travis Fremming'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/d67d1f4ae068de84d32d59df3675b91c?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Travis Fremming</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi &#8211; I looked through but did not see it (sorry if I missed it) we have an on-prem solution that we have customized templates (added fields, items re-arranged etc.)  Is there a migration path from On-PREM to VSTS for customization&#8217;s?  We would love to get away from the on-prem version.  Thanks.  Travis</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-60182" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-60182" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-05T23:01:48+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=60182#respond' onclick='return addComment.moveForm( "div-comment-60182", "60182", "respond", "10652" )' aria-label='Reply to Dianna'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3d7053c91e0c4cf1454dbcc1ca203db4?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Dianna</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It would be great to know the target quarter for the on-premise solution for planning purposes.  Additionally, we think these fields/controls would be very desirable: cascading picklists(second list depends on selection in first), radio buttons, mult-select menu drop/downs.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-60991" class="comment byuser comment-author-tkise even thread-even depth-1">
+			<article id="div-comment-60991" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-08T10:45:55+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=60991#respond' onclick='return addComment.moveForm( "div-comment-60991", "60991", "respond", "10652" )' aria-label='Reply to Tom Kise'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/99477b9a62cf439fb5f9ed17ae74e8bd?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Tom Kise</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>When will we see these changes in the TFS2015 on-premise?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-76951" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-76951" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-25T07:57:59+00:00">
+							1 month ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=76951#respond' onclick='return addComment.moveForm( "div-comment-76951", "76951", "respond", "10652" )' aria-label='Reply to Ali Asad'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/98363a1a3a6156dd9ed4b13f24f260ad?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.techlors.com' rel='external nofollow' class='url'>Ali Asad</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>We&#8217;re working on a Team Project, most of our developers are in remote distance. I want to edit Work Item types and add custom state on them for example</p>
+<p>Work Item type :<br />
+User story  &#8211; Approved &#8211; Done<br />
+Bug – new -&gt; in-progress -&gt; Fixed/Not for this release/Invalid/Not fixed<br />
+Chore – Approved – In progress &#8211; Done</p>
+<p>Even if a closet match of above is achieved then we are good. Please help me to figure out how to do it.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-88865" class="comment even thread-even depth-1">
+			<article id="div-comment-88865" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-27T04:31:53+00:00">
+							1 week ago						</time>
+						<div class="comment-actions">
+							<a class='comment-reply-link' href='/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=88865#respond' onclick='return addComment.moveForm( "div-comment-88865", "88865", "respond", "10652" )' aria-label='Reply to moving company'>Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/ac685fa0ede9c66fc69451b6f2c95aa6?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.vmoving.org/' rel='external nofollow' class='url'>moving company</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It&#8217;s difficult to find well-informed people for this subject,<br />
+but you sound like you know what you&#8217;re talking about!<br />
+Thanks</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+		
+</div><!-- #comments -->
+
+
+	
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-10272" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10272"><a href="http://msdn.microsoft.com/cc300389">Terms of Use</a></li>
+<li id="menu-item-10282" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10282"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-10291" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10291"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55402' );
+			$.cookie( 'aadsso-redirect', '/visualstudioalm/2015/12/10/adding-a-custom-field-to-a-work-item/?replytocom=55402', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='46023' post-id='10652'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.msdn.microsoft.com/visualstudioalm/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/akismet/_inc/form.js?ver=3.1.5'></script>
+<link rel='stylesheet' id='msdn-subscription-css-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/msdn-subscription/msdn-subscription.css?ver=4.1.5' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/js/comment-reply.min.js?ver=4.1.5'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/js/comments.min.js?ver=06182015'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":"1"};
+var msdnparent = {"is_search":"","is_singular":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ajax_object = {"ajax_url":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/msdn-subscription/msdn-subscription.js?ver=1.0.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

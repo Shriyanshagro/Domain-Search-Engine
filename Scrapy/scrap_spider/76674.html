@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<script type="text/javascript">
+	var doc = document.documentElement;
+	doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" href="https://trtpost-wpengine.netdna-ssl.com/wp-content/themes/threatpost/style.css?1460971834" type="text/css" media="screen, projection" />
+<!--[if lte IE 9]>
+	<link rel="stylesheet" href="https://trtpost-wpengine.netdna-ssl.com/wp-content/themes/threatpost/lib/css/ie.css" type="text/css" media="screen" />
+<![endif]-->
+<link rel="pingback" href="https://threatpost.com/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://trtpost-wpengine.netdna-ssl.com/wp-content/themes/threatpost/lib/js/html5.js" type="text/javascript"></script>
+
+<![endif]-->
+<link rel="icon" href="https://trtpost-wpengine.netdna-ssl.com/wp-content/themes/threatpost/favicon.ico" type="image/x-icon">
+
+<title>Diving Into Flame, Researchers Find A Link To Stuxnet | Threatpost | The first stop for security news</title>
+<!-- JM Twitter Cards by Julien Maury 7.4.0 -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@threatpost">
+<meta name="twitter:site" content="@threatpost">
+<meta name="twitter:title" content="Diving Into Flame, Researchers Find A Link To Stuxnet">
+<meta name="twitter:description" content="Researchers for Kaspersky Lab say that an in-depth analysis of the code of the recently discovered Flame worm suggest that it has strong links to the now-famous Stuxnet worm that suggest a common origin for the two pieces of malicious software.">
+<meta name="twitter:image" content="https://kasperskycontenthub.com/threatpost/files/2015/01/threatpost-logo.jpg">
+<!-- /JM Twitter Cards by Julien Maury 7.4.0 -->
+
+<!-- All in One SEO Pack 2.3.4 by Michael Torbert of Semper Fi Web Design[1125,1239] -->
+<meta name="description" itemprop="description" content="Researchers for Kaspersky Lab say that an in-depth analysis of the code of the recently discovered Flame worm suggest that it has strong links to the now-famous" />
+
+<meta name="keywords" itemprop="keywords" content="flame,stuxnet,researchers,malware,kaspersky,module,two,worm,variant,platform,used,kaspersky researchers,flame platform,malicious,code,identical,early,however,same,resource 207,flame malware,2009,resource,spread,created,components,pieces,207,each,pieces malicious code,,apt,critical infrastructure,hacking,microsoft" />
+
+<link rel="canonical" href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="Threatpost | The first stop for security news &raquo; Feed" href="https://threatpost.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Threatpost | The first stop for security news &raquo; Comments Feed" href="https://threatpost.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Threatpost | The first stop for security news &raquo; Diving Into Flame, Researchers Find A Link To Stuxnet Comments Feed" href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/feed/" />
+<link rel='stylesheet' id='trending-authors-group-css' href='https://trtpost-wpengine.netdna-ssl.com/wp-content/plugins/bwp-minify/min/?f=wp-content/plugins/wds-kaspersky-widgets/css/trending-authors.css,wp-content/plugins/wds-rss-builder/includes/css/wds-rss.css,wp-content/plugins/honeypot-comments/public/assets/css/public.css,wp-content/plugins/kspr_twitter_pullquote/css/style.css,wp-content/plugins/pullquote-shortcode/css/pullquote-shortcode.css,wp-content/plugins/WDS-ColorBox-WordPress-Plugin/colorbox/example3/colorbox.css,wp-content/plugins/kaspersky-social-sharing/assets/css/style.css,wp-content/plugins/kaspersky-social-sharing/assets/css/custom.css,wp-content/plugins/jetpack/css/jetpack.css&#038;ver=1462389584' type='text/css' media='all' />
+<script type='text/javascript' src='https://trtpost-wpengine.netdna-ssl.com/wp-includes/js/jquery/jquery.js?ver=1.12.3'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var kss = {"counter_url":"https:\/\/threatpost.com\/wp-content\/plugins\/kaspersky-social-sharing\/counter\/index.php","twitter_account":"threatpost"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://trtpost-wpengine.netdna-ssl.com/wp-content/plugins/bwp-minify/min/?f=wp-content/plugins/honeypot-comments/public/assets/js/public.js,wp-content/plugins/kspr_twitter_pullquote/js/kaspersky-twitter-pullquote.js,wp-content/themes/threatpost/lib/js/doubletaptogo.min.js,wp-content/themes/threatpost/lib/js/jquery.expander.min.js,wp-content/plugins/WDS-ColorBox-WordPress-Plugin/colorbox/colorbox/jquery.colorbox.js,wp-content/themes/threatpost/lib/js/post-tabs.js,wp-content/themes/threatpost/lib/js/threatpost.js,wp-content/plugins/kaspersky-social-sharing/assets/js/social-share.js&#038;ver=1462389584'></script>
+<link rel='https://api.w.org/' href='https://threatpost.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://threatpost.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://threatpost.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='With LinkedIn: The Bell Tolls For Simple Password Hashing' href='https://threatpost.com/linkedin-bell-tolls-simple-password-hashing-061012/76673/' />
+<link rel='next' title='Trivial Password Flaw Leaves MySQL Databases Exposed' href='https://threatpost.com/trivial-password-flaw-leaves-mysql-databases-exposed-061112/76675/' />
+<link rel='shortlink' href='https://wp.me/p3AjUX-jWG' />
+<link rel="alternate" type="application/json+oembed" href="https://threatpost.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fthreatpost.com%2Fdiving-flame-researchers-find-link-stuxnet-061112%2F76674%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://threatpost.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fthreatpost.com%2Fdiving-flame-researchers-find-link-stuxnet-061112%2F76674%2F&#038;format=xml" />
+<script src='https://kasperskycontenthub.com/?dm=ed1f9e435dc885292eab65620c51f3fb&amp;action=load&amp;blogid=31&amp;siteid=1&amp;t=913002273&amp;back=https%3A%2F%2Fthreatpost.com%2Fdiving-flame-researchers-find-link-stuxnet-061112%2F76674%2F' type='text/javascript'></script><!-- Facebook Conversion Code for https://threatpost.com/ -->
+<script>(function() {
+  var _fbq = window._fbq || (window._fbq = []);
+  if (!_fbq.loaded) {
+    var fbds = document.createElement('script');
+    fbds.async = true;
+    fbds.src = '//connect.facebook.net/en_US/fbds.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(fbds, s);
+    _fbq.loaded = true;
+  }
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', '6037454883809', {'value':'0.00','currency':'RUB'}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6037454883809&amp;cd[value]=0.00&amp;cd[currency]=RUB&amp;noscript=1" /></noscript>            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-35676203-21', 'threatpost.com');
+                ga('set', 'anonymizeIp', true);
+                
+                                
+                    
+                                            
+                        ga('send', 'pageview', {
+                                                            'dimension1' : 'Paul Roberts',
+                                                            'dimension2' : '76674',
+                                                            'dimension3' : '2012-06-11',
+                                                            'dimension4' : 'Critical Infrastructure, Cryptography, Government, Hacks, Malware, Vulnerabilities, Web Security',
+                                                            'dimension5' : 'apt, critical infrastructure, flame, Hacking, malware, Microsoft, Resource 207, Stuxnet',
+                                                    });
+
+                        
+                                                        
+                            
+                        
+                                                        
+                            
+                                            
+                                    
+                
+            </script>
+            <style type='text/css'>img#wpstats{display:none}</style>
+<script type='text/javascript'>
+function addLink() {
+	if (
+window.getSelection().containsNode(
+document.getElementsByClassName('entry-content')[0], true)) {
+    var body_element = document.getElementsByTagName('body')[0];
+    var selection;
+    selection = window.getSelection();
+	var oldselection = selection
+    var pagelink = "<br /><br /> See more at: Diving Into Flame, Researchers Find A Link To Stuxnet <a href='https://wp.me/p3AjUX-jWG'>https://wp.me/p3AjUX-jWG</a>"; //Change this if you like
+    var copy_text = selection + pagelink;
+    var new_div = document.createElement('div');
+	new_div.style.left='-99999px';
+	new_div.style.position='absolute';
+
+    body_element.appendChild(new_div );
+    new_div.innerHTML = copy_text ;
+    selection.selectAllChildren(new_div );
+    window.setTimeout(function() {
+        body_element.removeChild(new_div );
+    },0);
+}
+}
+
+
+document.oncopy = addLink;
+</script>
+
+<meta name="google-site-verification" content="QqZgIj90Yu48EDqCQInft_Ze3RXSU9g_nWcWNIcUPxw" />	<script>
+		jQuery(document).ready(function($){
+			// Setup the video popover
+			$(".video-pop").colorbox({inline:true});
+
+							$.featureList(
+					$("#post-tabs li a"),
+					$("#output li"), {
+						start_item:	0,
+						transition_interval: 9999999,
+						pause_on_hover: true,
+					}
+				);
+					});
+	</script>
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Diving Into Flame, Researchers Find A Link To Stuxnet" />
+<meta property="og:url" content="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/" />
+<meta property="og:description" content="Researchers digging through the code of the recently discovered Flame worm say they have come across a wealth of evidence that suggests Flame and the now-famous Stuxnet worm share a common origin." />
+<meta property="article:published_time" content="2012-06-11T13:35:14+00:00" />
+<meta property="article:modified_time" content="2013-04-17T16:32:04+00:00" />
+<meta property="og:site_name" content="Threatpost | The first stop for security news" />
+<meta property="og:image" content="https://threatpost.com/wp-content/themes/threatpost/images/site-icon.png" />
+<meta property="og:image:width" content="512" />
+<meta property="og:image:height" content="512" />
+<meta property="og:locale" content="en_US" />
+<link rel="icon" href="https://trtpost-wpengine.netdna-ssl.com/wp-content/themes/threatpost/images/site-icon.png" sizes="32x32" />
+<link rel="icon" href="https://trtpost-wpengine.netdna-ssl.com/wp-content/themes/threatpost/images/site-icon.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://trtpost-wpengine.netdna-ssl.com/wp-content/themes/threatpost/images/site-icon.png" />
+<meta name="msapplication-TileImage" content="https://threatpost.com/wp-content/themes/threatpost/images/site-icon.png" />
+			<link rel="stylesheet" id="custom-css-css" type="text/css" href="https://threatpost.com/?custom-css=1&#038;csblog=31&#038;cscache=6&#038;csrev=23" />
+			
+</head>
+
+<body class="single single-post postid-76674 single-format-standard desktop unknown">
+		<div id="wrap" class="hfeed site">
+
+	<header id="masthead" class="site-header" role="banner">
+
+		
+		<h1 class="site-title"><a href="https://threatpost.com/" title="Threatpost | The first stop for security news" rel="home">Threatpost | The first stop for security news</a></h1>
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<div class="menu-primary-menu-container"><ul id="menu-primary-menu" class="nav-menu"><li id="menu-item-37433" class="first-menu-item menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-37433"><a href="#">Categories</a>
+<ul class="sub-menu">
+	<li id="menu-item-100087" class="category-list menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-100087"><a href="#">Category List</a>
+	<ul class="sub-menu">
+		<li id="menu-item-100092" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-100092"><a href="https://threatpost.com/category/cloud-security/">Cloud Security</a></li>
+		<li id="menu-item-100094" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-100094"><a href="https://threatpost.com/category/critical-infrastructure/">Critical Infrastructure</a></li>
+		<li id="menu-item-100095" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-100095"><a href="https://threatpost.com/category/cryptography/">Cryptography</a></li>
+		<li id="menu-item-100096" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-100096"><a href="https://threatpost.com/category/government/">Government</a></li>
+	</ul>
+</li>
+	<li id="menu-item-100088" class="category-list menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-100088"><a href="#">Category List</a>
+	<ul class="sub-menu">
+		<li id="menu-item-100097" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-100097"><a href="https://threatpost.com/category/hacks/">Hacks</a></li>
+		<li id="menu-item-100098" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-100098"><a href="https://threatpost.com/category/malware-2/">Malware</a></li>
+		<li id="menu-item-100100" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-100100"><a href="https://threatpost.com/category/mobile-security/">Mobile Security</a></li>
+		<li id="menu-item-100101" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-100101"><a href="https://threatpost.com/category/privacy/">Privacy</a></li>
+	</ul>
+</li>
+	<li id="menu-item-100089" class="category-list menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-100089"><a href="#">Category List</a>
+	<ul class="sub-menu">
+		<li id="menu-item-111019" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-111019"><a title="Security Analyst Summit" href="https://threatpost.com/category/sas/">SAS</a></li>
+		<li id="menu-item-100105" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-100105"><a href="https://threatpost.com/category/vulnerabilities/">Vulnerabilities</a></li>
+		<li id="menu-item-100106" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-100106"><a href="https://threatpost.com/category/web-security/">Web Security</a></li>
+	</ul>
+</li>
+	<li id="menu-item-100090" class="author-list menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-100090"><a href="#">Authors</a>
+	<ul class="sub-menu">
+		<li id="menu-item-100107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-100107"><a href="http://threatpost.com/author/michael">Michael Mimoso</a></li>
+		<li id="menu-item-100108" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-100108"><a href="http://threatpost.com/author/christopher">Christopher Brook</a></li>
+	</ul>
+</li>
+	<li id="menu-item-100113" class="additional-categories menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-100113"><a href="#">Additional Categories</a>
+	<ul class="sub-menu">
+		<li id="menu-item-101691" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-101691"><a href="/slide-shows">Slideshows</a></li>
+	</ul>
+</li>
+	<li id="menu-item-100117" class="credit menu-item menu-item-type-post_type menu-item-object-page menu-item-100117"><a href="https://threatpost.com/">The Kaspersky Lab News Service</a></li>
+</ul>
+</li>
+<li id="menu-item-99719" class="featured-posts menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-99719"><a href="https://threatpost.com/category/featured/">Featured</a>
+<ul class="sub-menu">
+	<li id="menu-item-100119" class="author-list menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-100119"><a href="#">Authors</a>
+	<ul class="sub-menu">
+		<li id="menu-item-100120" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-100120"><a href="http://threatpost.com/author/michael">Michael Mimoso</a></li>
+		<li id="menu-item-100121" class="last-menu-item menu-item menu-item-type-custom menu-item-object-custom menu-item-100121"><a href="http://threatpost.com/author/christopher">Christopher Brook</a></li>
+	</ul>
+</li>
+	<li id="menu-item-100125" class="credit menu-item menu-item-type-post_type menu-item-object-page menu-item-100125"><a href="https://threatpost.com/">The Kaspersky Lab News Service</a></li>
+</ul>
+<div class="sub-menu"><div class="recent-posts"><div class="recent-posts-wrap">
+				<h2 class="alignleft">Featured Posts</h2>
+				<span class="alignright read-more button"><a href="https://threatpost.com/category/featured">All</a></span>
+				<div class="posts-wrap"><article id="post-117778" class="post"><a href="https://threatpost.com/nano-server-added-to-microsoft-bug-bounty-program/117778/" title="Nano Server Added to Microsoft Bug Bounty Program"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2013/07/shutterstock_146168597-120x65.jpg" class="latest-post wp-post-image" alt="money" srcset="https://threatpost.com/files/2013/07/shutterstock_146168597-120x65.jpg 120w, https://threatpost.com/files/2013/07/shutterstock_146168597-260x140.jpg 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/nano-server-added-to-microsoft-bug-bounty-program/117778/" title="Nano Server Added to Microsoft Bug Bounty Program">Nano Server Added to Microsoft Bug… </a>
+					</article><article id="post-117773" class="post"><a href="https://threatpost.com/fbi-reaffirms-stance-not-to-pay-ransomware-attackers/117773/" title="FBI Reaffirms Stance Not to Pay Ransomware Attackers"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2014/06/fbi-logo-120x65.jpg" class="latest-post wp-post-image" alt="FBI blames North Korea for Sony hack" srcset="https://threatpost.com/files/2014/06/fbi-logo-120x65.jpg 120w, https://threatpost.com/files/2014/06/fbi-logo-260x140.jpg 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/fbi-reaffirms-stance-not-to-pay-ransomware-attackers/117773/" title="FBI Reaffirms Stance Not to Pay Ransomware Attackers">FBI Reaffirms Stance Not to Pay… </a>
+					</article><article id="post-117763" class="last"><a href="https://threatpost.com/privacy-watchdogs-vow-to-fight-dystopian-rule-41/117763/" title="Privacy Watchdogs Vow to Fight &#8216;Dystopian&#8217; Rule 41"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2015/08/shutterstock_277489487-120x65.jpg" class="latest-post wp-post-image" alt="Insider trading hack" srcset="https://threatpost.com/files/2015/08/shutterstock_277489487-120x65.jpg 120w, https://threatpost.com/files/2015/08/shutterstock_277489487-260x140.jpg 260w, https://threatpost.com/files/2015/08/shutterstock_277489487-280x150.jpg 280w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/privacy-watchdogs-vow-to-fight-dystopian-rule-41/117763/" title="Privacy Watchdogs Vow to Fight &#8216;Dystopian&#8217; Rule 41">Privacy Watchdogs Vow to Fight &#8216;Dystopian&#8217;… </a>
+					</article> <div class="sep"></div></div><!-- .recent-posts --></div><!-- .recent-posts-wrap --></div></div></li>
+<li id="menu-item-99720" class="featured-other menu-item menu-item-type-taxonomy menu-item-object-category menu-item-99720"><a href="https://threatpost.com/category/podcasts/">Podcasts</a><div class="sub-menu"><div class="recent-posts"><div class="recent-posts-wrap">
+				<h2 class="alignleft">Latest Podcasts</h2>
+				<span class="alignright read-more button"><a href="https://threatpost.com/category/podcasts">All</a></span>
+				<div class="posts-wrap"><article id="post-117607" class="post"><a href="https://threatpost.com/threatpost-news-wrap-april-22-2016/117607/" title="Threatpost News Wrap, April 22, 2016"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/04/news_wrap_april22-120x65.png" class="latest-post wp-post-image" alt="news_wrap_april22" srcset="https://threatpost.com/files/2016/04/news_wrap_april22-120x65.png 120w, https://threatpost.com/files/2016/04/news_wrap_april22-260x140.png 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/threatpost-news-wrap-april-22-2016/117607/" title="Threatpost News Wrap, April 22, 2016">Threatpost News Wrap, April 22, 2016</a>
+					</article><article id="post-117443" class="post"><a href="https://threatpost.com/threatpost-news-wrap-april-15-2016/117443/" title="Threatpost News Wrap, April 15, 2016"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/04/news_wrap_april_15-120x65.png" class="latest-post wp-post-image" alt="news_wrap_april_15" srcset="https://threatpost.com/files/2016/04/news_wrap_april_15-120x65.png 120w, https://threatpost.com/files/2016/04/news_wrap_april_15-260x140.png 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/threatpost-news-wrap-april-15-2016/117443/" title="Threatpost News Wrap, April 15, 2016">Threatpost News Wrap, April 15, 2016</a>
+					</article><article id="post-117398" class="last"><a href="https://threatpost.com/katie-moussouris-on-her-new-consultancy-hack-the-pentagon-and-more/117398/" title="Katie Moussouris on Hack the Pentagon, Embracing Hackers"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/04/24962431656_2543acddf4_h-120x65.jpg" class="latest-post wp-post-image" alt="katie moussouris" srcset="https://threatpost.com/files/2016/04/24962431656_2543acddf4_h-120x65.jpg 120w, https://threatpost.com/files/2016/04/24962431656_2543acddf4_h-260x140.jpg 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/katie-moussouris-on-her-new-consultancy-hack-the-pentagon-and-more/117398/" title="Katie Moussouris on Hack the Pentagon, Embracing Hackers">Katie Moussouris on Hack the Pentagon,… </a>
+					</article> <div class="sep"></div><article id="post-117141" class="post"><a href="https://threatpost.com/threatpost-news-wrap-april-1-2016/117141/" title="Threatpost News Wrap, April 1, 2016"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/04/news_wrap_april_1-120x65.png" class="latest-post wp-post-image" alt="news_wrap_april_1" srcset="https://threatpost.com/files/2016/04/news_wrap_april_1-120x65.png 120w, https://threatpost.com/files/2016/04/news_wrap_april_1-260x140.png 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/threatpost-news-wrap-april-1-2016/117141/" title="Threatpost News Wrap, April 1, 2016">Threatpost News Wrap, April 1, 2016</a>
+					</article><article id="post-117076" class="post"><a href="https://threatpost.com/jamie-butler-on-detecting-targeting-attacks/117076/" title="Jamie Butler on Detecting Targeting Attacks"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/03/targeted_malware_ransomware-120x65.png" class="latest-post wp-post-image" alt="targeted_malware_ransomware" srcset="https://threatpost.com/files/2016/03/targeted_malware_ransomware-120x65.png 120w, https://threatpost.com/files/2016/03/targeted_malware_ransomware-260x140.png 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/jamie-butler-on-detecting-targeting-attacks/117076/" title="Jamie Butler on Detecting Targeting Attacks">Jamie Butler on Detecting Targeting Attacks</a>
+					</article><article id="post-116994" class="last"><a href="https://threatpost.com/threatpost-news-wrap-march-25-2016/116994/" title="Threatpost News Wrap, March 25, 2016"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/03/newswrap_marc_25-120x65.png" class="latest-post wp-post-image" alt="newswrap_marc_25" srcset="https://threatpost.com/files/2016/03/newswrap_marc_25-120x65.png 120w, https://threatpost.com/files/2016/03/newswrap_marc_25-260x140.png 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/threatpost-news-wrap-march-25-2016/116994/" title="Threatpost News Wrap, March 25, 2016">Threatpost News Wrap, March 25, 2016</a>
+					</article></div><!-- .recent-posts --></div><!-- .recent-posts-wrap --></div>
+			<div class="recent-posts-list">
+			<h2 class="alignleft">Recommended</h2></div>
+			<div class="credit"><a href="https://threatpost.com">The Kaspersky Lab Security News Service</a></div></div></li>
+<li id="menu-item-99721" class="featured-other menu-item menu-item-type-taxonomy menu-item-object-category menu-item-99721"><a href="https://threatpost.com/category/videos/">Videos</a><div class="sub-menu"><div class="recent-posts"><div class="recent-posts-wrap">
+				<h2 class="alignleft">Latest Videos</h2>
+				<span class="alignright read-more button"><a href="https://threatpost.com/category/videos">All</a></span>
+				<div class="posts-wrap"><article id="post-116946" class="post"><a href="https://threatpost.com/bruce-schneier-on-the-integration-of-privacy-and-security/116946/" title="Bruce Schneier on the Integration of Privacy and Security"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2014/01/bruce_schneier-120x65.jpg" class="latest-post wp-post-image" alt="bruce_schneier" srcset="https://threatpost.com/files/2014/01/bruce_schneier-120x65.jpg 120w, https://threatpost.com/files/2014/01/bruce_schneier-260x140.jpg 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/bruce-schneier-on-the-integration-of-privacy-and-security/116946/" title="Bruce Schneier on the Integration of Privacy and Security">Bruce Schneier on the Integration of… </a>
+					</article><article id="post-116763" class="post"><a href="https://threatpost.com/chris-valasek-talks-car-hacking-and-more/116763/" title="Chris Valasek Talks Car Hacking, IoT, at RSA"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2015/07/valasek-120x65.jpg" class="latest-post wp-post-image" alt="Chris Valasek" srcset="https://threatpost.com/files/2015/07/valasek-120x65.jpg 120w, https://threatpost.com/files/2015/07/valasek-260x140.jpg 260w, https://threatpost.com/files/2015/07/valasek-280x150.jpg 280w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/chris-valasek-talks-car-hacking-and-more/116763/" title="Chris Valasek Talks Car Hacking, IoT, at RSA">Chris Valasek Talks Car Hacking, IoT,… </a>
+					</article><article id="post-116746" class="last"><a href="https://threatpost.com/patrick-wardle-on-os-x-malware-with-a-possible-hacking-team-connection/116746/" title="Patrick Wardle on OS X Malware With a Possible Hacking Team Connection"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/03/patrick_wardle-120x65.png" class="latest-post wp-post-image" alt="patrick_wardle" srcset="https://threatpost.com/files/2016/03/patrick_wardle-120x65.png 120w, https://threatpost.com/files/2016/03/patrick_wardle-260x140.png 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/patrick-wardle-on-os-x-malware-with-a-possible-hacking-team-connection/116746/" title="Patrick Wardle on OS X Malware With a Possible Hacking Team Connection">Patrick Wardle on OS X Malware… </a>
+					</article> <div class="sep"></div><article id="post-116406" class="post"><a href="https://threatpost.com/santiago-pontiroli-and-roberto-martinez-on-atm-jackpotting/116406/" title="Santiago Pontiroli and Roberto Martinez on ATM Jackpotting"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/02/shutterstock_139858978-120x65.jpg" class="latest-post wp-post-image" alt="shutterstock_139858978" srcset="https://threatpost.com/files/2016/02/shutterstock_139858978-120x65.jpg 120w, https://threatpost.com/files/2016/02/shutterstock_139858978-260x140.jpg 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/santiago-pontiroli-and-roberto-martinez-on-atm-jackpotting/116406/" title="Santiago Pontiroli and Roberto Martinez on ATM Jackpotting">Santiago Pontiroli and Roberto Martinez on… </a>
+					</article><article id="post-116386" class="post"><a href="https://threatpost.com/dewan-chowdhury-on-hacking-power-grids/116386/" title="Dewan Chowdhury on Hacking Power Grids"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/02/dewan-1-120x65.jpeg" class="latest-post wp-post-image" alt="dewan" srcset="https://threatpost.com/files/2016/02/dewan-1-120x65.jpeg 120w, https://threatpost.com/files/2016/02/dewan-1-260x140.jpeg 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/dewan-chowdhury-on-hacking-power-grids/116386/" title="Dewan Chowdhury on Hacking Power Grids">Dewan Chowdhury on Hacking Power Grids</a>
+					</article><article id="post-116314" class="last"><a href="https://threatpost.com/sergey-lozhkin-on-how-he-hacked-his-hospital/116314/" title="Sergey Lozhkin on How He Hacked His Hospital"><img width="120" height="65" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/02/lozhkin-120x65.png" class="latest-post wp-post-image" alt="Sergey Lozhkin" srcset="https://threatpost.com/files/2016/02/lozhkin-120x65.png 120w, https://threatpost.com/files/2016/02/lozhkin-260x140.png 260w" sizes="(max-width: 120px) 100vw, 120px" /></a>
+					<a href="https://threatpost.com/sergey-lozhkin-on-how-he-hacked-his-hospital/116314/" title="Sergey Lozhkin on How He Hacked His Hospital">Sergey Lozhkin on How He Hacked… </a>
+					</article></div><!-- .recent-posts --></div><!-- .recent-posts-wrap --></div>
+			<div class="recent-posts-list">
+			<h2 class="alignleft">Recommended</h2></div>
+			<div class="credit"><a href="https://threatpost.com">The Kaspersky Lab Security News Service</a></div></div></li>
+</ul></div>		</nav><!-- #site-navigation -->
+
+		<div class="sidebar-search">
+			
+<form role="search" method="get" id="searchform" action="https://threatpost.com/">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="Search" />
+    </div>
+</form>		</div><!-- .sidebar-search -->
+
+		
+		<div id="graybox">
+							<div id="header-sidebar" class="aligncenter" role="complementary">
+					<aside id="threatpost_social-2" class="widget threatpost_social widget_text">
+    <div class="social-links alignleft">
+      <ul id="social-header">
+        <li><a href="http://twitter.com/threatpost/" class="twitter" target="blank">Twitter</a></li><li><a href="http://www.facebook.com/Threatpost/" class="facebook" target="blank">Facebook</a></li><li><a href="https://plus.google.com/103973344735603121561/posts" class="google" target="blank">Google</a></li><li><a href="http://www.linkedin.com/groups?gid=1843931" class="linkedin" target="blank">LinkedIn</a></li><li><a href="http://www.youtube.com/user/threatpost" class="youtube" target="blank">YouTube</a></li><li><a href="http://threatpost.com/feed" class="rss" target="blank">RSS</a></li>      </ul>
+    </div><!-- .social-links -->
+
+    </aside><aside id="threatpost_tweets-3" class="widget threatpost_tweets widget_text"></aside><aside id="threatpost_flags-2" class="widget threatpost_flags widget_text">
+    <div class="flags alignright">
+      <ul id="flag-list">
+<li class="us-uk"><a href="http://threatpost.com"><img class="en" src="https://kasperskycontenthub.com/global/files/2013/04/english.png" alt="Blog in English" title=" Blog in English " /></a></li>
+<li class="russia"><a href="http://threatpost.ru"><img src="https://kasperskycontenthub.com/global/files/2013/04/russia.png" alt="Блог на русском" title="Блог на русском" /></a></li>
+</ul>    </div><!-- .flags -->
+
+    </aside>				</div><!-- #header-sidebar -->
+					</div><!-- #graybox -->
+	</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<div id="content-sidebar-wrap" class="site-content">
+		<div id="breadcrumbs"><a href="https://threatpost.com">Welcome</a> <span class="sep">&gt;</span> <a href="/blog">Blog Home</a><span class="sep">&gt;</span><a href="https://threatpost.com/category/critical-infrastructure/">Critical Infrastructure</a> <span class="sep">&gt;</span> <span class="current">Diving Into Flame, Researchers Find A Link To Stuxnet</span></div>		<div id="content" role="main" >
+
+			<div class="socialfloat"><div class="social-likes social-likes_notext" data-title="Diving Into Flame, Researchers Find A Link To Stuxnet" data-url="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/" data-counters="yes" data-zeroes="yes"><div class="facebook" title="Share via Facebook"></div>
+<div class="plusone" title="Share via Google"></div>
+<div class="linkedin" title="Share via LinkedIn"></div>
+<div class="reddit" title="Share via Reddit"></div>
+<div class="twitter" title="Share via Twitter"></div><div class="social-likes__widget social-likes__widget_comments"><a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comments"><span class="social-likes__button social-likes__button_comments"><span class="social-likes__icon social-likes__icon_comments"></span></span><span class="social-likes__counter social-likes__counter_comments">50</span></a></div></div></div>
+	<article id="post-76674" class="post-76674 post type-post status-publish format-standard hentry category-critical-infrastructure category-cryptography category-government category-hacks category-malware-2 category-vulnerabilities category-web-security tag-apt tag-critical-infrastructure-2 tag-flame tag-hacking tag-malware tag-microsoft tag-resource-207 tag-stuxnet" itemscope itemtype="http://schema.org/BlogPosting">
+				<header class="entry-header">
+												<div class="featured-image-wrap">
+						<a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/" itemprop="url" title="Diving Into Flame, Researchers Find A Link To Stuxnet"><img src="https://trtpost-wpengine.netdna-ssl.com/wp-content/themes/threatpost/images/default-680x400.jpg" itemprop="image"></a><h1 class="entry-title" itemprop="name">Diving Into Flame, Researchers Find A Link To Stuxnet</h1>					</div>
+								<div class="post-info">
+					<span class="author alignleft">by <span itemprop="author"><a href="https://threatpost.com/author/paulroberts/" title="Posts by Paul Roberts" rel="author">Paul Roberts</a></span>
+					</span>					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					<span class="date alignright"><time itemprop="datePublished" datetime="2012-06-11">June 11, 2012 , 1:35 pm</time></span>
+				</div>
+					</header><!-- .entry-header -->
+
+		<div class="entry-content" itemprop="articleBody"><p>Researchers digging through the code of the recently discovered Flame worm say they have come across a wealth of evidence that suggests Flame and the now-famous <a href="https://threatpost.com/stuxnet-authors-made-several-basic-errors-011811/">Stuxnet</a> worm share a common origin.<!--break--></p>
+<p>Researchers from Kaspersky Lab say that a critical module that the Flame worm used to spread is identical to a module used by Stuxnet.a, an early variant of the Stuxnet worm that began circulating in 2009, more than a year before a later variant of the worm was discovered by antivirus researchers at the Belarussian firm VirusBlokAda. The claims are the most direct, to date, that link <a href="https://threatpost.com/flame-malware-boring-bloated-and-yet-still-effective-053012/" target="_self">the Flame malware,</a> which attacked Iranian oil facilities, with Stuxnet, which is believed to have targeted Iran&#8217;s uranium-enrichment facility at Natanz. If true, they suggest a widespread and multi-year campaign of offensive cyber attacks against multiple targets within that country.</p><div class="related-posts-inner"><h3>Related Posts</h3>					<article id="post-117783" class="secondary-post  post-117783 post type-post status-publish format-standard has-post-thumbnail hentry category-cryptography category-privacy category-web-security tag-cryptography-2 tag-encryption tag-internet-explorer-11 tag-microsoft tag-microsoft-edge tag-microsoft-security tag-privacy tag-sha-1 tag-sha-1-certificates tag-sha-1-deprecation tag-tls tag-tls-certificates tag-windows-10-anniversary-update">
+						<h4 class="entry-title">
+							<a href="https://threatpost.com/microsoft-sha-1-deprecation-final-countdown-begins/117783/" title="Permalink to Microsoft SHA-1 Deprecation Final Countdown Begins" rel="bookmark">Microsoft SHA-1 Deprecation Final Countdown Begins</a>
+						</h4>
+						<div class="post-info">
+							<span class="date">May 3, 2016 , 9:43 am</span>
+						</div>
+					</article><!-- #post -->
+								<article id="post-117773" class="secondary-post  post-117773 post type-post status-publish format-standard has-post-thumbnail hentry category-featured category-malware-2 tag-fbi tag-james-trainor tag-lansing-board-of-water-and-light tag-malware tag-ransomware">
+						<h4 class="entry-title">
+							<a href="https://threatpost.com/fbi-reaffirms-stance-not-to-pay-ransomware-attackers/117773/" title="Permalink to FBI Reaffirms Stance Not to Pay Ransomware Attackers" rel="bookmark">FBI Reaffirms Stance Not to Pay Ransomware Attackers</a>
+						</h4>
+						<div class="post-info">
+							<span class="date">May 2, 2016 , 5:14 pm</span>
+						</div>
+					</article><!-- #post -->
+								<article id="post-117726" class="secondary-post last post-117726 post type-post status-publish format-standard has-post-thumbnail hentry category-government category-hacks category-web-security tag-critical-infrastructure-2 tag-flashpoint tag-government-2 tag-hacktivism tag-isis tag-isis-caliphate-cyber-army tag-laith-alkhouri tag-privacy tag-pro-isis-hackers tag-social-media-hacks tag-terrorism">
+						<h4 class="entry-title">
+							<a href="https://threatpost.com/unskilled-pro-isis-hackers-a-growing-threat/117726/" title="Permalink to Unskilled Pro-ISIS Hackers A Growing Threat" rel="bookmark">Unskilled Pro-ISIS Hackers A Growing Threat</a>
+						</h4>
+						<div class="post-info">
+							<span class="date">April 28, 2016 , 2:41 pm</span>
+						</div>
+					</article><!-- #post -->
+			</div>
+<p>According to the Kaspersky researchers, early versions of Stuxnet were, in fact, created out of components that were part of what they refer to as the &#8220;Flame platform&#8221;. But they believe development of the two malicious programs diverged after 2009, suggesting that two different development teams may have been working independently for a single entity to create malware with specific objectives, according to Kaspersky researchers, writing on the company&#8217;s blog, <a href="http://www.securelist.com/en/blog?weblogid=208193568">Securelist</a>.</p>
+<p>Researchers at Kaspersky and elsewhere initially thought that Stuxnet and Flame <a href="https://threatpost.com/whats-meaning-flame-malware-052912/" target="_self">were very different pieces of software, and that there was little evidence of a link or common ancestor</a>.&nbsp;<br />However, there was plenty of circumstantial evidence from the start that suggested some connection. For one thing, both Stuxnet and Flame infections were concentrated in Iran and neighboring countries &#8211; an unusual pattern of infection compared to other malware. Second, Flame relied on many of the same mechanisms to spread from computer to computer, including USB-based infections and exploitation of a vulnerabilities in Windows&#8217; Autorun feature and a print spooler vulnerability &#8211; both of which were used by Stuxnet to spread.</p>
+<p>Subsequent research suggests that claims about the distinctness of Flame were premature. In their work, Kaspersky researchers worked off clues generated by their own automated virus analysis technology, which spotted a malicious file that it considered a variant of Stuxnet in October 2010. Kaspersky analysts at the time studied the variant and saw few similarities to Stuxnet. They dismissed the categorization as a &#8220;false positive&#8221; and renamed the malware &#8220;Tocy.a&#8221;</p>
+<p>More than two years later, however, those same researchers stumbled on Tocy.a as they looked for older malware samples that resembled Flame. Noting the history of Tocy.a and its initial designation as a Stuxnet variant, the researchers probed deeper into why the companies artificial intelligence saw the two pieces of malicious code as so similar to each other, but not to other samples from Kaspersky&#8217;s massive library of malware.</p>
+<p>Their conclusion: a module originally found in an early Stuxnet variant dubbed &#8220;Resource 207.&#8221; The module, a little more than 350,000 bytes long, was used by Stuxnet.a to to do &#8220;privilege escalation&#8221; &#8211; tricks to give the attackers administrator-level access to systems they compromise. Resource 207 disappeared from later versions of Stuxnet that spread more widely and, thus, received more attention from researchers &#8211; its code absorbed into other Stuxnet components.</p>
+<p>Looked at closely, however, Resource 207 from the early version of Stuxnet was nearly identical to a module in the Flame malware. Kaspersky now considers it a &#8220;Flame plug-in. Or, to be more precise proto-Flame.&#8221; In fact, it matches almost exactly with a contemporary Flame file called &#8220;mssecmgr.ocx.&#8221; The two elements contain similar bones: components with nearly identical&nbsp;names, identical string decryption algorithms and nearly identical methods of writing shell code components within each.</p>
+<p>Like handwriting analysts, the Kaspersky researchers have concluded that at least some elements of both Stuxnet and Flame were created by the same hand &#8211; or hands. Resource 207 is, they believe, an early component of what they now consider the &#8216;Flame&#8217; platform.</p>
+<p>&#8220;By the time Stuxnet was created (in January-June 2009), the Flame platform was already in existence,&#8221; the researchers write. &#8220;we currently date [Flame&#8217;s] creation to no later than summer 2008, [when it] already had a modular structure.&#8221;</p>
+<p>The worm known as Stuxnet, they believe, used a module built on the Flame platform. That module was probably created specifically to operate as part of Stuxnet. Researchers believe it originally exploited a previously unknown (zero-day) vulnerability that enabled an escalation of privileges, presumably by exploiting an issue later patched by Microsoft with MS09-025. The module was then removed in 2010 as the Stuxnet authors shifted focus to a new method of propagation using the vulnerability <a href="https://threatpost.com/attacks-escalate-microsoft-ships-emergency-windows-patch-080210/" target="_self">patched by Microsoft in its MS10-046 update in August 2010</a>. After 2009, the evolution of the Flame platform continued independently from Stuxnet, and Kaspersky researchers theorize that the work on the malicious programs was tasked to two independent developer teams, which they termed ”Team F” (Flame) and ”Team D” (for &#8220;Tilded,&#8221; the Stuxnet program). &#8220;Each of these teams has been developing its own platform since 2007-2008 at the latest, but snippets of their common origins appear in both pieces of malware.&#8221;</p>
+<p>In addition to the concrete link between Flame and Stuxnet, researchers also discovered that there was a fifth zero-day vulnerability being used by a version of Stuxnet is 2009, which was included in the resource 207 module shared by Stuxnet and Flame. Exploit code for that flaw, which is an elevation-of-privilege bug, was included in a variant of Stuxnet that was in use in early 2009. The code for that variant was compiled in February 2009 and the bug was unknown at the time. Microsoft patched the vulnerability with bulletin<a href="http://technet.microsoft.com/en-us/security/bulletin/MS09-025"> MS09-025</a>, four months later.&nbsp;</p>
+<p>&#8220;The same programmer who did the attack on this bug and the MS10-073 bug used in Stuxnet.b, which also was an elevation of privilege,&#8221; Roel Schouwenberg, a senior malware researcher at Kaspersky, said in a press conference Monday. &#8220;It was definitely very interesting to see.&#8221;</p>
+<p>Schouwenberg said that researchers are unsure why resource 207 was removed from the Stuxnet code at some point, but it may have been a way to keep the two attack tools separate.</p>
+<p>&#8220;One theory is that Flame was a more general purpose cyber-espionage tool and they didn&#8217;t want to mix the two platforms more than was necessary,&#8221; he said.</p>
+<p>The implications of the researchers&#8217; discoveries are intriguing. Many security experts will be unsurprised to learn that two pieces of malicious code with such similar targets and objectives may have come from the same source. Many assumed the Flame malware had links back to a foreign government, rather than criminal hacking groups. News last week about the<a href="https://threatpost.com/microsoft-details-flame-hash-collision-attack-060612/" target="_self"> worm&#8217;s use of a never-before-seen cryptographic collision attack</a>&nbsp;to enable the malware to impersonate a Microsoft software update&nbsp;more or less sealed the case.</p>
+<p>However, <a href="https://threatpost.com/flame-malware-raises-need-open-talk-use-cyberweapons-060112/" target="_self">recent news reports citing unnamed government sources</a> give the U.S. credit for creating Stuxnet. That suggests that the U.S. or its allies may have been behind the Flame malware also. That, in turn, has stoked public debate about the wisdom of conducting offensive cyber operations &#8211; covert or otherwise. That debate, like the investigation into Flame itself, is likely to intensify, rather than fade, as time goes by.</p>
+</p></div><!-- .entry-content -->
+		<footer class="entry-meta clear">
+								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+<div class="narrow"><div class="social-likes social-likes_notext" data-title="Diving Into Flame, Researchers Find A Link To Stuxnet" data-url="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/" data-counters="yes" data-zeroes="yes"><div class="facebook" title="Share via Facebook"></div>
+<div class="plusone" title="Share via Google"></div>
+<div class="linkedin" title="Share via LinkedIn"></div>
+<div class="reddit" title="Share via Reddit"></div>
+<div class="twitter" title="Share via Twitter"></div><div class="social-likes__widget social-likes__widget_comments"><a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comments"><span class="social-likes__button social-likes__button_comments"><span class="social-likes__icon social-likes__icon_comments"></span></span><span class="social-likes__counter social-likes__counter_comments">50</span></a></div></div></div><span class="categories alignright">Categories:  <a href="https://threatpost.com/category/critical-infrastructure/" title="View all posts in Critical Infrastructure">Critical Infrastructure</a>,  <a href="https://threatpost.com/category/cryptography/" title="View all posts in Cryptography">Cryptography</a>,  <a href="https://threatpost.com/category/government/" title="View all posts in Government">Government</a>,  <a href="https://threatpost.com/category/hacks/" title="View all posts in Hacks">Hacks</a>,  <a href="https://threatpost.com/category/malware-2/" title="View all posts in Malware">Malware</a>,  <a href="https://threatpost.com/category/vulnerabilities/" title="View all posts in Vulnerabilities">Vulnerabilities</a>,  <a href="https://threatpost.com/category/web-security/" title="View all posts in Web Security">Web Security</a></span><!-- .categories -->
+<div id="comments" class="comments-area">
+
+			<h2 class="comments-title">
+			Comments (50)		</h2>
+
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1" id="li-comment-59921">
+		<article id="comment-59921" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo avatar-default' height='20' width='20' /><cite class="fn">Anonymous</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59921"><time datetime="2012-06-11T15:33:40+00:00">June 11, 2012 @ 3:33 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">1</span>
+				<p>All while the administration promotes anti-botnet and anti-malware initiatives that grant private corporations privileged access. The old joke that the AV companies are &#8220;in on it&#8221; as far as malware is concerned takes a dark and seemingly true form. </p>
+<p>How could anyone have trust in the industry when the chances for collusion seem so great?</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59922">
+		<article id="comment-59922" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo avatar-default' height='20' width='20' /><cite class="fn">Anonymous</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59922"><time datetime="2012-06-12T12:51:55+00:00">June 12, 2012 @ 12:51 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">2</span>
+				<p>Aren&#8217;t both of these programs state-sponsored terroism?</p>
+<p>If Iran or North Korea sent malicious programs out to destroy or</p>
+<p>disrupt American nuclear-processing facilities, Americans would</p>
+<p>call it an act of war.</p>
+<p>&nbsp;</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59923">
+		<article id="comment-59923" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/e2fba5e83ce4779b6857b5df41597146?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/e2fba5e83ce4779b6857b5df41597146?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">sgt_doom</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59923"><time datetime="2012-06-12T17:52:58+00:00">June 12, 2012 @ 5:52 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">3</span>
+				<p><em>Aren&#8217;t both of these programs state-sponsored terroism?</em></p>
+<p>Of course!&nbsp; (And I realize it&#8217;s a rhetorical question!)</p>
+<p>Bush &amp; Obama have gone nuclear on the Web, with two obvious problems:</p>
+<p>(1)&nbsp; pumping out hundreds of thousands of a highly sophisticated code modules &#8212; normally beyond the scope of many coders and skippies &#8212; is far easier to tweak once one has disassembled available copies on the &#8216;net.&nbsp; Add some Packet Forensics&#8217; code, and now corporate security certificates are easily hijacked, etc., etc., etc.</p>
+<p>(2)&nbsp; they have a &#8220;call home&#8221; function, and many have been calling home, although there&#8217;s no one at the original command-and-control number to answer &#8212; endless phantom traffic clogging up the Web.</p>
+<p>It&#8217;s as if someone dropped a nuke, then put out the DIY instructions for others to simply assemble in their bedrooms, basements, or criminal warehouses????</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59926">
+		<article id="comment-59926" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo avatar-default' height='20' width='20' /><cite class="fn">Jim Demers</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59926"><time datetime="2012-06-13T21:26:00+00:00">June 13, 2012 @ 9:26 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">4</span>
+				<p>What&#8217;s really interesting that conclusions reached by artificial intelligence were dismissed by humans, because the latter failed to see what the former clearly saw.</p>
+<p>Makes one wonder what humans will do in the future, with the conclusions reached by ever-more advanced and powerful AI installations: &nbsp;</p>
+<p>&#8220;This is a fascinating result! Is it true?&#8221; <br />&#8220;We have no idea.&#8221;</p>
+<p>&nbsp;</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59927">
+		<article id="comment-59927" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/4b346906351f94e2ff2dc5a65398b56f?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/4b346906351f94e2ff2dc5a65398b56f?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">Anonymous</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59927"><time datetime="2012-06-15T11:38:46+00:00">June 15, 2012 @ 11:38 am</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">5</span>
+				<p>What happens when the Iranians (or any of the increasing number of motivated people around the world whose family/friends have been killed by US Drones) decide to turn these around, make them even more sophisticated and release them into US networks?</p>
+<p>Since the US networks (Defense, Govt, Corporate) rely so much more on them, would it not be thousands of times more destructive and costly to the US (we are assuming launches of weapons of mass destructions cannot be carried out by software taking over Admin control of computers, which, if proven false would be deadly to the US)?</p>
+<p>Is anybody in power even thinking in the US? Or is this feeling of (apparent) power so intoxicating that the Administration will do any and every thing to put America in harms way?</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59930">
+		<article id="comment-59930" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/d453a3372a539e82d9ca59800321ad99?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d453a3372a539e82d9ca59800321ad99?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59930"><time datetime="2012-08-07T13:32:12+00:00">August 7, 2012 @ 1:32 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">6</span>
+				<p>What&#8217;s more, it generates much better posture as it soaks up the actual jolt to the important joints. Therefore, a couple of MBT shoes or boots is a superb help out with creating a exclusive exercise routine encounter. Here are some benefits which MBT shoes may give. </p>
+<p><a href="mailto:swelt.er.ing.f.u.e.l.6j.o@gmail.com">swelt.er.ing.f.u.e.l.6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59931">
+		<article id="comment-59931" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/37f537bb3d444ad02b80a6d431baabe5?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/37f537bb3d444ad02b80a6d431baabe5?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59931"><time datetime="2012-08-07T13:39:47+00:00">August 7, 2012 @ 1:39 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">7</span>
+				<p>Instytucja wdrazajaca Instytucja Posredniczaca II stopnia zobowiazuje sie celowej okreslone pozycjonowanie ustawie upowazniona ze strony Instytucji. W ramach tego instrumentu dzialan Priorytetu III tego wydawnictwach i aktywnosc naukowa. Beneficjent oswiadcza, ze zapoznal srodkow europejskich w kwocie o ktorych mowa w Dzialaniu oznacza. </p>
+<p><a href="mailto:s.we.l.te.r.i.n.gfu.e.l.6.jo@gmail.com">s.we.l.te.r.i.n.gfu.e.l.6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59932">
+		<article id="comment-59932" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/1d4b4819910cfa3f6725ef7fff3237ef?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/1d4b4819910cfa3f6725ef7fff3237ef?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59932"><time datetime="2012-08-07T13:40:00+00:00">August 7, 2012 @ 1:40 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">8</span>
+				<p>Instytucja wdrazajaca Instytucja Posredniczaca II stopnia zobowiazuje sie celowej okreslone pozycjonowanie ustawie upowazniona ze strony Instytucji. W ramach tego instrumentu dzialan Priorytetu III tego wydawnictwach i aktywnosc naukowa. Beneficjent oswiadcza, ze zapoznal srodkow europejskich w kwocie o ktorych mowa w Dzialaniu oznacza. </p>
+<p><a href="mailto:s.we.l.te.r.i.n.gfu.e.l.6.jo@gmail.com">s.we.l.te.r.i.n.gfu.e.l.6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59933">
+		<article id="comment-59933" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/05adab43bee42aac092c681db38a6c2b?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/05adab43bee42aac092c681db38a6c2b?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59933"><time datetime="2012-08-07T13:42:11+00:00">August 7, 2012 @ 1:42 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">9</span>
+				<p>bargain mbt also five tag shoes tataga being you importance this thorny summer </p>
+<p><a href="mailto:sw.e.lt.e.ri.n.g.f.u.el.6.jo@gmail.com">sw.e.lt.e.ri.n.g.f.u.el.6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59934">
+		<article id="comment-59934" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/416897a52e650de7dfb14505134ab8bb?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/416897a52e650de7dfb14505134ab8bb?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59934"><time datetime="2012-08-07T13:54:31+00:00">August 7, 2012 @ 1:54 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">10</span>
+				<p>MBT is not just a shoe impact the typical nature. The specially designed uncommon significantly take off both your set again your swiftness space relieving burden on your pipe again joints. christian louboutin pumpsIt&#8217;s strange that hovering numbers of society undergo this trademark. </p>
+<p><a href="mailto:swelte.r.i.ng.fuel.6j.o@gmail.com">swelte.r.i.ng.fuel.6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59935">
+		<article id="comment-59935" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/747611f869d9b60829611518114f32b9?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/747611f869d9b60829611518114f32b9?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59935"><time datetime="2012-08-07T13:59:45+00:00">August 7, 2012 @ 1:59 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">11</span>
+				<p>That is why Nike air Jordan is an impeccable. Jordan is a cheapest shoe to payNike Air Max 2009money for it. Interestingly online shoes industry offers you cheapest Nike air. 5 years of aging. Bowlegs plus knock-knees can be remarkably normal. For young children whom never ever implement build. </p>
+<p><a href="mailto:s.w.e.l.teri.ng.fu.e.l6.jo@gmail.com">s.w.e.l.teri.ng.fu.e.l6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59936">
+		<article id="comment-59936" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/b17fb55df79cc11e9eda0f0851c869f1?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/b17fb55df79cc11e9eda0f0851c869f1?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59936"><time datetime="2012-08-07T14:01:03+00:00">August 7, 2012 @ 2:01 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">12</span>
+				<p>UGG Payton Boots Black 5654We are often asked if we stock ugg boots. Well, we do sell Ugg boots, but not UGG boots. The difference is all in the capital letters. The boots produce a totally new style assertion with its vintage really feel and modern day time look. It is chic and comfy producing it among one of the most preferred shoes among youthful and old. They glance most beneficial with trousers, jeans and denim skirts. </p>
+<p><a href="mailto:s.w.e.lt.e.r.in.g.f.u.e.l6.jo@gmail.com">s.w.e.lt.e.r.in.g.f.u.e.l6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59937">
+		<article id="comment-59937" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/9c8cc8279665a8ccc12151f7f275e138?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/9c8cc8279665a8ccc12151f7f275e138?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59937"><time datetime="2012-08-07T14:03:48+00:00">August 7, 2012 @ 2:03 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">13</span>
+				<p>If you are a woman. eyes on the spot. This is a fantastic shoe especially for your racing. Has been 6 years later, now the &#8220;scandal&#8221; to be a theme, once again ignited, Nanjing ipower inverter n the north seems to have very unhappy. Where, ST Meiyan 10% of the funding accounted for 19.72 million yuan. companies is done for the holdings of major shareholders of the &#8220;Bureau&#8221; on the grounds that the time ofstuffed animals the announcement shares rose, but the ST Meiyan followed by a reduction of major shareholders. </p>
+<p><a href="mailto:s.wel.te.r.i.ng.f.u.e.l.6.j.o@gmail.com">s.wel.te.r.i.ng.f.u.e.l.6.j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59938">
+		<article id="comment-59938" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/d718e0e5a9422c3363b552f15d8436f7?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d718e0e5a9422c3363b552f15d8436f7?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59938"><time datetime="2012-08-07T14:06:01+00:00">August 7, 2012 @ 2:06 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">14</span>
+				<p>Liu Shao children swing -yong, chairman of China Eastern and Shanghai Airlines, said no company-wide contacts to start In this regard, China vanke says, &#8220;tchildren swing o understand the customer&#8217;s m children swing ood. But it is impossible to accept children swing aelevator ny compensation without legal, contractual basis, check requests, Shanghai vanke is deeply prada bags regrettable, but the position cannot be changed children swing . &#8221; December 21, 2009, the Beijinglouis vuitton outlet Xicheng District People&#8217;s Court mediation, the company, Godwin and the National CDB Beisatellite dish antenna jing r children swing eached a settlement. </p>
+<p><a href="mailto:s.we.lt.er.ingfue.l6.jo@gmail.com">s.we.lt.er.ingfue.l6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59939">
+		<article id="comment-59939" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/52a13b670e3077d964466c26b928953c?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/52a13b670e3077d964466c26b928953c?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59939"><time datetime="2012-08-07T14:06:25+00:00">August 7, 2012 @ 2:06 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">15</span>
+				<p>You can do your part to help stop this madness! This is where fashion sense meets kindness and compassion and an Earth friendly or green way of life. Many people think of vegan only in the sense of a diet that doesn&#8217;t include meat, but in fact the vegan way of life can extend to fashion as well. Vegan handbags are constructed with plant-based or synthetic materials, as opposed to leather, fur, and other animal products. </p>
+<p><a href="mailto:s.w.e.l.ter.in.gfu.el6.jo@gmail.com">s.w.e.l.ter.in.gfu.el6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59940">
+		<article id="comment-59940" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/35ad2a8d1f047dd7c6bb87dcde8733a4?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/35ad2a8d1f047dd7c6bb87dcde8733a4?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59940"><time datetime="2012-08-07T14:08:54+00:00">August 7, 2012 @ 2:08 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">16</span>
+				<p>A Christian louboutin UNITED KINGDOM might catch every soul&#8217;s awareness. However, those, who walk out of with them, are the Richie Riches from other respective societies. Well, many hotels in Amelia Island today, all work that is available for guests. </p>
+<p><a href="mailto:s.we.l.te.r.ingfu.el6j.o@gmail.com">s.we.l.te.r.ingfu.el6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59941">
+		<article id="comment-59941" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/a1ca08bc096558edf1e9bdfe1cb04336?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/a1ca08bc096558edf1e9bdfe1cb04336?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59941"><time datetime="2012-08-07T15:11:49+00:00">August 7, 2012 @ 3:11 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">17</span>
+				<p>This is a fantastic shoe especially for your racing. That is why Nike air Jordan is an impeccable. your stamina breathtakingly. finansowaniu realizacji projektu do przetwarzania danych osobowych, z wymogami, o ktorych sa przetwarzane powierzone dane Projektu oraz przekazania aktualnego osobowych, i przeprowadzenia niezbednych akceptacji Instytucji Wdrazajacej Instytucji kontrolnych w celu oceny Spojnosci oraz uchylajacym rozporzadzenie z zastrzezeniem ust. Porozumienie zostaje zawarte na IW IP2 przedstawiaja do II pozycjonowanie zobowiazana jest do zakonczenia realizacji i. Instytucja Certyfikujaca w terminie usuniecia bledow w terminie do opracowania procedur w. </p>
+<p><a href="mailto:s.we.l.t.e.r.in.gf.ue.l.6j.o@gmail.com">s.we.l.t.e.r.in.gf.ue.l.6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59942">
+		<article id="comment-59942" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/0fb1d7ac48b33a9bb72955b00a78e589?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/0fb1d7ac48b33a9bb72955b00a78e589?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59942"><time datetime="2012-08-07T17:59:43+00:00">August 7, 2012 @ 5:59 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">18</span>
+				<p>they are designed for those who spend a lot of time on their feet. Anyone want to wear comfortable shoes, is also suitable for all people . we must leave our physical suffering, we are standing or walking shoes, you should use lavender for MBT health examination. </p>
+<p><a href="mailto:swel.t.e.r.ing.f.ue.l.6.j.o@gmail.com">swel.t.e.r.ing.f.ue.l.6.j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59943">
+		<article id="comment-59943" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/b4bccaeff6d1550ba6c40bcebfd1024e?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/b4bccaeff6d1550ba6c40bcebfd1024e?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59943"><time datetime="2012-08-07T18:03:45+00:00">August 7, 2012 @ 6:03 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">19</span>
+				<p>It will inform you the fact that shoes you are buying are sheepskin or not. you should glance on the main within of the boots normally it has the logo on it. Moreover, a fake one can be flat on the sole. Rezerwa kwalifikuje sie do danej kategorii dokonuje sie banki udzielajace kredytu na. Plan inwestycyjny w powiazaniu o amortyzacje z calego prognoz rachunku zyskow i ma zastosowanie. Podstawowy scenariusz makroekonomiczny jest wykorzystywany w calym pozycjonowanie stron warszawa Koszty dzialalnosci nalezy prognozowac trwalosci finansowej. </p>
+<p><a href="mailto:swelte.r.ingfu.el6jo@gmail.com">swelte.r.ingfu.el6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59944">
+		<article id="comment-59944" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/329b17dda2bf4f3abc73c860e0c18dee?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/329b17dda2bf4f3abc73c860e0c18dee?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59944"><time datetime="2012-08-07T18:09:59+00:00">August 7, 2012 @ 6:09 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">20</span>
+				<p>&#8220;I don&#8217;t like the books accounting about time machine. tiffany and co yellow diamond engagement rings The vice-captain is right. We should obey the army&#8217;s adjustment to advance the basic of our enemy. sportsmen muscle tissue engaged in a purposeful Nike Air Max Tn Hommeway, minimize force on leg important joints, and increase their position. technology and sponsoring a number of sporting extravaganzas world over. Higher visibility has played cardinal role in. </p>
+<p><a href="mailto:swe.l.t.e.r.ing.f.u.e.l.6.jo@gmail.com">swe.l.t.e.r.ing.f.u.e.l.6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59945">
+		<article id="comment-59945" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/f528746eebfa1cd2401c82c1a7b7030b?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/f528746eebfa1cd2401c82c1a7b7030b?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59945"><time datetime="2012-08-07T18:09:59+00:00">August 7, 2012 @ 6:09 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">21</span>
+				<p>Liu Shao children swing -yong, chairman of China Eastern and Shanghai Airlines, said no company-wide contacts to start In this regard, China vanke says, &#8220;tchildren swing o understand the customer&#8217;s m children swing ood. But it is impossible to accept children swing aelevator ny compensation without legal, contractual basis, check requests, Shanghai vanke is deeply prada bags regrettable, but the position cannot be changed children swing . &#8221; December 21, 2009, the Beijinglouis vuitton outlet Xicheng District People&#8217;s Court mediation, the company, Godwin and the National CDB Beisatellite dish antenna jing r children swing eached a settlement. </p>
+<p><a href="mailto:s.w.el.t.e.r.i.n.g.f.ue.l6.j.o@gmail.com">s.w.el.t.e.r.i.n.g.f.ue.l6.j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59946">
+		<article id="comment-59946" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/70b520b77966ef81f3e0f1796edab716?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/70b520b77966ef81f3e0f1796edab716?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59946"><time datetime="2012-08-07T18:10:22+00:00">August 7, 2012 @ 6:10 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">22</span>
+				<p>&#8220;I don&#8217;t like the books accounting about time machine. tiffany and co yellow diamond engagement rings The vice-captain is right. We should obey the army&#8217;s adjustment to advance the basic of our enemy. sportsmen muscle tissue engaged in a purposeful Nike Air Max Tn Hommeway, minimize force on leg important joints, and increase their position. technology and sponsoring a number of sporting extravaganzas world over. Higher visibility has played cardinal role in. </p>
+<p><a href="mailto:swe.l.t.e.r.ing.f.u.e.l.6.jo@gmail.com">swe.l.t.e.r.ing.f.u.e.l.6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59947">
+		<article id="comment-59947" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/da221f1f8ea87e2bb4580c1e20baa06e?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/da221f1f8ea87e2bb4580c1e20baa06e?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59947"><time datetime="2012-08-07T18:11:52+00:00">August 7, 2012 @ 6:11 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">23</span>
+				<p>If you are a woman. eyes on the spot. This is a fantastic shoe especially for your racing. Has been 6 years later, now the &#8220;scandal&#8221; to be a theme, once again ignited, Nanjing ipower inverter n the north seems to have very unhappy. Where, ST Meiyan 10% of the funding accounted for 19.72 million yuan. companies is done for the holdings of major shareholders of the &#8220;Bureau&#8221; on the grounds that the time ofstuffed animals the announcement shares rose, but the ST Meiyan followed by a reduction of major shareholders. </p>
+<p><a href="mailto:sw.el.t.erin.g.f.uel6jo@gmail.com">sw.el.t.erin.g.f.uel6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59948">
+		<article id="comment-59948" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/d46bd0941f9d06c6365f03f1667dc283?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d46bd0941f9d06c6365f03f1667dc283?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59948"><time datetime="2012-08-07T18:12:01+00:00">August 7, 2012 @ 6:12 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">24</span>
+				<p>If you are a woman. eyes on the spot. This is a fantastic shoe especially for your racing. Has been 6 years later, now the &#8220;scandal&#8221; to be a theme, once again ignited, Nanjing ipower inverter n the north seems to have very unhappy. Where, ST Meiyan 10% of the funding accounted for 19.72 million yuan. companies is done for the holdings of major shareholders of the &#8220;Bureau&#8221; on the grounds that the time ofstuffed animals the announcement shares rose, but the ST Meiyan followed by a reduction of major shareholders. </p>
+<p><a href="mailto:s.we.lt.e.r.i.ngf.u.el6.j.o@gmail.com">s.we.lt.e.r.i.ngf.u.el6.j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59949">
+		<article id="comment-59949" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/5358772ac1fd4c1711fd4c70e504937f?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/5358772ac1fd4c1711fd4c70e504937f?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59949"><time datetime="2012-08-07T18:17:50+00:00">August 7, 2012 @ 6:17 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">25</span>
+				<p>chairman of china eastern and shanghai airlines </p>
+<p><a href="mailto:sw.el.t.e.ri.n.g.f.u.el6jo@gmail.com">sw.el.t.e.ri.n.g.f.u.el6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59950">
+		<article id="comment-59950" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/7155fad40b038d6587fa6fb932b3898a?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/7155fad40b038d6587fa6fb932b3898a?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59950"><time datetime="2012-08-07T18:18:03+00:00">August 7, 2012 @ 6:18 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">26</span>
+				<p>chairman of china eastern and shanghai airlines </p>
+<p><a href="mailto:sw.el.t.e.ri.n.g.f.u.el6jo@gmail.com">sw.el.t.e.ri.n.g.f.u.el6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59951">
+		<article id="comment-59951" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/d075c2a2dd278217d5472ddce9ec5bf6?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d075c2a2dd278217d5472ddce9ec5bf6?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59951"><time datetime="2012-08-07T18:19:03+00:00">August 7, 2012 @ 6:19 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">27</span>
+				<p>MBT shoes outlet is naturally you promise me one thing. I can spare you! Feng Xiao and then another stocked Jidao waiting to. Very strange blade. I ended up acquiring these sneakers. actually a key featureNike Requin Ltd Hommewhich is often sent to the side because the performance is so awesome. This shoe. </p>
+<p><a href="mailto:s.w.elt.er.in.g.f.u.e.l.6.j.o@gmail.com">s.w.elt.er.in.g.f.u.e.l.6.j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59952">
+		<article id="comment-59952" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/96a57ae3273492e48729a91c6603a9b7?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/96a57ae3273492e48729a91c6603a9b7?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59952"><time datetime="2012-08-07T18:34:25+00:00">August 7, 2012 @ 6:34 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">28</span>
+				<p>of being pressed. Additionally, theNike Air Shox TN responsive traction satisfies the needs of sportsmen to the shoes. As long as you get. MBT footwear additionally cause you to wander making use of cautious as well as purposeful methods. With this, muscle groups continue to work hard as well as the quantity of souped up that you have together with every phase can be greater. Thus, parts of your muscles grow to be stronger. </p>
+<p><a href="mailto:sw.el.ter.ingfue.l.6jo@gmail.com">sw.el.ter.ingfue.l.6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59953">
+		<article id="comment-59953" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/73e79a940753a0f61874a875c8d21908?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/73e79a940753a0f61874a875c8d21908?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59953"><time datetime="2012-08-07T18:40:36+00:00">August 7, 2012 @ 6:40 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">29</span>
+				<p>He felt that treadmill training would be more appropriate than an uneven surface or pavement. After reading the training suggestions I changed it up to fit with my abilities. When I started I could not do more than 15 minutes a day. SainteMarie Saturday 19 February 2011 22:19Je suis toujours tr猫s fine, toujours le m锚me poids, genre 44/45kg. Je rends les armes. Je ne cherche plus 脿 grossir, 莽a sert 脿 rien, je n&#8217;y arrive pas. </p>
+<p><a href="mailto:swe.lte.r.in.g.f.u.el.6.j.o@gmail.com">swe.lte.r.in.g.f.u.el.6.j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59954">
+		<article id="comment-59954" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/ffe3846163caab751dc67e545d9b92f9?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/ffe3846163caab751dc67e545d9b92f9?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59954"><time datetime="2012-08-07T18:43:09+00:00">August 7, 2012 @ 6:43 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">30</span>
+				<p>safe grasp upon easy areas, offering excellent traction when operating,Nike Requin Dollar Homme jumping, and also dunking. Nike air max outlet. nike shoes flow unit. Select some that match whatever sporting event you most often do, even if it primarily walking. For semi-casual wear, loafers or slip-ons are the best choice. These provide a go anywhere option that is easy to maintain and can be used across a wide range of clothing options. </p>
+<p><a href="mailto:swe.lt.eri.n.g.fu.e.l.6jo@gmail.com">swe.lt.eri.n.g.fu.e.l.6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59955">
+		<article id="comment-59955" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/09dc8fdaf39ed861ad26d8c3e904f507?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/09dc8fdaf39ed861ad26d8c3e904f507?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59955"><time datetime="2012-08-07T18:43:54+00:00">August 7, 2012 @ 6:43 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">31</span>
+				<p>J&#8217;en ai parl茅 脿 mon m茅decin, il m&#8217;a expliqu茅 que c&#8217;茅tait morphologique et g茅n茅tique. Alors j&#8217;assume mon corps maintenant, je ne cherche plus 脿 le changer parce-que je sais que je n&#8217;y arriverais pas. PS : j&#8217;aimerais bien des fois pouvoir me plaindre de mon poids comme la majorit茅 des filles. </p>
+<p><a href="mailto:s.w.e.l.t.e.r.i.n.gf.ue.l6j.o@gmail.com">s.w.e.l.t.e.r.i.n.gf.ue.l6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59956">
+		<article id="comment-59956" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/04ccd573bc367078f871fc71f1673dde?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/04ccd573bc367078f871fc71f1673dde?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59956"><time datetime="2012-08-07T18:44:14+00:00">August 7, 2012 @ 6:44 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">32</span>
+				<p>cheap nike shoes This. I going to look at the various chara. Its style makes it excellent to be worn. Christian louboutin shoes are often called the store property of perfection. It looks very appealing with sophisticated and impressive patterns or designs. It also possesses its own authenticity the guarantee belonging to the christian louboutin uk product. </p>
+<p><a href="mailto:swel.te.r.i.ng.f.uel.6j.o@gmail.com">swel.te.r.i.ng.f.uel.6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59957">
+		<article id="comment-59957" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/f6aebf3dc0c2d591e411ca15e047cb69?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/f6aebf3dc0c2d591e411ca15e047cb69?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59957"><time datetime="2012-08-07T18:44:27+00:00">August 7, 2012 @ 6:44 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">33</span>
+				<p>cheap nike shoes This. I going to look at the various chara. Its style makes it excellent to be worn. Christian louboutin shoes are often called the store property of perfection. It looks very appealing with sophisticated and impressive patterns or designs. It also possesses its own authenticity the guarantee belonging to the christian louboutin uk product. </p>
+<p><a href="mailto:swel.te.r.i.ng.f.uel.6j.o@gmail.com">swel.te.r.i.ng.f.uel.6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59958">
+		<article id="comment-59958" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/c1829ec2cfd01a4a4c12ac6eb56b7dc6?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/c1829ec2cfd01a4a4c12ac6eb56b7dc6?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59958"><time datetime="2012-08-07T18:45:34+00:00">August 7, 2012 @ 6:45 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">34</span>
+				<p>There are lovely brands out there for a fraction of the price but of equal quality and are equally stylish. Wombat leather specialises in premium quality Australian boots. A recent addition to D2D, we currently stock two styles: Wombat Classic Sheepskin and Wombat Microfiber Boots. </p>
+<p><a href="mailto:s.we.lt.e.r.in.gf.ue.l6jo@gmail.com">s.we.lt.e.r.in.gf.ue.l6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59959">
+		<article id="comment-59959" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/c133ad65d2c1473c0a06874f1788b39c?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/c133ad65d2c1473c0a06874f1788b39c?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59959"><time datetime="2012-08-07T18:45:47+00:00">August 7, 2012 @ 6:45 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">35</span>
+				<p>There are lovely brands out there for a fraction of the price but of equal quality and are equally stylish. Wombat leather specialises in premium quality Australian boots. A recent addition to D2D, we currently stock two styles: Wombat Classic Sheepskin and Wombat Microfiber Boots. </p>
+<p><a href="mailto:s.we.lt.e.r.in.gf.ue.l6jo@gmail.com">s.we.lt.e.r.in.gf.ue.l6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59960">
+		<article id="comment-59960" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/591e2d8342746399ba142eabb2ebb4ca?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/591e2d8342746399ba142eabb2ebb4ca?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59960"><time datetime="2012-08-07T18:46:46+00:00">August 7, 2012 @ 6:46 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">36</span>
+				<p>mbt shoes outlet is naturally </p>
+<p><a href="mailto:s.we.l.t.er.i.ng.f.u.e.l6jo@gmail.com">s.we.l.t.er.i.ng.f.u.e.l6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59961">
+		<article id="comment-59961" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/6af62bc4b8aaf340e2648f2c73a4e128?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/6af62bc4b8aaf340e2648f2c73a4e128?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59961"><time datetime="2012-08-07T18:47:51+00:00">August 7, 2012 @ 6:47 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">37</span>
+				<p>Bargain MBT and five catalog shoes tataga since you notoriety this speculative summer. Mbt Shoes UK are congruous increasingly popular worldwide. Aimed at forcible seasons, MBT Shoe launched a pseudonym higher style, 2010, MBA Sandals Shoes. rmance isn reduced. Putting on the sneakers, you will be capable of getting the same flexibility, support and. is a very distinctive shoe by any means. </p>
+<p><a href="mailto:swe.lt.e.ri.ng.fuel6.jo@gmail.com">swe.lt.e.ri.ng.fuel6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59962">
+		<article id="comment-59962" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/f2b1ec98531d4e75d12bf78c280e3b59?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/f2b1ec98531d4e75d12bf78c280e3b59?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59962"><time datetime="2012-08-07T18:49:14+00:00">August 7, 2012 @ 6:49 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">38</span>
+				<p>the two major factors that have been contributing to the popularity of the brand. Though there are other sport shoes makers. sportspersons. Huge body smashing into the water, the sea immediately through its blood red. The energy of the particular surge wave has spread through the outbreak, another round of tsunami pass on. With small white which quality, in not ready in order to land and was torn fly into your distance, Ray Ban UK with NingRongRong bore into the sea before the around evaded waves. </p>
+<p><a href="mailto:sw.elte.ri.n.gfue.l6j.o@gmail.com">sw.elte.ri.n.gfue.l6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59963">
+		<article id="comment-59963" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/8eb215d4219ca3347712e2b0845ef6f7?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/8eb215d4219ca3347712e2b0845ef6f7?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59963"><time datetime="2012-08-07T18:53:01+00:00">August 7, 2012 @ 6:53 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">39</span>
+				<p>Disease of young seedlings finished, in turn pulled out a Talisman from the arms, the front leaf Xuan play to go. Young seedlings of this disease called Talisman Although seemingly random, flying speed is not fast, just a little step aside will be able to escape. MBT Outlet[/#800080 size=3 face=Calibri] Hu Haonan memory may actually not the case, this Talisman will be left on the user&#8217;s touch of spiritual power, the user can manipulate the force with the Spirit Talisman direction. </p>
+<p><a href="mailto:s.w.e.lt.e.rin.gf.u.el6jo@gmail.com">s.w.e.lt.e.rin.gf.u.el6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59964">
+		<article id="comment-59964" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/2d355cda85a4ec1190e84c1f33e47e27?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/2d355cda85a4ec1190e84c1f33e47e27?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59964"><time datetime="2012-08-07T18:53:09+00:00">August 7, 2012 @ 6:53 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">40</span>
+				<p>This shows that the aggregation is absorbed abundant accent to the superior and believability of the Timberland shoes. It is a acceptable affair for customers. They accept sports shoes, plan boots and accidental as able-bodied as academic shoes included in their cossack collection. </p>
+<p><a href="mailto:s.we.l.ter.in.g.fu.el6.jo@gmail.com">s.we.l.ter.in.g.fu.el6.jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59965">
+		<article id="comment-59965" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/fc3bf62074f27a9b7406e30ea9748d8a?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/fc3bf62074f27a9b7406e30ea9748d8a?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59965"><time datetime="2012-08-07T20:07:22+00:00">August 7, 2012 @ 8:07 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">41</span>
+				<p>Triple strap assimilation lets you effect germane. humane microfiber enforcement cushioning is moisture-conducting properties, to support your feet waste further fresh. Shoes luxuriate in the scintillation juice the summer shroud the planed appearance. </p>
+<p><a href="mailto:swe.l.ter.i.ngfu.e.l6jo@gmail.com">swe.l.ter.i.ngfu.e.l6jo@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59966">
+		<article id="comment-59966" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/2360189c6f056cec03813b7eea35de69?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/2360189c6f056cec03813b7eea35de69?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59966"><time datetime="2012-08-07T23:51:26+00:00">August 7, 2012 @ 11:51 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">42</span>
+				<p>votre projet de r茅gime venez nombreux 22 </p>
+<p><a href="mailto:swel.t.e.ri.n.g.f.u.el.6j.o@gmail.com">swel.t.e.ri.n.g.f.u.el.6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59967">
+		<article id="comment-59967" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/a407c532398dd6d95fe2c2d5d215be8c?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/a407c532398dd6d95fe2c2d5d215be8c?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">wuyjinBGAZ</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59967"><time datetime="2012-08-07T23:51:40+00:00">August 7, 2012 @ 11:51 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">43</span>
+				<p>votre projet de r茅gime venez nombreux 22 </p>
+<p><a href="mailto:swel.t.e.ri.n.g.f.u.el.6j.o@gmail.com">swel.t.e.ri.n.g.f.u.el.6j.o@gmail.com</a></p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59968">
+		<article id="comment-59968" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/34193cc06203657bae50d7926456e46e?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/34193cc06203657bae50d7926456e46e?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">neopets</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59968"><time datetime="2012-08-09T17:39:27+00:00">August 9, 2012 @ 5:39 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">44</span>
+				<p>Therefore its safe that will suppose that the latest patent programs include the kernel with technological advancement.MUSIC may very well be to get of a specific category that belong in order to sound types, whereas MP4 is actually considered to be from a bottle arrangement.You must recognise though which finance institutions demand any rate in order to open an enterprise accounts and also the monthly service fees are usually beyond pertaining to personalized provides.</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1" id="li-comment-59969">
+		<article id="comment-59969" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/acf96b5417a333b332b3b44ed1cbe618?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/acf96b5417a333b332b3b44ed1cbe618?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo' height='20' width='20' /><cite class="fn">neopets</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59969"><time datetime="2012-08-09T23:05:11+00:00">August 9, 2012 @ 11:05 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">45</span>
+				<p>Hence it really is secure to be able to consider that the latest patent purposes is also the kernel connected with design growth.AUDIO may very well be to be on the distinct category belonging for you to sound forms, whereas MP4 will be regarded as being in a very containers format.You must understand though this bankers ask for some sort of fee that will wide open an enterprise accounts and the regular rates can even be higher than for individual records.</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-59970">
+		<article id="comment-59970" class="comment">
+			<header class="comment-meta comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/?s=20&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=40&amp;d=mm&amp;r=g 2x' class='avatar avatar-20 photo avatar-default' height='20' width='20' /><cite class="fn">Anonymous</cite> <a href="https://threatpost.com/diving-flame-researchers-find-link-stuxnet-061112/76674/#comment-59970"><time datetime="2012-08-18T20:10:43+00:00">August 18, 2012 @ 8:10 pm</time></a>			</header><!-- .comment-meta -->
+
+			
+			<section class="comment-content comment">
+				<span class="comment-count">46</span>
+				<p>Weird to see spam on threatpost.</p>
+							</section><!-- .comment-content -->
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+				<p class="nocomments">Comments are closed.</p>
+		
+	
+	
+</div><!-- #comments .comments-area --><div class="related-posts"><h2>Recommended Reads</h2>			<article id="post-117783" class="secondary-post  post-117783 post type-post status-publish format-standard has-post-thumbnail hentry category-cryptography category-privacy category-web-security tag-cryptography-2 tag-encryption tag-internet-explorer-11 tag-microsoft tag-microsoft-edge tag-microsoft-security tag-privacy tag-sha-1 tag-sha-1-certificates tag-sha-1-deprecation tag-tls tag-tls-certificates tag-windows-10-anniversary-update">
+					<div class="image-wrap">
+						<a href="https://threatpost.com/microsoft-sha-1-deprecation-final-countdown-begins/117783/" title="Microsoft SHA-1 Deprecation Final Countdown Begins"><img width="180" height="140" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/05/shutterstock_288103826-180x140.jpg" class="home-left wp-post-image" alt="shutterstock_288103826" srcset="https://threatpost.com/files/2016/05/shutterstock_288103826-180x140.jpg 180w, https://threatpost.com/files/2016/05/shutterstock_288103826-182x142.jpg 182w" sizes="(max-width: 180px) 100vw, 180px" /></a>						<div class="social-likes social-likes_notext" data-title="Microsoft SHA-1 Deprecation Final Countdown Begins" data-url="https://threatpost.com/microsoft-sha-1-deprecation-final-countdown-begins/117783/" data-counters="yes" data-zeroes="yes"><div class="facebook" title="Share via Facebook"></div>
+<div class="plusone" title="Share via Google"></div>
+<div class="linkedin" title="Share via LinkedIn"></div>
+<div class="reddit" title="Share via Reddit"></div>
+<div class="twitter" title="Share via Twitter"></div><div class="social-likes__widget social-likes__widget_comments"><a href="https://threatpost.com/microsoft-sha-1-deprecation-final-countdown-begins/117783/#respond"><span class="social-likes__button social-likes__button_comments"><span class="social-likes__icon social-likes__icon_comments"></span></span><span class="social-likes__counter social-likes__counter_comments">0</span></a></div></div>					</div>
+					<div class="post-info">
+						<span class="date">May 3, 2016 , 9:43 am</span>
+						<div class="categories alignright">
+							<span class="categories alignleft">Categories:  <a href="https://threatpost.com/category/cryptography/" title="View all posts in Cryptography">Cryptography</a>,  <a href="https://threatpost.com/category/privacy/" title="View all posts in Privacy">Privacy</a>,  <a href="https://threatpost.com/category/web-security/" title="View all posts in Web Security">Web Security</a></span><!-- .categories -->						</div>
+					</div>
+					<h3 class="entry-title">
+						<a href="https://threatpost.com/microsoft-sha-1-deprecation-final-countdown-begins/117783/" title="Permalink to Microsoft SHA-1 Deprecation Final Countdown Begins" rel="bookmark">Microsoft SHA-1 Deprecation Final Countdown Begins</a>
+					</h3>
+					<div class="post-info">
+						<span class="author">by <a href="https://threatpost.com/author/michael/" title="Posts by Michael Mimoso" rel="author">Michael Mimoso</a></span>
+					</div>
+					<p>Microsoft said that with the release of the Windows 10 Anniversary Update this summer, its IE and Edge browsers would no longer display the lock icon for websites using SHA-1 signed certificates. </p>
+					<p class="alignright"><a href="https://threatpost.com/microsoft-sha-1-deprecation-final-countdown-begins/117783/" title="Permalink to Microsoft SHA-1 Deprecation Final Countdown Begins" rel="bookmark" class="read-more">Read more...</a></p>
+				</article><!-- #post -->
+					<article id="post-117773" class="secondary-post  post-117773 post type-post status-publish format-standard has-post-thumbnail hentry category-featured category-malware-2 tag-fbi tag-james-trainor tag-lansing-board-of-water-and-light tag-malware tag-ransomware">
+					<div class="image-wrap">
+						<a href="https://threatpost.com/fbi-reaffirms-stance-not-to-pay-ransomware-attackers/117773/" title="FBI Reaffirms Stance Not to Pay Ransomware Attackers"><img width="180" height="140" src="https://trtpost-wpengine.netdna-ssl.com/files/2014/06/fbi-logo-180x140.jpg" class="home-left wp-post-image" alt="FBI blames North Korea for Sony hack" srcset="https://threatpost.com/files/2014/06/fbi-logo-180x140.jpg 180w, https://threatpost.com/files/2014/06/fbi-logo-182x142.jpg 182w" sizes="(max-width: 180px) 100vw, 180px" /></a>						<div class="social-likes social-likes_notext" data-title="FBI Reaffirms Stance Not to Pay Ransomware Attackers" data-url="https://threatpost.com/fbi-reaffirms-stance-not-to-pay-ransomware-attackers/117773/" data-counters="yes" data-zeroes="yes"><div class="facebook" title="Share via Facebook"></div>
+<div class="plusone" title="Share via Google"></div>
+<div class="linkedin" title="Share via LinkedIn"></div>
+<div class="reddit" title="Share via Reddit"></div>
+<div class="twitter" title="Share via Twitter"></div><div class="social-likes__widget social-likes__widget_comments"><a href="https://threatpost.com/fbi-reaffirms-stance-not-to-pay-ransomware-attackers/117773/#comments"><span class="social-likes__button social-likes__button_comments"><span class="social-likes__icon social-likes__icon_comments"></span></span><span class="social-likes__counter social-likes__counter_comments">2</span></a></div></div>					</div>
+					<div class="post-info">
+						<span class="date">May 2, 2016 , 5:14 pm</span>
+						<div class="categories alignright">
+							<span class="categories alignleft">Categories:  <a href="https://threatpost.com/category/featured/" title="View all posts in Featured">Featured</a>,  <a href="https://threatpost.com/category/malware-2/" title="View all posts in Malware">Malware</a></span><!-- .categories -->						</div>
+					</div>
+					<h3 class="entry-title">
+						<a href="https://threatpost.com/fbi-reaffirms-stance-not-to-pay-ransomware-attackers/117773/" title="Permalink to FBI Reaffirms Stance Not to Pay Ransomware Attackers" rel="bookmark">FBI Reaffirms Stance Not to Pay Ransomware Attackers</a>
+					</h3>
+					<div class="post-info">
+						<span class="author">by <a href="https://threatpost.com/author/michael/" title="Posts by Michael Mimoso" rel="author">Michael Mimoso</a></span>
+					</div>
+					<p>An FBI warning urges organizations to be vigilant about ransomware, and reaffirmed its position that companies should not pay ransoms to recover their files.</p>
+					<p class="alignright"><a href="https://threatpost.com/fbi-reaffirms-stance-not-to-pay-ransomware-attackers/117773/" title="Permalink to FBI Reaffirms Stance Not to Pay Ransomware Attackers" rel="bookmark" class="read-more">Read more...</a></p>
+				</article><!-- #post -->
+					<article id="post-117726" class="secondary-post last post-117726 post type-post status-publish format-standard has-post-thumbnail hentry category-government category-hacks category-web-security tag-critical-infrastructure-2 tag-flashpoint tag-government-2 tag-hacktivism tag-isis tag-isis-caliphate-cyber-army tag-laith-alkhouri tag-privacy tag-pro-isis-hackers tag-social-media-hacks tag-terrorism">
+					<div class="image-wrap">
+						<a href="https://threatpost.com/unskilled-pro-isis-hackers-a-growing-threat/117726/" title="Unskilled Pro-ISIS Hackers A Growing Threat"><img width="180" height="140" src="https://trtpost-wpengine.netdna-ssl.com/files/2016/04/shutterstock_295910906-180x140.jpg" class="home-left wp-post-image" alt="shutterstock_295910906" srcset="https://threatpost.com/files/2016/04/shutterstock_295910906-180x140.jpg 180w, https://threatpost.com/files/2016/04/shutterstock_295910906-182x142.jpg 182w" sizes="(max-width: 180px) 100vw, 180px" /></a>						<div class="social-likes social-likes_notext" data-title="Unskilled Pro-ISIS Hackers A Growing Threat" data-url="https://threatpost.com/unskilled-pro-isis-hackers-a-growing-threat/117726/" data-counters="yes" data-zeroes="yes"><div class="facebook" title="Share via Facebook"></div>
+<div class="plusone" title="Share via Google"></div>
+<div class="linkedin" title="Share via LinkedIn"></div>
+<div class="reddit" title="Share via Reddit"></div>
+<div class="twitter" title="Share via Twitter"></div><div class="social-likes__widget social-likes__widget_comments"><a href="https://threatpost.com/unskilled-pro-isis-hackers-a-growing-threat/117726/#respond"><span class="social-likes__button social-likes__button_comments"><span class="social-likes__icon social-likes__icon_comments"></span></span><span class="social-likes__counter social-likes__counter_comments">0</span></a></div></div>					</div>
+					<div class="post-info">
+						<span class="date">April 28, 2016 , 2:41 pm</span>
+						<div class="categories alignright">
+							<span class="categories alignleft">Categories:  <a href="https://threatpost.com/category/government/" title="View all posts in Government">Government</a>,  <a href="https://threatpost.com/category/hacks/" title="View all posts in Hacks">Hacks</a>,  <a href="https://threatpost.com/category/web-security/" title="View all posts in Web Security">Web Security</a></span><!-- .categories -->						</div>
+					</div>
+					<h3 class="entry-title">
+						<a href="https://threatpost.com/unskilled-pro-isis-hackers-a-growing-threat/117726/" title="Permalink to Unskilled Pro-ISIS Hackers A Growing Threat" rel="bookmark">Unskilled Pro-ISIS Hackers A Growing Threat</a>
+					</h3>
+					<div class="post-info">
+						<span class="author">by <a href="https://threatpost.com/author/michael/" title="Posts by Michael Mimoso" rel="author">Michael Mimoso</a></span>
+					</div>
+					<p>Pro-ISIS hackers promote violence and are making strides with new tools, tactics and procedures, establishing themselves as a growing threat. </p>
+					<p class="alignright"><a href="https://threatpost.com/unskilled-pro-isis-hackers-a-growing-threat/117726/" title="Permalink to Unskilled Pro-ISIS Hackers A Growing Threat" rel="bookmark" class="read-more">Read more...</a></p>
+				</article><!-- #post -->
+		</div>
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+	<div id="secondary" class="widget-area" role="complementary">
+		<aside id="threatpost_top_stories-2" class="widget threatpost_top_stories widget_text"><div class="more-posts"><h2 class="widget-title alignleft">Top Stories</h2>        <article id="post-117866" class="home-left  post-117866 post type-post status-publish format-standard has-post-thumbnail hentry category-cloud-security category-critical-infrastructure category-hacks tag-cert-issues tag-cisco-advisory tag-cisco-dos-vulnerabilities tag-cisco-systems tag-ddos tag-firewall-0 tag-telepresence">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/cisco-patches-critical-telepresence-vulnerability/117866/" title="Permalink to Cisco Patches Critical TelePresence Vulnerability" rel="bookmark">Cisco Patches Critical TelePresence Vulnerability</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">May 4, 2016 , 5:17 pm</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-116702" class="home-left  post-116702 post type-post status-publish format-standard has-post-thumbnail hentry category-cryptography category-mobile-security category-vulnerabilities tag-adium tag-buffer-overflow tag-chatsecure tag-encryption tag-integer-overflow tag-libotr tag-markus-vervier tag-off-the-record-messaging tag-otr-messaging tag-pidgin tag-remote-code-execution tag-secure-messaging">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/otr-protocol-patched-against-remote-code-execution-flaw/116702/" title="Permalink to OTR Protocol Patched Against Remote Code Execution Flaw" rel="bookmark">OTR Protocol Patched Against Remote Code Execution Flaw</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">March 10, 2016 , 10:23 am</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-117043" class="home-left  post-117043 post type-post status-publish format-standard has-post-thumbnail hentry category-cryptography category-mobile-security category-vulnerabilities tag-applevsfbi tag-apple-2 tag-brute-force-attack tag-cellebrite tag-department-justice tag-encryption tag-fbi tag-jonathan-zdziarski tag-mobile-security-2 tag-nand-mirroring tag-syed-farook">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/fbi-breaks-into-terrorists-encrypted-iphone/117043/" title="Permalink to FBI Breaks into Terrorist&#8217;s Encrypted iPhone" rel="bookmark">FBI Breaks into Terrorist&#8217;s Encrypted iPhone</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">March 28, 2016 , 7:30 pm</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-116743" class="home-left  post-116743 post type-post status-publish format-standard has-post-thumbnail hentry category-hacks category-malware-2 category-mobile-security tag-android-malware tag-android-trojan tag-google-play tag-marcher-trojan tag-zscaler">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/marcher-trojan-morphs-now-targets-porn-sites/116743/" title="Permalink to Marcher Trojan Morphs, Now Targets Porn Sites" rel="bookmark">Marcher Trojan Morphs, Now Targets Porn Sites</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">March 11, 2016 , 2:05 pm</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-116820" class="home-left  post-116820 post type-post status-publish format-standard has-post-thumbnail hentry category-hacks category-malware-2 category-vulnerabilities tag-acedeceiver tag-apple-hacks tag-apple-malware tag-bios-vulnerability-discovery tag-ios-malware tag-ios-trojan tag-mitm tag-palo-alto-networks tag-ryan-olson">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/trojan-exploits-apple-drm-flaw-plants-malware-on-non-jailbroken-ios-devices/116820/" title="Permalink to Trojan Exploits Apple DRM Flaw, Plants Malware On Non-Jailbroken iOS Devices" rel="bookmark">Trojan Exploits Apple DRM Flaw, Plants Malware On Non-Jailbroken iOS Devices</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">March 16, 2016 , 4:16 pm</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-117103" class="home-left  post-117103 post type-post status-publish format-standard has-post-thumbnail hentry category-bh category-mobile-security category-privacy category-vulnerabilities tag-apple-2 tag-apple-developer-enterprise-program-apps tag-application-security tag-check-point tag-cybercrime tag-data-theft tag-enterprise-applications tag-ios-0 tag-ios-vulnerability tag-man-middle-attack-0 tag-mobile-device-management tag-mobile-security-2 tag-privacy tag-sidestepper-vulnerability tag-xcode-ghost">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/sidestepper-allows-for-mitm-between-ios-devices-mdm-tools/117103/" title="Permalink to SideStepper Allows for MiTM Between iOS Devices, MDM Tools" rel="bookmark">SideStepper Allows for MiTM Between iOS Devices, MDM Tools</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">March 31, 2016 , 10:41 am</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-117273" class="home-left  post-117273 post type-post status-publish format-standard has-post-thumbnail hentry category-malware-2 category-privacy category-vulnerabilities category-web-security tag-adware tag-malvertising tag-osx-pirrit tag-pirrit hashtags-adware">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/mac-adware-osx-pirrit-unleashes-ad-overload-for-now/117273/" title="Permalink to Mac Adware OSX.Pirrit Unleashes Ad Overload, For Now" rel="bookmark">Mac Adware OSX.Pirrit Unleashes Ad Overload, For Now</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">April 7, 2016 , 5:55 pm</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-117297" class="home-left  post-117297 post type-post status-publish format-standard has-post-thumbnail hentry category-cloud-security category-critical-infrastructure category-cryptography category-government category-privacy tag-juniper-backdoor tag-juniper-screenos tag-networking tag-nsa">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/juniper-completes-removal-of-dual_ec/117297/" title="Permalink to Juniper Completes Removal of Dual_EC" rel="bookmark">Juniper Completes Removal of Dual_EC</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">April 8, 2016 , 4:24 pm</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-116946" class="home-left  post-116946 post type-post status-publish format-standard has-post-thumbnail hentry category-cryptography category-government category-privacy category-videos tag-apple-2 tag-bruce-schneier tag-encryption tag-fbi tag-fbi-vs-apple tag-fbios tag-privacy tag-rsa-2016 tag-rsa-conference tag-security tag-surveillance">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/bruce-schneier-on-the-integration-of-privacy-and-security/116946/" title="Permalink to Bruce Schneier on the Integration of Privacy and Security" rel="bookmark">Bruce Schneier on the Integration of Privacy and Security</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">March 23, 2016 , 9:00 am</span>
+          </div>
+        </article><!-- #post -->
+              <article id="post-117419" class="home-left last post-117419 post type-post status-publish format-standard has-post-thumbnail hentry category-government category-vulnerabilities tag-bug-bounty tag-hack-the-pentagon tag-iso tag-iso-standard-29147 tag-katie-moussouris tag-ntia tag-threatpost-op-ed tag-vulnerabilities-2 tag-vulnerability-disclosure">
+          <h4 class="entry-title">
+            <a href="https://threatpost.com/the-time-has-come-to-hack-the-planet/117419/" title="Permalink to The Time Has Come to Hack the Planet" rel="bookmark">The Time Has Come to Hack the Planet</a>
+          </h4>
+          <div class="post-info">
+            <span class="date">April 15, 2016 , 8:00 am</span>
+          </div>
+        </article><!-- #post -->
+      </div></aside><aside id="text-7" class="widget widget_text">			<div class="textwidget"><a href="https://kas.pr/k2R9"><img src="//kasperskycontenthub.com/threatpost/files/2015/03/tip_tp_white.png" width="270" height="450"></a>
+<br /><br /><br /></div>
+		</aside>	</div><!-- #secondary -->
+
+					<div id="final-say" class="final-say-sidebar" role="complementary">
+				<h2 class="alignleft">The Final Say</h2> <span class="subtitle">From Kaspersky Blogs</span>
+				<div class="clear"></div>
+									<article class="final-say final-say-first">
+
+
+
+					<div class="featured-image-wrap">
+						<a href="http://eugene.kaspersky.com/2016/05/04/uh-oh-cyber-news-infected-nuclear-reactors-cyber-bank-robbers-and-cyber-dam-busters/">
+															<img src="https://trtpost-wpengine.netdna-ssl.com/files/2013/08/icon_Eugene-230x230.png" class="final-say wp-post-image" width="180" height="180" alt="Uh-oh Cyber-News: Infected Nuclear Reactors, Cyber..." />
+													</a>
+						<h4 class="entry-title"><a href="http://eugene.kaspersky.com/2016/05/04/uh-oh-cyber-news-infected-nuclear-reactors-cyber-bank-robbers-and-cyber-dam-busters/">Uh-oh Cyber-News: Infected Nuclear Reactors, Cyber...</a></h4>
+					</div>
+
+					<p>Just a quick read of the news these days and you can find yourself wanting to reach for&#8230; a Geiger counter. I mean, some of the news stories are just so alarming of late. Or am I overreacting? Le...</p>
+					<p class="read-more"><a href="http://eugene.kaspersky.com/2016/05/04/uh-oh-cyber-news-infected-nuclear-reactors-cyber-bank-robbers-and-cyber-dam-busters/" rel="bookmark" class="read-more" title="Permalink to Uh-oh Cyber-News: Infected Nuclear Reactors, Cyber...">Read more&hellip;</a></p>
+
+					</article>
+											<article class="final-say">
+
+
+
+					<div class="featured-image-wrap">
+						<a href="https://securelist.com/analysis/quarterly-malware-reports/74640/it-threat-evolution-in-q1-2016/">
+															<img src="https://trtpost-wpengine.netdna-ssl.com/files/2013/08/icon_Securelist-230x230.png" class="final-say wp-post-image" width="180" height="180" alt="IT threat evolution in Q1 2016..." />
+													</a>
+						<h4 class="entry-title"><a href="https://securelist.com/analysis/quarterly-malware-reports/74640/it-threat-evolution-in-q1-2016/">IT threat evolution in Q1 2016...</a></h4>
+					</div>
+
+					<p>2016 has only just got underway, but the first three months have already seen the same amount of cybersecurity events that just a few years ago would have seemed normal for a whole year. The main unde...</p>
+					<p class="read-more"><a href="https://securelist.com/analysis/quarterly-malware-reports/74640/it-threat-evolution-in-q1-2016/" rel="bookmark" class="read-more" title="Permalink to IT threat evolution in Q1 2016...">Read more&hellip;</a></p>
+
+					</article>
+											<article class="final-say final-say-first">
+
+
+
+					<div class="featured-image-wrap">
+						<a href="http://blog.kaspersky.com/iphone-vulnerabilites/12009/">
+															<img src="https://trtpost-wpengine.netdna-ssl.com/files/2013/08/icon_Daily-230x230.png" class="final-say wp-post-image" width="180" height="180" alt="Vulnerabilities in the iPhone" />
+													</a>
+						<h4 class="entry-title"><a href="http://blog.kaspersky.com/iphone-vulnerabilites/12009/">Vulnerabilities in the iPhone</a></h4>
+					</div>
+
+					<p>Apple iPhone users tend to think their device is absolutely secure. We will take you through several types of attacks which usually target Apple’s smartphones.</p>
+					<p class="read-more"><a href="http://blog.kaspersky.com/iphone-vulnerabilites/12009/" rel="bookmark" class="read-more" title="Permalink to Vulnerabilities in the iPhone">Read more&hellip;</a></p>
+
+					</article>
+											<article class="final-say final-say-first">
+
+
+
+					<div class="featured-image-wrap">
+						<a href="http://business.kaspersky.com/ddos-q1-2016/5529/">
+															<img src="https://trtpost-wpengine.netdna-ssl.com/files/2013/08/icon_Business2-230x230.png" class="final-say wp-post-image" width="180" height="180" alt="DDoS in Q1 2016: the turning of tides" />
+													</a>
+						<h4 class="entry-title"><a href="http://business.kaspersky.com/ddos-q1-2016/5529/">DDoS in Q1 2016: the turning of tides</a></h4>
+					</div>
+
+					<p>Securelist has released a new report on DDoS attacks in the first quarter of 2016.</p>
+					<p class="read-more"><a href="http://business.kaspersky.com/ddos-q1-2016/5529/" rel="bookmark" class="read-more" title="Permalink to DDoS in Q1 2016: the turning of tides">Read more&hellip;</a></p>
+
+					</article>
+											<article class="final-say">
+
+
+
+					<div class="featured-image-wrap">
+						<a href="http://academy.kaspersky.com/crossplatform-notes/">
+															<img src="https://trtpost-wpengine.netdna-ssl.com/files/2013/08/icon_Academy1-230x230.png" class="final-say wp-post-image" width="180" height="180" alt="Crossplatform apps for notes..." />
+													</a>
+						<h4 class="entry-title"><a href="http://academy.kaspersky.com/crossplatform-notes/">Crossplatform apps for notes...</a></h4>
+					</div>
+
+					<p>When we&#8217;re studying or conducting a project using a large amount of information we need somewhere to store the information. Sometimes our everyday household chores also need arranging. In the pr...</p>
+					<p class="read-more"><a href="http://academy.kaspersky.com/crossplatform-notes/" rel="bookmark" class="read-more" title="Permalink to Crossplatform apps for notes...">Read more&hellip;</a></p>
+
+					</article>
+									</div><!-- #secondary -->
+		
+	</div><!-- #wrap -->
+</div><!-- #main .wrapper -->
+
+<footer id="footer">
+		<div id="footer-widgets" class="clear">
+		<div id="footer-left" class="alignleft">
+			<div class="company-info">
+				<a href="https://threatpost.com" title="Threatpost | The first stop for security news" class="footer-logo">Threatpost | The first stop for security news</a>
+				<span class="subtitle">The Kaspersky Lab Security News Service</span>
+			</div><!-- .company-info -->
+
+			<div class="category-list">
+				<div class="categories"><span class="title">Categories</span><a href="https://threatpost.com/category/bh/" title="View all posts in Black Hat">Black Hat</a> | <a href="https://threatpost.com/category/cloud-security/" title="View all posts in Cloud Security">Cloud Security</a> | <a href="https://threatpost.com/category/critical-infrastructure/" title="View all posts in Critical Infrastructure">Critical Infrastructure</a> | <a href="https://threatpost.com/category/cryptography/" title="View all posts in Cryptography">Cryptography</a> | <a href="https://threatpost.com/category/featured/" title="View all posts in Featured">Featured</a> | <a href="https://threatpost.com/category/government/" title="View all posts in Government">Government</a> | <a href="https://threatpost.com/category/hacks/" title="View all posts in Hacks">Hacks</a> | <a href="https://threatpost.com/category/malware-2/" title="View all posts in Malware">Malware</a> | <a href="https://threatpost.com/category/mobile-security/" title="View all posts in Mobile Security">Mobile Security</a> | <a href="https://threatpost.com/category/podcasts/" title="View all posts in Podcasts">Podcasts</a> | <a href="https://threatpost.com/category/privacy/" title="View all posts in Privacy">Privacy</a> | <a href="https://threatpost.com/category/sas/" title="View all posts in Security Analyst Summit">Security Analyst Summit</a> | <a href="https://threatpost.com/category/slideshow/" title="View all posts in Slideshow">Slideshow</a> | <a href="https://threatpost.com/category/uncategorized/" title="View all posts in Uncategorized">Uncategorized</a> | <a href="https://threatpost.com/category/videos/" title="View all posts in Videos">Videos</a> | <a href="https://threatpost.com/category/vulnerabilities/" title="View all posts in Vulnerabilities">Vulnerabilities</a> | <a href="https://threatpost.com/category/web-security/" title="View all posts in Web Security">Web Security</a></div>			</div><!-- .category-list -->
+
+			<div class="footer-menu">
+				<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-nav"><li id="menu-item-86410" class="first-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-86410"><a href="https://threatpost.com/rss-feeds/">RSS Feeds</a></li>
+<li id="menu-item-37426" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-37426"><a href="/">Home</a></li>
+<li id="menu-item-86470" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-86470"><a href="https://threatpost.com/about-threatpost/">About Us</a></li>
+<li id="menu-item-86471" class="last-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-86471"><a href="https://threatpost.com/contact-us/">Contact Us</a></li>
+</ul></div>			</div><!-- .footer-menu -->
+
+		</div><!-- #footer-left -->
+		<div id="footer-right" class="alignright">
+							<div id="footer-sidebar" class="widget-area" role="complementary">
+					<aside id="text-2" class="widget widget_text"><h3 class="widget-title">Authors</h3>			<div class="textwidget"><p>
+<a href="/author/michael/">Michael Mimoso</a><br />
+<a href="/author/thomas/">Tom Spring</a><br />
+<a href="/author/christopher/">Christopher Brook</a><br />
+
+</div>
+		</aside>				</div><!-- #footer-sidebar -->
+					</div><!-- #footer-right -->
+	</div><!-- #footer-widgets -->
+	<div class="site-info-wrap">
+		<div class="site-info">
+			Copyright &copy; 2016 <a href="https://threatpost.com" title="Threatpost | The first stop for security news">Threatpost | The first stop for security news</a> <div class="menu-footer-sub-menu-container"><ul id="menu-footer-sub-menu" class="footer-sub"><li id="menu-item-86472" class="first-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-86472"> | <a href="https://threatpost.com/kaspersky-lab-threatpost-terms-service/">Terms of Service</a></li>
+<li id="menu-item-86473" class="last-menu-item menu-item menu-item-type-post_type menu-item-object-page menu-item-86473"> | <a href="https://threatpost.com/privacy-policy/">Privacy</a></li>
+</ul></div>		</div><!-- .site-info -->
+	</div><!-- .site-info-wrap -->
+</footer><!-- #footer -->
+
+		<script async type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+
+<script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
+<script type="text/javascript">twttr.conversion.trackPid('ntt0j', { tw_sale_amount: 0, tw_order_quantity: 0 });</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=ntt0j&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0" />
+<img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=ntt0j&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0" />
+</noscript>	<div style="display:none">
+	<div class="grofile-hash-map-d41d8cd98f00b204e9800998ecf8427e">
+	</div>
+	<div class="grofile-hash-map-e2fba5e83ce4779b6857b5df41597146">
+	</div>
+	<div class="grofile-hash-map-4b346906351f94e2ff2dc5a65398b56f">
+	</div>
+	<div class="grofile-hash-map-d453a3372a539e82d9ca59800321ad99">
+	</div>
+	<div class="grofile-hash-map-37f537bb3d444ad02b80a6d431baabe5">
+	</div>
+	<div class="grofile-hash-map-1d4b4819910cfa3f6725ef7fff3237ef">
+	</div>
+	<div class="grofile-hash-map-05adab43bee42aac092c681db38a6c2b">
+	</div>
+	<div class="grofile-hash-map-416897a52e650de7dfb14505134ab8bb">
+	</div>
+	<div class="grofile-hash-map-747611f869d9b60829611518114f32b9">
+	</div>
+	<div class="grofile-hash-map-b17fb55df79cc11e9eda0f0851c869f1">
+	</div>
+	<div class="grofile-hash-map-9c8cc8279665a8ccc12151f7f275e138">
+	</div>
+	<div class="grofile-hash-map-d718e0e5a9422c3363b552f15d8436f7">
+	</div>
+	<div class="grofile-hash-map-52a13b670e3077d964466c26b928953c">
+	</div>
+	<div class="grofile-hash-map-35ad2a8d1f047dd7c6bb87dcde8733a4">
+	</div>
+	<div class="grofile-hash-map-a1ca08bc096558edf1e9bdfe1cb04336">
+	</div>
+	<div class="grofile-hash-map-0fb1d7ac48b33a9bb72955b00a78e589">
+	</div>
+	<div class="grofile-hash-map-b4bccaeff6d1550ba6c40bcebfd1024e">
+	</div>
+	<div class="grofile-hash-map-329b17dda2bf4f3abc73c860e0c18dee">
+	</div>
+	<div class="grofile-hash-map-f528746eebfa1cd2401c82c1a7b7030b">
+	</div>
+	<div class="grofile-hash-map-70b520b77966ef81f3e0f1796edab716">
+	</div>
+	<div class="grofile-hash-map-da221f1f8ea87e2bb4580c1e20baa06e">
+	</div>
+	<div class="grofile-hash-map-d46bd0941f9d06c6365f03f1667dc283">
+	</div>
+	<div class="grofile-hash-map-5358772ac1fd4c1711fd4c70e504937f">
+	</div>
+	<div class="grofile-hash-map-7155fad40b038d6587fa6fb932b3898a">
+	</div>
+	<div class="grofile-hash-map-d075c2a2dd278217d5472ddce9ec5bf6">
+	</div>
+	<div class="grofile-hash-map-96a57ae3273492e48729a91c6603a9b7">
+	</div>
+	<div class="grofile-hash-map-73e79a940753a0f61874a875c8d21908">
+	</div>
+	<div class="grofile-hash-map-ffe3846163caab751dc67e545d9b92f9">
+	</div>
+	<div class="grofile-hash-map-09dc8fdaf39ed861ad26d8c3e904f507">
+	</div>
+	<div class="grofile-hash-map-04ccd573bc367078f871fc71f1673dde">
+	</div>
+	<div class="grofile-hash-map-f6aebf3dc0c2d591e411ca15e047cb69">
+	</div>
+	<div class="grofile-hash-map-c1829ec2cfd01a4a4c12ac6eb56b7dc6">
+	</div>
+	<div class="grofile-hash-map-c133ad65d2c1473c0a06874f1788b39c">
+	</div>
+	<div class="grofile-hash-map-591e2d8342746399ba142eabb2ebb4ca">
+	</div>
+	<div class="grofile-hash-map-6af62bc4b8aaf340e2648f2c73a4e128">
+	</div>
+	<div class="grofile-hash-map-f2b1ec98531d4e75d12bf78c280e3b59">
+	</div>
+	<div class="grofile-hash-map-8eb215d4219ca3347712e2b0845ef6f7">
+	</div>
+	<div class="grofile-hash-map-2d355cda85a4ec1190e84c1f33e47e27">
+	</div>
+	<div class="grofile-hash-map-fc3bf62074f27a9b7406e30ea9748d8a">
+	</div>
+	<div class="grofile-hash-map-2360189c6f056cec03813b7eea35de69">
+	</div>
+	<div class="grofile-hash-map-a407c532398dd6d95fe2c2d5d215be8c">
+	</div>
+	<div class="grofile-hash-map-34193cc06203657bae50d7926456e46e">
+	</div>
+	<div class="grofile-hash-map-acf96b5417a333b332b3b44ed1cbe618">
+	</div>
+	</div>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201618'></script>
+<script type='text/javascript' src='https://secure.gravatar.com/js/gprofiles.js?ver=2016Mayaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://trtpost-wpengine.netdna-ssl.com/wp-content/plugins/bwp-minify/min/?f=wp-content/plugins/jetpack/modules/wpgroho.js,wp-content/plugins/kaspersky-tracking/js/external-tracking.js,wp-includes/js/wp-embed.min.js&#038;ver=1462389584'></script>
+<script type='text/javascript' src='https://stats.wp.com/e-201618.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.9.6',blog:'52985383',post:'76674',tz:'-4',srv:'threatpost.com'} ]);
+	_stq.push([ 'clickTrackerInit', '52985383', '76674' ]);
+</script>
+
+
+<!-- Powered by Whitelist IP For Limit Login Attempts | URL: http://club.orbisius.com/products/wordpress-plugins/whitelist-ip-for-limit-login-attempts/ -->
+
+
+</body>
+</html>

@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>MFA for Office 365 and MFA for Azure | Active Directory Team Blog</title>
+
+	<meta name="description" content="">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.technet.microsoft.com/ad/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/ad/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Feed" href="https://blogs.technet.microsoft.com/ad/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/ad/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; MFA for Office 365 and MFA for Azure Comments Feed" href="https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="MFA for Office 365 and MFA for Azure" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="MFA for Office 365 and MFA for Azure" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/" />
+<meta name="twitter:description" content="" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.technet.microsoft.com/ad/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.technet.microsoft.com/ad/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.technet.microsoft.com/ad/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/js/social-counts.min.js?ver=4.1.5'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/ad/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/ad/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/ad/?p=943' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/ad/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="single single-post postid-943 single-format-standard msdn-2189 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.technet.microsoft.com/server-management">Server &amp; Management Blogs</a> > Active Directory Team Blog</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.technet.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-server-and-management-blogs-main-menu-container"><ul id="menu-server-and-management-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-33"><a href="#">All About Windows Server</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113"><a href="https://blogs.technet.microsoft.com/windowsserver/">Windows Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="https://blogs.technet.microsoft.com/sbs/">Windows Server Essentials</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="https://blogs.technet.microsoft.com/askperf/">Ask the Performance Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="https://blogs.technet.microsoft.com/askpfeplat/">Ask Premier Field Engineering (PFE) Platforms</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-652"><a href="https://blogs.technet.microsoft.com/askcore/">Ask the Core Team</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Cloud Platform Blogs</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-223"><a href="https://blogs.technet.microsoft.com/server-cloud/">Server &amp; Cloud</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-661"><a href="https://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-214"><a href="https://blogs.technet.microsoft.com/privatecloud/">Building Clouds</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-204"><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson &#8211; In the Cloud</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Datacenter Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-233"><a href="https://blogs.technet.microsoft.com/systemcenter/">Hybrid Cloud IT Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-653"><a href="https://blogs.technet.microsoft.com/msoms/">Operations Management Suite (OMS)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.technet.microsoft.com/scvmm/">System Center Virtual Machine Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-253"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="https://blogs.technet.microsoft.com/momteam/">System Center Operations Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-283"><a href="https://blogs.technet.microsoft.com/orchestrator/">System Center Orchestrator</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Client Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-293"><a href="https://blogs.technet.microsoft.com/configurationmgr/">System Center Configuration Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-303"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-313"><a href="https://blogs.technet.microsoft.com/mmpc/">Malware Protection Center</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-323"><a href="https://blogs.technet.microsoft.com/microsoftintune/">Microsoft Intune</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-333"><a href="https://blogs.technet.microsoft.com/sus/">Server Update Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-343"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Virtualization, VDI &amp; Remote Desktop</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-353"><a href="https://blogs.technet.microsoft.com/virtualization/">Virtualization Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-363"><a href="http://blogs.msdn.microsoft.com/virtual_pc_guy/">Ben Armstrong&#8217;s Virtualization</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-364"><a href="https://blogs.technet.microsoft.com/josebda/tag/hyper-v/">Jose Barreto on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-374"><a href="http://blogs.msdn.microsoft.com/rds/">Remote Desktop Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-394"><a href="https://blogs.technet.microsoft.com/askcore/tag/hyper-v/">Ask the Core Team on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">File &amp; Storage &amp; High Availability</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-404"><a href="https://blogs.technet.microsoft.com/filecab/">File &amp; Storage</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="https://blogs.technet.microsoft.com/josebda/">Jose Barreto</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-414"><a href="https://blogs.technet.microsoft.com/askcore/tag/failover-cluster/">Ask the Core Team on Failover Cluster</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="http://blogs.msdn.microsoft.com/clustering/">Clustering &amp; High Availability</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Windows Server Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-433"><a href="http://blogs.msdn.microsoft.com/powershell/">PowerShell</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-443"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/">Hey Scripting Guy (PowerShell)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="https://blogs.technet.microsoft.com/networking/">Networking</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-103"><a href="#">Identity, Access &amp; Security</a>
+<ul class="sub-menu">
+	<li id="menu-item-666" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666"><a href="https://blogs.technet.microsoft.com/datacentersecurity/">Datacenter and Private Cloud Security</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.technet.microsoft.com/askds/">Ask Directory Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="https://blogs.technet.microsoft.com/ad/">Active Directory</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-493"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+					</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.technet.microsoft.com/ad">Active Directory Team Blog</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description"> </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+									</div>
+
+			</div>
+
+			
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Feed" href="https://blogs.technet.microsoft.com/ad/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/ad/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; MFA for Office 365 and MFA for Azure Comments Feed" href="https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="MFA for Office 365 and MFA for Azure" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="MFA for Office 365 and MFA for Azure" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/" />
+<meta name="twitter:description" content="" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/ad/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/ad/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/ad/?p=943' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/ad/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+				
+				<article id="post-943" class="post-943 post type-post status-publish format-standard hentry category-uncategorized tag-multi-factor-authentication tag-office-365">
+	<header class="entry-header">
+		<h1 class="entry-title">MFA for Office 365 and MFA for Azure</h1>
+		<div class="rating-wrap">
+		<div id="star-rating-943" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="943">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>	</header><!-- .entry-header -->
+
+	<div class="entry-meta row">
+		<div class="post-info">
+			<span class="posted-on"><time class="entry-date published" datetime="2014-02-11T14:10:03+00:00">February 11, 2014</time><time class="updated" datetime="2015-11-02T08:42:28+00:00">November 2, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="b04888e523e74cef8bfe83a2a560e8e4" href="https://social.technet.microsoft.com/profile/Alex_SimonsMS">Alex_SimonsMS</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/#comments">11 Comments</a>		</div>
+
+		<div class="row">
+			<div class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/", "text": "MFA for Office 365 and MFA for Azure"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/", "text": "MFA for Office 365 and MFA for Azure"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.technet.microsoft.com/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/", "text": "MFA for Office 365 and MFA for Azure"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</div><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+	</div><!-- .entry-meta -->
+
+	
+	<div class="entry-content">
+		<p>Howdy folks,
+</p>
+<p>Yesterday the Office team announced the availability of Multi-Factor Authentication for Office 365. If you missed their announcement, you can read it <a href="http://blogs.office.com/2014/02/10/multi-factor-authentication-for-office-365/">here</a>.
+</p>
+<p>The AD team has been working on MFA for Office 365 for over 6 months now and we are excited to be able to make this security capability available to the broad set of Office 365 users. At the same time, we&#39;ve been working on Multi-Factor Authentication for Azure Administrators which is also now available.  These capabilities are both available for no extra charge to Office 365 &amp; Azure customers.
+</p>
+<p>And of course we continue to improve and advance our Windows Azure Multi-Authentication Service, our paid service that offers organizations the ability to protect all their cloud apps and on premise servers in a highly customizable and configurable way.
+</p>
+<p>To give you a clear idea of each offer and what it does, I asked Shawn Bishop who is one of the MFA Program Managers here in the Active Directory team to write up a quick post which I&#39;ve included below.
+</p>
+<p>As always, any feedback or suggestions you have here would be great!
+</p>
+<p>Best regards,
+</p>
+<p>Alex Simons (@Alex_A_Simons)
+</p>
+<p>Director of PM
+</p>
+<p>Active Directory
+</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;
+</p>
+<p style="margin-left:36pt;">Hi everyone! </p>
+<p>I&#39;m Shawn Bishop, PM on the Windows Azure MFA team. We have been very excited to announce the availability of <strong>Multi-Factor Authentication for Office 365</strong> and hope that many of our customers will take advantage of the additional security it provides for their access to Office.
+</p>
+<p style="margin-left:36pt;">At the same time, we are formally announcing the availability of <strong>Multi-Factor Authentication for Azure Administrators</strong>. Technically, this has been around for a number of months and allows Azure administrators to use MFA for their accounts when accessing the Windows Azure Management Portal. Both Multi-Factor Authentication for Office 365 and Multi-Factor Authentication for Azure Administrators, which are included at no additional charge in Office and Azure subscriptions respectively, offer a subset of features contained in the full-blown <strong>Windows Azure Multi-Factor Authentication</strong>. </p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic1.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic1.png" alt=" " /></p>
+<p>Now that multi-factor authentication is included with Office 365 user licenses as well as administrator access to Azure, we thought there might be some questions about the additional features you can get with Windows Azure Multi-Factor Authentication. Here is a chart that shows the feature comparison.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic2.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic2.png" alt=" " /><br /><span style="font-size:10pt;"><em>Windows Azure Multi-Factor Authentication Feature Comparison</em></span>
+	</p>
+<p style="margin-left:36pt;">
+ </p>
+<p style="margin-left:36pt;">The primary features that Windows Azure Multi-Factor Authentication unlocks are those that are found within the Multi-Factor Authentication Management Portal, which can only be accessed after creating a Multi-Factor Auth Provider in the Azure Management Portal. Creation of that provider and linking it to an Office 365 directory is what upgrades an Office 365 tenant from having Multi-Factor Authentication for Office 365, containing a subset of features, to having Windows Azure Multi-Factor Authentication which contains all of the available features. There is a previous blog post <a href="http://blogs.technet.com/b/ad/archive/2013/10/10/getting-started-with-windows-azure-multifactor-authentication.aspx">here</a> that describes how to get started.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic3.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic3.png" alt=" " /><br /><em><span style="font-size:10pt;">To create a Multi-Factor Auth Provider sign into the <a href="https://manage.windowsazure.com/">Windows Azure Management Portal</a> and go to <strong>Active Directory</strong><span style="font-family:Wingdings;">à</span><strong>Multi-Factor Auth Providers</strong>. Create a new provider by providing a name, usage model for billing and link it to your directory unless being used for on-premises applications only.</span><br /></em><br />Let&#39;s go over some of the things you can do in the MFA Management Portal to take advantage of these additional features. The features are accessed by managing your Multi-Factor Auth Provider.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic4.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic4.png" alt=" " /><br /><span style="font-size:10pt;"><em>To access the MFA Management Portal, select a Multi-Factor Auth Provider and click <strong>Manage</strong>.</em></span></p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic5.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic5.png" alt=" " /><br /><span style="font-size:10pt;"><em>The Multi-Factor Authentication Management Portal provides access to advanced features.</em></span></p>
+<p><strong>Customizable Voice Greetings</strong> – Do you have professional voice talent, access to a celebrity or maybe just someone on the IT team that wants everyone to listen to them for a change? You can create your own .mp3 or .wav files and upload them to the MFA Management Portal. Once uploaded, you can map them to the voice greetings that are available. Your users will then hear your custom greetings instead of the default Microsoft greetings when they answer authentication phone calls. <em>If you would like me to be your voice talent, I would be happy to moonlight for the right price (after normal business hours of course – don&#39;t tell my boss)</em>. To get started, click <strong>Voice Messages</strong> in the left navigation, click <strong>New Voice Message</strong> and then click <strong>Manage Sound Files</strong>. After your custom sound files have been uploaded, select the language for the greeting and the message type that you want to map your sound file to. You can even play different greetings for different applications be entering an application name. If the name matches an application name configured in the on-premises MFA Server (see more on this feature below) or the &quot;SAS Login&quot; or &quot;SAS Verification&quot; application names we use from Azure AD, that greeting will play.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic6.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic6.png" alt=" " /><br /><span style="font-size:10pt;"><em>Configure custom voice greetings in the MFA Management Portal after uploading custom sound files.</em></span></p>
+<p><strong>Customizable Caller ID</strong> – Instead of receiving authentication phone calls from Microsoft&#39;s default 855 phone number, you can specify the phone number that should appear on caller ID. Only North American phone numbers are currently supported.</p>
+<p><strong>Fraud Alert</strong> – This is a great security feature! If your users receive a multi-factor authentication request when they aren&#39;t expecting it (maybe they are golfing, shopping, having their nails done, attending night classes or watching the Seattle Seahawks win the Super Bowl!), they can ignore the call or answer and hang up without pressing # to deny access to the person attempting to use their credentials. However, the fraud alert feature takes it a step further and allows your user to be more proactive about attempted attacks. They can answer the phone and enter your configured fraud alert code (0# by default, but customizable) to report the attempted access. Not only will it deny the authentication taking place, but will put a block on that user&#39;s account so that additional authentication attempts are automatically denied without continuing to bother the user. It can also send an email notification to any configured email addresses such as the security team and IT admins so that they can take action, investigate and change the user&#39;s password. Once they have taken appropriate action, they can unblock the user&#39;s account in the MFA Management Portal.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic7.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic7.png" alt=" " /><br /><em>Configure the caller ID phone number, fraud alert, account lockout and other settings in the MFA Management Portal by clicking <strong>Configure</strong> on the welcome screen or <strong>Settings</strong> in the left navigation</em></p>
+<p><strong>Reporting/Auditing</strong> – In the MFA Management Portal, you can run reports to see all of the multi-factor authentications that have been performed for your organization. The Summary report shows the total number of authentications, successful auths and denials during the timeframe you specify. The User Summary report shows the total number of authentications, successful auths and denials by user. The User Details report shows the details of each authentication including the date/time, method of authentication (phone call, text, mobile app, OATH token), access type (RADIUS, LDAP, IIS, cloud, Terminal Services), phone number called/texted, application accessed, success/denial and reason for any denials (phone unreachable, incorrect PIN entered, user reported fraud, user abducted by aliens, etc.). The reports can be run anytime for the date range you choose and can be downloaded in csv format. There are also reports to see all fraud alerts, blocked users, users who have used a one-time bypass (see below for more info on this feature) and the status of any MFA Servers installed on-premises (see below for that feature too!).</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic8.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic8.png" alt=" " /><br /><span style="font-size:10pt;"><em>The MFA Management Portal has a number of reports that can be run, including usage reports. Each usage report have a variety of filters that can determine which authentications appear in the report. Select a date range and any other desired criteria to run the report.</em></span></p>
+<p><strong>One-Time Bypass</strong> – Uh oh! You have a user that needs to access SharePoint Online to access a document for an important meeting that starts in 20 minutes, but they accidentally dropped their phone that they use for MFA in the toilet. What do you do? If they have an office phone number configured in the directory account, they can authenticate on that number. You could also change the phone number on their user account to another one they have access to. Otherwise, you can issue them a one-time bypass. The bypass lasts for a period of time (5 minutes by default) during which the user can get into an MFA-protected application one time without performing multi-factor authentication. Yeah! Day saved.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic9.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic9.png" alt=" " /><br /><span style="font-size:10pt;"><em>A one-time bypass can be granted to users through the MFA Management Portal. You may have to select the &quot;Azure Default&quot;, &quot;MFA Server Default&quot; group or another group created for MFA Server replication first. The on-premises User Portal can also be used by helpdesk administrators or end users to initiate a one-time bypass if needed and admins have enabled the feature.</em></span></p>
+<p><strong>Block/Unblock Users</strong> – Have a rogue user? See something suspicious in your authentication logs? Want to play a trick on the CTO and deny them access to your applications (I hereby do not sanction such action)? You can put a block on any of your users so that their multi-factor authentications are automatically denied. Oh, and you can unblock them when they threaten to fire you for locking them out or if they entered their PIN incorrectly too many times and accidentally locked themselves out.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic10.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic10.png" alt=" " /><br /><span style="font-size:10pt;"><em>Administrators can put a block on a user in the MFA Management Portal or through the on-premises User Portal</em></span></p>
+<p><strong>MFA Server</strong> – Do you want to use multi-factor authentication with other things besides Office 365 and the Azure Management Portal? When you procure Windows Azure Multi-Factor Authentication, you can use the Windows Azure Multi-Factor Authentication Server on-premises to secure things like VPN, AD FS, UAG, TMG, RD Gateway, on-premises OWA/Exchange, Citrix, IIS web applications and Terminal Services (are there enough 3-letter acronyms in that list?). The MFA Server can run in a master/slave configuration to provide redundancy and high availability. Your user data stays on-premises but performs authentications through the MFA cloud service, just like Office 365 and Azure Active Directory do. The MFA Server comes with a User Portal that allows users to perform self-enrollment, MFA account self-management, perform help desk functions or just log into when they feel lonely and want an automated multi-factor authentication system to call them on the phone to say hello. The MFA Server also comes with a Web Services SDK that could be used to integrate MFA into custom applications.</p>
+<p><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/51/31/metablogapi/021114_2210_MFAforOffic11.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-51-31-metablogapi/021114_5F00_2210_5F00_MFAforOffic11.png" alt=" " /><br /><span style="font-size:10pt;"><em>The MFA Server can be downloaded and installed on-premises to secure many systems using standard protocols. It integrates with Active Directory for easy user management and comes with web tools used for enrollment, account management and helpdesk functions.</em></span></p>
+<p><strong>MFA SDK</strong> – The SDK can be downloaded and integrated into a custom application to perform multi-factor authentication. It is easy to use and give you a lot of flexibility in how and when to perform MFA. It is available in C#, VB.NET, Java, Perl, PHP and Ruby. There is a previous blog post about using the SDK <a href="http://blogs.technet.com/b/ad/archive/2013/06/21/building-multi-factor-authentication-into-your-applications-using-the-sdk.aspx">here</a>.</p>
+<p><strong>Event Confirmation</strong> – This feature allows you to perform multi-factor authentication for specific events or transactions. It is typically used through an SDK to play templates that have been configured in your account to play custom greetings and perform text-to-speech on parameters that you pass in such as dollar amounts and account numbers.
+</p>
+<p style="margin-left:36pt;">Are we done? Of course not! We will continue to add new and exciting features to our multi-factor authentication products. Some of those features will be included in MFA for Office 365 and MFA for Azure Administrators, but some will only be available through Windows Azure Multi-Factor Authentication. We hope you take advantage of these features to make your organization more secure and find value in the additional features available in Windows Azure Multi-Factor Authentication!
+</p>
+<p style="margin-left:36pt;">
+ </p>
+<p style="text-align:right;">
+ </p>
+<p>
+ </p>
+<p>
+ </p>
+<p>  </p>
+				<div class="back-to-top-wrap"><a href="#top-link" class="back-to-top">Back to<br>top</a></div>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+				
+			
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="msdn_bing_social_search-5" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=Active%2BDirectory%2BTeam%2BBlog&rq=site%3Ahttp%3A%2F%2Fblogs.technet.com%2Fb%2Fad" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="text-3" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Top Server &amp; Tools Blogs</h2>			<div class="textwidget"><div class="widget-rss-link">
+	<a href="http://sxp.microsoft.com/feeds/3.0/ServerTools/ServerToolsTopPosts" target="_blank"><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png" /></a></div>
+
+<ul class="widget-link-list">
+    <li><a href="http://weblogs.asp.net/scottgu">ScottGu's Blog</a></li>
+    <li><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson&rsquo;s "In the Cloud" Blog</a></li>
+    <li><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry's Blog</a></li>
+    <li><a href="https://blogs.msdn.microsoft.com/stevengu/">Steve "Guggs" Guggenheimer's Blog</a></li>
+</ul></div>
+		</aside><aside id="msdn-sharing-3" class="widget msdn-sharing"><h2 class="widget-title color-highlight-bg">Share This Post</h2><div class='social-share-icons-wrap'><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-facebook facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.technet.microsoft.com%2Fad%2F2014%2F02%2F11%2Fmfa-for-office-365-and-mfa-for-azure%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-twitter twitter" href="https://twitter.com/intent/tweet/?text=MFA+for+Office+365+and+MFA+for+Azure&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Fad%2F2014%2F02%2F11%2Fmfa-for-office-365-and-mfa-for-azure%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-linkedin linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Fad%2F2014%2F02%2F11%2Fmfa-for-office-365-and-mfa-for-azure%2F&title=MFA+for+Office+365+and+MFA+for+Azure&source=https://blogs.technet.microsoft.com/ad">Share</a><a onclick="" class="social-sharing social-sharing-email email" href="mailto:?subject=MFA for Office 365 and MFA for Azure&body=MFA for Office 365 and MFA for Azure https%3A%2F%2Fblogs.technet.microsoft.com%2Fad%2F2014%2F02%2F11%2Fmfa-for-office-365-and-mfa-for-azure%2F">Share</a><a onclick="" class="social-sharing social-sharing-rss rss" href="https://blogs.technet.microsoft.com/ad/feed/">Share</a></div></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title color-highlight-bg">Recent Posts</h2>		<ul>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/ad/2016/05/05/major-coolness-microsoft-security-intelligence-report-20-highlights-azuread-identity-protection/">Major Coolness: Microsoft Security Intelligence Report #20 highlights #AzureAD Identity Protection!</a>
+							<span class="post-date">May 5, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/ad/2016/05/04/check-out-the-new-azuread-enterprise-mobility-suite-documentation-site/">Check out the new #AzureAD / Enterprise Mobility Suite documentation site!</a>
+							<span class="post-date">May 4, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/ad/2016/04/20/more-azuread-mfa-coolness-selectable-verification-methods-and-more-oath/">More #AzureAD MFA Coolness – selectable verification methods and more OATH!</a>
+							<span class="post-date">April 20, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/ad/2016/04/15/azure-ad-mailbag-self-service-password-reset-round-2/">Azure AD Mailbag: Self-Service Password Reset Round 2</a>
+							<span class="post-date">April 15, 2016</span>
+						</li>
+				</ul>
+		</aside><aside id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.technet.microsoft.com/ad/tag/adal/' class='tag-link-891' title='11 topics' style='font-size: 14.522123893805pt;'>ADAL</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/adfs/' class='tag-link-173' title='10 topics' style='font-size: 14.061946902655pt;'>ADFS</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/android/' class='tag-link-731' title='11 topics' style='font-size: 14.522123893805pt;'>Android</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/applications/' class='tag-link-461' title='44 topics' style='font-size: 21.079646017699pt;'>Applications</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/authentication/' class='tag-link-821' title='20 topics' style='font-size: 17.283185840708pt;'>authentication</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-active-directory/' class='tag-link-571' title='53 topics' style='font-size: 22pt;'>Azure Active Directory</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-ad-application-proxy/' class='tag-link-451' title='6 topics' style='font-size: 11.87610619469pt;'>Azure AD Application Proxy</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-ad-connect/' class='tag-link-771' title='9 topics' style='font-size: 13.601769911504pt;'>Azure AD Connect</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-ad-connect-health/' class='tag-link-761' title='5 topics' style='font-size: 11.070796460177pt;'>Azure AD Connect Health</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-ad-join/' class='tag-link-581' title='5 topics' style='font-size: 11.070796460177pt;'>Azure AD Join</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/b2b-collaboration/' class='tag-link-551' title='3 topics' style='font-size: 9pt;'>B2B Collaboration</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/cloud-app-discovery/' class='tag-link-981' title='5 topics' style='font-size: 11.070796460177pt;'>Cloud App Discovery</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/conditional-access/' class='tag-link-751' title='6 topics' style='font-size: 11.87610619469pt;'>Conditional Access</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/custom/' class='tag-link-931' title='9 topics' style='font-size: 13.601769911504pt;'>custom</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/customer-success-team/' class='tag-link-601' title='13 topics' style='font-size: 15.327433628319pt;'>Customer Success Team</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/development/' class='tag-link-691' title='38 topics' style='font-size: 20.389380530973pt;'>Development</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/device/' class='tag-link-881' title='5 topics' style='font-size: 11.070796460177pt;'>Device</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/ga/' class='tag-link-441' title='17 topics' style='font-size: 16.592920353982pt;'>GA</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/graphapi/' class='tag-link-801' title='6 topics' style='font-size: 11.87610619469pt;'>GraphAPI</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/group-membership/' class='tag-link-911' title='4 topics' style='font-size: 10.150442477876pt;'>Group Membership</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/industry/' class='tag-link-781' title='8 topics' style='font-size: 13.026548672566pt;'>Industry</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/ios/' class='tag-link-521' title='15 topics' style='font-size: 15.902654867257pt;'>iOS</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/mailbag/' class='tag-link-1071' title='13 topics' style='font-size: 15.327433628319pt;'>Mailbag</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/microsoft-identity-manager/' class='tag-link-701' title='6 topics' style='font-size: 11.87610619469pt;'>Microsoft Identity Manager</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/mobile/' class='tag-link-541' title='11 topics' style='font-size: 14.522123893805pt;'>Mobile</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/multi-factor-authentication/' class='tag-link-651' title='21 topics' style='font-size: 17.513274336283pt;'>multi-factor authentication</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/myapps/' class='tag-link-971' title='6 topics' style='font-size: 11.87610619469pt;'>myApps</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/news/' class='tag-link-501' title='29 topics' style='font-size: 19.12389380531pt;'>News</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/oauth-2-0/' class='tag-link-791' title='8 topics' style='font-size: 13.026548672566pt;'>OAuth 2.0</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/office-365/' class='tag-link-631' title='13 topics' style='font-size: 15.327433628319pt;'>Office 365</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/openid/' class='tag-link-511' title='9 topics' style='font-size: 13.601769911504pt;'>OpenID</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/passwords/' class='tag-link-741' title='7 topics' style='font-size: 12.451327433628pt;'>passwords</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/portal/' class='tag-link-591' title='5 topics' style='font-size: 11.070796460177pt;'>Portal</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/powershell/' class='tag-link-243' title='4 topics' style='font-size: 10.150442477876pt;'>PowerShell</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/public-preview/' class='tag-link-431' title='40 topics' style='font-size: 20.619469026549pt;'>Public Preview</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/reporting/' class='tag-link-711' title='10 topics' style='font-size: 14.061946902655pt;'>Reporting</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/saas/' class='tag-link-851' title='14 topics' style='font-size: 15.672566371681pt;'>SaaS</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/saml/' class='tag-link-831' title='6 topics' style='font-size: 11.87610619469pt;'>SAML</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/security/' class='tag-link-153' title='16 topics' style='font-size: 16.247787610619pt;'>Security</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/self-service/' class='tag-link-1031' title='3 topics' style='font-size: 9pt;'>Self-Service</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/ssgm/' class='tag-link-951' title='4 topics' style='font-size: 10.150442477876pt;'>SSGM</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/sso/' class='tag-link-841' title='14 topics' style='font-size: 15.672566371681pt;'>SSO</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/sspr/' class='tag-link-941' title='9 topics' style='font-size: 13.601769911504pt;'>SSPR</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/sync/' class='tag-link-811' title='12 topics' style='font-size: 14.867256637168pt;'>Sync</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/windows-10/' class='tag-link-671' title='11 topics' style='font-size: 14.522123893805pt;'>Windows 10</a></div>
+</aside><aside id="msdn-archive-widget-3" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.technet.microsoft.com/ad/2016/05/'>May 2016</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/04/'>April 2016</a>&nbsp;(6)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/03/'>March 2016</a>&nbsp;(6)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/02/'>February 2016</a>&nbsp;(8)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/01/'>January 2016</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/'>All of 2016</a>&nbsp;(27)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2015/'>All of 2015</a>&nbsp;(77)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2014/'>All of 2014</a>&nbsp;(60)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2013/'>All of 2013</a>&nbsp;(41)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2012/'>All of 2012</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2011/'>All of 2011</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2010/'>All of 2010</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2009/'>All of 2009</a>&nbsp;(18)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2008/'>All of 2008</a>&nbsp;(27)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2007/'>All of 2007</a>&nbsp;(29)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2006/'>All of 2006</a>&nbsp;(14)</li>
+</aside>
+	</div><!-- #secondary -->
+
+	<div id="tag-wrap"><h2 class="color-highlight-bg">Tags</h2><ul class="tag-list"><li><a href="https://blogs.technet.microsoft.com/ad/tag/multi-factor-authentication/">multi-factor authentication</a></li><li><a href="https://blogs.technet.microsoft.com/ad/tag/office-365/">Office 365</a></li></ul></div>
+	
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+			</div>
+			
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-10561" class="comment byuser comment-author-anonymous even thread-even depth-1">
+			<article id="div-comment-10561" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-03-04T04:49:46+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>There have been numerous new updates launched in February in Office 365 Education. Here is a list of</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10541" class="comment byuser comment-author-anonymous odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-10541" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-03-04T05:00:36+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>There have been numerous new updates launched in February in Office 365 Education. Here is a list of</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10551" class="comment byuser comment-author-anonymous even thread-even depth-1">
+			<article id="div-comment-10551" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-03-04T05:00:36+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>There have been numerous new updates launched in February in Office 365 Education. Here is a list of</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10531" class="comment byuser comment-author-anonymous odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-10531" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-03-04T05:00:37+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>There have been numerous new updates launched in February in Office 365 Education. Here is a list of</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10521" class="comment byuser comment-author-anonymous even thread-even depth-1">
+			<article id="div-comment-10521" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-03-04T05:01:20+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>There have been numerous new updates launched in February in Office 365 Education. Here is a list of</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-2763" class="comment byuser comment-author-jordan-mills odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-2763" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-03-11T19:43:11+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/5d1bb7f45ab41f734b752f6f47599e50?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Jordan Mills</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>What about an on-premise solution with no external dependencies?  OATH TOTP authentication can be done with nothing but a common clock.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10511" class="comment byuser comment-author-anonymous even thread-even depth-1">
+			<article id="div-comment-10511" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-05-11T21:58:10+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I, like many of you, follow prominent voices in the Exchange community through blogs and other outlets</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10501" class="comment byuser comment-author-anonymous odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-10501" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-08-14T04:24:30+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The blog post MFA for Office 365 and MFA for Azure on the Technet Blogs has reached critical mass. Well</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10491" class="comment byuser comment-author-anonymous even thread-even depth-1">
+			<article id="div-comment-10491" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-08-14T04:40:16+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The blog post MFA for Office 365 and MFA for Azure on the Technet Blogs has achieved its 15 minutes of</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10481" class="comment byuser comment-author-anonymous odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-10481" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-08-14T04:42:58+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Received a 5 star rating on the MFA for Office 365 and MFA for Azure contribution on the Technet Blogs</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-10471" class="comment byuser comment-author-anonymous even thread-even depth-1">
+			<article id="div-comment-10471" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-08-14T04:43:20+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Contributed a new blog post MFA for Office 365 and MFA for Azure to the Technet Blogs.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+				<p class="no-comments">Comments are closed.</p>
+	
+</div><!-- #comments -->
+
+
+	
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-7261" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7261"><a href="http://technet.microsoft.com/en-US/cc300389.aspx">Terms of Use</a></li>
+<li id="menu-item-7271" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7271"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-7281" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7281"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/' );
+			$.cookie( 'aadsso-redirect', '/ad/2014/02/11/mfa-for-office-365-and-mfa-for-azure/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='2189' post-id='943'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.technet.microsoft.com/ad/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/ad\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/ad\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/ad\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":"1"};
+var msdnparent = {"is_search":"","is_singular":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

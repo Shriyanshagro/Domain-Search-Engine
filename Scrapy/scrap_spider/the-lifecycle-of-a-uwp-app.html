@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>
+		  The Lifecycle of a UWP App | Building Apps for Windows		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset="UTF-8"/>
+		<link rel="shortcut icon" href="https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/images/favicon.ico" />
+		<link rel="alternate" type="application/rss+xml" title="Building Apps for Windows &raquo; The Lifecycle of a UWP App Comments Feed" href="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"https:\/\/blogs.windows.com\/buildingapps\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
+			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='wb-css'  href='https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/assets/css/windows-blogs.min.css?ver=0.1.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='https://blogs.windows.com/buildingapps/wp-content/plugins/jetpack/css/jetpack.css?ver=3.8.1' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/plugins/jetpack/modules/related-posts/related-posts.js?ver=20150408'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/includes/announcement/js/jquery.cookies.js?ver=4.4.2'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/includes/announcement/js/cookie-helper.js?ver=4.4.2'></script>
+<link rel='https://api.w.org/' href='https://blogs.windows.com/buildingapps/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.windows.com/buildingapps/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.windows.com/buildingapps/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Design thinking: finding your inspiration' href='https://blogs.windows.com/buildingapps/2016/04/27/design-thinking-finding-your-inspiration/' />
+<link rel='next' title='Windows 10 Anniversary SDK Preview Build 14332 Released' href='https://blogs.windows.com/buildingapps/2016/04/28/windows-10-anniversary-sdk-preview-build-14332-released/' />
+<meta name="generator" content="WordPress 4.4.2" />
+<link rel="canonical" href="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/" />
+<link rel='shortlink' href='https://blogs.windows.com/buildingapps/?p=28233' />
+<link rel="alternate" type="application/json+oembed" href="https://blogs.windows.com/buildingapps/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblogs.windows.com%2Fbuildingapps%2F2016%2F04%2F28%2Fthe-lifecycle-of-a-uwp-app%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://blogs.windows.com/buildingapps/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblogs.windows.com%2Fbuildingapps%2F2016%2F04%2F28%2Fthe-lifecycle-of-a-uwp-app%2F&#038;format=xml" />
+
+ <!-- OneAll.com / Social Login for WordPress / v5.0 -->
+<script data-cfasync="false" type="text/javascript">
+ (function() {
+  var oa = document.createElement('script'); oa.type = 'text/javascript';
+  oa.async = true; oa.src = 'https://windows.api.oneall.com/socialize/library.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(oa, s);
+ })();
+</script>
+<style type='text/css'>img#wpstats{display:none}</style><link type="text/plain" rel="author" href="https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/humans.txt" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The Lifecycle of a UWP App" />
+<meta property="og:url" content="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/" />
+<meta property="og:description" content="Lifecycle management in a Universal Windows Platform (UWP) app is critical for the efficient use of battery power and memory. When done correctly, it allows the user to multitask between apps witho…" />
+<meta property="article:published_time" content="2016-04-28T17:00:49+00:00" />
+<meta property="article:modified_time" content="2016-05-04T12:42:04+00:00" />
+<meta property="og:site_name" content="Building Apps for Windows" />
+<meta property="og:image" content="http://az648995.vo.msecnd.net/win/2016/02/4_appintoview.png" />
+<meta property="og:image:width" content="372" />
+<meta property="og:image:height" content="680" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@windowsblog" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@windowsblog" />
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+
+	</head>
+	<body class="single single-post postid-28233 single-format-standard blog-id-3">
+
+	<header class="main-header" id="main-header" role="banner" aria-label="Header">
+		<div class="top-bar">
+			<div class="branding container">
+				<a href="https://blogs.windows.com/" rel="home" class="logo-link">
+					<img src="https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/images/logo.svg" alt="Windows Logo" class="logo">
+					<!-- .logo -->
+				</a>
+				<div id="toggle-mobile-menu" class="toggle-mobile-menu" role="button" aria-label="Navigation Menu" aria-controls="Navigation">
+					<a href="#"><span class="hidden-text">Menu</span></a>
+				</div>
+				<div class="top-bar-right">
+					<a href="https://blogs.windows.com/feed" class="rss-link" target="_blank"><i class="icon icon-rss"></i> <span class="hidden-mobile">RSS</span></a>
+					<a href="https://www.facebook.com/windows" class="social-link facebook" target="_blank"><i class="icon icon-facebook"></i> <span class="screen-reader-text">Facebook</span></a>
+					<a href="https://twitter.com/windowsblog" class="social-link twitter" target="_blank"><i class="icon icon-twitter"></i> <span class="screen-reader-text">Twitter</span></a>
+					<form role="search" method="get" class="search-form" action="https://blogs.windows.com/" aria-label="Search">
+	<label for="search-form-input">
+		<span class="screen-reader-text">Search for:</span>
+		<i class="icon icon-search"></i>
+		<input type="search" class="search-field" placeholder="Search …" value="" id="search-form-input" name="s" title="Search for:" />
+		<button type="submit" class="search-submit">Submit</button>
+	</label>
+</form>
+				</div>
+			</div>
+		</div>
+		<!-- .branding -->
+		<div id="bottom-bar" class="bottom-bar">
+			<nav class="main-nav container" role="navigation" aria-label="Primary Navigation">
+				<a href="https://blogs.windows.com/" rel="home" id="logo-scroll" class="logo-scroll">
+					<img src="https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/images/logo.svg" alt="Windows Logo">
+				</a>
+
+				<ul id="menu-main-menu" class="menu"><li id="menu-item-15443" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-15443"><a href="#">Building Apps for Windows</a>
+<ul class="sub-menu">
+	<li id="menu-item-20723" class="blog-id-2 menu-item menu-item-type-custom menu-item-object-custom menu-item-20723"><a href="http://blogs.windows.com/windowsexperience">Windows Experience Blog</a></li>
+	<li id="menu-item-20704" class="devices-gray menu-item menu-item-type-custom menu-item-object-custom menu-item-20704"><a href="http://blogs.windows.com/devices">Microsoft Devices Blog</a></li>
+	<li id="menu-item-20713" class="xbox-green menu-item menu-item-type-custom menu-item-object-custom menu-item-20713"><a href="http://news.xbox.com/">Xbox Wire</a></li>
+	<li id="menu-item-15454" class="blog-id-3 menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-15454"><a href="http://blogs.windows.com/buildingapps">Building Apps for Windows</a></li>
+	<li id="menu-item-15464" class="blog-id-4 menu-item menu-item-type-custom menu-item-object-custom menu-item-15464"><a href="http://blogs.windows.com/business">Windows For Your Business</a></li>
+	<li id="menu-item-15484" class="blog-id-33 menu-item menu-item-type-custom menu-item-object-custom menu-item-15484"><a href="http://blogs.windows.com/msedgedev">Microsoft Edge Dev Blog</a></li>
+	<li id="menu-item-15494" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15494"><a href="http://blogs.windows.com/windows-blog-directory/">Other Blogs</a></li>
+</ul>
+</li>
+<li id="menu-item-15513" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15513"><a href="http://blogs.windows.com/buildingapps/tag/windows-10/">Windows 10</a></li>
+</ul>
+				<div class="bing-translate-wrap">
+					<div id='MicrosoftTranslatorWidget' class='Dark' style='border:0px!important;color:white;background-color:#b5b5b5'></div>
+				</div>
+				<script type='text/javascript'>setTimeout(function(){{var s=document.createElement('script');s.type='text/javascript';s.charset='UTF-8';s.src=((location && location.href && location.href.indexOf('https') == 0)?'https://ssl.microsofttranslator.com':'http://www.microsofttranslator.com')+'/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**&ctf=False&ui=true&settings=Manual&from=en';var p=document.getElementsByTagName('head')[0]||document.documentElement;p.insertBefore(s,p.firstChild); }},0);</script>
+			</nav>
+		</div>
+		<!-- .main-nav -->
+	</header>
+	<!-- .main-header -->
+
+	
+	<div class="container iso-height">
+
+		<div class="post-content column" role="main" aria-label="Main Content">
+			<article role="article" class="post-28233 post type-post status-publish format-standard hentry category-mobile category-pc category-tablet tag-app-lifecycle tag-lifecycle-management tag-uwp-lifecycle">
+				<header class="post-header">
+					<span class="date">April 28, 2016 10:00 am</span>
+
+					<h1 class="post-title"><a href="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/">The Lifecycle of a UWP App</a></h1>
+
+					
+	<div class="author">
+		By <a href="https://blogs.windows.com/buildingapps/author/windowsappsteam/" title="Posts by Windows Apps Team" class="url fn" rel="author">Windows Apps Team</a>	</div>
+
+
+					<div id="addthis-28233" class="addthis_toolbox addthis_default_style expanded" addthis:url="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/" addthis:title="The Lifecycle of a UWP App">
+							<a class="addthis_button_facebook"><i class="icon icon-facebook"></i> <span>Share</span></a>
+							<a class="addthis_button_twitter"><i class="icon icon-twitter"></i> <span>Tweet</span></a>
+							<a class="addthis_button_reddit"><i class="icon icon-reddit"></i> <span>Share</span></a>
+							<a class="addthis_button_skype" href="#"><i class="icon icon-skype"></i> <span>Skype</span></a>
+						</div>				</header>
+												<p>Lifecycle management in a Universal Windows Platform (UWP) app is critical for the efficient use of battery power and memory. When done correctly, it allows the user to multitask between apps without needing to know anything about these resource optimizations.</p>
+<p>Today’s post is about the lifecycle of a UWP app, what should happen as an app transitions from one lifecycle state to the next, and techniques for making these transitions transparent to the user.</p>
+<h2>App states: not running, running, suspended</h2>
+<p>Traditional desktop applications have only two states: they are either <strong>running</strong> or they are <strong>not running</strong>. UWP apps have a third possible state called <strong>suspended</strong>. An app is suspended when a user minimizes it, or switches to another app. As far as the user is concerned  the app simply appears to be running in the background.</p>
+<p>What actually happens is that the app goes into a hibernation mode so that Windows is able to free up resources. The app’s threads are stopped, and the state of the app is held in memory. When the user returns to the app, it is quickly restored from a suspended state to a running state. The user isn’t aware that the suspension ever occurred.</p>
+<p><a href="http://az648995.vo.msecnd.net/win/2016/02/1_lifecycleofaUWPapp.png"><img class="aligncenter size-large wp-image-28243" src="http://az648995.vo.msecnd.net/win/2016/02/1_lifecycleofaUWPapp-1024x597.png" alt="1_lifecycleofaUWPapp" width="1024" height="597" /></a></p>
+<p>At times Windows 10 may determine that even in a suspended state, some apps are using too many resources. In this case, it may terminate some of these apps, effectively placing them into the not running state. What will happen when the user tries to switch back to a terminated app?</p>
+<p>Without additional coding, it will appear to the user as if she has lost her place in the app, as well as all her information from the latest session.</p>
+<p>You can keep this from happening to your user by handling the <a href="https://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.application.suspending">Application.Suspending</a> event (there is no <em>terminated</em> event method, so this is the last point at which you can do something) and overriding the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.application.onlaunched">Application.OnLaunched</a> method when the app picks up again. The coding pattern for managing potential app terminations only requires you to save off any useful data from the current user session. Then, if the app gets terminated, you restore this data with custom code once the app is relaunched by the user.</p>
+<h2>Handling suspending, termination, and closing</h2>
+<p>There are several ways that an app can leave the running state. We have already discussed a couple of these, but there are two additional scenarios. One occurs when an app is <em>killed</em> and goes from <strong>running</strong> à <strong>not running</strong> either because something has gone wrong with the app, like a crash, or because the user has forced the app to close down in the task manager. (Killed isn’t an official term, but is very convenient for remembering this lifecycle path.) The other occurs when an app is <em>closed</em> by a user using a close gesture while in tablet mode or clicking on the X when running over the desktop.  In this case, the app is suspended and then automatically terminated.</p>
+<p>We are here going to discuss scenarios in which an app is suspended and then terminated. In practice, this means we care if the app is terminated by the operating system (first scenario) and if the user intentionally closes the app (last scenario).</p>
+<p>When an app is suspended, it invokes the Suspending event. Visual Studio’s UWP project templates automatically generate a handler for this event called <strong>OnSuspending</strong> in the App.xaml class. It is here that you should place code to save application state information just in case the app terminates.</p>
+<p>If the app does not terminate following suspension, then no harm is done since the application state is never lost.</p>
+<p>Similarly, if the app shuts down following a running state without suspension, you do not need to do anything. In fact, there is nothing you could do, since no lifecycle events are invoked.</p>
+<p>Here is some example code demonstrating how to save state information. Since saving to a <a href="https://msdn.microsoft.com/en-us/library/system.io.filestream(v=vs.100).aspx">FileStream</a> is an asynchronous process, you will note the addition of the <a href="https://msdn.microsoft.com/en-us/library/hh156513.aspx">async</a> keyword to the default implementation of the <strong>OnSuspending</strong> method. Because the _store object used is a generic <a href="https://msdn.microsoft.com/en-us/library/xfhwa508(v=vs.100).aspx">Dictionary</a>, any sort of serializable data can be added to it for saving. For brevity, you are only adding a timestamp. (There&#8217;s also some code for something called deferral, which we’ll address later.)</p>
+<pre class="brush: csharp; title: ; notranslate" title="">
+private Dictionary&lt;string, object&gt; _store = new Dictionary&lt;string, object&gt;();
+private readonly string _saveFileName = &quot;store.xml&quot;;
+
+private async void OnSuspending(object sender, SuspendingEventArgs e)
+{
+    var deferral = e.SuspendingOperation.GetDeferral();
+    _store.Add(&quot;timestamp&quot;, DateTime.Now);
+    await SaveStateAsync();
+    deferral.Complete();
+}
+private async Task SaveStateAsync()
+{
+    var ms = new MemoryStream();
+    var serializer = new DataContractSerializer(typeof(Dictionary&lt;string, object&gt;));
+    serializer.WriteObject(ms, _store);
+
+    var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(_saveFileName, CreationCollisionOption.ReplaceExisting);
+
+    using (var fs = await file.OpenStreamForWriteAsync())
+    {
+        //because we have written to the stream, set the position back to start
+        ms.Seek(0, SeekOrigin.Begin);
+        await ms.CopyToAsync(fs);
+        await fs.FlushAsync();
+    }
+}
+
+
+</pre>
+<h2>The suspending deadline and deferral</h2>
+<p>There is an implicit rule that the handler for the Application.Suspending event must finish within five seconds. This five-second rule is known as the <a href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.suspendingoperation.deadline.aspx">deadline</a>. Normally, with an async call, the current thread would return to the caller when it hits the <strong>await</strong> keyword. This would be bad in the code above, since the async save method is unlikely to have finished by the time control returns to the caller and the app gets suspended.</p>
+<p>The <a href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.suspendingoperation.getdeferral">GetDeferral</a> method is a housekeeping method used for just this situation. It tells the system not to end suspension when the async call returns, but instead to defer suspension until either the Complete method is called or the five-second deadline arrives, <em>whichever comes first</em>. This means that GetDeferral does not actually buy you more time to finish your state save. It merely indicates how you are handling cleanup before suspension and ensures that you are given as much time as you need, up to a maximum of five seconds, to do this.</p>
+<p>Because of the deadline, you should not try to do too much in the OnSuspending handler. One strategy for managing this time limit is to save data incrementally as the application state changes. New key-value pairs can be added gradually to your dictionary object in page navigation events.  If you are using the MVVM pattern to manage state, you could even simply stash your view-models in the dictionary as a time saver.</p>
+<p>If all else fails, it is possible to buy more time to finish your save operation by requesting an ExtendedExecutionSession, though there is no guarantee that the request will be honored. You can learn more about ﷟<a href="https://msdn.microsoft.com/en-us/magazine/mt590969.aspx">extended execution</a> by visiting MSDN.</p>
+<h2>Handling the launch app lifecycle state</h2>
+<p>We have been working through the UWP lifecycle a bit backwards up to this point. There’s actually a good reason for this. Much of the information provided in the Application.OnLaunched method, it turns out, deals with how the app was previously closed.</p>
+<p>Launch and resuming correspond to terminate and suspending, respectively. If an app moves from a suspended state back to a running state, the Application.Resuming event will be invoked. If an app is terminated or forcibly shut down, then Application.OnLaunched will be called.</p>
+<p>OnLaunched is also called when an app is initially invoked from a tile. Inside the OnLaunched method, you need to perform initialization routines to get your application warmed up. This may include making network connections, allocating resources, or setting up the UI. Whatever needs to be set up behind the scenes when the app first wakes up should probably be set up no matter how the app closed previously.</p>
+<pre class="brush: csharp; title: ; notranslate" title="">
+protected override void OnLaunched(LaunchActivatedEventArgs e)
+{
+    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+    {
+        //TODO: Load state from previously suspended application
+    }
+}</pre>
+<p>The OnLaunched method receives a <a href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.activation.launchactivatedeventargs">LaunchActivatedEventArgs</a> object as its argument. This argument has an interesting property called <a href="https://msdn.microsoft.com/EN-US/library/windows/apps/windows.applicationmodel.activation.iactivatedeventargs.previousexecutionstate.aspx">PreviousExecutionState</a> that tells you the last state of the application before it was launched.</p>
+<ul>
+<li><em>NotRunning</em> tells you the app is being launched for the first time or that the app was previously killed in an unexpected way and you should just start the app <em>as if</em> it were being run for the first time. Nothing actually needs to be done to handle this situation, and you just start the app like normal.</li>
+<li><em>Terminated</em> tells you that the app was previously suspended and then was shut down. In the world of the user, the user was multitasking and after a while decided to come back to the app. Unfortunately, the app had been suspended and then killed by the operating system in order to free up memory. The user, however, doesn’t know any of this and expects the app to be the way he remembers it when he put it aside earlier.</li>
+<li><em>ClosedByUser</em> tells you that the user closed the app intentionally, for example by using the close gesture in tablet mode.</li>
+<li><a href="https://msdn.microsoft.com/EN-US/library/windows/apps/windows.applicationmodel.activation.applicationexecutionstate.aspx"><em>Running</em></a> and <em>Suspended</em> are the last two states and tell you that the app is being launched from a secondary tile when it has already been activated.</li>
+</ul>
+<p>To make sure the user has the expected experience, you need to restore the state information that was saved before the app got suspended. The code below demonstrates how you reverse the routine you used in the Suspending handler.</p>
+<pre class="brush: csharp; title: ; notranslate" title="">
+protected override async void OnLaunched(LaunchActivatedEventArgs e)
+{
+    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+    {
+        await ReadStateAsync();
+        var terminateDate = DateTime.Now;
+        if (_store.ContainsKey(&quot;timestamp&quot;))
+        {
+            terminateDate = (DateTime) _store[&quot;timestamp&quot;];
+        }
+    }
+    //... additional work logic
+}
+
+public async Task ReadStateAsync()
+{
+    var file = await ApplicationData.Current.LocalFolder.GetFileAsync(_saveFileName);
+    if (file == null) return;
+
+    using (IInputStream stream = await file.OpenSequentialReadAsync())
+    {
+        var serializer = new DataContractSerializer(typeof(Dictionary&lt;string, object&gt;));
+        _store = (Dictionary&lt;string, object&gt;)serializer.ReadObject(stream.AsStreamForRead());
+    }
+}
+</pre>
+<p>You typically want to restore all the saved state for the app. This assumes, though, that the user is returning to the app after only a few minutes or a few hours at most. In fact, it could be much longer since the user last looked at the app—perhaps days.</p>
+<p>Because you had the foresight to serialize the timestamp when the app was suspended, you can compare it against the current date and time to determine how long ago the app was terminated. If the gap is sufficiently long, it may actually make more sense to treat this app launch as if it is occurring for the first time.</p>
+<p>Another possible value for the previous execution state, ClosedByUser, requires you to take some initiative in deciding what it means. This state comes about when the user has used the close gesture in tablet mode to end the application. This action suspends the app, ensuring that the OnSuspending method is called, and then terminates the app. Since the app has essentially gone through the same steps that lead to the Terminated state, the general guidance is to handle this lifecycle story in the same way.</p>
+<p>On the other hand, if a user intentionally shut down an app, it would be reasonable for her to expect it to do a fresh startup when it is relaunched. If this makes more sense to you as a developer, then you may certainly treat ClosedByUser in this way.</p>
+<h2>Testing and debugging the lifecycle states</h2>
+<p>It’s a good idea to test the various states of your app’s lifecycle to make sure the app does what you expect. Visual Studio 2015 provides a Lifecycle Events control on the toolbar that lets you throw one of three lifecycle transitions: suspend, resume, or suspend and shutdown (terminate).</p>
+<p><a href="http://az648995.vo.msecnd.net/win/2016/02/2_lifecycleeventscontrol.png"><img class="aligncenter size-full wp-image-28253" src="http://az648995.vo.msecnd.net/win/2016/02/2_lifecycleeventscontrol.png" alt="2_lifecycleeventscontrol" width="234" height="165" /></a></p>
+<p>With this tool, you can debug your lifecycle management code to make sure it handles state changes correctly. You can also use it to validate your understanding of the lifecycle itself. For instance, you could find out what really happens when someone kills your app on a phone using the app switcher. Will the OnSuspending handler be called in this situation, or will the application simply die without letting you know? Let’s find out.</p>
+<p><a href="http://az648995.vo.msecnd.net/win/2016/02/3_deferral.png"><img class="aligncenter size-full wp-image-28263" src="http://az648995.vo.msecnd.net/win/2016/02/3_deferral.png" alt="3_deferral" width="569" height="73" /></a></p>
+<p>To test this, set a breakpoint inside the OnSuspending method. You then need to set the build target to a mobile emulator and run the app in debug mode. Select <em>Suspend</em> on the Lifecycle Events tool to confirm that the breakpoint is hit. Press F5 to continue past the breakpoint and select <em>Resume</em> on the tool to bring the app back into view.</p>
+<p><a href="http://az648995.vo.msecnd.net/win/2016/02/4_appintoview.png"><img class="aligncenter size-full wp-image-28273" src="http://az648995.vo.msecnd.net/win/2016/02/4_appintoview.png" alt="4_appintoview" width="372" height="680" /></a></p>
+<p>Now comes the fun part. Hold down the back button until the app shrinks in the mobile emulator’s screen. An X appears on the upper right corner of the app allowing us to close it. When the X is pressed, the breakpoint does not get hit this time.</p>
+<p>This simple test tells you that the app doesn’t go into suspend mode when it is killed from the phone’s app switcher screen, but instead, it goes directly into a not running state.</p>
+<p>You’ll find that there are times when you can’t quite recall how the UWP lifecycle works in every circumstance. In those situations, it often makes more sense to just test your assumptions with the debugging tools Visual Studio provides than to try figuring it out by combing through online articles. You may even find that you understand the UWP app lifecycle better when you test it out for yourself.</p>
+<h2>Handling resuming</h2>
+<p>When an app is suspended and then successfully returned to the running state, the Application.Resuming event is called rather than Application.OnLaunched. What should you do with Application.Resuming?</p>
+<p>In many cases, you don’t have to do anything at all. Application.Suspending is generally used only to handle the possibility that the app may get terminated. If you want your app to be good UWP citizens, however, you may also use Application.Suspending to deallocate expensive resources as your app goes into hibernation. Expensive resources can include anything from images and sound files to devices. If you choose to do this, you’ll need to implement a handler for the Application.Resuming event and reinitialize those resources.</p>
+<p>There’s one other exceptional circumstance to keep in mind for your UWP apps: when a user starts an app that has actually already been suspended, so the app calls the Application.Resuming event instead. This occurs when the app has been selected for prelaunch, which is for all intents and purposes transparent to the user.</p>
+<p>Prelaunch happens if the device has sufficient resources and the app is determined to be frequently launched by the current user. To improve performance, apps selected for prelaunch are launched in the background ahead of time and then quickly suspended.</p>
+<p>Because of prelaunch, the app’s OnLaunched method may be initiated by the system rather than by a user. This is then followed by a call to Application.Suspending. Then, when the user does try to launch the app, the Resuming event is invoked as well as the OnLaunched method.</p>
+<p>Surprisingly, no additional steps are typically required to handle prelaunch. The lifecycle code we have already covered handles everything well enough. In some circumstances, though, such as when an app uses heavy resources at launch to create a visual impact, it may be useful to distinguish a prelaunch from a normal launch so the effort doesn’t go to waste.</p>
+<p>The LaunchActivatedEventArgs object has a boolean property called <a href="https://msdn.microsoft.com/en-us/windows.applicationmodel.activation.launchactivatedeventargs.prelaunchactivated">PrelaunchActivated</a> that indicates whether OnLaunched is responding to a real user or to the prelaunch optimization. This flag can be used to step over any actions that would go to waste when no one is around to see them. As with the standard lifecycle events, Visual Studio also makes it possible to test a prelaunch scenario. You can learn more about <a href="https://msdn.microsoft.com/en-us/library/windows/apps/mt593297.aspx">prelaunch</a> on MSDN.</p>
+<h2>Wrapping up</h2>
+<p>The UWP lifecycle can seem intricate at first. In actual fact, however, the only two events you typically need to be concerned about handling are <a href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.application.suspending">Suspending</a> and <a href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.application.onlaunched">Launched</a>. Other flags, like PrelaunchActivated and ClosedByUser, are worth considering for edge cases but are not always essential. Remember, too, that if you start to suspect that those edge cases may be affecting your app, Visual Studio 2015 provides useful tools to help you test the lifecycle events and find out what is happening under the hood.</p>
+<h2>Additional resources</h2>
+<ul>
+<li><a href="https://msdn.microsoft.com/library/windows/apps/xaml/mt244352.aspx">How-to guides for Windows 10 apps</a></li>
+<li><a href="https://msdn.microsoft.com/en-us/windows/uwp/launch-resume/app-lifecycle">App lifecycle</a></li>
+<li><a href="https://visualstudiomagazine.com/articles/2015/09/01/its-universal.aspx">Understanding the Lifecycle of a Windows 10 App</a></li>
+<li><a href="https://msdn.microsoft.com/en-us/magazine/mt590969.aspx">Keep Apps Alive with Background Tasks and Extended Execution</a></li>
+</ul>
+<p><span class="post-modified">Updated May 4, 2016 5:42 am</span></p>				<footer class="post-footer">
+					<p class="post-tags"><span class="tags-title">Tags</span> <a href="https://blogs.windows.com/buildingapps/tag/app-lifecycle/" rel="tag">app lifecycle</a> <a href="https://blogs.windows.com/buildingapps/tag/lifecycle-management/" rel="tag">lifecycle management</a> <a href="https://blogs.windows.com/buildingapps/tag/uwp-lifecycle/" rel="tag">uwp lifecycle</a></p>					<div id="addthis-28233" class="addthis_toolbox addthis_default_style expanded" addthis:url="https://blogs.windows.com/buildingapps/2016/04/28/the-lifecycle-of-a-uwp-app/" addthis:title="The Lifecycle of a UWP App">
+							<a class="addthis_button_facebook"><i class="icon icon-facebook"></i> <span>Share</span></a>
+							<a class="addthis_button_twitter"><i class="icon icon-twitter"></i> <span>Tweet</span></a>
+							<a class="addthis_button_reddit"><i class="icon icon-reddit"></i> <span>Share</span></a>
+							<a class="addthis_button_skype" href="#"><i class="icon icon-skype"></i> <span>Skype</span></a>
+						</div>				</footer>
+			</article>
+			<!-- .post -->
+
+			
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+		<h3 class="comments-title">
+			Join the conversation		</h3>
+
+							<span class="sign-in-comment-button button"> <!-- OneAll.com / Social Login for WordPress / v5.0 -->
+<div class="oneall_social_login">
+ <div class="oneall_social_login_label" style="margin-bottom: 3px;"><label>Login with:</label></div>
+ <div class="oneall_social_login_providers" id="oneall_social_login_providers_1405245"></div>
+ <script type="text/javascript">
+  var _oneall = _oneall || [];
+  _oneall.push(['social_login', 'set_providers', ['windowslive']]);
+  _oneall.push(['social_login', 'set_callback_uri', (window.location.href + ((window.location.href.split('?')[1] ? '&amp;': '?') + "oa_social_login_source="))]);
+  _oneall.push(['social_login', 'set_custom_css_uri', 'https://secure.oneallcdn.com/css/api/socialize/themes/wordpress/default.css']);
+  _oneall.push(['social_login', 'do_render_ui', 'oneall_social_login_providers_1405245']);
+ </script>
+</div><span>Please sign in to comment</span></span>
+				
+	</div>
+	
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-20893" class="comment byuser comment-author-artem-valieiev even thread-even depth-1">
+			<article id="div-comment-20893" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-28T15:22:52+00:00">
+							7 days ago						</time>
+						<div class="comment-actions">
+							<a rel="nofollow" class="comment-reply-login" href="https://blogs.windows.com/buildingapps/wp-login.php?redirect_to=https%3A%2F%2Fblogs.windows.com%2Fbuildingapps%2F2016%2F04%2F28%2Fthe-lifecycle-of-a-uwp-app%2F">Log in to Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/e8a3b7d877a366616447aca1318a8862?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/e8a3b7d877a366616447aca1318a8862?s=80&amp;d=mm&amp;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='https://profile.live.com/' rel='external nofollow' class='url'>Artem Valieiev</a></span>						</div>
+					</div>
+					<!-- .comment-author -->
+
+									</footer>
+				<!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Nice Article! Can someone write more information about suspending serialization while you are in release mode (under .NET Native) ?</p>
+				</div>
+				<!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div>
+				<!-- .comment-metadata -->
+
+			</article>
+			<!-- .comment-body -->
+
+			</li><!-- #comment-## -->
+
+			<li id="comment-21003" class="comment byuser comment-author-ravindra-singh-chhabra odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-21003" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-04-30T12:07:35+00:00">
+							5 days ago						</time>
+						<div class="comment-actions">
+							<a rel="nofollow" class="comment-reply-login" href="https://blogs.windows.com/buildingapps/wp-login.php?redirect_to=https%3A%2F%2Fblogs.windows.com%2Fbuildingapps%2F2016%2F04%2F28%2Fthe-lifecycle-of-a-uwp-app%2F">Log in to Reply</a>						</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/87915edb7ca661d5621b536b89c18447?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/87915edb7ca661d5621b536b89c18447?s=80&amp;d=mm&amp;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='https://profile.live.com/' rel='external nofollow' class='url'>Ravindra Singh Chhabra</a></span>						</div>
+					</div>
+					<!-- .comment-author -->
+
+									</footer>
+				<!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Nice Article !!</p>
+				</div>
+				<!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div>
+				<!-- .comment-metadata -->
+
+			</article>
+			<!-- .comment-body -->
+
+			</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+		
+</div><!-- #comments -->
+		</div>
+		<!-- .post-content -->
+
+		<div class="sidebar column" role="complementary" aria-label="Sidebar">
+
+	
+	
+	<div class="related-articles">
+		<h3 class="related-articles-title">Related Posts</h3>
+
+		
+			<a href="https://blogs.windows.com/buildingapps/2016/04/03/best-of-build-2016/" class="related-article">
+								<h4 class="post-title">Best of Build 2016</h4>
+				<span class="read-more">Read more</span>
+			</a>
+
+		
+			<a href="https://blogs.windows.com/buildingapps/2016/02/17/building-a-great-hosted-web-app/" class="related-article">
+								<h4 class="post-title">Building a Great Hosted Web App</h4>
+				<span class="read-more">Read more</span>
+			</a>
+
+		
+			<a href="https://blogs.windows.com/buildingapps/2015/12/07/optimizing-apps-for-continuum-for-phone/" class="related-article">
+								<h4 class="post-title">Optimizing apps for Continuum for phone</h4>
+				<span class="read-more">Read more</span>
+			</a>
+
+		
+			<a href="https://blogs.windows.com/buildingapps/2016/03/30/windows-10-anniversary-sdk-is-bringing-exciting-opportunities-to-developers/" class="related-article">
+				<img srcset="https://az648995.vo.msecnd.net/win/2016/03/windowHomeForDevelopers1-70x70.png 1x, https://az648995.vo.msecnd.net/win/2016/03/windowHomeForDevelopers1-140x140.png 2x" alt="" class="related-thumbnail" width="70" height="70">				<h4 class="post-title">Windows 10 Anniversary SDK is bringing exciting opportunities to developers</h4>
+				<span class="read-more">Read more</span>
+			</a>
+
+		
+			<a href="https://blogs.windows.com/buildingapps/2016/02/16/27903/" class="related-article">
+								<h4 class="post-title">Leveraging existing code for Yahoo Mail with Hosted Web Apps</h4>
+				<span class="read-more">Read more</span>
+			</a>
+
+			</div>
+
+
+</div>
+<!-- .sidebar -->
+
+	</div>
+	<!-- .container -->
+
+
+<footer class="main-footer" role="contentinfo" aria-label="Footer">
+	<div class="container">
+		<a href="http://www.microsoft.com/" target="_blank" class="footer-logo">
+			<svg enable-background="new 0 0 93 20" viewBox="0 0 93 20" x="0px" y="0px" width="93px" height="20px" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+				<title>Microsoft SVG Logo</title>
+				<g id="Type">
+					<g>
+						<path fill="#ffffff" d="M 14.834 19 V 8.747 c 0 -0.779 0.045 -1.932 0.135 -3.459 h -0.045 c -0.15 0.809 -0.303 1.408 -0.46 1.797 L 9.59 19 H 7.849 L 2.941 7.197 C 2.814 6.8 2.661 6.164 2.481 5.288 H 2.414 C 2.436 5.49 2.46 6.018 2.486 6.871 c 0.026 0.854 0.04 1.591 0.04 2.212 V 19 H 0.044 V 2.896 h 3.818 L 7.961 13.07 c 0.389 0.98 0.632 1.723 0.73 2.224 h 0.067 l 0.854 -2.246 l 4.211 -10.152 h 3.661 V 19 H 14.834 Z"></path>
+						<path fill="#ffffff" d="M 23.281 3.435 c 0 0.427 -0.155 0.782 -0.466 1.067 c -0.311 0.285 -0.687 0.427 -1.128 0.427 c -0.442 0 -0.816 -0.142 -1.123 -0.427 c -0.307 -0.285 -0.46 -0.64 -0.46 -1.067 c 0 -0.434 0.155 -0.797 0.466 -1.089 c 0.311 -0.292 0.683 -0.438 1.118 -0.438 c 0.457 0 0.836 0.15 1.14 0.449 S 23.281 3.015 23.281 3.435 Z M 20.361 19 V 7.5 h 2.594 V 19 H 20.361 Z"></path>
+						<path fill="#ffffff"
+						      d="M 33.91 18.518 c -0.883 0.509 -1.973 0.764 -3.268 0.764 c -1.107 0 -2.094 -0.24 -2.959 -0.719 c -0.865 -0.479 -1.539 -1.161 -2.021 -2.045 c -0.483 -0.883 -0.724 -1.871 -0.724 -2.965 c 0 -1.25 0.249 -2.354 0.747 -3.313 c 0.498 -0.958 1.221 -1.701 2.167 -2.229 c 0.947 -0.527 2.046 -0.792 3.296 -0.792 c 0.486 0 0.992 0.054 1.516 0.163 c 0.523 0.109 0.939 0.249 1.246 0.421 v 2.459 c -0.846 -0.614 -1.729 -0.921 -2.65 -0.921 c -1.078 0 -1.951 0.361 -2.622 1.084 c -0.67 0.723 -1.005 1.686 -1.005 2.892 c 0 1.198 0.322 2.138 0.966 2.819 c 0.644 0.681 1.516 1.021 2.616 1.021 c 0.398 0 0.844 -0.086 1.338 -0.258 c 0.494 -0.173 0.947 -0.408 1.357 -0.708 V 18.518 Z"></path>
+						<path fill="#ffffff" d="M 42.771 10.027 c -0.135 -0.097 -0.355 -0.187 -0.663 -0.27 c -0.307 -0.083 -0.588 -0.124 -0.842 -0.124 c -0.757 0 -1.366 0.322 -1.831 0.966 c -0.464 0.645 -0.696 1.482 -0.696 2.516 V 19 h -2.594 V 7.5 h 2.594 v 2.235 h 0.045 c 0.255 -0.771 0.641 -1.37 1.157 -1.797 s 1.111 -0.64 1.785 -0.64 c 0.449 0 0.798 0.052 1.045 0.157 V 10.027 Z"></path>
+						<path fill="#ffffff"
+						      d="M 55.17 13.138 c 0 1.864 -0.539 3.354 -1.617 4.47 s -2.542 1.674 -4.391 1.674 c -1.774 0 -3.188 -0.53 -4.239 -1.59 s -1.578 -2.495 -1.578 -4.307 c 0 -1.909 0.539 -3.414 1.617 -4.515 s 2.571 -1.651 4.48 -1.651 c 1.797 0 3.201 0.526 4.212 1.578 C 54.665 9.849 55.17 11.296 55.17 13.138 Z M 52.475 13.228 c 0 -1.272 -0.282 -2.239 -0.848 -2.897 s -1.342 -0.988 -2.33 -0.988 c -1.019 0 -1.815 0.344 -2.393 1.033 c -0.576 0.689 -0.864 1.662 -0.864 2.92 c 0 1.221 0.288 2.169 0.864 2.847 c 0.577 0.678 1.382 1.017 2.415 1.017 c 1.04 0 1.826 -0.333 2.358 -1 C 52.209 15.492 52.475 14.516 52.475 13.228 Z"></path>
+						<path fill="#ffffff"
+						      d="M 64.486 15.709 c 0 1.071 -0.412 1.934 -1.235 2.589 c -0.824 0.655 -1.939 0.983 -3.347 0.983 c -0.457 0 -0.976 -0.061 -1.556 -0.18 c -0.58 -0.12 -1.064 -0.27 -1.454 -0.449 V 16.17 c 0.479 0.345 1.003 0.61 1.572 0.797 c 0.569 0.188 1.082 0.281 1.538 0.281 c 1.243 0 1.864 -0.412 1.864 -1.235 c 0 -0.292 -0.062 -0.526 -0.185 -0.702 c -0.124 -0.176 -0.337 -0.352 -0.641 -0.527 c -0.303 -0.176 -0.772 -0.395 -1.409 -0.657 c -0.749 -0.321 -1.305 -0.633 -1.668 -0.933 c -0.363 -0.299 -0.633 -0.65 -0.809 -1.055 s -0.264 -0.877 -0.264 -1.416 c 0 -1.033 0.408 -1.875 1.224 -2.527 c 0.816 -0.651 1.872 -0.977 3.167 -0.977 c 0.397 0 0.849 0.047 1.354 0.14 c 0.506 0.094 0.915 0.208 1.229 0.343 v 2.347 c -0.352 -0.24 -0.768 -0.432 -1.246 -0.579 c -0.479 -0.146 -0.955 -0.219 -1.427 -0.219 c -0.517 0 -0.924 0.116 -1.224 0.348 s -0.449 0.528 -0.449 0.887 c 0 0.404 0.118 0.721 0.354 0.949 c 0.236 0.228 0.792 0.519 1.668 0.87 c 1.078 0.434 1.838 0.917 2.279 1.449 C 64.266 14.287 64.486 14.938 64.486 15.709 Z"></path>
+						<path fill="#ffffff"
+						      d="M 77.858 13.138 c 0 1.864 -0.539 3.354 -1.617 4.47 s -2.542 1.674 -4.391 1.674 c -1.774 0 -3.188 -0.53 -4.239 -1.59 s -1.578 -2.495 -1.578 -4.307 c 0 -1.909 0.539 -3.414 1.617 -4.515 s 2.571 -1.651 4.48 -1.651 c 1.797 0 3.201 0.526 4.212 1.578 C 77.354 9.849 77.858 11.296 77.858 13.138 Z M 75.163 13.228 c 0 -1.272 -0.282 -2.239 -0.848 -2.897 s -1.342 -0.988 -2.33 -0.988 c -1.019 0 -1.815 0.344 -2.393 1.033 c -0.576 0.689 -0.864 1.662 -0.864 2.92 c 0 1.221 0.288 2.169 0.864 2.847 c 0.577 0.678 1.382 1.017 2.415 1.017 c 1.04 0 1.826 -0.333 2.358 -1 C 74.897 15.492 75.163 14.516 75.163 13.228 Z"></path>
+						<path fill="#ffffff" d="M 85.838 4.097 c -0.419 -0.187 -0.831 -0.281 -1.235 -0.281 c -0.568 0 -1.011 0.182 -1.325 0.545 c -0.314 0.363 -0.472 0.896 -0.472 1.6 V 7.5 h 2.572 v 2.089 h -2.572 V 19 h -2.628 V 9.589 h -1.932 V 7.5 h 1.932 V 5.815 c 0 -0.801 0.175 -1.514 0.522 -2.14 c 0.349 -0.625 0.839 -1.11 1.472 -1.454 c 0.632 -0.344 1.349 -0.517 2.15 -0.517 c 0.636 0 1.142 0.067 1.516 0.202 V 4.097 Z"></path>
+						<path fill="#ffffff" d="M 92.395 18.888 c -0.157 0.09 -0.437 0.178 -0.837 0.264 s -0.788 0.13 -1.162 0.13 c -2.254 0 -3.381 -1.213 -3.381 -3.639 V 9.589 h -1.909 V 7.5 h 1.909 V 4.85 l 2.605 -0.797 V 7.5 h 2.774 v 2.089 H 89.62 v 5.57 c 0 0.727 0.131 1.241 0.394 1.544 c 0.262 0.304 0.674 0.455 1.235 0.455 c 0.149 0 0.339 -0.032 0.567 -0.096 c 0.228 -0.063 0.421 -0.147 0.578 -0.252 V 18.888 Z"></path>
+					</g>
+				</g>
+			</svg>
+		</a>
+
+		<div class="footer-bar-right">
+			<nav class="sub-nav" role="navigation" aria-label="Footer Navigation">
+				<ul id="menu-site-footer-menu" class="menu"><li> <a href="http://go.microsoft.com/?linkid=2028351">Contact Us</a> </li><li> <a href="http://msdn.microsoft.com/en-US/cc300389">Terms of Use</a> </li><li> <a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a> </li><li> <a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy Statement</a> </li></ul>			</nav>
+			<span class="copyright">
+				&copy; 2016 Microsoft
+			</span>
+		</div>
+	</div>
+</footer>
+<!-- .main-footer -->
+
+<script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName('script')[0];
+a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0031/9413.js";
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+	<script type="text/javascript">
+		(function () {
+			var s = document.createElement('script');
+			s.type = 'text/javascript';
+			s.async = true;
+			s.src = ('https:' == document.location.protocol ? 'https://s' : 'http://i')
+			+ '.po.st/static/v4/post-widget.js#publisherKey=7gba9703183o3oq9jfd8';
+			var x = document.getElementsByTagName('script')[0];
+			x.parentNode.insertBefore(s, x);
+		})();
+	</script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shCore.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushCSharp.js?ver=3.0.9b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://blogs.windows.com/buildingapps/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://blogs.windows.com/buildingapps/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201618'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/underscore.min.js?ver=1.6.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var Windows_Blogs = {"ajaxurl":"https:\/\/blogs.windows.com\/buildingapps\/wp-admin\/admin-ajax.php","nonce_filter":"bf8beba462","action_filter_posts":"wb_ajax_filter_posts","template":"archive","debug":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-content/themes/windows-blogs/assets/js/windows-blogs.js?ver=0.1.2'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/comment-reply.min.js?ver=4.4.2'></script>
+<script type='text/javascript' src='https://blogs.windows.com/buildingapps/wp-includes/js/wp-embed.min.js?ver=4.4.2'></script>
+<script type='text/javascript' src='https://stats.wp.com/e-201618.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.8.1',blog:'72186895',post:'28233',tz:'-7',srv:'blogs.windows.com'} ]);
+	_stq.push([ 'clickTrackerInit', '72186895', '28233' ]);
+</script>
+<script type="text/JavaScript">
+	var varSegmentation = 0;
+	var varClickTracking = 1;
+	var varCustomerTracking = 1;
+	var varAutoFirePV = 1;
+	var Route = "23470";
+	var Ctrl = "";
+	document.write( "<script type='text/javascript' src='" + (
+		window.location.protocol
+	) + "//c.microsoft.com/ms.js'" + "'><\/script>" );
+</script>
+<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5591c9b53780a6e1" async="async"></script>
+</body>
+</html>
+<!--
+	generated 44 seconds ago
+	generated in 0.714 seconds
+	served from batcache in 0.025 seconds
+	expires in 256 seconds
+-->

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="With the release of the new AJAX user interface into testing on the Fastmail beta server, we decided that it might be interesting to talk about the technology that has gone into making the new interface work. This post is the first of a series of technical posts we plan to do over the next few months, documenting some of the interesting work and technologies we've used to power the new interface. Regular users can skip these posts, but we hope technical users find them interesting.">
+<title>Building the new AJAX mail UI part 1: Instant notifications of new emails via eventsource/server-sent events | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Building the new AJAX mail UI part 1: Instant notifications of new emails via eventsource/server-sent events">
+<meta property="og:description" content="With the release of the new AJAX user interface into testing on the Fastmail beta server, we decided that it might be interesting to talk about the technology that has gone into making the new interface work. This post is the first of a series of technical posts we plan to do over the next few months, documenting some of the interesting work and technologies we've used to power the new interface. Regular users can skip these posts, but we hope technical users find them interesting.">
+<meta property="og:url" content="https://blog.fastmail.com/2012/01/09/building-the-new-ajax-mail-ui-part-1-instant-notifications-of-new-emails-via-eventsourceserver-sent-events/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2012/01/09/building-the-new-ajax-mail-ui-part-1-instant-notifications-of-new-emails-via-eventsourceserver-sent-events/">
+<meta name="twitter:title" content="Building the new AJAX mail UI part 1: Instant notifications of new emails via eventsource/server-sent events">
+<meta name="twitter:description" content="With the release of the new AJAX user interface into testing on the Fastmail beta server, we decided that it might be interesting to talk about the technology that has gone into making the new interface work. This post is the first of a series of technical posts we plan to do over the next few months, documenting some of the interesting work and technologies we've used to power the new interface. Regular users can skip these posts, but we hope technical users find them interesting.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2012/01/09/building-the-new-ajax-mail-ui-part-1-instant-notifications-of-new-emails-via-eventsourceserver-sent-events/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2012/01/09/building-the-new-ajax-mail-ui-part-1-instant-notifications-of-new-emails-via-eventsourceserver-sent-events/'>Building the new AJAX mail UI part 1: Instant notifications of new emails via eventsource/server-sent events</a></h1>
+<p class="blog-author">Rob Mueller &ndash;  8 January 2012</p>
+<p>With the release of the <a href="http://blog.fastmail.fm/2011/12/23/new-webmail-user-interface-being-tested-on-beta-server/">new AJAX user interface into testing on the
+Fastmail beta
+server</a>,
+we decided that it might be interesting to talk about the technology
+that has gone into making the new interface work. This post is the first
+of a series of technical posts we plan to do over the next few months,
+documenting some of the interesting work and technologies we've used to
+power the new interface. Regular users can skip these posts, but we hope
+technical users find them interesting.</p>
+
+<p>We're starting the series by looking at how we push instant
+notifications of new email from the server to the web application
+running in your browser. The communication mechanism we are using is the
+native <a href="http://dev.w3.org/html5/eventsource/">eventsource/server-sent
+events</a> object. Our reasons for
+choosing this were threefold:</p>
+
+<ol>
+<li>It has slightly broader browser support than websockets
+(<a href="http://caniuse.com/eventsource">eventsource</a> vs
+<a href="http://caniuse.com/websockets">websockets</a>)</li>
+<li>We already had a well defined JSON RPC API, using XmlHttpRequest
+objects to request data from the server, so the only requirement we
+had was for notifications about new data, which is exactly what
+eventsource was designed for</li>
+<li>For browsers that don't support a native eventsource object, we
+could fallback to emulating it closely enough without too much extra
+code (more below), so we need only maintain one solution.</li>
+</ol>
+
+<p>We're using native eventsource support in Opera 11+, Chrome 6+, Safari
+5+ and Firefox 6+. For older Firefox versions, the native object is
+simulated using an XmlHttpRequest object; Firefox allows you to read
+data as it is streaming. Internet Explorer unfortunately doesn't, and
+whilst there are ways of doing push using script tags in a continually
+loading iframe, they felt hacky and less robust, so we just went with a
+<a href="http://en.wikipedia.org/wiki/Push_technology#Long_polling">long polling
+solution</a>
+there for now. It uses the same code as the older-Firefox eventsource
+simulation object, the only difference is that the server has to close
+the connection after each event is pused; the client then reestablishes
+a new connection immediately. The effect is the same, it's just a little
+less efficient.</p>
+
+<p>Once you have an eventsource object, be it native or simulated, using it
+for push notifications in the browser is easy; just point it at the
+right URL, then wait for events to be fired on the object as data is
+pushed. In the case of mail, we just send a 'something has changed'
+notification. Whenever a new notification arrives, we invalidate the
+cache and refresh the currently displayed view, fetching the new email.</p>
+
+<p>On the server side, the event push implementation had a few requirements
+and a few quirks to work with our existing infrastructure.</p>
+
+<p>Because eventsource connections are long lived, we need to use a system
+that can scale to a potentially very large number of simultaneous open
+connections. We already use <a href="http://nginx.org/">nginx</a> on our front end
+servers for http, imap and pop proxying. nginx uses a small process pool
+with a non-blocking event model and
+<a href="http://en.wikipedia.org/wiki/Epoll">epoll</a> on Linux, so it can scale to
+a very large number of simultaneous connections. We regularly see over
+30,000 simultaneous http, imap and pop connections to a frontend machine
+(mostly SSL connections), with less than 1/10th of total CPU being used.</p>
+
+<p>However, with a large number of client connections to nginx, we'd still
+have to proxy them to some backend process that could handle the large
+number of simultaneous connections. Fortunately, there is an alternative
+event based approach.</p>
+
+<p>After a little bit of searching, we found a <a href="https://github.com/wandenberg/nginx-push-stream-module/">third party push stream
+module</a> for
+nginx that was nearly compatible with the W3C eventsource specification.
+We contacted the author, and thankfully he was willing to make the
+changes required to make it fully compatible with the eventsource spec
+and incorporate those changes back into the master version. Thanks
+<a href="http://br.linkedin.com/pub/wandenberg-peixoto/8/82a/525">Wandenberg
+Peixoto</a>!</p>
+
+<p>Rather than proxying a connection, the module accepts a connection,
+holds it open, and connects it to an internal subscriber "channel". You
+can then use POST requests to the matching publisher URL channel to send
+messages to the subscriber, and the messages will be sent to the client
+over the open connection.</p>
+
+<p>This means you don't have to hold lots of internal network proxy
+connections open and deal with that scaling, instead you just have to
+send POST requests to nginx when an "event" occurs. This is done via a
+backend process that listens for events from cyrus (our IMAP server),
+such as when new emails are delivered to a mailbox, and (longer term)
+when any change is made to a mailbox.</p>
+
+<p>Two other small issues also need to be dealt with. First is that only
+logged in users should be able to connect to an eventsource channel, and
+second is that we have two separate frontend servers and clients connect
+randomly to one of the other because each hostname resolves to two IP
+addresses, so the backend needs to send POST requests to the correct
+frontend nginx server the user is connected to.</p>
+
+<p>We do the first by accepting the client connection, proxying to a
+backend mod_perl server which does the standard session and cookie
+authentication, and then use nginx's internal <a href="http://wiki.nginx.org/X-accel">X-Accel-Redirect
+mechanism</a> to do an internal redirect
+that hooks the connection to the correct subscriber channel. For the
+second, we add a "X-Frontend" header to each proxied request, so that
+the mod_perl backend knows which server the client is connected to.</p>
+
+<p>The stripped down version of the nginx configuration looks like this:</p>
+
+<pre><code>    # clients connect to this URL to receive events
+    location ^~ /events/ {
+      # proxy to backend, it'll do authentication and X-Accel-Redirect
+      # to /sub/ if user is authenticated, or return error otherwise
+      proxy_set_header   X-Frontend   frontend1;
+      proxy_pass         http://backend/events/;
+    }
+    location ^~ /subchannel/ {
+      internal;
+      push_stream_subscriber;
+      push_stream_eventsource_support on;
+      push_stream_content_type "text/event-stream; charset=utf-8";
+    }
+    # location we POST to from backend to push events to subscribers
+    location ^~ /pubchannel/ {
+      push_stream_publisher;
+      # prevent anybody but us from publishing
+      allow   10.0.0.0/8;
+      deny    all;
+    }
+</code></pre>
+
+<p>Putting the whole process together, the steps are as follows:</p>
+
+<ol>
+<li>Client connects to https://example.com/events/</li>
+<li>Request is proxied to a mod_perl server</li>
+<li>The mod_perl server does the usual session and user authentication</li>
+<li>If not successful, an error is returned, otherwise we continue</li>
+<li>The mod_perl server generates a channel number based on the user
+and session key</li>
+<li>It then sends a POST to the nginx process (picking the right one
+based on the X-Frontend header) to create a new channel</li>
+<li>It then returns an X-Accel-Redirect response to nginx which tells
+nginx to internally redirect and connect the client to the
+subscriber channel</li>
+<li>It then contacts an event pusher daemon on the users backend IMAP
+server to let it know that the user is now waiting for events. It
+tells the daemon the user, the channel id, and the frontend server.
+After doing that, the mod_perl request is complete and the process
+is free to service other requests</li>
+<li>On the backend IMAP server, the pusher daemon now waits for events
+from cyrus, and filters out events for that user</li>
+<li>When an event is received, it sends a POST request to the frontend
+server to push the event over the eventsource connection to the
+client</li>
+<li>One of the things the nginx module returns in response to the PUSH
+request is a "number of active subscribers" value. This should be 1,
+but if it drops to 0, we know that the client has dropped its
+connection, so at that point we don't need to monitor or push any
+more events for that channel, and internally cleanup so we don't
+push any more events for that user and channel. The nginx push
+stream module automatically does this on the frontend as well.</li>
+<li>If a client drops a connection and re-connects (in the same login
+session), it'll get the same channel id. This avoids potentially
+creating lots of channels</li>
+</ol>
+
+<p>In the future, we will be pushing events when any mailbox changes are
+made, not just a new email delivery (e.g. change made in an IMAP client,
+a mobile client, or another web login session). We don't currently do
+this because we need to filter out notifications due to actions made by
+the same client; since it already knows about these, invalidating the
+cached would be very inefficient.</p>
+
+<p>In general this all works as expected in all supported browsers and is
+really very easy to use. We have however come across a few issues to do
+with re-establishing lost connections. For example, when the computer
+goes to sleep then wakes up, the connection will have probably been
+lost. Opera has a bug in that it doesn't realise this and keeps showing
+that the connection is OPEN (in readyState 1).</p>
+
+<p>We've also found a potential related issue with the spec itself: "Any
+other HTTP response code not listed here, and any network error that
+prevents the HTTP connection from being established in the first place
+(e.g. DNS errors), must cause the user agent to fail the connection".
+This means that if you lose internet connection (for example pass
+through a tunnel on the train), the eventsource will try to reconnect,
+find there's no network and fail permanently. It will not make any
+further attempts to connect to the server once a network connection is
+found again. This same problem can cause a race condition when waking a
+computer from sleep as it often takes a few seconds to re-establish the
+internet connection. If the browser tries to re-establish the
+eventsource connection before the network is up, it will therefore
+permanently fail.</p>
+
+<p>This spec problem can be worked around by observing the error event. If
+the readyState property is now CLOSED (in readyState 2), we set a 30
+second timeout. When this fires, we create a new eventsource object to
+replace the old one (you can't reuse them) which will then try
+connecting again; essentially this is manually recreating the reconnect
+behaviour.</p>
+
+<p>The Opera bug in not detecting it's lost a connection after waking from
+sleep can be fixed by detecting when the computer has been asleep and
+manually re-establishing the connection, even if it's apparently open.
+To do this, we set a timeout for say 60s, then when it fires we compare
+the timestamp with when the timeout was set. If the difference is
+greater than (say) 65s, it's probable the computer has been asleep (thus
+delaying the timeout's firing), and so we again create a new eventsource
+object to replace the old one.</p>
+
+<p>Lastly, it was reasonably straight forward to implement a fully
+compatible eventsource implementation in Firefox using just a normal
+XmlHttpRequest object, thereby making this feature work in FF3.5+ (we
+haven't tested further back, but it may work in earlier versions too).
+The only difference is that the browser can't release from memory any of
+the data received over the eventsource connection until the connection
+is closed (and they could be really long lived), as you can always
+access it all through the XHR responseText property. However, we don't
+actually know if the other browsers actually make this optimisation with
+their native eventsource implementations, and given the data pushed
+through the eventsource connection is normally quite small, this
+certainly isn't an issue in practice.</p>
+
+<p>This means we support Opera/Firefox/Chrome/Safari with the same server
+implementation. To add Internet Explorer to the mix we use a long
+polling approach. To make the server support long polling all we do is
+make IE set a header on an XmlHttpRequest connection (we use
+X-Long-Poll: Yes), and if the server sees that header it closes the
+connection after every event is pushed; other than that it's exactly the
+same. This also means IE can share FF's eventsource emulation class with
+minimal changes.</p>
+
+<p>The instant notification of new emails is one of core features of the
+new interface that allows the blurring of boundaries between traditional
+email clients and webmail clients. Making this feature work, and work in
+a way that we knew was scalable going forward was an important
+requirement for the new interface. We've achieved this with a straight
+forward client solution, and in a way that elegantly integrates with our
+existing backend infrastructure.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2012/01/06/change-of-default-mx-records-for-domains/">Change of default MX records for domains</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2012/01/09/monthly-bandwidth-limits-removed/">Monthly bandwidth limits removed</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

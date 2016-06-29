@@ -1,0 +1,2733 @@
+<!DOCTYPE html>
+
+
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head><link rel="canonical" href="https://msdn.microsoft.com/en-us/library/windows/hardware/dn707969(v=vs.85).aspx" /><script type="text/javascript" src="//c.webtrends.com/acs/account/mx643kesn3/js/wt.js"></script>
+    <title>Preinstallable apps for desktop devices - Windows 10 hardware dev</title>
+
+        
+
+
+
+
+
+
+<meta name="DCS.dcsuri" content="/en-us/library/windows/hardware/dn707969(d=default,l=en-us,v=vs.85).aspx" />
+
+<meta name="NormalizedUrl" content="https://msdn.microsoft.com/en-us/library/windows/hardware/dn707969(d=default,l=en-us,v=vs.85).aspx" />
+
+<meta name="ms.normalizedurl" content="https://msdn.microsoft.com/en-us/library/windows/hardware/dn707969(d=default,l=en-us,v=vs.85).aspx" />
+
+<meta name="AmbientContext" content="{&quot;layout.limit_max_width&quot;:true,&quot;AmbientContextId&quot;:&quot;54738DE5-218A-49B8-B039-84C6DE1C9BDF&quot;,&quot;display.use_large_font&quot;:false,&quot;insight.perf_timing&quot;:true,&quot;AmbientContextDownstream&quot;:{},&quot;display.high_contrast&quot;:false,&quot;insight.use_wedcs_vnext&quot;:true}" />
+
+<meta name="VotingContextUrl" content="https://msdn.microsoft.com/en-us/library/windows/hardware/dn707969(d=default,l=en-us,v=vs.85).aspx" />
+
+<meta name="MN" content="61C41DD1-11:59:36 AM" />
+
+<meta name="Search.ShortId" content="dn707969" />
+
+<meta name="ms.shortidmsdn" content="dn707969" />
+
+<meta name="Ms.Locale" content="en-us" />
+
+<meta name="ms.prodver" content="VS.85" />
+
+<meta name="ms.contentlang" content="EN" />
+
+<meta name="ms.lang" content="DE" />
+
+<meta name="ms.loc" content="DE" />
+
+<meta name="ms.sitever" content="2016.04.30.1" />
+
+<meta name="ms.assetid" content="047A9971-29C1-402A-8671-C36272EC511B" />
+
+<meta name="ms.auth" content="0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" data-do-not-move="true">
+        //<![CDATA[
+        var AmbientContext = null;
+
+        (function(){
+            var root = (function(){return this;}).call(null);
+
+            var GetCookie = function(name){
+                var cookies = root.document.cookie ? root.document.cookie.split('; ') : [];
+                for (var i = 0; i < cookies.length; i++) {
+                    var pos = cookies[i].indexOf('=');
+                    if (name === root.decodeURIComponent(cookies[i].slice(0, pos)))
+                    {
+                        var cookie = cookies[i].slice(pos + 1).replace(/\+/g, ' ');
+                        cookie = root.decodeURIComponent(cookie);
+                        return cookie;
+                    }
+                }
+            };
+
+            var JsonDeserialize = function(content) {
+                return root.JSON && root.JSON.parse ? root.JSON.parse(content) : (new Function('return (' + content + ')'))();
+            };
+
+            try {
+                AmbientContext = GetCookie('AmbientContext');
+                AmbientContext = AmbientContext && JsonDeserialize(AmbientContext);
+            } catch(ex) {
+            } finally {
+                AmbientContext = AmbientContext || null;
+            }
+        })();
+        //]]>
+    </script>
+
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js" data-do-not-move="true" data-provides="jQuery"></script>
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/Areas/Epx/Themes/Windows/Content/Winlogo_favicon.ico" />
+
+
+<link rel="stylesheet" type="text/css" href="https://assets.onestore.ms/cdnfiles/onestorerolling-1604-22001/shell/v3/scss/shell.min.css" /><link rel="stylesheet" type="text/css" href="https://i-msdn.sec.s-msft.com/Combined.css?resources=0:ImageSprite,0:TopicResponsive,0:TopicResponsive.MediaQueries,1:CodeSnippet,1:ProgrammingSelector,1:ExpandableCollapsibleArea,0:CommunityContent,1:TopicNotInScope,1:FeedViewerBasic,1:ImageSprite,2:Header,2:sprite,3:Banner,3:Banner.MediaQueries,0:Breadcrumbs,0:Breadcrumbs.MediaQueries,4:breadcrumbs,0:ResponsiveToc,0:ResponsiveToc.MediaQueries,1:ContentFallback,0:LibraryMemberFilter,2:Footer,5:StandardRating,6:SelectLocaleFromPopUp,4:WindowsResponsive,0:Tables.MediaQueries;/Areas/Library/Content:0,/Areas/Epx/Content/Css:1,/Areas/Epx/Themes/Windows/Content:2,/Areas/Epx/Shared/Content:3,/Areas/Library/Themes/Windows/content:4,/Areas/Global/Content:5,/Areas/Epx/Themes/Base/Content:6&amp;amp;v=4BD307B45136CD01A4A2A73EDF5E173E" /></head>
+<body class="library ">
+    <div id="page">
+
+        
+
+        
+
+    
+
+
+    
+    <div id="ux-banner">
+        <div class="banner">
+            <div class="row">
+                <div class="left">Ich stimme zu, dass diese Seite Cookies für Analysen, personalisierten Inhalt und Werbung verwendet</div>
+                <div class="middle"><a tabindex="1" href="https://www.microsoft.com/privacystatement/de-de/core/default.aspx">Erfahren Sie mehr</a></div>
+                <div class="right"><a tabindex="1" title="Schließen"></a></div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+
+	      
+        <link rel="stylesheet" type="text/css" href="https://i-msdn.sec.s-msft.com/Areas/Epx/Themes/Windows/Content/UhfHeaderResponsive.css?v=635975733210964868" data-do-not-move="true" />
+    <div id="uhf-header-wrapper">
+         
+
+
+
+
+ 
+
+
+
+        <script data-requires="jQuery" data-provides="uhfHeader" async="true" src="https://mem.gfx.ms/meversion?partner=dev-center-win-hardware"></script>
+
+
+
+ 
+
+
+
+<div id="shell-header" class="shell-header shell-responsive " ms.pgarea="header" role="banner">
+    <div class="shell-header-wrapper">
+        <div class="shell-header-top" data-bi-area="HeaderL0" data-bi-view="L0V1">
+
+            <div class="shell-header-brand" ms.cmpgrp="logo">
+                        <a id="srv_shellHeaderMicrosoftLogo" href="https://www.microsoft.com" ms.cmpnm="MicrosoftBrandLogo" ms.title="Microsoft" title="Microsoft" data-bi-name="BrandLogo" tabindex="10">
+            <img src="https://assets.onestore.ms/cdnfiles/onestorerolling-1604-22001/shell/v3/images/logo/microsoft.png" alt="Microsoft" />
+        </a>
+
+            </div>
+
+            <div class="shell-header-nav-wrapper" ms.cmpgrp="nav" role="navigation">
+                <ul class="shell-header-nav" role="menubar" id="srv_shellHeaderNav" data-bi-area="L1" data-bi-view="Hovermenus">
+                        <li class="shell-header-user-mobile-container">
+                        </li>
+                                    <li class="shell-header-dropdown  " data-navcontainer="developer_resources_NavContainer">
+                                        <div id="developer_resources" class="shell-header-dropdown-label">
+                                            <a id="Entwicklerressourcen-navigation" href="javascript:void(0)" role="button" aria-labelledby="developer_resources" aria-haspopup="true" aria-expanded="false" ms.title="Entwicklerressourcen" data-bi-name="DeveloperResources" data-bi-slot="1" tabindex="20">
+                                                Entwicklerressourcen
+                                            </a>
+                                        </div>
+
+
+
+
+
+<div class="shell-header-dropdown-content " aria-hidden="true" role="menu">
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Microsoft-Entwickler">
+
+                            <dt id="dev_tech_ms_developer" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link">
+                                <a href="https://developer.microsoft.com/de-de" ms.title="Microsoft-Entwickler" tabindex="20" data-bi-name="DeveloperTech_MSDeveloper">Microsoft-Entwickler</a>                         
+                            </dt>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Windows">
+
+                            <dt id="developer_tech_windows" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link-withL3">
+                                <a href="https://developer.microsoft.com/de-de/windows" role="menuitem" ms.title="Windows" tabindex="20" data-bi-name="DeveloperTech_Windows">Windows</a>
+                                <i class="shell-icon-dropdown"></i>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_windows_windows_apps">
+                        <a href="https://developer.microsoft.com/de-de/windows/windows-apps " class="shell-l3-list-item" ms.title="Windows-Apps" tabindex="20" data-bi-name="DeveloperTech_Windows_WindowsApps">
+                            Windows-Apps
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_classic_desktop">
+                        <a href="https://developer.microsoft.com/de-de/windows/desktop" class="shell-l3-list-item" ms.title="Klassischer Desktop" tabindex="20" data-bi-name="DeveloperTech_Windows_ClassicDesktop">
+                            Klassischer Desktop
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_IoT">
+                        <a href="https://developer.microsoft.com/de-de/windows/iot" class="shell-l3-list-item" ms.title="Das Internet der Dinge" tabindex="20" data-bi-name="DeveloperTech_Windows_IoT">
+                            Das Internet der Dinge
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_games">
+                        <a href="https://developer.microsoft.com/de-de/windows/games" class="shell-l3-list-item" ms.title="Spiele" tabindex="20" data-bi-name="DeveloperTech_Games">
+                            Spiele
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_holographic">
+                        <a href="https://developer.microsoft.com/de-de/windows/holographic" class="shell-l3-list-item" ms.title="Holographic" tabindex="20" data-bi-name="DeveloperTech_Windows_Holographic">
+                            Holographic
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_edge">
+                        <a href="https://developer.microsoft.com/de-de/microsoft-edge" class="shell-l3-list-item" ms.title="Microsoft Edge" tabindex="20" data-bi-name="DeveloperTech_Windows_Edge">
+                            Microsoft Edge
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_hardware">
+                        <a href="https://msdn.microsoft.com/windows/hardware/gg236587.aspx" class="shell-l3-list-item" ms.title="Hardware" tabindex="20" data-bi-name="DeveloperTech_Hardware">
+                            Hardware
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Azure">
+
+                            <dt id="dev_tech_azure" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link-withL3">
+                                <a href="https://azure.microsoft.com/" role="menuitem" ms.title="Azure" tabindex="20" data-bi-name="DeveloperTech_Azure">Azure</a>
+                                <i class="shell-icon-dropdown"></i>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_windows_web_apps">
+                        <a href="https://azure.microsoft.com/documentation/scenarios/web-app/" class="shell-l3-list-item" ms.title="Web-Apps" tabindex="20" data-bi-name="DeveloperTech_Windows_WebApps">
+                            Web-Apps
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_mobile_apps">
+                        <a href="https://azure.microsoft.com/documentation/scenarios/mobile-app/ " class="shell-l3-list-item" ms.title="Mobile Apps" tabindex="20" data-bi-name="DeveloperTech_Windows_MobileApps">
+                            Mobile Apps
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_api_apps">
+                        <a href="https://azure.microsoft.com/services/app-service/api/" class="shell-l3-list-item" ms.title="API-Apps" tabindex="20" data-bi-name="DeveloperTech_Windows_APIapps">
+                            API-Apps
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_service_fabric">
+                        <a href="https://azure.microsoft.com/services/service-fabric/" class="shell-l3-list-item" ms.title="Service Fabric" tabindex="20" data-bi-name="DeveloperTech_Windows_ServiceFabric">
+                            Service Fabric
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Visual Studio">
+
+                            <dt id="developer_tech_visual_studio" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link-withL3">
+                                <a href="https://www.visualstudio.com/" role="menuitem" ms.title="Visual Studio" tabindex="20" data-bi-name="DeveloperTech_VisualStudio">Visual Studio</a>
+                                <i class="shell-icon-dropdown"></i>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_vs_visual_studio_2015_products">
+                        <a href="https://visualstudio.com/products/vs-2015-product-editions" class="shell-l3-list-item" ms.title="Visual Studio 2015-Produkte" tabindex="20" data-bi-name="DeveloperTech_VS_VisualStudio2015Products">
+                            Visual Studio 2015-Produkte
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_visual_studio_team_services">
+                        <a href="https://visualstudio.com/products/visual-studio-team-services-vs" class="shell-l3-list-item" ms.title="Visual Studio Team Services" tabindex="20" data-bi-name="DeveloperTech_Windows_VisualStudioTeamServices">
+                            Visual Studio Team Services
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_visual_studio_code">
+                        <a href="https://www.visualstudio.com/products/code-vs.aspx" class="shell-l3-list-item" ms.title="Visual Studio-Code" tabindex="20" data-bi-name="DeveloperTech_Windows_VisualStudioCode">
+                            Visual Studio-Code
+                        </a>
+                    </li>
+                    <li id="developer_tech_vs_visual_studio_dev_essentials">
+                        <a href="https://visualstudio.com/visual-studio-dev-essentials-vs" class="shell-l3-list-item" ms.title="Visual Studio Dev Essentials" tabindex="20" data-bi-name="DeveloperTech_VS_VisualStudioDevEssentials">
+                            Visual Studio Dev Essentials
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Office">
+
+                            <dt id="developer_tech_office" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link-withL3">
+                                <a href="https://dev.office.com/" role="menuitem" ms.title="Office" tabindex="20" data-bi-name="DeveloperTech_Office">Office</a>
+                                <i class="shell-icon-dropdown"></i>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_windows_word_excel_powerpoint">
+                        <a href="https://dev.office.com/getting-started/addins" class="shell-l3-list-item" ms.title="Word/Excel/PowerPoint" tabindex="20" data-bi-name="DeveloperTech_Windows_WordExcelPowerPoint">
+                            Word/Excel/PowerPoint
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_microsoft_graph">
+                        <a href="http://graph.microsoft.io" class="shell-l3-list-item" ms.title="Microsoft Graph" tabindex="20" data-bi-name="DeveloperTech_Windows_MicrosoftGraph">
+                            Microsoft Graph
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_outlook">
+                        <a href="https://dev.outlook.com/" class="shell-l3-list-item" ms.title="Outlook" tabindex="20" data-bi-name="DeveloperTech_Windows_Outlook">
+                            Outlook
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_one_drive_sharepoint">
+                        <a href="https://dev.onedrive.com/" class="shell-l3-list-item" ms.title="OneDrive/Sharepoint" tabindex="20" data-bi-name="DeveloperTech_Windows_OneDriveSharepoint">
+                            OneDrive/Sharepoint
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_skype">
+                        <a href="https://www.skype.com/developer/ " class="shell-l3-list-item" ms.title="Skype" tabindex="20" data-bi-name="DeveloperTech_Windows_Skype">
+                            Skype
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Dienste">
+
+                            <dt id="developer_tech_services" class="shell-header-dropdown-tab-label">
+                                <a href="javascript:void(0)" role="menuitem" ms.title="Dienste" ms.interactiontype="14" tabindex="20" data-bi-dnt="">
+                                    Dienste
+                                    <i class="shell-icon-dropdown facing-right"></i>
+                                </a>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_windows_store">
+                        <a href="https://developer.microsoft.com/de-de/store" class="shell-l3-list-item" ms.title="Store" tabindex="20" data-bi-name="DeveloperTech_Windows_Store">
+                            Store
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_cortana">
+                        <a href="https://developer.microsoft.com/de-de/windows-apps/cortana" class="shell-l3-list-item" ms.title="Cortana" tabindex="20" data-bi-name="DeveloperTech_Windows_Cortana">
+                            Cortana
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_bing">
+                        <a href="https://www.bing.com/dev " class="shell-l3-list-item" ms.title="Bing" tabindex="20" data-bi-name="DeveloperTech_Windows_Bing">
+                            Bing
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_app_insights">
+                        <a href="https://azure.microsoft.com/services/application-insights/" class="shell-l3-list-item" ms.title="Application Insights" tabindex="20" data-bi-name="DeveloperTech_Windows_AppInsights">
+                            Application Insights
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Sprachen und Plattformen">
+
+                            <dt id="dev_tech_lang_platforms" class="shell-header-dropdown-tab-label">
+                                <a href="javascript:void(0)" role="menuitem" ms.title="Sprachen und Plattformen" ms.interactiontype="14" tabindex="20" data-bi-dnt="">
+                                    Sprachen und Plattformen
+                                    <i class="shell-icon-dropdown facing-right"></i>
+                                </a>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_lang_platform_service_fabric">
+                        <a href="https://developer.xamarin.com/" class="shell-l3-list-item" ms.title="Xamarin" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_ServiceFabric">
+                            Xamarin
+                        </a>
+                    </li>
+                    <li id="developer_tech_lang_platform_asp_net">
+                        <a href="https://www.asp.net/" class="shell-l3-list-item" ms.title="ASP.NET" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_ASP.NET">
+                            ASP.NET
+                        </a>
+                    </li>
+                    <li id="developer_tech_lang_platform_c++">
+                        <a href="https://msdn.microsoft.com/library/60k1461a.aspx" class="shell-l3-list-item" ms.title="C++" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_C++">
+                            C++
+                        </a>
+                    </li>
+                    <li id="developer_tech_lang_platform_type_script">
+                        <a href="https://www.typescriptlang.org/" class="shell-l3-list-item" ms.title="TypeScript" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_TypeScript">
+                            TypeScript
+                        </a>
+                    </li>
+                    <li id="developer_tech_lang_platform_net_vb_c#_f#">
+                        <a href="https://msdn.microsoft.com/vstudio/aa496123" class="shell-l3-list-item" ms.title=".NET – VB, C#, F#" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_NET_VB_C#F#">
+                            .NET – VB, C#, F#
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Server">
+
+                            <dt id="dev_tech_server" class="shell-header-dropdown-tab-label">
+                                <a href="javascript:void(0)" role="menuitem" ms.title="Server" ms.interactiontype="14" tabindex="20" data-bi-dnt="">
+                                    Server
+                                    <i class="shell-icon-dropdown facing-right"></i>
+                                </a>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_server_windows_server">
+                        <a href="https://msdn.microsoft.com/windowsserver" class="shell-l3-list-item" ms.title="Windows Server" tabindex="20" data-bi-name="DeveloperTech_Server_WindowsServer">
+                            Windows Server
+                        </a>
+                    </li>
+                    <li id="developer_tech_server_sql_server">
+                        <a href="https://msdn.microsoft.com/library/mt590198" class="shell-l3-list-item" ms.title="SQL Server" tabindex="20" data-bi-name="DeveloperTech_Server_SQLServer">
+                            SQL Server
+                        </a>
+                    </li>
+                    <li id="developer_tech_server_biz_talk_server">
+                        <a href="https://msdn.microsoft.com/biztalk/aa937640.aspx" class="shell-l3-list-item" ms.title="BizTalk Server" tabindex="20" data-bi-name="DeveloperTech_Server_BizTalkServer">
+                            BizTalk Server
+                        </a>
+                    </li>
+                    <li id="developer_tech_server_sharepoint">
+                        <a href="https://msdn.microsoft.com/library/mt674607" class="shell-l3-list-item" ms.title="SharePoint" tabindex="20" data-bi-name="DeveloperTech_Server_SharePoint">
+                            SharePoint
+                        </a>
+                    </li>
+                    <li id="developer_tech_server_dynamics">
+                        <a href="https://msdn.microsoft.com/dynamics" class="shell-l3-list-item" ms.title="Dynamics" tabindex="20" data-bi-name="DeveloperTech_Server_Dynamics">
+                            Dynamics
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="Entwicklerressourcen; Programme und Communitys">
+
+                            <dt id="dev_tech_programs_community" class="shell-header-dropdown-tab-label">
+                                <a href="javascript:void(0)" role="menuitem" ms.title="Programme und Communitys" ms.interactiontype="14" tabindex="20" data-bi-dnt="">
+                                    Programme und Communitys
+                                    <i class="shell-icon-dropdown facing-right"></i>
+                                </a>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_server_programs_community_students">
+                        <a href="https://msdn.microsoft.com/imagine/imagine-home" class="shell-l3-list-item" ms.title="Studenten" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity_Students">
+                            Studenten
+                        </a>
+                    </li>
+                    <li id="developer_tech_programs_community_startups">
+                        <a href="https://microsoft.com/bizspark" class="shell-l3-list-item" ms.title="Startups" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity_Startups">
+                            Startups
+                        </a>
+                    </li>
+                    <li id="developer_tech_programs_community_forums">
+                        <a href="https://social.msdn.microsoft.com/forums/" class="shell-l3-list-item" ms.title="Foren" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity_Forums">
+                            Foren
+                        </a>
+                    </li>
+                    <li id="developer_tech_programs_community _msdn">
+                        <a href="https://msdn.microsoft.com" class="shell-l3-list-item" ms.title="MSDN" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity _MSDN">
+                            MSDN
+                        </a>
+                    </li>
+                    <li id="developer_tech_programs_community _subscriber_downloads">
+                        <a href="https://msdn.microsoft.com/subscriptions/" class="shell-l3-list-item" ms.title="Downloads für Abonnenten" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity _SubscriberDownloads">
+                            Downloads für Abonnenten
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+
+</div>
+                                    </li>
+
+                </ul>
+            </div>
+                <div class="shell-header-user-container">
+                    <dl class="shell-header-user">
+                        <dt>
+                            <span id="meControl">
+                                <div class="msame_Header" tabindex="60" style="display: inline-block; height: 48px; font-size: 14px; border: 1px solid transparent; border-bottom-style: none; width: 100%;">
+                                    <div class="msame_Header_name" style="line-height: 48px; max-width: 160px; display: inline-block; vertical-align: top; font-size: 86%; color: #505050; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; word-break: break-all">Anmelden </div>
+                                </div>
+                            </span>
+                        </dt>
+                    </dl>
+                </div>
+            
+            <div class="shell-header-nav-toggle " ms.cmpgrp="nav">
+                <button class="shell-header-toggle-menu" ms.cmpnm="mobile global nav toggle button" ms.title="Toggle menu" title="Menü ein-/ausschalten" type="button" data-bi-name="Toggle Menu" tabindex="55">
+                    <i class="shell-icon-menu"></i>
+                </button>
+            </div>
+
+            <ul class="shell-header-toggle" ms.cmpgrp="header actions">
+                    <li>
+                        <button class="shell-header-toggle-search" type="button" data-bi-name="Toggle Search Icon" ms.title="search toggle" title="Suche ein-/ausschalten" tabindex="45">
+                            <i class="shell-icon-search"></i>
+                        </button>
+                    </li>
+                            </ul>
+
+            <div class="shell-header-actions" ms.cmpgrp="header actions">
+                    <form id="srv_shellHeaderSearchForm" class="shell-search" role="search" action="https://social.msdn.microsoft.com/search/windows/hardware" method="GET" autocomplete="off" onsubmit=" return window.msCommonShell.onSearch(this) " ms.cmpnm="search">
+                        <div class="shell-search-wrapper">
+                            <label for="cli_shellHeaderSearchInput" class="sr-only">Search Microsoft</label>
+                            <input id="cli_shellHeaderSearchInput" type="search" title="" name="query" data-bi-dnt="" placeholder="" maxlength="200" tabindex="30" />
+
+                                <input type="hidden" name="Refinement" data-bi-dnt="" value="182" />
+
+                            <button type="submit" title="Suchen" data-bi-dnt="" tabindex="40">
+                                <i class="shell-icon-search"></i>
+                                <span class="sr-only">Search</span>
+                            </button>
+                            <div id="cli_searchSuggestionsContainer" class="shell-search-dropdown-container">
+                                <div class="search-dropdown">
+                                    <div class="dropdown-item">
+                                        <ul id="cli_searchSuggestionsResults" data-bi-name="Search Suggestions" data-bi-source="UnifiedSearch" ms.cmpgrp="search suggestions"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="fixed-global-nav-buffer"></div>
+
+
+
+
+
+
+
+
+<div class="shell-category-header cat-theme-blue" ms.pgarea="categoryheader">
+    
+    <div role="navigation" aria-label="Category level navigation" class="shell-category-nav" ms.cmpgrp="cat nav" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="C0">
+        <div class="c-nav-pagination c-nav-pagination-prev">
+            <i class="shell-icon-dropdown facing-left"></i>
+        </div>
+        <ul class="shell-category-top-level shell-category-brand">
+            <li class="c-logo-item">
+                                <a id="shell-cat-header-logo" class="c-logo c-top-nav-link" href="https://msdn.microsoft.com/de-de/windows/hardware/gg236587.aspx" title="" ms.title="Hardware Dev Center" data-bi-name="Category logo" tabindex="70">
+                    <span class="logo-text-label">Hardware Dev Center</span>
+                </a>
+                <a id="shell-cat-header-logo-mobile" class="c-logo-mobile c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Hardware Dev Center" ms.interactiontype="14" data-bi-name="Mobile category logo" tabindex="70">
+                    <span class="logo-text-label">Hardware Dev Center</span>
+                    <i class="shell-icon-dropdown"></i>
+                </a>
+            <ul class="c-nav-dropdown-menu" role="menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="C1">
+
+
+
+            <li class="c-top-nav-item" id="explore-mobilelist">
+                <a id="explore-mobile" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="explore-mobilelist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Erkunden" role="button" ms.interactiontype="14" data-bi-name="Explore" data-bi-slot="1" data-show-cta="True">
+                    <span>
+                        Erkunden
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Explore-C2" ms.cmpnm="Erkunden" role="menu">
+
+
+
+
+        <li class="c-nav-item ">
+            <a id="explore_NewDevices-mobile" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/dn915057(v=vs.85).aspx" ms.title="Neue Gerätefunktionen" role="link" data-bi-name="Explore_New_Devices" data-bi-slot="1" tabindex="70">
+                <span>
+                    Neue Gerätefunktionen
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_UWD-mobile" class="c-nav-dropdown-item c-nav-link " href="http://go.microsoft.com/fwlink/?LinkId=698848" ms.title="Universelle Windows-Treiber" role="link" data-bi-name="Explore_UWD" data-bi-slot="2" tabindex="70">
+                <span>
+                    Universelle Windows-Treiber
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_hardware_compatibility-mobile" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/windows/hardware/mt269773.aspx" ms.title="Kompatibilitätsprogramme für Hardware" role="link" data-bi-name="Explore_Hardware_Compatibility" data-bi-slot="3" tabindex="70">
+                <span>
+                    Kompatibilitätsprogramme für Hardware
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_iotCore-mobile" class="c-nav-dropdown-item c-nav-link " href="http://go.microsoft.com/fwlink/p/?LinkId=526369 " ms.title="Windows IoT Core" role="link" data-bi-name="Explore_iotCore" data-bi-slot="4" tabindex="70">
+                <span>
+                    Windows IoT Core
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_3dPrint-mobile" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/windows/hardware/bg183398.aspx" ms.title="3D-Druck" role="link" data-bi-name="Explore_3DPrint" data-bi-slot="5" tabindex="70">
+                <span>
+                    3D-Druck
+                </span>
+            </a>
+
+
+
+        </li>
+
+
+                </ul>
+            </li>
+            <li class="c-top-nav-item" id="docs-mobilelist">
+                <a id="docs-mobile" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="docs-mobilelist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Dokumentation" role="button" ms.interactiontype="14" data-bi-name="Docs" data-bi-slot="2" data-show-cta="True">
+                    <span>
+                        Dokumentation
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs-C2" ms.cmpnm="Dokumentation" role="menu">
+
+
+
+
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_getstarted-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Erste Schritte" role="button" data-bi-name="Docs_GetStarted" data-bi-slot="1" tabindex="70">
+                <span>
+                    Erste Schritte
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs_GetStarted-C3" ms.cmpnm="Erste Schritte" role="menu">
+
+
+
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn927349.aspx" ms.title="Neues bei der Treiberentwicklung" role="link" data-bi-name="Docs_GetStarted-NewDriverDev" data-bi-slot="1">
+                            <span>
+                                Neues bei der Treiberentwicklung
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn927348.aspx" ms.title="Neues bei Kits und Tools" role="link" data-bi-name="GetStarted-NewKitsTools" data-bi-slot="2">
+                            <span>
+                                Neues bei Kits und Tools
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn757545.aspx" ms.title="Herstellung von Mobilgeräten" role="link" data-bi-name="Docs_GetStarted-MobileManfu" data-bi-slot="3">
+                            <span>
+                                Herstellung von Mobilgeräten
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/windows/hardware/gg507680.aspx" ms.title="Erste Schritte mit Windows 8.1 " role="link" data-bi-name="Docs_Apps_GetStartedWin8-1" data-bi-slot="4">
+                            <span>
+                                Erste Schritte mit Windows 8.1 
+                            </span>
+                        </a>
+            </li>
+
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_design-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Design" role="button" data-bi-name="Docs_Design" data-bi-slot="2" tabindex="70">
+                <span>
+                    Design
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs_Design-C3" ms.cmpnm="Design" role="menu">
+
+
+
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn915086.aspx" ms.title="Minimale Hardwareanforderungen" role="link" data-bi-name="Docs_Design_MinHardwareReq" data-bi-slot="1">
+                            <span>
+                                Minimale Hardwareanforderungen
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn915054.aspx" ms.title="PC" role="link" data-bi-name="Docs_Design_PC" data-bi-slot="2">
+                            <span>
+                                PC
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn915112.aspx" ms.title="Smartphone" role="link" data-bi-name="Docs_Design_Smartphone" data-bi-slot="3">
+                            <span>
+                                Smartphone
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/windows/hardware/gg462970.aspx" ms.title="Windows 8.1-Hardwaredesign" role="link" data-bi-name="Docs_Apps_Win8-1HardwareDesign" data-bi-slot="4">
+                            <span>
+                                Windows 8.1-Hardwaredesign
+                            </span>
+                        </a>
+            </li>
+
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_develop-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Entwickeln" role="button" data-bi-name="Docs_Develop" data-bi-slot="3" tabindex="70">
+                <span>
+                    Entwickeln
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs_Develop-C3" ms.cmpnm="Entwickeln" role="menu">
+
+
+
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/ff551063.aspx" ms.title="Debuggingtools" role="link" data-bi-name="Docs_Develop_DebugTools" data-bi-slot="1">
+                            <span>
+                                Debuggingtools
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/ff557557.aspx" ms.title="Desktopgeräte- und Treibertechnologien" role="link" data-bi-name="Docs_Develop_DesktopDeviceDriverTech" data-bi-slot="2">
+                            <span>
+                                Desktopgeräte- und Treibertechnologien
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/ff557557.aspx" ms.title="Mobilgeräte- und Treibertechnologien" role="link" data-bi-name="Docs_Develop_MobileDriverTech" data-bi-slot="3">
+                            <span>
+                                Mobilgeräte- und Treibertechnologien
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/windows/hardware/ff960953.aspx" ms.title="Entwicklung von Windows 8.1-Treibern" role="link" data-bi-name="Docs_Develop_Win8-1DriverDev" data-bi-slot="4">
+                            <span>
+                                Entwicklung von Windows 8.1-Treibern
+                            </span>
+                        </a>
+            </li>
+
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_customize-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Anpassen" role="button" data-bi-name="Docs_Customize" data-bi-slot="4" tabindex="70">
+                <span>
+                    Anpassen
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs_Customize-C3" ms.cmpnm="Anpassen" role="menu">
+
+
+
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn898375.aspx" ms.title="Windows-Bereitstellungsframework" role="link" data-bi-name="Docs_Customize_WinProvisionFrame" data-bi-slot="1">
+                            <span>
+                                Windows-Bereitstellungsframework
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn898376.aspx" ms.title="Framework für die unbeaufsichtigte Installation" role="link" data-bi-name="Docs_Desktop_UnattendFramework" data-bi-slot="2">
+                            <span>
+                                Framework für die unbeaufsichtigte Installation
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn757433(v=vs.85).aspx" ms.title="MCSF-Framework" role="link" data-bi-name="Docs_Mobile_UpdateScenarios" data-bi-slot="3">
+                            <span>
+                                MCSF-Framework
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://technet.microsoft.com/library/dn621900.aspx" ms.title="Windows 8.1-Anpassungstools" role="link" data-bi-name="Docs_PrevVerisions_Win8-1CustomTools" data-bi-slot="4">
+                            <span>
+                                Windows 8.1-Anpassungstools
+                            </span>
+                        </a>
+            </li>
+
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_test-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Test" role="button" data-bi-name="Docs_Test" data-bi-slot="5" tabindex="70">
+                <span>
+                    Test
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs_Test-C3" ms.cmpnm="Test" role="menu">
+
+
+
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn930814.aspx" ms.title="Windows Hardware Lab Kit (HLK)" role="link" data-bi-name="Docs_Test_WinHWLK" data-bi-slot="1">
+                            <span>
+                                Windows Hardware Lab Kit (HLK)
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn915002.aspx" ms.title="Erste Schritte mit dem HLK für Desktops" role="link" data-bi-name="Docs_Test_HLKDesktop" data-bi-slot="2">
+                            <span>
+                                Erste Schritte mit dem HLK für Desktops
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn927306.aspx" ms.title="Analysieren von Leistungsproblemen bei Mobilgeräten" role="link" data-bi-name="Docs_Test_AnalyzeMobilePerformance" data-bi-slot="3">
+                            <span>
+                                Analysieren von Leistungsproblemen bei Mobilgeräten
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/windows/hardware/gg462970.aspx" ms.title="Windows 8.1-Hardwaredesign" role="link" data-bi-name="Docs_Apps_Win8-1HardwareDesign" data-bi-slot="4">
+                            <span>
+                                Windows 8.1-Hardwaredesign
+                            </span>
+                        </a>
+            </li>
+
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_manufacture-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Herstellen" role="button" data-bi-name="Docs_Manufacture" data-bi-slot="6" tabindex="70">
+                <span>
+                    Herstellen
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs_Manufacture-C3" ms.cmpnm="Herstellen" role="menu">
+
+
+
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/br230796.aspx" ms.title="Übermitteln der Hardware für die Zertifizierung" role="link" data-bi-name="Manufacture_SubmitHardwareCert" data-bi-slot="1">
+                            <span>
+                                Übermitteln der Hardware für die Zertifizierung
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn898436.aspx" ms.title="Desktop-Herstellung – Schritt-für-Schritt-Anleitungen" role="link" data-bi-name="Docs_Manufacture_DesktopManufactureSteps" data-bi-slot="2">
+                            <span>
+                                Desktop-Herstellung – Schritt-für-Schritt-Anleitungen
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn757545.aspx" ms.title="Herstellung von Mobilgeräten" role="link" data-bi-name="Docs_Manufacture_MobileManufacturing" data-bi-slot="3">
+                            <span>
+                                Herstellung von Mobilgeräten
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/windows/hardware/dn593619.aspx" ms.title="Windows 8.1-Bereitstellung und -Bewertung" role="link" data-bi-name="Docs_Manufacture_Win8-1DeployAssess" data-bi-slot="4">
+                            <span>
+                                Windows 8.1-Bereitstellung und -Bewertung
+                            </span>
+                        </a>
+            </li>
+
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_service-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Dienst" role="button" data-bi-name="Docs_Service" data-bi-slot="7" tabindex="70">
+                <span>
+                    Dienst
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs_Service-C3" ms.cmpnm="Dienst" role="menu">
+
+
+
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/br230803.aspx" ms.title="Dashboard-Dienste" role="link" data-bi-name="Docs_Service_Dashboard" data-bi-slot="1">
+                            <span>
+                                Dashboard-Dienste
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn946570.aspx" ms.title="Aufbereiten von PCs" role="link" data-bi-name="Docs_Service_RefurbishPCs" data-bi-slot="2">
+                            <span>
+                                Aufbereiten von PCs
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/dn757528.aspx" ms.title="Updateszenarien" role="link" data-bi-name="Docs_Service_UpdateScenarios" data-bi-slot="3">
+                            <span>
+                                Updateszenarien
+                            </span>
+                        </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/hardware/hh825051.aspx" ms.title="Windows 8.1-Wiederherstellung" role="link" data-bi-name="Docs_Service_Win8-1Recovery" data-bi-slot="4">
+                            <span>
+                                Windows 8.1-Wiederherstellung
+                            </span>
+                        </a>
+            </li>
+
+
+
+                    </ul>
+        </li>
+
+
+                </ul>
+            </li>
+            <li class="c-top-nav-item" id="downloads-mobilelist">
+                <a id="downloads-mobile" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="downloads-mobilelist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Downloads" role="button" ms.interactiontype="14" data-bi-name="Downloads" data-bi-slot="3" data-show-cta="True">
+                    <span>
+                        Downloads
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Downloads-C2" ms.cmpnm="Downloads" role="menu">
+
+
+
+
+        <li class="c-nav-item ">
+            <a id="downloads_wdk-mobile" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/de-de/windows/hardware/hh852365.aspx " ms.title="Windows-Treiberkit (Windows Driver Kit, WDK)" role="link" data-bi-name="Downloads_WDK" data-bi-slot="1" tabindex="70">
+                <span>
+                    Windows-Treiberkit (Windows Driver Kit, WDK)
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="downloads_hlk-mobile" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/de-de/windows/hardware/hh833788.aspx" ms.title="Hardware Lab Kit (HLK)" role="link" data-bi-name="Downloads_HLK" data-bi-slot="2" tabindex="70">
+                <span>
+                    Hardware Lab Kit (HLK)
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="downloads_adk-mobile" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/de-de/windows/hardware/dn913721.aspx" ms.title="Assessment and Deployment Kit (ADK)" role="link" data-bi-name="Downloads_ADK" data-bi-slot="3" tabindex="70">
+                <span>
+                    Assessment and Deployment Kit (ADK)
+                </span>
+            </a>
+
+
+
+        </li>
+
+
+                </ul>
+            </li>
+                <li class="c-top-nav-item" id="samples-mobilelist">
+                    <a id="samples-mobile" tabindex="70" aria-labelledby="samples-mobilelist" class="c-top-nav-link c-nav-link" href="https://msdn.microsoft.com/windows/hardware/mt238339.aspx" ms.title="Beispiele" role="menuitem" data-bi-name="Samples" data-bi-slot="4" data-show-cta="True">
+                        <span>
+                            Beispiele
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="support-mobilelist">
+                    <a id="support-mobile" tabindex="70" aria-labelledby="support-mobilelist" class="c-top-nav-link c-nav-link" href="https://msdn.microsoft.com/windows/hardware/dn913720.aspx" ms.title="Support" role="menuitem" data-bi-name="Support" data-bi-slot="5" data-show-cta="True">
+                        <span>
+                            Support
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="programs-mobilelist">
+                    <a id="programs-mobile" tabindex="70" aria-labelledby="programs-mobilelist" class="c-top-nav-link c-nav-link" href="https://msdn.microsoft.com/windows/hardware/mt238276.aspx" ms.title="Programme" role="menuitem" data-bi-name="Programs" data-bi-slot="6" data-show-cta="True">
+                        <span>
+                            Programme
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="dashboard-mobilelist">
+                    <a id="dashboard-mobile" tabindex="70" aria-labelledby="dashboard-mobilelist" class="c-top-nav-link c-nav-link" href="https://sysdev.microsoft.com/de-de/hardware" ms.title="Dashboard" role="menuitem" data-bi-name="Dashboard" data-bi-slot="7" data-show-cta="True">
+                        <span>
+                            Dashboard
+                        </span>
+                    </a>
+                </li>
+
+            </ul>
+
+            </li>
+
+        </ul>
+
+        
+        <ul class="c-menu-container shell-category-top-level shell-category-nav-wrapper" role="menu" data-bi-area="CategoryMenuItems-Hardware Dev Center" data-bi-view="C1">
+
+
+
+            <li class="c-top-nav-item" id="explorelist">
+                <a id="explore" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="explorelist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Erkunden" role="button" ms.interactiontype="14" data-bi-name="Explore" data-bi-slot="1" data-show-cta="True">
+                    <span>
+                        Erkunden
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Explore-C2" ms.cmpnm="Erkunden" role="menu">
+
+
+
+
+        <li class="c-nav-item ">
+            <a id="explore_NewDevices" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/dn915057(v=vs.85).aspx" ms.title="Neue Gerätefunktionen" role="link" data-bi-name="Explore_New_Devices" data-bi-slot="1" tabindex="70">
+                <span>
+                    Neue Gerätefunktionen
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_UWD" class="c-nav-dropdown-item c-nav-link " href="http://go.microsoft.com/fwlink/?LinkId=698848" ms.title="Universelle Windows-Treiber" role="link" data-bi-name="Explore_UWD" data-bi-slot="2" tabindex="70">
+                <span>
+                    Universelle Windows-Treiber
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_hardware_compatibility" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/windows/hardware/mt269773.aspx" ms.title="Kompatibilitätsprogramme für Hardware" role="link" data-bi-name="Explore_Hardware_Compatibility" data-bi-slot="3" tabindex="70">
+                <span>
+                    Kompatibilitätsprogramme für Hardware
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_iotCore" class="c-nav-dropdown-item c-nav-link " href="http://go.microsoft.com/fwlink/p/?LinkId=526369 " ms.title="Windows IoT Core" role="link" data-bi-name="Explore_iotCore" data-bi-slot="4" tabindex="70">
+                <span>
+                    Windows IoT Core
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_3dPrint" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/windows/hardware/bg183398.aspx" ms.title="3D-Druck" role="link" data-bi-name="Explore_3DPrint" data-bi-slot="5" tabindex="70">
+                <span>
+                    3D-Druck
+                </span>
+            </a>
+
+
+
+        </li>
+
+
+                </ul>
+            </li>
+            <li class="c-top-nav-item" id="docslist">
+                <a id="docs" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="docslist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Dokumentation" role="button" ms.interactiontype="14" data-bi-name="Docs" data-bi-slot="2" data-show-cta="True">
+                    <span>
+                        Dokumentation
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Docs-C2" ms.cmpnm="Dokumentation" role="menu">
+
+
+
+
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_getstarted" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/dn914752(v=vs.85).aspx" ms.title="Erste Schritte" role="button" data-bi-name="Docs_GetStarted" data-bi-slot="1" tabindex="70">
+                <span>
+                    Erste Schritte
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content c-nav-multicolumn" data-col="4">
+
+
+
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Alle Geräte 
+                            </h3>
+                    </li>
+                        <li id="docs_getstarted-newdriverdev">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn927349.aspx" role="menuitem" ms.title="Neues bei der Treiberentwicklung" data-bi-name="Docs_GetStarted-NewDriverDev">
+                                Neues bei der Treiberentwicklung
+                            </a>
+                        </li>
+                        <li id="getstarted-writefirstdriver">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/ff554811.aspx" role="menuitem" ms.title="Schreiben des ersten Treibers " data-bi-name="GetStarted-WriteFirstDriver">
+                                Schreiben des ersten Treibers 
+                            </a>
+                        </li>
+                        <li id="getstarted-uwd">
+                            <a href=" http://go.microsoft.com/fwlink/?LinkId=698848" role="menuitem" ms.title="Universelle Windows-Treiber" data-bi-name="GetStarted-UWD">
+                                Universelle Windows-Treiber
+                            </a>
+                        </li>
+                        <li id="getstarted-provisioningframework">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn898375.aspx" role="menuitem" ms.title="Bereitstellungsframework" data-bi-name="GetStarted--ProvisioningFramework">
+                                Bereitstellungsframework
+                            </a>
+                        </li>
+                        <li id="getstarted-dashboardservices">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/br230803.aspx" role="menuitem" ms.title="Dashboard-Dienste" data-bi-name="GetStarted-DashboardServices">
+                                Dashboard-Dienste
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Desktop 
+                            </h3>
+                    </li>
+                        <li id="getstarted-newkitstools">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn927348.aspx" role="menuitem" ms.title="Neues bei Kits und Tools" data-bi-name="GetStarted-NewKitsTools">
+                                Neues bei Kits und Tools
+                            </a>
+                        </li>
+                        <li id="docs_getstarted-desktopmanfu">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn898436.aspx" role="menuitem" ms.title="Desktop-Herstellung – Schritt-für-Schritt-Anleitungen" data-bi-name="Docs_GetStarted-DesktopManfu">
+                                Desktop-Herstellung – Schritt-für-Schritt-Anleitungen
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Mobilgerät
+                            </h3>
+                    </li>
+                        <li id="docs_getstarted-mobilemanfu">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn757545.aspx" role="menuitem" ms.title="Herstellung von Mobilgeräten" data-bi-name="Docs_GetStarted-MobileManfu">
+                                Herstellung von Mobilgeräten
+                            </a>
+                        </li>
+                        <li id="docs_getstarted-buildsellmobiledevices">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkId=624707" role="menuitem" ms.title="Herstellen und Verkaufen von Mobilgeräten " data-bi-name="Docs_GetStarted-BuildSellMobileDevices">
+                                Herstellen und Verkaufen von Mobilgeräten 
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Vorherige Versionen
+                            </h3>
+                    </li>
+                        <li id="docs_apps_getstarted_win8-1">
+                            <a href="https://msdn.microsoft.com/windows/hardware/gg507680.aspx" role="menuitem" ms.title="Erste Schritte mit Windows 8.1 " data-bi-name="Docs_Apps_GetStartedWin8-1">
+                                Erste Schritte mit Windows 8.1 
+                            </a>
+                        </li>
+                        <li id="docs_apps_winphone8-1">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkId=615593" role="menuitem" ms.title="Erste Schritte mit Windows Phone 8.1 " data-bi-name="Docs_Apps_Winphone8-1">
+                                Erste Schritte mit Windows Phone 8.1 
+                            </a>
+                        </li>
+
+            </ul>
+
+
+
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_design" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/mt269766(v=vs.85).aspx" ms.title="Design" role="button" data-bi-name="Docs_Design" data-bi-slot="2" tabindex="70">
+                <span>
+                    Design
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content c-nav-multicolumn" data-col="4">
+
+
+
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Alle Geräte 
+                            </h3>
+                    </li>
+                        <li id="docs_design_minhardware_req">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915086.aspx" role="menuitem" ms.title="Minimale Hardwareanforderungen" data-bi-name="Docs_Design_MinHardwareReq">
+                                Minimale Hardwareanforderungen
+                            </a>
+                        </li>
+                        <li id="docs_design_device_experiences">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915057.aspx" role="menuitem" ms.title="Gerätefunktionen" data-bi-name="Docs_Design_DeviceExperiences">
+                                Gerätefunktionen
+                            </a>
+                        </li>
+                        <li id="docs_design_formfactors">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915070.aspx" role="menuitem" ms.title="Formfaktoren" data-bi-name="Docs_Design_FormFactors">
+                                Formfaktoren
+                            </a>
+                        </li>
+                        <li id="docs_design_component_guide">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915049.aspx" role="menuitem" ms.title="Richtlinien für Komponenten" data-bi-name="Docs_Design_ComponentGuide">
+                                Richtlinien für Komponenten
+                            </a>
+                        </li>
+                        <li id="docs_design_hardware_compat">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn922588.aspx" role="menuitem" ms.title="Kompatibilitätsprogramm" data-bi-name="Docs_Design_HardwareCompat">
+                                Kompatibilitätsprogramm
+                            </a>
+                        </li>
+                        <li id="docs_design_compat_req">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn932845.aspx" role="menuitem" ms.title="Kompatibilitätsanforderungen" data-bi-name="Docs_Design_CompatReq">
+                                Kompatibilitätsanforderungen
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Desktop 
+                            </h3>
+                    </li>
+                        <li id="docs_design_pc">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915054.aspx" role="menuitem" ms.title="PC" data-bi-name="Docs_Design_PC">
+                                PC
+                            </a>
+                        </li>
+                        <li id="docs_design_pctablet">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915113.aspx" role="menuitem" ms.title="PC-Tablet" data-bi-name="Docs_Design_PCTablet">
+                                PC-Tablet
+                            </a>
+                        </li>
+                        <li id="docs_design_2in1">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915037.aspx" role="menuitem" ms.title="2-in-1" data-bi-name="Docs_Design_2in1">
+                                2-in-1
+                            </a>
+                        </li>
+                        <li id="docs_design_notebook">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915092.aspx" role="menuitem" ms.title="Notebook" data-bi-name="Docs_Design_Notebook">
+                                Notebook
+                            </a>
+                        </li>
+                        <li id="docs_design_allinone">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn917882.aspx" role="menuitem" ms.title="All-in-One" data-bi-name="Docs_Design_All-InOne">
+                                All-in-One
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Mobilgerät
+                            </h3>
+                    </li>
+                        <li id="docs_design_smartphone">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915112.aspx" role="menuitem" ms.title="Smartphone" data-bi-name="Docs_Design_Smartphone">
+                                Smartphone
+                            </a>
+                        </li>
+                        <li id="docs_design_mobiletablet">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915113.aspx" role="menuitem" ms.title="Mobiles Tablet" data-bi-name="Docs_Design_MobileTablet">
+                                Mobiles Tablet
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Vorherige Versionen
+                            </h3>
+                    </li>
+                        <li id="docs_design_win8-1hardwaredesign">
+                            <a href="https://msdn.microsoft.com/windows/hardware/gg462970.aspx" role="menuitem" ms.title="Windows 8.1-Hardwaredesign" data-bi-name="Docs_Apps_Win8-1HardwareDesign">
+                                Windows 8.1-Hardwaredesign
+                            </a>
+                        </li>
+
+            </ul>
+
+
+
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_develop" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/mt269767(v=vs.85).aspx" ms.title="Entwickeln" role="button" data-bi-name="Docs_Develop" data-bi-slot="3" tabindex="70">
+                <span>
+                    Entwickeln
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content c-nav-multicolumn" data-col="4">
+
+
+
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Alle Geräte 
+                            </h3>
+                    </li>
+                        <li id="docs_develop_debugtools">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/ff551063.aspx" role="menuitem" ms.title="Debuggingtools" data-bi-name="Docs_Develop_DebugTools">
+                                Debuggingtools
+                            </a>
+                        </li>
+                        <li id="docs_develop_driverconverge">
+                            <a href="http://go.microsoft.com/fwlink/?LinkId=698849" role="menuitem" ms.title="Treiberkonvergenzmodell" data-bi-name="Docs_Develop_DriverConverge">
+                                Treiberkonvergenzmodell
+                            </a>
+                        </li>
+                        <li id="docs_develop_universaldrivers">
+                            <a href=" http://go.microsoft.com/fwlink/?LinkId=698848" role="menuitem" ms.title="Universelle Windows-Treiber" data-bi-name="Docs_Develop_UniversalDrivers">
+                                Universelle Windows-Treiber
+                            </a>
+                        </li>
+                        <li id="docs_develop_UniversalINF">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn941087.aspx" role="menuitem" ms.title="Universelle INF-Datei" data-bi-name="Docs_Develop_UniversalINF">
+                                Universelle INF-Datei
+                            </a>
+                        </li>
+                        <li id="docs_develop_devicedriverinstall">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/ff549731.aspx" role="menuitem" ms.title="Geräte- und Treiberinstallation" data-bi-name="Docs_Develop_DeviceDriverInstall">
+                                Geräte- und Treiberinstallation
+                            </a>
+                        </li>
+                        <li id="docs_develop_troubleshootdriverconfig">
+                            <a href="http://go.microsoft.com/fwlink/?LinkId=698850" role="menuitem" ms.title="Problembehandlung bei der Treiberkonfiguration " data-bi-name="Docs_Develop_TroubleshootDriverConfig">
+                                Problembehandlung bei der Treiberkonfiguration 
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Desktop
+                            </h3>
+                    </li>
+                        <li id="docs_develop_desktopdevicetech">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/ff557557.aspx" role="menuitem" ms.title="Desktopgeräte- und Treibertechnologien" data-bi-name="Docs_Develop_DesktopDeviceDriverTech">
+                                Desktopgeräte- und Treibertechnologien
+                            </a>
+                        </li>
+                        <li id="docs_develop_mobilebroadband">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn706054.aspx" role="menuitem" ms.title="Mobiles Breitband für Desktops" data-bi-name="Docs_Develop_MobileBroadband">
+                                Mobiles Breitband für Desktops
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Mobilgerät
+                            </h3>
+                    </li>
+                        <li id="docs_develop_mobiledrivertech">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/ff557557.aspx" role="menuitem" ms.title="Mobilgeräte- und Treibertechnologien" data-bi-name="Docs_Develop_MobileDriverTech">
+                                Mobilgeräte- und Treibertechnologien
+                            </a>
+                        </li>
+                        <li id="docs_develop_mobilepackages">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn756642.aspx" role="menuitem" ms.title="Erstellen von mobilen Paketen" data-bi-name="Docs_Develop_MobilePackages">
+                                Erstellen von mobilen Paketen
+                            </a>
+                        </li>
+                        <li id="docs_develop_mobilecodesigning">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn756634.aspx" role="menuitem" ms.title="Mobile Codesignatur" data-bi-name="Docs_Develop_MobileCodeSigning">
+                                Mobile Codesignatur
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Vorherige Versionen
+                            </h3>
+                    </li>
+                        <li id="docs_develop_win8-1driverdev">
+                            <a href="https://msdn.microsoft.com/windows/hardware/ff960953.aspx" role="menuitem" ms.title="Entwicklung von Windows 8.1-Treibern" data-bi-name="Docs_Develop_Win8-1DriverDev">
+                                Entwicklung von Windows 8.1-Treibern
+                            </a>
+                        </li>
+                        <li id="docs_develop_winphone8-1dev">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkId=615594" role="menuitem" ms.title="Entwicklung von Windows Phone 8.1-Treibern " data-bi-name="Docs_Develop_WinPhone8-1Dev">
+                                Entwicklung von Windows Phone 8.1-Treibern 
+                            </a>
+                        </li>
+
+            </ul>
+
+
+
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_customize" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/mt269765(v=vs.85).aspx" ms.title="Anpassen" role="button" data-bi-name="Docs_Customize" data-bi-slot="4" tabindex="70">
+                <span>
+                    Anpassen
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content c-nav-multicolumn" data-col="4">
+
+
+
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Alle Geräte
+                            </h3>
+                    </li>
+                        <li id="docs_customize_winprovisionframe">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn898375.aspx" role="menuitem" ms.title="Windows-Bereitstellungsframework" data-bi-name="Docs_Customize_WinProvisionFrame">
+                                Windows-Bereitstellungsframework
+                            </a>
+                        </li>
+                        <li id="docs_customize_provisiopackages">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/mt147447.aspx" role="menuitem" ms.title="Bereitstellungspakete" data-bi-name="Docs_Customize_provisiopackages">
+                                Bereitstellungspakete
+                            </a>
+                        </li>
+                        <li id="docs_customize_winicd">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn916113(v=vs.85).aspx" role="menuitem" ms.title="Windows ICD" data-bi-name="Docs_Customize_WinICD">
+                                Windows ICD
+                            </a>
+                        </li>
+                        <li id="docs_customize_preinstallapps">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/mt269740(v=vs.85).aspx" role="menuitem" ms.title="Vorinstallierte Apps" data-bi-name="Docs_Customize_PreinstallApps">
+                                Vorinstallierte Apps
+                            </a>
+                        </li>
+                        <li id="docs_customize_mdm">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn914769.aspx" role="menuitem" ms.title="Mobile Geräteverwaltung (MDM)" data-bi-name="Docs_Customize_MDM">
+                                Mobile Geräteverwaltung (MDM)
+                            </a>
+                        </li>
+                        <li id="docs_customize_deviceenrollment">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn925033.aspx" role="menuitem" ms.title="Geräteregistrierung" data-bi-name="Docs_Customize_DeviceEnrollment">
+                                Geräteregistrierung
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Desktop
+                            </h3>
+                    </li>
+                        <li id="docs_desktop_unattendframework">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn898376.aspx" role="menuitem" ms.title="Framework für die unbeaufsichtigte Installation" data-bi-name="Docs_Desktop_UnattendFramework">
+                                Framework für die unbeaufsichtigte Installation
+                            </a>
+                        </li>
+                        <li id="docs_desktop_startlayoutdesktop">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/mt171092(v=vs.85).aspx" role="menuitem" ms.title="Startlayout für Desktops" data-bi-name="Docs_Desktop_StartLayoutDesktop">
+                                Startlayout für Desktops
+                            </a>
+                        </li>
+                        <li id="docs_desktop_preinstalled_apps_desktop">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn707969.aspx" role="menuitem" ms.title="Vorinstallierte Apps für Desktops" data-bi-name="Docs_Desktop_PreinstalledAppsDesktop">
+                                Vorinstallierte Apps für Desktops
+                            </a>
+                        </li>
+                        <li id="docs_desktop_builddeploy_winicd">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn916105(v=vs.85).aspx" role="menuitem" ms.title="Erstellen und Bereitstellen eines Desktopimages mit Windows ICD" data-bi-name="Docs_Desktop_BuildDeployWinICD">
+                                Erstellen und Bereitstellen eines Desktopimages mit Windows ICD
+                            </a>
+                        </li>
+                        <li id="docs_desktop_desktopmfsteps">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn898436.aspx" role="menuitem" ms.title="Desktop-Herstellung – Schritt-für-Schritt-Anleitungen" data-bi-name="Docs_Desktop_DesktopMFSteps">
+                                Desktop-Herstellung – Schritt-für-Schritt-Anleitungen
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Mobilgerät
+                            </h3>
+                    </li>
+                        <li id="docs_mobile_updatescenarios">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn757433(v=vs.85).aspx" role="menuitem" ms.title="MCSF-Framework" data-bi-name="Docs_Mobile_UpdateScenarios">
+                                MCSF-Framework
+                            </a>
+                        </li>
+                        <li id="docs_mobile_layoutmobile">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/mt171093(v=vs.85).aspx" role="menuitem" ms.title="Startlayout für Mobilgeräte" data-bi-name="Docs_Mobile_StartLayoutMobile">
+                                Startlayout für Mobilgeräte
+                            </a>
+                        </li>
+                        <li id="docs_mobile_preinstalledappsmobile">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn707972.aspx" role="menuitem" ms.title="Vorinstallierte Apps für Mobilgeräte" data-bi-name="Docs_Mobile_PreinstalledAppsMobile">
+                                Vorinstallierte Apps für Mobilgeräte
+                            </a>
+                        </li>
+                        <li id="docs_mobile_mobileicd">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn916106.aspx" role="menuitem" ms.title="Erstellen und Bereitstellen eines Mobilgeräteimages mit Windows ICD " data-bi-name="Docs_Mobile_MobileICDimg">
+                                Erstellen und Bereitstellen eines Mobilgeräteimages mit Windows ICD 
+                            </a>
+                        </li>
+                        <li id="docs_mobile_build_mobile_img-gen">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn756630(v=vs.85).aspx" role="menuitem" ms.title="Erstellen eines mobilen Images mithilfe von ImgGen" data-bi-name="Docs_Mobile_Build_Mobile_Img-ImgGen">
+                                Erstellen eines mobilen Images mithilfe von ImgGen
+                            </a>
+                        </li>
+                        <li id="docs_mobile_optmobileimg">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn756780.aspx" role="menuitem" ms.title="Optionale Features für die Erstellung von Mobilgeräteimages" data-bi-name="Docs_Mobile_OptMobileImg">
+                                Optionale Features für die Erstellung von Mobilgeräteimages
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Vorherige Versionen
+                            </h3>
+                    </li>
+                        <li id="docs_prevversions_win8-1customtools">
+                            <a href="https://technet.microsoft.com/library/dn621900.aspx" role="menuitem" ms.title="Windows 8.1-Anpassungstools" data-bi-name="Docs_PrevVerisions_Win8-1CustomTools">
+                                Windows 8.1-Anpassungstools
+                            </a>
+                        </li>
+                        <li id="docs_prevversions_customswp8-1">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkId=615595" role="menuitem" ms.title="Windows Phone 8.1-Anpassung " data-bi-name="Docs_PrevVerisions_CustomWP8-1">
+                                Windows Phone 8.1-Anpassung 
+                            </a>
+                        </li>
+
+            </ul>
+
+
+
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_test" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/mt269770(v=vs.85).aspx" ms.title="Test" role="button" data-bi-name="Docs_Test" data-bi-slot="5" tabindex="70">
+                <span>
+                    Test
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content c-nav-multicolumn" data-col="4">
+
+
+
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Alle Geräte
+                            </h3>
+                    </li>
+                        <li id="docs_test_WinHWLK">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn930814.aspx" role="menuitem" ms.title="Windows Hardware Lab Kit (HLK)" data-bi-name="Docs_Test_WinHWLK">
+                                Windows Hardware Lab Kit (HLK)
+                            </a>
+                        </li>
+                        <li id="docs_test_hardwarecert">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/br230796.aspx" role="menuitem" ms.title="Übermitteln der Hardware für die Zertifizierung" data-bi-name="Docs_Test_HardwareCert">
+                                Übermitteln der Hardware für die Zertifizierung
+                            </a>
+                        </li>
+                        <li id="docs_test_troubleshoothlk">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn939955(v=vs.85).aspx" role="menuitem" ms.title="Problembehandlung für HLK" data-bi-name="Docs_Test_TroubleshootHLK">
+                                Problembehandlung für HLK
+                            </a>
+                        </li>
+                        <li id="docs_test_wpt">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn927310.aspx" role="menuitem" ms.title="Windows Performance Toolkit (WPT)" data-bi-name="Docs_Test_WPT">
+                                Windows Performance Toolkit (WPT)
+                            </a>
+                        </li>
+                        <li id="docs_test_wat">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn923543.aspx" role="menuitem" ms.title="Windows-Bewertungstoolkit " data-bi-name="Docs_Test_WAT">
+                                Windows-Bewertungstoolkit 
+                            </a>
+                        </li>
+                        <li id="docs_test_validateuwd">
+                            <a href="http://go.microsoft.com/fwlink/?LinkId=698851" role="menuitem" ms.title="Überprüfen von universellen Windows-Treibern" data-bi-name="Docs_Test_ValidateUWD">
+                                Überprüfen von universellen Windows-Treibern
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Desktop
+                            </h3>
+                    </li>
+                        <li id="docs_test_hlkdesktop">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn915002.aspx" role="menuitem" ms.title="Erste Schritte mit dem HLK für Desktops" data-bi-name="Docs_Test_HLKDesktop">
+                                Erste Schritte mit dem HLK für Desktops
+                            </a>
+                        </li>
+                        <li id="docs_test_analyzedesktopperformance">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn927306.aspx" role="menuitem" ms.title="Analysieren von Desktopleistungsproblemen" data-bi-name="Docs_Test_AnalyzeDesktopPerformance">
+                                Analysieren von Desktopleistungsproblemen
+                            </a>
+                        </li>
+                        <li id="docs_test_eventtracing">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn938554.aspx" role="menuitem" ms.title="Ereignisablaufverfolgung" data-bi-name="Docs_Test_EventTracing">
+                                Ereignisablaufverfolgung
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Mobilgerät
+                            </h3>
+                    </li>
+                        <li id="docs_test_analyzemobileperformance">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn927306.aspx" role="menuitem" ms.title="Analysieren von Leistungsproblemen bei Mobilgeräten" data-bi-name="Docs_Test_AnalyzeMobilePerformance">
+                                Analysieren von Leistungsproblemen bei Mobilgeräten
+                            </a>
+                        </li>
+                        <li id="docs_test_mobilesoftwaretracing">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn757514.aspx" role="menuitem" ms.title="Mobile Softwarenachverfolgung" data-bi-name="Docs_Test_MobileSoftwareTracing">
+                                Mobile Softwarenachverfolgung
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Vorherige Versionen
+                            </h3>
+                    </li>
+                        <li id="docs_design_win8-1hardwaredesign">
+                            <a href="https://msdn.microsoft.com/windows/hardware/gg462970.aspx" role="menuitem" ms.title="Windows 8.1-Hardwaredesign" data-bi-name="Docs_Apps_Win8-1HardwareDesign">
+                                Windows 8.1-Hardwaredesign
+                            </a>
+                        </li>
+                        <li id="docs_test_wp8-1test">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkId=615596" role="menuitem" ms.title="Testen von Windows Phone 8.1" data-bi-name="Docs_Test_WP8-1Test">
+                                Testen von Windows Phone 8.1
+                            </a>
+                        </li>
+
+            </ul>
+
+
+
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_manufacture" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/mt269768(v=vs.85).aspx" ms.title="Herstellen" role="button" data-bi-name="Docs_Manufacture" data-bi-slot="6" tabindex="70">
+                <span>
+                    Herstellen
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content c-nav-multicolumn" data-col="4">
+
+
+
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Alle Geräte
+                            </h3>
+                    </li>
+                        <li id="docs_manufacture_submithardwarecert">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/br230796.aspx" role="menuitem" ms.title="Übermitteln der Hardware für die Zertifizierung" data-bi-name="Manufacture_SubmitHardwareCert">
+                                Übermitteln der Hardware für die Zertifizierung
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_ffusupport">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn940130.aspx" role="menuitem" ms.title="FFU-Unterstützung" data-bi-name="Manufacture_FFUSupport">
+                                FFU-Unterstützung
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Desktop
+                            </h3>
+                    </li>
+                        <li id="docs_manufacturing_desktopmanufacturesteps">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn898436.aspx" role="menuitem" ms.title="Desktop-Herstellung – Schritt-für-Schritt-Anleitungen" data-bi-name="Docs_Manufacture_DesktopManufactureSteps">
+                                Desktop-Herstellung – Schritt-für-Schritt-Anleitungen
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_deploytoolsdesktop">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn938361.aspx" role="menuitem" ms.title="Bereitstellungstools für den Desktop" data-bi-name="Docs_Manufacture_DeployToolsDesktop">
+                                Bereitstellungstools für den Desktop
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_pushreset">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn938307.aspx" role="menuitem" ms.title="Zurücksetzen auf Knopfdruck" data-bi-name="Docs_Manufacture_PushReset">
+                                Zurücksetzen auf Knopfdruck
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_langpacks">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn898584.aspx" role="menuitem" ms.title="Sprachpakete" data-bi-name="Docs_Manufacture_LangPacks">
+                                Sprachpakete
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_winpe">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn938389.aspx" role="menuitem" ms.title="Windows PE" data-bi-name="Docs_Manufacture_WinPE">
+                                Windows PE
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_dism">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn898558.aspx" role="menuitem" ms.title="DISM" data-bi-name="Docs_Manufacture_DISM">
+                                DISM
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Mobilgerät
+                            </h3>
+                    </li>
+                        <li id="docs_manufacture_mobilemanufacturing">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn757545.aspx" role="menuitem" ms.title="Herstellung von Mobilgeräten" data-bi-name="Docs_Manufacture_MobileManufacturing">
+                                Herstellung von Mobilgeräten
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_deploytoolsmobile">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn757542.aspx" role="menuitem" ms.title="Bereitstellungstools für Mobilgeräte" data-bi-name="Docs_Manufacture_DeployToolsMobile">
+                                Bereitstellungstools für Mobilgeräte
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_updatescenarios">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn756628.aspx" role="menuitem" ms.title="Erstellen und Flashen von Mobilgeräteimages" data-bi-name="Docs_Manufacture_BuildMobileImgs">
+                                Erstellen und Flashen von Mobilgeräteimages
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Vorherige Versionen
+                            </h3>
+                    </li>
+                        <li id="docs_manufacture_win8-1deployassess">
+                            <a href="https://msdn.microsoft.com/windows/hardware/dn593619.aspx" role="menuitem" ms.title="Windows 8.1-Bereitstellung und -Bewertung" data-bi-name="Docs_Manufacture_Win8-1DeployAssess">
+                                Windows 8.1-Bereitstellung und -Bewertung
+                            </a>
+                        </li>
+                        <li id="docs_manufacture_wp8-1manufacturing">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkId=615597" role="menuitem" ms.title="Windows Phone 8.1-Herstellung " data-bi-name="Docs_Manufacture_WP8-1Manufacturing">
+                                Windows Phone 8.1-Herstellung 
+                            </a>
+                        </li>
+
+            </ul>
+
+
+
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_service" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/hardware/mt269769(v=vs.85).aspx" ms.title="Dienst" role="button" data-bi-name="Docs_Service" data-bi-slot="7" tabindex="70">
+                <span>
+                    Dienst
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content c-nav-multicolumn" data-col="4">
+
+
+
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Alle Geräte
+                            </h3>
+                    </li>
+                        <li id="docs_service_dashboard">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/br230803.aspx" role="menuitem" ms.title="Dashboard-Dienste" data-bi-name="Docs_Service_Dashboard">
+                                Dashboard-Dienste
+                            </a>
+                        </li>
+                        <li id="docs_service_driverdistribute">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/br230778(v=vs.85).aspx" role="menuitem" ms.title="Treiberverteilung" data-bi-name="Docs_Service_DriverDistribute">
+                                Treiberverteilung
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Desktop
+                            </h3>
+                    </li>
+                        <li id="docs_service_refurbishpcs">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn946570.aspx" role="menuitem" ms.title="Aufbereiten von PCs" data-bi-name="Docs_Service_RefurbishPCs">
+                                Aufbereiten von PCs
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Mobilgerät
+                            </h3>
+                    </li>
+                        <li id="docs_service_updatescenarios">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn757528.aspx" role="menuitem" ms.title="Updateszenarien" data-bi-name="Docs_Service_UpdateScenarios">
+                                Updateszenarien
+                            </a>
+                        </li>
+                        <li id="docs_service_refurbishmobile">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn757542.aspx" role="menuitem" ms.title="Aufbereiten von Mobilgeräten " data-bi-name="Docs_Service_RefurbishMobile">
+                                Aufbereiten von Mobilgeräten 
+                            </a>
+                        </li>
+                        <li id="docs_service_fieldscenarios">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/dn757540.aspx" role="menuitem" ms.title="Außendienstszenarien" data-bi-name="Docs_Service_FieldScenarios">
+                                Außendienstszenarien
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                Vorherige Versionen
+                            </h3>
+                    </li>
+                        <li id="docs_service_win8-1recovery">
+                            <a href="https://msdn.microsoft.com/library/windows/hardware/hh825051.aspx" role="menuitem" ms.title="Windows 8.1-Wiederherstellung" data-bi-name="Docs_Service_Win8-1Recovery">
+                                Windows 8.1-Wiederherstellung
+                            </a>
+                        </li>
+                        <li id="docs_service_toolswp8-1">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkId=615598 " role="menuitem" ms.title="Service Center-Tools für Windows Phone 8.1 " data-bi-name="Docs_Service_ToolsWP8-1">
+                                Service Center-Tools für Windows Phone 8.1 
+                            </a>
+                        </li>
+                        <li id="docs_service_wp8-1update">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkId=615599" role="menuitem" ms.title="Windows Phone 8.1-Update " data-bi-name="Docs_Service_WP8-1Update">
+                                Windows Phone 8.1-Update 
+                            </a>
+                        </li>
+
+            </ul>
+
+
+
+                    </div>
+        </li>
+
+
+                </ul>
+            </li>
+            <li class="c-top-nav-item" id="downloadslist">
+                <a id="downloads" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="downloadslist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Downloads" role="button" ms.interactiontype="14" data-bi-name="Downloads" data-bi-slot="3" data-show-cta="True">
+                    <span>
+                        Downloads
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Hardware Dev Center" data-bi-view="Downloads-C2" ms.cmpnm="Downloads" role="menu">
+
+
+
+
+        <li class="c-nav-item ">
+            <a id="downloads_wdk" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/de-de/windows/hardware/hh852365.aspx " ms.title="Windows-Treiberkit (Windows Driver Kit, WDK)" role="link" data-bi-name="Downloads_WDK" data-bi-slot="1" tabindex="70">
+                <span>
+                    Windows-Treiberkit (Windows Driver Kit, WDK)
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="downloads_hlk" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/de-de/windows/hardware/hh833788.aspx" ms.title="Hardware Lab Kit (HLK)" role="link" data-bi-name="Downloads_HLK" data-bi-slot="2" tabindex="70">
+                <span>
+                    Hardware Lab Kit (HLK)
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="downloads_adk" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/de-de/windows/hardware/dn913721.aspx" ms.title="Assessment and Deployment Kit (ADK)" role="link" data-bi-name="Downloads_ADK" data-bi-slot="3" tabindex="70">
+                <span>
+                    Assessment and Deployment Kit (ADK)
+                </span>
+            </a>
+
+
+
+        </li>
+
+
+                </ul>
+            </li>
+                <li class="c-top-nav-item" id="sampleslist">
+                    <a id="samples" tabindex="70" aria-labelledby="sampleslist" class="c-top-nav-link c-nav-link" href="https://msdn.microsoft.com/windows/hardware/mt238339.aspx" ms.title="Beispiele" role="menuitem" data-bi-name="Samples" data-bi-slot="4" data-show-cta="True">
+                        <span>
+                            Beispiele
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="supportlist">
+                    <a id="support" tabindex="70" aria-labelledby="supportlist" class="c-top-nav-link c-nav-link" href="https://msdn.microsoft.com/windows/hardware/dn913720.aspx" ms.title="Support" role="menuitem" data-bi-name="Support" data-bi-slot="5" data-show-cta="True">
+                        <span>
+                            Support
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="programslist">
+                    <a id="programs" tabindex="70" aria-labelledby="programslist" class="c-top-nav-link c-nav-link" href="https://msdn.microsoft.com/windows/hardware/mt238276.aspx" ms.title="Programme" role="menuitem" data-bi-name="Programs" data-bi-slot="6" data-show-cta="True">
+                        <span>
+                            Programme
+                        </span>
+                    </a>
+                </li>
+
+        </ul>
+                <div class="shell-category-nav-featured">
+                    <a id="dashboard" class="c-nav-link c-top-nav-link" ms.title="Dashboard" href="https://sysdev.microsoft.com/de-de/hardware" role="menuitem" data-bi-name="Dashboard" data-bi-slot="7">
+                        <span tabindex="70">
+                            Dashboard
+                        </span>
+                    </a>
+                </div>
+
+        <div class="c-nav-pagination c-nav-pagination-next">
+            <i class="shell-icon-dropdown facing-right"></i>
+        </div>
+    </div>
+
+</div>
+<div class="fixed-category-nav-buffer"></div>
+
+
+
+
+
+
+<script data-do-not-move="true" type="text/javascript">
+
+    var shellInitOptions = {
+        lcaDisclaimerEnabled: false,
+        suggestedProductTitle : 'Empfohlene Produkte'
+    };
+
+    
+    var meControlInitOptions = {
+        containerId: 'meControl',
+            enabled: true,
+        headerHeight: 48,
+        custom: {chevHtml:'<i class="msame_chev_uhf shell-icon-dropdown"></i>'},
+        
+            
+        market: 'de-DE',
+        
+
+        mobileBreakpoints: {
+            shortHeader: 1084
+            },
+
+        rpData:
+    {
+        msaInfo:
+            {
+                        
+                signInUrl: '/de-de/store/signin',
+                signOutUrl: '/de-de/store/signout',
+                accountSettingsUrl: 'https://account.microsoft.com/',
+                switchUrl: '',
+                meUrl: 'https://login.live.com/me.srf?wa=wsignin1.0',
+                isSupported: true
+                
+            },
+        aadInfo:
+            {
+            },
+        preferredIdp: 'msa',
+    },
+        signInStr: 'Anmelden',
+        signOutStr: 'Abmelden'
+    };
+</script>
+ 
+    </div>
+    <input type="hidden" id="UhfSignInOutLink" value="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=12&amp;ct=1462474776&amp;rver=6.0.5276.0&amp;wp=MCMBI&amp;wlcxt=MSDN%24MSDN%24MSDN&amp;wreply=https%3a%2f%2fmsdn.microsoft.com%2fde-de%2flibrary%2fwindows%2fhardware%2fdn707969.aspx&amp;lc=1031&amp;id=254354&amp;mkt=de-DE" />
+    
+    
+
+
+
+
+
+
+
+
+    <div id="breadcrumbs">
+        <div id="breadcrumbDesktop" class="breadCrumb">
+        </div>
+        <div id="breadcrumbDropDownMenu"></div>
+        <div id="tocDropDownMenu"></div>
+
+        <div id="breadcrumbTablet" class="breadCrumb">
+                <span class="breadcrumbDropSmall"><a id="tocDropDownButton" href="#" title="Windows-Hardware"><span>Windows-Hardware</span></a></span>
+        </div>
+        <div id="breadcrumbMobile" class="breadCrumb">
+            <span class="breadcrumbDropSmall"><a id="tocPopupButton" href="#" title="Windows-Hardware"><span>Windows-Hardware</span></a></span>
+        </div>
+    </div>
+    <div id="tocPopupMenu">
+        <div id="tocPopMenuClose" class="tocCloseLarge"></div>
+        <div id="tocTitle">Windows-Hardware</div>
+    </div>
+
+
+        <div id="body" ms.pgarea="body">
+            <span id="tabletView_large"></span>
+            <span id="tabletView_small"></span>
+            <span id="mobileView"></span>
+            
+
+
+
+
+
+
+
+    <div id="leftNav" ms.cmpgrp="left toc">
+
+
+
+
+
+<div id="tocnav" class="hide-archive ">
+
+
+    <div class="tocunselected">
+        <div id="tocExpandArea">
+            <span class="toc_empty"></span>
+            <span id="tocExpandButton"><a href="#"></a></span>
+        </div>
+        <div id="tocExpand"></div>
+    </div>
+    <div class="tocselected"></div>
+    <div class="tocunselected">
+                <div class="toclevel current" data-toclevel="1">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/de-de/library/windows/hardware/mt297477.aspx" id="dn623406_VS.85_de-de" mtpsaliasid="" mtpsassetid="197bd91c-785c-459e-945f-ab9b1fed60e9_VS.85_de-de" mtpsshortid="mt297477_MSDN.10_de-de" title="Windows-Hardware">Windows-Hardware</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/de-de/library/windows/hardware/dn914752(v=vs.85).aspx" id="mt269743_VS.85_de-de" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Erste Schritte">Erste Schritte</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/de-de/library/windows/hardware/mt269766(v=vs.85).aspx" id="dn623407_VS.85_de-de" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Entwerfen">Entwerfen</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/de-de/library/windows/hardware/mt269767(v=vs.85).aspx" id="dn623408_VS.85_de-de" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Entwickeln">Entwickeln</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/de-de/library/windows/hardware/mt269765(v=vs.85).aspx" id="dn623409_VS.85_de-de" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Anpassen">Anpassen</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/de-de/library/windows/hardware/mt269770(v=vs.85).aspx" id="dn595391_VS.85_de-de" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Testen">Testen</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/de-de/library/windows/hardware/mt269768(v=vs.85).aspx" id="dn595394_VS.85_de-de" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Herstellen">Herstellen</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/de-de/library/windows/hardware/mt269769(v=vs.85).aspx" id="dn896566_VS.85_de-de" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Warten">Warten</a>                </div>
+    </div>
+    <a id="tocMenuToggler" href="#">
+        <span id="tocMenuTogglerIcon" class="tocMenuCollapse"></span>
+        <div id="tocMenuTogglerLabel">TOC</div>
+    </a>
+</div>            <div style="display:none">
+                <div id="CollapseLocalizeString">Inhaltsverzeichnis reduzieren</div>
+                <div id="ExpandLocalizeString">Inhaltsverzeichnis erweitern</div>
+            </div>
+        <div>
+            <a id="isd_archiveControlResponsive" style="display:none;" data-include-archive="Vorversion einschließen" data-exclude-archive="Vorversion ausschließen">
+            </a>
+        </div>
+    </div>
+     <div id="content" class="content" ms.cmpgrp="content body">
+
+
+
+
+<div id="ContentFallback" class="ContentFallback">
+    <div class="ContentFallbackHead"><span>EN</span></div>
+    <div class="ContentFallbackText">Dieser Inhalt ist in Ihrer Sprache leider nicht verfügbar. Im Folgenden finden Sie die englische Version.</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="topic" xmlns="http://www.w3.org/1999/xhtml">
+  <h1 class="title">Preinstallable apps for desktop devices</h1>
+  
+  <div id="mainSection">
+<div class="clsServerSDKContent">
+
+</div>
+<h2><a id="To_add_a_preinstalled_app_to_a_desktop_image"></a><a id="to_add_a_preinstalled_app_to_a_desktop_image"></a><a id="TO_ADD_A_PREINSTALLED_APP_TO_A_DESKTOP_IMAGE"></a>To add a preinstalled app to a desktop image</h2>
+<p>You will need to use the Windows Assessment and Deployment Kit (ADK) to pre-install Windows Store apps in your desktop images. <a href="http://go.microsoft.com/fwlink/p/?LinkId=526740">Download the Windows ADK</a>. </p>
+<h2><a id="Request_a_preinstallation_package"></a><a id="request_a_preinstallation_package"></a><a id="REQUEST_A_PREINSTALLATION_PACKAGE"></a>Request a preinstallation package</h2>
+<p>Once an app has been added to the Dev Center, you can request a preinstallation package for it. If you are the OEM adding this application to your OS image, you would ask the developer of the application to do this on your behalf. They would then give you the downloaded zip file. You cannot access their developer account directly.</p>
+<ol>
+<li>From the dashboard in Dev Center, select the app that is to be preinstalled. If it is a new app, click <strong>Create new app</strong>.</li>
+<li>Select <strong>manage published</strong> packages</li>
+<li>Select <strong>Request package</strong> for OS preinstallation</li>
+<li>A confirmation dialog will appear, noting that apps preinstalled on an OS prior to Windows 10 must be free. Select <strong>Enable</strong>.</li>
+<li>Find the correct package for the targeted OS and download by selecting <strong>Download</strong> or <strong>Generate package</strong>.</li>
+<li>Once ready the link will change to <strong>Download</strong>.</li>
+<li>Zip file is ready for inclusion in OS image.</li>
+</ol>
+<h2><a id="Add_the_app_to_the_OS_image_"></a><a id="add_the_app_to_the_os_image_"></a><a id="ADD_THE_APP_TO_THE_OS_IMAGE_"></a>Add the app to the OS image </h2>
+<p>In Windows 10, applications are consider Assets, which are configurable customizations that are not settings. You can add them in the Windows Imaging and Configuration Designer (ICD), or using DISM, both of which are part of the Windows Assessment and Deployment Kit (ADK). <a href="http://go.microsoft.com/fwlink/p/?LinkId=526740">Download the Windows ADK</a></p>
+<p class="proch"><img id="wedge" alt="Dn707969.wedge(en-us,VS.85).gif" src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" title="Dn707969.wedge(en-us,VS.85).gif" xmlns="" class="cl_IC153696" /><strong>Add the preinstalled app to the image using Windows ICD</strong></p>
+<ol>
+<li>Open Windows ICD. From either the Start screen or the Start menu search pane, type 'Imaging and Configuration Designer' and click on the Windows ICD shortcut.</li>
+<li>Open the Project (or create a new Project) that you want to add the app Asset to.</li>
+<li>Click the <strong>Browse</strong>... button to launch File Explorer to search and locate the path to the .appx package.</li>
+<li>Select the .appx file that you want to add.
+
+</li>
+<li>To specify the license file for the app in the<strong> License Path</strong> text box, browse to the license file that you downloaded with the app package from the Store.</li>
+<li>If you're using a custom data file, specify the file in the <strong>Custom Data Path</strong>. </li>
+<li>Click <strong>Add</strong> to add the app package to the <strong>Configured Customizations</strong> panel.<p>A check mark in the <strong>Available Customizations</strong> pane appears next to the asset that you added.</p>
+</li>
+<li>Build the image.  To build a Windows 10 image, use the steps in <a href="https://msdn.microsoft.com/de-de/library/windows/hardware/dn916105.aspx">Build and deploy a Windows 10 image for desktop</a>. </li>
+</ol>
+<p class="proch"><img id="wedge" alt="Dn707969.wedge(en-us,VS.85).gif" src="https://i-msdn.sec.s-msft.com/areas/global/content/clear.gif" title="Dn707969.wedge(en-us,VS.85).gif" xmlns="" class="cl_IC153696" /><strong>Add the preinstalled app to the image using DISM</strong></p>
+<ol>
+<li>Open the Deployment Tools Command Prompt, installed with the Windows Assessment and Deployment Kit (ADK), with administrator privileges. From the Windows Start screen, type <strong>Deployment and Imaging Tools Environment</strong>, right-click the icon, and select <strong>Run as Administrator</strong> from the menu bar at the bottom of the screen.</li>
+<li>Mount the offline image for servicing. At the command prompt, type:<p><code>Dism /Mount-Image /ImageFile:c:\images\myimage.wim /Index:1 /mountdir:c:\test\offline</code></p>
+</li>
+<li>3.	Add the app to the mounted image. Use the <code>/PackagePath</code> option and the <code>/DependencyPackagePath</code> option to specify the location of the folder containing all of the unpacked files and the dependency files from the Store package. <code>/PackagePath</code> should specify the root folder for the extracted folders. The root folder contains the license.xml, AUMIDs.txt, and all of the package files. At the command prompt, type:<p><code>Dism /Image:c:\test\offline /Add-ProvisionedAppxPackage /PackagePath:c:\downloads\appxpackage /DependencyPackagePath:c:\downloads\appxpackagedependency</code></p>
+</li>
+<li>Save changes and unmount the image. At the command prompt, type:<p><code>Dism /Unmount-Image /mountdir:c:\test\offline /commit</code></p>
+</li>
+</ol>
+<p> </p>
+<p> </p>
+<p><a href="mailto:wsddocfb@microsoft.com?subject=Documentation%20feedback [p_preinstall\p_preinstall]:%20Preinstallable apps for desktop devices%20 RELEASE:%20(4/12/2016)&amp;body=%0A%0APRIVACY STATEMENT%0A%0AWe use your feedback to improve the documentation. We don't use your email address for any other purpose, and we'll remove your email address from our system after the issue that you're reporting is fixed. While we're working to fix this issue, we might send you an email message to ask for more info. Later, we might also send you an email message to let you know that we've addressed your feedback.%0A%0AFor more info about Microsoft's privacy policy, see http://privacy.microsoft.com/en-us/default.aspx." title="Send comments about this topic to Microsoft">Send comments about this topic to Microsoft</a></p>
+</div>
+</div>
+
+
+
+
+
+
+<div class="libraryMemberFilter">
+    <div class="filterContainer">
+        <span>Anzeigen:</span>
+        <label>
+            <input type="checkbox" class="libraryFilterInherited" checked="checked" value="Inherit" />Geerbt
+        </label>
+        <label>
+            <input type="checkbox" class="libraryFilterProtected" checked="checked" value="Protected" />Geschützt
+        </label>
+    </div>
+</div>
+    
+<input type="hidden" id="libraryMemberFilterEmptyWarning" value="Es gibt keine Member, die den aktuellen Filtereinstellungen entsprechen." />
+
+
+
+    </div>
+<div id="rightNavigationMenu" ms.cmpgrp="right nav">
+    <div id="mobileButtons">
+        <div id="navigationButtons">
+            <a id="isd_print" href="https://msdn.microsoft.com/de-de/library/windows/hardware/dn707969(d=printer).aspx" rel="nofollow"><ins class="print"></ins>Drucken </a>
+            <a id="isd_printABook" href="/de-de/library/export/help/?returnurl=%2fde-de%2flibrary%2fwindows%2fhardware%2fdn707969.aspx">
+                <ins class="export"></ins>Exportieren (<span class="count">0</span>)
+            </a>
+        </div>
+    </div>
+    <div id="navMain">
+        <div id="closeNavigation">
+            <a class="tocCloseSmall" id="closeButton"></a>
+        </div>
+        <div id="navigationButtons">
+            <a id="isd_print" href="https://msdn.microsoft.com/de-de/library/windows/hardware/dn707969(d=printer).aspx" rel="nofollow"><ins class="print"></ins>Drucken </a>
+            <a id="isd_printABook2" href="/de-de/library/export/help/?returnurl=%2fde-de%2flibrary%2fwindows%2fhardware%2fdn707969.aspx">
+                <ins class="export"></ins>Exportieren (<span class="count">0</span>)
+            </a>
+            <a id="isdShare" href="#">
+                <ins class="share"></ins>Teilen
+            </a>
+            <div id="socials" style="display: none">
+                <a class="isdFacebook" href="#">
+                    <ins class="facebook"></ins>
+                </a>
+                <a class="isdTwitter" href="#">
+                    <ins class="twitter"></ins>
+                </a>
+                <a class="isdGooglePlus" href="#">
+                    <ins class="googlePlus"></ins>
+                </a>
+            </div>
+        </div>
+        <div id="indoc_toc" style="display: none" ms.cmpgrp="indoc toc">
+            <div id="indoc_title">IN DIESEM ARTIKEL</div>
+            <ul id="indoc_toclist"></ul>
+        </div>
+    </div>
+</div>
+<div id="rightNavigationMenuThumbnail" class="rightNavigationMenuThumbnail">
+</div>
+
+
+
+
+
+
+        </div>
+        <div class="clear"></div>
+
+        
+
+<input name="__RequestVerificationToken" type="hidden" value="LrVl-l9QjSH-2Tcm3Ig3R-AyLcX1DPXzL1ez8xX_HzeJGdBdbVfZz9g4LTBuStyobmfx8SA4CnmmgAx-AmyZYhXQGMY1" />
+<input id="ratingValueSubmitUrl" type="hidden" value="https://msdn.microsoft.com/de-de/library/feedback/rate/dn707969.aspx" />
+<input id="ratingAdditionalSubmitUrl" type="hidden" value="https://msdn.microsoft.com/de-de/library/feedback/additional/dn707969.aspx" />
+<input id="isTopicRated" type="hidden" value="false" />
+
+
+
+    
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://i-msdn.sec.s-msft.com/Areas/Epx/Themes/Windows/Content/UhfFooterResponsive.css?v=635975733210808605" data-do-not-move="true" />
+    
+    <div id="ux-footer" class="ltr">
+        
+
+
+    <div id="standardRatingBefore" class="clear stdr-container-before"></div>
+    <div id="standardRating" class="stdr-container" ms.pgarea="body">
+        <div class="stdr-close"></div>
+        <div class="stdr-vote stdr-content">
+            <div class="stdr-content">
+                <span class="stdr-votetitle">War diese Seite hilfreich?</span>
+                <button class="stdr-yes" aria-label="Ja, diese Seite war hilfreich">Ja</button>
+                <button class="stdr-no" aria-label="Nein, diese Seite war nicht hilfreich">Nein</button>
+                <input id="s_ratingValue" type="hidden" value="" />
+            </div>
+        </div>
+        <div class="stdr-feedback" style="display: none">
+            <div class="stdr-form">
+                <div class="stdr-fieldtitle">Weiteres Feedback?</div>
+                <textarea class="stdr-detail" rows="6" maxlength="1500"></textarea>
+                <div>
+                    <span class="stdr-count"><span class="stdr-charcnt">1500</span> verbleibende Zeichen</span>
+                    <div class="stdr-buttons">
+                        <button class="stdr-provide" aria-label="Mein weiteres Feedback senden">Absenden</button>
+                        <button class="stdr-skip" aria-label="Weiteres Feedback überspringen">Überspringen</button>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="stdr-thanks" style="display: none">
+            <div class="stdr-content">
+                <span class="stdr-thankyou">Vielen Dank!</span>
+                <span class="stdr-appreciate">Vielen Dank für Ihr Feedback.</span>
+            </div>
+        </div>
+
+        
+        <div id="contentFeedbackQAContainer" style="display: none;"></div>
+    </div>
+    
+        <div id="footerContainer">
+            <div id="baseFooter">
+                 
+
+
+<div class="shell-footer" role="contentinfo" ms.pgarea="uhffooter" data-bi-area="Footer" data-bi-view="3xLinks">
+    <div class="shell-footer-wrapper">
+
+            <div class="shell-footer-menugroups" ms.cmpgrp="footer nav">
+                    <div class="sfm-group" ms.cmpnm="Footer_New">
+                        <div class="grp-title">
+                            Neuigkeiten <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=534183" ms.title="Windows-Apps" data-bi-name="Footer_New_WinApps" data-bi-slot="1" data-bi-source="Compass">
+                                            Windows-Apps
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=534185" ms.title="Desktopanwendungen" data-bi-name="Footer_New_DesktopApp" data-bi-slot="2" data-bi-source="Compass">
+                                            Desktopanwendungen
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=534186" ms.title="Windows IoT" data-bi-name="Footer_New_WinIoT" data-bi-slot="3" data-bi-source="Compass">
+                                            Windows IoT
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=534187" ms.title="Microsoft Edge" data-bi-name="Footer_New_Edge" data-bi-slot="4" data-bi-source="Compass">
+                                            Microsoft Edge
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://msdn.microsoft.com/windows/hardware/gg236587.aspx" ms.title="Windows-Hardware" data-bi-name="Footer_New_WinHardware" data-bi-slot="5" data-bi-source="Compass">
+                                            Windows-Hardware
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+                    <div class="sfm-group" ms.cmpnm="Footer_Tools">
+                        <div class="grp-title">
+                            Downloads und Tools <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=526729" ms.title="Visual Studio" data-bi-name="Footer_DownloadsAndTools_VS" data-bi-slot="1" data-bi-source="Compass">
+                                            Visual Studio
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=536682" ms.title="Windows SDK" data-bi-name="Footer_DownloadsAndTools_WinSDK" data-bi-slot="2" data-bi-source="Compass">
+                                            Windows SDK
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=526733" ms.title="Windows-Treiberkit" data-bi-name="footer_DownloadsAndTools_WDK" data-bi-slot="3" data-bi-source="Compass">
+                                            Windows-Treiberkit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkID=404112" ms.title="Windows Hardware Lab Kit" data-bi-name="Footer_DownloadsAndTools_WHLK" data-bi-slot="4" data-bi-source="Compass">
+                                            Windows Hardware Lab Kit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=526740" ms.title="Windows Assessment and Deployment Kit" data-bi-name="Footer_DownloadsAndTools_WinAssessDeployKit" data-bi-slot="5" data-bi-source="Compass">
+                                            Windows Assessment and Deployment Kit
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+                    <div class="sfm-group" ms.cmpnm="Footer_Essentials">
+                        <div class="grp-title">
+                            Grundlagen <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?linkid=285653" ms.title="Dashboard-Dienste" data-bi-name="Footer_Essentials_DashboardServices" data-bi-slot="1" data-bi-source="Compass">
+                                            Dashboard-Dienste
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?linkid=285651" ms.title="Debuggingtools" data-bi-name="Footer_Essentials_DebuggingTools" data-bi-slot="2" data-bi-source="Compass">
+                                            Debuggingtools
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://msdn.microsoft.com/windows/hardware/mt238339.aspx" ms.title="Treiberbeispiele" data-bi-name="Footer_Essentials_DriverSamples" data-bi-slot="3" data-bi-source="Compass">
+                                            Treiberbeispiele
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+                    <div class="sfm-group" ms.cmpnm="Footer_Programs">
+                        <div class="grp-title">
+                            Programme <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="https://msdn.microsoft.com/library/windows/hardware/dn922588(v=vs.85).aspx" ms.title="Kompatibilitätsprogramme für Hardware" data-bi-name="Footer_Programs_HwCompatPrgrm" data-bi-slot="1" data-bi-source="Compass">
+                                            Kompatibilitätsprogramme für Hardware
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?linkid=317804" ms.title="Partner von Microsoft" data-bi-name="Footer_Programs_PartnerWithMS" data-bi-slot="2" data-bi-source="Compass">
+                                            Partner von Microsoft
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://insider.windows.com/" ms.title="Windows-Insider-Programm" data-bi-name="Footer_Programs_WinInsider" data-bi-slot="3" data-bi-source="Compass">
+                                            Windows-Insider-Programm
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+                    <div class="sfm-group" ms.cmpnm="Footer_Support">
+                        <div class="grp-title">
+                            Support <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?linkid=285664" ms.title="Foren" data-bi-name="Footer_Support_Forums" data-bi-slot="1" data-bi-source="Compass">
+                                            Foren
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://msdn.microsoft.com/windows/hardware/dn913720.aspx" ms.title="Community-Support" data-bi-name="Footer_Support_CommunitySupport" data-bi-slot="2" data-bi-source="Compass">
+                                            Community-Support
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+
+            </div>
+
+        <div class="shell-footer-lang" ms.cmpgrp="loc picker" ms.cmpnm="loc picker">
+                <ul>
+                    <li>
+                        <i class="shell-icon-globe"></i>
+                    </li><li>
+                        <a id="locale-picker-link" ms.title="Deutsch (Deutschland)" href="https://dev.windows-int.com/locale" data-bi-name="LocalePicker">
+                            Deutsch (Deutschland)‎
+                        </a>
+                    </li>
+                </ul>
+        </div>
+        <div class="shell-footer-copyright" ms.cmpgrp="corp links" ms.cmpnm="corp">
+            <ul>
+                            <li>
+                                <a id="privacyandcookies" href="//go.microsoft.com/fwlink/p/?linkid=521839" ms.title="Datenschutz und Cookies" class="ctl_footerNavLink" data-bi-name="PrivacyAndCookies" data-bi-slot="1">
+                                    Datenschutz und Cookies
+                                </a>
+                            </li>
+                            <li>
+                                <a id="termsofuse" href="//go.microsoft.com/fwlink/p/?linkid=248155" ms.title="Nutzungsbedingungen" class="ctl_footerNavLink" data-bi-name="TermsOfUse" data-bi-slot="2">
+                                    Nutzungsbedingungen
+                                </a>
+                            </li>
+                            <li>
+                                <a id="trademarks" href="//go.microsoft.com/fwlink/p/?linkid=248154" ms.title="Marken" class="ctl_footerNavLink" data-bi-name="Trademarks" data-bi-slot="3">
+                                    Marken
+                                </a>
+                            </li>
+
+                <li class="ctl_footerCopyright">
+                    © 2016 Microsoft
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+                        
+    
+    <span id="selectLocaleFromPopUp">
+        <div class="locale-selector" style="position: relative">
+            <a class="current-locale" href="javascript:void(0)">
+                <span class="text">Deutsch</span>
+                <span class="gear"></span>
+            </a>
+            <div class="locale-selection-panel site-flag site-flag-lang" style="top: -245px; display: none;">
+                <div class="content">
+                    <table class="all-locales" cellspacing="0" autogeneratecolumns="false" allowpaging="false" allowsorting="false" style="border-collapse: collapse;">
+                        <tbody>
+                            <tr>
+
+
+                                    <td><a title="Deutsch" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=de-de&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link selected">Deutsch</a></td>
+                                    <td><a title="English" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=en-us&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">English</a></td>
+                                    <td><a title="Español" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=es-es&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">Español</a></td>
+                                    <td><a title="Français" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=fr-fr&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">Français</a></td>
+                                        </tr><tr>
+                                    <td><a title="Italiano" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=it-it&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">Italiano</a></td>
+                                    <td><a title="日本語" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=ja-jp&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">日本語</a></td>
+                                    <td><a title="한국어" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=ko-kr&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">한국어</a></td>
+                                    <td><a title="Português" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=pt-br&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">Português</a></td>
+                                        </tr><tr>
+                                    <td><a title="Pусский" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=ru-ru&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">Pусский</a></td>
+                                    <td><a title="简体中文" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=zh-cn&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">简体中文</a></td>
+                                    <td><a title="繁體中文" href="https://msdn.microsoft.com/de-de/?action=selectlocale&amp;currentlocale=de-de&amp;newlocale=zh-tw&amp;frompage=/de-de/library/windows/hardware/dn707969.aspx" class="locale-link">繁體中文</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="arrow">
+                         </div>
+                </div>
+            </div>
+        </div>
+    </span>
+
+
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="footerPrintView">
+            <div class="footerCopyrightPrintView">© 2016 Microsoft</div>
+        </div>
+
+        
+        
+        
+        
+
+
+
+        <input id="MtpsDevice" type="hidden" value="Default" />
+
+
+<![CDATA[ Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx. ]]>
+
+        
+        
+        
+            
+        
+
+
+
+
+
+
+<noscript><div><img alt="DCSIMG" id="Img1" width="1" height="1" src="https://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;WT.js=No" /></div></noscript>
+
+
+
+
+
+
+
+
+<div id="globalRequestVerification">
+    <input name="__RequestVerificationToken" type="hidden" value="zpObRwT9XsGR-MZ7QtYT7fgjaqT5O6RgN9j6ebB1Mo5KcKGm2gwcM4HAiPYxdMkiLG97E86ncU_jrJBIYy9hE8sdwLY1" />
+</div>
+
+
+    </div>
+
+    
+    
+
+    
+
+    
+    
+    
+<script type="text/javascript" class="mtps-injected">
+/*<![CDATA[*/
+(function(window,document){"use strict";function preload(scripts){for(var result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);return result}function inject(scripts,index){var script,elem;if(index>=scripts.length){delete mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="try {\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+MTPS.injectScripts([
+	{ txt: "/**/\r\n(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"js\": \"https://i2-msdn.sec.s-msft.com\", \r\n\t\"css\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"ttf\": \"https://i-msdn.sec.s-msft.com\"\r\n});\r\n/**/" },
+	{ url: "https://assets.onestore.ms/cdnfiles/onestorerolling-1604-22001/shell/generated/shellservice.v3.min.js" },
+	{ url: "https://www.microsoft.com/uniblends/scripts/blender.js" },
+	{ txt: "var isAuthenticated = (false);\n\n        //TODO: Notify all UxService first and add this link back.\n        // Currently we won\u0027t enable AAD, hard-code it to false\n        //var aadEnabled= (false);\n        var aadEnabled = false;\n\n        var ssoProperties = {\n          signedIn: isAuthenticated,\n          aadEnabled: aadEnabled,\n          signInOutUrl: $(\"#UhfSignInOutLink\").val(),\n        };\n\n        if (isAuthenticated) {\n          ssoProperties.userHasProfile = (false);\n          ssoProperties.profileText = \":ProfileText:\";\n          ssoProperties.createViewProfileText = \":CreateViewMSDNProfileText:\";\n          ssoProperties.createViewProfileLink = \":ProfileLink:\";\n          ssoProperties.MsaMemberName = \":MsaMemberName:\";\n          ssoProperties.MsaFirstName = \":MsaFirstName:\";\n          ssoProperties.MsaLastName = \":MsaLastName:\";\n          ssoProperties.MsaCID = \":MsaCID:\";\n          ssoProperties.AadDisplayName = \":AadDisplayName:\";\n          ssoProperties.AadMemberName = \":AadMemberName:\";\n          ssoProperties.AadOrgName = \":AadOrgName:\";\n        }" },
+	{ txt: "//\n  var literalNormalizedUrl = \u0027/en-us/library/windows/hardware/dn707969(l=en-us,v=vs.85).aspx\u0027;\n  var wt_nvr_ru = \u0027WT_NVR_RU\u0027;\n  var wt_fpcdom = \u0027.microsoft.com\u0027;\n  var wt_domlist = \u0027msdn.microsoft.com\u0027;\n  var wt_pathlist = \u0027\u0027;\n  var wt_paramlist = \u0027DCSext.mtps_devcenter\u0027;\n  var wt_siteid = \u0027MSDN\u0027;\n  var gDomain = \u0027m.webtrends.com\u0027;\n  var gDcsId = \u0027dcsmgru7m99k7mqmgrhudo0k8_8c6m\u0027;\n  var gFpc = \u0027WT_FPC\u0027;\n\n\n\n  if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n    var wtidJs = document.createElement(\"script\");\n    wtidJs.src = \"//\" + gDomain + \"/\" + gDcsId + \"/wtid.js\";\n    document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n  }\n\n\n\n  var detectedLocale = \u0027de-de\u0027;\n  var wtsp = \u0027_msdn_\u0027;\n  var gTrackEvents = \u00270\u0027;\n/**/" },
+	{ txt: "//\n\n        window.appInsightsId = \u00275eb1b2eb-c47a-497a-a7ac-a1c230b2882f\u0027;\n        //" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:Banner,2:UhfHeader,3:Breadcrumbs,4:LibraryRightNavigationMenu,4:PrintExportButton,5:StandardRating,0:Topic,6:webtrendsscript,0:AppInsightsPerf,3:ResponsiveToc,0:ABTestControl,4:WEDCS,0:livefyre,0:Comment,2:TocDropDown,3:LibraryMemberFilter,0:Toc_Fixed,7:UhfFooter,8:SelectLocaleFromPopUp,0:CodeSnippet,0:TopicNotInScope,3:ResponsiveSupport,0:VersionSelector,0:SurveyBroker;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Shared/Content:1,/Areas/Epx/Themes/Windows/Content:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content:5,/Areas/Global/Content/Webtrends/resources:6,/Areas/Epx/Themes/Windows/Content/:7,/Areas/Epx/Themes/Base/Content:8\u0026amp;hashKey=A6136533B4E9B864D7FF8B89E6D94428\u0026amp;v=701006F2499617FB15C7A292502DA165" },
+	{ txt: "$(document).ready(function() {\n        try {\n            var token = $(\"#globalRequestVerification input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n            $(\"#siteFeedbackForm\").append(token);\n        } catch(err) {\n            \n        }\n    });" }
+]);
+
+/*]]>*/
+</script></body>
+</html>

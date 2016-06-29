@@ -1,0 +1,1128 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/b862e3652436f5e010eeeb9ee7f831f1-29e0b168a1d7b62073035132d909e9e7-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />
+    <meta name="description" content="This script deleting AD User home drives, by checking if the owner is available in Active Directory." />
+    <meta name="Search.BRAND" content="TechNet"/>
+    <meta name="Search.IROOT" content=""/>
+
+    <link rel="shortcut icon" href="https://i1.gallery.technet.s-msft.com/GlobalResources/images/Technet/favicon.ico" type="image/x-icon" /> <meta name="CommunityInfo" content=" B=Technet;A=TechNet;L=en-US;" /><meta name="ms.puidhash" content="" />
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.11.0.min.js" type="text/javascript" language="javascript"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.migrate/jquery-migrate-1.2.1.min.js" type="text/javascript" language="javascript"></script>
+    <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/1345f68ae4443bbf3984a1194d098b0c-0ea90d6947a7920d7824c891520a0b7c-RequestReducedScript.js" type="text/javascript" ></script>    
+    <title>TechNet Delete AD Users homefolder if the User doesn&#180;t exist in AD</title> 
+        <link href="/site/feeds/searchRss" rel="Alternate" type="application/rss+xml"
+        title="TechNet downloads and scripts - IT pro's" />
+    <link rel="P3Pv1" href="/W3C/p3p.xml" />
+    
+    
+            <link rel="canonical" href="https://gallery.technet.microsoft.com/scriptcenter/Check-if-the-user-exist-if-4d906032" />
+    
+    <meta name="ContentLanguage" content="L=en-US;"/>
+
+<!--
+Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use â€“ http://www.asp.net/ajaxlibrary/CDN.ashx.
+-->
+    <script type="text/javascript" >
+        function addAsyncScript(src) {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.async = true;
+            script.src = src;
+            return script;
+        };
+    </script>
+    
+        <script type="text/javascript" language="javascript">
+            jQuery(window).load(function () {
+                window.appInsights = {
+                    queue: [],
+                    start: function (n) {
+                        function r(n, t) {
+                            n[t] = function () {
+                                var i = arguments;
+                                n.queue.push(function () { n[t].apply(n, i); });
+                            };
+                        }
+                        var t, i;
+                        this.applicationInsightsId = n;
+                        this.accountId = null;
+                        this.appUserId = null;
+                        r(this, "logEvent");
+                        r(this, "logPageView");
+                    }
+                };
+                window.appInsights.start("da4169d5-ce7e-4d99-b383-f5de813a9516");
+                window.appInsights.logPageView();
+            });
+        </script>
+    </head>
+<body class=" en-us TechNet " dir= "ltr">
+    
+    <div id="BodyBackground" class="ltr">
+        <div id="JelloSizer">    
+            <div id="JelloExpander">
+                <div id="JelloWrapper">
+                    <div class="Clear"> </div>
+                    
+                   
+                    
+                        <div class="Masthead">
+                            <div id="BrandLogo" class="BrandLogo"><a class="BrandLogoLink" href="http://technet.microsoft.com/en-us/ms376608.aspx"><span id="BrandDisplayText">Resources for IT Professionals</span></a></div>
+                                 
+                        <div class="Search">
+                            <div id="SearchBox" class="SearchBox"><input name="SearchTextBox" type="text" id="SearchTextBox" class="TextBoxSearch TextBoxSearchIE7" /><input type="image" name="SearchButton" id="SearchButton" class="SearchButton" src="https://i1.gallery.technet.s-msft.com/globalresources/Images/trans.gif?cver=0001" /><span class="Bing"> </span></div>
+                        </div>
+
+                        <div class="GlobalBar">                       
+                            <div class="PassportScarab">
+                            <a id="idPPScarab" href="/Account/Login?ReturnUrl=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032">Sign in</a>
+                            </div> 
+                                
+                            <div id="LocaleFlyout" class="LocaleFlyout">
+                                <div id="LocaleSelector">
+                    <div id="TargetPanel">
+                        <a>United States (English)</a><span class="DropDownArrow">&nbsp;</span>
+                    </div>
+                    <div id="PopupPanel" class="ContextMenuPanel">
+                        <a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=es-AR&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">Argentina (Español)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=pt-BR&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">Brasil (Português)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=cs-CZ&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">Česká republika (Čeština)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=de-DE&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">Deutschland (Deutsch)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=es-ES&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">España (Español)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=fr-FR&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">France (Français)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=it-IT&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">Italia (Italiano)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=pl-PL&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">Polska (Polski)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=tr-TR&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">Türkiye (Türkçe)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=ru-RU&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">Россия (Русский)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=ko-KR&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">대한민국 (한국어)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=zh-CN&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">中华人民共和国 (中文)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=zh-TW&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">台灣 (中文)</a><a href="https://Msdn.microsoft.com/?action=SelectLocale&amp;currentLocale=en-US&amp;newLocale=ja-JP&amp;fromPage=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" class="ContextMenuItem" rel="nofollow">日本 (日本語)</a>
+                    </div>
+                 </div>
+                            </div>
+                            
+                            <div class="Clear"> </div>
+
+                            
+                            <div class="UserName" id="UserName"><a id="ctl02_UserNameLink"></a></div>
+                             
+
+                        </div>
+                    
+                        <div class="Clear"> </div>
+
+                        <div id="NetworkTagLineArea" class="NetworkLogo">
+                            <a id="NetworkLink" href="https://Technet.microsoft.com/en-US">
+                                &nbsp;
+                            </a>
+                        </div>
+
+                        <div class="leftcap" xmlns:msxsl="urn:schemas-microsoft-com:xslt"> </div><div class="internav" xmlns:msxsl="urn:schemas-microsoft-com:xslt"><a href="http://technet.microsoft.com/en-us/ms376608.aspx">Home</a><a href="http://technet.microsoft.com/en-us/library/default.aspx">Library</a><a href="http://social.technet.microsoft.com/wiki ">Wiki</a><a href="http://technet.microsoft.com/en-us/bb291022.aspx">Learn</a><a href="http://gallery.technet.microsoft.com">Gallery</a><a href="http://technet.microsoft.com/en-us/bb403698.aspx">Downloads</a><a href="http://technet.microsoft.com/en-us/ms772425.aspx">Support</a><a href="http://social.technet.microsoft.com/Forums/en-us/categories/">Forums</a><a href="http://blogs.technet.com">Blogs</a></div>
+                        </div>
+                         
+                    
+                    
+                    <div class="Clear"> </div>
+                          
+                    <div class="topleftcorner"></div>           
+                    <div class="toprightcorner"></div>                                
+                    <div class="alley"> <!-- Left Side -->
+                        <div class="wrapper"> <!-- Right Side -->
+                            <div class="inner">  
+                            
+                                                 
+                                <div class="Clear"></div>   
+
+
+                                
+                                
+                                
+                                
+                                <div id="MainContent" class="Technet">
+                                    
+    
+    
+
+    <script language="javascript" type="text/javascript">
+        $(function () { Galleries.cookie.setTimezoneOffsetCookie(); })
+    </script>
+
+    <div id="container">
+        
+            <div id="GalleriesNavigation">
+                
+            </div>            
+        
+        
+            <div id="subHeader">
+                <div id="eyebrow" class="left">
+                    
+
+
+
+
+
+
+
+
+
+
+
+<div class="EyebrowContainer">
+    
+    
+        <a href="https://gallery.technet.microsoft.com/site/search?f%5B0%5D.Type=SupportedPlatform&amp;f%5B0%5D.Value=Server2003&amp;f%5B0%5D.Text=Windows%20Server%202003&amp;f%5B1%5D.Type=Contributors&amp;f%5B1%5D.Value=Community&amp;f%5B1%5D.Text=Community&amp;f%5B2%5D.Type=ProgrammingLanguage&amp;f%5B2%5D.Value=XML&amp;f%5B2%5D.Text=XML&amp;f%5B3%5D.Type=RootCategory&amp;f%5B3%5D.Value=activedirectory&amp;f%5B3%5D.Text=Active%20Directory&amp;f%5B4%5D.Type=Tag&amp;f%5B4%5D.Value=Active%20Directory&amp;f%5B5%5D.Type=User&amp;f%5B5%5D.Value=Tim%20Buntrock&amp;f%5B5%5D.Text=Tim%20Buntrock&amp;f%5B6%5D.Type=ProgrammingLanguage&amp;f%5B6%5D.Value=Windows%20Shell%20Script&amp;f%5B6%5D.Text=Windows%20Shell%20Script" class="lnkBackToSearch">Back to search results</a><label for=""> | </label>
+    
+<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="EyebrowElement">
+    <a href=https://technet.microsoft.com/en-US/ itemprop="url">
+        <span itemprop="title">Resources for IT professionals</span>
+    </a>
+</div>
+<text>></text>
+
+    
+    
+    
+    <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="EyebrowElement">
+             <a href="/" itemprop="url">
+                <span itemprop="title">Gallery</span>
+            </a> 
+    </div>
+
+
+
+
+    >
+    <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="EyebrowElement">
+             <a href="/site/search?f%5B0%5D.Type=RootCategory&amp;f%5B0%5D.Value=activedirectory" itemprop="url">
+                <span itemprop="title">Active Directory</span>
+            </a> 
+    </div>
+
+    >
+    <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="EyebrowElement">
+             <a href="/Check-if-the-user-exist-if-4d906032" itemprop="url" class="EyebrowLeafLink">
+                <span itemprop="title">Delete AD Users homefolder if the User doesn&#180;t exist in AD</span>
+            </a> 
+    </div>
+</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        
+        
+            <div id="siteMessage">
+                
+
+
+
+
+
+
+            </div>
+            <div class="clear"></div>
+        
+        
+
+<div class="subMenu">
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            $('.internav > a').each(function (index, elem) {
+                if ($(elem).attr('href').toUpperCase().indexOf('GALLERY') != -1) {
+                    $(elem).addClass('active');
+                }
+                if ($(elem).attr('href').toUpperCase().indexOf('TECHNETGSMOKE') != -1) {
+                    $(elem).addClass('active');
+                }
+                if ($(elem).attr('href').toUpperCase().indexOf('TNG') != -1) {
+                    $(elem).addClass('active');
+                }
+            });
+        });
+    </script>
+</div>      
+        <div class="clear"></div>
+
+        <div id="bodyContainer">
+            
+    
+    <div id="projectPage">
+        <div class="sidebar">
+            <div data-chameleon-template="actionbox"></div>
+            
+
+
+<div class="section" id="contributeSection">
+<div class="contributeAction">
+    <a href="https://technet.microsoft.com/en-us/evalcenter/hh670538"><img  src="https://i1.gallery.technet.s-msft.com/content/common/download.png" />Download Windows Server 2012</a>
+</div>
+    <h3>Quick access</h3>
+
+<div id="myContributionsAction">
+    <div>
+        <a id="myContributionsLink" href="/site/mydashboard">
+            My contributions
+        </a>
+    </div>
+</div>
+
+<div id="uploadAction">
+    <a id="uploadLink" href="/site/upload">Upload a contribution</a>
+</div>
+
+</div>
+
+
+
+<div id="userCard" class="section">
+    <div class="unified-baseball-card" 
+         data-profile-usercard-customLink='{"href":"/site/search?f%5B0%5D.Type=User&f%5B0%5D.Value=Tim%20Buntrock","text":"View contributions"}' 
+         data-profile-userid="31a528d0-3f47-4ad2-94ef-f80a9c65318f">
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    if (false)
+        Galleries.utility.waitFor(
+            function() { $('#userCard .profile-statline, #userCard .profile-usercard-profileLink').hide(); });
+</script>
+            <div id="moreFromAuthor" class="collapsableSidebar">
+                <div data-url="/Check-if-the-user-exist-if-4d906032/AuthorProjects" id="authorProjectContainer"></div>
+            </div>
+        </div>
+
+        <div id="projectDetails">
+            <div>
+                
+
+
+<h1 class="projectTitle">Delete AD Users homefolder if the User doesn´t exist in AD</h1>
+<h2 class="projectSummary">This script deleting AD User home drives, by checking if the owner is available in Active Directory.</h2>
+<div class="clear" ></div>
+
+    <div id="Downloads">
+        <div>
+            <label for="Downloads">Download</label>
+        </div>
+        
+                    <a href="/Check-if-the-user-exist-if-4d906032/file/135586/1/ADUserHomeFolderCleanup.cmd" data-url="/Check-if-the-user-exist-if-4d906032/file/135586/1/ADUserHomeFolderCleanup.cmd" class="button">ADUserHomeFolderCleanup.cmd</a>
+        
+    </div>
+
+<div class="clear"></div>
+
+<div class="clear"></div>
+<div id="projectInfo">
+    <div id="sectionLeft" class="section">
+        <div class="itemBar">
+            <label for="ReviewValue">Ratings</label>                   
+            
+    <div id="yourRating"">
+        <form action="/Check-if-the-user-exist-if-4d906032/createreview" id="reviewForm" method="post" name="reviewForm"><input id="Rating" name="Rating" type="hidden" value="" />
+            <input id="Text" name="Text" type="hidden" value="" />
+        <div class="Rating stackLeft EditStarMode" id="Star_Span" onmouseout="onStarsMouseOut()">
+        
+            <div id="Star_0" class="RatingStar EmptyRatingStar"
+                data-initialstarclass="EmptyRatingStar" 
+                onmouseover="onStarMouseOver('Star_0')" onclick="onStarClick(0)"
+                title="1">
+                &nbsp;</div>
+        
+            <div id="Star_1" class="RatingStar EmptyRatingStar"
+                data-initialstarclass="EmptyRatingStar" 
+                onmouseover="onStarMouseOver('Star_1')" onclick="onStarClick(1)"
+                title="2">
+                &nbsp;</div>
+        
+            <div id="Star_2" class="RatingStar EmptyRatingStar"
+                data-initialstarclass="EmptyRatingStar" 
+                onmouseover="onStarMouseOver('Star_2')" onclick="onStarClick(2)"
+                title="3">
+                &nbsp;</div>
+        
+            <div id="Star_3" class="RatingStar EmptyRatingStar"
+                data-initialstarclass="EmptyRatingStar" 
+                onmouseover="onStarMouseOver('Star_3')" onclick="onStarClick(3)"
+                title="4">
+                &nbsp;</div>
+        
+            <div id="Star_4" class="RatingStar EmptyRatingStar"
+                data-initialstarclass="EmptyRatingStar" 
+                onmouseover="onStarMouseOver('Star_4')" onclick="onStarClick(4)"
+                title="5">
+                &nbsp;</div>
+        
+        </div>
+        <div style="clear:both;"></div> 
+        </form>
+    </div>
+    
+    <div id="RatingCount">(0)</div>
+    
+
+<script language="javascript">
+    function onStarMouseOver(id) {
+        var id_prefix = id.substring(0, id.lastIndexOf('_') + 1);
+        var index = parseInt(id.substring(id.lastIndexOf('_') + 1, id.length));
+
+        for (i = 0; i < 5; i++) {
+            var star = $('#' + id_prefix + i);
+            var initialRatingClass = star.data('initialstarclass');
+            if (i <= index)                star.removeClass(initialRatingClass).removeClass('EmptyRatingStar').addClass('FilledRatingStarHover');            else                star.removeClass(initialRatingClass).removeClass('FilledRatingStarHover').addClass('EmptyRatingStar');
+        }
+        
+    }
+    function onStarsMouseOut() {
+        var stars = $("#RatingStar");
+        var id_prefix = "Star_";
+        var currentRating = 0;
+        
+        for (i = 0; i < 5; i++) {
+            var star = $('#' + id_prefix + i.toString());
+            var initialRatingClass = star.data('initialstarclass');
+            star.removeClass('EmptyRatingStar').removeClass('FilledRatingStarHover').addClass(initialRatingClass);
+        }
+    }
+    
+    function onStarClick(index) {
+        $('#Rating').val(index + 1);
+        document.getElementById("reviewForm").submit();
+    }
+</script>
+                                   
+        </div>
+        
+            <div class="itemBar">
+                <label for="DownloadCount">Downloaded</label>
+                <span id="DownloadCount">99 times</span>
+            </div>
+        
+            <div class="itemBar">
+                <label for="Favorites">Favorites</label>
+                
+
+<script language="javascript">
+    $(function () { $('a#addFavoriteLink').click(function () { $('form#favoriteform').submit(); }); });
+</script>
+<span id="Collections">
+
+        <a href="/Account/Login?ReturnUrl=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032">Add to favorites</a>
+
+</span>
+
+            </div>
+        
+            <div class="itemBar">
+                <label>Category</label>
+                
+                <a href="/site/search?f%5B0%5D.Type=RootCategory&f%5B0%5D.Value=activedirectory&f%5B0%5D.Text=Active%20Directory">Active Directory</a>        
+            </div>
+            
+            <div class="itemBarLong">
+                <label>Sub-category</label>
+                <div><a href="/site/search?f%5B0%5D.Type=RootCategory&f%5B0%5D.Value=activedirectory&f%5B0%5D.Text=Active%20Directory&f%5B1%5D.Type=SubCategory&f%5B1%5D.Value=useraccounts&f%5B1%5D.Text=User%20Accounts">User Accounts</a>
+                </div>
+            </div>
+            
+<script type="text/javascript">
+
+    $(function () {
+        $('#Downloads a').click(function (e) {
+            var top = '15%';
+            var url = $(this).data('url');
+            $.get('\x2fsite\x2fCheck-if-the-user-exist-if-4d906032\x2feulapartial\x3flicenseType\x3dTechNet', function(data){
+                $.prompt(data, { 
+                    buttons: {
+                                'I agree': true,
+                                'Cancel': false
+                                }, 
+                    top: top,
+                    prefix: 'eulaPage', 
+                    submit: function(v) {
+                        if(v)
+                        {
+                            window.location.href = url;
+                        }
+                    }
+                });
+            });
+            e.preventDefault();
+            e.stopPropagation();
+            
+        });
+    });
+
+</script>
+        
+        
+    </div>
+
+    <div id="sectionRight" class="section">
+        <div class="itemBar">
+            <label for="LastUpdated">
+                Updated</label>
+            <span id="LastUpdated">
+                3/30/2015</span>
+        </div>
+        
+            <div class="itemBarLong">
+                <label for="License">
+                    License</label>
+                <div id="License"><a href="javascript:showEula()">TechNet terms of use</a></div>
+            </div>
+        
+        <div class="itemBar">
+            <label for="LastUpdated">
+                Share</label>
+            <span>
+                
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $('.shareThisItem > a').WireTrackerForEvent('click', 'https://gallery.technet.microsoft.com/Content/Common/tracker.gif', 'ShareItClick', 'Check-if-the-user-exist-if-4d906032', true);
+    });
+</script>
+
+<div class="shareThisItem">
+ 
+<a href ="mailto:?subject=Delete%20AD%20Users%20homefolder%20if%20the%20User%20doesn%c2%b4t%20exist%20in%20AD&amp;Body=https://gallery.technet.microsoft.com/Check-if-the-user-exist-if-4d906032" target="_blank"><img alt="E-mail" src="https://i1.gallery.technet.s-msft.com/scriptcenter/content/common/sharethis/email.gif" /></a>
+
+ 
+<a href ="http://twitter.com/home?status=Delete%20AD%20Users%20homefolder%20if%20the%20User%20doesn%c2%b4t%20exist%20in%20AD&#32;:&#32;https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" target="_blank"><img alt="Twitter" src="https://i1.gallery.technet.s-msft.com/scriptcenter/content/common/sharethis/twitter.gif" /></a>
+
+ 
+<a href ="http://del.icio.us/post?url=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032&amp;title=Delete%20AD%20Users%20homefolder%20if%20the%20User%20doesn%c2%b4t%20exist%20in%20AD" target="_blank"><img alt="del.icio.us" src="https://i1.gallery.technet.s-msft.com/scriptcenter/content/common/sharethis/delicious.gif" /></a>
+
+ 
+<a href ="http://digg.com/submit?url=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032&amp;title=Delete%20AD%20Users%20homefolder%20if%20the%20User%20doesn%c2%b4t%20exist%20in%20AD" target="_blank"><img alt="Digg" src="https://i1.gallery.technet.s-msft.com/scriptcenter/content/common/sharethis/digg.gif" /></a>
+
+ 
+<a href ="http://www.facebook.com/sharer.php?u=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032&amp;t=Delete%20AD%20Users%20homefolder%20if%20the%20User%20doesn%c2%b4t%20exist%20in%20AD" target="_blank"><img alt="Facebook" src="https://i1.gallery.technet.s-msft.com/scriptcenter/content/common/sharethis/facebook.gif" /></a>
+
+
+</div></span>
+        </div>
+        
+        
+    </div>
+    <div class="clear"></div>
+    <div class="section">
+    
+
+
+
+
+    <div class="itemBarLong tagsContainer">
+        <label for="Tags">Tags</label>
+        <div id="Tags">
+            <a href="/site/search?f%5B0%5D.Type=Tag&amp;f%5B0%5D.Value=Active%20Directory&amp;f%5B0%5D.Text=Active%20Directory">Active Directory</a>, <a href="/site/search?f%5B0%5D.Type=Tag&amp;f%5B0%5D.Value=AD&amp;f%5B0%5D.Text=AD">AD</a>, <a href="/site/search?f%5B0%5D.Type=Tag&amp;f%5B0%5D.Value=User%20Accounts&amp;f%5B0%5D.Text=User%20Accounts">User Accounts</a>, <a href="/site/search?f%5B0%5D.Type=Tag&amp;f%5B0%5D.Value=home%20folder&amp;f%5B0%5D.Text=home%20folder">home folder</a>, <a href="/site/search?f%5B0%5D.Type=Tag&amp;f%5B0%5D.Value=Home%20Directory&amp;f%5B0%5D.Text=Home%20Directory">Home Directory</a>
+        </div>
+    </div>
+
+
+    <a name="content"></a>
+    <div class="itemBar">
+            <span id="reportAbuse">
+                <a href="/Account/Login?ReturnUrl=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032%2fview%2fReportAbuse">Report abuse to Microsoft</a>
+            </span>
+        </div>
+    </div>
+</div>
+
+<script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/149a27ede283d527fc8e41a1a58b1bd9-7af9a874efbc1f5aa0062aba1a48cd8f-RequestReducedScript.js" type="text/javascript" ></script><script type="text/javascript">
+
+    $(function () {
+        $('#Downloads input').click(function () {
+            window.location.href = $(this).data('url');
+         });
+    });
+
+    function rateItReviewIt() {
+        displayCreateReview();
+        $('#Reviews_Tab').click();
+    }
+
+    function showEula() {
+        $.get('\x2fsite\x2fCheck-if-the-user-exist-if-4d906032\x2feulapartial\x3flicenseType\x3dTechNet', function(data){
+            $.prompt(data, {
+                prefix: 'eulaPage',
+                top: '15%',
+                buttons: { 'Close': true }   
+            });
+        });
+    };
+
+</script>
+
+
+            </div>
+        </div>
+        
+
+
+
+<div id="projectBody">
+    <div id="projectContent">
+        <div class="tabHeaders">
+            <div id="Details_Tab" class = current><a href="/Check-if-the-user-exist-if-4d906032#content" >Description</a></div>
+            
+                <div id="Discussions_Tab"  class = ><a href="/Check-if-the-user-exist-if-4d906032/view/Discussions#content" >Q and A </a></div>
+        </div>
+        <div class="tabContents">
+                <div id="Details_Content">
+                            <iframe id="longdescIframe" frameborder="0" width="100%" scrolling="no" marginwidth="0" marginheight="0" src="/Check-if-the-user-exist-if-4d906032/description"></iframe>
+                    
+    <div id="supportedPlatformsChart">
+        <span class="descriptionSubSectionTitle"> Verified on the following platforms</span>
+        <table cellpadding="0" cellspacing="0">
+                <tr class="oddRow">
+                    <td>
+                        Windows 10
+                    </td>
+                    <td>
+                        No
+                    </td>
+                </tr>
+                <tr class="evenRow">
+                    <td>
+                        Windows Server 2012
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td>
+                        Windows Server 2008 R2
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                </tr>
+                <tr class="evenRow">
+                    <td>
+                        Windows Server 2008
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td>
+                        Windows Server 2003
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                </tr>
+                <tr class="evenRow">
+                    <td>
+                        Windows 8
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td>
+                        Windows 7
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                </tr>
+                <tr class="evenRow">
+                    <td>
+                        Windows Vista
+                    </td>
+                    <td>
+                        No
+                    </td>
+                </tr>
+                <tr class="oddRow">
+                    <td>
+                        Windows XP
+                    </td>
+                    <td>
+                        No
+                    </td>
+                </tr>
+                <tr class="evenRow">
+                    <td>
+                        Windows 2000
+                    </td>
+                    <td>
+                        No
+                    </td>
+                </tr>
+        </table>
+    </div>
+    <div id="supportedPlatformText">
+        This script is tested on these platforms by the author.  It is likely to work on other platforms as well.  If you try it and find that it works on another platform, please add a note to the script discussion to let others know.
+    </div>
+    <div id="disclaimer">
+        <span class="descriptionSubSectionTitle">
+            Disclaimer</span>
+        The sample scripts are not supported under any Microsoft standard support program or service. The sample scripts are provided AS IS without warranty of any kind. Microsoft further disclaims all implied warranties including, without limitation, any implied warranties of merchantability or of fitness for a particular purpose. The entire risk arising out of the use or performance of the sample scripts and documentation remains with you. In no event shall Microsoft, its authors, or anyone else involved in the creation, production, or delivery of the scripts be liable for any damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use of or inability to use the sample scripts or documentation, even if Microsoft has been advised of the possibility of such damages.
+    </div>
+
+
+                </div>
+            
+            
+
+        </div>
+    </div>
+</div>    
+    </div>
+    <script language="javascript" type="text/javascript">
+
+        $(document).ready(function() {
+	    if (StreamEvents) {
+                window.gTracker = StreamEvents.tracker.create(null, {
+                    beaconUrl: 'setrack.gif',
+                    pageEventType: 'GalleriesPage',
+                    pageActionEventType: 'GalleriesPageAction',
+                    pageEventArg: {
+                        Brand: 'TechNet',
+                        Page: 'ProjectDetails',
+                        Section: null,
+                        PageContent: 'Check-if-the-user-exist-if-4d906032',
+                        PageContentType: 'Project'
+                    }
+                });
+             }
+
+
+             registerPageView();
+            
+             Galleries.project.getAuthorProjects();
+            
+             loadTabData('Details');
+
+             var reportAbuseFormUrl = '\x2fCheck-if-the-user-exist-if-4d906032\x2freportabuse';
+             $("#reportAbuse a[href='']").click(function() {
+                    $('#projectContent').load(reportAbuseFormUrl);
+                    return false;
+                });
+            
+             
+        });
+        
+         function loadTabData(tabId) {
+                if ((tabId == 'SourceCode')) {
+                    $('div.collapsableSidebar').addClass('hiddenSidebar');
+                    $('#projectBody .tabContents').addClass('fullProjectBody');
+                    Galleries.utility.waitFor(
+                        function(){ return $("#userCard .profile-statline").length > 0;},
+                        function(){$("#userCard .profile-biography, #userCard .profile-statline, #userCard .profile-footer, #userCard .profile-inline-secondary").addClass('hiddenSidebar'); });
+                    
+                }
+                else {
+                    $('div.collapsableSidebar, #userCard .profile-biography, #userCard .profile-statline, #userCard .profile-footer, #userCard .profile-inline-secondary').removeClass('hiddenSidebar');
+                    $('#projectBody .tabContents').removeClass('fullProjectBody');
+                }
+
+                Galleries.project.resizeDesc();
+        }
+
+        function registerPageView() {
+            $.post('\x2fCheck-if-the-user-exist-if-4d906032\x2fstats\x2fRegisterPageView');
+        }
+    </script>
+
+
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="advertisment">
+        
+    </div>
+
+                                    <div class="Clear"></div>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="Clearbottom"></div>          
+                    <div class="bottomleftcorner"></div>            
+                    <div class="bottomrightcorner"></div> 
+                    
+                     
+               
+                         <div id="Footer">
+                            <div class="FooterLogoContainer"><a href="http://www.microsoft.com/en/us/default.aspx"><div class="FooterLogo" title="Microsoft Corporation"> </div></a></div><div id="FooterCopyright" class="FooterCopyright">© 2016  Microsoft. All rights reserved.</div><div class="FooterLinks"><span class="FooterAnchorList"><a href="http://technet.microsoft.com/cc543196.aspx">Newsletter</a><span class="Pipe">|</span><a href="http://technet.microsoft.com/cc512759.aspx">Contact Us</a><span class="Pipe">|</span><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy Statement</a><span class="Pipe">|</span><a href="http://technet.microsoft.com/cc300389.aspx">Terms of Use</a><span class="Pipe">|</span><a href="http://www.microsoft.com/About/Legal/EN/US/IntellectualProperty/Trademarks/EN-US.aspx">Trademarks</a><span class="Pipe">|</span><a href="https://lab.msdn.microsoft.com/mailform/contactus.aspx?refurl=https%3a%2f%2fgallery.technet.microsoft.com%2fCheck-if-the-user-exist-if-4d906032" target="_blank">Site Feedback</a></span></div>
+                            
+    <div id="buildVersion">
+        Version:
+        427.5068.95.0</div>
+
+                        </div>  
+                    
+
+                           
+                </div>
+            </div>
+        </div>
+    </div>
+      
+    <div data-chameleon-template="megablade" >    
+        
+
+    <div id="megabladeContainer" xmlns="http://www.w3.org/1999/xhtml">
+        <div id="megabladeContainerCenter">
+            <ul id="megabladeItems">
+                <li class="Logo"><a href="https://technet.microsoft.com/" title="TechNet">TechNet</a></li>
+                        <li data-value="hh326172" class="bladeItem bladeItemWithMenu"><a class="label" href="" onclick="return false;">Products</a><span class="caret"></span></li>
+                        <li data-value="hh880860" class="bladeItem bladeItemWithMenu"><a class="label" href="" onclick="return false;">IT Resources</a><span class="caret"></span></li>
+                        <li data-value="hh371326" class="bladeItem bladeItemWithMenu"><a class="label" href="" onclick="return false;">Downloads</a><span class="caret"></span></li>
+                        <li data-value="jj837158" class="bladeItem bladeItemWithMenu"><a class="label" href="" onclick="return false;">Training</a><span class="caret"></span></li>
+                        <li data-value="hh371327" class="bladeItem bladeItemWithMenu"><a class="label" href="" onclick="return false;">Support</a><span class="caret"></span></li>
+            </ul>
+            <div class="bladeItemMenuContainer">
+                    <div data-value="hh326172" class="bladeItemMenu" style="display: none;">
+                        <div class="menuContainerLayout">
+  <h5>Products</h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/windows">Windows</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/bb625087.aspx">Windows Server</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/cc507089.aspx">System Center</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/browser">Browser</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/office">Office</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/office/dn788774">Office 365</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/office/dn788775">Exchange Server</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://msdn.microsoft.com/library/mt590198(v=sql.1)">SQL Server</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/office/dn788776">SharePoint Products</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/office/dn788773">Skype for Business</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/bb421517.aspx?wt.svl=more_centers_link">See all products »</a>
+    </li>
+  </ul>
+</div>
+                    </div>
+                    <div data-value="hh880860" class="bladeItemMenu" style="display: none;">
+                        <div class="menuContainerLayout">
+  <h5>Resources</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/evalcenter/">Evaluation Center</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/bb291022">Learning Resources</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/dn440144">Microsoft Tech Companion App</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/dn550853" title="Microsoft Technical Communities">Microsoft Technical Communities</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/?CR_CC=200157774">Microsoft Virtual Academy</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/scriptcenter">Script Center</a>
+    </li>
+    <li>
+      <a href="http://blogs.technet.com/b/serverandtools/">Server and Tools Blogs</a>
+    </li>
+    <li>
+      <a href="http://blogs.technet.com/">TechNet Blogs</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/cc543196">TechNet Flash Newsletter</a>
+    </li>
+    <li>
+      <a href="https://gallery.technet.microsoft.com/">TechNet Gallery</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/default.aspx">TechNet Library</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/magazine/default.aspx">TechNet Magazine</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/subscriptions">TechNet Subscriptions</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/video">TechNet Video</a>
+    </li>
+    <li>
+      <a href="http://social.technet.microsoft.com/wiki">TechNet Wiki</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/sysinternals">Windows Sysinternals</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/virtuallabs">Virtual Labs</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Solutions</h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/network">Networking</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/cloud/private-cloud">Cloud and Datacenter</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/security">Security</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/server-cloud/solutions/virtualization.aspx">Virtualization</a>
+    </li>
+  </ul>
+</div>
+                    </div>
+                    <div data-value="hh371326" class="bladeItemMenu" style="display: none;">
+                        <div class="menuContainerLayout">
+  <h5>Updates</h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us">Service Packs</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/security/bulletin">Security Bulletins</a>
+    </li>
+    <li>
+      <a href="http://windows.microsoft.com/en-us/windows/windows-update">Windows Update</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Trials</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2012-r2">Windows Server 2012 R2</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-system-center-2012-r2">System Center 2012 R2</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2014">Microsoft SQL Server 2014 SP1</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-8-1-enterprise">Windows 8.1 Enterprise</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/" title="See all trials">See all trials »</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Related Sites</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/download">Microsoft Download Center</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/">TechNet Evaluation Center</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/download/driver.aspx?q=driver">Drivers</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/sysinternals">Windows Sysinternals</a>
+    </li>
+    <li>
+      <a href="https://gallery.technet.microsoft.com/">TechNet Gallery</a>
+    </li>
+  </ul>
+</div>
+                    </div>
+                    <div data-value="jj837158" class="bladeItemMenu" style="display: none;">
+                        <div class="menuContainerLayout">
+  <h5>Training</h5>
+  <ul>
+    <li>
+      <a href="http://www.microsoftimmersion.com/virtualclassroom">Expert-led, virtual classes</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/training.aspx">Training Catalog</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/find-partner.aspx">Class Locator</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/">Microsoft Virtual Academy</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/en-US/training-courses/windows-server-2012-training-technical-overview-8564?l=BpPnn410_6504984382">Free Windows Server 2012 courses</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/product-training/windows?CR_CC=200155697#!lang=1033" title="Free Windows 8 courses">Free Windows 8 courses</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/sql-training.aspx">SQL Server training</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/on-demand-online-courses.aspx">Microsoft Official Courses On-Demand</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Certifications</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/certification-overview.aspx">Certification overview</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-windows-10-certifications.aspx" title="MCSA: Windows 10">MCSA: Windows 10</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-windows-server-certification.aspx">Windows Server Certification (MCSE)</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/private-cloud-certification.aspx">Private Cloud Certification (MCSE)</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-sql-certification.aspx">SQL Server Certification (MCSE)</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Other resources</h5>
+  <ul>
+    <li>
+      <a href="http://www.technetevents.com/">TechNet Events</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/second-shot.aspx">Second shot for certification</a>
+    </li>
+    <li>
+      <a href="https://borntolearn.mslearn.net/b/?Redirected=true">Born To Learn blog</a>
+    </li>
+    <li>
+      <a href="https://www.technicalcommunity.com/default.aspx" title="Microsoft Technical Communities">Find technical communities in your area</a>
+    </li>
+  </ul>
+</div>
+                    </div>
+                    <div data-value="hh371327" class="bladeItemMenu" style="display: none;">
+                        <div class="menuContainerLayout">
+  <h5>Support options</h5>
+  <ul>
+    <li>
+      <a href="https://businessaccount.microsoft.com/en-us/support">For small and midsize businesses</a>
+    </li>
+    <li>
+      <a href="https://premier.microsoft.com/">For enterprises</a>
+    </li>
+    <li>
+      <a href="https://msdn.microsoft.com/hh361695">For developers</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/ms772425">For IT professionals</a>
+    </li>
+    <li>
+      <a href="https://pinpoint.microsoft.com/en-US/">From partners</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us/assistedsupportproducts">For technical support</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/microsoftservices/support.aspx">Support offerings</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/">For home users</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>More support</h5>
+  <ul>
+    <li>
+      <a href="https://premier.microsoft.com/">Microsoft Premier Online</a>
+    </li>
+    <li>
+      <a href="https://social.technet.microsoft.com/forums/en-us/home">TechNet Forums</a>
+    </li>
+    <li>
+      <a href="https://social.msdn.microsoft.com/forums/en-us/home">MSDN Forums</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/security/bulletin">Security Bulletins &amp; Advisories</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/">International support solutions</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/en-us/assistedsupportproducts">Log a support ticket</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Not an IT pro?</h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us">Microsoft Customer Support</a>
+    </li>
+    <li>
+      <a href="http://answers.microsoft.com/en-us">Microsoft Community Forums</a>
+    </li>
+  </ul>
+</div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    
+<script type="text/javascript" xmlns="http://www.w3.org/1999/xhtml">
+/*<![CDATA[*/
+/**/
+(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { 
+	"image": "https://i-technet.sec.s-msft.com", 
+	"js": "https://i2-technet.sec.s-msft.com", 
+	"css": "https://i-technet.sec.s-msft.com", 
+	"ttf": "https://i-technet.sec.s-msft.com"
+});
+/**/
+/*]]>*/
+</script><script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/cf0be4b0c73bdec922ed9932365f9205-16fd11f4708faf9d809e95df7f68f599-RequestReducedScript.js" type="text/javascript" ></script><script type="text/javascript" xmlns="http://www.w3.org/1999/xhtml">
+/*<![CDATA[*/
+var omnitureTracking = "false";
+/*]]>*/
+</script><script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/4f4c874ae258c7aba6642925db4737cc-74711ee292da135515fc514e5b529841-RequestReducedScript.js" type="text/javascript" ></script></div>
+    
+    <script type="text/javascript">
+        Galleries.utility.loadJavaScript("https://widgets.membership.s-msft.com/v1/loader.js?brand=TechNet&lang=en-US", true);
+        Galleries.utility.loadJavaScript('https://www.microsoft.com/library/svy/sto/broker.js', true);
+    </script>    
+
+    <script src="https://i1.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=SearchTextBox&btnid=SearchButton&brand=Technet&loc=en-US&resref=&addEnglish=&rn=&rq=&watermark=&focusOnInit=False&beta=0&iroot=&overrideWatermark=false&pgArea=&cver=0001" type="text/javascript" language="javascript"></script>
+    <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/167a4a892edd4f17a18b3c1002cb3269-c769c4ecaf33d04f3dea6af4337b9847-RequestReducedScript.js" type="text/javascript" ></script>        
+    <script type="text/javascript">
+        jQuery(window).load(
+            function () {
+                document.getElementsByTagName('body')[0].appendChild(addAsyncScript("https://i1.gallery.technet.s-msft.com/GlobalResources/scripts/omni_rsid_social.js?cver=0001"));
+                document.getElementsByTagName('body')[0].appendChild(addAsyncScript("https://i1.gallery.technet.s-msft.com/GlobalResources/scripts/WEDCS.js?cver=0001"));
+            });
+        </script>
+        <noscript><a href="https://www.omniture.com" title="Web Analytics">
+        <img src="https://msstonojssocial.112.2O7.net/b/ss/msstonojssocial/1/H.20.2--NS/0" height="1" width="1" alt="" />
+        </a></noscript>
+    
+</body>
+</html>

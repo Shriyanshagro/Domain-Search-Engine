@@ -1,0 +1,1342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Semantic Web Services Framework (SWSF) Overview</title>
+    <link rel="stylesheet" type="text/css"
+	  href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM.css"/>
+  </head>
+  <body>
+    <div class="head">
+
+  <p>
+  <a href="http://www.w3.org/"><img height="48" alt="W3C"
+     src="http://www.w3.org/Icons/w3c_home" width="72" /></a> 
+  <a href="http://www.w3.org/Submission/">
+     <img height="48" alt="W3C Member Submission" 
+     src="http://www.w3.org/Icons/member_subm" width="211" /></a> 
+  </p>
+
+	<h1 id="ST">Semantic Web Services Framework (SWSF) Overview</h1>
+        <h2><a name="SW">W3C Member Submission 9 September 2005</a></h2>
+
+	<dl>
+          <dt>This version:</dt>
+          <dd><a href="http://www.w3.org/Submission/2005/SUBM-SWSF-20050909/">http://www.w3.org/Submission/2005/SUBM-SWSF-20050909/</a></dd>
+
+          <dt>Latest version:</dt>
+          <dd><a href="http://www.w3.org/Submission/SWSF/">http://www.w3.org/Submission/SWSF/</a></dd>
+
+
+	  <dt>Authors:</dt>
+	  <dd>
+	    Steve Battle (Hewlett Packard) <br/>
+	    Abraham Bernstein (University of Zurich)<br/>
+	    Harold Boley (National Research Council of Canada)<br/>
+	    Benjamin Grosof (Massachusetts Institute of Technology) <br/>
+	    Michael Gruninger (NIST)<br/>
+	    Richard Hull (Bell Labs Research, Lucent Technologies) <br/>
+	    Michael Kifer (State University of New York at Stony Brook) <br/>
+	    David Martin (SRI International) <br/>
+	    Sheila McIlraith (University of Toronto) <br/>
+	    Deborah McGuinness (Stanford University) <br/>
+	    Jianwen Su (University of California, Santa Barbara) <br/>
+	    Said Tabet (The RuleML Initiative) <br/>
+	  </dd>
+	</dl>
+	<!-- copyright -->
+	<p class="copyright">Copyright &copy; 2005 retained by the authors.
+	  All Rights Reserved.<br/>
+See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notices and Disclaimers</a> for additional information.
+	  </p>
+	<hr title="Separator for header"/>
+      </div>
+      <h2><a id="abstract" name="abstract">Abstract</a></h2>
+      <p>This document provides an overview of the Semantic Web
+      Services Framework (SWSF), which includes the Semantic Web
+      Services Language (SWSL) and the Semantic Web Services Ontology
+      (SWSO).  
+      </p>
+      <h2><a id="status" name="status"></a>Status of this document</h2>
+      <div class="status">
+<p>This document is part of a member submission, offered by 
+National Institute of Standards and Technology (NIST),
+National Research Council of Canada,
+SRI International,
+Stanford University,
+Toshiba Corporation,
+and
+University of Southampton
+on behalf of themselves and the authors.
+</p>
+        <p>This is one of <a href="/Submission/2005/SUBM-SWSF-20050909/#roadmap">four documents</a>
+      that make up the submission.  
+      These documents define the Semantic Web Services Framework (SWSF).
+      This submission has been prepared by the <a
+      href="http://www.daml.org/services/swsl/">Semantic Web Services
+      Language Committee</a> of the <a
+      href="http://www.swsi.org">Semantic Web Services Initiative</a>.
+        </p>
+<p>
+The W3C Team Comment discusses this submission
+in the context of W3C activities.
+Public comment on this document is invited on the mailing list
+<a href="mailto:public-sws-ig@w3.org">public-sws-ig@w3.org</a> 
+(<a href="http://lists.w3.org/Archives/Public/public-sws-ig/">public archive</a>).
+Announcements and current information may also be available on the <a
+href="http://www.daml.org/services/swsl/">SWSL Committee Web site</a>.
+</p>
+
+<p>By publishing this document, W3C acknowledges that 
+National Institute of Standards and Technology (NIST),
+National Research Council of Canada,
+SRI International,
+Stanford University,
+Toshiba Corporation,
+and
+University of Southampton
+have made a formal submission to W3C for discussion. Publication of
+this document by W3C indicates no endorsement of its content by W3C,
+nor that W3C has, is, or will be allocating any resources to the
+issues addressed by it. This document is not the product of a
+chartered W3C group, but is published as potential input to the <a
+href="http://www.w3.org/2004/02/Process-20040205/">W3C
+Process</a>. Publication of acknowledged Member Submissions at the W3C
+site is one of the benefits of <a
+href="http://www.w3.org/Consortium/Prospectus/Joining">W3C
+Membership</a>. Please consult the requirements associated with Member
+Submissions of <a
+href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-submissions">section
+3.3 of the W3C Patent Policy</a>. Please consult the complete <a
+href="http://www.w3.org/Submission/">list of acknowledged W3C Member
+Submissions</a>.</p>
+      </div>
+
+      <hr/>
+      <h2><a id="contents" name="contents">Table of contents</a></h2>
+      <p class="toc">
+	1 <a href="#sec-introduction">Introduction to SWSL and SWSO</a>
+	<br/>
+	2 <a href="#roadmap">Document Roadmap </a>
+	<br/>
+	3 <a href="#sec-acknowledgements">Acknowledgements</a>
+	<br/>
+	4 <a href="#sec-glossary">Glossary</a>
+	<br/>
+	5 <a href="#sec-references">References</a>
+      </p>
+
+      <hr/>
+
+    <h1><a id="sec-introduction" name="sec-introduction">1 Introduction to SWSL and SWSO</a></h1>
+
+    <p>
+      The promise of Web services and the need for widely accepted standards
+      enabling them are widely recognized, and considerable efforts are
+      underway to define and evolve such standards in the commercial realm. In
+      particular, the Web Services Description Language (WSDL)
+      [<cite><a href="#WSDL">WSDL 1.1</a></cite>] 
+      is
+      already well established as an essential building block in the evolving
+      stack of Web service technologies, and is being standardized in the W3C's
+      Web Services Description Working Group. WSDL, in essence, allows
+      for the specification of the syntax of the input and output messages of a
+      basic service, as well as other details needed for the invocation of the
+      service. WSDL does not, however, support the specification of workflows
+      composed of basic services. In this area, the Business Process Execution
+      Language for Web Services (BPEL4WS) 
+      [<cite><a href="#BPEL">BPEL 1.1</a></cite>], 
+      under development at OASIS,
+      has the most prominent status. The Choreography Description Language
+      under development by W3C's Web Services Choreography Working
+      Group, serves to "define from a global viewpoint ...  the
+      information exchanges that occur and the jointly agreed ordering rules
+      that need to be satisfied" in carrying out a Web service-based
+      transaction 
+            [<cite><a href="#WS-Choreography">WS-Choreography</a></cite>].
+      With respect to registering Web services for
+      purposes of advertising and discovery, Universal Description, Discovery
+      and Integration (UDDI) [<cite><a
+      href="#UDDI">UDDI v3.02</a></cite>] has received the most attention to
+      date. Standards are also being developed in connection with various other
+      aspects of Web service provisioning, such as reliable messaging,
+      security, and resource management.
+    </p>
+    <p>
+      At the same time, recognition is growing of the need for richer semantic
+      specifications of Web services, based on a compressive representational
+      framework that spans the full range of service-related concepts. Such a
+      framework will enable fuller, more flexible automation of service
+      provision and use, support the construction of more powerful tools and
+      methodologies, and promote the use of semantically well-founded reasoning
+      about services. Because an expressive representation framework permits
+      the specification of many different aspects of services, it can provide a
+      foundation for a broad range of activities, across the Web service
+      lifecycle. For example, richer semantics can support greater automation
+      of service selection and invocation; automated translation of message
+      content between heterogeneous interoperating services; automated or
+      semi-automated approaches to service composition; more comprehensive
+      approaches to service monitoring and recovery from failure; and fuller
+      automation of verification, simulation, configuration, supply chain
+      management, contracting, and negotiation for services.  
+      The technologies presented in this document are designed to 
+      realize this <em>Semantic Web Service</em> vision
+      [<cite><a href="#McIlraith01">McIlraith01</a></cite>].
+    </p>
+    <p>
+      This report presents 
+      two major components:
+    </p>
+    <ul>
+      <li>The <a href="/Submission/2005/SUBM-SWSF-SWSL-20050909/">
+	  <b>Semantic Web Services Language (SWSL)</b></a> is used to
+	specify formal characterizations of Web service concepts and
+	descriptions of individual services.  It includes two
+	sublanguages.
+        <b><i>SWSL-FOL</i></b> is based on first-order logic (FOL) and is used
+        primarily to express the formal characterization (ontology) of
+        Web service concepts.
+	<b><i>SWSL-Rules</i></b> is based on the logic-programming (or "rules")
+        paradigm and is used to support the use of the service ontology in
+        reasoning and execution environments based on that paradigm.
+        SWSL is a general-purpose language (that is, its features are
+        not service-specific), but it has been designed to address the needs of
+        Semantic Web Services.  Also associated with SWSL is a
+	<em>simplified presentation syntax</em>, which reduces to SWSL-FOL.
+      </li>
+      <li>
+	The <a
+	   href="/Submission/2005/SUBM-SWSF-SWSO-20050909/">
+	  <b>Semantic Web Services Ontology (SWSO)</b></a> presents a
+        conceptual model by which Web services can be described, and an
+        axiomatization, or formal characterization, of that model.
+        The complete axiomatization is given in first-order logic, using
+        SWSL-FOL, with a model-theoretic semantics that specifies the
+        precise <i>meaning</i> of the concepts. We call this FOL form of the ontology <em><b>FLOWS</b></em> --
+	<b>F</b>irst-Order <b>L</b>ogic <b>O</b>ntology for <b>
+	  W</b>eb <b>S</b>ervices.  In addition, the axioms from FLOWS have been
+	  systematically translated into the SWSL-Rules language (with an
+	  unavoidable weakening of some axioms). The resulting
+	  ontology, which relies on logic-programming semantics,
+	  is called
+	<em><b>ROWS</b></em> -- <b>R</b>ules <b>O</b>ntology for <b>
+	  W</b>eb <b>S</b>ervices.
+      </li>
+    </ul>
+    <p>
+      More specifically, SWSL is a general-purpose logical language,
+      with certain features to make it usable with the basic languages and
+      infrastructure of the Web. These features include URIs, integration of
+      XML built-in types, and XML-compatible namespace and import
+      mechanisms. SWSL includes two layers of expressiveness: SWSL-FOL
+      and SWSL-Rules. SWSL-FOL is a first-order logic, extended with features
+      from HiLog
+      [<cite><a
+      href="#hilog">Chen93</a></cite>]
+      and the frame syntax of F-logic
+      [<cite><a
+      href="#f-logic">Kifer95</a></cite>].
+      SWSL-Rules is a full-featured logic programming (LP) language, which
+      includes a novel combination of features from Courteous logic programs
+      [<cite><a
+      href="#Grosof99a">Grosof99a</a></cite>],
+      HiLog, and F-logic.
+    </p>
+    <p>
+      Nearly all the elements of
+      the syntax are
+      common to both SWSL-FOL and SWSL-Rules, so as to promote the ability of
+      developers to easily work with both layers, and to facilitate various
+      kinds of interchange and interoperation between the layers. The
+      presentation syntax is designed for readability, and incorporates a
+      number of convenience features, such as an object-oriented style of
+      presentation, which can be used to improve code organization and
+      comprehensibility, but without changing the expressiveness and
+      tractability of the underlying logical systems. An XML-based
+      serialization syntax, based on RuleML, is also specified.
+    </p>
+    <p>
+      FLOWS is an axiomatized ontology of service concepts,
+      which provides the conceptual framework for describing and reasoning
+      about services. FLOWS draws many of its intuitions and lessons-learned
+      from OWL-S, the OWL ontology for Web services
+      [<cite><a href="#OWL-S-white-paper">OWL-S 1.1</a></cite>].  A key
+      contribution of the FLOWS ontology is the development of a rich
+      behavioural process model, based on ISO 18629
+      <a href="http://www.mel.nist.gov/psl/">
+	Process Specification Language </a> (PSL)
+      [<cite><a href="#PSL1-Gruninger">Gruninger03a</a></cite>],
+      [<cite><a href="#PSL2-Gruninger">Gruninger03b</a></cite>].
+      Originally designed to support interoperability among process modeling
+      languages, PSL provides the ideal foundation for interoperability among
+      emerging Web service process models, while supporting the realization of
+      automation task associated with the Semantic Web Service vision. FLOWS
+      goes beyond PSL in modeling many Web-service specific process concepts
+      including messages, channels, inputs and outputs.
+    </p>
+    <p>
+      FLOWS is
+      designed modularly.  It comprises an ontology for service descriptors,
+      somewhat akin to a domain-independent yellow-pages or OWL-S service
+      profile, an extensive process model ontology, and a grounding that
+      relates the process model message types to WSDL messages.  
+      The process model ontology is in
+      turn comprised of a core ontology and a number of extensions.  
+      </p>
+
+    <p>The statements above about FLOWS are also true of ROWS, which
+    is derived from FLOWS.
+    </p>
+
+    <p>
+      In addition to presenting SWSL and SWSO, this document also
+      provides some guidance as to how SWSL-FOL and SWSL-Rules can be
+      used together, examples of applications of SWSL and SWSO, and a
+      discussion of how FLOWS-based service descriptions can be
+      <em>grounded</em> in the concrete descriptions of messages and
+      protocols provided by WSDL.
+    </p>
+    <p>
+      This proposal has been prepared by the 
+      <a
+      href="http://www.daml.org/services/swsl/">Semantic Web Services
+      Language Committee</a> of the <a
+      href="http://www.swsi.org">Semantic Web Services Initiative</a>,
+      a collaborative
+      international research effort. In addition to providing further
+      evolution of the SWSL language and ontology, SWSI will also be a forum for
+      working towards convergence of SWSL with the products
+      of the WSMO research effort
+      [<cite><a href="#wsmo-d2">Bruijn05</a></cite>].
+    </p>
+
+    <p>
+      The overall design of the SWSL Language and Ontology, and of the
+      application scenarios using those, has been motivated by an
+      overall longer-term vision and set of objectives for Semantic
+      Web services.  These are summarized in a requirements document,
+      which is available on the SWSL Committee's Web site [<cite><a
+      href="#SWSL-Req">SWSL Requirements</a></cite>].  That document
+      expressed our thinking as we set out to design the SWSF Languge
+      and Ontology.  The current design of SWSF addresses, directly or
+      indirectly, most (but not all) of the points in the requirements
+      document.
+
+    </p>
+    <h2 id="Related_Efforts">Related Efforts</h2>
+    <p>
+      <em><b>OWL-S</b></em>: OWL-S 
+      [<cite><a href="#OWL-S-white-paper">OWL-S 1.1</a></cite>] 
+      is an ontology of service concepts expressed
+      in OWL-DL, a decidable description logic language.  
+      In contrast, FLOWS is an ontology of service concepts 
+      expressed in first-order logic.  Since OWL-DL trades off expressiveness
+      for decidability, there were aspects of the OWL-S process model 
+      ontology whose semantics could not be defined in the OWL-DL language.
+      This is not a problem with the FLOWS ontology.  FLOWS provides a
+      more comprehensive ontology, building on the conceptual model and
+      lessons-learned from OWL-S.  As such it captures all
+      concepts in OWL-S.  In terms of coverage it is distinguished by 
+      its axiomatization of messages, something that was not addressed in 
+      OWL-S.  An important final distinction between OWL-S and FLOWS is
+      with respect to the role it plays.  Whereas both endeavours attempt
+      to provide an ontology for Web services, FLOWS had the additional
+      objective of acting as a focal point for interoperability, enabling
+      other business process modeling languages to be expressed or
+      related to FLOWS. 
+    </p>
+    <p>
+      <em><b>Process Specification Language (PSL) and related
+	  specifications</b></em>: There are a number of efforts whose aim is
+	  to develop a process specification ontology. These efforts include
+	  PSL [<cite><a href="#PSL1-Gruninger">Gruninger03a</a></cite>], BPMI
+	  [<cite><a href="#BPML">BPML 1.0</a></cite>], and others. The process
+	  ontology of SWSL is based on PSL. From the perspective of PSL, FLOWS
+	  may be viewed as a collection of extensions that situate the
+	  description of processes within a larger context of message-based
+	  communications across networks. </p>
+    <p>
+      <em><b>BPEL4WS</b></em>:   There is much to be said about the 
+       relationship between this effort and BPEL4WS
+         [<cite><a href="#BPEL">BPEL 1.1</a></cite>].  
+       BPEL4WS provides an executable
+       business process modeling language that enables the specification
+       (orchestration) of executable business processes as well as the
+       description of non-executable processes.  The most obvious point of
+       comparison between BPEL4WS and this effort is with respect to the
+       FLOWS ontology.  The FLOWS ontology is a great deal more than process
+       modeling, supporting the axiomatization of non-functional service 
+       descriptions (for service discovery) as well as the rich mapping of 
+       message types to WSDL.
+       We believe that the FLOWS process model subsumes the BPEL4WS process
+       model, enabling the encoding of both executable and abstract BPEL 
+       process models in FLOWS.  (Note
+       that we have not yet confirmed this through a systematic translation.)
+       Whereas BPEL takes a message-centric view of services, FLOWS provides
+       for a process-centric view of services, where message exchanges
+       are conceived as additional processes that may be inferred automatically.       A notable difference between the two formalisms is that FLOWS supports
+       the encoding of service side-effects, i.e., the effects of services
+       on the world, which enables automated composition of Web services,
+       in additon to the manual composition supported by BPEL.
+       Finally, 
+       BPEL is indeed designed for Web service orchestration, whereas
+       FLOWS may also be used for choreography of services.
+ 
+    </p>
+
+
+    <p>
+      <em><b>Web Services Modeling Ontology (WSMO)</b></em>: WSMO [<cite><a
+      href="#wsmo-d2">Bruijn05</a></cite>] is a
+      parallel effort to define an ontology and a language for Semantic Web
+      services. Like SWSL-Rules, WSMO's rule language, WSML is largely based on
+      F-logic and these languages share much of the logical expression
+      syntax. Nevertheless, the two groups have pursued complimentary
+      goals. WSMO has focused heavily on the language effort, and in particular
+      on end user issues, associated with the language.  In particular, they
+      have developed a "conceptual syntax" for top-level descriptions of
+      services, which might make the specifications easier to read for the end
+      user. WSMO has also paid special attention to the issue of OWL
+      compatibility. To this end, it defined WSML-Core as a subset of both OWL
+      and WSML, which serves as a common ground for ontology
+      interoperability. In contrast, SWSL's focus was on extending the
+      functionality of the rule language. In particular, SWSL-Rules supports
+      meta-reasoning with its HiLog and reification extensions. It also
+      supports prioritized defaults and classical negation by incorporating
+      Courteous Logic Programming.
+    </p>
+    <p>
+      A major distinction between the WSMO effort and the effort presented here
+      is with respect to the ontology.  The two efforts are divergent, but
+      complementary.  WSMO has focussed on describing Web service choreography
+      through guarded transition rules, Event-Condition-Action (ECA) rules
+      which are viewed as abstract
+      state machines. In contrast, FLOWS provides an extensive first-order
+      process ontology, which enables description of process orchestration as
+      well as message exchange among processes. The FLOWS ontology also
+      provides the foundation for enabling automated simulation, verification
+      and composition of Web services, something that cannot be done with the
+      guarded transition rules, without further definition of the semantics.
+    </p>
+
+<hr />
+    <h1><a id="roadmap" name="roadmap">2 Document Roadmap</a></h1>
+    <p>
+      This report comprises four top-level documents:
+    </p>
+      <ol>
+        <li><b>Semantic Web Services Framework
+	Overview</b>, this document, includes introductory material,
+      comments about selected other work that is most directly related
+      to this work, and acknowledgements.  
+        </li>
+	<li><a href="/Submission/2005/SUBM-SWSF-SWSL-20050909/">The Semantic Web Services Language (SWSL)</a>
+      describes the syntactic elements of SWSL and, informally, its
+      semantic underpinnings.   It also explains how SWSL-FOL and
+      SWSL-Rules can be used together, and presents an XML
+      serialization syntax for SWSL, based on RuleML.
+	</li>
+	<li><a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/">The Semantic Web Services Ontology (SWSO)</a>
+      presents FLOWS, a first-order ontology for Web services,
+      expressed in SWSL-FOL, and its partial
+      translation into ROWS, expressed in SWSL-Rules.
+      SWSO also includes material about grounding FLOWS/ROWS process 
+      models with WSDL.
+      <p>
+      The SWSO document includes four appendices:
+      </p>
+      <p class="toc">
+	A <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/appendices/psl-swsl.html">PSL in SWSL-FOL and SWSL-Rules</a>
+	<br/>
+	B <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/appendices/swso-fol.html">Axiomatization of the FLOWS Process Model</a>
+	<br/>
+	C <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/appendices/swso-rules.html">
+	  Axiomatization of the Process Model in SWSL-Rules
+	</a>
+	<br/>
+	D <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/appendices/ref-grammar.html"> Reference Grammars </a>
+	<br/>
+      </p>
+	</li>
+	<li><a href="/Submission/2005/SUBM-SWSF-Applications-20050909/">SWSF Application Scenarios</a>
+      gives examples that illustrate possible uses of the
+      ontology and the language.  
+        </li>
+        </ol>
+
+      <p>
+      So as to be more-or-less self-contained, each of these four documents
+      includes a glossary and references.  For simplicity, these are
+      the same in each document.
+      </p>
+    <p>
+      For pedagogical reasons, it makes sense to introduce SWSL before
+      SWSO, since SWSL is used in expressing SWSO.  However, the SWSO
+      document relies primarily on simple uses of SWSL-FOL.  Hence,
+      those readers who are already familiar with first-order logic
+      may want to begin with the SWSO document, which contains the Web
+      services-specific aspects of this work.  A suggested order of
+      reading for such readers is: the Overview document (this
+      document); the Ontology document; the first two sections of the
+      Applications document; the Language document; the three
+      remaining sections of the Applications document.
+
+    </p>
+
+      <hr/>
+
+      <h1><a id="sec-acknowledgements"
+	name="sec-acknowledgments">3 Acknowledgements</a></h1>
+
+<p>
+We are grateful for the vision and support of <b>Murray Burke</b> and <b>Dieter Fensel</b>, who first envisioned the collaboration that became SWSI, and
+were essential in getting it started.
+<b>Katia Sycara</b>,
+in her role as SWSI co-executive (with Dieter) has been active
+and supportive throughout the efforts of the committee, and has given
+valuable guidance in many areas.
+</p>
+<p>
+The participation of some members of SWSL was funded by the <a
+href="http://www.daml.org/">DARPA DAML Program</a>.  
+We very much
+appreciate the ongoing support, interest, and patience of DAML program
+managers <b>Jim Hendler, Murray Burke</b>, and <b>Mark Greaves</b>.  
+</p>
+<p>
+We are also grateful to <b>Carine Bournez</b> and <b>Sandro Hawke</b>, of the World
+Wide Web Consortium, for guidance in the preparation of this
+submission.  We thank the W3C for permitting and supporting the use of
+the public-sws-ig mailing list for discussion of SWSL issues, and
+Carine Bournez for helping to make this possible.
+</p>
+<p>
+We would like to give special thanks to the following individuals
+who have made significant contributions to this work: 
+</p>
+      <ul>
+        <li>Karl Aberer</li>
+        <li>Mark Burstein</li>
+        <li>Bijan Parsia</li>
+        <li>Daniela Berardi</li>
+        <li>Richard Goodwin</li>
+        <li>Drew McDermott</li>
+        <li>Terry Payne</li>
+        <li>Axel Polleres</li>
+        <li>Austin Tate</li>
+      </ul>
+<p> We are also greatly appreciative of the efforts of the following
+individuals, who, as reviewers, provided valuable
+feedback on short notice:
+</p>
+<ul>
+  <li>Tom Hite</li>
+  <li>Ruben Lara</li>
+  <li>Massimo Paolucci</li>
+</ul>
+<p>
+This document has benefited from input from
+members of the <a href="http://www.daml.org/services/swsa/">Semantic
+Web Services Architecture (SWSA) committee</a>.
+</p>
+
+      <hr/>
+      <h1><a id="sec-glossary" name="sec-glossary">4  Glossary</a></h1>
+      
+<dl>
+
+  <dt><a name="gl-Activity"><b>Activity</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Activity</em>.  
+      In the formal PSL ontology, the notion of activity is a basic construct,
+      which corresponds intuitively to a kind of (manufacturing
+      or processing) activity.  
+      In PSL, an activity may have associated
+      <em>occurrences</em>, which 
+      correspond intuitively to individual instances or 
+      executions of the activity.
+      (We note that in PSL an activity is not a class or type with
+      occurrences as members; rather, an activity is an object,
+      and occurrences are related to this object by the
+      binary predicate <code>occurrence_of</code>.) 
+      The occurrences of an activity may impact 
+      fluents (which provide an abstract
+      representation of the "real world").
+      In FLOWS, with each service there is an associated
+      activity (called the "service activity" of that service).
+      The service activity may specify aspects of the internal
+      process flow of the service, and also aspects of the
+      messaging interface of that service to other services.
+  </dd>    
+
+
+
+  <dt><a name="gl-Channel"><b>Channel</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Channel</em>.  
+      In FLOWS, a channel is a formal conceptual object, 
+      which corresponds intuitively to a repository and
+      conduit for messages.
+      The FLOWS notion of channel is quite primitive,
+      and under various restrictions can be used to model
+      the form of channel or message-passing as 
+      found in web services standards,
+      including WSDL, BPEL, WS-Choreography, WSMO,
+      and also as found in several research investigations,
+      including process algrebras.
+  </dd>    
+
+
+  <dt><a name="gl-FLOWS"><b>FLOWS</b></a></dt>
+   <dd> <!-- description text here -->
+    <em><b>F</b>irst-order 
+     <b>L</b>ogic <b>O</b>ntology for <b>W</b>eb <b>S</b>ervices</em>.  
+     FLOWS, also known as SWSO-FOL, 
+     is the first-order logic version of the Semantic Web Services Ontology.
+     FLOWS is an extension of the PSL-OuterCore ontology, to 
+     incorporate the fundamental aspects of 
+     (web and other electronic) services, including service descriptors,
+     the service activity, and the service grounding.
+   </dd>
+
+
+
+  <dt><a name="gl-fluent"><b>Fluent</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Fluent</em>.  
+      In FLOWS, following PSL and the situation calculii, a
+      fluent is a first-order logic term or predicate whose
+      value may vary over time.
+      In a first-order model of a FLOWS theory, this 
+      being a model of PSL-OuterCore,
+      time is represented as a discrete linear sequence
+      of <em>timees</em>, and
+      fluents has a value for each time in this sequence.
+  </dd>    
+
+
+
+  <dt><a name="gl-grounding"><b>Grounding</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Grounding</em>.  
+      The SWSO concepts for describing service activities,
+      and the instantiations
+      of these concepts that describe a particular service activity, are
+      <i>abstract</i> specifications, in the sense that they do not specify
+      the details of particular message formats, transport protocols, 
+      and network
+      addresses by which a Web service is accessed. The role of
+      the <i>grounding</i> is to provide these more concrete
+      details.
+      A substantial portion of the grounding can be acheived by
+      mapping SWSO concepts into corresponding WSDL constructs.
+      (Additional grounding, e.g., of some process-related aspects
+      of SWSO, might be acheived using other standards, such
+      as BPEL.)
+  </dd>    
+
+
+
+  <dt><a name="gl-Message"><b>Message</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Message</em>.  
+      In FLOWS, a message is a formal conceptual object, 
+      which corresponds intuitively to a single message that
+      is created by a service occurrence, and read by zero
+      or more service occurrences.
+      The FLOWS notion of message is quite primitive, and
+      under various restrictions can be used to model
+      the form of messages as found in web services standards,
+      including WSDL (1.0 and 2.0), BPEL, WS-Choreography, WSMO,
+      and also as found in several research investigations.
+      A message has a <em>payload</em>, which corresponds 
+      intuitively to the body or contents of the message.
+      In FLOWS emphasis is placed on the knowledge that
+      is gained by a service occurrence when reading a message
+      with a given payload
+      (and the knowledge needed to create that message.
+  </dd>    
+
+  <dt><a name="gl-Occurrence"><b>Occurrence</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Occurence (of a service)</em>.  
+      In FLOWS, a service <em>S</em> has an associated FLOWS activity 
+      <em>A</em> (which
+      generalizes the notion of PSL activity).
+      An <em>occurrence</em> of <em>S</em> is formally
+      a PSL occurrence of the activity <em>A</em>.
+      Intuitively, this occurrence corresponds to
+      an instance or execution (from start to finish) of the activity
+      <em>A</em>, i.e., of the process associated with
+      service <em>S</em>.
+      As in PSL, an occurrence has a starting time
+      time and an ending time.
+  </dd>    
+
+
+
+  <dt><a name="gl-PSL"><b>PSL</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Process Specification Language</em>.  
+      The Process Specification Language (PSL) is a
+      formally axiomatized ontology 
+      [<cite><a href="#PSL1-Gruninger">Gruninger03a</a></cite>, 
+       <cite><a href="#PSL2-Gruninger">Gruninger03b</a></cite>] 
+      that has been
+      standardized as ISO 18629.  
+      PSL provides a layered, extensible ontology
+      for specifying properties of processes. 
+      The most basic PSL constructs are embodied in
+      PSL-Core; and PSL-OuterCore incorporates 
+      several extensions of PSL-Core that includes
+      several useful constructs.  
+      (An overview of concepts in PSL
+      that are
+      relevant to FLOWS is given in 
+      <a href="/Submission/2005/SUBM-SWSF-SWSO-20050909/#onto-background">Section 6 of the 
+      Semantic Web Services Ontology document</a>.)
+  </dd>    
+
+  <dt><a name="gl-qname"><b>QName</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Qualified name</em>.  
+     A pair (<em>URI</em>, <em>local-name</em>). The <em>URI</em> represents a
+     namespace and <em>local-name</em> represents a name used in an XML
+     document, such as a tag name or an attribute name.
+    In XML, QNames are syntactically
+    represented as <em>prefix</em>:<em>local-name</em>, where <em>prefix</em> is
+     a macro that expands into a concrete URI.
+    See <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/">Namespaces
+     in XML</a> for more details.
+  </dd>    
+
+
+
+  <dt><a name="gl-ROWS"><b>ROWS</b></a></dt>
+   <dd> <!-- description text here -->
+    <em><b>R</b>ules <b>O</b>ntology for <b>W</b>eb <b>S</b>ervices</em>.  
+     ROWS, also known as SWSO-Rules, 
+     is the rules-based version of the Semantic Web Services Ontology.
+     ROWS is created by a relatively straight-forward,
+     almost faithful,
+     transformation of FLOWS, the First-order Logic Ontology for
+     Web Services.
+     As with FLOWS, ROWS incorporates
+     fundamental aspects of 
+     (web and other electronic) services, including service descriptors,
+     the service activity, and the service grounding.
+     ROWS enables a rules-based specification of a family of
+     services, including both the underlying ontology and
+     the domain-specific aspects.
+   </dd>
+
+
+
+  <dt><a name="gl-service"><b>Service</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>(Formal) Service</em>.  
+     In FLOWS, a service is a conceptual object, that
+     corresponds intuitively to a web service (or other electronically
+     accessible service).  Through binary predicates a service
+     is associated with various service descriptors (a.k.a. 
+     non-functional properties) such as Service Name, Service Author, 
+     Service URL, etc.; an <em>activity</em> (in the sense of
+     PSL) which specifies intuitively the process model associated with the
+     service; and a <em>grounding</em>.
+  </dd>    
+
+
+
+  <dt><a name="gl-contract"><b>Service contract</b></a></dt>
+  <dd>Describes an agreement between the service requester and service 
+  provider, 
+  detailing requirements on a service occurrence or family of
+  service occurrences.
+</dd>
+
+
+  <dt><a name="gl-service-descriptor"><b>Service descriptor</b></a></dt>
+  <dd> <!-- description text here -->
+    <em>Service Descriptor</em>.  
+     This is one of several non-functional properties 
+     associated with services.
+     The Service Descriptors include
+     Service Name, Service Author, Service Contract Information,
+     Service Contributor, Service Description, Service URL,
+     Service Identifier, Service Version, Service Release Date, 
+     Service Language, Service Trust, Service Subject, 
+     Service Reliability, and Service Cost.
+  </dd>    
+
+
+  <dt><a name="gl-serv-offer"><b>Service offer description</b></a></dt>
+  <dd> <!-- description text here -->
+    Describes an abstract service (i.e. not a concrete instance of the service) 
+  provided by a service provider agent.
+  </dd>    
+
+
+
+  <dt><a name="gl-serv-req"><b>Service requirement description</b></a> </dt>
+  <dd>
+    Describes an abstract service required by a service requester agent,
+    in the context of service discovery, service brokering, or negotiation.
+</dd>
+
+
+  <dt><a name="gl-sqname"><b>sQName</b></a></dt>
+  <dd>
+    <em>Serialized QName</em>.  
+    A serialized QName is a shorthand representation of a URI. It is
+    a macro that expands into a full-blown URI.
+    sQNames are <em>not</em> QNames: the former are URIs, while the latter are
+    pairs (<em>URI</em>, <em>local-name</em>).   
+    Serialized QNames were originally introduced in RDF as a notation for
+    shortening URI representation. Unfortunately, 
+    RDF introduced confusion by adopting the term QName for something that is
+    different from QNames used in XML. To add to the confusion, RDF uses
+    the syntax for sQNames that is identical to XML's syntax for QNames.
+    SWSL distinguishes between QNames and sQNames, and uses the
+    syntax <em>prefix</em>#<em>local-name</em> for the latter.
+    Such an sQName expands into a full URI by concatenating the value
+    of <em>prefix</em> with <em>local-name</em>.  
+  </dd>
+
+
+  <dt><a name="gl-uri"><b>URI</b></a></dt>
+  <dd>
+    <em>Universal Resource Identifier</em>.  
+    A symbol used to locate resources on the Web. URIs are defined by IETF. See
+    <a href="http://www.ietf.org/rfc/rfc2396.txt">Uniform Resource Identifiers
+    (URI): Generic Syntax</a> for more details.
+    Within the IETF standards the notion of URI is an extension
+    and refinement of the notions of Uniform Resource Locator (URL)
+    and Relative Uniform Resource Locators.
+  </dd>
+</dl>
+  
+
+      <hr/>
+      <h1><a id="sec-references" name="sec-references">5 References</a></h1>
+      
+<dl>
+  <dt> <a id="Berardi03">[Berardi03]</a></dt>
+  <dd><cite>Automatic composition of e-services that export their
+behavior</cite>.
+D. Berardi, D. Calvanese, G. De Giacomo, M. Lenzerini, and M. Mecella.
+In <em> Proc. 1st Int. Conf. on Service Oriented Computing (ICSOC)</em>,
+volume 2910 of <em> LNCS</em>, pages 43--58, 2003. </dd>
+</dl>
+<dl>
+  <dt><a id="Bernstein2000">[Bernstein2000]</a></dt>
+  <dd> <cite>How can cooperative work tools support dynamic group
+processes? Bridging the specificity frontier</cite>. A. Bernstein. In <em>
+Proc. Computer Supported Cooperative Work (CSCW'2000)</em>, 2000. </dd>
+</dl>
+<dl>
+  <dt><a id="Bernstein2002">[Bernstein2002]</a></dt>
+  <dd> <cite>Towards High-Precision Service Retrieval</cite>. A.
+Bernstein, and M. Klein. In <em>
+Proc. of the first International Semantic Web Conference (ISWC'2002)</em>,
+2002. </dd>
+</dl>
+<dl>
+  <dt><a id="Bernstein2003">[Bernstein2003]</a></dt>
+  <dd> <cite>Beyond Monotonic Inheritance: Towards Semantic Web
+Process Ontologies</cite>. A. Bernstein and B.N. Grosof (NB: authorship
+sequence is alphabetic). Working Paper, Aug. 2003. Available at: <a
+ href="http://ebusiness.mit.edu/bgrosof/#beyond-mon-inh-basic">http://ebusiness.mit.edu/bgrosof/#beyond-mon-inh-basic</a>.
+  </dd>
+</dl>
+<dl>
+  <dt> <a id="Bonner93">[Bonner93]</a></dt>
+  <dd> <cite>Database Programming in Transaction Logic</cite>. A.J.
+    Bonner, M. Kifer, M. Consens. <em>Proceedings of the 4-th Intl.~Workshop on
+      Database Programming Languages</em>,
+    C. Beeri, A. Ohori and D.E. Shasha
+    (eds.), 1993. In Springer-Verlag Workshops in Computing Series, Feb.
+    1994: 309-337. </dd>
+</dl>
+<dl>
+  <dt> <a id="Bonner98">[Bonner98]</a></dt>
+  <dd> <cite>A Logic for Programming Database Transactions</cite>.
+A.J. Bonner, M. Kifer. Logics for Databases and Information Systems, J.
+Chomicki and G. Saake (eds.). Kluwer Academic Publishers, 1998: 117-166.</dd>
+</dl>
+
+<dl>
+  <dt> <a id="wsmo-d2">[Bruijn05]</a></dt>
+  <dd> <cite>Web Service Modeling Ontology (WSMO)</cite>.
+    J. de Bruijn, C. Bussler, J. Domingue,
+    D. Fensel, M. Hepp, M. Kifer, B. Kaenig-Ries, J. Kopecky,
+    R. Lara, E. Oren, A. Polleres, J. Scicluna, M. Stollberg.
+    <cite><a href="http://www.wsmo.org/TR/d2/v1.2/">
+	DERI Technical Report.
+      </a>
+    </cite>
+  </dd>
+</dl>
+
+<dl>
+  <dt> <a id="BPML">[BPML 1.0]</a></dt>
+  <dd> <cite>A. Arkin. <a href="http://www.bpmi.org/bpml-spec.htm">
+	Business Process Modeling Language</a></cite>.
+    BPMI.org, 2002 </dd>
+</dl>
+
+<dl>
+  <dt> <a id="BPEL">[BPEL 1.1]</a></dt>
+  <dd><cite><a
+ href="http://www-128.ibm.com/developerworks/library/ws-bpel/">
+Business Process Execution Language for Web Services, Version 1.1
+  </a></cite>.  S. Thatte, editor.
+OASIS Standards Specification, May 5, 2003.</dd>
+</dl>
+<dl>
+  <dt> <a id="Bultan03">[Bultan03]</a></dt>
+  <dd><cite>Conversation specification: A new approach to design and
+analysis of e-service composition</cite>.
+T. Bultan, X. Fu, R. Hull, and J. Su. In <em> Proc. Int. World Wide
+Web Conf. (WWW)</em>, May 2003. </dd>
+</dl>
+<dl>
+  <dt> <a id="chang-lee73">[Chang73]</a></dt>
+  <dd> <cite>Symbolic Logic and Mechanical Theorem Proving</cite>.
+C.L. Chang and R.C.T. Lee. Academic Press, 1973. </dd>
+</dl>
+<dl>
+  <dt> <a id="hilog">[Chen93]</a></dt>
+  <dd> <cite>HiLog: A Foundation for Higher-Order Logic Programming</cite>.
+W. Chen, M. Kifer, D.S. Warren. Journal of Logic Programming, 15:3,
+February 1993, 187-230. </dd>
+</dl>
+<dl>
+  <dt> <a id="ldl-vldb89">[Chimenti89]</a></dt>
+  <dd> <cite>Towards an Open Architecture for LDL</cite>. D. Chimeti,
+R. Gamboa, R. Krishnamurthy, VLDB Conference, 1989: 195-203. </dd>
+</dl>
+<dl>
+  <dt> <a id="ConGolog">[deGiacomo00]</a></dt>
+  <dd><cite>ConGolog, A Concurrent Programming Language Based on the
+Situation
+Calculus</cite>.
+G. de Giacomo, Y. Lesperance, and H. Levesque.
+Artificial Intelligence, 121(1--2):109--169, 2000. </dd>
+</dl>
+<dl>
+  <dt> <a id="Fu04">[Fu04]</a></dt>
+  <dd><cite>WSAT: A Tool for Formal Analysis of Web Services</cite>.
+X. Fu, T. Bultan, and J. Su. <em>16th International Conference on
+Computer Aided Verification (CAV)</em>, July 2004. </dd>
+</dl>
+<dl>
+  <dt><a id="Frohn94">[Frohn94]</a></dt>
+  <dd> <cite>Access to Objects by Path Expressions and Rules</cite>.
+J. Frohn, G. Lausen, H. Uphoff. Intl. Conference on Very Large
+Databases, 1994, pp. 273-284.</dd>
+</dl>
+<dl>
+  <dt> <a id="java">[Gosling96]</a></dt>
+  <dd> <cite> The Java language specification.</cite>Gosling, James,
+Bill Joy, and Guy L. Steele. 1996. Reading, Mass.: Addison-Wesley. </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof99a">[Grosof99a]</a></dt>
+  <dd> <cite>A Courteous Compiler From Generalized Courteous Logic
+Programs To Ordinary Logic Programs</cite>. B.N. Grosof. IBM Report
+included as part of documentation in the IBM CommonRules 1.0 software
+toolkit and documentation, released on <a
+ href="http://alphaworks.ibm.com">http://alphaworks.ibm.com</a>. July
+1999. Also available at: <a
+ href="http://ebusiness.mit.edu/bgrosof/#gclp-rr-99k">
+http://ebusiness.mit.edu/bgrosof/#gclp-rr-99k</a>. </dd>
+</dl>
+
+<dl><dt><a id="Grosof99b">[Grosof99b]</a></dt><dd>
+<cite>A Declarative Approach to Business Rules in Contracts</cite>.  
+B.N. Grosof, J.K. Labrou, and H.Y. Chan.  
+Proceedings of the 1st ACM Conference on Electronic Commerce (EC-99).
+Also available at:  
+<a href="http://ebusiness.mit.edu/bgrosof/#econtracts+rules-ec99">http://ebusiness.mit.edu/bgrosof/#econtracts+rules-ec99</a>.  
+</dd></dl>
+
+<dl><dt><a id="Grosof99c">[Grosof99c]</a></dt><dd>
+<cite>DIPLOMAT:  Compiling Prioritized Default Rules Into Ordinary 
+Logic Programs (Extended Abstract of Intelligent Systems Demonstration)</cite>.
+B.N. Grosof.  IBM Research Report RC 21473, May 1999.
+Extended version of 2-page refereed conference paper
+appearing in Proceedings of the National Conference on 
+Artificial Intelligence (AAAI-99), 1999.  Also available at:
+<a href="http://ebusiness.mit.edu/bgrosof/#cr-ec-demo-rr-99b">http://ebusiness.mit.edu/bgrosof/#cr-ec-demo-rr-99b</a>.  
+</dd></dl>
+
+<dl>
+  <dt> <a id="Grosof2003a">[Grosof2003a]</a> </dt>
+  <dd> <cite>Description Logic Programs: Combining Logic Programs with
+Description Logic</cite>. B.N. Grosof, I. Horrocks, R. Volz, and S.
+Decker. Proceedings of the 12th International Conference on the World
+Wide Web (WWW-2003). Also available at: <a
+ href="http://ebusiness.mit.edu/bgrosof/#dlp-www2003">http://ebusiness.mit.edu/bgrosof/#dlp-www2003</a>.
+  </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof2004a">[Grosof2004a]</a></dt>
+  <dd> <cite>Representing E-Commerce Rules Via Situated Courteous
+Logic Programs in RuleML</cite>. B.N. Grosof. Electronic Commerce
+Research and Applications, 3:1, 2004, 2-20. Preprint version is also
+available at: <a href="http://ebusiness.mit.edu/bgrosof/#">http://ebusiness.mit.edu/bgrosof/#</a>.
+  </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof2004b">[Grosof2004b]</a></dt>
+  <dd> <cite>SweetRules: Tools for Semantic Web Rules and Ontologies,
+including Translation, Inferencing, Analysis, and Authoring</cite>.
+B.N. Grosof, M. Dean, S. Ganjugunte, S. Tabet, C. Neogy, and D. Kolas. <a
+ href="http://sweetrules.projects.semwebcentral.org">
+http://sweetrules.projects.semwebcentral.org</a>. Software toolkit and
+documentation. Version 2.0, Dec. 2004. </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof2004c">[Grosof2004c]</a></dt>
+  <dd> <cite>Hypermonotonic Reasoning: Unifying Nonmonotonic Logic
+Programs with First Order Logic</cite>. B.N. Grosof. <a
+ href="http://ebusiness.mit.edu/bgrosof/#HypermonFromPPSWR04InvitedTalk">
+http://ebusiness.mit.edu/bgrosof/#HypermonFromPPSWR04InvitedTalk</a>.
+Slides from Invited Talk at Workshop on Principles and Practice of
+Semantic Web Reasoning (PPWSR04), Sep. 2004; revised Oct. 2004. Paper
+in preparation. </dd>
+</dl>
+<dl>
+  <dt><a id="Grosof2004d">[Grosof2004d]</a></dt>
+  <dd> <cite>SweetPH: Using the Process Handbook for Semantic Web
+Services</cite>. B.N. Grosof and A. Bernstein. <a
+ href="http://ebusiness.mit.edu/bgrosof/#SweetPHSWSLF2F1204Talk">
+http://ebusiness.mit.edu/bgrosof/#SweetPHSWSLF2F1204Talk</a>. Slides
+from Presentation at SWSL Meeting, Dec. 9-10, 2004. <i>Note: Updates
+the design in the 2003 Working Paper "Beyond Monotonic Inheritance:
+Towards Semantic Web Process Ontologies" and describes implementation.</i>
+  </dd>
+</dl>
+
+<dl><dt><a id="Grosof2004e">[Grosof2004e]</a></dt><dd>
+<cite>SweetDeal:  Representing Agent Contracts with Exceptions using 
+Semantic Web Rules, Ontologies, and Process Descriptions</cite>.
+B.N. Grosof and T.C. Poon.  
+International Journal of Electronic Commerce (IJEC), 8(4):61-98, Summer 2004
+Also available at:
+<a href="http://ebusiness.mit.edu/bgrosof/#sweetdeal-exceptions-ijec">http://ebusiness.mit.edu/bgrosof/#sweetdeal-exceptions-ijec</a>.  
+</dd></dl>
+
+<dl><dt><a id="Grosof2004f">[Grosof2004f]</a></dt><dd>
+<cite>Semantic Web Rules with Ontologies, and their E-Business Applications</cite>.
+B.N. Grosof and M. Dean.
+Slides of Conference Tutorial (3.5-hour) at the 3rd International Semantic
+Web Conference (ISWC-2004).  
+Available at:
+<a href="http://ebusiness.mit.edu/bgrosof/#ISWC2004RulesTutorial">http://ebusiness.mit.edu/bgrosof/#ISWC2004RulesTutorial</a>.  
+</dd></dl>
+
+<dl>
+  <dt><a id="PSL1-Gruninger">[Gruninger03a]</a> </dt>
+  <dd>
+    <cite>
+      A Guide to the Ontology of the Process Specification Language.
+    </cite>
+    M. Gruninger.
+    <em>
+      Handbook on Ontologies in Information Systems.
+    </em>
+    R. Studer and S. Staab (eds.).  Springer Verlag, 2003.
+  </dd>
+</dl>
+
+
+<dl>
+  <dt>
+    <a id="PSL2-Gruninger">[Gruninger03b]</a>
+  </dt>
+  <dd>
+    <em>
+      Process Specification Language:  Principles and Applications.
+    </em>
+    M. Gruninger and C. Menzel.
+    <em>AI Magazine,</em> 24:63-74, 2003.
+  </dd>
+</dl>
+
+<dl>
+
+  <dt><a id="PSL3-Gruninger">[Gruninger03c]</a> </dt>
+  <dd>
+    <cite>
+      Applications of PSL to Semantic Web Services.
+    </cite>
+    M. Gruninger.
+    <em>
+Workshop on Semantic Web and Databases. Very Large Databases Conference, Berlin.
+    </em>
+
+  </dd>
+</dl>
+
+<dl>
+  <dt><a id="rdf-mt">[Hayes04]</a></dt>
+  <dd> <cite><a href="http://www.w3.org/TR/rdf-mt/">RDF Model Theory</a></cite>.
+Hayes, P. W3C, February 2004. </dd>
+</dl>
+<dl>
+  <dt> <a id="Helland05">[Helland05]</a></dt>
+  <dd><cite>Data on the Outside Versus Data on the Inside</cite>.
+P. Helland. <em><a href="http://www-db.cs.wisc.edu/cidr/program.html">Proc.
+2005 Conf. on Innovative Database Research (CIDR)</a></em>, January,
+2005. </dd>
+</dl>
+<dl>
+  <dt> <a id="Hull03">[Hull03]</a></dt>
+  <dd><cite>E-Services: A Look Behind the Curtain</cite>.
+R. Hull, M. Benedikt, V. Christophides, J. Su. <em>Proc. of the ACM
+Symp. on Principles of Database Systems (PODS)</em>, San Diego, June,
+2003. </dd>
+</dl>
+<dl>
+  <dt><a id="f-logic">[Kifer95]</a></dt>
+  <dd> <cite>Logical Foundations of Object-Oriented and Frame-Based
+Languages</cite>, M. Kifer, G. Lausen, J. Wu. Journal of ACM, 1995, 42,
+741-843. </dd>
+</dl>
+<dl>
+  <dt><a id="serv-disc-tr">[Kifer04]</a></dt>
+  <dd> <cite>A Logical Framework for Web Service Discovery</cite>, M.
+Kifer, R. Lara, A. Polleres, C. Zhao. Semantic Web Services Workshop,
+November 2004, Hiroshima, Japan. </dd>
+</dl>
+<dl>
+  <dt> <a id="exception-design">[Klein00a]</a></dt>
+  <dd> <cite>Towards a Systematic Repository of Knowledge About
+Managing Collaborative Design Conflicts.</cite> Klein, Mark.
+2000.&nbsp; Proceedings of the Conference on Artificial Intelligence in
+Design. Boston, MA, USA. </dd>
+</dl>
+<dl>
+  <dt> <a id="exception-wfm">[Klein00b]</a></dt>
+  <dd> <cite> A Knowledge-Based Approach to Handling Exceptions in
+Workflow Systems.</cite> Klein, Mark, and C. Dellarocas. 2000.&nbsp;
+Computer Supported Cooperative Work: The Journal of Collaborative
+Computing 9:399-412. </dd>
+</dl>
+<dl>
+  <dt><a id="Lloyd87">[Lloyd87]</a></dt>
+  <dd><cite>Foundations of logic programming (second, extended edition)</cite>.
+J. W. Lloyd. Springer series in symbolic computation. Springer-Verlag,
+New York, 1987. </dd>
+</dl>
+<dl>
+  <dt><a id="lindenstraus97">[Lindenstrauss97]</a></dt>
+  <dd><cite>Automatic Termination Analysis of Logic Programs</cite>.
+    N. Lindenstrauss and Y. Sagiv. International Conference on Logic
+    Programming (ICLP), 1997.
+  </dd>
+</dl>
+<dl>
+  <dt><a id="Maier81">[Maier81]</a></dt>
+  <dd><cite>Incorporating Computed Relations in Relational Databases</cite>.
+D. Maier, D.S. Warren. SIGMOD Conference, 1981: 176-187. </dd>
+</dl>
+<dl>
+  <dt> <a id="Malone99">[Malone99]</a></dt>
+  <dd><cite>Tools for inventing organizations: Toward a handbook of
+organizational processes</cite>. T. W. Malone, K. Crowston, J. Lee, B.
+Pentland, C. Dellarocas, G. Wyner, J. Quimby, C. Osborne, A. Bernstein,
+G. Herman, M. Klein, E. O'Donnell. <em>Management Science</em>, 45(3),
+pages 425--443, 1999. </dd>
+</dl>
+<dl>
+  <dt> <a id="McIlraith01">[McIlraith01]</a></dt>
+  <dd><cite>Semantic Web Services</cite>.
+<em>IEEE Intelligent Systems</em>, Special Issue on the
+Semantic Web, S. McIlraith, T.Son and H. Zeng.
+16(2):46--53, March/April, 2001. </dd>
+</dl>
+<dl>
+  <dt> <a id="Pi-Calculus">[Milner99]</a></dt>
+  <dd><cite>Communicating and Mobile Systems: The &#960;-Calculus</cite>.
+R. Milner. Cambridge University Press, 1999. </dd>
+</dl>
+<dl>
+  <dt> <a id="Narayanan02">[Narayanan02]</a></dt>
+  <dd><cite>Simulation, Verification and Automated Composition of Web
+Services</cite>. S. Narayanan and S. McIlraith.
+In <em> Proceedings of the Eleventh International World Wide Web
+Conference (WWW-11)</em>, May, 2002. </dd>
+</dl>
+<dl>
+  <dt><a id="ontoprise">[Ontobroker]</a></dt>
+  <dd> <cite><a href="http://www.ontoprise.de/content/e3/e27/index_eng.html">
+	Ontobroker 3.8</a></cite>. Ontoprise, GmbH.
+  </dd>
+</dl>
+<dl>
+  <dt><a id="owl-ref">[OWL Reference]</a></dt>
+  <dd> <cite><a href="http://www.w3.org/TR/2002/WD-owl-ref-20021112/">OWL
+Web Ontology Language 1.0 Reference</a></cite>. Mike Dean, Dan
+Connolly, Frank van Harmelen, James Hendler, Ian Horrocks, Deborah L.
+McGuinness, Peter F. Patel-Schneider, and Lynn Andrea Stein. W3C
+Working Draft 12 November 2002. Latest version is available at <a
+ href="http://www.w3.org/TR/owl-ref/">http://www.w3.org/TR/owl-ref/</a>.
+  </dd>
+</dl>
+<dl>
+  <dt> <a id="OWL-S-white-paper">[OWL-S 1.1]</a></dt>
+  <dd><cite><a
+ href="http://www.daml.org/services/owl-s/1.1/overview/"> OWL-S:
+Semantic Markup for Web Services</a></cite>.  David Martin, editor.  Technical Overview
+(associated with OWL-S Release 1.1).
+  </dd>
+</dl>
+<dl>
+  <dt><a id="Papazoglou-SOA-WISE-03">[Papazoglou03]</a></dt>
+  <dd> <cite>Service-Oriented Computing: Concepts, 
+             Characteristics and Directions. </cite> 
+       M.P. Papazoglou. 
+       Keynote for the 4th International Conference on Web Information 
+       Systems Engineering (WISE 2003), December 10-12, 2003. 
+   </dd>
+</dl>
+
+<dl>
+  <dt> <a id="perlis85">[Perlis85]</a></dt>
+  <dd> <cite>Languages with Self-Reference I: Foundations</cite>. D.
+Perlis. Artificial Intelligence, 25, 1985, 301-322. </dd>
+</dl>
+<dl>
+  <dt> <a id="Preist04">[Preist04]</a></dt>
+  <dd> A Conceptual Architecture for Semantic Web Services, C. Preist, 1993. 
+    In Proceedings of Third International Semantic Web Conference, Nov. 2004:
+    395-409.
+  </dd>
+</dl>
+<dl>
+  <dt> <a id="Golog">[Reiter01]</a></dt>
+  <dd><cite>Knowledge in Action: Logical Foundations for Specifying and
+Implementing Dynamical Systems.</cite>
+Raymond Reiter. MIT Press. 2001 </dd>
+</dl>
+<dl>
+  <dt> <a id="Scherl03">[Scherl03]</a></dt>
+  <dd><cite>Knowledge, Action, and the Frame Problem</cite>.
+R. B. Scherl and H. J. Levesque. <em>Artificial Intelligence</em>,
+Vol. 144, 2003, pp. 1-39. </dd>
+</dl>
+
+<dl>
+  <dt> <a id="Singh04">[Singh04]</a></dt>
+  <dd><cite>Protocols for Processes: Programming in the Large for Open
+Systems</cite>.
+M. P. Singh, A. K. Chopra, N. V. Desai, and A. U. Mallya. <em>Proc. of
+the 19th Annual ACM Conf. on Object-Oriented Programming, Systems,
+Languages, and Applications (OOPSLA)</em>, Vancouver, October 2004. </dd>
+</dl>
+
+<dl>
+  <dt> <a id="SWSL-Req">[SWSL Requirements]</a></dt>
+  <dd><cite><a
+ href="http://www.daml.org/services/swsl/requirements/swsl-requirements.shtml">Semantic Web Services Language Requirements</a></cite>.
+B. Grosof, M. Gruninger, et al, editors.
+White paper of the Semantic Web Services Language Committee.
+</dd>
+</dl>
+
+<dl>
+  <dt> <a id="UDDI">[UDDI v3.02]</a></dt>
+  <dd><cite><a
+ href="http://www.oasis-open.org/committees/uddi-spec/doc/spec/v3/uddi-v3.0.2-20041019.htm">
+Universal Description, Discovery and Integration (UDDI)
+  protocol</a></cite>.  S. Thatte, editor.
+OASIS Standards Specification, February 2005.  </dd>
+</dl>
+<dl>
+  <dt> <a id="well-founded">[VanGelder91]</a></dt>
+  <dd> <cite>The Well-Founded Semantics for General Logic Programs</cite>.
+A. Van Gelder, K.A. Ross, J.S. Schlipf. Journal of ACM, 38:3, 1991,
+620-650. </dd>
+</dl>
+<dl>
+  <dt> <a id="WSCL">[WSCL 1.0]</a></dt>
+  <dd><cite> <a
+ href="http://www.w3.org/TR/2002/NOTE-wscl10-20020314/"> Web Services
+Conversation Language (WSCL) 1.0</a></cite>.  A. Banerji et al.  W3C Note, March 14, 2002.</dd>
+</dl>
+<dl>
+  <dt> <a id="WSDL">[WSDL 1.1]</a></dt>
+  <dd><cite>
+    <a href="http://www.w3.org/TR/wsdl"> Web Services Description
+Language (WSDL) 1.1</a></cite>.  E. Christensen, F. Curbera,
+  G. Meredith, and S. Weerawarana.  W3C Note, March 15, 2001. 
+</dd>
+</dl>
+<dl>
+  <dt> <a id="WSDL20">[WSDL 2.0]</a></dt>
+  <dd>
+       <cite>
+          <a href="http://www.w3.org/TR/wsdl20/"> Web Services Description
+                    Language (WSDL) 2.0 -- 
+                    Part 1: Core Language</a></cite>.  R. Chinnici, M. Gudgin, J.-J. Moreau, J. Schlimmer, and S. Weerawarana.
+           W3C Working Draft, 
+           August 3, 2004. </dd>
+</dl>
+<dl>
+  <dt> <a id="WSDL20-Primer">[WSDL 2.0 Primer]</a></dt>
+  <dd>
+       <cite>
+          <a href="http://www.w3.org/TR/wsdl20-primer/"> Web Services Description
+                    Language (WSDL) Version 2.0 -- 
+                    Part 0: Primer</a></cite>.  D. Booth, C. Liu, editors.
+           W3C Working Draft,
+           21 December 2004.  </dd>
+</dl>
+<dl>
+  <dt> <a id="WS-Choreography">[WS-Choreography]</a></dt>
+  <dd><cite> <a
+ href="http://www.w3.org/TR/2004/WD-ws-cdl-10-20041217/">Web Services
+  Choreography Description Language Version 1.0</a></cite>.  N. Kavantzas, D. Burdett, et. al., editors. W3C
+  Working Draft, December 17,
+2004. </dd>
+</dl>
+<dl>
+  <dt> <a id="XSLT">[XSLT]</a></dt>
+  <dd><cite> <a
+ href="http://www.w3.org/TR/xslt">XSL Transformations (XSLT) Version
+  1.0</a></cite>.  J. Clark, editor.  W3C
+  Recommendation, 16 November 1999. </dd>
+</dl>
+<dl>
+  <dt> <a id="XQuery">[XQuery 1.0]</a></dt>
+  <dd><cite> <a
+ href="http://www.w3.org/TR/xquery/">XQuery 1.0: An XML Query
+  Language</a></cite>.  S. Boag, D. Chamberlin, et al, editors.
+  W3C Working Draft 04 April 2005. 
+  </dd>
+</dl>
+<dl>
+  <dt><a id="well-founded-inheritance">[Yang02]</a></dt>
+  <dd> <cite> Well-Founded Optimism: Inheritance in Frame-Based
+Knowledge Bases</cite>. G. Yang, M. Kifer. Intl. Conference on
+Ontologies, DataBases, and Applications of Semantics for Large Scale
+Information Systems (ODBASE), October 2002. </dd>
+</dl>
+<dl>
+  <dt><a id="reification">[Yang03]</a></dt>
+  <dd> <cite>Reasoning about Anonymous Resources and Meta Statements
+on the Semantic Web</cite>. G. Yang, M. Kifer. Journal on Data
+Semantics, Lecture Notes in Computer Science 2800, Springer Verlag,
+September 2003, 69-98. </dd>
+</dl>
+<dl>
+  <dt> <a id="flora-manual">[Yang04]</a></dt>
+  <dd> <cite><a href="http://flora.sourceforge.net">FLORA-2</a> User's
+Manual</cite>. G. Yang, M. Kifer, C. Zhao, V. Chowdhary. 2004.</dd>
+</dl>
+
+
+  </body>
+</html>

@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta name="ROBOTS" content="INDEX, FOLLOW" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="version" content="0" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="ms.sitename" content="TechNet" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="ms.depotname" content="Win.windows" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="description" content="Device Guard is a combination of enterprise-related hardware and software security features that, when configured together, will lock a device down so that it can only run trusted applications." xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="keywords" content="Device Guard" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="ms.publishtime" content="2016-04-06 10:16 PM" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="ms.gitcommit" content="https://github.com/Microsoft/win-cpub-itpro-docs/blob/d347af16fcc067a6a6f0e7d301e6440bb986b634/windows/whats-new/device-guard-overview.md" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="ms.giturl" content="https://github.com/Microsoft/win-cpub-itpro-docs/blob/live/windows/whats-new/device-guard-overview.md" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="content_type" content="text/html" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="ms.documentid" content="94911035-d315-3441-8b5d-f5c8aeba924c" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="content_uri" content="https://opdhsblobprod02.blob.core.windows.net/contents/530492ad88694527b878efafaf8d7d10/6465988c9bce4dc4b8dc248c6ffaabe6" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta>
+<meta name="ms.contentsource" content="OP" xmlns:c="urn:msdn-com:mtps/2004/1/common" xmlns="http://www.w3.org/1999/xhtml"></meta><link rel="canonical" href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/device-guard-overview" />
+    <title>Device Guard overview (Windows 10)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+<meta name="AmbientContext" content="{&quot;layout.limit_max_width&quot;:true,&quot;AmbientContextId&quot;:&quot;419A9A72-E7F8-4547-812B-F0E19B43E2CE&quot;,&quot;display.use_large_font&quot;:false,&quot;insight.perf_timing&quot;:true,&quot;AmbientContextDownstream&quot;:{},&quot;display.high_contrast&quot;:false,&quot;insight.use_wedcs_vnext&quot;:true}" />
+
+<meta name="MN" content="61C41DD5-8:23:03 AM" />
+
+<meta name="Ms.Locale" content="en-us" />
+
+<meta name="ms.lang" content="EN" />
+
+<meta name="ms.loc" content="US" />
+
+<meta name="ms.assetid" content="FFE244EE-5804-4CE8-A2A9-48F49DC3AEF2" />
+
+<meta name="ms.auth" content="0" />
+
+<meta name="ms.sitesec" content="library" />
+
+<meta name="ms.author" content="brianlic-msft" />
+
+<meta name="ms.mktglfcycl" content="explore" />
+
+<meta name="ms.prod" content="W10" />
+
+<meta name="ms.pagetype" content="Conceptual" />
+
+<meta name="ms.locale" content="en-us" />
+    <script type="text/javascript" data-do-not-move="true">
+        //<![CDATA[
+        var AmbientContext = null;
+
+        (function () {
+            var root = (function () { return this; }).call(null);
+
+            var GetCookie = function (name) {
+                var cookies = root.document.cookie ? root.document.cookie.split('; ') : [];
+                for (var i = 0; i < cookies.length; i++) {
+                    var pos = cookies[i].indexOf('=');
+                    if (name === root.decodeURIComponent(cookies[i].slice(0, pos))) {
+                        var cookie = cookies[i].slice(pos + 1).replace(/\+/g, ' ');
+                        cookie = root.decodeURIComponent(cookie);
+                        return cookie;
+                    }
+                }
+            };
+
+            var JsonDeserialize = function (content) {
+                return root.JSON && root.JSON.parse ? root.JSON.parse(content) : (new Function('return (' + content + ')'))();
+            };
+
+            try {
+                AmbientContext = GetCookie('AmbientContext');
+                AmbientContext = AmbientContext && JsonDeserialize(AmbientContext);
+            } catch (ex) {
+            } finally {
+                AmbientContext = AmbientContext || null;
+            }
+        })();
+        //]]>
+    </script>
+
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0.min.js" data-do-not-move="true" data-provides="jQuery"></script>
+    
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+    
+<link rel="stylesheet" type="text/css" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="https://i-technet.sec.s-msft.com/Combined.css?resources=0:MSDNOP,0:OverridesForBootstrap,0:vs,0:OverridesForHighlightJs,1:Tables.MediaQueries,2:OALayout,3:OP_Msdn,4:Header.2,4:HeaderFooterSprite,4:Header.MediaQueries,4:Banner.MediaQueries,5:megabladeMenu.1,5:MegabladeMenu.MediaQueries,5:MegabladeMenuSpriteCluster,0:OpenPublishingMobileMenu,2:OpenPublishingTopic,0:ImageSprite,4:Footer.2,2:LinkList,4:Footer.MediaQueries,2:OpenPublishingTopic.MediaQueries;/Areas/Epx/Content/Css:0,/Areas/Library/Content:1,/Areas/Epx/Themes/Base/Content:2,/Areas/Library/Themes/Msdn/Content:3,/Areas/Epx/Themes/TechNet/Content:4,/Areas/Epx/Themes/Shared/Content:5&amp;amp;v=056526A1F5FDD21C64FEB3FDCC462DF3" /><style type="text/css">
+/*<![CDATA[*/
+#ux-footer .feedbackListItem {
+        display: none;
+    }
+/*]]>*/
+</style></head>
+<body>
+    <div id="page">
+
+        
+
+        
+    
+
+        
+    
+        
+        
+    <div id="ux-header" dir="ltr" class="ltr " ms.pgarea="header">
+        
+        
+
+        <div class="upperBand">
+            <div class="row1">
+                <div class="msLogoAndMegablade">
+                    <a class="msdnLogoImg" href="https://technet.microsoft.com/en-us" title="Technet home" ms.cmpgrp="mslogo">
+                        <div id="msft-logo" class="msft-logo"></div>
+                    </a><div class="GrayPipe"></div><div class="megabladeMenu" ms.cmpgrp="megablade">
+    
+        
+    
+    <div id="megabladeContainer" class="ltr">
+        <div id="megabladeContainerCenter">
+            <div id="megabladeMainMenu">TechNet</div>
+            <ul id="megabladeItems">
+                        <li data-value="hh326172" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">Products</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Products</h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/windows">Windows</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/bb625087.aspx">Windows Server</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/cc507089.aspx">System Center</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/browser">Browser</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/office">Office</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/office/dn788774">Office 365</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/office/dn788775">Exchange Server</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://msdn.microsoft.com/library/mt590198(v=sql.1)">SQL Server</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/office/dn788776">SharePoint Products</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/office/dn788773">Skype for Business</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/bb421517.aspx?wt.svl=more_centers_link">See all products »</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+                        <li data-value="hh880860" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">IT Resources</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Resources</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/evalcenter/">Evaluation Center</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/bb291022">Learning Resources</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/dn440144">Microsoft Tech Companion App</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/dn550853" title="Microsoft Technical Communities">Microsoft Technical Communities</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/?CR_CC=200157774">Microsoft Virtual Academy</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/scriptcenter">Script Center</a>
+    </li>
+    <li>
+      <a href="http://blogs.technet.com/b/serverandtools/">Server and Tools Blogs</a>
+    </li>
+    <li>
+      <a href="http://blogs.technet.com/">TechNet Blogs</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/cc543196">TechNet Flash Newsletter</a>
+    </li>
+    <li>
+      <a href="https://gallery.technet.microsoft.com/">TechNet Gallery</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/default.aspx">TechNet Library</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/magazine/default.aspx">TechNet Magazine</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/subscriptions">TechNet Subscriptions</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/video">TechNet Video</a>
+    </li>
+    <li>
+      <a href="http://social.technet.microsoft.com/wiki">TechNet Wiki</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/sysinternals">Windows Sysinternals</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/virtuallabs">Virtual Labs</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Solutions</h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/network">Networking</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/cloud/private-cloud">Cloud and Datacenter</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/security">Security</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/server-cloud/solutions/virtualization.aspx">Virtualization</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+                        <li data-value="hh371326" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">Downloads</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Updates</h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us">Service Packs</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/security/bulletin">Security Bulletins</a>
+    </li>
+    <li>
+      <a href="http://windows.microsoft.com/en-us/windows/windows-update">Windows Update</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Trials</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2012-r2">Windows Server 2012 R2</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-system-center-2012-r2">System Center 2012 R2</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2014">Microsoft SQL Server 2014 SP1</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-8-1-enterprise">Windows 8.1 Enterprise</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/" title="See all trials">See all trials »</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Related Sites</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/download">Microsoft Download Center</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/">TechNet Evaluation Center</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/download/driver.aspx?q=driver">Drivers</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/sysinternals">Windows Sysinternals</a>
+    </li>
+    <li>
+      <a href="https://gallery.technet.microsoft.com/">TechNet Gallery</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+                        <li data-value="jj837158" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">Training</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Training</h5>
+  <ul>
+    <li>
+      <a href="http://www.microsoftimmersion.com/virtualclassroom">Expert-led, virtual classes</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/training.aspx">Training Catalog</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/find-partner.aspx">Class Locator</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/">Microsoft Virtual Academy</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/en-US/training-courses/windows-server-2012-training-technical-overview-8564?l=BpPnn410_6504984382">Free Windows Server 2012 courses</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/product-training/windows?CR_CC=200155697#!lang=1033" title="Free Windows 8 courses">Free Windows 8 courses</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/sql-training.aspx">SQL Server training</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/on-demand-online-courses.aspx">Microsoft Official Courses On-Demand</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Certifications</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/certification-overview.aspx">Certification overview</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-windows-10-certifications.aspx" title="MCSA: Windows 10">MCSA: Windows 10</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-windows-server-certification.aspx">Windows Server Certification (MCSE)</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/private-cloud-certification.aspx">Private Cloud Certification (MCSE)</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-sql-certification.aspx">SQL Server Certification (MCSE)</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Other resources</h5>
+  <ul>
+    <li>
+      <a href="http://www.technetevents.com/">TechNet Events</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/second-shot.aspx">Second shot for certification</a>
+    </li>
+    <li>
+      <a href="https://borntolearn.mslearn.net/b/?Redirected=true">Born To Learn blog</a>
+    </li>
+    <li>
+      <a href="https://www.technicalcommunity.com/default.aspx" title="Microsoft Technical Communities">Find technical communities in your area</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+                        <li data-value="hh371327" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">Support</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Support options</h5>
+  <ul>
+    <li>
+      <a href="https://businessaccount.microsoft.com/en-us/support">For small and midsize businesses</a>
+    </li>
+    <li>
+      <a href="https://premier.microsoft.com/">For enterprises</a>
+    </li>
+    <li>
+      <a href="https://msdn.microsoft.com/hh361695">For developers</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/ms772425">For IT professionals</a>
+    </li>
+    <li>
+      <a href="https://pinpoint.microsoft.com/en-US/">From partners</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us/assistedsupportproducts">For technical support</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/microsoftservices/support.aspx">Support offerings</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/">For home users</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>More support</h5>
+  <ul>
+    <li>
+      <a href="https://premier.microsoft.com/">Microsoft Premier Online</a>
+    </li>
+    <li>
+      <a href="https://social.technet.microsoft.com/forums/en-us/home">TechNet Forums</a>
+    </li>
+    <li>
+      <a href="https://social.msdn.microsoft.com/forums/en-us/home">MSDN Forums</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/security/bulletin">Security Bulletins &amp; Advisories</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/">International support solutions</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/en-us/assistedsupportproducts">Log a support ticket</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Not an IT pro?</h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us">Microsoft Customer Support</a>
+    </li>
+    <li>
+      <a href="http://answers.microsoft.com/en-us">Microsoft Community Forums</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+            </ul>
+        </div>
+    </div>
+    
+
+</div>
+                </div>
+
+                <div class="controls" ms.cmpgrp="aux nav">
+                    <div id="setting-menu">
+                        <div class="mobile-setting-icon"></div>
+                    </div>
+                    <div class="controlsInternal">
+                        
+    <form class="selectLocale" id="selectLocaleForm" action="https://technet.microsoft.com/en-us/SelectLocale">
+        <input type="hidden" name="fromPage" value="https%3a%2f%2ftechnet.microsoft.com%2fen-us%2fitpro%2fwindows%2fwhats-new%2fdevice-guard-overview" />
+        <a href="#" onclick="$('#selectLocaleForm').submit();return false;" title="Change your language">United States (English)</a>
+    </form>
+
+
+                        <a class="scarabLink" href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=12&amp;ct=1462461783&amp;rver=6.0.5276.0&amp;wp=mcmbi&amp;wlcxt=technet%24technet%24technet&amp;wreply=https%3a%2f%2ftechnet.microsoft.com%2fen-us%2fitpro%2fwindows%2fwhats-new%2fdevice-guard-overview&amp;lc=1033&amp;id=254354&amp;mkt=en-us" title="Sign in">Sign in</a>
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+            <div class="row2">
+                <div id="gripAndBrandLogo">
+                    <div id="grip-menu">
+                        <div id="grip" class="menu-icon"></div>
+                    </div>
+                    <div class="brandLogo" ms.cmpgrp="brandlogo">
+                        <a href="https://technet.microsoft.com/" title="Microsoft TechNet"><img alt="Microsoft TechNet" src="https://i-technet.sec.s-msft.com/Areas/Epx/Themes/TechNet/Content/Images/BrandLogoTechNetNew.png?v=635975721035751124"></img></a>
+                    </div>
+                </div>
+                <div id="drawer">
+
+                </div>
+                <div id="search-menu">
+                    <div class="mobile-search-icon"></div>
+                </div>
+                
+
+    <div class="SearchBox" ms.cmpgrp="aux nav">
+        <form id="HeaderSearchForm" name="HeaderSearchForm" method="get" onsubmit="return Epx.Controls.SearchBox.searchBoxOnSubmit(this);">
+            <input id="HeaderSearchTextBox" name="query" type="text" maxlength="200" onfocus="Epx.Controls.SearchBox.watermarkFocus(event, this.title)" onblur="Epx.Controls.SearchBox.watermarkBlur(event, this.title)" aria-labelledby="HeaderSearchButton" />
+            <button id="HeaderSearchButton" value="" type="submit" class="header-search-button" ms.title="search"></button>
+        </form>
+
+        
+        
+
+    </div>
+
+                <div class="clear"></div>
+             </div>
+
+            <div class="row3">
+
+            </div>
+        </div>
+        <div class="lowerBand">
+            <div class="ux-nav" ms.cmpgrp="main nav">
+                <div class="TocNavigation">
+   
+   <div class="toclevel1">
+          <a class="normal" href="https://technet.microsoft.com/" title="Home">Home</a>
+          <a class="normal" href="https://technet.microsoft.com/library/default.aspx" title="Library">Library</a>
+          <a class="normal" href="http://social.technet.microsoft.com/wiki" title="Wiki">Wiki</a>
+          <a class="normal" href="https://technet.microsoft.com/bb291022" title="Learn">Learn</a>
+          <a class="normal" href="http://gallery.technet.microsoft.com/" title="Gallery">Gallery</a>
+          <a class="normal" href="https://technet.microsoft.com/bb403698" title="Downloads">Downloads</a>
+          <a class="normal" href="https://technet.microsoft.com/ms772425" title="Support">Support</a>
+          <a class="normal" href="https://social.technet.microsoft.com/forums/en-us/home" title="Forums">Forums</a>
+          <a class="normal" href="http://blogs.technet.com/" title="Blogs">Blogs</a>
+
+    </div>
+  
+</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+<div id="mobileMenu" data-spy="affix">
+    <div id="tocDropdownMenuButton">
+        <div class="tocLabel">Table of contents<div class="dropDownIcon"></div></div>
+        <div id="tocDropdownMenu">
+        </div>
+    </div>
+    <div id="functionDropdownMenuButton">
+        <div class="moreToolIcon"></div>
+        <div id="functionDropdownMenu">
+        </div>
+    </div>
+</div>
+<div id="mobileMenuSpaceHolder"></div>
+<div class="modal fade" id="mobileSocialShareModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h2 class="modal-title">Shared to</h2>
+            <div class="modal-body" id="mobileSocialShare">
+            </div>
+            <div class="mobileSocialShareModalDialogFooter">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="mobileBranchSelectorModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="mobileBranchSelector">
+            </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</div>
+<div id="tabletContainerWithoutBreadcrumbs"></div>
+
+        <div id="body" ms.pgarea="body">
+            
+
+
+
+
+
+
+<div id="threeColumns">
+    <div id="leftColumn" class="left" ms.cmpgrp="left toc">
+        <div id="tocNav">
+    <div class="tocRootContainer">
+        <a href="#" class="tocRoot" title="Table of contents">Table of contents</a> 
+        <a href="#" class="tocRootIcon" title="Table of contents">+</a>
+    </div>
+    <div class="tocData hidden">
+                <div class="tocSelected tocLevel1">
+                    <div class="tocLevel">
+            <a class="tocExpanded" href="#"></a>
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/index" title="What's new in Windows 10" class="">What's new in Windows 10</a>
+        </div>
+        <div class="tocPadding">
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/change-history-for-what-s-new-in-windows-10" title="Change history for What's new in Windows 10">Change history for What's new in Windows 10</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/applocker" title="AppLocker">AppLocker</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/bitlocker" title="BitLocker">BitLocker</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/edge-ie11-whats-new-overview" title="Browser: Microsoft Edge and Internet Explorer 11">Browser: Microsoft Edge and Internet Explorer 11</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/credential-guard" title="Credential Guard">Credential Guard</a>
+        </div>
+        <div class="tocLevel current">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/device-guard-overview" title="Device Guard">Device Guard</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/edp-whats-new-overview" title="Enterprise data protection (EDP)">Enterprise data protection (EDP)</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/device-management" title="Enterprise management for Windows 10 devices">Enterprise management for Windows 10 devices</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/lockdown-features-windows-10" title="Lockdown features from Windows Embedded Industry 8.1">Lockdown features from Windows Embedded Industry 8.1</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/microsoft-passport" title="Microsoft Passport">Microsoft Passport</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/new-provisioning-packages" title="Provisioning packages">Provisioning packages</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/security" title="Security">Security</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/security-auditing" title="Security auditing">Security auditing</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/trusted-platform-module" title="Trusted Platform Module">Trusted Platform Module</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/user-account-control" title="User Account Control">User Account Control</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/windows-spotlight" title="Windows spotlight on the lock screen">Windows spotlight on the lock screen</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/windows-store-for-business-overview" title="Windows Store for Business overview">Windows Store for Business overview</a>
+        </div>
+        <div class="tocLevel">
+            <a href="https://technet.microsoft.com/en-us/itpro/windows/whats-new/windows-update-for-business" title="Windows Update for Business">Windows Update for Business</a>
+        </div>
+        </div>
+
+        </div>
+
+    </div>
+    <a id="tocMenuToggler" href="javascript:void(0);">
+        <span id="tocMenuTogglerIcon"></span>
+        <div id="tocMenuTogglerLabel">TOC</div>
+    </a>
+</div>
+
+
+
+        <div style="display:none">
+            <div id="CollapseLocalizeString">Collapse the table of content</div>
+            <div id="ExpandLocalizeString">Expand the table of content</div>
+        </div>
+    </div>
+    <div class="main" ms.cmpgrp="content body">
+        <div id="oaContent" class="row"><div class="col-md-9" id="api-doc-contents"><h1 id="device-guard-overview">Device Guard overview</h1><span><div class="gitContributors"><span class="author-bio"><a target="_blank" href="https://github.com/brianlic-msft" aria-label="Brian Lich"><span class="author-img" style="background-image:url('https://avatars.githubusercontent.com/u/16143421?v=3&amp;s=50')"></span></a></span><span class="username"><a target="_blank" href="https://github.com/brianlic-msft">Brian Lich</a></span><span class="contributorSplitter">|</span><span class="contributorsLabel">Last Updated: 4/6/2016</span></div></span><p><strong>Applies to</strong></p><ul><li>Windows 10</li><li>Windows 10 Mobile</li></ul><p>Device Guard is a combination of enterprise-related hardware and software security features that, when configured together, will lock a device down so that it can only run trusted applications. If the app isn’t trusted it can’t run, period. It also means that even if an attacker manages to get control of the Windows kernel, he or she will be much less likely to be able to run malicious executable code after the computer restarts because of how decisions are made about what can run and when.</p><p>Device Guard uses the new virtualization-based security in Windows 10 Enterprise to isolate the Code Integrity service from the Microsoft Windows kernel itself, letting the service use signatures defined by your enterprise-controlled policy to help determine what is trustworthy. In effect, the Code Integrity service runs alongside the kernel in a Windows hypervisor-protected container.</p><p>For details on how to implement Device Guard, see <a href="../keep-secure/device-guard-deployment-guide">Device Guard deployment guide</a>.</p><h2 id="why-use-device-guard">Why use Device Guard</h2><p>With thousands of new malicious files created every day, using traditional methods like signature-based detection to fight against malware provides an inadequate defense against new attacks. Device Guard on Windows 10 Enterprise changes from a mode where apps are trusted unless blocked by an antivirus or other security solutions, to a mode where the operating system trusts only apps authorized by your enterprise.</p><p>Device Guard also helps protect against <a href="http://go.microsoft.com/fwlink/p/?linkid=534209">zero day attacks</a> and works to combat the challenges of <a href="http://go.microsoft.com/fwlink/p/?LinkId=534210">polymorphic viruses</a>.</p><h3 id="advantages-to-using-device-guard">Advantages to using Device Guard</h3><p>You can take advantage of the benefits of Device Guard, based on what you turn on and use:</p><ul><li>Helps provide strong malware protection with enterprise manageability</li><li>Helps provide the most advanced malware protection ever offered on the Windows platform</li><li>Offers improved tamper resistance</li></ul><h2 id="how-device-guard-works">How Device Guard works</h2><p>Device Guard restricts the Windows 10 Enterprise operating system to only running code that’s signed by trusted signers, as defined by your Code Integrity policy through specific hardware and security configurations, including:</p><ul><li><p>User Mode Code Integrity (UMCI)</p></li><li><p>New kernel code integrity rules (including the new Windows Hardware Quality Labs (WHQL) signing constraints)</p></li><li><p>Secure Boot with database (db/dbx) restrictions</p></li><li><p>Virtualization-based security to help protect system memory and kernel mode apps and drivers from possible tampering.</p></li><li><p><strong>Optional:</strong> Trusted Platform Module (TPM) 1.2 or 2.0</p></li></ul><p>Device Guard works with your image-building process, so you can turn the virtualization-based security feature on for capable devices, configure your Code Integrity policy, and set any other operating system settings you require for Windows 10 Enterprise. After that, Device Guard works to help protect your devices:</p><ol><li><p>Your device starts up using Universal Extensible Firmware Interface (UEFI) Secure Boot, so that boot kits can’t run and so that Windows 10 Enterprise starts before anything else.</p></li><li><p>After securely starting up the Windows boot components, Windows 10 Enterprise can start the Hyper-V virtualization-based security services, including Kernel Mode Code Integrity. These services help protect the system core (kernel), privileged drivers, and system defenses, like anti-malware solutions, by preventing malware from running early in the boot process, or in kernel after startup.</p></li><li><p>Device Guard uses UMCI to make sure that anything that runs in User mode, such as a service, a Universal Windows Platform (UWP) app, or a Classic Windows application is trusted, allowing only trusted binaries to run.</p></li><li><p>At the same time that Windows 10 Enterprise starts up, so too does the trusted platform module (TPM). TPM provides an isolated hardware component that helps protect sensitive information, such as user credentials and certificates.</p></li></ol><h2 id="required-hardware-and-software">Required hardware and software</h2><p>The following table shows the hardware and software you need to install and configure to implement Device Guard.</p><table><colgroup><col width="50%" /><col width="50%" /></colgroup><thead><tr class="header"><th align="left">Requirement</th><th align="left">Description</th></tr></thead><tbody><tr class="odd"><td align="left"><p>Windows 10 Enterprise</p></td><td align="left"><p>The PC must be running Windows 10 Enterprise.</p></td></tr><tr class="even"><td align="left"><p>UEFI firmware version 2.3.1 or higher and Secure Boot</p></td><td align="left"><p>To verify that the firmware is using UEFI version 2.3.1 or higher and Secure Boot, you can validate it against the <a href="https://msdn.microsoft.com/library/windows/hardware/dn932807.aspx#system-fundamentals-firmware-cs-uefisecureboot-connectedstandby">System.Fundamentals.Firmware.CS.UEFISecureBoot.ConnectedStandby</a> Windows Hardware Compatibility Program requirement.</p></td></tr><tr class="odd"><td align="left"><p>Virtualization extensions</p></td><td align="left"><p>The following virtualization extensions are required to support virtualization-based security:</p><ul><li>Intel VT-x or AMD-V</li><li>Second Level Address Translation</li></ul></td></tr><tr class="even"><td align="left"><p>Firmware lock</p></td><td align="left"><p>The firmware setup should be locked to prevent other operating systems from starting and to prevent changes to the UEFI settings. You should also disable boot methods other than from the hard drive.</p></td></tr><tr class="odd"><td align="left"><p>x64 architecture</p></td><td align="left"><p>The features that virtualization-based security uses in the Windows hypervisor can only run on a 64-bit PC.</p></td></tr><tr class="even"><td align="left"><p>A VT-d or AMD-Vi IOMMU (Input/output memory management unit)</p></td><td align="left"><p>In Windows 10, an IOMMU enhances system resiliency against memory attacks. ¹</p></td></tr><tr class="odd"><td align="left"><p>Secure firmware update process</p></td><td align="left"><p>To verify that the firmware complies with the secure firmware update process, you can validate it against the <a href="https://msdn.microsoft.com/library/windows/hardware/dn932805.aspx#system-fundamentals-firmware-uefisecureboot">System.Fundamentals.Firmware.UEFISecureBoot</a> Windows Hardware Compatibility Program requirement.</p></td></tr></tbody></table><h2 id="before-you-begin">Before using Device Guard in your company</h2><p>Before you can successfully use Device Guard, you must set up your environment and your policies.</p><h3 id="signing-your-apps">Signing your apps</h3><p>Device Guard mode supports both UWP apps and Classic Windows applications. Trust between Device Guard and your apps happen when your apps are signed using a signature that you determine to be trustworthy. Not just any signature will work.</p><p>This signing can happen by:</p><ul><li><p><strong>Using the Windows Store publishing process.</strong> All apps that come out of the Microsoft Store are automatically signed with special signatures that can roll-up to our certificate authority (CA) or to your own.</p></li><li><p><strong>Using your own digital certificate or public key infrastructure (PKI).</strong> ISV's and enterprises can sign their own Classic Windows applications themselves, adding themselves to the trusted list of signers.</p></li><li><p><strong>Using a non-Microsoft signing authority.</strong> ISV's and enterprises can use a trusted non-Microsoft signing authority to sign all of their own Classic Windows applications.</p></li><li><p><strong>Use the Device Guard signing portal</strong>. Available in the Windows Store for Business, you can use a Microsoft web service to sign your Classic Windows applications. For more info, see <a href="../manage/device-guard-signing-portal">Device Guard signing</a>.</p></li></ul><h3 id="code-integrity-policy">Code Integrity policy</h3><p>Before you can use the app protection included in Device Guard, you must create a Code Integrity policy using tools provided by Microsoft, but deployed using your current management tools, like Group Policy. The Code Integrity policy is a binary-encoded XML document that includes configuration settings for both the User and Kernel-modes of Windows 10 Enterprise, along with restrictions on Windows 10 script hosts. This policy restricts what code can run on a device.</p><p>For the Device Guard feature, devices should only have Code Integrity pre-configured if the settings are provided by a customer for a customer-provided image.</p><p><strong>Note</strong>  This XML document can be signed in Windows 10 Enterprise, helping to add additional protection against administrative users changing or removing this policy.</p><h3 id="virtualization-based-security-using-windows-10-hypervisor">Virtualization-based security using Windows 10 Enterprise Hypervisor</h3><p>Windows 10 Enterprise Hypervisor introduces new capabilities around virtual trust levels, which helps Windows 10 Enterprise services to run in a protected environment, in isolation from the running operating system. Windows 10 Enterprise virtualization-based security helps protect kernel code integrity and helps to provide credential isolation for the local security authority (LSA). Letting the Kernel Code Integrity service run as a hypervisor-hosted service increases the level of protection around the root operating system, adding additional protections against any malware that compromises the kernel layer.</p><p><strong>Important</strong>  Device Guard devices that run Kernel Code Integrity with virtualization-based security must have compatible drivers - legacy drivers can be updated - and have all virtualization capabilities turned on. This includes virtualization extensions and input/output memory management unit (IOMMU) support.</p></div><div id="right-nav-wrapper" class="col-md-3"><div id="right-nav-area" class="bs-sidebar affix"><ul id="task-nav-list" class="nav bs-sidenav" ms.cmpgrp="indoc toc"><li class="nav-header">IN THIS ARTICLE</li><li><a class="" href="#why-use-device-guard">Why use Device Guard</a></li><li><a class="sub-task" href="#advantages-to-using-device-guard">Advantages to using Device Guard</a></li><li><a class="" href="#how-device-guard-works">How Device Guard works</a></li><li><a class="" href="#required-hardware-and-software">Required hardware and software</a></li><li><a class="" href="#before-you-begin">Before using Device Guard in your company</a></li><li><a class="sub-task" href="#signing-your-apps">Signing your apps</a></li><li><a class="sub-task" href="#code-integrity-policy">Code Integrity policy</a></li><li><a class="sub-task" href="#virtualization-based-security-using-windows-10-hypervisor">Virtualization-based security using Windows 10 Enterprise Hypervisor</a></li></ul></div></div></div>
+        
+
+<input type="hidden" id="proxyUrl" value="https://apiexproxy.azurewebsites.net/svc" />
+<input type="hidden" id="playgroundUrl" value="https://apisandbox.msdn.microsoft.com/" />
+<input type="hidden" id="ajaxTimeout" value="10000" />
+<input type="hidden" id="supportedLanguagesForPlayground" value="javascript;c#" />
+<input type="hidden" id="authorizationHeader" value="Bearer {token:{resourceName}}" />
+
+
+
+
+    </div>
+    <div id="rightColumn" class="right" ms.cmpgrp="right nav">
+            <div id="right-nav-wrapper">
+        <div id="right-nav-area" class="bs-sidebar affix">
+
+            <div id="navigationButtons">
+                <a id="isdSmile" title="Feedback" href="#">
+                    <ins class="smile"></ins>
+                    Feedback
+                </a>
+
+
+                <a id="isdShare" title="Share" href="#">
+                    <ins class="share"></ins>
+                    Share
+                </a>
+                <div id="socials" style="display: none">
+                    <a class="isdFacebook" title="Share on Facebook" href="#" data-sitename="Facebook">
+                        <ins class="facebook"></ins>
+                    </a>
+                    <a class="isdTwitter" title="Share on Twitter" href="#" data-sitename="Twitter">
+                        <ins class="twitter"></ins>
+                    </a>
+                    <a class="isdGooglePlus" title="Share on Google+" href="#" data-sitename="Google+">
+                        <ins class="googlePlus"></ins>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+        </div>
+
+                
+               <div id="openFeedbackContainer" style="z-index:220; position:relative;" ms.pgarea="body" ms.cmpgrp="feedbackform"></div>
+               
+
+        
+    
+        
+    <div id="ux-footer" dir="ltr" class="ltr" ms.pgarea="footer">
+        <div class="ux-footer-clear"></div>
+        <div id="footerWrapper">
+            <div id="footerLeft">
+                <div id="footerProfileFeedback">
+                    <div id="footerProfileLink">
+                        <div data-fragmentName="ManageProfileLink" id="Fragment_ManageProfileLink" xmlns="http://www.w3.org/1999/xhtml">
+  <a href="https://social.technet.microsoft.com/profile" xmlns="http://www.w3.org/1999/xhtml">Manage Your Profile</a>
+</div>
+                    </div>
+                    <div id="Feedback">
+                        <div class="feedbackListItem">
+                            <div class="divider">|</div>
+                            
+
+    
+                        </div>
+                    </div>
+                </div>
+                <div id="footerGroup">
+                    <div id="LinkGroup">
+                        <div id="Links1"><div data-fragmentName="FooterLinks" id="Fragment_FooterLinks" xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="linkList">
+    <ul class="links horizontal">
+      <li>
+        <a href="https://technet.microsoft.com/cc543196.aspx" xmlns="http://www.w3.org/1999/xhtml">Flash Newsletter</a>
+      </li>
+      <li class="divider">|</li>
+      <li>
+        <a href="https://technet.microsoft.com/cc512759.aspx" xmlns="http://www.w3.org/1999/xhtml">Contact Us</a>
+      </li>
+      <li class="divider">|</li>
+      <li>
+        <a href="https://privacy.microsoft.com/privacystatement" xmlns="http://www.w3.org/1999/xhtml">Privacy Statement</a>
+      </li>
+      <li class="divider">|</li>
+      <li>
+        <a href="https://technet.microsoft.com/cc300389.aspx" xmlns="http://www.w3.org/1999/xhtml">Terms of Use</a>
+      </li>
+      <li class="divider">|</li>
+      <li>
+        <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/" xmlns="http://www.w3.org/1999/xhtml">Trademarks</a>
+      </li>
+      <li class="divider">|</li>
+    </ul>
+  </div>
+</div></div>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+                <div id="Links2"></div>
+            </div>
+            <div id="footerRight">
+                <div id="FooterLogoContainer"><div id="FooterLogo"></div></div>
+                <div id="FooterCopyright">© 2016 Microsoft</div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <div class="footerPrintView">
+            <div class="footerCopyrightPrintView">© 2016 Microsoft</div>
+        </div>
+
+        
+    
+
+
+
+
+
+
+
+<noscript><div><img alt="DCSIMG" id="Img1" width="1" height="1" src="https://m.webtrends.com/dcsjwb9vb00000c932fd0rjc7_5p3t/njs.gif?dcsuri=/nojavascript&amp;WT.js=No" /></div></noscript>
+
+
+
+
+
+
+    </div>
+
+    
+    
+
+    
+    
+
+<![CDATA[ Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx. ]]>
+    
+<script type="text/javascript" class="mtps-injected">
+/*<![CDATA[*/
+(function(window,document){"use strict";function preload(scripts){for(var result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);return result}function inject(scripts,index){var script,elem;if(index>=scripts.length){delete mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="try {\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+MTPS.injectScripts([
+	{ txt: "/**/\r\n(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": \"https://i-technet.sec.s-msft.com\", \r\n\t\"js\": \"https://i2-technet.sec.s-msft.com\", \r\n\t\"css\": \"https://i-technet.sec.s-msft.com\", \r\n\t\"ttf\": \"https://i-technet.sec.s-msft.com\"\r\n});\r\n/**/" },
+	{ url: "https://docswebappstaticprod.blob.core.windows.net/docsmsft/_chrome/rating/open-rating.entry.min.js" },
+	{ txt: "//\n  var literalNormalizedUrl = \u0027/en-us/itpro/windows/whats-new/device-guard-overview\u0027;\n  var wt_nvr_ru = \u0027WT_NVR_RU\u0027;\n  var wt_fpcdom = \u0027.microsoft.com\u0027;\n  var wt_domlist = \u0027technet.microsoft.com\u0027;\n  var wt_pathlist = \u0027/technet/\u0027;\n  var wt_paramlist = \u0027DCSext.mtps_techcenter\u0027;\n  var wt_siteid = \u0027TECHNET\u0027;\n  var gDomain = \u0027m.webtrends.com\u0027;\n  var gDcsId = \u0027dcsjwb9vb00000c932fd0rjc7_5p3t\u0027;\n  var gFpc = \u0027WT_FPC\u0027;\n\n\n\n  if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n    var wtidJs = document.createElement(\"script\");\n    wtidJs.src = \"//\" + gDomain + \"/\" + gDcsId + \"/wtid.js\";\n    document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n  }\n\n\n\n  var detectedLocale = \u0027en-us\u0027;\n  var wtsp = \u0027_technet_\u0027;\n  var gTrackEvents = \u00270\u0027;\n/**/" },
+	{ txt: "//\n\n        window.appInsightsId = \u0027c48d7639-e2ae-45e0-b536-c9b172c95e44\u0027;\n        //" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:OpenPublishingResponsiveTable,0:OpenPublishingResponsiveVideo,1:webtrendsscript,0:AppInsightsPerf,0:Telemetry,0:InteractionTracker,0:ABTestControl,2:WEDCS;/Areas/Epx/Content/Scripts:0,/Areas/Global/Content/Webtrends/resources:1,/Areas/Library/Themes/Base/Content:2\u0026amp;hashKey=1B945F0693266E42FF004404326A5325\u0026amp;v=06774866B7F737A46B267B011868E1BB" },
+	{ url: "https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:Utilities,0:highlight.min,0:OACodeSnippet;/Areas/Epx/Content/Scripts:0\u0026amp;hashKey=D84B394CB58389D671CD5518D5AF34AE\u0026amp;v=06774866B7F737A46B267B011868E1BB" },
+	{ txt: "var omnitureTracking = \"false\";" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:megabladeMenu.1,1:SearchBox;/Areas/Epx/Themes/Shared/Content:0,/Areas/Epx/Themes/Base/Content:1\u0026amp;hashKey=855E0AF46D7EB3787F30CFB4C70E0487\u0026amp;v=06774866B7F737A46B267B011868E1BB" },
+	{ url: "https://i4.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox\u0026btnid=HeaderSearchButton\u0026brand=TechNet\u0026loc=en-us\u0026watermark=TechNet\u0026focusOnInit=false" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:JumpRedirect,1:Header.2,2:OpenPublishingMobileMenu,2:apiRunner,2:OpenPublishingTopic,0:API.1;/Areas/Epx/Themes/Base/Content:0,/Areas/Epx/Themes/TechNet/Content:1,/Areas/Epx/Content/Scripts:2\u0026amp;hashKey=7007332A58703E80DEA71F34D2F0E9A7\u0026amp;v=06774866B7F737A46B267B011868E1BB" },
+	{ txt: "//\n                    // Load metadata into map to speed up reading later.\n                    var metadataMap = {};\n                    var metadataElements = document.getElementsByTagName(\"meta\");\n                    for (var i = 0; i \u003c metadataElements.length; ++i)\n                    {\n                        var meta = metadataElements[i];\n                        var name = meta.getAttribute(\"name\");\n                        if (name)\n                        {\n                            metadataMap[name.toLowerCase()] = meta.getAttribute(\"content\");\n                        }\n                    }\n\n                    window.openFeedbackOptions =\n                    {\n                        environment: \"prod\",\n                        anonUserCookieName:\"A\",\n                        documentMetaName: \"ms.documentid\",\n                        documentSnapIdMetaName: \"ms.gitcommit\",\n                        localeMetaName: \"ms.locale\",\n                        propertyBag:\n                        {\n                            \"ms.depotname\": metadataMap[\"ms.depotname\"],\n                            \"ms.contentsource\": metadataMap[\"ms.contentsource\"]\n                        }\n                    };\n                //" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:ResponsiveSupport,0:Breadcrumbs;/Areas/Library/Content:0\u0026amp;hashKey=6CC0C34B93BDEE928515492177C33200\u0026amp;v=06774866B7F737A46B267B011868E1BB" }
+]);
+
+/*]]>*/
+</script></body>
+</html>

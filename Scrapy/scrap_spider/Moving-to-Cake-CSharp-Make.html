@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Laurent Kempé">
+    <title>Moving to Cake (C# Make) - Laurent Kempé</title>
+    <meta name="author" content="Laurent Kempé">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="I finally invested time to migrate our build from a heteroclite mixture of  MSBuild, TeamCity build steps and whatever to something that really delight me: Cake (C# Make).">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Moving to Cake (C# Make)">
+<meta property="og:url" content="http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/index.html">
+<meta property="og:site_name" content="Laurent Kempé">
+<meta property="og:description" content="I finally invested time to migrate our build from a heteroclite mixture of  MSBuild, TeamCity build steps and whatever to something that really delight me: Cake (C# Make).">
+<meta property="og:updated_time" content="2016-04-05T16:30:46.235Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Moving to Cake (C# Make)">
+<meta name="twitter:description" content="I finally invested time to migrate our build from a heteroclite mixture of  MSBuild, TeamCity build steps and whatever to something that really delight me: Cake (C# Make).">
+<meta name="twitter:creator" content="@laurentkempe">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://www.gravatar.com/avatar/a613c55feb51f402582d82218c5b2c68?s=640"/>
+    
+    
+        <meta property="og:image" content="https://farm2.staticflickr.com/1527/25703873226_512850f0c5_q.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://farm2.staticflickr.com/1527/25703873226_512850f0c5_q.jpg" />
+    
+    
+        <meta property="og:image" content="https://farm2.staticflickr.com/1527/25703873226_8f2eea0426_h.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://farm2.staticflickr.com/1527/25703873226_8f2eea0426_h.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-quwccsthbllipo6252snb2tfkddvrsp1eczkytpz3vmxpsb6nwodixemlkux.min.css" type="text/css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-64298-8']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Laurent Kempé</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="http://www.gravatar.com/avatar/a613c55feb51f402582d82218c5b2c68?s=90"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://www.gravatar.com/avatar/a613c55feb51f402582d82218c5b2c68?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">Laurent Kempé</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/laurentkempe" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://twitter.com/laurentkempe" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+                    <span class="sidebar-button-desc">Twitter</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://www.linkedin.com/in/laurentkempe" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+                    <span class="sidebar-button-desc">LinkedIn</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://feeds.feedburner.com/laurentkempe" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('https://farm2.staticflickr.com/1527/25703873226_8f2eea0426_h.jpg');"
+             data-behavior="3">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Moving to Cake (C# Make)
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Tue Apr 05 2016 17:46:28 GMT+0200">
+	
+		    Apr 05, 2016
+    	
+    </time>
+    
+</div>
+</div>
+            
+        </div>
+
+            <div id="main" data-behavior="3"
+                 class="hasCover
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+        <span class="post-header-cover-caption caption">Le rocher du Diamant, Martinique</span>
+    
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>I finally invested time to migrate our build from a heteroclite mixture of  MSBuild, TeamCity build steps and whatever to something that really delight me: <a href="http://cakebuild.net/" target="_blank" rel="external">Cake (C# Make)</a>.<br><a id="more"></a></p>
+<p>I tried in the past several other systems like PSake, Fake… Never grasped those and gave up quite quickly.</p>
+<p>This time, two triggers pushed me to look further:</p><p></p><p></p>
+<ol>
+<li>We had to build a patch and someone deactivated <a href="http://laurentkempe.com/2014/12/13/TeamCity-9-project-settings-versioning-in-Git/">TeamCity project settings versioning in Git</a> so we could not get back the settings and could not build on TeamCity, too bad!</li>
+<li>We were working on improving the performance of our build by going to NUnit 3 and trying to run our specifications, integrations and unit tests in parallel.</li>
+</ol>
+<p>For long I was the advocate of versioning our build script with the source code but never got the time to finally do it. I guess you need a bit of pain to trigger some changes.</p>
+<p>So last week I prepared a small presentation to my great team which I presented this last Monday. You can have a look that presentation <a href="https://sway.com/G8xS5gVqbwOA9euI" target="_blank" rel="external">here</a>.</p>
+<p>Most of the slides are coming from the Cake documentation provided by the team behind this great project!</p>
+<p>I would like to put some emphasis on one part which is not coming from Cake documentation which is: <strong>Why Cake?</strong></p><p></p>  <p></p>
+<ul>
+<li><strong>Unify</strong> our build process</li>
+<li><strong>Versioning</strong> the build script <strong>with the source code</strong> of the application</li>
+<li>Being able to <strong>run</strong> our build <strong>where we want</strong><ul>
+<li>Any machine with .NET framework, good for our escrow process</li>
+<li>Our TeamCity build server</li>
+<li>New cloud build services like AppVeyor, Visual Studio Team Services…</li>
+</ul>
+</li>
+<li><strong>It is C#</strong>. In the past we looked at PSake, Fake.. but never really grasped those</li>
+<li>Coming with almost all <a href="http://cakebuild.net/dsl" target="_blank" rel="external">tools</a>, <a href="http://cakebuild.net/addins?path=contributing%252Fguidelines" target="_blank" rel="external">add-ins</a> we need for our build process. Missing NDepend which stays as a TeamCity build at the moment.</li>
+<li><strong>Open source</strong> and <strong>great responsive community</strong> on <a href="https://gitter.im/cake-build/cake" target="_blank" rel="external">Gitter chat</a></li>
+<li>No need to version binaries</li>
+<li>Syntax Highlighting in Visual Studio Code</li>
+</ul>
+<p>One point to take away from that list is <strong>great responsive community</strong> and nothing proves it more than <a href="https://gitter.im/cake-build/cake?at=57024151d39de41b49604f5e" target="_blank" rel="external">this discussion</a> and that <a href="https://github.com/cake-build/cake/issues/805" target="_blank" rel="external">pull request</a> which fixes an issue we just found and reported. The fix came the same day and will be available in the next patch release, great job. </p>
+<p>So our current situation is much better now!</p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/NET-Development/">.NET Development</a> <a class="tag tag--primary tag--small t-link" href="/tags/continuous-integration/">continuous integration</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/07/Upload-files-to-DropBox-from-PowerShell/"  data-tooltip="Upload files to DropBox from PowerShell">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/03/29/Rebooting-my-blog/" data-tooltip="Rebooting my blog">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2016 Laurent Kempé. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/07/Upload-files-to-DropBox-from-PowerShell/"  data-tooltip="Upload files to DropBox from PowerShell">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/03/29/Rebooting-my-blog/" data-tooltip="Rebooting my blog">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://www.gravatar.com/avatar/a613c55feb51f402582d82218c5b2c68?s=110"/>
+        
+            <h4 id="about-card-name">Laurent Kempé</h4>
+        
+            <h5 id="about-card-bio"><p>I am an experienced Team Leader &amp; Senior Solutions Architect with a passion for shipping high-quality products by empowering development team and culture toward an agile mindset. I bring technical vision and strategy, leading engineering teams to move product, processes and architecture forward.</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Team Leader, Senior Solutions Architect</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Illzach, France
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.1.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/scrip-rjanlllosg30d03qrddpwrs6wqf4k3v0bbo68hiifuvthyhqfefx2htcagu0.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://laurentkempe.com/2016/04/05/Moving-to-Cake-CSharp-Make/';
+                 
+                    this.page.identifier = '20160405174628';
+                                  
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'laurentkempe';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+</html>

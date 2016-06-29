@@ -1,0 +1,4109 @@
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>cpanm - get, unpack build and install modules from CPAN - metacpan.org</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://metacpan.org/feed/distribution/App-cpanminus" />
+        <link href="/_assets/c75a9f8004d0af75ef7d11dcd5c06f27.css" rel="stylesheet" type="text/css">
+        <link rel="search" href="/static/opensearch.xml" type="application/opensearchdescription+xml" title="MetaCPAN">
+        <link rel="canonical" href="https://metacpan.org/pod/distribution/App-cpanminus/bin/cpanm" />
+        <meta name="description" content="get, unpack build and install modules from CPAN" />
+        <link rel="shortcut icon" href="/static/icons/favicon.ico">
+        <link rel="apple-touch-icon" sizes="152x152" href="/static/icons/apple-touch-icon.png">
+        <script src="/_assets/ea9d2a2f02c5546177fcefd5fb9bc955.js" type="text/javascript"></script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-27829474-1', {
+              siteSpeedSampleRate : 100
+          });
+          ga('send', 'pageview');
+
+          ga(function() {
+            var cookies=['__utma', '__utmb', '__utmc', '__utmv', '__utmz', '_gat'];
+            for (var i = cookies.length; i--; ) {
+              var cookie = cookies[i]+"=; expires="+(new Date(0)).toGMTString()+"; path=/";
+              document.cookie = cookie;
+              document.cookie = cookie + '; domain=.'+document.domain;
+            }
+          });
+        </script>
+        
+        
+        <meta name="twitter:card"        content="summary" />
+<meta name="twitter:url"         content="https://metacpan.org/pod/distribution/App-cpanminus/bin/cpanm" />
+<meta name="twitter:title"       content="cpanm" />
+<meta name="twitter:description" content="get, unpack build and install modules from CPAN" />
+<meta name="twitter:site"        content="metacpan" />
+
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                <li class="visible-xs">
+                <a href="#" data-toggle="slidepanel" data-target=".slidepanel">
+                  <i class="fa fa-bars fa-2x icon-slidepanel"></i>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </a>
+                </li>
+            
+                    <li class="">
+                        <a href="/"><img src="/static/icons/metacpan-icon.png" />                            Home                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/recent"><i class="fa fa-history"></i>                            Recent                        </a>
+                    </li>
+                    <li class="hidden-xs">
+                        <a href="/about/faq"><i class="fa fa-question"></i>                            FAQ                        </a>
+                    </li>
+                    <li class="hidden-xs">
+                        <a href="https://github.com/CPAN-API/metacpan-web/issues"><i class="fa fa-github-alt"></i>                            Github Issues                        </a>
+                    </li>
+                    <li class="hidden-xs">
+                        <a href="/news"><i class="fa fa-rss"></i>                            News                        </a>
+                    </li>
+                    <li class="hidden-xs">
+                        <a href="/lab"><i class="fa fa-rocket"></i>                            Lab                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <form action="https://metacpan.org/account/logout" method="POST" id="metacpan-logout"></form>
+                    <li class="dropdown logged_in" style="display: none;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Account
+                        <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/account/identities">Identities</a></li>
+                            <li><a href="/account/profile">Profile</a></li>
+                            <li><a href="/account/favorite/list">Favorites</a></li>
+                            <li>
+                                <a href="#" onclick="$('#metacpan-logout').submit(); return false">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown logged_out" style="display: none;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Sign in
+                        <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="https://api.metacpan.org/oauth2/authorize?client_id=metacpan.org&amp;choice=facebook" onclick="return logInPAUSE(this)">
+                                <i class="fa fa-facebook fa-fw"></i>
+                                Facebook
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://api.metacpan.org/oauth2/authorize?client_id=metacpan.org&amp;choice=github" onclick="return logInPAUSE(this)">
+                                <i class="fa fa-github fa-fw"></i>
+                                GitHub
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://api.metacpan.org/oauth2/authorize?client_id=metacpan.org&amp;choice=twitter" onclick="return logInPAUSE(this)">
+                                <i class="fa fa-twitter fa-fw"></i>
+                                Twitter
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://api.metacpan.org/oauth2/authorize?client_id=metacpan.org&amp;choice=google" onclick="return logInPAUSE(this)">
+                                <i class="fa fa-google fa-fw"></i>
+                                Google
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/login/openid">
+                                <i class="fa fa-openid fa-fw"></i>
+                                OpenID
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+
+        
+
+            
+            <div class="row hidden-phone">
+                <div class="head-small-logo col-md-3">
+                    <a href="/" class="small-logo"></a>
+                </div>
+                <div class="col-md-9">
+                    <form action="/search" class="search-form form-horizontal">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" name="q" size="41" id="search-input" class="form-control" value="">
+                                <span class="input-group-btn">
+                                    <button class="btn search-btn" type="submit">Search</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group search-type">
+                            <label class="radio-inline">
+                                <input type="radio" name="search_type" value="modules" checked 
+                                >
+                                Modules
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="search_type" value="authors"
+                                >
+                                Authors
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+
+            <div class="row">
+                <div class="main-content col-md-12">
+                    
+
+
+
+
+<div itemscope itemtype="http://schema.org/SoftwareApplication">
+  
+
+
+<div class="breadcrumbs">
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person" >
+    <a itemprop="url"  data-keyboard-shortcut="g a" rel="author" href="/author/MIYAGAWA" title="" class="author-name"><span itemprop="name" >Tatsuhiko Miyagawa</span></a>
+  </span>
+  <span>&nbsp;/&nbsp;</span>
+  <div class="release status-latest maturity-released">
+    <span class="dropdown"><b class="caret"></b></span>
+    <select class="" onchange="document.location.href=this.value">
+
+  <option selected value="/module/MIYAGAWA/App-cpanminus-1.7040/bin/cpanm">
+    1.7040
+      (MIYAGAWA on 2016-01-07)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7039/bin/cpanm">
+    1.7039
+      (MIYAGAWA on 2015-06-29)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7038/bin/cpanm">
+    1.7038
+      (MIYAGAWA on 2015-06-23)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7037/bin/cpanm">
+    1.7037
+      (MIYAGAWA on 2015-06-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7036/bin/cpanm">
+    1.7036
+      (MIYAGAWA on 2015-06-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7035/bin/cpanm">
+    1.7035
+      (MIYAGAWA on 2015-06-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7034/bin/cpanm">
+    1.7034
+      (MIYAGAWA on 2015-05-07)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7033/bin/cpanm">
+    1.7033
+      (MIYAGAWA on 2015-05-02)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7032/bin/cpanm">
+    1.7032
+      (MIYAGAWA on 2015-04-30)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7031/bin/cpanm">
+    1.7031
+      (MIYAGAWA on 2015-04-22)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7030/bin/cpanm">
+    1.7030
+      (MIYAGAWA on 2015-04-19)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7029-TRIAL/bin/cpanm">
+    1.7029 DEV
+      (MIYAGAWA on 2015-04-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7028/bin/cpanm">
+    1.7028
+      (MIYAGAWA on 2015-04-17)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7027/bin/cpanm">
+    1.7027
+      (MIYAGAWA on 2015-02-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7026/bin/cpanm">
+    1.7026
+      (MIYAGAWA on 2015-02-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7025/bin/cpanm">
+    1.7025
+      (MIYAGAWA on 2015-02-07)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7024/bin/cpanm">
+    1.7024
+      (MIYAGAWA on 2015-01-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7023/bin/cpanm">
+    1.7023
+      (MIYAGAWA on 2015-01-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7022/bin/cpanm">
+    1.7022
+      (MIYAGAWA on 2014-12-13)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7021/bin/cpanm">
+    1.7021
+      (MIYAGAWA on 2014-12-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7020/bin/cpanm">
+    1.7020
+      (MIYAGAWA on 2014-12-09)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7019/bin/cpanm">
+    1.7019
+      (MIYAGAWA on 2014-12-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7018/bin/cpanm">
+    1.7018
+      (MIYAGAWA on 2014-11-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7017/bin/cpanm">
+    1.7017
+      (MIYAGAWA on 2014-11-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7016/bin/cpanm">
+    1.7016
+      (MIYAGAWA on 2014-11-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7015/bin/cpanm">
+    1.7015
+      (MIYAGAWA on 2014-11-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7014/bin/cpanm">
+    1.7014
+      (MIYAGAWA on 2014-10-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7013/bin/cpanm">
+    1.7013
+      (MIYAGAWA on 2014-10-07)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7012/bin/cpanm">
+    1.7012
+      (MIYAGAWA on 2014-09-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7011/bin/cpanm">
+    1.7011
+      (MIYAGAWA on 2014-09-22)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7010-TRIAL/bin/cpanm">
+    1.7010 DEV
+      (MIYAGAWA on 2014-09-17)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7009/bin/cpanm">
+    1.7009
+      (MIYAGAWA on 2014-09-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7007/bin/cpanm">
+    1.7007
+      (MIYAGAWA on 2014-09-09)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7006/bin/cpanm">
+    1.7006
+      (MIYAGAWA on 2014-09-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7005-TRIAL/bin/cpanm">
+    1.7005 DEV
+      (MIYAGAWA on 2014-09-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7004/bin/cpanm">
+    1.7004
+      (MIYAGAWA on 2014-04-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7003/bin/cpanm">
+    1.7003
+      (MIYAGAWA on 2014-04-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7002/bin/cpanm">
+    1.7002
+      (MIYAGAWA on 2014-04-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7001/bin/cpanm">
+    1.7001
+      (MIYAGAWA on 2013-09-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7000/bin/cpanm">
+    1.7000
+      (MIYAGAWA on 2013-09-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6943/bin/cpanm">
+    1.6943
+      (MIYAGAWA on 2013-09-03)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6942/bin/cpanm">
+    1.6942
+      (MIYAGAWA on 2013-08-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6941/bin/cpanm">
+    1.6941
+      (MIYAGAWA on 2013-08-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6940/bin/cpanm">
+    1.6940
+      (MIYAGAWA on 2013-08-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6939/bin/cpanm">
+    1.6939
+      (MIYAGAWA on 2013-08-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6938/bin/cpanm">
+    1.6938
+      (MIYAGAWA on 2013-08-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6937/bin/cpanm">
+    1.6937
+      (MIYAGAWA on 2013-08-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6936/bin/cpanm">
+    1.6936
+      (MIYAGAWA on 2013-08-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6935/bin/cpanm">
+    1.6935
+      (MIYAGAWA on 2013-07-31)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6934/bin/cpanm">
+    1.6934
+      (MIYAGAWA on 2013-07-26)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6933/bin/cpanm">
+    1.6933
+      (MIYAGAWA on 2013-07-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6932/bin/cpanm">
+    1.6932
+      (MIYAGAWA on 2013-07-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6931/bin/cpanm">
+    1.6931
+      (MIYAGAWA on 2013-07-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6929/bin/cpanm">
+    1.6929
+      (MIYAGAWA on 2013-07-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6928/bin/cpanm">
+    1.6928
+      (MIYAGAWA on 2013-07-23)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6927/bin/cpanm">
+    1.6927
+      (MIYAGAWA on 2013-07-23)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6926-TRIAL/bin/cpanm">
+    1.6926 DEV
+      (MIYAGAWA on 2013-07-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6925/bin/cpanm">
+    1.6925
+      (MIYAGAWA on 2013-07-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6924/bin/cpanm">
+    1.6924
+      (MIYAGAWA on 2013-07-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6923/bin/cpanm">
+    1.6923
+      (MIYAGAWA on 2013-07-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6922/bin/cpanm">
+    1.6922
+      (MIYAGAWA on 2013-06-19)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6921/bin/cpanm">
+    1.6921
+      (MIYAGAWA on 2013-06-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6920/bin/cpanm">
+    1.6920
+      (MIYAGAWA on 2013-06-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6919-TRIAL/bin/cpanm">
+    1.6919 DEV
+      (MIYAGAWA on 2013-06-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6918/bin/cpanm">
+    1.6918
+      (MIYAGAWA on 2013-06-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6917-TRIAL/bin/cpanm">
+    1.6917 DEV
+      (MIYAGAWA on 2013-06-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6916/bin/cpanm">
+    1.6916
+      (MIYAGAWA on 2013-06-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6915/bin/cpanm">
+    1.6915
+      (MIYAGAWA on 2013-05-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6914/bin/cpanm">
+    1.6914
+      (MIYAGAWA on 2013-05-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6913/bin/cpanm">
+    1.6913
+      (MIYAGAWA on 2013-05-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6912/bin/cpanm">
+    1.6912
+      (MIYAGAWA on 2013-05-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6911/bin/cpanm">
+    1.6911
+      (MIYAGAWA on 2013-05-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6910-TRIAL/bin/cpanm">
+    1.6910 DEV
+      (MIYAGAWA on 2013-05-03)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6909/bin/cpanm">
+    1.6909
+      (MIYAGAWA on 2013-04-29)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6908-TRIAL/bin/cpanm">
+    1.6908 DEV
+      (MIYAGAWA on 2013-04-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6907/bin/cpanm">
+    1.6907
+      (MIYAGAWA on 2013-04-26)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6906-TRIAL/bin/cpanm">
+    1.6906 DEV
+      (MIYAGAWA on 2013-04-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6905-TRIAL/bin/cpanm">
+    1.6905 DEV
+      (MIYAGAWA on 2013-04-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6904-TRIAL/bin/cpanm">
+    1.6904 DEV
+      (MIYAGAWA on 2013-04-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6903-TRIAL/bin/cpanm">
+    1.6903 DEV
+      (MIYAGAWA on 2013-04-22)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6902/bin/cpanm">
+    1.6902
+      (MIYAGAWA on 2013-04-21)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6109/bin/cpanm">
+    1.6109
+      (MIYAGAWA on 2013-04-21)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6900-TRIAL/bin/cpanm">
+    1.6900 DEV
+      (MIYAGAWA on 2013-04-15)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6193-TRIAL/bin/cpanm">
+    1.6193 DEV
+      (MIYAGAWA on 2013-04-15)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6192-TRIAL/bin/cpanm">
+    1.6192 DEV
+      (MIYAGAWA on 2013-04-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6191-TRIAL/bin/cpanm">
+    1.6191 DEV
+      (MIYAGAWA on 2013-04-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6190-TRIAL/bin/cpanm">
+    1.6190 DEV
+      (MIYAGAWA on 2013-04-13)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6108/bin/cpanm">
+    1.6108
+      (MIYAGAWA on 2013-04-13)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6107/bin/cpanm">
+    1.6107
+      (MIYAGAWA on 2013-04-07)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6106/bin/cpanm">
+    1.6106
+      (MIYAGAWA on 2013-04-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6105/bin/cpanm">
+    1.6105
+      (MIYAGAWA on 2013-04-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6104/bin/cpanm">
+    1.6104
+      (MIYAGAWA on 2013-04-03)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6103/bin/cpanm">
+    1.6103
+      (MIYAGAWA on 2013-03-30)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6102/bin/cpanm">
+    1.6102
+      (MIYAGAWA on 2013-03-28)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6101/bin/cpanm">
+    1.6101
+      (MIYAGAWA on 2013-03-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6100/bin/cpanm">
+    1.6100
+      (MIYAGAWA on 2013-03-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6008/bin/cpanm">
+    1.6008
+      (MIYAGAWA on 2013-03-19)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6007/bin/cpanm">
+    1.6007
+      (MIYAGAWA on 2013-03-17)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6006/bin/cpanm">
+    1.6006
+      (MIYAGAWA on 2013-03-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6005/bin/cpanm">
+    1.6005
+      (MIYAGAWA on 2013-03-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6004/bin/cpanm">
+    1.6004
+      (MIYAGAWA on 2013-03-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6003/bin/cpanm">
+    1.6003
+      (MIYAGAWA on 2013-03-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6002/bin/cpanm">
+    1.6002
+      (MIYAGAWA on 2013-02-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6001/bin/cpanm">
+    1.6001
+      (MIYAGAWA on 2013-02-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6000/bin/cpanm">
+    1.6000
+      (MIYAGAWA on 2013-02-26)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_13/bin/cpanm">
+    1.59_13 DEV
+      (MIYAGAWA on 2013-02-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_12/bin/cpanm">
+    1.59_12 DEV
+      (MIYAGAWA on 2013-02-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_11/bin/cpanm">
+    1.59_11 DEV
+      (MIYAGAWA on 2013-02-11)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_10/bin/cpanm">
+    1.59_10 DEV
+      (MIYAGAWA on 2013-02-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_09/bin/cpanm">
+    1.59_09 DEV
+      (MIYAGAWA on 2013-02-07)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_08/bin/cpanm">
+    1.59_08 DEV
+      (MIYAGAWA on 2013-02-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_07/bin/cpanm">
+    1.59_07 DEV
+      (MIYAGAWA on 2013-02-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_06/bin/cpanm">
+    1.59_06 DEV
+      (MIYAGAWA on 2013-02-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_05/bin/cpanm">
+    1.59_05 DEV
+      (MIYAGAWA on 2013-02-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_04/bin/cpanm">
+    1.59_04 DEV
+      (MIYAGAWA on 2013-02-03)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_03/bin/cpanm">
+    1.59_03 DEV
+      (MIYAGAWA on 2013-02-01)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_02/bin/cpanm">
+    1.59_02 DEV
+      (MIYAGAWA on 2013-02-01)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.59_01/bin/cpanm">
+    1.59_01 DEV
+      (MIYAGAWA on 2013-01-31)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5021/bin/cpanm">
+    1.5021
+      (MIYAGAWA on 2013-01-31)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5020/bin/cpanm">
+    1.5020
+      (MIYAGAWA on 2013-01-29)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5019/bin/cpanm">
+    1.5019
+      (MIYAGAWA on 2012-12-22)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5018/bin/cpanm">
+    1.5018
+      (MIYAGAWA on 2012-09-19)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5017/bin/cpanm">
+    1.5017
+      (MIYAGAWA on 2012-07-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5016/bin/cpanm">
+    1.5016
+      (MIYAGAWA on 2012-07-17)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5015/bin/cpanm">
+    1.5015
+      (MIYAGAWA on 2012-06-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5014/bin/cpanm">
+    1.5014
+      (MIYAGAWA on 2012-06-13)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5013/bin/cpanm">
+    1.5013
+      (MIYAGAWA on 2012-05-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5012/bin/cpanm">
+    1.5012
+      (MIYAGAWA on 2012-05-11)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5011/bin/cpanm">
+    1.5011
+      (MIYAGAWA on 2012-04-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5010/bin/cpanm">
+    1.5010
+      (MIYAGAWA on 2012-03-31)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5009/bin/cpanm">
+    1.5009
+      (MIYAGAWA on 2012-03-30)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5008/bin/cpanm">
+    1.5008
+      (MIYAGAWA on 2012-03-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5007/bin/cpanm">
+    1.5007
+      (MIYAGAWA on 2011-12-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5006/bin/cpanm">
+    1.5006
+      (MIYAGAWA on 2011-11-29)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5005/bin/cpanm">
+    1.5005
+      (MIYAGAWA on 2011-11-22)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5004/bin/cpanm">
+    1.5004
+      (MIYAGAWA on 2011-11-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5003/bin/cpanm">
+    1.5003
+      (MIYAGAWA on 2011-10-19)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5002/bin/cpanm">
+    1.5002
+      (MIYAGAWA on 2011-10-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5001/bin/cpanm">
+    1.5001
+      (MIYAGAWA on 2011-10-13)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.5000/bin/cpanm">
+    1.5000
+      (MIYAGAWA on 2011-10-13)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.49_02/bin/cpanm">
+    1.49_02 DEV
+      (MIYAGAWA on 2011-10-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.49_01/bin/cpanm">
+    1.49_01 DEV
+      (MIYAGAWA on 2011-06-26)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4008/bin/cpanm">
+    1.4008
+      (MIYAGAWA on 2011-06-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4007/bin/cpanm">
+    1.4007
+      (MIYAGAWA on 2011-05-17)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4006/bin/cpanm">
+    1.4006
+      (MIYAGAWA on 2011-05-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4005/bin/cpanm">
+    1.4005
+      (MIYAGAWA on 2011-05-11)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4004/bin/cpanm">
+    1.4004
+      (MIYAGAWA on 2011-03-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4003/bin/cpanm">
+    1.4003
+      (MIYAGAWA on 2011-03-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4002/bin/cpanm">
+    1.4002
+      (MIYAGAWA on 2011-03-09)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4001/bin/cpanm">
+    1.4001
+      (MIYAGAWA on 2011-03-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.4000/bin/cpanm">
+    1.4000
+      (MIYAGAWA on 2011-03-08)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_13/bin/cpanm">
+    1.30_13 DEV
+      (MIYAGAWA on 2011-03-07)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_12/bin/cpanm">
+    1.30_12 DEV
+      (MIYAGAWA on 2011-03-07)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_11/bin/cpanm">
+    1.30_11 DEV
+      (MIYAGAWA on 2011-03-06)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_10/bin/cpanm">
+    1.30_10 DEV
+      (MIYAGAWA on 2011-03-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_09/bin/cpanm">
+    1.30_09 DEV
+      (MIYAGAWA on 2011-03-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_08/bin/cpanm">
+    1.30_08 DEV
+      (MIYAGAWA on 2011-03-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_07/bin/cpanm">
+    1.30_07 DEV
+      (MIYAGAWA on 2011-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_06/bin/cpanm">
+    1.30_06 DEV
+      (MIYAGAWA on 2011-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_05/bin/cpanm">
+    1.30_05 DEV
+      (MIYAGAWA on 2011-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_04/bin/cpanm">
+    1.30_04 DEV
+      (MIYAGAWA on 2011-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_03/bin/cpanm">
+    1.30_03 DEV
+      (MIYAGAWA on 2011-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.30_02/bin/cpanm">
+    1.30_02 DEV
+      (MIYAGAWA on 2011-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.3001/bin/cpanm">
+    1.3001
+      (MIYAGAWA on 2011-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.3000/bin/cpanm">
+    1.3000
+      (MIYAGAWA on 2011-03-02)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.29_02/bin/cpanm">
+    1.29_02 DEV
+      (MIYAGAWA on 2011-03-02)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.29_01/bin/cpanm">
+    1.29_01 DEV
+      (MIYAGAWA on 2011-03-01)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.2001/bin/cpanm">
+    1.2001
+      (MIYAGAWA on 2011-02-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.2000-TRIAL/bin/cpanm">
+    1.2000 DEV
+      (MIYAGAWA on 2011-02-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1008/bin/cpanm">
+    1.1008
+      (MIYAGAWA on 2011-01-26)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.19_02/bin/cpanm">
+    1.19_02 DEV
+      (MIYAGAWA on 2011-01-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.19_01/bin/cpanm">
+    1.19_01 DEV
+      (MIYAGAWA on 2011-01-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1007/bin/cpanm">
+    1.1007
+      (MIYAGAWA on 2011-01-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1006/bin/cpanm">
+    1.1006
+      (MIYAGAWA on 2010-12-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1005/bin/cpanm">
+    1.1005
+      (MIYAGAWA on 2010-12-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1004/bin/cpanm">
+    1.1004
+      (MIYAGAWA on 2010-11-30)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1003/bin/cpanm">
+    1.1003
+      (MIYAGAWA on 2010-11-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1002/bin/cpanm">
+    1.1002
+      (MIYAGAWA on 2010-11-17)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1001/bin/cpanm">
+    1.1001
+      (MIYAGAWA on 2010-11-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.1000/bin/cpanm">
+    1.1000
+      (MIYAGAWA on 2010-11-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0015/bin/cpanm">
+    1.0015
+      (MIYAGAWA on 2010-09-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0014/bin/cpanm">
+    1.0014
+      (MIYAGAWA on 2010-09-21)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0013/bin/cpanm">
+    1.0013
+      (MIYAGAWA on 2010-09-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0012/bin/cpanm">
+    1.0012
+      (MIYAGAWA on 2010-08-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0011/bin/cpanm">
+    1.0011
+      (MIYAGAWA on 2010-08-18)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0010/bin/cpanm">
+    1.0010
+      (MIYAGAWA on 2010-07-30)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0006/bin/cpanm">
+    1.0006
+      (MIYAGAWA on 2010-07-02)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0005/bin/cpanm">
+    1.0005
+      (MIYAGAWA on 2010-07-02)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0004/bin/cpanm">
+    1.0004
+      (MIYAGAWA on 2010-05-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0003/bin/cpanm">
+    1.0003
+      (MIYAGAWA on 2010-05-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0002/bin/cpanm">
+    1.0002
+      (MIYAGAWA on 2010-05-02)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0001/bin/cpanm">
+    1.0001
+      (MIYAGAWA on 2010-04-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.0000/bin/cpanm">
+    1.0000
+      (MIYAGAWA on 2010-04-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9936/bin/cpanm">
+    0.9936
+      (MIYAGAWA on 2010-04-21)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.999_05/bin/cpanm">
+    0.999_05 DEV
+      (MIYAGAWA on 2010-04-21)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.999_04/bin/cpanm">
+    0.999_04 DEV
+      (MIYAGAWA on 2010-04-19)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9935/bin/cpanm">
+    0.9935
+      (MIYAGAWA on 2010-04-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.999_03/bin/cpanm">
+    0.999_03 DEV
+      (MIYAGAWA on 2010-04-14)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.999_02/bin/cpanm">
+    0.999_02 DEV
+      (MIYAGAWA on 2010-04-13)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.999_01/bin/cpanm">
+    0.999_01 DEV
+      (MIYAGAWA on 2010-04-12)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9934/bin/cpanm">
+    0.9934
+      (MIYAGAWA on 2010-04-11)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_33/bin/cpanm">
+    0.99_33 DEV
+      (MIYAGAWA on 2010-04-11)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9932/bin/cpanm">
+    0.9932
+      (MIYAGAWA on 2010-04-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9931/bin/cpanm">
+    0.9931
+      (MIYAGAWA on 2010-04-05)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9930/bin/cpanm">
+    0.9930
+      (MIYAGAWA on 2010-03-30)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9929/bin/cpanm">
+    0.9929
+      (MIYAGAWA on 2010-03-27)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9928/bin/cpanm">
+    0.9928
+      (MIYAGAWA on 2010-03-26)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9927/bin/cpanm">
+    0.9927
+      (MIYAGAWA on 2010-03-23)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_26/bin/cpanm">
+    0.99_26 DEV
+      (MIYAGAWA on 2010-03-23)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_25/bin/cpanm">
+    0.99_25 DEV
+      (MIYAGAWA on 2010-03-23)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_24/bin/cpanm">
+    0.99_24 DEV
+      (MIYAGAWA on 2010-03-22)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9923/bin/cpanm">
+    0.9923
+      (MIYAGAWA on 2010-03-16)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9922/bin/cpanm">
+    0.9922
+      (MIYAGAWA on 2010-03-11)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9921/bin/cpanm">
+    0.9921
+      (MIYAGAWA on 2010-03-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_20/bin/cpanm">
+    0.99_20 DEV
+      (MIYAGAWA on 2010-03-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9919/bin/cpanm">
+    0.9919
+      (MIYAGAWA on 2010-03-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9918/bin/cpanm">
+    0.9918
+      (MIYAGAWA on 2010-03-10)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9917/bin/cpanm">
+    0.9917
+      (MIYAGAWA on 2010-03-09)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9916/bin/cpanm">
+    0.9916
+      (MIYAGAWA on 2010-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9915/bin/cpanm">
+    0.9915
+      (MIYAGAWA on 2010-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9914/bin/cpanm">
+    0.9914
+      (MIYAGAWA on 2010-03-04)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9913/bin/cpanm">
+    0.9913
+      (MIYAGAWA on 2010-03-03)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9912/bin/cpanm">
+    0.9912
+      (MIYAGAWA on 2010-03-03)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9911/bin/cpanm">
+    0.9911
+      (MIYAGAWA on 2010-03-02)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.9910/bin/cpanm">
+    0.9910
+      (MIYAGAWA on 2010-03-01)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_07/bin/cpanm">
+    0.99_07 DEV
+      (MIYAGAWA on 2010-02-28)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_06/bin/cpanm">
+    0.99_06 DEV
+      (MIYAGAWA on 2010-02-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_05/bin/cpanm">
+    0.99_05 DEV
+      (MIYAGAWA on 2010-02-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_04/bin/cpanm">
+    0.99_04 DEV
+      (MIYAGAWA on 2010-02-25)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_03/bin/cpanm">
+    0.99_03 DEV
+      (MIYAGAWA on 2010-02-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_02/bin/cpanm">
+    0.99_02 DEV
+      (MIYAGAWA on 2010-02-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.99_01/bin/cpanm">
+    0.99_01 DEV
+      (MIYAGAWA on 2010-02-23)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.09/bin/cpanm">
+    0.09
+      (MIYAGAWA on 2010-02-21)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.08/bin/cpanm">
+    0.08
+      (MIYAGAWA on 2010-02-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.07/bin/cpanm">
+    0.07
+      (MIYAGAWA on 2010-02-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.06/bin/cpanm">
+    0.06
+      (MIYAGAWA on 2010-02-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.05/bin/cpanm">
+    0.05
+      (MIYAGAWA on 2010-02-20)
+      
+  </option>
+        <optgroup label="BackPAN">
+          
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7008/bin/cpanm">
+    1.7008
+      (MIYAGAWA on 2014-09-10)
+      
+  </option>
+
+  <option  value="/module/GMARLER/App-cpanminus-1.7006/bin/cpanm">
+    1.7006
+      (GMARLER on 2014-09-02)
+      
+  </option>
+
+  <option  value="/module/GMARLER/App-cpanminus-1.7005/bin/cpanm">
+    1.7005
+      (GMARLER on 2014-09-02)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7102-TRIAL/bin/cpanm">
+    1.7102 DEV
+      (MIYAGAWA on 2013-09-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7101-TRIAL/bin/cpanm">
+    1.7101 DEV
+      (MIYAGAWA on 2013-09-19)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.7100-TRIAL/bin/cpanm">
+    1.7100 DEV
+      (MIYAGAWA on 2013-09-19)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6930/bin/cpanm">
+    1.6930
+      (MIYAGAWA on 2013-07-24)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-1.6901/bin/cpanm">
+    1.6901
+      (MIYAGAWA on 2013-04-21)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.04/bin/cpanm">
+    0.04
+      (MIYAGAWA on 2010-02-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.03/bin/cpanm">
+    0.03
+      (MIYAGAWA on 2010-02-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.02/bin/cpanm">
+    0.02
+      (MIYAGAWA on 2010-02-20)
+      
+  </option>
+
+  <option  value="/module/MIYAGAWA/App-cpanminus-0.01/bin/cpanm">
+    0.01
+      (MIYAGAWA on 2010-02-20)
+      
+  </option>
+        </optgroup>
+    
+</select>
+    
+    <a data-keyboard-shortcut="g d" class="release-name" href="/release/App-cpanminus">App-cpanminus-1.7040</a>
+    
+    
+  </div>
+  <div class="inline"><script type="text/javascript">
+  MetaCPAN.favs_to_check['App-cpanminus'] = 1;
+</script>
+
+<div id="App-cpanminus-fav" class="logged_in">
+<form action="/account/favorite/add" style="display: inline" onsubmit="return favDistribution(this)">
+    <input type="hidden" name="remove" value="0">
+    <input type="hidden" name="release" value="App-cpanminus-1.7040">
+    <input type="hidden" name="author" value="MIYAGAWA">
+    <input type="hidden" name="distribution" value="App-cpanminus">
+    <button type="submit" class="favorite highlight"><span>209</span> ++</button>
+</form>
+</div>
+<div class="logged_out">
+<a href="" onclick="alert('Please sign in to add favorites'); return false" class="favorite highlight">
+<span>209</span> ++</a>
+</div>
+</div>
+  &nbsp;/&nbsp;<span itemprop="name" >cpanm</span>
+</div>
+
+
+  <ul class="nav-list slidepanel">
+    <li class="visible-xs">
+      <div>
+    <form action="/search">
+        <input type="search" class="form-control tool-bar-form" placeholder="Search" name="q">
+        <input type="submit" class="hidden">
+    </form>
+</div>
+
+    </li>
+    <li class="nav-header">
+      <time class="relatize" itemprop="dateModified" datetime="2016-01-07">07 Jan 2016 19:29:19 GMT</time>
+    </li>
+    
+    <li>
+      <a data-keyboard-shortcut="g s" href="/source/MIYAGAWA/App-cpanminus-1.7040/bin/cpanm"><i class="fa fa-fw fa-file-code-o black"></i>Source</a>
+      (<a href="https://api.metacpan.org/source/MIYAGAWA/App-cpanminus-1.7040/bin/cpanm">raw</a>)
+    </li>
+    <li>
+      <a data-keyboard-shortcut="g b" href="/source/MIYAGAWA/App-cpanminus-1.7040/bin"><i class="fa fa-fw fa-folder-open black"></i>Browse</a>
+      (<a href="https://api.metacpan.org/source/MIYAGAWA/App-cpanminus-1.7040/">raw</a>)
+    </li>
+    <li>
+    <a data-keyboard-shortcut="g c" href="/changes/distribution/App-cpanminus"><i class="fa fa-fw fa-cogs black"></i>Changes</a>
+</li>
+
+<li>
+    <a class="nopopup" href="https://github.com/miyagawa/cpanminus"><i class="fa fa-fw fa-external-link black"></i>Homepage</a>
+</li>
+
+
+<li>
+    
+    <a data-keyboard-shortcut="g r" href="https://github.com/miyagawa/cpanminus"><i class="fa fa-fw fa-code-fork black"></i>Repository</a>
+    
+    
+    (<a href="https://github.com/miyagawa/cpanminus.git">git clone</a>)
+    
+</li>
+
+<li>
+    <a data-keyboard-shortcut="g i" href="https://github.com/miyagawa/cpanminus/issues"><i class="fa fa-fw fa-info-circle black"></i>Issues</a>
+    (68)
+</li>
+
+<li>
+    
+<span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" >
+  <a href="http://cpanratings.perl.org/rate/?distribution=App-cpanminus"><i class="fa fa-fw fa-smile-o black"></i><span class="rating-50"></span></a><span class="hidden" itemprop="ratingValue" >5</span> (<a href="http://cpanratings.perl.org/dist/App-cpanminus"><span itemprop="reviewCount" >17</span> reviews</a>)
+</span>
+
+</li>
+
+<li>
+    
+    <a href="http://matrix.cpantesters.org/?dist=App-cpanminus+1.7040" title="Matrix"><i class="fa fa-fw fa-check-circle black"></i>Testers</a>
+    <span title="(pass / fail / na)">(<a href="http://www.cpantesters.org/distro/A/App-cpanminus.html?oncpan=1&amp;distmat=1&amp;version=1.7040&amp;grade=2" style="color: #090">990</a> / <a href="http://www.cpantesters.org/distro/A/App-cpanminus.html?oncpan=1&amp;distmat=1&amp;version=1.7040&amp;grade=3" style="color: #900">0</a> / <a href="http://www.cpantesters.org/distro/A/App-cpanminus.html?oncpan=1&amp;distmat=1&amp;version=1.7040&amp;grade=4">0</a>)</span>
+</li>
+<li>
+    <a href="http://cpants.charsbar.org/dist/overview/App-cpanminus"><i class="fa fa-fw fa-line-chart black"></i>Kwalitee</a>
+</li>
+
+<li><i class="fa fa-fw fa-gavel black"></i>License: perl_5</li>
+
+
+
+
+    <li class="nav-header">Activity</li>
+    <li><div class="activity-graph">
+  <img src="/activity?res=month&amp;distribution=App-cpanminus" width="170" height="22" />
+  <div align="right"><small class="comment">24 month</small></div>
+</div>
+</li>
+    <li class="nav-header">Tools</li>
+<li>
+    <i class="fa fa-file fa-fw black"></i><a href="http://perlybook.org/?source=cpanm&amp;book_selection=&amp;target=mobi" title="Download POD of this module in .mobi format for Kindle.">MOBI</a> | <a href="http://perlybook.org/?source=cpanm&amp;book_selection=&amp;target=epub" title="Download POD of this module in .epub format for E-book readers.">EPUB</a></li>
+
+<li>
+    <a itemprop="downloadUrl" href="https://cpan.metacpan.org/authors/id/M/MI/MIYAGAWA/App-cpanminus-1.7040.tar.gz">
+    <i class="fa fa-download fa-fw black"></i>Download (<span itemprop="fileSize" >309.82Kb</span>)</a>
+    
+    <span class="invisible" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+      <span itemprop="price">0</span>
+    </span>
+    
+</li>
+<li>
+    <a href="https://explorer.metacpan.org/?url=%2Fmodule%2FMIYAGAWA%2FApp-cpanminus-1.7040%2Fbin%2Fcpanm">
+    <i class="fa fa-list-alt fa-fw black"></i>MetaCPAN Explorer
+    </a>
+</li>
+<li>
+    <a href="http://cpanratings.perl.org/rate/?distribution=App-cpanminus">
+    <i class="fa fa-star fa-fw black"></i>Rate this distribution
+    </a>
+</li>
+<li>
+    <a href="/feed/distribution/App-cpanminus">
+    <i class="fa fa-rss-square fa-fw black"></i>Subscribe to distribution
+    </a>
+</li>
+<li>
+    <button class="btn btn-link" data-toggle="modal" data-target="#install-instructions-dialog">
+      <i class="fa fa-terminal fa-fw black"></i>Install Instructions
+    </button>
+</li>
+<li>
+    <form action="/search">
+        <input type="hidden" name="q" value="dist:App-cpanminus">
+        <input type="search" name="q" placeholder="Search distribution" style="width: 153px" class="form-control tool-bar-form">
+        <input type="submit" style="display: none">
+    </form>
+</li>
+<li>
+    <select onchange="document.location.href='/module/'+this.value" class="form-control tool-bar-form">
+        <option>Jump to version</option>
+    <option value="MIYAGAWA/App-cpanminus-1.7039/bin/cpanm">1.7039 (MIYAGAWA on 2015-06-29)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7038/bin/cpanm">1.7038 (MIYAGAWA on 2015-06-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7037/bin/cpanm">1.7037 (MIYAGAWA on 2015-06-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7036/bin/cpanm">1.7036 (MIYAGAWA on 2015-06-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7035/bin/cpanm">1.7035 (MIYAGAWA on 2015-06-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7034/bin/cpanm">1.7034 (MIYAGAWA on 2015-05-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7033/bin/cpanm">1.7033 (MIYAGAWA on 2015-05-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7032/bin/cpanm">1.7032 (MIYAGAWA on 2015-04-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7031/bin/cpanm">1.7031 (MIYAGAWA on 2015-04-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7030/bin/cpanm">1.7030 (MIYAGAWA on 2015-04-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7029-TRIAL/bin/cpanm">1.7029 DEV (MIYAGAWA on 2015-04-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7028/bin/cpanm">1.7028 (MIYAGAWA on 2015-04-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7027/bin/cpanm">1.7027 (MIYAGAWA on 2015-02-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7026/bin/cpanm">1.7026 (MIYAGAWA on 2015-02-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7025/bin/cpanm">1.7025 (MIYAGAWA on 2015-02-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7024/bin/cpanm">1.7024 (MIYAGAWA on 2015-01-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7023/bin/cpanm">1.7023 (MIYAGAWA on 2015-01-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7022/bin/cpanm">1.7022 (MIYAGAWA on 2014-12-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7021/bin/cpanm">1.7021 (MIYAGAWA on 2014-12-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7020/bin/cpanm">1.7020 (MIYAGAWA on 2014-12-09)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7019/bin/cpanm">1.7019 (MIYAGAWA on 2014-12-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7018/bin/cpanm">1.7018 (MIYAGAWA on 2014-11-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7017/bin/cpanm">1.7017 (MIYAGAWA on 2014-11-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7016/bin/cpanm">1.7016 (MIYAGAWA on 2014-11-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7015/bin/cpanm">1.7015 (MIYAGAWA on 2014-11-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7014/bin/cpanm">1.7014 (MIYAGAWA on 2014-10-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7013/bin/cpanm">1.7013 (MIYAGAWA on 2014-10-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7012/bin/cpanm">1.7012 (MIYAGAWA on 2014-09-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7011/bin/cpanm">1.7011 (MIYAGAWA on 2014-09-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7010-TRIAL/bin/cpanm">1.7010 DEV (MIYAGAWA on 2014-09-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7009/bin/cpanm">1.7009 (MIYAGAWA on 2014-09-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7007/bin/cpanm">1.7007 (MIYAGAWA on 2014-09-09)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7006/bin/cpanm">1.7006 (MIYAGAWA on 2014-09-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7005-TRIAL/bin/cpanm">1.7005 DEV (MIYAGAWA on 2014-09-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7004/bin/cpanm">1.7004 (MIYAGAWA on 2014-04-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7003/bin/cpanm">1.7003 (MIYAGAWA on 2014-04-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7002/bin/cpanm">1.7002 (MIYAGAWA on 2014-04-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7001/bin/cpanm">1.7001 (MIYAGAWA on 2013-09-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7000/bin/cpanm">1.7000 (MIYAGAWA on 2013-09-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6943/bin/cpanm">1.6943 (MIYAGAWA on 2013-09-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6942/bin/cpanm">1.6942 (MIYAGAWA on 2013-08-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6941/bin/cpanm">1.6941 (MIYAGAWA on 2013-08-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6940/bin/cpanm">1.6940 (MIYAGAWA on 2013-08-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6939/bin/cpanm">1.6939 (MIYAGAWA on 2013-08-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6938/bin/cpanm">1.6938 (MIYAGAWA on 2013-08-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6937/bin/cpanm">1.6937 (MIYAGAWA on 2013-08-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6936/bin/cpanm">1.6936 (MIYAGAWA on 2013-08-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6935/bin/cpanm">1.6935 (MIYAGAWA on 2013-07-31)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6934/bin/cpanm">1.6934 (MIYAGAWA on 2013-07-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6933/bin/cpanm">1.6933 (MIYAGAWA on 2013-07-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6932/bin/cpanm">1.6932 (MIYAGAWA on 2013-07-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6931/bin/cpanm">1.6931 (MIYAGAWA on 2013-07-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6929/bin/cpanm">1.6929 (MIYAGAWA on 2013-07-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6928/bin/cpanm">1.6928 (MIYAGAWA on 2013-07-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6927/bin/cpanm">1.6927 (MIYAGAWA on 2013-07-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6926-TRIAL/bin/cpanm">1.6926 DEV (MIYAGAWA on 2013-07-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6925/bin/cpanm">1.6925 (MIYAGAWA on 2013-07-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6924/bin/cpanm">1.6924 (MIYAGAWA on 2013-07-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6923/bin/cpanm">1.6923 (MIYAGAWA on 2013-07-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6922/bin/cpanm">1.6922 (MIYAGAWA on 2013-06-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6921/bin/cpanm">1.6921 (MIYAGAWA on 2013-06-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6920/bin/cpanm">1.6920 (MIYAGAWA on 2013-06-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6919-TRIAL/bin/cpanm">1.6919 DEV (MIYAGAWA on 2013-06-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6918/bin/cpanm">1.6918 (MIYAGAWA on 2013-06-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6917-TRIAL/bin/cpanm">1.6917 DEV (MIYAGAWA on 2013-06-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6916/bin/cpanm">1.6916 (MIYAGAWA on 2013-06-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6915/bin/cpanm">1.6915 (MIYAGAWA on 2013-05-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6914/bin/cpanm">1.6914 (MIYAGAWA on 2013-05-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6913/bin/cpanm">1.6913 (MIYAGAWA on 2013-05-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6912/bin/cpanm">1.6912 (MIYAGAWA on 2013-05-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6911/bin/cpanm">1.6911 (MIYAGAWA on 2013-05-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6910-TRIAL/bin/cpanm">1.6910 DEV (MIYAGAWA on 2013-05-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6909/bin/cpanm">1.6909 (MIYAGAWA on 2013-04-29)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6908-TRIAL/bin/cpanm">1.6908 DEV (MIYAGAWA on 2013-04-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6907/bin/cpanm">1.6907 (MIYAGAWA on 2013-04-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6906-TRIAL/bin/cpanm">1.6906 DEV (MIYAGAWA on 2013-04-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6905-TRIAL/bin/cpanm">1.6905 DEV (MIYAGAWA on 2013-04-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6904-TRIAL/bin/cpanm">1.6904 DEV (MIYAGAWA on 2013-04-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6903-TRIAL/bin/cpanm">1.6903 DEV (MIYAGAWA on 2013-04-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6902/bin/cpanm">1.6902 (MIYAGAWA on 2013-04-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6109/bin/cpanm">1.6109 (MIYAGAWA on 2013-04-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6900-TRIAL/bin/cpanm">1.6900 DEV (MIYAGAWA on 2013-04-15)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6193-TRIAL/bin/cpanm">1.6193 DEV (MIYAGAWA on 2013-04-15)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6192-TRIAL/bin/cpanm">1.6192 DEV (MIYAGAWA on 2013-04-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6191-TRIAL/bin/cpanm">1.6191 DEV (MIYAGAWA on 2013-04-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6190-TRIAL/bin/cpanm">1.6190 DEV (MIYAGAWA on 2013-04-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6108/bin/cpanm">1.6108 (MIYAGAWA on 2013-04-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6107/bin/cpanm">1.6107 (MIYAGAWA on 2013-04-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6106/bin/cpanm">1.6106 (MIYAGAWA on 2013-04-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6105/bin/cpanm">1.6105 (MIYAGAWA on 2013-04-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6104/bin/cpanm">1.6104 (MIYAGAWA on 2013-04-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6103/bin/cpanm">1.6103 (MIYAGAWA on 2013-03-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6102/bin/cpanm">1.6102 (MIYAGAWA on 2013-03-28)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6101/bin/cpanm">1.6101 (MIYAGAWA on 2013-03-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6100/bin/cpanm">1.6100 (MIYAGAWA on 2013-03-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6008/bin/cpanm">1.6008 (MIYAGAWA on 2013-03-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6007/bin/cpanm">1.6007 (MIYAGAWA on 2013-03-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6006/bin/cpanm">1.6006 (MIYAGAWA on 2013-03-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6005/bin/cpanm">1.6005 (MIYAGAWA on 2013-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6004/bin/cpanm">1.6004 (MIYAGAWA on 2013-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6003/bin/cpanm">1.6003 (MIYAGAWA on 2013-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6002/bin/cpanm">1.6002 (MIYAGAWA on 2013-02-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6001/bin/cpanm">1.6001 (MIYAGAWA on 2013-02-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6000/bin/cpanm">1.6000 (MIYAGAWA on 2013-02-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_13/bin/cpanm">1.59_13 DEV (MIYAGAWA on 2013-02-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_12/bin/cpanm">1.59_12 DEV (MIYAGAWA on 2013-02-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_11/bin/cpanm">1.59_11 DEV (MIYAGAWA on 2013-02-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_10/bin/cpanm">1.59_10 DEV (MIYAGAWA on 2013-02-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_09/bin/cpanm">1.59_09 DEV (MIYAGAWA on 2013-02-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_08/bin/cpanm">1.59_08 DEV (MIYAGAWA on 2013-02-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_07/bin/cpanm">1.59_07 DEV (MIYAGAWA on 2013-02-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_06/bin/cpanm">1.59_06 DEV (MIYAGAWA on 2013-02-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_05/bin/cpanm">1.59_05 DEV (MIYAGAWA on 2013-02-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_04/bin/cpanm">1.59_04 DEV (MIYAGAWA on 2013-02-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_03/bin/cpanm">1.59_03 DEV (MIYAGAWA on 2013-02-01)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_02/bin/cpanm">1.59_02 DEV (MIYAGAWA on 2013-02-01)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_01/bin/cpanm">1.59_01 DEV (MIYAGAWA on 2013-01-31)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5021/bin/cpanm">1.5021 (MIYAGAWA on 2013-01-31)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5020/bin/cpanm">1.5020 (MIYAGAWA on 2013-01-29)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5019/bin/cpanm">1.5019 (MIYAGAWA on 2012-12-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5018/bin/cpanm">1.5018 (MIYAGAWA on 2012-09-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5017/bin/cpanm">1.5017 (MIYAGAWA on 2012-07-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5016/bin/cpanm">1.5016 (MIYAGAWA on 2012-07-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5015/bin/cpanm">1.5015 (MIYAGAWA on 2012-06-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5014/bin/cpanm">1.5014 (MIYAGAWA on 2012-06-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5013/bin/cpanm">1.5013 (MIYAGAWA on 2012-05-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5012/bin/cpanm">1.5012 (MIYAGAWA on 2012-05-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5011/bin/cpanm">1.5011 (MIYAGAWA on 2012-04-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5010/bin/cpanm">1.5010 (MIYAGAWA on 2012-03-31)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5009/bin/cpanm">1.5009 (MIYAGAWA on 2012-03-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5008/bin/cpanm">1.5008 (MIYAGAWA on 2012-03-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5007/bin/cpanm">1.5007 (MIYAGAWA on 2011-12-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5006/bin/cpanm">1.5006 (MIYAGAWA on 2011-11-29)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5005/bin/cpanm">1.5005 (MIYAGAWA on 2011-11-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5004/bin/cpanm">1.5004 (MIYAGAWA on 2011-11-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5003/bin/cpanm">1.5003 (MIYAGAWA on 2011-10-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5002/bin/cpanm">1.5002 (MIYAGAWA on 2011-10-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5001/bin/cpanm">1.5001 (MIYAGAWA on 2011-10-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5000/bin/cpanm">1.5000 (MIYAGAWA on 2011-10-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.49_02/bin/cpanm">1.49_02 DEV (MIYAGAWA on 2011-10-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.49_01/bin/cpanm">1.49_01 DEV (MIYAGAWA on 2011-06-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4008/bin/cpanm">1.4008 (MIYAGAWA on 2011-06-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4007/bin/cpanm">1.4007 (MIYAGAWA on 2011-05-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4006/bin/cpanm">1.4006 (MIYAGAWA on 2011-05-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4005/bin/cpanm">1.4005 (MIYAGAWA on 2011-05-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4004/bin/cpanm">1.4004 (MIYAGAWA on 2011-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4003/bin/cpanm">1.4003 (MIYAGAWA on 2011-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4002/bin/cpanm">1.4002 (MIYAGAWA on 2011-03-09)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4001/bin/cpanm">1.4001 (MIYAGAWA on 2011-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4000/bin/cpanm">1.4000 (MIYAGAWA on 2011-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_13/bin/cpanm">1.30_13 DEV (MIYAGAWA on 2011-03-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_12/bin/cpanm">1.30_12 DEV (MIYAGAWA on 2011-03-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_11/bin/cpanm">1.30_11 DEV (MIYAGAWA on 2011-03-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_10/bin/cpanm">1.30_10 DEV (MIYAGAWA on 2011-03-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_09/bin/cpanm">1.30_09 DEV (MIYAGAWA on 2011-03-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_08/bin/cpanm">1.30_08 DEV (MIYAGAWA on 2011-03-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_07/bin/cpanm">1.30_07 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_06/bin/cpanm">1.30_06 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_05/bin/cpanm">1.30_05 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_04/bin/cpanm">1.30_04 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_03/bin/cpanm">1.30_03 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_02/bin/cpanm">1.30_02 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.3001/bin/cpanm">1.3001 (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.3000/bin/cpanm">1.3000 (MIYAGAWA on 2011-03-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.29_02/bin/cpanm">1.29_02 DEV (MIYAGAWA on 2011-03-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.29_01/bin/cpanm">1.29_01 DEV (MIYAGAWA on 2011-03-01)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.2001/bin/cpanm">1.2001 (MIYAGAWA on 2011-02-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.2000-TRIAL/bin/cpanm">1.2000 DEV (MIYAGAWA on 2011-02-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1008/bin/cpanm">1.1008 (MIYAGAWA on 2011-01-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.19_02/bin/cpanm">1.19_02 DEV (MIYAGAWA on 2011-01-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.19_01/bin/cpanm">1.19_01 DEV (MIYAGAWA on 2011-01-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1007/bin/cpanm">1.1007 (MIYAGAWA on 2011-01-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1006/bin/cpanm">1.1006 (MIYAGAWA on 2010-12-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1005/bin/cpanm">1.1005 (MIYAGAWA on 2010-12-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1004/bin/cpanm">1.1004 (MIYAGAWA on 2010-11-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1003/bin/cpanm">1.1003 (MIYAGAWA on 2010-11-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1002/bin/cpanm">1.1002 (MIYAGAWA on 2010-11-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1001/bin/cpanm">1.1001 (MIYAGAWA on 2010-11-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1000/bin/cpanm">1.1000 (MIYAGAWA on 2010-11-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0015/bin/cpanm">1.0015 (MIYAGAWA on 2010-09-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0014/bin/cpanm">1.0014 (MIYAGAWA on 2010-09-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0013/bin/cpanm">1.0013 (MIYAGAWA on 2010-09-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0012/bin/cpanm">1.0012 (MIYAGAWA on 2010-08-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0011/bin/cpanm">1.0011 (MIYAGAWA on 2010-08-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0010/bin/cpanm">1.0010 (MIYAGAWA on 2010-07-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0006/bin/cpanm">1.0006 (MIYAGAWA on 2010-07-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0005/bin/cpanm">1.0005 (MIYAGAWA on 2010-07-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0004/bin/cpanm">1.0004 (MIYAGAWA on 2010-05-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0003/bin/cpanm">1.0003 (MIYAGAWA on 2010-05-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0002/bin/cpanm">1.0002 (MIYAGAWA on 2010-05-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0001/bin/cpanm">1.0001 (MIYAGAWA on 2010-04-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0000/bin/cpanm">1.0000 (MIYAGAWA on 2010-04-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9936/bin/cpanm">0.9936 (MIYAGAWA on 2010-04-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_05/bin/cpanm">0.999_05 DEV (MIYAGAWA on 2010-04-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_04/bin/cpanm">0.999_04 DEV (MIYAGAWA on 2010-04-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9935/bin/cpanm">0.9935 (MIYAGAWA on 2010-04-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_03/bin/cpanm">0.999_03 DEV (MIYAGAWA on 2010-04-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_02/bin/cpanm">0.999_02 DEV (MIYAGAWA on 2010-04-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_01/bin/cpanm">0.999_01 DEV (MIYAGAWA on 2010-04-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9934/bin/cpanm">0.9934 (MIYAGAWA on 2010-04-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_33/bin/cpanm">0.99_33 DEV (MIYAGAWA on 2010-04-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9932/bin/cpanm">0.9932 (MIYAGAWA on 2010-04-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9931/bin/cpanm">0.9931 (MIYAGAWA on 2010-04-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9930/bin/cpanm">0.9930 (MIYAGAWA on 2010-03-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9929/bin/cpanm">0.9929 (MIYAGAWA on 2010-03-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9928/bin/cpanm">0.9928 (MIYAGAWA on 2010-03-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9927/bin/cpanm">0.9927 (MIYAGAWA on 2010-03-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_26/bin/cpanm">0.99_26 DEV (MIYAGAWA on 2010-03-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_25/bin/cpanm">0.99_25 DEV (MIYAGAWA on 2010-03-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_24/bin/cpanm">0.99_24 DEV (MIYAGAWA on 2010-03-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9923/bin/cpanm">0.9923 (MIYAGAWA on 2010-03-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9922/bin/cpanm">0.9922 (MIYAGAWA on 2010-03-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9921/bin/cpanm">0.9921 (MIYAGAWA on 2010-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_20/bin/cpanm">0.99_20 DEV (MIYAGAWA on 2010-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9919/bin/cpanm">0.9919 (MIYAGAWA on 2010-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9918/bin/cpanm">0.9918 (MIYAGAWA on 2010-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9917/bin/cpanm">0.9917 (MIYAGAWA on 2010-03-09)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9916/bin/cpanm">0.9916 (MIYAGAWA on 2010-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9915/bin/cpanm">0.9915 (MIYAGAWA on 2010-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9914/bin/cpanm">0.9914 (MIYAGAWA on 2010-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9913/bin/cpanm">0.9913 (MIYAGAWA on 2010-03-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9912/bin/cpanm">0.9912 (MIYAGAWA on 2010-03-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9911/bin/cpanm">0.9911 (MIYAGAWA on 2010-03-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9910/bin/cpanm">0.9910 (MIYAGAWA on 2010-03-01)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_07/bin/cpanm">0.99_07 DEV (MIYAGAWA on 2010-02-28)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_06/bin/cpanm">0.99_06 DEV (MIYAGAWA on 2010-02-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_05/bin/cpanm">0.99_05 DEV (MIYAGAWA on 2010-02-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_04/bin/cpanm">0.99_04 DEV (MIYAGAWA on 2010-02-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_03/bin/cpanm">0.99_03 DEV (MIYAGAWA on 2010-02-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_02/bin/cpanm">0.99_02 DEV (MIYAGAWA on 2010-02-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_01/bin/cpanm">0.99_01 DEV (MIYAGAWA on 2010-02-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.09/bin/cpanm">0.09 (MIYAGAWA on 2010-02-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.08/bin/cpanm">0.08 (MIYAGAWA on 2010-02-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.07/bin/cpanm">0.07 (MIYAGAWA on 2010-02-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.06/bin/cpanm">0.06 (MIYAGAWA on 2010-02-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.05/bin/cpanm">0.05 (MIYAGAWA on 2010-02-20)</option>
+
+<optgroup label="BackPAN"></optgroup>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7008/bin/cpanm">1.7008 (MIYAGAWA on 2014-09-10)
+    </option>
+
+    <option value="GMARLER/App-cpanminus-1.7006/bin/cpanm">1.7006 (GMARLER on 2014-09-02)
+    </option>
+
+    <option value="GMARLER/App-cpanminus-1.7005/bin/cpanm">1.7005 (GMARLER on 2014-09-02)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7102-TRIAL/bin/cpanm">1.7102 DEV (MIYAGAWA on 2013-09-20)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7101-TRIAL/bin/cpanm">1.7101 DEV (MIYAGAWA on 2013-09-19)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7100-TRIAL/bin/cpanm">1.7100 DEV (MIYAGAWA on 2013-09-19)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6930/bin/cpanm">1.6930 (MIYAGAWA on 2013-07-24)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6901/bin/cpanm">1.6901 (MIYAGAWA on 2013-04-21)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.04/bin/cpanm">0.04 (MIYAGAWA on 2010-02-20)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.03/bin/cpanm">0.03 (MIYAGAWA on 2010-02-20)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.02/bin/cpanm">0.02 (MIYAGAWA on 2010-02-20)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.01/bin/cpanm">0.01 (MIYAGAWA on 2010-02-20)
+    </option>
+
+
+    </select>
+</li>
+<li>
+    <select name="release" onchange="document.location.href='/diff/file/?target=MIYAGAWA%2FApp-cpanminus-1.7040%2Fbin%2Fcpanm&amp;source=' + encodeURIComponent(this.value)" class="form-control tool-bar-form">
+        <option>Diff with version</option>
+    <option value="MIYAGAWA/App-cpanminus-1.7039/bin/cpanm">1.7039 (MIYAGAWA on 2015-06-29)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7038/bin/cpanm">1.7038 (MIYAGAWA on 2015-06-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7037/bin/cpanm">1.7037 (MIYAGAWA on 2015-06-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7036/bin/cpanm">1.7036 (MIYAGAWA on 2015-06-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7035/bin/cpanm">1.7035 (MIYAGAWA on 2015-06-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7034/bin/cpanm">1.7034 (MIYAGAWA on 2015-05-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7033/bin/cpanm">1.7033 (MIYAGAWA on 2015-05-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7032/bin/cpanm">1.7032 (MIYAGAWA on 2015-04-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7031/bin/cpanm">1.7031 (MIYAGAWA on 2015-04-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7030/bin/cpanm">1.7030 (MIYAGAWA on 2015-04-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7029-TRIAL/bin/cpanm">1.7029 DEV (MIYAGAWA on 2015-04-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7028/bin/cpanm">1.7028 (MIYAGAWA on 2015-04-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7027/bin/cpanm">1.7027 (MIYAGAWA on 2015-02-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7026/bin/cpanm">1.7026 (MIYAGAWA on 2015-02-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7025/bin/cpanm">1.7025 (MIYAGAWA on 2015-02-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7024/bin/cpanm">1.7024 (MIYAGAWA on 2015-01-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7023/bin/cpanm">1.7023 (MIYAGAWA on 2015-01-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7022/bin/cpanm">1.7022 (MIYAGAWA on 2014-12-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7021/bin/cpanm">1.7021 (MIYAGAWA on 2014-12-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7020/bin/cpanm">1.7020 (MIYAGAWA on 2014-12-09)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7019/bin/cpanm">1.7019 (MIYAGAWA on 2014-12-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7018/bin/cpanm">1.7018 (MIYAGAWA on 2014-11-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7017/bin/cpanm">1.7017 (MIYAGAWA on 2014-11-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7016/bin/cpanm">1.7016 (MIYAGAWA on 2014-11-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7015/bin/cpanm">1.7015 (MIYAGAWA on 2014-11-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7014/bin/cpanm">1.7014 (MIYAGAWA on 2014-10-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7013/bin/cpanm">1.7013 (MIYAGAWA on 2014-10-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7012/bin/cpanm">1.7012 (MIYAGAWA on 2014-09-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7011/bin/cpanm">1.7011 (MIYAGAWA on 2014-09-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7010-TRIAL/bin/cpanm">1.7010 DEV (MIYAGAWA on 2014-09-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7009/bin/cpanm">1.7009 (MIYAGAWA on 2014-09-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7007/bin/cpanm">1.7007 (MIYAGAWA on 2014-09-09)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7006/bin/cpanm">1.7006 (MIYAGAWA on 2014-09-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7005-TRIAL/bin/cpanm">1.7005 DEV (MIYAGAWA on 2014-09-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7004/bin/cpanm">1.7004 (MIYAGAWA on 2014-04-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7003/bin/cpanm">1.7003 (MIYAGAWA on 2014-04-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7002/bin/cpanm">1.7002 (MIYAGAWA on 2014-04-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7001/bin/cpanm">1.7001 (MIYAGAWA on 2013-09-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7000/bin/cpanm">1.7000 (MIYAGAWA on 2013-09-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6943/bin/cpanm">1.6943 (MIYAGAWA on 2013-09-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6942/bin/cpanm">1.6942 (MIYAGAWA on 2013-08-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6941/bin/cpanm">1.6941 (MIYAGAWA on 2013-08-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6940/bin/cpanm">1.6940 (MIYAGAWA on 2013-08-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6939/bin/cpanm">1.6939 (MIYAGAWA on 2013-08-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6938/bin/cpanm">1.6938 (MIYAGAWA on 2013-08-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6937/bin/cpanm">1.6937 (MIYAGAWA on 2013-08-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6936/bin/cpanm">1.6936 (MIYAGAWA on 2013-08-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6935/bin/cpanm">1.6935 (MIYAGAWA on 2013-07-31)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6934/bin/cpanm">1.6934 (MIYAGAWA on 2013-07-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6933/bin/cpanm">1.6933 (MIYAGAWA on 2013-07-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6932/bin/cpanm">1.6932 (MIYAGAWA on 2013-07-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6931/bin/cpanm">1.6931 (MIYAGAWA on 2013-07-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6929/bin/cpanm">1.6929 (MIYAGAWA on 2013-07-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6928/bin/cpanm">1.6928 (MIYAGAWA on 2013-07-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6927/bin/cpanm">1.6927 (MIYAGAWA on 2013-07-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6926-TRIAL/bin/cpanm">1.6926 DEV (MIYAGAWA on 2013-07-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6925/bin/cpanm">1.6925 (MIYAGAWA on 2013-07-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6924/bin/cpanm">1.6924 (MIYAGAWA on 2013-07-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6923/bin/cpanm">1.6923 (MIYAGAWA on 2013-07-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6922/bin/cpanm">1.6922 (MIYAGAWA on 2013-06-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6921/bin/cpanm">1.6921 (MIYAGAWA on 2013-06-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6920/bin/cpanm">1.6920 (MIYAGAWA on 2013-06-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6919-TRIAL/bin/cpanm">1.6919 DEV (MIYAGAWA on 2013-06-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6918/bin/cpanm">1.6918 (MIYAGAWA on 2013-06-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6917-TRIAL/bin/cpanm">1.6917 DEV (MIYAGAWA on 2013-06-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6916/bin/cpanm">1.6916 (MIYAGAWA on 2013-06-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6915/bin/cpanm">1.6915 (MIYAGAWA on 2013-05-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6914/bin/cpanm">1.6914 (MIYAGAWA on 2013-05-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6913/bin/cpanm">1.6913 (MIYAGAWA on 2013-05-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6912/bin/cpanm">1.6912 (MIYAGAWA on 2013-05-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6911/bin/cpanm">1.6911 (MIYAGAWA on 2013-05-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6910-TRIAL/bin/cpanm">1.6910 DEV (MIYAGAWA on 2013-05-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6909/bin/cpanm">1.6909 (MIYAGAWA on 2013-04-29)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6908-TRIAL/bin/cpanm">1.6908 DEV (MIYAGAWA on 2013-04-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6907/bin/cpanm">1.6907 (MIYAGAWA on 2013-04-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6906-TRIAL/bin/cpanm">1.6906 DEV (MIYAGAWA on 2013-04-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6905-TRIAL/bin/cpanm">1.6905 DEV (MIYAGAWA on 2013-04-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6904-TRIAL/bin/cpanm">1.6904 DEV (MIYAGAWA on 2013-04-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6903-TRIAL/bin/cpanm">1.6903 DEV (MIYAGAWA on 2013-04-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6902/bin/cpanm">1.6902 (MIYAGAWA on 2013-04-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6109/bin/cpanm">1.6109 (MIYAGAWA on 2013-04-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6900-TRIAL/bin/cpanm">1.6900 DEV (MIYAGAWA on 2013-04-15)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6193-TRIAL/bin/cpanm">1.6193 DEV (MIYAGAWA on 2013-04-15)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6192-TRIAL/bin/cpanm">1.6192 DEV (MIYAGAWA on 2013-04-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6191-TRIAL/bin/cpanm">1.6191 DEV (MIYAGAWA on 2013-04-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6190-TRIAL/bin/cpanm">1.6190 DEV (MIYAGAWA on 2013-04-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6108/bin/cpanm">1.6108 (MIYAGAWA on 2013-04-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6107/bin/cpanm">1.6107 (MIYAGAWA on 2013-04-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6106/bin/cpanm">1.6106 (MIYAGAWA on 2013-04-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6105/bin/cpanm">1.6105 (MIYAGAWA on 2013-04-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6104/bin/cpanm">1.6104 (MIYAGAWA on 2013-04-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6103/bin/cpanm">1.6103 (MIYAGAWA on 2013-03-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6102/bin/cpanm">1.6102 (MIYAGAWA on 2013-03-28)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6101/bin/cpanm">1.6101 (MIYAGAWA on 2013-03-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6100/bin/cpanm">1.6100 (MIYAGAWA on 2013-03-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6008/bin/cpanm">1.6008 (MIYAGAWA on 2013-03-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6007/bin/cpanm">1.6007 (MIYAGAWA on 2013-03-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6006/bin/cpanm">1.6006 (MIYAGAWA on 2013-03-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6005/bin/cpanm">1.6005 (MIYAGAWA on 2013-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6004/bin/cpanm">1.6004 (MIYAGAWA on 2013-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6003/bin/cpanm">1.6003 (MIYAGAWA on 2013-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6002/bin/cpanm">1.6002 (MIYAGAWA on 2013-02-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6001/bin/cpanm">1.6001 (MIYAGAWA on 2013-02-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6000/bin/cpanm">1.6000 (MIYAGAWA on 2013-02-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_13/bin/cpanm">1.59_13 DEV (MIYAGAWA on 2013-02-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_12/bin/cpanm">1.59_12 DEV (MIYAGAWA on 2013-02-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_11/bin/cpanm">1.59_11 DEV (MIYAGAWA on 2013-02-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_10/bin/cpanm">1.59_10 DEV (MIYAGAWA on 2013-02-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_09/bin/cpanm">1.59_09 DEV (MIYAGAWA on 2013-02-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_08/bin/cpanm">1.59_08 DEV (MIYAGAWA on 2013-02-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_07/bin/cpanm">1.59_07 DEV (MIYAGAWA on 2013-02-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_06/bin/cpanm">1.59_06 DEV (MIYAGAWA on 2013-02-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_05/bin/cpanm">1.59_05 DEV (MIYAGAWA on 2013-02-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_04/bin/cpanm">1.59_04 DEV (MIYAGAWA on 2013-02-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_03/bin/cpanm">1.59_03 DEV (MIYAGAWA on 2013-02-01)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_02/bin/cpanm">1.59_02 DEV (MIYAGAWA on 2013-02-01)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.59_01/bin/cpanm">1.59_01 DEV (MIYAGAWA on 2013-01-31)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5021/bin/cpanm">1.5021 (MIYAGAWA on 2013-01-31)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5020/bin/cpanm">1.5020 (MIYAGAWA on 2013-01-29)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5019/bin/cpanm">1.5019 (MIYAGAWA on 2012-12-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5018/bin/cpanm">1.5018 (MIYAGAWA on 2012-09-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5017/bin/cpanm">1.5017 (MIYAGAWA on 2012-07-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5016/bin/cpanm">1.5016 (MIYAGAWA on 2012-07-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5015/bin/cpanm">1.5015 (MIYAGAWA on 2012-06-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5014/bin/cpanm">1.5014 (MIYAGAWA on 2012-06-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5013/bin/cpanm">1.5013 (MIYAGAWA on 2012-05-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5012/bin/cpanm">1.5012 (MIYAGAWA on 2012-05-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5011/bin/cpanm">1.5011 (MIYAGAWA on 2012-04-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5010/bin/cpanm">1.5010 (MIYAGAWA on 2012-03-31)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5009/bin/cpanm">1.5009 (MIYAGAWA on 2012-03-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5008/bin/cpanm">1.5008 (MIYAGAWA on 2012-03-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5007/bin/cpanm">1.5007 (MIYAGAWA on 2011-12-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5006/bin/cpanm">1.5006 (MIYAGAWA on 2011-11-29)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5005/bin/cpanm">1.5005 (MIYAGAWA on 2011-11-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5004/bin/cpanm">1.5004 (MIYAGAWA on 2011-11-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5003/bin/cpanm">1.5003 (MIYAGAWA on 2011-10-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5002/bin/cpanm">1.5002 (MIYAGAWA on 2011-10-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5001/bin/cpanm">1.5001 (MIYAGAWA on 2011-10-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.5000/bin/cpanm">1.5000 (MIYAGAWA on 2011-10-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.49_02/bin/cpanm">1.49_02 DEV (MIYAGAWA on 2011-10-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.49_01/bin/cpanm">1.49_01 DEV (MIYAGAWA on 2011-06-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4008/bin/cpanm">1.4008 (MIYAGAWA on 2011-06-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4007/bin/cpanm">1.4007 (MIYAGAWA on 2011-05-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4006/bin/cpanm">1.4006 (MIYAGAWA on 2011-05-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4005/bin/cpanm">1.4005 (MIYAGAWA on 2011-05-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4004/bin/cpanm">1.4004 (MIYAGAWA on 2011-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4003/bin/cpanm">1.4003 (MIYAGAWA on 2011-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4002/bin/cpanm">1.4002 (MIYAGAWA on 2011-03-09)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4001/bin/cpanm">1.4001 (MIYAGAWA on 2011-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.4000/bin/cpanm">1.4000 (MIYAGAWA on 2011-03-08)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_13/bin/cpanm">1.30_13 DEV (MIYAGAWA on 2011-03-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_12/bin/cpanm">1.30_12 DEV (MIYAGAWA on 2011-03-07)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_11/bin/cpanm">1.30_11 DEV (MIYAGAWA on 2011-03-06)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_10/bin/cpanm">1.30_10 DEV (MIYAGAWA on 2011-03-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_09/bin/cpanm">1.30_09 DEV (MIYAGAWA on 2011-03-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_08/bin/cpanm">1.30_08 DEV (MIYAGAWA on 2011-03-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_07/bin/cpanm">1.30_07 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_06/bin/cpanm">1.30_06 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_05/bin/cpanm">1.30_05 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_04/bin/cpanm">1.30_04 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_03/bin/cpanm">1.30_03 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.30_02/bin/cpanm">1.30_02 DEV (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.3001/bin/cpanm">1.3001 (MIYAGAWA on 2011-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.3000/bin/cpanm">1.3000 (MIYAGAWA on 2011-03-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.29_02/bin/cpanm">1.29_02 DEV (MIYAGAWA on 2011-03-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.29_01/bin/cpanm">1.29_01 DEV (MIYAGAWA on 2011-03-01)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.2001/bin/cpanm">1.2001 (MIYAGAWA on 2011-02-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.2000-TRIAL/bin/cpanm">1.2000 DEV (MIYAGAWA on 2011-02-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1008/bin/cpanm">1.1008 (MIYAGAWA on 2011-01-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.19_02/bin/cpanm">1.19_02 DEV (MIYAGAWA on 2011-01-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.19_01/bin/cpanm">1.19_01 DEV (MIYAGAWA on 2011-01-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1007/bin/cpanm">1.1007 (MIYAGAWA on 2011-01-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1006/bin/cpanm">1.1006 (MIYAGAWA on 2010-12-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1005/bin/cpanm">1.1005 (MIYAGAWA on 2010-12-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1004/bin/cpanm">1.1004 (MIYAGAWA on 2010-11-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1003/bin/cpanm">1.1003 (MIYAGAWA on 2010-11-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1002/bin/cpanm">1.1002 (MIYAGAWA on 2010-11-17)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1001/bin/cpanm">1.1001 (MIYAGAWA on 2010-11-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.1000/bin/cpanm">1.1000 (MIYAGAWA on 2010-11-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0015/bin/cpanm">1.0015 (MIYAGAWA on 2010-09-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0014/bin/cpanm">1.0014 (MIYAGAWA on 2010-09-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0013/bin/cpanm">1.0013 (MIYAGAWA on 2010-09-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0012/bin/cpanm">1.0012 (MIYAGAWA on 2010-08-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0011/bin/cpanm">1.0011 (MIYAGAWA on 2010-08-18)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0010/bin/cpanm">1.0010 (MIYAGAWA on 2010-07-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0006/bin/cpanm">1.0006 (MIYAGAWA on 2010-07-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0005/bin/cpanm">1.0005 (MIYAGAWA on 2010-07-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0004/bin/cpanm">1.0004 (MIYAGAWA on 2010-05-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0003/bin/cpanm">1.0003 (MIYAGAWA on 2010-05-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0002/bin/cpanm">1.0002 (MIYAGAWA on 2010-05-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0001/bin/cpanm">1.0001 (MIYAGAWA on 2010-04-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.0000/bin/cpanm">1.0000 (MIYAGAWA on 2010-04-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9936/bin/cpanm">0.9936 (MIYAGAWA on 2010-04-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_05/bin/cpanm">0.999_05 DEV (MIYAGAWA on 2010-04-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_04/bin/cpanm">0.999_04 DEV (MIYAGAWA on 2010-04-19)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9935/bin/cpanm">0.9935 (MIYAGAWA on 2010-04-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_03/bin/cpanm">0.999_03 DEV (MIYAGAWA on 2010-04-14)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_02/bin/cpanm">0.999_02 DEV (MIYAGAWA on 2010-04-13)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.999_01/bin/cpanm">0.999_01 DEV (MIYAGAWA on 2010-04-12)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9934/bin/cpanm">0.9934 (MIYAGAWA on 2010-04-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_33/bin/cpanm">0.99_33 DEV (MIYAGAWA on 2010-04-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9932/bin/cpanm">0.9932 (MIYAGAWA on 2010-04-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9931/bin/cpanm">0.9931 (MIYAGAWA on 2010-04-05)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9930/bin/cpanm">0.9930 (MIYAGAWA on 2010-03-30)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9929/bin/cpanm">0.9929 (MIYAGAWA on 2010-03-27)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9928/bin/cpanm">0.9928 (MIYAGAWA on 2010-03-26)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9927/bin/cpanm">0.9927 (MIYAGAWA on 2010-03-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_26/bin/cpanm">0.99_26 DEV (MIYAGAWA on 2010-03-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_25/bin/cpanm">0.99_25 DEV (MIYAGAWA on 2010-03-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_24/bin/cpanm">0.99_24 DEV (MIYAGAWA on 2010-03-22)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9923/bin/cpanm">0.9923 (MIYAGAWA on 2010-03-16)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9922/bin/cpanm">0.9922 (MIYAGAWA on 2010-03-11)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9921/bin/cpanm">0.9921 (MIYAGAWA on 2010-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_20/bin/cpanm">0.99_20 DEV (MIYAGAWA on 2010-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9919/bin/cpanm">0.9919 (MIYAGAWA on 2010-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9918/bin/cpanm">0.9918 (MIYAGAWA on 2010-03-10)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9917/bin/cpanm">0.9917 (MIYAGAWA on 2010-03-09)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9916/bin/cpanm">0.9916 (MIYAGAWA on 2010-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9915/bin/cpanm">0.9915 (MIYAGAWA on 2010-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9914/bin/cpanm">0.9914 (MIYAGAWA on 2010-03-04)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9913/bin/cpanm">0.9913 (MIYAGAWA on 2010-03-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9912/bin/cpanm">0.9912 (MIYAGAWA on 2010-03-03)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9911/bin/cpanm">0.9911 (MIYAGAWA on 2010-03-02)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.9910/bin/cpanm">0.9910 (MIYAGAWA on 2010-03-01)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_07/bin/cpanm">0.99_07 DEV (MIYAGAWA on 2010-02-28)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_06/bin/cpanm">0.99_06 DEV (MIYAGAWA on 2010-02-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_05/bin/cpanm">0.99_05 DEV (MIYAGAWA on 2010-02-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_04/bin/cpanm">0.99_04 DEV (MIYAGAWA on 2010-02-25)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_03/bin/cpanm">0.99_03 DEV (MIYAGAWA on 2010-02-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_02/bin/cpanm">0.99_02 DEV (MIYAGAWA on 2010-02-24)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.99_01/bin/cpanm">0.99_01 DEV (MIYAGAWA on 2010-02-23)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.09/bin/cpanm">0.09 (MIYAGAWA on 2010-02-21)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.08/bin/cpanm">0.08 (MIYAGAWA on 2010-02-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.07/bin/cpanm">0.07 (MIYAGAWA on 2010-02-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.06/bin/cpanm">0.06 (MIYAGAWA on 2010-02-20)</option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.05/bin/cpanm">0.05 (MIYAGAWA on 2010-02-20)</option>
+
+<optgroup label="BackPAN"></optgroup>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7008/bin/cpanm">1.7008 (MIYAGAWA on 2014-09-10)
+    </option>
+
+    <option value="GMARLER/App-cpanminus-1.7006/bin/cpanm">1.7006 (GMARLER on 2014-09-02)
+    </option>
+
+    <option value="GMARLER/App-cpanminus-1.7005/bin/cpanm">1.7005 (GMARLER on 2014-09-02)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7102-TRIAL/bin/cpanm">1.7102 DEV (MIYAGAWA on 2013-09-20)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7101-TRIAL/bin/cpanm">1.7101 DEV (MIYAGAWA on 2013-09-19)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.7100-TRIAL/bin/cpanm">1.7100 DEV (MIYAGAWA on 2013-09-19)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6930/bin/cpanm">1.6930 (MIYAGAWA on 2013-07-24)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-1.6901/bin/cpanm">1.6901 (MIYAGAWA on 2013-04-21)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.04/bin/cpanm">0.04 (MIYAGAWA on 2010-02-20)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.03/bin/cpanm">0.03 (MIYAGAWA on 2010-02-20)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.02/bin/cpanm">0.02 (MIYAGAWA on 2010-02-20)
+    </option>
+
+    <option value="MIYAGAWA/App-cpanminus-0.01/bin/cpanm">0.01 (MIYAGAWA on 2010-02-20)
+    </option>
+
+
+    </select>
+</li>
+
+<li class="nav-header">Permalinks</li>
+<li>
+    <a href="/pod/release/MIYAGAWA/App-cpanminus-1.7040/bin/cpanm">This version</a>
+</li>
+<li>
+    <a itemprop="url" href="/pod/distribution/App-cpanminus/bin/cpanm">Latest version</a>
+</li>
+<li class="nav-header">S.C.O</li>
+<li>
+    <a href="http://search.cpan.org/~MIYAGAWA/App-cpanminus-1.7040/bin/cpanm" rel="nofollow">This version</a>
+</li>
+<li>
+    <a href="http://search.cpan.org/perldoc?cpanm" rel="nofollow">Latest version</a>
+</li>
+
+  </ul>
+
+  <button id="right-panel-toggle" class="btn-link" onclick="togglePanel('right'); return false;"><span class="panel-hidden">Show</span><span class="panel-visible">Hide</span> Right Panel</button>
+  <div id="right-panel" class="pull-right">
+  <div class="box-right">
+  <!-- For plussers -->
+
+<div class="plussers hidden-phone">
+<div><b>++ed by:</b></div>
+
+
+
+
+<a class="display-all" href="/author/KOORCHIK"><img src="https://secure.gravatar.com/avatar/388f0564e6cb0de0996b4f0d3c50e9f8?s=20&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F388f0564e6cb0de0996b4f0d3c50e9f8%3Fs%3D20%26d%3Didenticon" title="KOORCHIK" alt="KOORCHIK"></a>
+
+
+
+<a class="display-all" href="/author/ANDREFS"><img src="https://secure.gravatar.com/avatar/d2c0a12ed7d62d701e2d225cd7b70b61?s=20&amp;d=identicon" title="ANDREFS" alt="ANDREFS"></a>
+
+
+
+<a class="display-all" href="/author/RWSTAUNER"><img src="https://secure.gravatar.com/avatar/e9fda58e2eaefecacfff42aaebcf9b9e?s=20&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fe9fda58e2eaefecacfff42aaebcf9b9e%3Fs%3D20%26d%3Didenticon" title="RWSTAUNER" alt="RWSTAUNER"></a>
+
+
+
+<a class="display-all" href="/author/MELO"><img src="https://secure.gravatar.com/avatar/584d974034606369cf2e3401e4497354?s=20&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F4809188f41ad2613f4c240b72d97604c%3Fs%3D20%26d%3Didenticon" title="MELO" alt="MELO"></a>
+
+
+
+<a class="display-all" href="/author/LLAP"><img src="https://secure.gravatar.com/avatar/cb46084dc72e94a8bb3cad03c347118e?s=20&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Ffe83c062043dc4e41c9af07b080e306e%3Fs%3D20%26d%3Didenticon" title="LLAP" alt="LLAP"></a>
+
+
+
+<!-- Display counts of plussers-->
+<p>
+
+<a href="/release/App-cpanminus/plussers">128 PAUSE users</a><br>
+
+
+81 non-PAUSE users.
+
+</p>
+</div>
+
+
+<div class="author-pic">
+<a href="/author/MIYAGAWA">
+  <img src="https://secure.gravatar.com/avatar/b2d653d5d663e750a2cd57bfbc9b727f?s=130&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F2edd59ce5f91bec4b962bfce0a805211%3Fs%3D130%26d%3Didenticon">
+</a>
+
+<strong>
+  <a rel="author" href="/author/MIYAGAWA">MIYAGAWA</a>
+</strong>
+<span title="">Tatsuhiko Miyagawa</span>
+
+
+
+
+
+
+
+</div>
+
+  
+
+<div id="contributors">
+    <div class="contributors-header">and 70 contributors</div>
+    <div align="right">
+        <button class="btn-link"
+            onclick="$(this).hide(); $('#contributors ul').slideDown(); return false;"
+        >show them</button>
+    </div>
+    <ul class="nav nav-list box-right" style="display: none">
+    
+        <li class="contributor">
+        
+        - Tatsuhiko Miyagawa
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="al3xbio@gmail.com">
+        
+        Alessandro Ghedini
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="andrew@cleverdomain.org">
+        
+        Andrew Rodland
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="andy@broadbean.com">
+        
+        Andy Jones
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="andy_jones@outgun.com">
+        
+        andyjones
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="ash_github@firemirror.com">
+        
+        Ash Berlin
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="benkasminbullock@gmail.com">
+        
+        Ben Bullock
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="GARU" data-contrib-email="garu@cpan.org">
+        
+        <a href="https://metacpan.org/author/GARU"
+           class="cpan-author"
+        >Breno G. de Oliveira</a>
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="MidLifeXis@wightmanfam.org">
+        
+        Brian Wightman
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="cho45@lowreal.net">
+        
+        cho45
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="walde.christian@googlemail.com">
+        
+        Christian Walde
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="chromatic@wgz.org">
+        
+        chromatic
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="ilmari@ilmari.org">
+        
+        Dagfinn Ilmari Mannsaker
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="diederich@gmail.com">
+        
+        Dana M. Diederich
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="davidjgoodell@gmail.com">
+        
+        Dave Goodell
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="autarch@urth.org">
+        
+        Dave Rolsky
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="DAGOLDEN" data-contrib-email="dagolden@cpan.org">
+        
+        <a href="https://metacpan.org/author/DAGOLDEN"
+           class="cpan-author"
+        >David Golden</a>
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="dsteinbrunner@pobox.com">
+        
+        David Steinbrunner
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="frioux@gmail.com">
+        
+        fREW Schmidt
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="g.psy.va@gmail.com">
+        
+        Fuji, Goro
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="gbjk@thermeon.com">
+        
+        Gareth Kirwan
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="GFUJI" data-contrib-email="gfuji@cpan.org">
+        
+        <a href="https://metacpan.org/author/GFUJI"
+           class="cpan-author"
+        >gfx</a>
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="haarg@haarg.org">
+        
+        Graham Knop
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="perl@wdlabs.com">
+        
+        Graham Ollis
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="masaki.nakagawa@gmail.com">
+        
+        ikasam_a
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="ingy@ingy.net">
+        
+        Ingy dot Net
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="jand@activestate.com">
+        
+        Jan Dubois
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="jeff@imaginative-software.com">
+        
+        Jeffrey Ryan Thalhammer
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="doy@tozt.net">
+        
+        Jesse Luehrs
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="nick@cpanel.net">
+        
+        J. Nick Koston
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="jj@jonallen.info">
+        
+        jonallen
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="duff@pobox.com">
+        
+        Jonathan Scott Duff
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="kahlil.hodgson@dealmax.com.au">
+        
+        Kahlil (Kal) Hodgson
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="ISHIGAKI" data-contrib-email="ishigaki@cpan.org">
+        
+        <a href="https://metacpan.org/author/ISHIGAKI"
+           class="cpan-author"
+        >Kenichi Ishigaki</a>
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="KENTNL" data-contrib-email="kentnl@cpan.org">
+        
+        <a href="https://metacpan.org/author/KENTNL"
+           class="cpan-author"
+        >Kent Fredric</a>
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="KMX" data-contrib-email="kmx@cpan.org">
+        
+        <a href="https://metacpan.org/author/KMX"
+           class="cpan-author"
+        >kmx</a>
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="larryl@atomiclearning.com">
+        
+        Larry Leszczynski
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="lestrrat+github@gmail.com">
+        
+        lestrrat
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="kazeburo@gmail.com">
+        
+        Masahiro Nagano
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="sekimura@gmail.com">
+        
+        Masayoshi Sekimura
+        
+        </li>
+    
+        <li class="contributor">
+        
+        Matt S Trout &lt;&gt;
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="mst@shadowcat.co.uk">
+        
+        Matt S Trout
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="schwern@pobox.com">
+        
+        Michael G. Schwern
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="motemen@gmail.com">
+        
+        motemen
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="moznion@gmail.com">
+        
+        moznion
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="nnunley@gmail.com">
+        
+        Norman Nunley
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="olaf@wundersolutions.com">
+        
+        Olaf Alders
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="DOLMEN" data-contrib-email="dolmen@cpan.org">
+        
+        <a href="https://metacpan.org/author/DOLMEN"
+           class="cpan-author"
+        >Olivier Mengue</a>
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="melo@simplicidade.org">
+        
+        Pedro Melo
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="r.pocztarski@gmail.com">
+        
+        Rafal Pocztarski
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="kind@gmx.at">
+        
+        reezer
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="RJBS" data-contrib-email="rjbs@cpan.org">
+        
+        <a href="https://metacpan.org/author/RJBS"
+           class="cpan-author"
+        >Ricardo Signes</a>
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="webmaster@robario.com">
+        
+        robario
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="rmb32@cornell.edu">
+        
+        Robert Buels
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="rob@hoelz.ro">
+        
+        Rob Hoelz
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="rjurkov@verio.net">
+        
+        Roman Jurkov
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="SRI" data-contrib-email="sri@cpan.org">
+        
+        <a href="https://metacpan.org/author/SRI"
+           class="cpan-author"
+        >Sebastian Riedel</a>
+        
+        </li>
+    
+        <li class="contributor" data-cpan-author="SKAJI" data-contrib-email="skaji@cpan.org">
+        
+        <a href="https://metacpan.org/author/SKAJI"
+           class="cpan-author"
+        >Shoichi Kaji</a>
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="slaven@rezic.de">
+        
+        Slaven Rezic
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="Smylers@stripey.com">
+        
+        Smylers
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="stoned.elipot@gmail.com">
+        
+        Stoned Elipot
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="syohex@gmail.com">
+        
+        Syohei YOSHIDA
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="tom@zulutango.org">
+        
+        Thomas Sibley
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="tokuhirom@gmail.com">
+        
+        Tokuhiro Matsuno
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="tuure.laurinolli@portalify.com">
+        
+        Tuure Laurinolli
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="viacheslav.t@gmail.com">
+        
+        vti
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="mmcleric@yandex-team.ru">
+        
+        Vyacheslav Matyukhin
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="xaicron@gmail.com">
+        
+        xaicron
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="yann@cyberion.net">
+        
+        Yann Kerherve
+        
+        </li>
+    
+        <li class="contributor" data-contrib-email="yappo@shibuya.pl">
+        
+        yappo
+        
+        </li>
+    
+    </ul>
+</div>
+
+
+
+  </div>
+  <ul class="nav-list box-right hidden-phone dependencies">
+    <li class="nav-header">Dependencies</li>
+    <li><i>none</i></li>
+    <li><hr /></li>
+    <li>
+        <a href="http://deps.cpantesters.org/?module=App::cpanminus">
+        <i class="fa fa-retweet fa-fw black"></i>CPAN Testers List</a>
+    </li>
+    <li>
+        <a href="/requires/distribution/App-cpanminus?sort=[[2,1]]">
+        <i class="fa fa-share fa-fw black"></i>Reverse dependencies</a>
+    </li>
+</ul>
+
+
+  </div>
+  <a name="___pod"></a>
+  <div class="pod content anchors">
+  
+  <ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#COMMANDS">COMMANDS</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>cpanm - get, unpack build and install modules from CPAN</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  cpanm Test::More                                 # install Test::More
+  cpanm MIYAGAWA/Plack-0.99_05.tar.gz              # full distribution path
+  cpanm http://example.org/LDS/CGI.pm-3.20.tar.gz  # install from URL
+  cpanm ~/dists/MyCompany-Enterprise-1.00.tar.gz   # install from a local file
+  cpanm --interactive Task::Kensho                 # Configure interactively
+  cpanm .                                          # install from local directory
+  cpanm --installdeps .                            # install all the deps for the current directory
+  cpanm -L extlib Plack                            # install Plack and all non-core deps into extlib
+  cpanm --mirror http://cpan.cpantesters.org/ DBI  # use the fast-syncing mirror
+  cpanm --from https://cpan.metacpan.org/ Plack    # use only the HTTPS mirror</code></pre>
+
+<h1 id="COMMANDS">COMMANDS</h1>
+
+<dl>
+
+<dt id="arguments">(arguments)</dt>
+<dd>
+
+<p>Command line arguments can be either a module name, distribution file, local file path, HTTP URL or git repository URL. Following commands will all work as you expect.</p>
+
+<pre><code>    cpanm Plack
+    cpanm Plack/Request.pm
+    cpanm MIYAGAWA/Plack-1.0000.tar.gz
+    cpanm /path/to/Plack-1.0000.tar.gz
+    cpanm http://cpan.metacpan.org/authors/id/M/MI/MIYAGAWA/Plack-0.9990.tar.gz
+    cpanm git://github.com/plack/Plack.git</code></pre>
+
+<p>Additionally, you can use the notation using <code>~</code> and <code>@</code> to specify version for a given module. <code>~</code> specifies the version requirement in the <a href="https://metacpan.org/pod/CPAN::Meta::Spec">CPAN::Meta::Spec</a> format, while <code>@</code> pins the exact version, and is a shortcut for <code>~&quot;== VERSION&quot;</code>.</p>
+
+<pre><code>    cpanm Plack~1.0000                 # 1.0000 or later
+    cpanm Plack~&quot;&gt;= 1.0000, &lt; 2.0000&quot;  # latest of 1.xxxx
+    cpanm Plack@0.9990                 # specific version. same as Plack~&quot;== 0.9990&quot;</code></pre>
+
+<p>The version query including specific version or range will be sent to <a href="https://metacpan.org/pod/MetaCPAN">MetaCPAN</a> to search for previous releases. The query will search for BackPAN archives by default, unless you specify <code>--dev</code> option, in which case, archived versions will be filtered out.</p>
+
+<p>For a git repository, you can specify a branch, tag, or commit SHA to build. The default is <code>master</code></p>
+
+<pre><code>    cpanm git://github.com/plack/Plack.git@1.0000        # tag
+    cpanm git://github.com/plack/Plack.git@devel         # branch</code></pre>
+
+</dd>
+<dt id="i---install">-i, --install</dt>
+<dd>
+
+<p>Installs the modules. This is a default behavior and this is just a compatibility option to make it work like <a href="https://metacpan.org/pod/cpan">cpan</a> or <a href="https://metacpan.org/pod/cpanp">cpanp</a>.</p>
+
+</dd>
+<dt id="self-upgrade">--self-upgrade</dt>
+<dd>
+
+<p>Upgrades itself. It&#39;s just an alias for:</p>
+
+<pre><code>  cpanm App::cpanminus</code></pre>
+
+</dd>
+<dt id="info">--info</dt>
+<dd>
+
+<p>Displays the distribution information in <code>AUTHOR/Dist-Name-ver.tar.gz</code> format in the standard out.</p>
+
+</dd>
+<dt id="installdeps">--installdeps</dt>
+<dd>
+
+<p>Installs the dependencies of the target distribution but won&#39;t build itself. Handy if you want to try the application from a version controlled repository such as git.</p>
+
+<pre><code>  cpanm --installdeps .</code></pre>
+
+</dd>
+<dt id="look">--look</dt>
+<dd>
+
+<p>Download and unpack the distribution and then open the directory with your shell. Handy to poke around the source code or do manual testing.</p>
+
+</dd>
+<dt id="h---help">-h, --help</dt>
+<dd>
+
+<p>Displays the help message.</p>
+
+</dd>
+<dt id="V---version">-V, --version</dt>
+<dd>
+
+<p>Displays the version number.</p>
+
+</dd>
+</dl>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<p>You can specify the default options in <code>PERL_CPANM_OPT</code> environment variable.</p>
+
+<dl>
+
+<dt id="f---force">-f, --force</dt>
+<dd>
+
+<p>Force install modules even when testing failed.</p>
+
+</dd>
+<dt id="n---notest">-n, --notest</dt>
+<dd>
+
+<p>Skip the testing of modules. Use this only when you just want to save time for installing hundreds of distributions to the same perl and architecture you&#39;ve already tested to make sure it builds fine.</p>
+
+<p>Defaults to false, and you can say <code>--no-notest</code> to override when it is set in the default options in <code>PERL_CPANM_OPT</code>.</p>
+
+</dd>
+<dt id="test-only">--test-only</dt>
+<dd>
+
+<p>Run the tests only, and do not install the specified module or distributions. Handy if you want to verify the new (or even old) releases pass its unit tests without installing the module.</p>
+
+<p>Note that if you specify this option with a module or distribution that has dependencies, these dependencies will be installed if you don&#39;t currently have them.</p>
+
+</dd>
+<dt id="S---sudo">-S, --sudo</dt>
+<dd>
+
+<p>Switch to the root user with <code>sudo</code> when installing modules. Use this if you want to install modules to the system perl include path.</p>
+
+<p>Defaults to false, and you can say <code>--no-sudo</code> to override when it is set in the default options in <code>PERL_CPANM_OPT</code>.</p>
+
+</dd>
+<dt id="v---verbose">-v, --verbose</dt>
+<dd>
+
+<p>Makes the output verbose. It also enables the interactive configuration. (See --interactive)</p>
+
+</dd>
+<dt id="q---quiet">-q, --quiet</dt>
+<dd>
+
+<p>Makes the output even more quiet than the default. It only shows the successful/failed dependencies to the output.</p>
+
+</dd>
+<dt id="l---local-lib">-l, --local-lib</dt>
+<dd>
+
+<p>Sets the <a href="https://metacpan.org/pod/local::lib">local::lib</a> compatible path to install modules to. You don&#39;t need to set this if you already configure the shell environment variables using <a href="https://metacpan.org/pod/local::lib">local::lib</a>, but this can be used to override that as well.</p>
+
+</dd>
+<dt id="L---local-lib-contained">-L, --local-lib-contained</dt>
+<dd>
+
+<p>Same with <code>--local-lib</code> but with <a href="https://metacpan.org/pod/--self-contained">--self-contained</a> set. All non-core dependencies will be installed even if they&#39;re already installed.</p>
+
+<p>For instance,</p>
+
+<pre><code>  cpanm -L extlib Plack</code></pre>
+
+<p>would install Plack and all of its non-core dependencies into the directory <code>extlib</code>, which can be loaded from your application with:</p>
+
+<pre><code>  use local::lib &#39;/path/to/extlib&#39;;</code></pre>
+
+<p>Note that this option does <b>NOT</b> reliably work with perl installations supplied by operating system vendors that strips standard modules from perl, such as RHEL, Fedora and CentOS, <b>UNLESS</b> you also install packages supplying all the modules that have been stripped. For these systems you will probably want to install the <code>perl-core</code> meta-package which does just that.</p>
+
+</dd>
+<dt id="self-contained">--self-contained</dt>
+<dd>
+
+<p>When examining the dependencies, assume no non-core modules are installed on the system. Handy if you want to bundle application dependencies in one directory so you can distribute to other machines.</p>
+
+</dd>
+<dt id="exclude-vendor">--exclude-vendor</dt>
+<dd>
+
+<p>Don&#39;t include modules installed under the &#39;vendor&#39; paths when searching for core modules when the <code>--self-contained</code> flag is in effect. This restores the behaviour from before version 1.7023</p>
+
+</dd>
+<dt id="mirror">--mirror</dt>
+<dd>
+
+<p>Specifies the base URL for the CPAN mirror to use, such as <code>http://cpan.cpantesters.org/</code> (you can omit the trailing slash). You can specify multiple mirror URLs by repeating the command line option.</p>
+
+<p>You can use a local directory that has a CPAN mirror structure (created by tools such as <a href="https://metacpan.org/pod/OrePAN">OrePAN</a> or <a href="https://metacpan.org/pod/Pinto">Pinto</a>) by using a special URL scheme <code>file://</code>. If the given URL begins with `/` (without any scheme), it is considered as a file scheme as well.</p>
+
+<pre><code>  cpanm --mirror file:///path/to/mirror
+  cpanm --mirror ~/minicpan      # Because shell expands ~ to /home/user</code></pre>
+
+<p>Defaults to <code>http://www.cpan.org/</code>.</p>
+
+</dd>
+<dt id="mirror-only">--mirror-only</dt>
+<dd>
+
+<p>Download the mirror&#39;s 02packages.details.txt.gz index file instead of querying the CPAN Meta DB. This will also effectively opt out sending your local perl versions to backend database servers such as CPAN Meta DB and MetaCPAN.</p>
+
+<p>Select this option if you are using a local mirror of CPAN, such as minicpan when you&#39;re offline, or your own CPAN index (a.k.a darkpan).</p>
+
+</dd>
+<dt id="from--M">--from, -M</dt>
+<dd>
+
+<pre><code>  cpanm -M https://cpan.metacpan.org/
+  cpanm --from https://cpan.metacpan.org/</code></pre>
+
+<p>Use the given mirror URL and its index as the <i>only</i> source to search and download modules from.</p>
+
+<p>It works similar to <code>--mirror</code> and <code>--mirror-only</code> combined, with a small difference: unlike <code>--mirror</code> which <i>appends</i> the URL to the list of mirrors, <code>--from</code> (or <code>-M</code> for short) uses the specified URL as its <i>only</i> source to download index and modules from. This makes the option always override the default mirror, which might have been set via global options such as the one set by <code>PERL_CPANM_OPT</code> environment variable.</p>
+
+<p><b>Tip:</b> It might be useful if you name these options with your shell aliases, like:</p>
+
+<pre><code>  alias minicpanm=&#39;cpanm --from ~/minicpan&#39;
+  alias darkpan=&#39;cpanm --from http://mycompany.example.com/DPAN&#39;</code></pre>
+
+</dd>
+<dt id="mirror-index">--mirror-index</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Specifies the file path to <code>02packages.details.txt</code> for module search index.</p>
+
+</dd>
+<dt id="cpanmetadb">--cpanmetadb</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Specifies an alternate URI for CPAN MetaDB index lookups.</p>
+
+</dd>
+<dt id="metacpan">--metacpan</dt>
+<dd>
+
+<p>Prefers MetaCPAN API over CPAN MetaDB.</p>
+
+</dd>
+<dt id="cpanfile">--cpanfile</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Specified an alternate path for cpanfile to search for, when <code>--installdeps</code> command is in use. Defaults to <code>cpanfile</code>.</p>
+
+</dd>
+<dt id="prompt">--prompt</dt>
+<dd>
+
+<p>Prompts when a test fails so that you can skip, force install, retry or look in the shell to see what&#39;s going wrong. It also prompts when one of the dependency failed if you want to proceed the installation.</p>
+
+<p>Defaults to false, and you can say <code>--no-prompt</code> to override if it&#39;s set in the default options in <code>PERL_CPANM_OPT</code>.</p>
+
+</dd>
+<dt id="dev">--dev</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: search for a newer developer release as well. Defaults to false.</p>
+
+</dd>
+<dt id="reinstall">--reinstall</dt>
+<dd>
+
+<p>cpanm, when given a module name in the command line (i.e. <code>cpanm Plack</code>), checks the locally installed version first and skips if it is already installed. This option makes it skip the check, so:</p>
+
+<pre><code>  cpanm --reinstall Plack</code></pre>
+
+<p>would reinstall <a href="https://metacpan.org/pod/Plack">Plack</a> even if your locally installed version is latest, or even newer (which would happen if you install a developer release from version control repositories).</p>
+
+<p>Defaults to false.</p>
+
+</dd>
+<dt id="interactive">--interactive</dt>
+<dd>
+
+<p>Makes the configuration (such as <code>Makefile.PL</code> and <code>Build.PL</code>) interactive, so you can answer questions in the distribution that requires custom configuration or Task:: distributions.</p>
+
+<p>Defaults to false, and you can say <code>--no-interactive</code> to override when it&#39;s set in the default options in <code>PERL_CPANM_OPT</code>.</p>
+
+</dd>
+<dt id="pp---pureperl">--pp, --pureperl</dt>
+<dd>
+
+<p>Prefer Pure perl build of modules by setting <code>PUREPERL_ONLY=1</code> for MakeMaker and <code>--pureperl-only</code> for Build.PL based distributions. Note that not all of the CPAN modules support this convention yet.</p>
+
+</dd>
+<dt id="with-recommends---with-suggests">--with-recommends, --with-suggests</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Installs dependencies declared as <code>recommends</code> and <code>suggests</code> respectively, per META spec. When these dependencies fail to install, cpanm continues the installation, since they&#39;re just recommendation/suggestion.</p>
+
+<p>Enabling this could potentially make a circular dependency for a few modules on CPAN, when <code>recommends</code> adds a module that <code>recommends</code> back the module in return.</p>
+
+<p>There&#39;s also <code>--without-recommend</code> and <code>--without-suggests</code> to override the default decision made earlier in <code>PERL_CPANM_OPT</code>.</p>
+
+<p>Defaults to false for both.</p>
+
+</dd>
+<dt id="with-develop">--with-develop</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Installs develop phase dependencies in META files or <code>cpanfile</code> when used with <code>--installdeps</code>. Defaults to false.</p>
+
+</dd>
+<dt id="with-feature---without-feature---with-all-features">--with-feature, --without-feature, --with-all-features</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Specifies the feature to enable, if a module supports optional features per META spec 2.0.</p>
+
+<pre><code>    cpanm --with-feature=opt_csv Spreadsheet::Read</code></pre>
+
+<p>the features can also be interactively chosen when <code>--interactive</code> option is enabled.</p>
+
+<p><code>--with-all-features</code> enables all the optional features, and <code>--without-feature</code> can select a feature to disable.</p>
+
+</dd>
+<dt id="configure-timeout---build-timeout---test-timeout">--configure-timeout, --build-timeout, --test-timeout</dt>
+<dd>
+
+<p>Specify the timeout length (in seconds) to wait for the configure, build and test process. Current default values are: 60 for configure, 3600 for build and 1800 for test.</p>
+
+</dd>
+<dt id="configure-args---build-args---test-args---install-args">--configure-args, --build-args, --test-args, --install-args</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Pass arguments for configure/build/test/install commands respectively, for a given module to install.</p>
+
+<pre><code>    cpanm DBD::mysql --configure-args=&quot;--cflags=... --libs=...&quot;</code></pre>
+
+<p>The argument is only enabled for the module passed as a command line argument, not dependencies.</p>
+
+</dd>
+<dt id="scandeps">--scandeps</dt>
+<dd>
+
+<p><b>DEPRECATED</b>: Scans the depencencies of given modules and output the tree in a text format. (See <code>--format</code> below for more options)</p>
+
+<p>Because this command doesn&#39;t actually install any distributions, it will be useful that by typing:</p>
+
+<pre><code>  cpanm --scandeps Catalyst::Runtime</code></pre>
+
+<p>you can make sure what modules will be installed.</p>
+
+<p>This command takes into account which modules you already have installed in your system. If you want to see what modules will be installed against a vanilla perl installation, you might want to combine it with <code>-L</code> option.</p>
+
+</dd>
+<dt id="format">--format</dt>
+<dd>
+
+<p><b>DEPRECATED</b>: Determines what format to display the scanned dependency tree. Available options are <code>tree</code>, <code>json</code>, <code>yaml</code> and <code>dists</code>.</p>
+
+<dl>
+
+<dt id="tree">tree</dt>
+<dd>
+
+<p>Displays the tree in a plain text format. This is the default value.</p>
+
+</dd>
+<dt id="json-yaml">json, yaml</dt>
+<dd>
+
+<p>Outputs the tree in a JSON or YAML format. <a href="https://metacpan.org/pod/JSON">JSON</a> and <a href="https://metacpan.org/pod/YAML">YAML</a> modules need to be installed respectively. The output tree is represented as a recursive tuple of:</p>
+
+<pre><code>  [ distribution, dependencies ]</code></pre>
+
+<p>and the container is an array containing the root elements. Note that there may be multiple root nodes, since you can give multiple modules to the <code>--scandeps</code> command.</p>
+
+</dd>
+<dt id="dists">dists</dt>
+<dd>
+
+<p><code>dists</code> is a special output format, where it prints the distribution filename in the <i>depth first order</i> after the dependency resolution, like:</p>
+
+<pre><code>  GAAS/MIME-Base64-3.13.tar.gz
+  GAAS/URI-1.58.tar.gz
+  PETDANCE/HTML-Tagset-3.20.tar.gz
+  GAAS/HTML-Parser-3.68.tar.gz
+  GAAS/libwww-perl-5.837.tar.gz</code></pre>
+
+<p>which means you can install these distributions in this order without extra dependencies. When combined with <code>-L</code> option, it will be useful to replay installations on other machines.</p>
+
+</dd>
+</dl>
+
+</dd>
+<dt id="save-dists">--save-dists</dt>
+<dd>
+
+<p>Specifies the optional directory path to copy downloaded tarballs in the CPAN mirror compatible directory structure i.e. <i>authors/id/A/AU/AUTHORS/Foo-Bar-version.tar.gz</i></p>
+
+<p>If the distro tarball did not come from CPAN, for example from a local file or from GitHub, then it will be saved under <i>vendor/Foo-Bar-version.tar.gz</i>.</p>
+
+</dd>
+<dt id="uninst-shadows">--uninst-shadows</dt>
+<dd>
+
+<p>Uninstalls the shadow files of the distribution that you&#39;re installing. This eliminates the confusion if you&#39;re trying to install core (dual-life) modules from CPAN against perl 5.10 or older, or modules that used to be XS-based but switched to pure perl at some version.</p>
+
+<p>If you run cpanm as root and use <code>INSTALL_BASE</code> or equivalent to specify custom installation path, you SHOULD disable this option so you won&#39;t accidentally uninstall dual-life modules from the core include path.</p>
+
+<p>Defaults to true if your perl version is smaller than 5.12, and you can disable that with <code>--no-uninst-shadows</code>.</p>
+
+<p><b>NOTE</b>: Since version 1.3000 this flag is turned off by default for perl newer than 5.12, since with 5.12 @INC contains site_perl directory <i>before</i> the perl core library path, and uninstalling shadows is not necessary anymore and does more harm by deleting files from the core library path.</p>
+
+</dd>
+<dt id="uninstall--U">--uninstall, -U</dt>
+<dd>
+
+<p>Uninstalls a module from the library path. It finds a packlist for given modules, and removes all the files included in the same distribution.</p>
+
+<p>If you enable local::lib, it only removes files from the local::lib directory.</p>
+
+<p>If you try to uninstall a module in <code>perl</code> directory (i.e. core module), an error will be thrown.</p>
+
+<p>A dialog will be prompted to confirm the files to be deleted. If you pass <code>-f</code> option as well, the dialog will be skipped and uninstallation will be forced.</p>
+
+</dd>
+<dt id="cascade-search">--cascade-search</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Specifies whether to cascade search when you specify multiple mirrors and a mirror doesn&#39;t have a module or has a lower version of the module than requested. Defaults to false.</p>
+
+</dd>
+<dt id="skip-installed">--skip-installed</dt>
+<dd>
+
+<p>Specifies whether a module given in the command line is skipped if its latest version is already installed. Defaults to true.</p>
+
+<p><b>NOTE</b>: The <code>PERL5LIB</code> environment variable have to be correctly set for this to work with modules installed using <a href="https://metacpan.org/pod/local::lib">local::lib</a>, unless you always use the <code>-l</code> option.</p>
+
+</dd>
+<dt id="skip-satisfied">--skip-satisfied</dt>
+<dd>
+
+<p><b>EXPERIMENTAL</b>: Specifies whether a module (and version) given in the command line is skipped if it&#39;s already installed.</p>
+
+<p>If you run:</p>
+
+<pre><code>  cpanm --skip-satisfied CGI DBI~1.2</code></pre>
+
+<p>cpanm won&#39;t install them if you already have CGI (for whatever versions) or have DBI with version higher than 1.2. It is similar to <code>--skip-installed</code> but while <code>--skip-installed</code> checks if the <i>latest</i> version of CPAN is installed, <code>--skip-satisfied</code> checks if a requested version (or not, which means any version) is installed.</p>
+
+<p>Defaults to false.</p>
+
+</dd>
+<dt id="verify">--verify</dt>
+<dd>
+
+<p>Verify the integrity of distribution files retrieved from PAUSE using CHECKSUMS and SIGNATURES (if found). Defaults to false.</p>
+
+</dd>
+<dt id="report-perl-version">--report-perl-version</dt>
+<dd>
+
+<p>Whether it reports the locally installed perl version to the various web server as part of User-Agent. Defaults to true unless CI related environment variables such as <code>TRAVIS</code>, <code>CI</code> or <code>AUTOMATED_TESTING</code> is enabled. You can disable it by using <code>--no-report-perl-version</code>.</p>
+
+</dd>
+<dt id="auto-cleanup">--auto-cleanup</dt>
+<dd>
+
+<p>Specifies the number of days in which cpanm&#39;s work directories expire. Defaults to 7, which means old work directories will be cleaned up in one week.</p>
+
+<p>You can set the value to <code>0</code> to make cpan never cleanup those directories.</p>
+
+</dd>
+<dt id="man-pages">--man-pages</dt>
+<dd>
+
+<p>Generates man pages for executables (man1) and libraries (man3).</p>
+
+<p>Defaults to true (man pages generated) unless <code>-L|--local-lib-contained</code> option is supplied in which case it&#39;s set to false. You can disable it with <code>--no-man-pages</code>.</p>
+
+</dd>
+<dt id="lwp">--lwp</dt>
+<dd>
+
+<p>Uses <a href="https://metacpan.org/pod/LWP">LWP</a> module to download stuff over HTTP. Defaults to true, and you can say <code>--no-lwp</code> to disable using LWP, when you want to upgrade LWP from CPAN on some broken perl systems.</p>
+
+</dd>
+<dt id="wget">--wget</dt>
+<dd>
+
+<p>Uses GNU Wget (if available) to download stuff. Defaults to true, and you can say <code>--no-wget</code> to disable using Wget (versions of Wget older than 1.9 don&#39;t support the <code>--retry-connrefused</code> option used by cpanm).</p>
+
+</dd>
+<dt id="curl">--curl</dt>
+<dd>
+
+<p>Uses cURL (if available) to download stuff. Defaults to true, and you can say <code>--no-curl</code> to disable using cURL.</p>
+
+<p>Normally with <code>--lwp</code>, <code>--wget</code> and <code>--curl</code> options set to true (which is the default) cpanm tries <a href="https://metacpan.org/pod/LWP">LWP</a>, Wget, cURL and <a href="https://metacpan.org/pod/HTTP::Tiny">HTTP::Tiny</a> (in that order) and uses the first one available.</p>
+
+</dd>
+</dl>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="https://metacpan.org/pod/App::cpanminus">App::cpanminus</a></p>
+
+<h1 id="COPYRIGHT">COPYRIGHT</h1>
+
+<p>Copyright 2010- Tatsuhiko Miyagawa.</p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Tatsuhiko Miyagawa</p>
+  
+        <div id="install-instructions-dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Module Install Instructions</h4>
+            </div>
+            <div class="modal-body">
+                <p>To install cpanm, simply copy and paste either of the commands in to your terminal</p>
+                <p><a href="/pod/distribution/App-cpanminus/bin/cpanm">cpanm</a></p>
+                <pre>
+                    cpanm cpanm</pre>
+                <p><a href="https://metacpan.org/pod/CPAN">CPAN shell</a></p>
+                <pre>
+                    perl -MCPAN -e shell
+                    install cpanm</pre>
+                <p>For more information on module installation please visit <a href="http://www.cpan.org/modules/INSTALL.html">the detailed CPAN module installation guide</a>.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+</div>
+
+                </div>
+            </div>
+
+            <div class="row footer">
+                <div class="hidden-xs hidden-sm col-md-2">&nbsp;</div>
+                <div class="col-xs-2 col-sm-1 col-md-1" style="text-align: center">
+                    <a href="https://github.com/CPAN-API/cpan-api/blob/master/docs/API-docs.md">API</a>
+                </div>
+                <div class="col-xs-5 col-sm-3 col-md-2" style="text-align: center">
+                    <a href="/about">About MetaCPAN</a>
+                </div>
+                <div class="hidden-xs col-sm-2 col-md-2" style="text-align: center">
+                    <a href="/mirrors">CPAN Mirrors</a>
+                </div>
+                <div class="hidden-xs col-sm-3 col-md-2" style="text-align: center">
+                    <a href="https://github.com/CPAN-API/metacpan-web">Fork metacpan.org</a>
+                </div>
+                <div class="hidden-xs col-sm-1 col-md-1" style="text-align: center">
+                    <a href="https://www.perl.org/">Perl.org</a>
+                </div>
+            </div>
+
+            <div class="row" style="padding:15px">
+              <div class="hidden-xs col-md-4 text-right" style="padding:25px">
+                <span class="hidden-phone" style="color: #999">Hosting generously provided by:</span>
+              </div>
+              <div class="col-xs-9 col-md-4" style="padding:25px">
+                <a href="http://www.bytemark.co.uk/r/metacpan.org/" target="_blank">
+                  <img width="210" src="/static/images/sponsors/bytemark_logo.png">
+                </a>
+              </div>
+              <div class="col-xs-9 col-md-4" style="padding:15px">
+                <a target="_blank" href="https://www.liquidweb.com/">
+                  <img width="170" src="/static/images/sponsors/liquidweb_color.png">
+                </a>
+              </div>
+            </div>
+        </div>
+        <div class="modal fade" tabindex="-1" role="dialog" id="keyboard-shortcuts">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Keyboard Shortcuts</h4>
+              </div>
+              <div class="modal-body row">
+                <div class="col-md-6">
+  <table class="table keyboard-shortcuts">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Global</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="keys">
+          <kbd>s</kbd>
+        </td>
+        <td>Focus search bar</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>?</kbd>
+        </td>
+        <td>Bring up this help dialog</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table keyboard-shortcuts">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Github</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>p</kbd>
+        </td>
+        <td>Go to pull requests</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>i</kbd>
+        </td>
+        <td>go to github issues (only if github is preferred repository)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-6">
+  <table class="table keyboard-shortcuts">
+    <thead>
+      <tr>
+        <th></th>
+        <th>POD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>a</kbd>
+        </td>
+        <td>Go to author</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>c</kbd>
+        </td>
+        <td>Go to changes</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>i</kbd>
+        </td>
+        <td>Go to issues</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>d</kbd>
+        </td>
+        <td>Go to dist</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>r</kbd>
+        </td>
+        <td>Go to repository/SCM</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>s</kbd>
+        </td>
+        <td>Go to source</td>
+      </tr>
+      <tr>
+        <td class="keys">
+          <kbd>g</kbd> <kbd>b</kbd>
+        </td>
+        <td>Go to file browse</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+              </div>
+              <div class="modal-footer"></div>
+            </div>
+          </div>
+        </div>
+    </body>
+</html>

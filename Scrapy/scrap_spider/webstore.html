@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+    <head>
+<script src="/webstore/static/111213/js/perf/stub.js" type="text/javascript"></script><script src="/faces/a4j/g/3_3_3.Finalorg.ajax4jsf.javascript.AjaxScript?rel=1462388150000" type="text/javascript"></script><script src="/webstore/jslibrary/1452545184000/ui-sfdc-javascript/SfdcCore.js" type="text/javascript"></script><script src="/webstore/resource/1404360674000/GoogleAnalytics" type="text/javascript"></script><script src="/webstore/static/111213/js/picklist.js" type="text/javascript"></script><script src="/webstore/jslibrary/1450392800000/sfdc/VFState.js" type="text/javascript"></script><link class="user" href="https://www.iso.org/webstore-css/iso/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link class="user" href="https://www.iso.org/webstore-css/iso/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" /><link class="user" href="https://www.iso.org/webstore-css/iso/css/custom.css" rel="stylesheet" type="text/css" /><link class="user" href="https://www.iso.org/webstore-css/iso/css/responsive-tables.css" rel="stylesheet" type="text/css" /><meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE" />
+<meta HTTP-EQUIV="Expires" content="Mon, 01 Jan 1990 12:00:00 GMT" />
+
+        <title>ISO Store - Finalisation de la commande</title>
+        
+        <script type="text/javascript">
+            janrainHandler_onCaptureLoginSuccess = function (res){
+                document.getElementById('captureSignInLink').style.display='none';
+                document.getElementById('shoppingBasketPage:shoppingBasketForm:sfcheckout').style.display='block';
+                userData = res.userData;
+                //alert('##userData:'+ userData );
+                //alert('login using email: ' + userData.email + " accessToken: " + res.accessToken);              
+                //alert(document.getElementById('shoppingBasketPage:shoppingBasketForm:sfcheckout').style.display); 
+                document.getElementById('shoppingBasketPage:shoppingBasketForm:accessToken').value = res.accessToken;
+                janrain.capture.ui.modal.close();
+                validateLogin_redirect();
+            }   
+            janrainHandler_onCaptureSessionFound = function (res){
+                document.getElementById('captureSignInLink').style.display='none';
+                document.getElementById('shoppingBasketPage:shoppingBasketForm:sfcheckout').style.display='block';
+                //alert('login using accessToken: ' + res.accessToken);
+                //alert(document.getElementById('shoppingBasketPage:shoppingBasketForm:sfcheckout').style.display);
+                //alert(document.getElementById('captureSignInLink').style.display);
+                document.getElementById('shoppingBasketPage:shoppingBasketForm:accessToken').value = res.accessToken;
+                validateLogin();
+                janrain.capture.ui.modal.close();
+                //addressConfirm();
+            }    
+            janrainHandler_onCaptureSessionNotFound = function (res){
+                if(document.getElementById('captureSignInLink')!=null){
+                    document.getElementById('captureSignInLink').style.display = 'block';
+                }
+                if(document.getElementById('shoppingBasketPage:shoppingBasketForm:sfcheckout')!=null){
+                    document.getElementById('shoppingBasketPage:shoppingBasketForm:sfcheckout').style.display='none';
+                }
+            }  
+            
+            function applyQuantity(e) {
+                e = e || window.event || {};
+                var charCode = e.charCode || e.keyCode || e.which;
+                
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                            
+                if(charCode == 13){
+                    var baseQuantity = document.getElementById('baseQuantity').value;
+                    var chkBoxcount = document.getElementById("").chkBoxCount.length;
+    
+                    if(chkBoxcount==undefined){
+                        var quantityTextBoxes = document.getElementById(""+":0:quantity");
+                        quantityTextBoxes.value = baseQuantity;
+                    }
+                    else{
+                        for(var i=0; i<chkBoxcount; i++){
+                            document.getElementById(""+":"+i+":"+"quantity").value = baseQuantity;
+                        }   
+                    }               
+                }
+                return true;
+            }
+        </script>
+        <!--[if lt IE 10]>
+        <script src="https://www.iso.org/webstore-css/iso/js/placeholders.min.js"></script>
+        <![endif]-->
+    
+        
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+<form id="shoppingBasketPage:shoppingBasketForm" name="shoppingBasketPage:shoppingBasketForm" method="post" action="/webstore/ShoppingBasket" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="shoppingBasketPage:shoppingBasketForm" value="shoppingBasketPage:shoppingBasketForm" />
+
+<script type="text/javascript" language="Javascript">function dpf(f) {var adp = f.adp;if (adp != null) {for (var i = 0;i < adp.length;i++) {adp[i].parentNode.removeChild(adp[i]);}}};function apf(f, pvp) {var adp = new Array();f.adp = adp;var ps = pvp.split(',');for (var i = 0,ii = 0;i < ps.length;i++,ii++) {var p = document.createElement("input");p.type = "hidden";p.name = ps[i];p.value = ps[i + 1];f.appendChild(p);adp[ii] = p;i += 1;}};function jsfcljs(f, pvp, t) {apf(f, pvp);var ft = f.target;if (t) {f.target = t;}f.submit();f.target = ft;dpf(f);};</script>
+<script>function addressConfirm() { SfdcApp.Visualforce.VSManager.vfPrepareForms(["shoppingBasketPage:shoppingBasketForm"]); if(typeof jsfcljs == 'function'){jsfcljs(document.forms['shoppingBasketPage:shoppingBasketForm'],'shoppingBasketPage:shoppingBasketForm:j_id6,shoppingBasketPage:shoppingBasketForm:j_id6','');}return false }</script><script id="shoppingBasketPage:shoppingBasketForm:j_id7" type="text/javascript">validateLogin=function(){A4J.AJAX.Submit('shoppingBasketPage:shoppingBasketForm',null,{'similarityGroupingId':'shoppingBasketPage:shoppingBasketForm:j_id7','parameters':{'shoppingBasketPage:shoppingBasketForm:j_id7':'shoppingBasketPage:shoppingBasketForm:j_id7'} ,'status':'shoppingBasketPage:shoppingBasketForm:processingStatus'} )};
+</script><script id="shoppingBasketPage:shoppingBasketForm:j_id8" type="text/javascript">validateLogin_redirect=function(){A4J.AJAX.Submit('shoppingBasketPage:shoppingBasketForm',null,{'similarityGroupingId':'shoppingBasketPage:shoppingBasketForm:j_id8','oncomplete':function(request,event,data){addressConfirm()},'parameters':{'shoppingBasketPage:shoppingBasketForm:j_id8':'shoppingBasketPage:shoppingBasketForm:j_id8'} ,'status':'shoppingBasketPage:shoppingBasketForm:processingStatus'} )};
+</script>
+    <script src="https://www.iso.org/obp/janrain/init/iso.js?guilang=fr" type="text/javascript"></script>
+    
+    
+        
+        <header class="navbar-inverse" id="header" role="banner">
+            <div class="top-bar"></div>
+            <div class="container">
+                <a class="logo" href="http://www.iso.org/iso/fr/home/news_index/news_archive/news.htm?refid=Ref1117" title="Back to http://www.iso.org/iso/fr/home/news_index/news_archive/news.htm?refid=Ref1117"></a>
+                <div class="clearfix">
+                    <ul class="menu pull-right">
+                        
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="clearfix">
+                    <ul class="shopping-steps">
+                        <li class="step1 active"><span>Panier</span></li>
+                        <li class="step2"><span>Adresse</span></li>
+                        <li class="step3"><span>Commande</span></li>
+                        <li class="step4"><span>Paiement</span></li>
+                        <li class="step5"><span>Confirmation</span></li>
+                    </ul>
+                </div>
+                <h2>Votre panier</h2><span id="shoppingBasketPage:shoppingBasketForm:j_id14">
+                    <div id="memberstore"></div></span><div id="shoppingBasketPage:shoppingBasketForm:step-basket" class="panel panel-default">
+                    <div class="panel-body responsive-table-container">
+                        <table class="table table-condensed">
+                        <thead>
+                            <tr class="active">
+                                <th>Description du produit</th>
+                                <th>Format</th>
+                                <th>Langue</th>
+                                <th class="text-center">Prix unitaire</th>
+                                <th class="text-center col-xs-1">Licence / Quantit&eacute;</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center">Suivre</th>
+                                <th class="text-right col-xs-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        </table>
+                    </div></div><span id="shoppingBasketPage:shoppingBasketForm:processingStatus"><span id="shoppingBasketPage:shoppingBasketForm:processingStatus.start" style="display: none"><span id="shoppingBasketPage:shoppingBasketForm:j_id48"><input type="submit" name="shoppingBasketPage:shoppingBasketForm:j_id49" value="Traitement..." disabled="disabled" class="btn btn-default btn-sm pull-left" /><input type="submit" name="shoppingBasketPage:shoppingBasketForm:j_id50" value="Traitement..." disabled="disabled" class="btn btn-primary btn-sm pull-right" /></span></span><span id="shoppingBasketPage:shoppingBasketForm:processingStatus.stop"><span id="shoppingBasketPage:shoppingBasketForm:j_id51"><a href="#" onclick="if(typeof jsfcljs == 'function'){jsfcljs(document.getElementById('shoppingBasketPage:shoppingBasketForm'),'shoppingBasketPage:shoppingBasketForm:j_id52,shoppingBasketPage:shoppingBasketForm:j_id52','');}return false" class="btn btn-default btn-sm pull-left">&laquo; Poursuivre les achats</a></span></span></span>
+                
+            </div>
+        </div><span id="shoppingBasketPage:shoppingBasketForm:sessionInfo"><input id="shoppingBasketPage:shoppingBasketForm:accessToken" type="hidden" name="shoppingBasketPage:shoppingBasketForm:accessToken" /></span>
+    <footer id="footer">
+        <div class="container">
+            <ul>
+                <li><a href="http://www.iso.org/iso/fr/home/store/terms_and_conditions.htm#shopping_security">S&eacute;curit&eacute; des achats</a></li>
+                <li><a href="http://www.iso.org/iso/fr/home/policies.htm">Confidentialit&eacute; et droit d'auteur</a></li>
+            </ul>
+        </div>
+    </footer><div id="shoppingBasketPage:shoppingBasketForm:j_id59"></div>
+</form><span id="ajax-view-state-page-container" style="display: none"><span id="ajax-view-state" style="display: none"><input type="hidden"  id="com.salesforce.visualforce.ViewState" name="com.salesforce.visualforce.ViewState" value="i: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" /><input type="hidden"  id="com.salesforce.visualforce.ViewStateVersion" name="com.salesforce.visualforce.ViewStateVersion" value="201605041855500675" /><input type="hidden"  id="com.salesforce.visualforce.ViewStateMAC" name="com.salesforce.visualforce.ViewStateMAC" value="AImJOcE-hZ16xc5z5tEFBD4AAAFUgXzGIu1puVLldHojuXvyZjP5hVh8ATCu17bIU85JJJs3pgGI" /></span></span>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://www.iso.org/webstore-css/iso/js/bootstrap.min.js"></script>
+<script src="https://www.iso.org/webstore-css/iso/js/custom.js"></script>
+</body><script type="text/javascript">Sfdc.onReady(function(){
+	SfdcApp && SfdcApp.Visualforce && SfdcApp.Visualforce.VSManager && SfdcApp.Visualforce.VSManager.vfPrepareForms(["shoppingBasketPage:shoppingBasketForm"]);
+
+});</script>

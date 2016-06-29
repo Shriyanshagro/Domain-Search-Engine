@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="author" content="Steve Speicher"/>
+  <meta name="author" content="Martin Nally"/>
+  <meta name="author" content="John Arwe"/>
+  <meta name="author" content="Arnaud Le Hors"/>  
+  <meta name="keywords" content="linked data, W3C, semantice web"/>
+  <title>Linked Data Basic Profile 1.0 - Use Cases and Requirements</title>
+  <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM"/>
+  <style type="text/css">
+    div.req {margin-top: 0.5em;}
+    li.toc {list-style-type: none}
+    h1, h2, h3, h4, h5 {
+ text-align: left;
+ font-family: sans-serif;
+ font-weight: normal;
+ color: #005a9c;
+ margin-left: 0
+}
+    dt {padding-top: 0.5em; }
+  </style>
+</head>
+<body>
+<div class="head">
+<p>
+<a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/></a>
+<a href="http://www.w3.org/Submission/"> <img height="48" width="211" alt="W3C Member Submission" src="http://www.w3.org/Icons/member_subm"/></a>
+</p>
+
+<h1 id="title">Linked Data Basic Profile 1.0 - Use Cases and Requirements</h1>
+<h2 id="W3C-doctype">W3C Member Submission 26 March 2012</h2>
+
+<dl>
+	<dt>This Version:</dt>
+	<dd><a href="http://www.w3.org/Submission/2012/SUBM-ldbpucr-20120326/">http://www.w3.org/Submission/2012/SUBM-ldbpucr-20120326/</a></dd>
+	<dt>Latest Version:</dt>
+	<dd><a href="http://www.w3.org/Submission/ldbpucr/">http://www.w3.org/Submission/ldbpucr/</a></dd>
+	<dt>Authors:</dt>
+	<dd>Martin Nally, IBM Corporation</dd>	
+	<dd>Steve Speicher, IBM Corporation</dd>
+	<dd>John Arwe, IBM Corporation</dd>
+	<dd>Arnaud Le Hors, IBM Corporation</dd>
+</dl>
+
+<p class="copyright">Copyright © IBM Corporation 2012. This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document
+License</a>. See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notice and Legal Disclaimers</a> for additional
+information.</p>
+
+</div>
+<hr/>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>This document describes the motivation, scope, use cases, and requirements
+for best practices and simple approach for a read-write Linked Data architecture, based on
+HTTP access to web resources that describe their state using RDF.</p>
+
+<h2 id="status">Status of This Document</h2>
+<div>
+<p><em>This section describes the status of this document at the time of its
+publication. Other documents may supersede this document. A list of current W3C
+publications can be found in the </em><a href="http://www.w3.org/TR/"><i>W3C
+technical reports index</i></a><em> at http://www.w3.org/TR/.</em></p>
+
+<p>This document is a part of the Linked Data Basic Profile Submission, which
+comprises two documents:</p>
+
+<ol>
+ <li><em>Linked Data Basic Profile 1.0</em></li>
+ <li><em>Linked Data Basic Profile 1.0 - Use Cases and Requirements (this document)</em></li>
+</ol>
+
+<p>By publishing this document, W3C acknowledges that the <a
+href="http://www.w3.org/Submission/2012/02/">Submitting
+Members</a> have made a formal Submission request to W3C for discussion.
+Publication of this document by W3C indicates no endorsement of its content by
+W3C, nor that W3C has, is, or will be allocating any resources to the issues
+addressed by it. This document is not the product of a chartered W3C group, but
+is published as potential input to the <a
+href="http://www.w3.org/Consortium/Process">W3C Process</a>. A <a
+href="http://www.w3.org/Submission/2012/02/Comment/">W3C Team Comment</a> has
+been published in conjunction with this Member Submission. Publication of
+acknowledged Member Submissions at the W3C site is one of the benefits of <a
+href="http://www.w3.org/Consortium/Prospectus/Joining">W3C Membership</a>.
+Please consult the requirements associated with Member Submissions of <a
+href="http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">section
+3.3 of the W3C Patent Policy</a>. Please consult the complete <a
+href="http://www.w3.org/Submission">list of acknowledged W3C Member Submissions</a>.</p>
+</div>
+
+<h2 id="toc">Table of Contents</h2>
+<div>
+<ul>
+<li class="toc"><a href="#scope">1. Scope and Motivation</a></li>
+<li class="toc"><a href="#usecases">2. Use Cases</a></li>
+<li class="toc" style='margin-left:.5in'><a href="#social">2.1 Maintaining Social Contact Information</a></li>
+<li class="toc" style='margin-left:.5in'><a href="#bizrel">2.2 Keeping Track of Personal and Business Relationships</a></li>
+<li class="toc" style='margin-left:.5in'><a href="#oslc">2.3 System and Software Development Tool Integration</a></li>
+<li class="toc" style='margin-left:.5in'><a href="#lld">2.4 Library Linked Data</a></li>
+<li class="toc" style='margin-left:.5in'><a href="#city">2.5 Municipality Operational Monitoring</a></li>
+<li class="toc" style='margin-left:.5in'><a href="#hc">2.6 Healthcare</a></li>
+<li class="toc"><a href="#requirements">3. Requirements</a></li>
+<li class="toc"><a href="#references">4. References</a></li>
+<li class="toc"><a href="#acks">5. Acknowledgements</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="scope">1. Scope and Motivation</h1>
+<div>
+<p>Linked Data was defined by Tim Berners-Lee with the
+following [4Rules]</p>
+
+<p style='margin-left:.5in;text-indent:-.25in'>1. Use URIs as
+names for things</p>
+
+<p style='margin-left:.5in;text-indent:-.25in'>2. Use HTTP URIs
+so that people can look up those names</p>
+
+<p style='margin-left:.5in;text-indent:-.25in'>3. When someone
+looks up a URI, provide useful information, using the standards (RDF*, SPARQL)</p>
+
+<p style='margin-left:.5in;text-indent:-.25in'>4. Include links
+to other URIs. so that they can discover more things</p>
+
+<p>These four rules have proven very effective in guiding and
+inspiring people to <i>publish</i> Linked Data on the web. The amount of data,
+especially public data, available on the web has grown rapidly, and an
+impressive number of extremely creative and useful “mashups” has been created
+using this data as result.</p>
+
+<p>There has been much less focus on the potential of Linked
+Data as a model for <i>managing</i> data on the web - the majority of the
+Application Programming Interfaces (APIs) available on the Internet for
+creating and updating data follow a Remote Procedure Call (RPC) model rather
+than a Linked Data model.</p>
+
+<p>If Linked Data were just another model for doing something
+that RPC models can already do, it would be of only marginal interest. Interest
+in Linked Data arises from the fact that applications with an interface
+defined using Linked Data can be much more easily and seamlessly integrated
+with each other than applications that offer an RPC interface. In many problem
+domains, the most important problems and the greatest value are found not in
+the implementation of new applications, but in the successful integration of
+multiple applications into larger systems.</p>
+
+<p>Some of the features that make Linked Data exceptionally
+well suited for integration include:</p>
+
+<ul>
+ <li>A single interface – defined by the HTTP methods – that
+     is universally understood and is constant across all applications. This is
+     in contrast with the RPC architecture where each application has a unique
+     interface that has to be learned and coded to.</li>
+ <li>A universal addressing scheme – provided by HTTP URLs
+     – for both identifying and accessing all “entities”. This is in contrast
+     with the RPC architecture where there is no uniform way to either identify
+     or access data.</li>
+ <li>A simple yet extensible data model – provided by RDF
+     – for describing data about a resource in a way which doesn’t require
+     prior knowledge of vocabulary being used.</li>
+</ul>
+
+<p>Experience implementing applications and integrating them
+using Linked Data has shown very promising results, but has also demonstrated
+that the original four rules defined by Tim Berners-Lee for Linked Data are not
+sufficient to guide and constrain a writable Linked Data API. As was the case
+with the original four rules, the need generally is not for the invention of
+fundamental new technologies, but rather for a series of additional rules and
+patterns that guide and constrain the use of existing technologies in the
+construction of a Basic Profile for Linked Data to achieve interoperability.</p>
+
+<p>The following list illustrates a few of the issues that
+require additional rules and patterns:</p>
+
+<ul>
+ <li>What URLs do I post to in order to create new
+     resources?</li>
+ <li>How do I get lists of existing resources, and how do
+     I get basic information about them without having to access each one?</li>
+ <li>How should I detect and deal with race conditions on
+     write?</li>
+ <li>What media-types/representations should I use?</li>
+ <li>What standard vocabularies should I use?</li>
+ <li>What primitive data types should I use?</li>
+</ul>
+
+<p>A good goal for the Basic Profile for Linked Data would be to
+define a specification required to allow the definition of a writable Linked
+Data API equivalent to the simple application APIs that are often written on
+the web today using the Atom Publishing Protocol (APP). APP shares some
+characteristics with Linked Data, such as the use of HTTP and URLs. One difference is that Linked Data relies on a
+flexible data model with RDF, which allows for multiple representations.</p>
+</div>
+
+<h1 id="usecases">2. Use Cases</h1>
+<div>
+<p>This section collects a limited number of high-level use
+cases to illustrate the need for a Basic Profile for Linked Data, both for data
+consumption and for the creation and modification of data. The W3C maintains a repository of Semantic
+Web Case Studies and Use Cases [SEMWEB-UC]. Some of that material may apply to
+the Use Cases for the Basic Profile for Linked Data and will be called out in
+the following sections where appropriate.</p>
+
+<h2 id="social">2.1 Maintaining Social Contact Information</h2>
+<div>
+<p>Many of us have multiple email accounts that include
+information about the people and organizations we interact with – names, email
+addresses, telephone numbers, instant messenger identities and so on. When someone’s email address or telephone
+number changes (or they acquire a new one), our lives would be much simpler if
+we could update that information in one spot and all copies of it would
+automatically be updated. In other
+words, those copies would all be linked to some definition of “the
+contact.” There might also be good
+reasons (like off-line email addressing) to maintain a local copy of the
+contact, but ideally any copies would still be linked to some central “master.”</p>
+
+<p>Agreeing on a format for “the contact” is not enough,
+however. Even if all our email providers
+agreed on the format of a contact, we would still need to use each provider’s
+custom interface to update or replace the provider’s copy, or we would have to
+agree on a way for each email provider to link to the “master”. If we look outside our own personal
+interests, it would be even more useful if the person or organization exposed
+their own contact information so we could link to it.</p>
+
+<p>What would work in either case is a common understanding of the resource, a few formats needed, and 
+access guidance for these resources. This would support how to acquire a link to a contact, and how to use those links to interact with a 
+contact (including reading, updating, and deleting it), as well as how to easily create a 
+new contact and add it to my contacts and when deleting a contact, how it would be removed 
+from my list of contacts. It would also be good to be able to add
+some application-specific data about my contacts that the original design
+didn’t consider. Ideally we’d like to eliminate multiple copies of contacts,
+there would be additional valuable information about my contacts that may be
+stored on separate servers and need a simple way to link this information back
+to the contacts. Regardless of whether a contact collection is my own, shared
+by an organization, or all contacts known to an email provider (or to a single
+email account at an email provider), it would be nice if they all worked pretty
+much the same way.</p>
+</div>
+
+<h2 id="bizrel">2.2 Keeping Track of Personal and Business Relationships</h2>
+<div>
+<p>In our daily lives, we deal with many different
+organizations in many different relationships, and they each have data about us. However, it is unlikely that any one
+organization has all the information about us. Each of them typically gives us access to the
+information (at least some of it), many through websites where we are uniquely
+identified by some string – an account number, user ID, and so on. We have to use their applications to interact
+with the data about us, however, and we have to use their identifier(s) for
+us. If we want to build any semblance of
+a holistic picture of ourselves (more accurately, collect all the data about us
+that they externalize), we as humans must use their custom applications to find
+the data, copy it, and organize it to suit our needs.</p>
+
+<p>Would it not be simpler if at least the Web-addressable
+portion of that data could be linked to consistently, so that instead of
+maintaining various identifiers in different formats and instead of having to
+manually supply those identifiers to each one’s corresponding custom
+application, we could essentially build a set of bookmarks to it all? When we want to examine or change their
+contents, would it not be simpler if there were a single consistent application
+interface that they all supported? Of
+course it would.</p>
+
+
+<p>Our set of links would probably be a simple collection. The information held by any single
+organization might be a mix of simple data and collections of other data, for
+example, a bank account balance and a collection of historical
+transactions. Our bank might easily have
+a collection of accounts for each of its collection of customers.</p>
+</div>
+
+<h2 id="oslc">2.3 System and Software Development Tool Integration</h2>
+<div>
+<p>System and software development tools typically come from a
+diverse set of vendors and are built on various architectures and
+technologies. These tools are purpose
+built to meet the needs for a specific domain scenario (modeling, design,
+requirements and so on.) Often tool vendors view integrations with other
+tools as a necessary evil rather than providing additional value to their
+end-users. Even more of an afterthought
+is how these tools’ data -- such as people, projects, customer-reported problems
+and needs -- integrate and relate to corporate and external applications that
+manage data such as customers, business priorities and market trends. The
+problem can be isolated by standardizing on a small set of tools or a set of
+tools from a single vendor, but this rarely occurs and if does it usually does
+so only within small organizations. As
+these organizations grow both in size and complexity, they have needs to work
+with outsourced development and diverse internal other organizations with their
+own set of tools and processes. There is a need for better support of more
+complete business processes (system and software development processes) that
+span the roles, tasks, and data addressed by multiple tools. This demand has
+existed for many years, and the tools vendor industry has tried several different
+architectural approaches to address the problem. Here are a few:</p>
+
+<ul>
+ <li>Implement an API for
+     each application, and then, in each application, implement “glue code”
+     that exploits the APIs of other applications to link them together.</li>
+ <li>Design a single
+     database to store the data of multiple applications, and implement each of
+     the applications against this database. In the software development tools
+     business, these databases are often called “repositories.”</li>
+ <li>Implement a central
+     “hub” or “bus” that orchestrates the broader business process by
+     exploiting the APIs described previously.</li>
+</ul>
+
+<p>It is fair to say that although each of those approaches
+has its adherents and can point to some successes, none of them is wholly
+satisfactory. The use of Linked Data as an application integration technology
+has a strong appeal. [OSLC]</p>
+</div>
+
+<h2 id="lld">2.4 Library Linked Data</h2>
+<div>
+<p>The W3C Library Linked Data working group has a number of
+use cases cited in their Use Case Report. [LLD-UC] These referenced use cases focus on the need
+to extract and correlate library data from disparate sources. Variants of these use cases that can provide
+consistent formats, as well as ways to improve or update the data, would enable
+simplified methods for both efficiently sharing this data as well as producing
+incremental updates without the need for repeated full extractions and import
+of data.</p>
+</div>
+
+<h2 id="city">2.5 Municipality Operational Monitoring</h2>
+<div>
+<p>
+Across various cities, towns, counties, and various municipalities there is a growing number of services 
+managed and run by municipalities that produce and consume a vast amount of information. 
+This information is used to help monitor
+services, predict problems, and handle logistics. In order to effectively and efficiently
+collect, produce, and analyze all this data, a fundamental set of loosely
+coupled standard data sources are needed. A simple, low-cost way to expose data from the diverse set of monitored services
+is needed, one that can easily integrate into the municipalities of other
+systems that inspect and analyze the data. All these services have links and dependencies on other data and
+services, so having a simple and scalable linking model is key.</p>
+</div>
+
+<h2 id="hc">2.6 Healthcare</h2>
+<div>
+<p>For physicians to analyze, diagnose, and propose treatment
+for patients requires a vast amount of complex, changing and growing
+knowledge. This knowledge needs to come
+from a number of sources, including physicians’ own subject knowledge, consultation
+with their network of other healthcare professionals, public health sources,
+food and drug regulators, and other repositories of medical research and
+recommendations.</p>
+
+<p>To diagnose a patient’s condition requires current data on the
+patient’s medications and medical history. In addition, recent pharmaceutical advisories about these medications are
+linked into the patient’s data. If the
+patient experiences adverse affects from medications, these physicians need to
+publish information about this to an appropriate regulatory source. Other medical professionals require access to
+both validated and emerging effects of the medication. Similarly, if there are geographical patterns
+around outbreaks that allow both the awareness of new symptoms and treatments,
+this information needs to quickly reach a very distributed and diverse set of
+medical information systems. Also,
+reporting back to these regulatory agencies regarding new occurrences of an
+outbreak, including additional details of symptoms and causes, is critical in producing
+the most effective treatment for future incidents.</p>
+</div>
+</div>
+<h1 id="requirements">3. Requirements</h1>
+<div>
+<div id="r3.1" class="req">3.1 Define a minimal set of RDF media-types/representations</div>
+<div id="r3.2" class="req">3.2 Define a limited number of literal value types</div>
+<div id="r3.3" class="req">3.3 Use standard vocabularies as appropriate</div>
+<div id="r3.4" class="req">3.4 Update resources, either RDF-based or not</div>
+<div id="r3.5" class="req">3.5 Use optimistic collision detection on updates</div>
+<div id="r3.6" class="req">3.6 Ensure clients are ready for resource format and type changes</div>
+<div id="r3.7" class="req">3.7 Apply minimal constraints for creation and update</div>
+<div id="r3.8" class="req">3.8 Add a resource to an existing container</div>
+<div id="r3.9" class="req">3.9 Remove a resource, including any associations with a container</div>
+<div id="r3.10" class="req">3.10 Get members of a container</div>
+<div id="r3.11" class="req">3.11 When getting members of a container, provide data about the members</div>
+<div id="r3.12" class="req">3.12 Get just data about a container, without all the members</div>
+<div id="r3.13" class="req">3.13 Handle a large number of members of a container, breaking up representation into pages</div>
+<div id="r3.14" class="req">3.14 Allow pages to have order information for members, within a page and across all pages</div>
+</div>
+
+<h1 id="references">4. References</h1>
+<div>
+<dl>
+<dt>4Rules</dt>
+<dd><a
+href="http://www.w3.org/DesignIssues/LinkedData.html">http://www.w3.org/DesignIssues/LinkedData.html</a></dd>
+
+<dt>Dublin Core</dt>
+<dd><cite><a href="http://dublincore.org/documents/2010/10/11/dcmi-terms/">Dublin Core
+Metadata Initiative Terms</a></cite>, DCMI Recommendation, 11 October 2010. This
+version is http://dublincore.org/documents/2010/10/11/dcmi-terms/. The latest version is http://dublincore.org/documents/dcmi-terms/.</dd>
+
+<dt>DC-RDF</dt>
+<dd><cite><a
+href="http://dublincore.org/documents/dc-rdf/">Expressing Dublin Core metadata using the
+Resource Description Framework (RDF)</a></cite>, M. Nilsson and all, 14 January 2008,
+http://dublincore.org/documents/2008/01/14/dc-rdf/. Latest available at:
+http://dublincore.org/documents/dc-rdf/.</dd>
+
+<dt>GLD</dt>
+<dd><cite><a href="http://www.w3.org/2011/gld/wiki/Main_Page">Government Linked Data</a></cite>, W3C, 9
+February 2012, http://www.w3.org/2011/gld/wiki/Main_Page</dd>
+
+<dt>LinkedData</dt>
+<dd><cite><a
+href="http://www.w3.org/standards/semanticweb/data">Linked Data at W3C</a></cite>, http://www.w3.org/standards/semanticweb/data</dd>
+
+<dt>LLD-UC</dt>
+<dd><cite><a href="http://www.w3.org/2005/Incubator/lld/wiki/UseCaseReport">W3C Library Linked Data Use Case
+Report</a></cite>,  http://www.w3.org/2005/Incubator/lld/wiki/UseCaseReport</dd>
+
+<dt>OSLC</dt>
+<dd><cite><a href="http://open-services.net/">Open Services for Lifecycle Collaboration (OSLC)</a></cite>, http://open-services.net</dd>
+
+		<dt>RDF</dt>
+        <dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-primer-20040210/">Resource Description Framework (RDF): Concepts and Abstract Syntax</a></cite>, Klyne G., 
+        Carroll J. (Editors), W3C Recommendation, 10 February 2004. 
+        This version is http://www.w3.org/TR/2004/REC-rdf-primer-20040210/. 
+        The <a href="http://www.w3.org/TR/rdf-concepts/">latest version</a> is http://www.w3.org/TR/rdf-concepts/.</dd>
+
+<dt>RDF-MT</dt>
+<dd><cite><a
+href="http://www.w3.org/TR/2004/REC-rdf-mt-20040210/">RDF Semantics</a></cite>, P. Hayes, Editor, W3C Recommendation, 10 February 2004,
+http://www.w3.org/TR/2004/REC-rdf-mt-20040210/.</dd>
+
+		<dt>RDF Primer</dt>
+		<dd><cite>
+			<a href="http://www.w3.org/TR/2004/REC-rdf-primer-20040210">Resource
+						Description Framework (RDF): Concepts and Abstract Syntax
+			</a></cite>, Klyne G., Carroll J. (Editors), W3C Recommendation, 10 February
+			2004. This version is
+			http://www.w3.org/TR/2004/REC-rdf-primer-20040210/.  The <a href="http://www.w3.org/TR/rdf-primer/">latest
+			version</a> is http://www.w3.org/TR/rdf-primer/.
+		</dd>
+		
+<dt>RDF-REST</dt>
+<dd><cite><a href="http://www.w3.org/2001/sw/wiki/index.php?title=REST">RDF Simple Data Interface Protocol
+– Level Zero</a></cite>, http://www.w3.org/2001/sw/wiki/index.php?title=REST</dd>
+
+<dt>REST</dt>
+<dd><cite><a
+href="http://www.ics.uci.edu/%7Efielding/pubs/dissertation/rest_arch_style.htm">Representational
+State Transfer (REST)</a></cite>, R. Fielding, Ph.D. dissertation,
+2000.</dd>
+
+<dt>IANA</dt>
+<dd><cite><a href="http://www.iana.org/assignments/media-types/index.html">Internet Assigned Numbers Authority
+(IANA)</a></cite> MIME Media Types, http://www.iana.org/assignments/media-types/index.html</dd>
+
+<dt>RFC2616</dt>
+<dd><cite><a
+href="http://www.ietf.org/rfc/rfc2616.txt">Hypertext Transfer Protocol -
+HTTP/1.1</a></cite>, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, T.
+Berners-Lee, June 1999. Available at http://www.ietf.org/rfc/rfc2616.txt.</dd>
+
+<dt>RFC3986</dt>
+<dd><cite><a
+href="http://www.apps.ietf.org/rfc/rfc3986.html">Uniform Resource Identifier
+(URI): Generic Syntax</a></cite>, Berners-Lee, Fielding, Masinter, January 2005.</dd>
+
+<dt>RFC3987</dt>
+<dd><cite><a
+href="http://www.ietf.org/rfc/rfc3987.txt">Internationalized Resource
+Identifiers (IRIs)</a></cite>, Duerst, Suignard, January 2005.</dd>
+
+<dt>RW LinkedData</dt>
+<dd><cite><a href="http://www.w3.org/DesignIssues/ReadWriteLinkedData.html">Read-Write Linked Data</a></cite>, 
+Berners-Lee, August 2009, http://www.w3.org/DesignIssues/ReadWriteLinkedData.html</dd>
+
+<dt>SEMWEB-UC</dt>
+<dd><cite><a href="http://www.w3.org/2001/sw/sweo/public/UseCases/">Semantic Web Case Studies and Use Cases</a></cite>, 
+  W3C, 9 February 2012, http://www.w3.org/2001/sw/sweo/public/UseCases/.</dd>
+
+<dt>SPARQL</dt>
+<dd><cite><a
+href="http://www.w3.org/TR/2008/REC-rdf-sparql-query-20080115/">SPARQL Query
+Language for RDF</a></cite>, E. Prud'hommeaux, A. Seaborne, Editor,
+W3C Recommendation, 15 January 2008,
+http://www.w3.org/TR/2008/REC-rdf-sparql-query-20080115/. <a
+href="http://www.w3.org/TR/rdf-sparql-query/"
+title="Latest version of Query Language for RDF">Latest version</a> available
+at http://www.w3.org/TR/rdf-sparql-query/.</dd>
+
+<dt>SPARQL-HTTP</dt>
+<dd><cite><a
+href="http://www.w3.org/2009/sparql/docs/http-rdf-update/">SPARQL 1.1 Graph Store HTTP Protocol</a></cite>, http://www.w3.org/2009/sparql/docs/http-rdf-update/.</dd>
+
+<dt>WEBARCH</dt>
+<dd><cite><a
+href="http://www.w3.org/TR/2004/REC-webarch-20041215/">Architecture of the
+World Wide Web, Volume One</a></cite>, N. Walsh, I. Jacobs, Editors,
+W3C Recommendation, 15 December 2004,
+http://www.w3.org/TR/2004/REC-webarch-20041215/. <a
+href="http://www.w3.org/TR/webarch/">Latest version</a> available at
+http://www.w3.org/TR/webarch/.</dd>
+</dl>
+</div>
+
+<h1 id="acks">5. Acknowledgements</h1>
+<div>
+		<p>Additional Contributors:</p>
+		<p style="margin:2em;">Arthur Ryman (IBM), Ian Green (IBM), Barbara McKee (IBM), Sally Hehir (IBM)</p>
+</div>
+</body>
+
+</html>

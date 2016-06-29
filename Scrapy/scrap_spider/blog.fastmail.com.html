@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="Today we're pleased to announce the launch of a much requested new feature at FastMail: automatically updating your calendar with incoming invitations and responses (also known as iMIP messages).">
+<title>Automatic invitation processing | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Automatic invitation processing">
+<meta property="og:description" content="Today we're pleased to announce the launch of a much requested new feature at FastMail: automatically updating your calendar with incoming invitations and responses (also known as iMIP messages).">
+<meta property="og:url" content="https://blog.fastmail.com/2016/04/20/automatic-invitatation-processing/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2016/04/20/automatic-invitatation-processing/">
+<meta name="twitter:title" content="Automatic invitation processing">
+<meta name="twitter:description" content="Today we're pleased to announce the launch of a much requested new feature at FastMail: automatically updating your calendar with incoming invitations and responses (also known as iMIP messages).">
+
+<link rel="canonical" href="https://blog.fastmail.com/2016/04/20/automatic-invitatation-processing/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2016/04/20/automatic-invitatation-processing/'>Automatic invitation processing</a></h1>
+<p class="blog-author">Bron Gondwana &ndash; 20 April 2016</p>
+<p>Today we're pleased to announce the launch of a much requested new feature at FastMail: automatically updating your calendar with incoming invitations and responses (also known as iMIP messages).</p>
+
+<p>By default, we now do the following:</p>
+
+<ul>
+<li>If a <strong>new</strong> invitation arrives from one of your contacts, add it to your default calendar and deliver the invitation to your inbox.</li>
+<li>If an <strong>update</strong> arrives to any event already in your calendar, update that event with the changes in the email and deliver the email to your inbox.</li>
+</ul>
+
+<p>In the FastMail settings you can now configure to automatically file these emails rather than leaving them in your Inbox if you prefer, or turn off automatically updating your calendar. You can read about the new configuration options <a href="https://www.fastmail.com/help/calendar/events.html">in our help documentation</a>.</p>
+
+<p>If you access your FastMail calendar via a CalDAV client, for example Apple's iPhone or Mac Calendar app, new invitations will now appear in the client and you will be able to RSVP directly, without having to log in to your email.</p>
+
+<p>We have also made all messages related to the same event be included in a single mail conversation in the mail interface, to make it easier to manage.</p>
+
+<h2>Technical details</h2>
+
+<p>For those who want to know more about how this is implemented, read on!</p>
+
+<p>There are three components to the handling of iMIP request emails at FastMail.</p>
+
+<h3>Stage 1: Detection</h3>
+
+<p>Detection is run in the <code>lmtpprox</code> mail filter which runs between accepting email and delivering it to your mail store.  This is the stage where we can modify the email.  If there is an attached calendar event (content type of "text/calendar" or "application/ics", or a filename ending with ".ics") then we extract the calendar event and parse it to find the METHOD and UID fields.</p>
+
+<p>If there is no METHOD then it's a calendar event, but not an iMIP invitation, so we ignore it. If there is both a METHOD and a UID, we look up the UID in your calendars.</p>
+
+<p>Regardless of whether it exists, we add two headers: <code>X-ME-Cal-Method</code> (with the method as the value, converted to lower case) and <code>X-ME-Cal-UID</code> (with the UID as the value). If the event was found, we add a third header <code>X-ME-Cal-Exists</code> with the <code>calendarId</code> of the calendar in which the UID already exists.</p>
+
+<p>We also add an <code>X-ME-Message-Id</code> derived from the UID, which is used to link the messages together into a single conversation in the mail interface.</p>
+
+<p>If there are any errors parsing the attachment, then we continue and deliver it as if there were no attached event.</p>
+
+<h3>Stage 2: Filtering</h3>
+
+<p>Filtering is run in your sieve script on the IMAP server.  If you go to <code>Settings =&gt; Rules =&gt; Edit custom sieve code</code>, you can see the specific rules calculated from the Calendar Preferences values in the generated part of your sieve script.</p>
+
+<p>We have extended the <a href="https://tools.ietf.org/html/rfc5435">notify</a> sieve extension to add two new targets, <code>addcal</code> and <code>updatecal</code>, which work as you might guess from the names. The <code>addcal</code> target also takes an <code>:options</code> key value list, for which the option <code>calendarId</code> is defined - and takes the ID of a calendar to store the new event into.  If not provided, the default calendar is used.</p>
+
+<h3>Stage 3: Updating the calendar</h3>
+
+<p>Our notify pipeline goes through a non-blocking server which does immediate push notifications, and then to a background daemon which handles long running tasks.  The <code>notifyd</code> daemon does the heavy lifting, parsing the email again (using a library with the same code used earlier by <code>lmtpprox</code>) and checking again for the existing record in your calendar.</p>
+
+<p>The code for adding or updating from iMIP was extracted from the web interface and generalised as well, so the <code>notifyd</code> does exactly what would have happened if you had pressed <strong>Add to Calendar</strong> or <strong>Update Calendar</strong> in the web interface.</p>
+
+<h3>RSVPs</h3>
+
+<p>We do not automatically send an RSVP to invitations you receive. You can accept or decline invitations in our web interface, from either the invitation email or the event in your calendar. Alternatively, if you are using a CalDAV client you can let the organiser know whether you can attend directly from the client.  Either way, our server will send out iMIP emails in response to the organiser of the event.</p>
+
+<p><em>Blogging from the <a href="https://www.calconnect.org/">CalConnect</a> conference in Hong Kong.</em></p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2016/04/11/add-rule-from-message-feature-released/">Add rule from message feature released</a></p>
+
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

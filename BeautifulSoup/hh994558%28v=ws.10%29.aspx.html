@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+
+
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head><link rel="canonical" href="https://technet.microsoft.com/en-us/library/hh994558(v=ws.10).aspx" /><script type="text/javascript" src="//c.webtrends.com/acs/account/mx643kesn3/js/wt.js"></script>
+    <title>Passwords Technical Overview</title>
+
+        
+
+
+
+
+
+
+<meta name="DCS.dcsuri" content="/en-us/library/hh994558(d=default,l=en-us,v=ws.10).aspx" />
+
+<meta name="NormalizedUrl" content="https://technet.microsoft.com/en-us/library/hh994558(d=default,l=en-us,v=ws.10).aspx" />
+
+<meta name="ms.normalizedurl" content="https://technet.microsoft.com/en-us/library/hh994558(d=default,l=en-us,v=ws.10).aspx" />
+
+<meta name="DCS.appliesToProduct" content="Windows Server 2008" />
+
+<meta name="AmbientContext" content="{&quot;layout.limit_max_width&quot;:true,&quot;AmbientContextId&quot;:&quot;91E3C5A8-33F5-4F87-986D-1AC1ED8AA5D0&quot;,&quot;display.use_large_font&quot;:false,&quot;insight.perf_timing&quot;:true,&quot;AmbientContextDownstream&quot;:{},&quot;display.high_contrast&quot;:false,&quot;insight.use_wedcs_vnext&quot;:true}" />
+
+<meta name="VotingContextUrl" content="https://technet.microsoft.com/en-us/library/hh994558(d=default,l=en-us,v=ws.10).aspx" />
+
+<meta name="MN" content="61C41DD1-2:06:37 AM" />
+
+<meta name="Search.ShortId" content="hh994558" />
+
+<meta name="ms.shortidmsdn" content="hh994558" />
+
+<meta name="Ms.Locale" content="en-us" />
+
+<meta name="ms.prodver" content="WS.10" />
+
+<meta name="ms.contentlang" content="EN" />
+
+<meta name="ms.lang" content="EN" />
+
+<meta name="ms.loc" content="US" />
+
+<meta name="ms.sitever" content="2016.04.30.1" />
+
+<meta name="ms.assetid" content="0288c73f-8ce8-4bfd-9016-2e47139fa38d" />
+
+<meta name="ms.auth" content="0" />
+    
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" data-do-not-move="true">
+        //<![CDATA[
+        var AmbientContext = null;
+
+        (function(){
+            var root = (function(){return this;}).call(null);
+
+            var GetCookie = function(name){
+                var cookies = root.document.cookie ? root.document.cookie.split('; ') : [];
+                for (var i = 0; i < cookies.length; i++) {
+                    var pos = cookies[i].indexOf('=');
+                    if (name === root.decodeURIComponent(cookies[i].slice(0, pos)))
+                    {
+                        var cookie = cookies[i].slice(pos + 1).replace(/\+/g, ' ');
+                        cookie = root.decodeURIComponent(cookie);
+                        return cookie;
+                    }
+                }
+            };
+
+            var JsonDeserialize = function(content) {
+                return root.JSON && root.JSON.parse ? root.JSON.parse(content) : (new Function('return (' + content + ')'))();
+            };
+
+            try {
+                AmbientContext = GetCookie('AmbientContext');
+                AmbientContext = AmbientContext && JsonDeserialize(AmbientContext);
+            } catch(ex) {
+            } finally {
+                AmbientContext = AmbientContext || null;
+            }
+        })();
+        //]]>
+    </script>
+
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js" data-do-not-move="true" data-provides="jQuery"></script>
+    
+<link rel="stylesheet" type="text/css" href="https://i-technet.sec.s-msft.com/Combined.css?resources=0:Topic,0:CodeSnippet,0:ProgrammingSelector,0:ExpandableCollapsibleArea,1:CommunityContent,0:TopicNotInScope,0:FeedViewerBasic,0:ImageSprite,2:Header.2,2:HeaderFooterSprite,3:megabladeMenu.1,3:MegabladeMenuSpriteCluster,4:PrintExportButton,1:Toc,1:NavigationResize,1:LibraryMemberFilter,5:StandardRating,2:Footer.2,6:LinkList,0:SiteFeedbackLink,6:Base,7:TechNet,7:SkinnyRatingResponsive,7:SkinnyRatingV2;/Areas/Epx/Content/Css:0,/Areas/Library/Content:1,/Areas/Epx/Themes/TechNet/Content:2,/Areas/Epx/Themes/Shared/Content:3,/Areas/Library/Themes/Base/Content:4,/Areas/Global/Content:5,/Areas/Epx/Themes/Base/Content:6,/Areas/Library/Themes/TechNet/Content:7&amp;amp;v=62E32D8D7A6936C99BFACA8A0020F25C" /></head>
+<body class="library ">
+    <div id="page">
+
+        
+
+        
+    
+    <div id="ux-header" dir="ltr" class="ltr isd" ms.pgarea="header">
+        
+        
+
+        <div class="upperBand">
+            <div class="row1">
+                <div class="msLogoAndMegablade">
+                    <a class="msdnLogoImg" href="https://technet.microsoft.com/en-us" title="Technet home" ms.cmpgrp="mslogo">
+                        <div id="msft-logo" class="msft-logo"></div>
+                    </a><div class="GrayPipe"></div><div class="megabladeMenu" ms.cmpgrp="megablade">
+    
+    
+    <div id="megabladeContainer" class="ltr">
+        <div id="megabladeContainerCenter">
+            <div id="megabladeMainMenu">TechNet</div>
+            <ul id="megabladeItems">
+                        <li data-value="hh326172" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">Products</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Products</h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/windows">Windows</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/bb625087.aspx">Windows Server</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/cc507089.aspx">System Center</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/browser">Browser</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/office">Office</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/office/dn788774">Office 365</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/office/dn788775">Exchange Server</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://msdn.microsoft.com/library/mt590198(v=sql.1)">SQL Server</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/office/dn788776">SharePoint Products</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/office/dn788773">Skype for Business</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/bb421517.aspx?wt.svl=more_centers_link">See all products »</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+                        <li data-value="hh880860" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">IT Resources</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Resources</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/evalcenter/">Evaluation Center</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/bb291022">Learning Resources</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/dn440144">Microsoft Tech Companion App</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/dn550853" title="Microsoft Technical Communities">Microsoft Technical Communities</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/?CR_CC=200157774">Microsoft Virtual Academy</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/scriptcenter">Script Center</a>
+    </li>
+    <li>
+      <a href="http://blogs.technet.com/b/serverandtools/">Server and Tools Blogs</a>
+    </li>
+    <li>
+      <a href="http://blogs.technet.com/">TechNet Blogs</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/cc543196">TechNet Flash Newsletter</a>
+    </li>
+    <li>
+      <a href="https://gallery.technet.microsoft.com/">TechNet Gallery</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/library/default.aspx">TechNet Library</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/magazine/default.aspx">TechNet Magazine</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/subscriptions">TechNet Subscriptions</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/video">TechNet Video</a>
+    </li>
+    <li>
+      <a href="http://social.technet.microsoft.com/wiki">TechNet Wiki</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/sysinternals">Windows Sysinternals</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/virtuallabs">Virtual Labs</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Solutions</h5>
+  <ul>
+    <li>
+      <a href="https://technet.microsoft.com/network">Networking</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/cloud/private-cloud">Cloud and Datacenter</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/security">Security</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/server-cloud/solutions/virtualization.aspx">Virtualization</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+                        <li data-value="hh371326" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">Downloads</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Updates</h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us">Service Packs</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/security/bulletin">Security Bulletins</a>
+    </li>
+    <li>
+      <a href="http://windows.microsoft.com/en-us/windows/windows-update">Windows Update</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Trials</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2012-r2">Windows Server 2012 R2</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-system-center-2012-r2">System Center 2012 R2</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2014">Microsoft SQL Server 2014 SP1</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-8-1-enterprise">Windows 8.1 Enterprise</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/" title="See all trials">See all trials »</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Related Sites</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/download">Microsoft Download Center</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/evalcenter/">TechNet Evaluation Center</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/download/driver.aspx?q=driver">Drivers</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/sysinternals">Windows Sysinternals</a>
+    </li>
+    <li>
+      <a href="https://gallery.technet.microsoft.com/">TechNet Gallery</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+                        <li data-value="jj837158" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">Training</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Training</h5>
+  <ul>
+    <li>
+      <a href="http://www.microsoftimmersion.com/virtualclassroom">Expert-led, virtual classes</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/training.aspx">Training Catalog</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/find-partner.aspx">Class Locator</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/">Microsoft Virtual Academy</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/en-US/training-courses/windows-server-2012-training-technical-overview-8564?l=BpPnn410_6504984382">Free Windows Server 2012 courses</a>
+    </li>
+    <li>
+      <a href="https://mva.microsoft.com/product-training/windows?CR_CC=200155697#!lang=1033" title="Free Windows 8 courses">Free Windows 8 courses</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/sql-training.aspx">SQL Server training</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/on-demand-online-courses.aspx">Microsoft Official Courses On-Demand</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Certifications</h5>
+  <ul>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/certification-overview.aspx">Certification overview</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-windows-10-certifications.aspx" title="MCSA: Windows 10">MCSA: Windows 10</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-windows-server-certification.aspx">Windows Server Certification (MCSE)</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/private-cloud-certification.aspx">Private Cloud Certification (MCSE)</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/mcsa-sql-certification.aspx">SQL Server Certification (MCSE)</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Other resources</h5>
+  <ul>
+    <li>
+      <a href="http://www.technetevents.com/">TechNet Events</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/learning/second-shot.aspx">Second shot for certification</a>
+    </li>
+    <li>
+      <a href="https://borntolearn.mslearn.net/b/?Redirected=true">Born To Learn blog</a>
+    </li>
+    <li>
+      <a href="https://www.technicalcommunity.com/default.aspx" title="Microsoft Technical Communities">Find technical communities in your area</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+                        <li data-value="hh371327" class="bladeItem bladeItemWithMenu">
+                            <a href="" onclick="return false;">Support</a><span class="caret"></span>
+                            <div class="navpage"><div class="menuContainerLayout">
+  <h5>Support options</h5>
+  <ul>
+    <li>
+      <a href="https://businessaccount.microsoft.com/en-us/support">For small and midsize businesses</a>
+    </li>
+    <li>
+      <a href="https://premier.microsoft.com/">For enterprises</a>
+    </li>
+    <li>
+      <a href="https://msdn.microsoft.com/hh361695">For developers</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/ms772425">For IT professionals</a>
+    </li>
+    <li>
+      <a href="https://pinpoint.microsoft.com/en-US/">From partners</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayout">
+  <h5> </h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us/assistedsupportproducts">For technical support</a>
+    </li>
+    <li>
+      <a href="https://www.microsoft.com/en-us/microsoftservices/support.aspx">Support offerings</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/">For home users</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>More support</h5>
+  <ul>
+    <li>
+      <a href="https://premier.microsoft.com/">Microsoft Premier Online</a>
+    </li>
+    <li>
+      <a href="https://social.technet.microsoft.com/forums/en-us/home">TechNet Forums</a>
+    </li>
+    <li>
+      <a href="https://social.msdn.microsoft.com/forums/en-us/home">MSDN Forums</a>
+    </li>
+    <li>
+      <a href="https://technet.microsoft.com/en-us/security/bulletin">Security Bulletins &amp; Advisories</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/">International support solutions</a>
+    </li>
+    <li>
+      <a href="https://support.microsoft.com/en-us/assistedsupportproducts">Log a support ticket</a>
+    </li>
+  </ul>
+</div><div class="menuContainerLayoutSplashGuard"></div><div class="menuContainerLayout">
+  <h5>Not an IT pro?</h5>
+  <ul>
+    <li>
+      <a href="https://support.microsoft.com/en-us">Microsoft Customer Support</a>
+    </li>
+    <li>
+      <a href="http://answers.microsoft.com/en-us">Microsoft Community Forums</a>
+    </li>
+  </ul>
+</div></div>
+                        </li>
+            </ul>
+        </div>
+    </div>
+    
+
+</div>
+                </div>
+
+                <div class="controls" ms.cmpgrp="aux nav">
+                    <div id="setting-menu">
+                        <div class="mobile-setting-icon"></div>
+                    </div>
+                    <div class="controlsInternal">
+                        
+    <form class="selectLocale" id="selectLocaleForm" action="https://technet.microsoft.com/en-us/SelectLocale">
+        <input type="hidden" name="fromPage" value="https%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary%2fhh994558(v%3dws.10).aspx" />
+        <a href="#" onclick="$('#selectLocaleForm').submit();return false;" title="Change your language">United States (English)</a>
+    </form>
+
+
+                        <a class="scarabLink" href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=12&amp;ct=1463043997&amp;rver=6.0.5276.0&amp;wp=mcmbi&amp;wlcxt=technet%24technet%24technet&amp;wreply=https%3a%2f%2ftechnet.microsoft.com%2fen-us%2flibrary%2fhh994558%2528v%3dws.10%2529.aspx&amp;lc=1033&amp;id=254354&amp;mkt=en-us" title="Sign in">Sign in</a>
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+            <div class="row2">
+                <div id="gripAndBrandLogo">
+                    <div id="grip-menu">
+                        <div id="grip" class="menu-icon"></div>
+                    </div>
+                    <div class="brandLogo" ms.cmpgrp="brandlogo">
+                        <a href="https://technet.microsoft.com/" title="Windows Server"><img alt="Windows Server" src="https://i-technet.sec.s-msft.com/Areas/Epx/Themes/TechNet/Content/Images/BrandLogoWindowsServer.png?v=635975721036063623"></img></a>
+                    </div>
+                </div>
+                <div id="drawer">
+
+                </div>
+                <div id="search-menu">
+                    <div class="mobile-search-icon"></div>
+                </div>
+                
+
+    <div class="SearchBox" ms.cmpgrp="aux nav">
+        <form id="HeaderSearchForm" name="HeaderSearchForm" method="get" onsubmit="return Epx.Controls.SearchBox.searchBoxOnSubmit(this);">
+            <input id="HeaderSearchTextBox" name="query" type="text" maxlength="200" onfocus="Epx.Controls.SearchBox.watermarkFocus(event, this.title)" onblur="Epx.Controls.SearchBox.watermarkBlur(event, this.title)" aria-labelledby="HeaderSearchButton" />
+            <button id="HeaderSearchButton" value="" type="submit" class="header-search-button" ms.title="search"></button>
+        </form>
+
+        
+        
+
+    </div>
+
+                <div class="clear"></div>
+             </div>
+
+            <div class="row3">
+
+            </div>
+        </div>
+        <div class="lowerBand">
+            <div class="ux-nav" ms.cmpgrp="main nav">
+                <div class="TocNavigation">
+   
+   <div class="toclevel1">
+          <a class="normal" href="https://technet.microsoft.com/windowsserver/bb250589" title="Home">Home</a>
+          <a class="normal" href="https://technet.microsoft.com/windowsserver/hh534429" title="Windows Server 2012 R2">Windows Server 2012 R2</a>
+          <a class="normal" href="https://technet.microsoft.com/windowsserver/bb310558" title="Windows Server 2008 R2">Windows Server 2008 R2</a>
+          <a class="active" href="https://technet.microsoft.com/library/bb625087.aspx" title="Library">Library</a>
+          <a class="normal" href="http://social.technet.microsoft.com/forums/en-us/category/windowsserver" title="Forums">Forums</a>
+
+    </div>
+  
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="printExportMenus ltr">
+        <a id="isd_printABook" href="/en-us/library/export/help/?returnurl=%2fen-us%2flibrary%2fhh994558(v%3dws.10).aspx">
+            Export (<span class="count">0</span>)
+        </a>
+        <a id="isd_print" href="https://technet.microsoft.com/en-us/library/hh994558(d=printer,v=ws.10).aspx" rel="nofollow">
+            Print 
+        </a>
+        <a id="isd_archiveControl" style="display:none;" data-include-archive="Show archived versions" data-exclude-archive="Hide archived versions">
+        </a>
+    </div>
+    
+    
+
+    <div class="printExportMenus ltr">
+        <a id="expandCollapseAll" accesskey="e" href="javascript:void(0)" title="Expand/Collapse all sections by pressing Ctrl + Shift + e">Expand All</a>
+    </div>
+
+    
+
+
+        <div id="body" ms.pgarea="body">
+            <span id="tabletView_large"></span>
+            <span id="tabletView_small"></span>
+            <span id="mobileView"></span>
+            
+
+
+
+
+        <div id="leftNav">
+
+
+
+
+<div id="tocnav" class="hide-archive">
+
+
+            <div class="toclevel0 " data-toclevel="0">
+<a data-tochassubtree="true" href="https://technet.microsoft.com/en-us/library/aa991542.aspx" id="bb126093_TechNet.10_en-us" mtpsaliasid="" mtpsassetid="7fb9516e-5f92-4e34-8e32-4307b6091e4f_TechNet.10_en-us" mtpsshortid="aa991542_MSDN.10_en-us" title="TechNet Library">TechNet Library</a>            </div>
+            <div class="toclevel0 " data-toclevel="0">
+<a data-tochassubtree="true" href="https://technet.microsoft.com/en-us/library/bb625087.aspx" id="cc728909_TechNet.10_en-us" mtpsaliasid="" mtpsassetid="7a7b869e-e4a7-45a2-bf09-47f4d2fba81a_TechNet.10_en-us" mtpsshortid="bb625087_MSDN.10_en-us" title="Windows Server">Windows Server</a>            </div>
+            <div class="toclevel0 " data-toclevel="0">
+<a data-tochassubtree="true" href="https://technet.microsoft.com/en-us/library/dd349801(v=ws.10).aspx" id="cc667411_TechNet.10_en-us" mtpsaliasid="" mtpsassetid="bc831894-e291-4610-a89f-3ee0758e4a96_TechNet.10_en-us" mtpsshortid="dd349801_WS.10_en-us" title="Windows Server 2008 R2 and Windows Server 2008">Windows Server 2008 R2 and Windows Server 2008</a>            </div>
+            <div class="toclevel0 " data-toclevel="0">
+<a data-tochassubtree="true" href="https://technet.microsoft.com/en-us/library/dd283012(v=ws.10).aspx" id="dd640794_WS.10_en-us" mtpsaliasid="" mtpsassetid="54226eb7-20a2-4823-9520-a64d12d09541_WS.10_en-us" mtpsshortid="dd283012_WS.10_en-us" title="Browse Windows Server Technologies">Browse Windows Server Technologies</a>            </div>
+            <div class="toclevel0 " data-toclevel="0">
+<a data-tochassubtree="true" href="https://technet.microsoft.com/en-us/library/cc772066(v=ws.10).aspx" id="dd640646_WS.10_en-us" mtpsaliasid="" mtpsassetid="e7e522ac-b32f-42e1-b914-53ccc78d1816_WS.10_en-us" mtpsshortid="cc772066_WS.10_en-us" title="Security and Protection">Security and Protection</a>            </div>
+            <div class="toclevel0 " data-toclevel="0">
+<a data-tochassubtree="true" href="https://technet.microsoft.com/en-us/library/hh994561(v=ws.10).aspx" id="jj126163_WS.10_en-us" mtpsaliasid="" mtpsassetid="229e363c-8870-402a-a7b5-592f9e80797c_WS.10_en-us" mtpsshortid="hh994561_WS.10_en-us" title="Passwords">Passwords</a>            </div>
+            <div class="toclevel1 current " data-toclevel="1">
+<a data-tochassubtree="true" href="https://technet.microsoft.com/en-us/library/hh994558(v=ws.10).aspx" id="jj126165_WS.10_en-us" mtpsaliasid="" mtpsassetid="0288c73f-8ce8-4bfd-9016-2e47139fa38d_WS.10_en-us" mtpsshortid="hh994558_WS.10_en-us" title="Passwords Technical Overview">Passwords Technical Overview</a>            </div>
+            <div class="toclevel2 " data-toclevel="2">
+<a data-tochassubtree="true" href="https://technet.microsoft.com/en-us/library/hh994572(v=ws.10).aspx" id="jj126162_WS.10_en-us" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Password Policy">Password Policy</a>            </div>
+</div>                <div style="display:none">
+                    <div id="CollapseLocalizeString">Collapse the table of content</div>
+                    <div id="ExpandLocalizeString">Expand the table of content</div>
+                </div>
+
+            
+
+            
+
+            
+
+            <div id="toc-resizable-ew" class="toc-resizable-ew"></div>
+            
+
+<a id="NavigationResize" href="javascript:void(0)">
+    <img class="cl_nav_resize_open" src="https://i-technet.sec.s-msft.com/Areas/Epx/Content/Images/ImageSprite.png?v=635975720914499532" title="Expand" alt="Expand" />
+    <img class="cl_nav_resize_close" src="https://i-technet.sec.s-msft.com/Areas/Epx/Content/Images/ImageSprite.png?v=635975720914499532" title="Minimize" alt="Minimize" />
+</a>
+
+
+
+        </div>
+    <div id="content" class="content">
+
+
+
+
+
+
+
+
+    <div id="archiveDisclaimerText" style="display:none">This document is archived and information here might be outdated.</div>
+
+
+
+<div xmlns="http://www.w3.org/1999/xhtml">
+<div class="topic" xmlns="http://www.w3.org/1999/xhtml" xmlns:mtps="http://msdn2.microsoft.com/mtps" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:cs="http://msdn.microsoft.com/en-us/">
+  <h1 class="title">Passwords Technical Overview</h1>
+  
+  <p>Updated: May 2, 2012</p><p>Applies To: Windows 7, Windows Server 2003, Windows Server 2008, Windows Server 2008 R2, Windows Vista</p><div id="mainSection">
+    <div id="mainBody">
+      <p>This topic for the IT professional explains how Windows implements passwords in versions of Windows beginning with Windows Server 2003 and Windows XP. It also discusses strong passwords, passphrases, and password policies.</p>
+      <div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">How passwords work in Windows</span></a><div id="Anchor_0" class="LW_CollapsibleArea_Anchor_Div"><a href="/en-us/library/hh994558(v=ws.10).aspx#Anchor_0" class="LW_CollapsibleArea_Anchor_Img" title="Right-click to copy and share the link for this section"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock">
+        <p>In Windows and many other operating systems, the most common method for authenticating a user's identity is to use a secret passphrase or password. Securing your network environment requires that strong passwords be used by all users. This helps avoid the threat of a malicious user guessing a weak password, whether through manual methods or by using tools, to acquire the credentials of a compromised user account. This is especially true for administrative accounts. When you change a complex password regularly, it reduces the likelihood of a successful password attack. </p>
+        <p>Password policy settings control the complexity and lifetime of passwords. Password policies affect Windows passwords, not necessarily feature passwords.</p>
+        <p>Users' ability to modify their passwords is governed by the password policies and the available interfaces. For example, through the Secure Desktop, users can change their password at any time based upon the password policies administered by the system administrator or domain administrator. Features such as Windows Vault, BitLocker, and Encrypting File System allow users to modify passwords specific to that feature. </p>
+        <div><h3 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">How passwords are stored in Windows</span></a><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h3><div class="sectionblock">
+          <p>The Windows operating system stores passwords many different ways for different purposes. For use in Windows networking, including Active Directory domains, the password is stored two different ways by default: as the LAN Manager one-way function (LM OWF) and as the NT OWF. "One-way function" is a term that denotes a one-way mathematical transformation of data. The data that is being transformed can only be converted through encryption one way and cannot be reversed. The most common type of one-way function in use is a cryptographic hash. A hash is a small set of data that is mathematically tied to some larger set of data from which the hash is calculated. If the larger set of data is changed, the hash also changes. Hashes are useful, for example, as a checksum to verify that data has not been modified in transmission. A cryptographic hash is a hash that fulfills certain properties. A cryptographic hash must, for instance, be created in such a way that it is mathematically infeasible in a reasonable amount of time to infer the larger set of data from only the hash. Likewise, it is mathematically infeasible to find two sets of large data that generate the same hash.</p>
+          <p>There are many different types of one-way functions. All hash functions are, by definition, one-way functions. However, ordinary cryptographic functions that are typically reversible can also be used to create a one-way function. This can be done by swapping the data and the key in a cryptographic function and encrypting the fixed value (the key) by using the data as the key. This is how the LM hash is computed. The LM hash is computed as follows:</p>
+          <ol class="ordered">
+            <li>
+									The password is padded with NULL bytes to exactly 14 characters. If the password is longer than 14 characters, it is replaced with 14 NULL bytes for the remaining operations.<br /><br /></li>
+            <li>
+									The password is converted to all uppercase.<br /><br /></li>
+            <li>
+									The password is split into two 7-byte (56-bit) keys.<br /><br /></li>
+            <li>
+									Each key is used to encrypt a fixed string.<br /><br /></li>
+            <li>
+									The two results from step 4 are concatenated and stored as the LM hash.<br /><br /></li>
+          </ol>
+          <p>The LM OWF algorithm is included in Windows for backward compatibility with software and hardware that cannot use newer algorithms.</p>
+          <p>The NT hash is simply a hash. The password is hashed by using the MD4 algorithm and stored. The NT OWF is used for authentication by domain members in both Windows NT 4.0 and earlier domains and in Active Directory domains.</p>
+          <p>Neither the NT hash nor the LM hash is salted.  <em>Salting</em> is a process that combines the password with a random numeric value (the salt) before computing the one-way function. </p>
+          <p>Windows also stores a password verifier on domain members when a domain user logs on to that domain member. This verifier can be used to authenticate a domain user if the computer is not able to access the domain controller. The password verifier is also commonly called a cached credential. It is computed by taking the NT hash, concatenating the user name to it, and then hashing the result by using the MD4 hash function.</p>
+          <p>Internally, Windows represents passwords in 256-character UNICODE strings. The logon dialog box is limited to 127 characters. Therefore, the longest password that can be used to log on interactively to a computer running Windows is 127 characters. Programs such as services can use longer passwords, but they must be set programmatically.</p>
+        </div></div>
+        <div><h3 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">How passwords are used in Windows</span></a><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h3><div class="sectionblock">
+          <p>When a user logs on, the password the user types is converted into both types of one-way functions and held in memory by the Local Security Authority Subsystem Service (LSASS) process. If the user using a local account for authentication, the NT OWF is compared against the locally stored NT hash, and if the two match, the user is logged on. If the user is authenticating against an Active Directory domain by using a host name to access a resource, the NT hash is used in a Kerberos logon against the Key Distribution Center (KDC), which is typically the domain controller. The password verifier is computed by WINLOGON, not LSASS.</p>
+          <p>Kerberos cannot be used in the following situations:</p>
+          <ul>
+            <li class="unordered">
+									Authenticating against a domain running only Windows NT 4.0 or earlier<br /><br /></li>
+            <li class="unordered">
+									Accessing a resource on an Active Directory domain member by using an IP address rather than a host name<br /><br /></li>
+            <li class="unordered">
+									Accessing a resource on a computer that is not a member of an Active Directory domain<br /><br /></li>
+            <li class="unordered">
+									Accessing any resource on a computer running that does not support Kerberos<br /><br /></li>
+          </ul>
+          <p>In these situations, the authentication process uses two different protocols, called LAN Manager and NTLM. The process starts with the client requesting a challenge from the authentication server. After the challenge is received, the client computes a response to this challenge. This is done by first padding the two hashes of the password with null values to 168 bits. The 168 bits of each hash are then split into three 56-bit DES keys. The six DES keys are then used to encrypt the challenge. The three cipher texts produced by using the LM hash are concatenated and become the LAN Manager response. The three cipher texts produced by using the NT hash are concatenated and become the NTLM response.</p>
+          <p>The functions used to compute the response may be modified by the <strong>LM Compatibility Level</strong> setting in the <strong>Network security: LAN Manager authentication level</strong> Group Policy setting. If that value is set to 1 or lower, the client will send the original LAN Manager and NTLM responses. If it is set to 2, only the NTLM response is sent. If it is set to 3 or higher, a new version of both protocols is used. The NTLM version is called NTLMv2. The LAN Manager version is often referred to as LMv2. Both protocols use the NT hash to compute the response, and both use a client-side challenge, either instead of or in addition to the server challenge. In addition, if the <strong>LM Compatibility Level</strong> setting is set to 1 or higher, the NTLM response is time-stamped to help prevent replay attacks. For information about the <strong>LM Compatibility Level</strong> setting, see <a href="https://technet.microsoft.com/en-us/library/jj852207(v=ws.10).aspx">Network security: LAN Manager authentication level</a>.</p>
+        </div></div>
+      </div></div>
+      <div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">Strong passwords</span></a><div id="Anchor_1" class="LW_CollapsibleArea_Anchor_Div"><a href="/en-us/library/hh994558(v=ws.10).aspx#Anchor_1" class="LW_CollapsibleArea_Anchor_Img" title="Right-click to copy and share the link for this section"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock">
+        <p>Passwords provide the first line of defense against unauthorized access to your organization. Beginning with Windows Server 2003, Windows checks the complexity of the password for the Administrator account during setup of the operating system. If the password is blank or does not meet complexity requirements, the <strong>Windows Setup</strong> dialog box prompts you to create a strong password for the Administrator account. If you leave this password blank, you will not be able to access this account over the network. </p>
+        <p>Weak passwords provide attackers with easy access to your computers and network, while strong passwords are considerably more difficult to crack. The following table compares weak and strong passwords.</p>
+        <h3 class="subHeading"> </h3>
+        <table Responsive="true">
+          <tr Responsive="true">
+            <th>
+									Weak password
+								</th>
+            <th>
+									Strong password
+								</th>
+          </tr>
+          <tr>
+            <td data-th="&#xA;         Weak password&#xA;        ">
+              <p>Blank</p>
+            </td>
+            <td data-th="&#xA;         Strong password&#xA;        ">
+              <p>Is at least seven characters long</p>
+            </td>
+          </tr>
+          <tr>
+            <td data-th="&#xA;         Weak password&#xA;        ">
+              <p>Contains easily discoverable or known information, such as user name or domain name</p>
+            </td>
+            <td data-th="&#xA;         Strong password&#xA;        ">
+              <p>Contains "secret" or random information</p>
+            </td>
+          </tr>
+          <tr>
+            <td data-th="&#xA;         Weak password&#xA;        ">
+              <p>Is similar to previous passwords</p>
+            </td>
+            <td data-th="&#xA;         Strong password&#xA;        ">
+              <p>Is significantly different from previous passwords</p>
+            </td>
+          </tr>
+          <tr>
+            <td data-th="&#xA;         Weak password&#xA;        ">
+              <p>Contains a complete dictionary word</p>
+            </td>
+            <td data-th="&#xA;         Strong password&#xA;        ">
+              <p>Contains a mix of the following characters:</p>
+              <ul>
+                <li class="unordered">
+										Uppercase letters<br /><br /></li>
+                <li class="unordered">
+										Lowercase letters<br /><br /></li>
+                <li class="unordered">
+										Numerals<br /><br /></li>
+                <li class="unordered">
+										Symbols including spaces<br /><br /></li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+        <p>An example of a strong password is <em>J*p2leO4&gt;F</em>.</p>
+        <p>A password can meet most of the criteria of a strong password but still be rather weak. For example, <em>Hello2U!</em> is a relatively weak password even though it meets most of the criteria for a strong password and also meets the complexity requirements of password policy. <em>H!elZl2o</em> is a strong password because the dictionary word is interspersed with symbols, numbers, and other letters. It is important to educate users about the benefits of using strong passwords and to teach them how to create passwords that are actually strong.   </p>
+        <p>You can create passwords that contain characters from the extended ASCII character set. Using extended ASCII characters increases the number of characters that you can choose when you create a password. As a result, it might take more time for password-cracking software to crack passwords that contain these extended ASCII characters than it does to crack other passwords. Before using extended ASCII characters in your password, test them thoroughly to make sure that passwords containing extended ASCII characters are compatible with the applications that your organization uses. Be especially cautious about using extended ASCII characters in passwords if your organization uses several different operating systems. </p>
+        <p>Examples of passwords that contain characters from the extended ASCII character set are <em>kUµ!¶0o</em> and <em>Wf©$0k#»g¤5ªrd</em>.</p>
+      </div></div>
+      <div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">Passphrases in Windows</span></a><div id="Anchor_2" class="LW_CollapsibleArea_Anchor_Div"><a href="/en-us/library/hh994558(v=ws.10).aspx#Anchor_2" class="LW_CollapsibleArea_Anchor_Img" title="Right-click to copy and share the link for this section"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock">
+        <p>A passphrase is a different form of token-based password in which the tokens are words instead of symbols from a character set. An example of a passphrase is a sentence that contains special characters, numerals, uppercase letters, and lowercase letters. The key differences between passphrases and passwords are:</p>
+        <ul>
+          <li class="unordered">
+							A passphrase usually has spaces; passwords do not.<br /><br /></li>
+          <li class="unordered">
+							A passphrase is much longer than the vast majority of words, and, more important, longer than any random string of letters that an ordinary person could remember.<br /><br /></li>
+        </ul>
+        <p>Passphrases that conform to the character limit as set in the policy are generally, more difficult to crack than passwords because they contain more characters. It is the LM and NT hash that stores the password or passphrase, and the LM hash is the weaker of the two. </p>
+        <p>There are several ways to ensure the LM hash is not stored; one of them is to use passwords or passphrases longer than 14 characters. You can also use the <strong>Network security: Do not store LAN Manager hash value on next password change</strong> Group Policy setting. Using this policy setting globally turns off storage LM hashes for all accounts. The change will take effect the next time the password is changed. Because the policy's effect is not immediate, you will not immediately notice any potential interoperability problems caused by not storing LM hashes.</p>
+      </div></div>
+      <div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">Local password policies available in Windows</span></a><div id="Anchor_3" class="LW_CollapsibleArea_Anchor_Div"><a href="/en-us/library/hh994558(v=ws.10).aspx#Anchor_3" class="LW_CollapsibleArea_Anchor_Img" title="Right-click to copy and share the link for this section"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock">
+        <p>You can implement a password policy setting that enforces password complexity requirements. For more information about this policy setting, see <a href="https://technet.microsoft.com/en-us/library/cc786468(v=ws.10).aspx">Password must meet complexity requirements</a>. For information about how to apply a password policy, see <span class="unresolvedLink">Apply or Modify a Password Policy</span>. For information about all available password policy settings, see <a href="https://technet.microsoft.com/en-us/library/hh994572(v=ws.10).aspx">Password Policy</a>.</p>
+      </div></div>
+      <div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="Collapse" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">Fine-grained password policy available through Active Directory Domain Services (AD DS)</span></a><div id="Anchor_4" class="LW_CollapsibleArea_Anchor_Div"><a href="/en-us/library/hh994558(v=ws.10).aspx#Anchor_4" class="LW_CollapsibleArea_Anchor_Img" title="Right-click to copy and share the link for this section"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock">
+        <p>Beginning with Windows Server 2008, you can use fine-grained password policies to specify multiple password policies and apply different password restrictions and account lockout policies to different sets of users within a single domain. For example, to increase the security of privileged accounts, you can apply stricter settings to the privileged accounts and then apply less strict settings to the accounts of other users. Or in some cases, you may want to apply a special password policy for accounts whose passwords are synchronized with other data sources.</p>
+        <p>To store fine-grained password policies, two new object classes exist in the AD DS schema:</p>
+        <ul>
+          <li class="unordered">
+            <strong>Password Settings Container</strong>
+            <br />
+            <br />
+          </li>
+          <li class="unordered">
+            <strong>Password Settings</strong>
+            <br />
+            <br />
+          </li>
+        </ul>
+        <p>For more information about these policies, see <a href="https://technet.microsoft.com/en-us/library/cc770394(v=ws.10).aspx">AD DS: Fine-Grained Password Policies</a>. </p>
+      </div></div>
+    </div>
+    <p>
+      
+    </p>
+  </div>
+</div></div>
+
+
+
+
+
+<script id="CommentTemplate" type="text/x-jquery-tmpl">
+    <div class="communityContentAnnotation">
+        <a name="${Index}"></a>
+        <h3>
+            ${Title}
+        </h3>
+        <div class="communityContentAnnotationBody">
+            {{html Body}}
+        </div>
+        <div class="communityContentAnnotationInfo">
+            <div class="communityContentAnnotationAvatarContainer">
+                <a href="${UserAvatar.Href}" title="${UserAvatar.ToolTip}" class="communityContentAnnotationAvatar"><img src="${UserAvatar.ImageUrl}" alt="${UserAvatar.ImageAltText}" width="34" height="34" /></a>
+            </div>
+            <div class="communityContentAnnotationUserDateContainer">
+                <div class="communityContentAnnotationUserContainer">
+                    <a href="${UserAvatar.Href}">
+                        ${User}
+                    </a>
+                </div>
+                <div class="communityContentAnnotationDateContainer">
+                    <span>${Date}</span>
+                    
+                    {{if EditLink}}
+                        <span>
+                            <a href="${EditLink.Href}" title="${EditLink.ToolTip}" class="communityContentCommentEditLink">${EditLink.Title}</a>
+                        </span>
+                    {{/if}}
+
+                    {{if DeleteLink}}
+                        <span>
+                            <a href="${DeleteLink.Href}" title="${DeleteLink.ToolTip}" class="communityContentDeleteLink">${DeleteLink.Title}</a>
+                        </span>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div class="communityContentContainer" ms.cmpgrp="community">
+    <div id="CommunityContentHeader" class="communityContentHeader">
+        <div class="communityContentHeaderTitleContainer">
+            <h2>Community Additions</h2>
+                <a class="communityContentAddLink" href="https://technet.microsoft.com/en-us/library/community/add/hh994558(v=ws.10).aspx">
+                    <span class="communityContentAddButton" title="Add">
+                        ADD
+                    </span>
+                </a>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    
+    <div id="CommunityComments" data-url="/en-us/library/community/comments/hh994558(v=ws.10).aspx"></div>
+</div>
+
+
+
+
+<div class="libraryMemberFilter">
+    <div class="filterContainer">
+        <span>Show:</span>
+        <label>
+            <input type="checkbox" class="libraryFilterInherited" checked="checked" value="Inherit" />Inherited
+        </label>
+        <label>
+            <input type="checkbox" class="libraryFilterProtected" checked="checked" value="Protected" />Protected
+        </label>
+    </div>
+</div>
+    
+<input type="hidden" id="libraryMemberFilterEmptyWarning" value="There are no members available with your current filter settings." />
+
+
+
+    </div>
+
+
+        </div>
+        <div class="clear"></div>
+
+        
+
+<input name="__RequestVerificationToken" type="hidden" value="ZST1egKHPP6X0aYnjhUamuGRCBmQmpYiSG7JVUP3d0m5YVAXN3jy8fK9d1ys91vqHxJHfjp7xlrFFwwKDIcLAnkCZ1o1" />
+<input id="ratingValueSubmitUrl" type="hidden" value="https://technet.microsoft.com/en-us/library/feedback/rate/hh994558(v=ws.10).aspx" />
+<input id="ratingAdditionalSubmitUrl" type="hidden" value="https://technet.microsoft.com/en-us/library/feedback/additional/hh994558(v=ws.10).aspx" />
+<input id="isTopicRated" type="hidden" value="false" />
+
+
+
+        <div id="lib-footer">
+
+
+    <div id="standardRatingBefore" class="clear stdr-container-before"></div>
+    <div id="standardRating" class="stdr-container" ms.pgarea="body">
+        <div class="stdr-close"></div>
+        <div class="stdr-vote stdr-content">
+            <div class="stdr-content">
+                <span class="stdr-votetitle">Was this page helpful?</span>
+                <button class="stdr-yes" aria-label="Yes, this page was helpful">Yes</button>
+                <button class="stdr-no" aria-label="No, this page was not helpful">No</button>
+                <input id="s_ratingValue" type="hidden" value="" />
+            </div>
+        </div>
+        <div class="stdr-feedback" style="display: none">
+            <div class="stdr-form">
+                <div class="stdr-fieldtitle">Additional feedback?</div>
+                <textarea class="stdr-detail" rows="6" maxlength="1500"></textarea>
+                <div>
+                    <span class="stdr-count"><span class="stdr-charcnt">1500</span> characters remaining</span>
+                    <div class="stdr-buttons">
+                        <button class="stdr-provide" aria-label="Submit my additional feedback">Submit</button>
+                        <button class="stdr-skip" aria-label="Skip additional feedback">Skip this</button>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="stdr-thanks" style="display: none">
+            <div class="stdr-content">
+                <span class="stdr-thankyou">Thank you!</span>
+                <span class="stdr-appreciate">We appreciate your feedback.</span>
+            </div>
+        </div>
+
+        
+        <div id="contentFeedbackQAContainer" style="display: none;"></div>
+    </div>
+    
+            
+    <div id="ux-footer" dir="ltr" class="ltr" ms.pgarea="footer">
+        <div class="ux-footer-clear"></div>
+        <div id="footerWrapper">
+            <div id="footerLeft">
+                <div id="footerProfileFeedback">
+                    <div id="footerProfileLink">
+                        <div data-fragmentName="ManageProfileLink" id="Fragment_ManageProfileLink" xmlns="http://www.w3.org/1999/xhtml">
+  <a href="https://social.technet.microsoft.com/profile" xmlns="http://www.w3.org/1999/xhtml">Manage Your Profile</a>
+</div>
+                    </div>
+                    <div id="Feedback">
+                        <div class="feedbackListItem">
+                            <div class="divider">|</div>
+                            
+
+
+
+
+
+<div class="FooterSiteFeedBack">
+    <a id="SiteFeedbackLinkOpener" href="javascript:void(0)">
+        <span class="FeedbackButton clip20x21" id="FeedbackButton">
+            <img id="feedBackImg" class="cl_footer_feedback_icon" src="https://i-technet.sec.s-msft.com/Areas/Epx/Content/Images/ImageSprite.png?v=635975720914499532" alt="Site Feedback" />
+        </span>
+        Site Feedback
+    </a>
+    
+    <div id="SiteFeedbackLinkContainer" class="SiteFeedbackLinkContainer" style="display: none;">
+    <form id="siteFeedbackForm" method="post" action="https://technet.microsoft.com/en-us/library/feedback/add/hh994558(v=ws.10).aspx">
+        <div class="SiteFeedbackLinkTitleContainer">
+            <div class="SiteFeedbackLinkTitle">
+                Site Feedback
+            </div>
+            <div class="SiteFeedbackLinkCancel">
+                <a id="SiteFeedbackLinkCloser" href="javascript:void(0)">x</a>
+            </div>
+        </div>
+        <div class="SiteFeedbackLinkData">
+            <div class="SiteFeedbackLinkInfoText">
+                Tell us about your experience...
+            </div>
+            <div class="QuestionText">
+                Did the page load quickly?
+            </div>
+            <div class="AnswerText">
+                
+                <span>
+                    Yes<span>
+                        <input id="searchBox" name="searchBox" type="radio" value="1" /></span></span>
+                
+                <span>
+                    No<span>
+                        <input id="searchBox" name="searchBox" type="radio" value="0" /></span></span>
+                
+            </div>
+            <div class="QuestionText">
+                Do you like the page design?
+            </div>
+            <div class="AnswerText">
+                
+                <span>
+                    Yes<span>
+                        <input id="tabbedCode" name="tabbedCode" type="radio" value="1" /></span></span>
+                
+                <span>
+                    No<span>
+                        <input id="tabbedCode" name="tabbedCode" type="radio" value="0" /></span></span>
+                
+            </div>
+            <div class="QuestionText">
+                Tell us more
+            </div>
+            <div class="SiteFeedbackLinkTextAreaContainer">
+                <textarea id="feedbackText" data-maxlength="4000" name="feedbackText" cols="25" rows="5" class="SiteFeedbackLinkTextArea"></textarea>
+                
+                <input type="hidden" id="feedbackSiteName" name="feedbackSiteName" value="" />
+                <input type="hidden" id="feedbackPriority" name="feedbackPriority" value="" />
+                <input type="hidden" id="feedbackSourceUrl" name="feedbackSourceUrl" value="" />
+                <input type="hidden" id="ClientIP" name="ClientIP" value="" />
+                <input type="hidden" id="ClientOS" name="ClientOS" value="" />
+                <input type="hidden" id="ClientBrowser" name="ClientBrowser" value="" />
+                <input type="hidden" id="ClientTime" name="ClientTime" value="" />
+                <input type="hidden" id="ClientDate" name="ClientDate" value="" />
+                
+            </div>
+            <div>
+                <input id="siteFeedbackSubmit" type="submit" value="Send" class="SiteFeedbackLinkSubmit" />
+            </div>
+        </div>
+        <input type="hidden" id="returnUrl" name="returnUrl" value="https://technet.microsoft.com/en-us/library/hh994558(v=ws.10).aspx" />
+    </form>
+</div>
+    
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="footerGroup">
+                    <div id="LinkGroup">
+                        <div id="Links1"><div data-fragmentName="FooterLinks" id="Fragment_FooterLinks" xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="linkList">
+    <ul class="links horizontal">
+      <li>
+        <a href="https://technet.microsoft.com/cc543196.aspx" xmlns="http://www.w3.org/1999/xhtml">Flash Newsletter</a>
+      </li>
+      <li class="divider">|</li>
+      <li>
+        <a href="https://technet.microsoft.com/cc512759.aspx" xmlns="http://www.w3.org/1999/xhtml">Contact Us</a>
+      </li>
+      <li class="divider">|</li>
+      <li>
+        <a href="https://privacy.microsoft.com/privacystatement" xmlns="http://www.w3.org/1999/xhtml">Privacy Statement</a>
+      </li>
+      <li class="divider">|</li>
+      <li>
+        <a href="https://technet.microsoft.com/cc300389.aspx" xmlns="http://www.w3.org/1999/xhtml">Terms of Use</a>
+      </li>
+      <li class="divider">|</li>
+      <li>
+        <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/" xmlns="http://www.w3.org/1999/xhtml">Trademarks</a>
+      </li>
+      <li class="divider">|</li>
+    </ul>
+  </div>
+</div></div>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+                <div id="Links2"></div>
+            </div>
+            <div id="footerRight">
+                <div id="FooterLogoContainer"><div id="FooterLogo"></div></div>
+                <div id="FooterCopyright">© 2016 Microsoft</div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+
+        <div class="footerPrintView">
+            <div class="footerCopyrightPrintView">© 2016 Microsoft</div>
+        </div>
+
+        
+        
+        
+        
+
+        
+            
+
+
+
+    <input id="tocPaddingPerLevel" type="hidden" value="17" />
+
+
+
+        <input id="MtpsDevice" type="hidden" value="Default" />
+
+
+<![CDATA[ Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx. ]]>
+
+        
+        
+        
+            
+        
+
+
+
+
+
+
+<noscript><div><img alt="DCSIMG" id="Img1" width="1" height="1" src="https://m.webtrends.com/dcsjwb9vb00000c932fd0rjc7_5p3t/njs.gif?dcsuri=/nojavascript&amp;WT.js=No" /></div></noscript>
+
+
+
+
+
+
+
+
+<div id="globalRequestVerification">
+    <input name="__RequestVerificationToken" type="hidden" value="7MdWifThwtM0djx3u4VEfG6CNbUNd1h-4_-dPyteulwbrzcoCywIgdATmwqlovYvz7lvIG26Z2HxBZ6aJgS87sl5_yI1" />
+</div>
+
+
+    </div>
+
+    
+    
+
+    
+
+    
+    
+    
+<script type="text/javascript" class="mtps-injected">
+/*<![CDATA[*/
+(function(window,document){"use strict";function preload(scripts){for(var result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);return result}function inject(scripts,index){var script,elem;if(index>=scripts.length){delete mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="try {\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+MTPS.injectScripts([
+	{ txt: "/**/\r\n(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": \"https://i-technet.sec.s-msft.com\", \r\n\t\"js\": \"https://i2-technet.sec.s-msft.com\", \r\n\t\"css\": \"https://i-technet.sec.s-msft.com\", \r\n\t\"ttf\": \"https://i-technet.sec.s-msft.com\"\r\n});\r\n/**/" },
+	{ txt: "//\n  var literalNormalizedUrl = \u0027/en-us/library/hh994558(l=en-us,v=ws.10).aspx\u0027;\n  var wt_nvr_ru = \u0027WT_NVR_RU\u0027;\n  var wt_fpcdom = \u0027.microsoft.com\u0027;\n  var wt_domlist = \u0027technet.microsoft.com\u0027;\n  var wt_pathlist = \u0027/technet/\u0027;\n  var wt_paramlist = \u0027DCSext.mtps_techcenter\u0027;\n  var wt_siteid = \u0027TECHNET\u0027;\n  var gDomain = \u0027m.webtrends.com\u0027;\n  var gDcsId = \u0027dcsjwb9vb00000c932fd0rjc7_5p3t\u0027;\n  var gFpc = \u0027WT_FPC\u0027;\n\n\n\n  if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n    var wtidJs = document.createElement(\"script\");\n    wtidJs.src = \"//\" + gDomain + \"/\" + gDcsId + \"/wtid.js\";\n    document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n  }\n\n\n\n  var detectedLocale = \u0027en-us\u0027;\n  var wtsp = \u0027_technet_library_windowsserver_WinSvr_2003_\u0027;\n  var gTrackEvents = \u00270\u0027;\n/**/" },
+	{ txt: "//\n\n        window.appInsightsId = \u0027c48d7639-e2ae-45e0-b536-c9b172c95e44\u0027;\n        //" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:Utilities,1:StandardRating,0:Topic,2:webtrendsscript,0:AppInsightsPerf,3:Toc,0:ABTestControl,4:WEDCS,0:livefyre,0:Comment;/Areas/Epx/Content/Scripts:0,/Areas/Global/Content:1,/Areas/Global/Content/Webtrends/resources:2,/Areas/Library/Content:3,/Areas/Library/Themes/Base/Content:4\u0026amp;hashKey=42529EF217B4FEC485D3B2005FC8354D\u0026amp;v=F620C7CCDAC78875377DB8FF23F56CFC" },
+	{ txt: "var omnitureTracking = \"false\";" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:megabladeMenu.1,1:SearchBox;/Areas/Epx/Themes/Shared/Content:0,/Areas/Epx/Themes/Base/Content:1\u0026amp;hashKey=855E0AF46D7EB3787F30CFB4C70E0487\u0026amp;v=F620C7CCDAC78875377DB8FF23F56CFC" },
+	{ url: "https://i3.services.social.microsoft.com/search/Widgets/SearchBox.jss?boxid=HeaderSearchTextBox\u0026btnid=HeaderSearchButton\u0026brand=TechNet\u0026loc=en-us\u0026Refinement=9\u0026watermark=Windows%20Server\u0026focusOnInit=false\u0026iroot=windowsserver" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:JumpRedirect,1:Header.2,2:PrintExportButton,3:AnySuggestion,4:NavigationResize;/Areas/Epx/Themes/Base/Content:0,/Areas/Epx/Themes/TechNet/Content:1,/Areas/Library/Themes/Base/Content:2,/Areas/Library/Themes/Technet/Content:3,/Areas/Library/Content:4\u0026amp;hashKey=DA54AF8472EE8BF6DDF9021D34313D0C\u0026amp;v=F620C7CCDAC78875377DB8FF23F56CFC" },
+	{ txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = \u0027Expand\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = \u0027Collapse\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027Click to expand. Double-click to expand all.\u0027; MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027Click to collapse. Double-click to collapse all.\u0027; MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027Expand All\u0027; MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027Collapse All\u0027;" },
+	{ txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = \u0027Expand\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = \u0027Collapse\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027Click to expand. Double-click to expand all.\u0027; MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027Click to collapse. Double-click to collapse all.\u0027; MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027Expand All\u0027; MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027Collapse All\u0027;" },
+	{ url: "https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" },
+	{ url: "https://i2-technet.sec.s-msft.com/Combined.js?resources=0:CommunityContent,0:LibraryMemberFilter,1:SiteFeedbackLink,1:CodeSnippet,1:TopicNotInScope,1:CollapsibleArea,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1\u0026amp;hashKey=0F2A7C1C85F1764A9FF6021ABE6C61A8\u0026amp;v=F620C7CCDAC78875377DB8FF23F56CFC" },
+	{ txt: "$(document).ready(function() {\n        try {\n            var token = $(\"#globalRequestVerification input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n            $(\"#siteFeedbackForm\").append(token);\n        } catch(err) {\n            \n        }\n    });" }
+]);
+
+/*]]>*/
+</script></body>
+</html>

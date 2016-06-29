@@ -1,0 +1,1282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0047)http://www.w3.org/TR/Templates/tech-report.html -->
+<HTML lang=en>
+<HEAD>
+<TITLE>XUP - Extensible User Interface Protocol</TITLE>
+<META content="Microsoft FrontPage 4.0" name=GENERATOR>
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<LINK rel="stylesheet" type="text/css" href="xup-style.css">
+<LINK rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-NOTE">
+</HEAD>
+<BODY>
+<DIV class=head><A href="http://www.w3.org/"><IMG height=48 alt=W3C 
+src="http://www.w3.org/Icons/w3c_home" width=72></A> 
+<H1>XUP - Extensible User Interface Protocol</H1>
+<H2>W3C Note 28 May 2002</H2>
+<DL>
+  <DT>This version: 
+  <DD>
+   <A href="http://www.w3.org/TR/2002/NOTE-xup-20020528">http://www.w3.org/TR/2002/NOTE-xup-20020528/</A>
+  <DT>Latest version: 
+  <DD>
+   <A href="http://www.w3.org/TR/xup/">http://www.w3.org/TR/xup/</A>
+
+  <DT>Previous version: 
+  <DD>None 
+
+  <DT>Editors: 
+  <DD>Jin Yu, MartSoft Corporation, 
+   <A href="mailto:jyu@martsoft.com">jyu@martsoft.com<BR>
+   </A>
+   Jun Chen, MartSoft Corporation, 
+   <A href="mailto:jun_chen@martsoft.com">jun_chen@martsoft.com</A>
+</DD></DL>
+<P class=copyright>Copyright 
+©2002 
+<A href="http://www.martsoft.com/">MartSoft Corporation</A>, All 
+Rights Reserved.</P>
+<HR>
+</DIV>
+<H2><A id=abstract name=abstract>Abstract</A></H2>
+<P>The Extensible User Interface Protocol (XUP) is a SOAP-based protocol for communicating user interface events and updates on the web. It paves a foundation for developing and consuming highly interactive web applications and
+services. XUP may be used with any user interface model or any event model with an XML-based representation.</P>
+<H2><A id=status name=status>Status of this document</A></H2>
+
+<p>
+This document is a Note that is the result of an acknowledged <a href="http://www.w3.org/Consortium/Process-20010719/submission#Submission">Member Submission</a>, made available by the W3C for discussion only. Please read the <a href="http://www.w3.org/Submission/2002/03/">Submission request</a> and <a href="http://www.w3.org/Submission/2002/03/Comment">W3C Staff Comment</a> on this request. Publication of this Note by W3C indicates no endorsement of its content by W3C, nor that W3C has, is, or will be allocating any resources to the issues addressed by the Note. The <a href="/Submission/">list of acknowledged W3C Submissions</a> is available at the W3C Web site.</p>
+<P>
+Feedback and comments are welcome and may be sent to 
+<A href="mailto:xup@martsoft.com">xup@martsoft.com</A>.</P>
+
+<div class="toc">
+<H2><A id=contents name=contents>Table of contents</A></H2>
+
+<p class="toc">1 
+<A href="#intro"> Introduction</A>
+<br>
+&nbsp;&nbsp;&nbsp; 1.1 
+<A href="#Terminology"> Terminology</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.2 
+<A href="#DocumentationConvention"> Documentation Convention</A>
+<BR>
+2 
+<A href="#ui"> User Interface Model</A>
+<br>
+3 
+<A href="#protocol"> Protocol Overview</A>
+<br>
+4 
+<A href="#event"> Network Event Delivery</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4.1 
+<A href="#event_intro"> Introduction</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;4.2 
+<A href="#event_model"> Event Models</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;4.3 
+<A href="#event_dispatch"> Event Dispatch</A>
+<br>
+5 
+<A href="#transport"> Transport Layer</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;5.1 
+<A href="#transport_intro"> Introduction</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;5.2 
+<A href="#transport_soap"> Relationship to SOAP</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;5.3 
+<A href="#transport_http"> Relationship to HTTP</A>
+<br>
+6 
+<A href="#startup"> Startup</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;6.1 
+<A href="#startup_intro"> Introduction</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;6.2 
+<A href="#startup_request"> XUP Request</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.2.1 
+<A href="#elem_userAgent"> userAgent</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.2.2 
+<A href="#elem_uiModelNamespace">uiModelNamespace</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;6.3 
+<A href="#startup_response"> XUP Response</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.3.1 
+<A href="#elem_server">server</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.3.2 
+<A href="#elem_sessionID">sessionID</A>
+<BR>
+7 
+<A href="#normalop"> Normal Operation</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;7.1 
+<A href="#normalop_intro"> Introduction</A>
+<BR>
+&nbsp;&nbsp;&nbsp; 7.2 
+<A href="#normalop_request"> XUP Request</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.2.1 
+<A href="#normalop_request_sessionID">sessionID</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.2.2 
+<A href="#elem_event">event</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.2.3 
+<A href="#elem_detail">detail</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.2.4 
+<A href="#elem_uiElement">uiElement</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.2.5 
+<A href="#elem_uiAttr">uiAttr</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.2.6 
+<A href="#normalop_request_ex">XUP Request Example</A>
+<BR>
+&nbsp;&nbsp;&nbsp; 7.3 
+<A href="#normalop_response"> XUP Response</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.1 
+<A href="#elem_uiModel">uiModel</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.2 
+<A href="#elem_addUIElement">addUIElement</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.3 
+<A href="#elem_updateUIElement">updateUIElement</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.4 
+<A href="#elem_updateUIAttr">updateUIAttr</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.5 
+<A href="#elem_removeUIElement">removeUIElement</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.6 
+<A href="#elem_updateListeners">updateListeners</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.7 
+<A href="#elem_add">add</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.8 
+<A href="#elem_listener">listener</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.9 
+<A href="#elem_uiRef">uiRef</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.10 
+<A href="#elem_remove">remove</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.11 
+<A href="#elem_stopPropagation">stopPropagation</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7.3.12 
+<A href="#normalop_response_ex">XUP Response Example</A>
+<BR>
+8 
+<A href="#error"> Error Handling</A>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;8.1 
+<A href="#error_intro"> Introduction</A>
+<BR>
+&nbsp;&nbsp;&nbsp; 8.2 
+<A href="#error_request"> Request Processing Errors</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8.2.1 <A href="#error_UIErrors">xup:UIErrors</A>
+<BR>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8.2.1.1 
+<A href="#elem_unsupportedEvent">unsupportedEvent</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 8.2.1.2 
+<A href="#elem_eventHandlerNotFound">eventHandlerNotFound<BR>
+</A>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8.2.1.3 
+<A href="#elem_unknownRefs">unknownRefs</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 8.2.1.4 
+<A href="#elem_elementRef">elementRef</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8.2.1.5 
+<A href="#elem_listenerRef">listenerRef</A>
+<BR>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8.2.1.6 
+<A href="#elem_attrRef">attrRef</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 8.2.1.7 
+<A href="#elem_unsupportedUI">unsupportedUI</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8.2.1.8 
+<A href="#elem_illegalUIValues">illegalUIValues</A>
+<BR>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8.2.1.9 
+<A href="#elem_illegalUIStructure">illegalUIStructure</A>
+<BR>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 8.2.2 
+<A href="#error_example">Request Processing Error Example</A>
+<BR>
+&nbsp;&nbsp;&nbsp; 8.3 
+<A href="#error_response"> Response Processing Errors</A>
+<br>
+9 
+<A href="#impl"> Implementation Considerations</A>
+</p>
+<H2><A id=appendices name=appendices>Appendices</A></H2>
+<p class="toc">
+A 
+<A href="#SchemaRef"> XML Schema Reference</A>
+<br>
+B 
+<A href="#references"> References</A>
+<BR>
+&nbsp;&nbsp;&nbsp; B.1 
+<A href="#NormativeReference"> Normative References</A>
+<BR>
+&nbsp;&nbsp;&nbsp; B.2 
+<A href="#InformativeReference"> Informative References</A>
+</p>
+</div>
+
+<HR>
+
+<H2><A id=intro name=intro>1 Introduction</A></H2>
+
+<P>The Extensible User Interface Protocol (XUP) is an XML-based protocol for communicating events and user interface changes on the web. Its goal is to provide a framework for developing and using highly interactive web
+applications.</P>
+
+<P>XUP provides a model that bridges between the traditional desktop based and web page based user interface paradigms. With XUP, events are delivered from 
+<A href="#term_user_agent"> user agent</A>
+ to 
+<A href="#term_server"> server</A>
+ as SOAP [<A href="#ref-SOAP">SOAP12</A>] messages. Programmers implement event handlers on the server side. They no longer need to process form data as URL-encoded strings. User interface changes are delivered from
+server to user agent as incremental updates, so end users will no longer experience slow page refreshes, and network bandwidth is conserved.&nbsp;</P>
+
+<P> The traditional desktop-based model offers rich and powerful user interface controls, but it requires client-side software
+administration. The web page based model has no client software administration cost, as it has a universal client--the web browser, but it lacks sophisticated user interface controls required by highly interactive web applications. XUP
+provides a foundation for a user interface programming model that combines the advantages of both the desktop and web page based models. XUP offers the benefit of zero client administration cost as well as better, richer, and more
+powerful user interactivities. The XUP based model complements, rather than replaces, the traditional desktop or web page based models. The desktop model is more appropriate for graphics-intensive applications, such as movie
+players and video games, and the web page based model is more suitable for information browsing, such as browsing news web sites.</P>
+
+<P>XUP does not dictate a specific user interface model. It only assumes an XML-based user interface representation. Examples of such models include XUL [<A href="#ref-XUL">XUL</A>], XHTML [<A href="#ref-XHTML">XHTML10</A>], and WML [<A href="#ref-WML">WML20</A>]. XUP may be used with any event model (e.g. delegation [<A href="#ref-DELEGATION">DELEGATION</A>], capturing/bubbling [<A href="#ref-DOM2">DOM2EVENTS</A>]) with any
+type of events.</P>
+
+<H3><A name="Terminology">1.1 Terminology</A></H3>
+
+<P>The key words <B>may</B>, <B>must</B>, and <B>should</B> in this document are to be interpreted as described in RFC 2119 [<A href="#ref-RFC2119">RFC2119</A>].</P>
+
+<P>An implementation is not compliant if it fails to satisfy one or more of the <B>must</B> level requirements for the protocols it implements. An implementation that satisfies all the <B>must</B> level and all the <B>should</B> level requirements for its protocols is said to be &quot;unconditionally compliant&quot;; one that satisfies all the
+<B>must</B> level requirements but not all the <B>should</B> level requirements for its protocols is said to be
+&quot;conditionally compliant.&quot;</P>
+
+<P>This specification uses a number of terms to refer to the roles played by participants in, and objects of, the XUP communication.</P>
+
+<blockquote>
+<P>
+<B>
+<A name="term_user_agent">user agent</A>
+</B> - a program which sends requests and processes responses on behalf of the end user.<BR>
+<B>
+<A name="term_server">server</A>
+</B> - a program that accepts connections in order to service requests by sending back responses.<B><BR>
+application</B> - a program that resides in the server and provides desired functionalities to the end user through the user agent.<BR>
+<B>UI model</B> - a representation of the user interface which the end user perceives and interacts with. The user agent keeps an instance of UI model for each application which the end user interacts with.<BR>
+<B>event model</B> - a representation of events triggered by user interactions with the UI model. The event model defines how events are fired, what types of events are fired, and from which UI elements the events are fired in the UI model. The event
+model is often part of the UI model.</P>
+
+</blockquote>
+
+<H3>
+<A name="DocumentationConvention">1.2 Documentation Convention</A>
+</H3>
+
+<P>Throughout this document, the following namespace prefixes and corresponding namespace identifiers are used:</P>
+
+<blockquote>
+<P>
+<B>
+xup</B> - the XUP namespace (<A href="http://www.w3.org/2002/03/xup">http://www.w3.org/2002/03/xup</A>)<BR>
+<B>
+xul</B> - the XML User Interface Language (XUL) namespace (<A href="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul</A>)<B><BR>
+xsd</B> - the XML schema [<A href="#ref-XMLSCHEMA">XMLSCHEMA1</A>] namespace (<A href="http://www.w3.org/2001/XMLSchema">http://www.w3.org/2001/XMLSchema</A>)<BR>
+<B>
+env</B> - the SOAP envelope namespace (<A href="http://www.w3.org/2001/12/soap-envelope">http://www.w3.org/2001/12/soap-envelope</A>)<BR>
+<B>ev</B> - a fictional event namespace (http://example_event.org).</P>
+</blockquote>
+<p>
+This is only a convention. Any namespace prefix may be used in practice.
+</p>
+<p>
+The following typographical conventions are used to present technical material in this document.
+</p>
+<p>The XML representation of various elements within XUP are presented as follows: Listed are the element name, names of all attributes, allowed values of attributes appearing after a &quot;=&quot; character, default values of
+attributes after a &quot;:&quot; character, and allowed content. One or more headings below the listing provide additional explanatory information. The following block illustrates an example of XML representation for the <CODE> userAgent</CODE>
+element.
+</p>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;userAgent&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;userAgent</PRE><PRE>  name = xsd:string</PRE><PRE>  version = xsd:string</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/userAgent&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>name </B>- user agent name.<br>
+  
+  <B>version</B> - user agent version number.
+  
+  </P></BLOCKQUOTE>
+</DIV>
+
+<P>
+References to external documents appear as follows: [<A href="#references">REF1</A>]
+ with links to the references section of this document.
+
+<H2><A id="ui" name="ui">2 User Interface Model</A></H2>
+
+<P>XUP is a protocol for delivering events and user interface updates. It is independent of the actual UI or event model. It places no restriction on the UI component set, or the attributes or events associated with each component.
+Furthermore, it supports both delegation and capturing/bubbling event models.</P>
+
+<P>XUP can work with any UI models with XML-based representations. A UI model is described by a tree of XML elements, with UI components (e.g. panels, buttons) mapping to elements and the properties (e.g. color, size) of the
+components mapping to attributes. Throughout this document, we will use the terms UI element and UI attribute to refer to UI components and their properties.</P>
+
+<P>Examples of XML-based UI models include XUL, Proto [<A href="#ref-proto">PROTO</A>], XHTML, and WML. This specification uses XUL in most
+examples, as XUL has a rich set of UI components. But the same examples can be replicated in the other UI models as well.</P>
+
+<H2><a name="protocol" id="protocol">3 Protocol Overview</a></H2>
+
+<P>This section provides an overview of the various elements of XUP and the interactions among them.</P>
+
+<P>An XUP user agent communicates with an XUP server by sending events encapsulated in XUP requests. The server then handles the events and returns UI and listener updates in XUP responses.</P>
+
+<P>An end user interacts with an XUP application by operating a user agent which sends events to the XUP server hosting the XUP application. XUP applications are developed by programmers to provide desired application
+functionalities for end users. An XUP server may host one or more XUP applications which may be running concurrently. Similarly, an end user may use a user agent to interact with more than one application from one or more servers
+at the same time.</P>
+
+<P>Each XUP application is identified by a URL. The format of the URL is server implementation specific. For example, query strings can be used to identify different XUP applications within a server. The following diagram
+illustrates XUP message exchanges between a user agent and a server. The user agent starts an
+application by sending a request to the URL identifying the application. This request includes user agent software information and a list of UI model namespaces supported by the user agent. The server then responds by sending a session ID
+used for identifying the user agent in subsequent request, the initial UI model, and an initial list of event listeners. The server side maintains a user session for each user agent, identified by a session ID. This document
+does not specify how the server or the application should maintain user sessions, nor the contents of user sessions. The initial UI model's namespace must be in the list of UI model namespaces supported by the user agent. The user agent
+interprets this UI model and renders its initial UI accordingly. The event listeners are used by the user agent to deliver events to the server in subsequent requests.</P>
+
+<P><IMG border="0" src="xup_overview.gif" 
+alt="XUP exchange between a user agent on the left and a server on the right.
+The user agent contains a UI model and a set of event listeners. The server contains multiple applications where each application has a set of event handlers.
+The XUP communication between the user agent and the server includes a initial startup message and multiple subsequent messages.
+In the startup message, the user agent sends user agent info, supported UI model namespsaces. The server responds with server info, session ID, initial UI models and listeners.
+In subsequent messages, the user agent sends event and UI data (due to end-user changes). The server responds with updates to UI model and listeners, or fault."
+width="570" height="228"></P>
+
+<P>After the startup phase, the end user interacts with the application by manipulating the UI model, which triggers events to be sent to the server. An event is sent to the server only when it matches with an event listener in the
+user agent. Together with the event, a list of UI data is also sent. Those UI data are referenced in event listener specifications in server responses. They often reflect changes made by the end user to the UI model, such as text entered in a text box and a check box been unchecked.</P>
+
+<P>Upon receiving an event request from the user agent, the server locates the XUP application by the request URL and calls the event handlers registered by the application for the event. The UI data sent with the event are also available
+to the event handlers. Note that there is only one event in each request, but multiple event handlers within an application may be invoked to handle that event. Event handlers execute the necessary application logics and
+generate UI model updates and listener updates to be returned to the user agent. If some errors occurred, a SOAP fault is returned in place of the UI model and listener updates.</P>
+
+<P>The user agent processes response by updating its list of event listeners and rendering UI changes. The UI model changes include both UI element level and attribute level changes, and the UI elements could be simple UI controls or
+complex UI containers. This approach allows applications to perform both macro and micro UI updates, eliminating end users' visual discomfort with frequent page refreshes as in HTML-based applications.</P>
+
+<P>XUP does not define a specific mechanism for the user agent to terminate the session with an XUP application. The user agent may simply close the transport connection and expect the server or application to purge the user
+session after some time interval. Alternatively, a particular event on a UI element may be interpreted by the application as a termination notice. For example, a click event on a button labeled &quot;quit&quot; may be used by
+the application to terminate the user session.</P>
+
+<H2><A id=event name=event>4 Network Event Delivery</A></H2>
+
+<H3>
+<A name="event_intro">4.1 Introduction</A>
+</H3>
+
+<P>In XUP, events are triggered by user interactions on the UI model in the user agent. Once an event is fired, the user agent sends a request encapsulating the full event detail and its associated UI data to the
+server for further processing.&nbsp; Server sends back UI changes and listener updates after handling the event.</P>
+
+<H3>
+<A name="event_model">4.2 Event Models</A>
+</H3>
+
+<P>XUP supports both delegation (e.g. Java Swing) and capturing/bubbling (e.g. DOM) event models. The protocol itself does not specify any event details, such as what types of events may occur on which UI elements, or the syntax
+and semantics of any particular event.</P>
+
+<H3>
+<A name="event_dispatch">4.3 Event Dispatch</A>
+</H3>
+
+<P>
+The user agent maintains a list of event listeners which are updated by server through XUP responses. An event is sent to the server when a listener matches with the event in the following manner:<P>
+delegation model
+<UL>
+ <LI>the listener's event type matches with the event's type, and</LI>
+ <LI>the element to which the listener is attached is the same as the element at which the event is targeted. In this model, the element is the source of the event.</LI>
+</UL>
+<P>
+capturing/bubbling model
+<UL>
+ <LI>the listener's event type matches with the event's type, and</LI>
+ <LI>the element to which the listener is attached is the same as the element at which the event is targeted, and</LI>
+ <LI>if the listener specifies a source element, it must match the source element of the event, and</LI>
+ <LI>the listener's phase attribute must match with that of the event, or both attributes must be unspecified.</LI>
+</UL>
+<P>Together with the event, a list of UI data is sent, as referenced by the event listeners that match the event. Within each event listener specification, there are a list of UI element and attribute references which
+indicate the UI data to be sent to the server when an event is fired. Typically, the list of references points to the UI elements or attributes changeable by the end user, such as text boxes and check boxes. If multiple event
+listeners match an event, the user agent must send the event to the server only once, with the UI data referenced by the multiple listeners merged together. The event must not be sent if there are no listeners matching the
+event. The user agent must send the event without any UI data if the matching listener does not reference any UI data.</P>
+
+<P>After the server receives the event, it calls one or more event handlers registered by the XUP application. The event handlers process the event and perform any necessary computation for the application. For
+capturing/bubbling event models, the application may also indicate in the response whether to stop the propagation of the event in the user agent. By default, events propagate in the user agent according to
+their types (e.g. some types of events bubble, others don't) defined in the event model.</P>
+
+<P>Because events are dispatched over the network, to conserve network bandwidth, the user agent should not send certain types of high-frequency events, such as mouse movement and key press.</P>
+
+<H2><A id="transport" name="transport">5 Transport Layer</A></H2>
+
+<H3>
+<A name="transport_intro">5.1 Introduction</A>
+</H3>
+<P>XUP does not define its own transport mechanism. It relies on SOAP and HTTP to exchange messages between user agent and server.</P>
+<H3>
+<A name="transport_soap">5.2 Relationship to SOAP</A>
+</H3>
+<P>An XUP request is encapsulated in a SOAP envelope. The header blocks of the SOAP envelop form the XUP request header, and the body blocks of the SOAP envelope form the XUP request body. Similarly, an XUP response is also
+encapsulated in a SOAP envelope. The header blocks of the SOAP envelope form the XUP response header, and the body blocks of the SOAP envelope form the XUP response body. If error occurs when processing a request, an XUP server
+must generate a SOAP fault and return it in the response body.&nbsp;</P>
+<H3>
+<A name="transport_http">5.3 Relationship to HTTP</A>
+</H3>
+<P>To efficiently utilize network resources, an implementation should take advantage of HTTP persistent connection when necessary. As an example, a sequence of capturing/bubbling events caused by a single user action should be
+communicated via a persistent connection. On the other hand, most infrequent event requests due to end user interactions should be sent in multiple non-persistent connections so that server does not need to keep long persistent
+connections.</P>
+<P>Since XUP supports persistent, non-persistent, and mixed operations, when a user agent interacts with an XUP application, a user session needs be maintained for each user agent in the server. The user session is
+identified by a session ID which must be carried in the header of every XUP request to identify the user agent.</P>
+
+<H2><A id=startup name=startup>6 Startup</A></H2>
+
+<H3>
+<A name="startup_intro">6.1 Introduction</A>
+</H3>
+
+<P>The following sections provide full details of XUP request and response messages during application startup. Each XUP application is identified by a URL. The details of the URL depends on XUP server implementations. For
+example, a particular XUP server implementation may use query strings to identify the XUP applications hosted in the server. A user agent interacts with an XUP application by sending requests (as SOAP messages) to the URL
+identifying the XUP application.</P>
+
+<H3>
+<A name="startup_request">6.2 XUP Request</A>
+</H3>
+
+<P>In the XUP startup request, the SOAP header contains user agent software name and version, and a list of UI models supported by the user agent. The XUP protocol version supported by the user agent is specified as the namespace
+URI of the first header block in the request.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>XUP request header (SOAP header)</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;env:Header&gt;</PRE><PRE>  &lt;!-- Content: <A href="#elem_userAgent">userAgent</A>?, <A href="#elem_uiModelNamespace">uiModelNamespace</A>+ --&gt;
+&lt;/env:Header&gt;</PRE></DIV>
+</DIV>
+
+<P>The request body (SOAP body) is empty.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>XUP request body (SOAP body)</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;env:Body/&gt;</PRE></DIV>
+</DIV>
+
+<H4>
+<A name="elem_userAgent">6.2.1 userAgent</A>
+</H4>
+
+<P>The <CODE> userAgent</CODE> element specifies the name and version number of the user agent software.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;userAgent&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;userAgent</PRE><PRE>  name = xsd:string</PRE><PRE>  version = xsd:string</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/userAgent&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>name </B>- the name of user agent.<br>
+  
+  <B>version</B> - user agent version number.
+  
+  </P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_uiModelNamespace">6.2.2 uiModelNamespace</A>
+</H4>
+
+<P>The <CODE> uiModelNamespace</CODE> element specifies a UI model namespace supported by the user agent.&nbsp; Multiple <CODE> uiModelNamespace</CODE> elements are listed in the order of user agent preference in the request header.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;uiModelNamespace&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;uiModelNamespace</PRE><PRE>  env:mustUnderstand = 1</PRE><PRE>&gt;
+  &lt;!-- Content: xsd:anyURI --&gt;
+&lt;/uiModelNamespace&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>mustUnderstand</B> - this SOAP attribute implies that this header block must be understood and processed by the server.<BR>
+  Content - UI model namespace URI.
+  
+  </P></BLOCKQUOTE>
+</DIV>
+
+<H3>
+<A name="startup_response">6.3 XUP Response</A>
+</H3>
+
+<P>In the XUP startup response, the SOAP header contains server information and an XUP session ID.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>XUP response header</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;env:Header&gt;
+  &lt;!-- Content: <A href="#elem_server">server</A>?, <A href="#elem_sessionID">sessionID</A> --&gt;
+&lt;/env:Header&gt;</PRE></DIV>
+</DIV>
+
+<P>The response body contains the initial UI model and event listeners. The namespace of the first element under <CODE> 
+<A href="#elem_updateUIElement"> updateUIElement</A>
+</CODE> (inside <CODE>
+<A href="#elem_uiModel">uiModel</A></CODE>) specifies the UI model used by the XUP application. The element details are
+described in 
+<A href="#normalop"> section 7</A>
+.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>XUP response body</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;env:Body&gt;
+  &lt;!-- Content: <A href="#elem_uiModel">uiModel</A>, <A href="#elem_updateListeners">updateListeners</A> --&gt;
+&lt;/env:Body&gt;</PRE></DIV>
+</DIV>
+
+<H4>
+<A name="elem_server">6.3.1 server</A>
+</H4>
+
+<P>The <CODE> server</CODE> element specifies the server software's name and version.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;server&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;server</PRE><PRE>  name = xsd:string</PRE><PRE>  version = xsd:string</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/server&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>name</B> - the name of server software.<BR>
+  <B>version</B> - server version number.
+  
+  </P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_sessionID">6.3.2 sessionID</A>
+</H4>
+
+<P>The <CODE> sessionID</CODE> element specifies the session ID to be carried by the user agent throughout future communication.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;sessionID&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;sessionID&gt;
+  &lt;!-- Content: xsd:string --&gt;
+&lt;/sessionID&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P>Content - session ID value.
+  </P></BLOCKQUOTE>
+</DIV>
+
+<H2><A id=normalop name=normalop>7 Normal Operation</A></H2>
+
+<H3>
+<A name="normalop_intro">7.1 Introduction</A>
+</H3>
+
+<P>The following sections provide full details of XUP request and response messages during normal operations. Normal operations cover all messages after the startup messages described in the previous section.</P>
+
+<H3>
+<A name="normalop_request">7.2 XUP Request</A>
+</H3>
+
+<P>During normal operations, an XUP request encapsulates an event and its associated user interface data.</P>
+
+<P>The request header contains the session ID identifying the current session.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>XUP request header (SOAP header)</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;env:Header&gt;</PRE><PRE>  &lt;!-- Content: <A href="#elem_sessionID">sessionID</A> --&gt;
+&lt;/env:Header&gt;</PRE></DIV>
+</DIV>
+
+<P>The request body contains a single <CODE> event</CODE> element.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>XUP request body (SOAP body)</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;env:Body&gt;</PRE><PRE>  &lt;!-- Content: <A href="#elem_event">event</A> --&gt;</PRE><PRE>&lt;/env:Body&gt;</PRE></DIV>
+</DIV>
+
+<H4>
+<A name="normalop_request_sessionID">7.2.1 sessionID</A>
+</H4>
+
+<P>Every request in normal operations must include a session ID as a SOAP header block. The value of the session ID element comes from the 
+<A href="#elem_sessionID"> startup server response</A>.</P>
+
+<H4>
+<A name="elem_event">7.2.2 event</A>
+</H4>
+
+<P>The <CODE> event</CODE> element specifies the event occurred in user agent and UI data to be passed to the server.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;event&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;event</PRE><PRE>  type = xsd:QName</PRE><PRE>  element = xsd:IDREF</PRE><PRE>  source = xsd:IDREF</PRE><PRE>  phase = (capture | default) : default</PRE><PRE>&gt;
+  &lt;!-- Content: <A href="#elem_detail">detail</A>?, (<A href="#elem_uiElement">uiElement</A> | <A href="#elem_uiAttr">uiAttr</A>)* --&gt;
+&lt;/event&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>type </B>- event type.<br>
+  
+  <B>element</B> - event target element ID.<BR>
+  <B>source</B>  (optional) - event source element ID.&nbsp; This attribute must not be used in delegation event models. However, it is required in capturing/bubbling model.<BR>
+  <B>phase</B>  (optional) - event occurrence phase.&nbsp;If set to capture, the event is activated during capturing phase. If set to default, or unspecified, the event is
+  activated during bubbling phase or at the source. This attribute must not be used in delegation event models.
+  
+  </P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_detail">7.2.3 detail</A>
+</H4>
+
+<P>The <CODE> detail</CODE> element may contain any event data, depending on the event model and event type. For instance, in a
+mouse click event, event details include which button was pressed and the pointer position. This document does not specify the syntax or the semantics of the <CODE>
+detail</CODE> element.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;detail&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;detail</PRE><PRE>  (any attribute)</PRE><PRE>&gt;
+  &lt;!-- Content: (##other) --&gt;
+&lt;/detail&gt;</PRE></DIV>
+</DIV>
+
+<H4>
+<A name="elem_uiElement">7.2.4 uiElement</A>
+</H4>
+
+<P>The <CODE> uiElement</CODE> contains a single-rooted element in the UI model.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;uiElement&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;uiElement</PRE><PRE>  element = xsd:IDREF</PRE><PRE>&gt;
+  &lt;!-- Content: (any single-rooted UI element) --&gt;
+&lt;/uiElement&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>element </B>- UI element ID. It overrides the ID of the top-level element in the content.
+  </P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_uiAttr">7.2.5 uiAttr</A>
+</H4>
+
+<P>The <CODE> uiAttr</CODE> element specifies the value of one UI element attribute.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;uiAttr&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;uiAttr</PRE><PRE>  element = xsd:IDREF</PRE><PRE>  attr = xsd:QName</PRE><PRE>&gt;
+  &lt;!-- Content: xsd:string --&gt;
+&lt;/uiAttr&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>element</B> - UI element name.<BR>
+  <B>attr</B> - the UI element's attribute name.&nbsp;<BR>
+  Content - UI attribute value.</P></BLOCKQUOTE>
+</DIV>
+
+<H4> 
+<A name="normalop_request_ex"> 7.2.6 XUP Request Example</A>
+</H4>
+
+<P> The
+following example shows an XUP request based on XUL. The session ID of the XUP session is 4124. The user agent sends a mouse clicking event on the &quot;detailBtn&quot; element. The event occurs on button number 0 (the left
+button), at window
+position 20 pixels from the left and 40 pixels form the top. In addition to the mouse event, the &quot;outerBox&quot; element and the &quot;selected&quot; attribute of &quot;radioMale&quot; element are sent in the request.</P>
+
+<DIV class="exampleOuter">
+ <DIV class="exampleHead">
+  Example: XUP request in a SOAP envelope
+ </DIV>
+ <DIV class="exampleInner">
+  <PRE>&lt;env:Envelope xmlns:env=&quot;<A href="http://www.w3.org/2001/12/soap-envelope">http://www.w3.org/2001/12/soap-envelope</A>&quot;</PRE>
+  <PRE>              xmlns:xup=&quot;<A href="http://www.w3.org/2002/03/xup">http://www.w3.org/2002/03/xup</A>&quot;&gt;</PRE>
+  <PRE>  &lt;env:Header&gt;</PRE>
+  <PRE>    &lt;xup:sessionID env:mustUnderstand=&quot;1&quot;&gt;4124&lt;/xup:sessionID&gt;</PRE>
+  <PRE>  &lt;/env:Header&gt;</PRE>
+  <PRE>  &lt;env:Body&gt;</PRE>
+  <PRE>    &lt;xup:event type=&quot;ev:click&quot; element=&quot;detailBtn&quot; xmlns:ev=&quot;http://example_event.org&quot;&gt;</PRE>
+  <PRE>      &lt;detail&gt;</PRE>
+  <PRE>        &lt;ev:mouseClick button=&quot;0&quot; clientX=&quot;20&quot; clientY=&quot;40&quot;/&gt;</PRE>
+  <PRE>      &lt;/detail&gt;</PRE>
+  <PRE>      &lt;uiElement element=&quot;outerBox&quot;&gt;</PRE>
+  <PRE>        &lt;xul:box id=&quot;outerBox&quot;</PRE>
+  <PRE>         xmlns:xul=&quot;<A href="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul</A>&quot;&gt;</PRE>
+  <PRE>          &lt;textbox id=&quot;name&quot; value=&quot;Joe Blow&quot;/&gt;</PRE>
+  <PRE>          &lt;textbox id=&quot;company&quot; value=&quot;ACME Corp.&quot;/&gt;</PRE>
+  <PRE>        &lt;/xul:box&gt;</PRE>
+  <PRE>      &lt;/uiElement&gt;</PRE>
+  <PRE>      &lt;uiAttr element=&quot;radioMale&quot; attr=&quot;xul:selected&quot;&gt;true&lt;/uiAttr&gt;</PRE>
+  <PRE>    &lt;/xup:event&gt;</PRE>
+  <PRE>  &lt;/env:Body&gt;
+&lt;/env:Envelope&gt;</PRE>
+ </DIV>
+</DIV>
+
+<H3>
+<A name="normalop_response">7.3 XUP Response</A>
+</H3>
+
+<P>An XUP response contains UI updates and event listener updates in response to the user agent's event request.</P>
+
+<P>There is no response header.</P>
+
+<P> The response body contains UI model updates, event listener
+updates, and whether to stop event propagation in user agent (only in event capturing/bubbling model).</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>XUP response body (SOAP body)</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;env:Body&gt;
+  &lt;!-- Content: <A href="#elem_uiModel">uiModel</A>?, <A href="#elem_updateListeners">updateListeners</A>?, <A href="#elem_stopPropagation">stopPropagation</A>? --&gt;
+&lt;/env:Body&gt;</PRE></DIV>
+</DIV>
+
+<H4>
+<A name="elem_uiModel">7.3.1 uiModel</A>
+</H4>
+
+<P>The <CODE> uiModel</CODE> element specifies UI updates to the user agent. User agent must execute
+UI updates according to the lexical order of specification in the <CODE> uiModel</CODE>
+element.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;uiModel&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;uiModel&gt;
+  &lt;!-- Content: (<A href="#elem_addUIElement">addUIElement</A> | <A href="#elem_updateUIElement">updateUIElement</A> | <A href="#elem_updateUIAttr">updateUIAttr</A> | <A href="#elem_removeUIElement">removeUIElement</A>)+ --&gt;
+&lt;/uiModel&gt;</PRE></DIV>
+</DIV>
+
+<H4>
+<A name="elem_addUIElement">7.3.2 addUIElement</A>
+</H4>
+
+<P>The <CODE> addUIElement</CODE> element specifies a UI element to be added to the user agent.
+Only one element may be specified at a time.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;addUIElement&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;addUIElement</PRE><PRE>  parent = xsd:IDREF</PRE><PRE>  before = xsd:IDREF</PRE><PRE>  after = xsd:IDREF</PRE><PRE>&gt;
+  &lt;!-- Content: (any single-rooted UI element) --&gt;
+&lt;/addUIElement&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>parent </B>(optional) - ID of the parent element under which the new UI element will be added. If the parent has child elements, the new UI element will be appended to the end of the children list.<BR>
+  <B>before</B>  (optional) - ID of the element before which the new UI element will be added.<BR>
+  <B>after</B>  (optional) - ID of the element after which the new UI element will be added.<BR>
+  The above three attributes are mutually exclusive. One and only one attribute out of the three must be used in a particular instance of the <CODE> addUIElement</CODE> element.</P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_updateUIElement">7.3.3 updateUIElement</A>
+</H4>
+
+<P>The <CODE> updateUIElement</CODE> specifies a UI element to be updated in the user agent. The full UI tree rooted at the specified element is replaced by the new content.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;updateUIElement&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;updateUIElement</PRE><PRE>  element = xsd:IDREF</PRE><PRE>&gt;
+  &lt;!-- Content: (any single-rooted UI element) --&gt;
+&lt;/updateUIElement&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>element</B>  (optional) - ID of the element to update. It overrides ID of the top-level element in the content. If the attribute is not specified, the full UI model will be replaced by the content. During
+  application startup, this attribute must be unspecified to initialize the user agent's UI model.
+  </P>
+</BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_updateUIAttr">7.3.4 updateUIAttr</A>
+</H4>
+
+<P>The <CODE> updateUIAttr</CODE> specifies a UI attribute to be updated in the user agent.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;updateUIAttr&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;updateUIAttr</PRE><PRE>  element = xsd:IDREF</PRE><PRE>  attr = xsd:QName</PRE><PRE>&gt;
+  &lt;!-- Content: xsd:string --&gt;
+&lt;/updateUIElement&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>element</B> - element ID.<BR>
+  <B>attr</B> - attribute name.<BR>
+  Content - new UI attribute value. If the content is empty, the attribute is set to its default value in the UI model.
+  </P>
+</BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_removeUIElement">7.3.5 removeUIElement</A>
+</H4>
+
+<P>The <CODE> removeUIElement</CODE> element specifies a UI element to be removed from the user agent.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;removeUIElement&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;removeUIElement</PRE><PRE>  element = xsd:IDREF</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/removeUIElement&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>element</B> - ID of the element to be removed.</P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_updateListeners">7.3.6 updateListeners</A>
+</H4>
+
+<P>The <CODE>updateListeners</CODE> element specifies updates to event listeners in the user agent. Listener
+updates consist of both listener additions and listener removals. The user agent must execute the updates according to the lexical order of specification in this element.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;updateListeners&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;updateListeners&gt;
+  &lt;!-- Content: (<A href="#elem_add">add</A> | <A href="#elem_remove">remove</A>)+ --&gt;
+&lt;/updateListeners&gt;</PRE></DIV>
+</DIV>
+
+<H4>
+<A name="elem_add">7.3.7 add</A>
+</H4>
+
+<P>The <CODE> add</CODE> element specifies addition of a listener.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;add&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;add&gt;
+  &lt;!-- Content: <A href="#elem_listener">listener</A> --&gt;
+&lt;/add&gt;</PRE></DIV>
+</DIV>
+
+<H4>
+<A name="elem_listener">7.3.8 listener</A>
+</H4>
+
+<P>The <CODE> listener</CODE> element specifies an event listener. It includes the event type and references to selected UI elements and attributes to be sent to the server when the event is triggered.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;listener&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;listener</PRE><PRE>  id = xsd:ID</PRE><PRE>  event = xsd:QName</PRE><PRE>  element = xsd:IDREF</PRE><PRE>  source = xsd:IDREF</PRE><PRE>  phase = (capture | default) : default</PRE><PRE>&gt;
+  &lt;!-- Content: <A href="#elem_uiRef">uiRef</A>* --&gt;
+&lt;/listener&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>id </B> - listener ID.<B><BR>
+  event</B> - event type.<BR>
+  <B>element</B> - event target element ID. In the delegation model, this attribute specifies the event source. In the capturing/bubbling model, the listener is activated when an event is fired from the element specified by this
+  attribute or one of the element's descendants.<BR>
+  <B>source</B>  (optional) - event source ID.&nbsp; If unspecified, then the source could be the target element itself or one of its descendants. This attribute must not be used in delegation event models.<BR>
+  <B>phase</B>  (optional) - event occurrence phase. If set to capture, the listener is activated during capturing phase. If set to default, or unspecified, the listener is activated during bubbling or at the source. This attribute must not be
+  used in delegation event models.</P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_uiRef">7.3.9 uiRef</A>
+</H4>
+
+<P>The <CODE> uiRef</CODE> element specifies a list of UI elements or attributes through an XPath [<A href="#ref-XPATH">XPATH10</A>] expression. When used inside the listener element, it indicates what UI elements or attributes the user agent should send to the server when the
+corresponding event is triggered. If a selection is a UI element, the entire UI tree starting at the element is sent to the server in the request.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;uiRef&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;uiRef&gt;</PRE><PRE>  &lt;!-- Content: XPath expression --&gt;
+&lt;/uiRef&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P>Content - UI elements or attributes selection expressed in XPath.</P>
+</BLOCKQUOTE>
+</DIV>
+
+<P>User agent should reevaluate the <CODE> uiRef</CODE> XPath expression when sending an event request.</P>
+
+<H4>
+<A name="elem_remove">7.3.10 remove</A>
+</H4>
+
+<P>The <CODE> remove</CODE> element specifies a listener to be removed from the user agent.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;remove&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;remove</PRE><PRE>  listener = xsd:IDREF</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/remove&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>listener</B> - listener ID.</P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="elem_stopPropagation">7.3.11 stopPropagation</A>
+</H4>
+
+<P>The <CODE> stopPropagation</CODE> element specifies whether the event in the request should stop propagating in the user agent. If unspecified, the event will propagate according to its type (e.g. some types of events bubble, others don't). It is only applicable to event models which support event
+capturing/bubbling. The element must not be used in delegation event models.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;stopPropagation&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;stopPropagation/&gt;</PRE></DIV>
+</DIV>
+
+<H4> 
+<A name="normalop_response_ex"> 7.3.12 XUP Response Example</A>
+</H4>
+
+<P> The
+following example shows an XUP response based on XUL. The response contains the following UI model updates:</P>
+
+<UL>
+ <LI>addition of &quot;SSNLabel&quot; label and &quot;SSN&quot; textbox</LI>
+ <LI>removal of &quot;detailBtn&quot; element (a button)</LI>
+</UL>
+<P>
+In addition, the response contains the addition of listener &quot;shortListener&quot; and the removal of listener &quot;detailListener&quot;. Finally, the server stops any further event propagation in the user agent.</P>
+
+<DIV class="exampleOuter">
+ <DIV class="exampleHead">
+  Example: XUP response in a SOAP envelope
+ </DIV>
+ <DIV class="exampleInner">
+  <PRE>&lt;env:Envelope xmlns:env=&quot;<A href="http://www.w3.org/2001/12/soap-envelope">http://www.w3.org/2001/12/soap-envelope</A>&quot;</PRE>
+  <PRE>              xmlns:xup=&quot;<A href="http://www.w3.org/2002/03/xup">http://www.w3.org/2002/03/xup</A>&quot;&gt;</PRE>
+  <PRE>  &lt;env:Body&gt;</PRE>
+  <PRE>    &lt;xup:uiModel&gt;</PRE>
+  <PRE>      &lt;addUIElement after=&quot;name&quot;&gt;</PRE>
+  <PRE>        &lt;xul:label xmlns:xul=&quot;<A href="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul</A>&quot;</PRE>
+  <PRE>                   id=&quot;SSNLabel&quot; value=&quot;Social Security Number&quot;/&gt;</PRE>
+  <PRE>      &lt;/addUIElement&gt;</PRE>
+  <PRE>      &lt;addUIElement after=&quot;SSNLabel&quot;&gt;</PRE>
+  <PRE>        &lt;xul:textbox xmlns:xul=&quot;<A href="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul</A>&quot;</PRE>
+  <PRE>                     id=&quot;SSN&quot; value=&quot;123-45-6789&quot;/&gt;</PRE>
+  <PRE>      &lt;/addUIElement&gt;</PRE>
+  <PRE>      &lt;removeUIElement element=&quot;detailBtn&quot;/&gt;</PRE>
+  <PRE>    &lt;/xup:uiModel&gt;</PRE>
+  <PRE>    &lt;xup:updateListeners&gt;</PRE>
+  <PRE>      &lt;add&gt;</PRE>
+  <PRE>        &lt;listener id=&quot;shortListener&quot; event=&quot;ev:click&quot; element=&quot;shortBtn&quot;</PRE>
+  <PRE>          xmlns:ev=&quot;http://example_event.org&quot;&gt;</PRE>
+  <PRE>          &lt;uiRef&gt;/window/box/textbox/@value&lt;/uiRef&gt;</PRE>
+  <PRE>        &lt;/listener&gt;</PRE>
+  <PRE>      &lt;/add&gt;</PRE>
+  <PRE>      &lt;remove listener=&quot;detailListener&quot;/&gt;</PRE>
+  <PRE>    &lt;/xup:updateListeners&gt;</PRE>
+  <PRE>    &lt;xup:stopPropagation/&gt;</PRE>
+  <PRE>  &lt;/env:Body&gt;
+&lt;/env:Envelope&gt;</PRE>
+ </DIV>
+</DIV>
+
+<H2><A id=error name=error>8 Error Handling</A></H2>
+
+<H3>
+<A name="error_intro">8.1 Introduction</A>
+</H3>
+
+<P>This section describes XUP errors. XUP errors may occur on the server side while processing user agent requests or on the user agent side while processing server responses.</P>
+
+<H3>
+<A name="error_request">8.2 Request Processing Errors</A>
+</H3>
+
+<P>Request processing errors are reported by the server while attempting to understand and process a user agent request. Server sends back errors as <A href="http://www.w3.org/TR/soap12-part1/#soapfault">SOAP faults</A> in
+responses.</P>
+
+<P>The following table lists all request processing errors by SOAP fault code and fault detail.</P>
+
+<TABLE border="1" width="100%">
+
+<TR>
+<TH width="28%">SOAP fault code</TH>
+<TH width="25%">SOAP fault detail</TH>
+<TH width="48%">fault description</TH>
+</TR>
+
+<TR>
+<TD width="28%">xup:ApplicationNotFound</TD>
+<TD width="25%">None</TD>
+<TD width="48%">The user agent sends the request to the server by pointing to a URL, but the server fails to identify the target XUP application from the URL.</TD>
+</TR>
+
+<TR>
+<TD width="28%">xup:VersionMismatch</TD>
+<TD width="25%">None</TD>
+<TD width="48%">User agent's XUP version is not supported by server.</TD>
+</TR>
+
+<TR>
+<TD width="28%">xup:UnsupportedUIModel</TD>
+<TD width="25%">None</TD>
+<TD width="48%">None of the UI models specified in the <CODE> uiModelNamespace</CODE> elements in the request header is supported by the server.</TD>
+</TR>
+
+<TR>
+<TD width="28%">xup:InternalApplicationError</TD>
+<TD width="25%">None or empty</TD>
+<TD width="48%">The XUP application malfunctions or crashes due to some programming error in the application.</TD>
+</TR>
+
+<TR>
+<TD width="28%">xup:UnknownSessionID</TD>
+<TD width="25%">None</TD>
+<TD width="48%">Invalid XUP session ID.</TD>
+</TR>
+
+<TR>
+<TD width="28%">xup:UIErrors</TD>
+<TD width="25%">See 
+<A href="#error_UIErrors"> section</A>
+ on xup:UIErrors
+</TD>
+<TD width="48%">Various UI and event errors.</TD>
+</TR>
+
+</TABLE>
+
+<P>
+Note: In the SOAP fault detail column, &quot;none&quot; means the fault <CODE>detail</CODE> element does not exist. On the other hand, &quot;empty&quot; means the <CODE>detail</CODE> element exists, but its content is empty.
+
+<H4>
+<A name="error_UIErrors">8.2.1 xup:UIErrors</A>
+</H4>
+
+<P><CODE>xup:UIErrors</CODE> may be used to describe various UI and event errors from the request. The SOAP fault <CODE> detail</CODE> element contains the details of one or more errors.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;detail&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;detail&gt;
+  &lt;!-- Content: <A href="#elem_unsupportedEvent">unsupportedEvent</A>?, <A href="#elem_eventHandlerNotFound">eventHandlerNotFound</A>?, <A href="#elem_unknownRefs">unknownRefs</A>?, </PRE><PRE>                <A href="#elem_unsupportedUI">unsupportedUI</A>?, <A href="#elem_illegalUIValues">illegalUIValues</A>?, <A href="#elem_illegalUIStructure">illegalUIStructure</A>? --&gt;
+&lt;/detail&gt;</PRE></DIV>
+</DIV>
+
+<P>The detail element contains several subtypes of errors within xup:UIErrors. They are not specified as separate SOAP fault codes because SOAP only allows one fault code in each message, and it is desirable for the server to send multiple
+related UI and event errors to the user agent in the response.</P>
+
+<H5>
+<A name="elem_unsupportedEvent">8.2.1.1 unsupportedEvent</A>
+</H5>
+<P>The <CODE> unsupportedEvent</CODE> element indicates that the event type in the request is not supported by the server.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;unsupportedEvent&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;unsupportedEvent/&gt;</PRE></DIV>
+</DIV>
+
+<H5>
+<A name="elem_eventHandlerNotFound">8.2.1.2 eventHandlerNotFound</A>
+</H5>
+
+<P>The <CODE> eventHandlerNotFound</CODE> element indicates that the XUP application does not have an event handler for the event.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;eventHandlerNotFound&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;eventHandlerNotFound/&gt;</PRE></DIV>
+</DIV>
+
+<H5>
+<A name="elem_unknownRefs">8.2.1.3 unknownRefs</A>
+</H5>
+
+<P>The <CODE> unknownRefs</CODE> element specifies unknown element, listener, and attribute references in the user agent request.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;unknownRefs&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;unknownRefs&gt;
+  &lt;!-- Content: <A href="#elem_elementRef">elementRef</A>?, <A href="#elem_listenerRef">listenerRef</A>?, <A href="#elem_attrRef">attrRef</A>* --&gt;
+&lt;/unknownRefs&gt;</PRE></DIV>
+</DIV>
+
+<H5>
+<A name="elem_elementRef">8.2.1.4 elementRef</A>
+</H5>
+
+<P>The <CODE> elementRef</CODE> element specifies a list of element references.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;elementRef&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;elementRef</PRE><PRE>  elements = xsd:IDREFS</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/elementRef&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>elements</B> - white-space separated list of element ID's.</P></BLOCKQUOTE>
+</DIV>
+
+<H5>
+<A name="elem_listenerRef">8.2.1.5 listenerRef</A>
+</H5>
+
+<P>The <CODE> listenerRef</CODE> element specifies a list of listener references.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;listenerRef&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;listenerRef</PRE><PRE>  listeners = xsd:IDREFS</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/listenerRef&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>listeners</B> - white-space separated list of listener ID's.</P></BLOCKQUOTE>
+</DIV>
+
+<H5>
+<A name="elem_attrRef">8.2.1.6 attrRef</A>
+</H5>
+
+<P>The <CODE> attrRef</CODE> element specifies an attribute reference.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;attrRef&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;attrRef</PRE><PRE>  element = xsd:IDREF</PRE><PRE>  attr = xsd:QName</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/attrRef&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>element</B> - element ID.<BR>
+  <B>attr</B> - attribute name.</P></BLOCKQUOTE>
+</DIV>
+
+<H5>
+<A name="elem_unsupportedUI">8.2.1.7 unsupportedUI</A>
+</H5>
+<P>The <CODE> unsupportedUI</CODE> element specifies unsupported UI elements and attributes in the request. For instance, a particular server implementation may not support <CODE> xul:tree</CODE>, or the &quot;orient&quot; attribute of
+<CODE> xul:toolbar</CODE>.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;unsupportedUI&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;unsupportedUI&gt;
+  &lt;!-- Content: <A href="#elem_elementRef">elementRef</A>?, <A href="#elem_attrRef">attrRef</A>* --&gt;
+&lt;/unsupportedUI&gt;</PRE></DIV>
+</DIV>
+
+<H5>
+<A name="elem_illegalUIValues">8.2.1.8 illegalUIValues</A>
+</H5>
+<P>The <CODE> illegalUIValues</CODE> element specifies illegal UI element content or attribute values in the request. For instance, a particular server implementation may not support the value &quot;vertical&quot; for the &quot;orient&quot;
+attribute of <CODE> xul:toolbar</CODE>.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;illegalUIValues&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;illegalUIValues&gt;
+  &lt;!-- Content: (<A href="#elem_uiElement">uiElement</A> | <A href="#elem_uiAttr">uiAttr</A>)* --&gt;
+&lt;/illegalUIValues&gt;</PRE></DIV>
+</DIV>
+
+<H5>
+<A name="elem_illegalUIStructure">8.2.1.9 illegalUIStructure</A>
+</H5>
+<P>The <CODE> illegalUIStructure</CODE> element references a list of UI elements with illegal structures. The structural problems may be internal to an element enclosed in a <CODE>uiElement</CODE> within the request, or the problems may occur
+when the element is attached to its parent. An example structural problem is an <CODE>xul:window</CODE>  in the content of a <CODE>uiElement</CODE>  being attached as a child to an <CODE>xul:box</CODE>.</P>
+
+<DIV class=exampleOuter>
+<DIV class=exampleHead>XML Representation: <CODE>&lt;illegalUIStructure&gt;</CODE></DIV>
+<DIV class=exampleInner><PRE>&lt;illegalUIStructure</PRE><PRE>  elements = xsd:IDREFS</PRE><PRE>&gt;
+  &lt;!-- Content: (##empty) --&gt;
+&lt;/illegalUIStructure&gt;</PRE></DIV>
+<BLOCKQUOTE>
+  <P><B>elements</B> - a list of element ID's, from the &quot;element&quot; attributes of the <CODE>uiElement</CODE> elements in the request.</P></BLOCKQUOTE>
+</DIV>
+
+<H4>
+<A name="error_example">8.2.2 Request Processing Error Example</A>
+</H4>
+
+<P>An example
+of request processing error is shown below. The error is of type xup:UIErrors, as indicated in the <CODE> faultcode</CODE> element. The detail reveals that there are two unknown elements &quot;buttonZ1&quot; and &quot;labelZZ&quot;, and an unsupported element
+&quot;XMLEditor1&quot;.</P>
+
+<DIV class="exampleOuter">
+ <DIV class="exampleHead">
+  Example: XUP error in a SOAP envelope
+ </DIV>
+ <DIV class="exampleInner">
+  <PRE>&lt;env:Envelope xmlns:env=&quot;<A href="http://www.w3.org/2001/12/soap-envelope">http://www.w3.org/2001/12/soap-envelope</A>&quot;</PRE>
+  <PRE>              xmlns:xup=&quot;<A href="http://www.w3.org/2002/03/xup">http://www.w3.org/2002/03/xup</A>&quot;&gt;</PRE>
+  <PRE>  &lt;env:Body&gt;</PRE>
+  <PRE>    &lt;env:Fault&gt;</PRE>
+  <PRE>      &lt;faultcode&gt;xup:UIErrors&lt;/faultcode&gt;</PRE>
+  <PRE>      &lt;faultstring&gt;User interface errors&lt;/faultstring&gt;</PRE>
+  <PRE>      &lt;detail&gt;</PRE>
+  <PRE>        &lt;xup:unknownRefs&gt;</PRE>
+  <PRE>          &lt;elementRef elements=&quot;buttonZ1 labelZZ&quot;/&gt;</PRE>
+  <PRE>        &lt;/xup:unknownRefs&gt;</PRE>
+  <PRE>        &lt;xup:unsupportedUI&gt;</PRE>
+  <PRE>          &lt;elementRef elements=&quot;XMLEditor1&quot;/&gt;</PRE>
+  <PRE>        &lt;/xup:unsupportedUI&gt;</PRE>
+  <PRE>      &lt;/detail&gt;</PRE>
+  <PRE>    &lt;/env:Fault&gt;</PRE>
+  <PRE>  &lt;/env:Body&gt;
+&lt;/env:Envelope&gt;</PRE>
+ </DIV>
+</DIV>
+
+<H3>
+<A name="error_response">8.3 Response Processing Errors</A>
+</H3>
+
+<P>User agent may detect errors when processing server responses. Examples of response processing errors are unsupported event types on listeners, unknown listeners, UI elements, or attribute references, unsupported UI elements or
+attributes, illegal UI values, and illegal UI structure. Due to transport protocol limitations, these errors cannot be sent back to the server. User agent implementations may prompt end users, silently ignore the errors, or abort.</P>
+
+<H2><A id="impl" name="impl">9 Implementation Considerations</A></H2>
+
+<P>Implementations should take advantage of HTTP headers to signal language and character set preferences.</P>
+
+<P>To save network resources, the user agent should send UI data which have been changed by the end user since their last transmission. Furthermore, the user agent should not send duplicated UI data to server within a request.
+UI data duplications could occur when one UI element is a descendant of another UI element, both of which are referenced by the event listener. When multiple listeners match an event, duplications could also occur since UI data
+referenced by those listeners are merged together.</P>
+
+<P>XUP server must be prepared to handle concurrent event requests from one user agent targeted at the same XUP application. User agent must be able to issue concurrent event requests targeted at one XUP application in order to
+support end user multi-tasking.</P>
+
+<P>When removing UI elements, server should not issue removal of any event listeners attached to the UI elements in the response. User agent should automatically remove any event listeners when the UI elements to which they are attached
+are removed.</P>
+
+<P>Server should help applications maintain a UI model for each user session. This allows an application's event handlers to have full access to the UI tree. Furthermore, it enables the server to detect UI errors caused by the
+XUP application so that the errors are handled by the application locally and not propagated to the user agent.</P>
+
+<P>All UI elements should have unique ID's to accommodate IDREF-based operations such as <CODE> addUIElement</CODE> and <CODE> removeUIElement</CODE>. If an element's ID is not specified by the XUP application, the server should
+automatically generate an ID for the element.</P>
+<HR>
+
+<H2>
+<A name="SchemaRef">A XML Schema Reference</A>
+</H2>
+<P>The XML schema specification of XUP can be found here: <A href="xup.xsd">xup.xsd</A>.
+</P>
+<H2><A id=references name=references>B References</A></H2>
+<H3>
+<A name="NormativeReference">B.1 Normative references</A>
+</H3>
+<DL>
+ <DT>[<A class="normref" name="ref-RFC2119">RFC2119</A>]</DT>
+ <DD><A href="http://www.ietf.org/rfc/rfc2119.txt">&quot;Key words for use in RFCs to Indicate Requirement Levels&quot;</A>, S. Bradner, March 1997.</DD>
+  <DT>[<A name="ref-SOAP">SOAP12</A>]</DT>
+  <DD>&quot;<A href="http://www.w3.org/TR/soap12-part1/">SOAP Version 1.2 Part 1: Messaging Framework</A>&quot;, M. Gudgin, M. Hadley, J. Moreau, H. Nielsen, December 2001.</DD>
+  <DT><STRONG>
+   [<A name="ref-XML">XML10</A>]
+   </STRONG>
+  <DD>
+   &quot;<A href="http://www.w3.org/TR/REC-xml">Extensible Markup Language (XML) 1.0 (Second Edition)</A>&quot;, T. Bray, J. Paoli, C. M. Sperberg-McQueen, E. Maler, October 2000.</DD>
+  <DT>[<A name="ref-XMLSCHEMA">XMLSCHEMA1</A>]</DT>
+  <DD>&quot;<A href="http://www.w3.org/TR/xmlschema-1/">XML Schema Part 1: Structures</A>&quot;, H. Thompson, D. Beech, M. Maloney, N. Mendelsohn, May 2001.</DD>
+ <DT>[<A name="ref-XPATH">XPATH10</A>]</DT>
+ <DD>&quot;<A href="http://www.w3.org/TR/xpath">XML Path Language (XPath) Version 1.0</A>&quot;, J. Clark, S. DeRose, November 1999.</DD>
+</DL>
+<H3>
+<A name="InformativeReference">B.2 Informative references</A>
+</H3>
+ <DL>
+  <DT>[<A name="ref-DELEGATION">DELEGATION</A>]</DT>
+  <DD>&quot;<A href="http://java.sun.com/products/jdk/1.1/docs/guide/awt/designspec/events.html">Java(TM) AWT: Delegation Event Model</A>&quot;, Sun Microsystems Inc., April 1999.</DD>
+  <DT>[<A name="ref-DOM2">DOM2EVENTS</A>]</DT>
+  <DD>&quot;<A href="http://www.w3.org/TR/DOM-Level-2-Events/">Document Object Model (DOM) Level 2 Events Specification</A>&quot;, T. Pixley, November 2000.</DD>
+  <DT>[<A name="ref-proto">PROTO</A>]</DT>
+  <DD>&quot;<A href="http://www.pierlou.com/prototype/">XML Application - Prototype</A>&quot;, P. Morel, April 1999.</DD>
+  <DT>[<A name="ref-WML">WML</A>20]</DT>
+  <DD>&quot;<A href="http://www1.wapforum.org/tech/documents/WAP-238-WML-20010911-a.pdf">Wireless Markup Language Version 2.0</A>&quot;, WAP Forum, September 2001.</DD>
+  <DT>[<A name="ref-XHTML">XHTML10</A>]</DT>
+  <DD>&quot;<A href="http://www.w3.org/TR/xhtml1/">XHTML 1.0: The Extensible HyperText Markup Language - A Reformulation of HTML 4 in XML 1.0</A>&quot;, S. Pemberton, et al., January 2000.</DD>
+  <DT>[<A name="ref-XUL">XUL</A>]</DT>
+  <DD>&quot;<A href="http://www.mozilla.org/xpfe/xulref/">XUL Programmer's Reference</A>&quot;, The Mozilla Organization, April 2001.</DD>
+ </DL>
+</BODY></HTML>

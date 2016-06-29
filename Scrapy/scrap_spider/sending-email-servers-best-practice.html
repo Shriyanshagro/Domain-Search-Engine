@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="If you run an outbound SMTP email server, then there's a number of things you should be doing to ensure smooth sending of your email. All of the things below are fairly straightforward recommendations that are either specified by RFCs or as general best practice.">
+<title>Sending email servers best practice | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Sending email servers best practice">
+<meta property="og:description" content="If you run an outbound SMTP email server, then there's a number of things you should be doing to ensure smooth sending of your email. All of the things below are fairly straightforward recommendations that are either specified by RFCs or as general best practice.">
+<meta property="og:url" content="https://blog.fastmail.com/2007/12/05/sending-email-servers-best-practice/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2007/12/05/sending-email-servers-best-practice/">
+<meta name="twitter:title" content="Sending email servers best practice">
+<meta name="twitter:description" content="If you run an outbound SMTP email server, then there's a number of things you should be doing to ensure smooth sending of your email. All of the things below are fairly straightforward recommendations that are either specified by RFCs or as general best practice.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2007/12/05/sending-email-servers-best-practice/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2007/12/05/sending-email-servers-best-practice/'>Sending email servers best practice</a></h1>
+<p class="blog-author">Rob Mueller &ndash;  5 December 2007</p>
+<p>If you run an outbound SMTP email server, then there's a number of
+things you should be doing to ensure smooth sending of your email. All
+of the things below are fairly straightforward recommendations that are
+either specified by RFCs or as general best practice.</p>
+
+<ol>
+<li><p><em>*Ensure your forward and reverse DNS match -  *</em></p>
+
+<p>Also called <a href="http://en.wikipedia.org/wiki/Forward_Confirmed_reverse_DNS">Forward Confirmed Reverse
+DNS</a>,
+having valid and matching forward and reverse DNS is one of the
+first recommendations in <a href="http://tools.ietf.org/html/rfc1912#section-2.1">RFC
+1912</a> ("Make sure
+your PTR and A records match"). It's a sign that the system
+administrator understands at least the basic
+<a href="http://en.wikipedia.org/wiki/Request_for_Comments">RFCs</a>. It also
+helps to avoid spoofing of your systems by spammers.</p>
+
+<p>You need to ensure that the IP address you are testing is the "edge"
+one that your email server connects to other servers with. In most
+cases this is obvious, but you might have a machine with multiple IP
+addresses, or you might be behind some sort of
+<a href="http://en.wikipedia.org/wiki/Network_address_translation">NAT</a>
+system, in which case the apparent IP address will be the NAT router
+IP address, so make sure you are testing the right IP address.</p>
+
+<p>There's a tool to test that your forward and reverse DNS match
+<a href="http://ipadmin.junkemailfilter.com/rdns.php">here</a>. Or you can do
+it easily via Linux command line tools. For instance, here's the
+forward &amp; reverse DNS for one of our outgoing hosts.</p>
+
+<blockquote>
+  <p>$ dig +short out1.smtp.messagingengine.com <br />
+  66.111.4.25 <br />
+  $ dig +short -x 66.111.4.25 <br />
+  out1.smtp.messagingengine.com.</p>
+</blockquote>
+
+<p>Note how out1.smtp.messagingengine.com -> 66.11.4.25 and
+66.111.4.25 -> out1.smtp.messagingengine.com, this shows that
+forward and reverse DNS match.</p>
+
+<p>If you're using an ADSL connection or similar, then make sure you
+get a static IP (most ADSL providers have this option, it may cost a
+little bit more) and make sure you can get the reverse DNS changed
+(also known as setting a PTR record - your ADSL provider will have
+to do this, and not all offer it, so check with your provider first
+before signing up)</p></li>
+<li><p><strong>Ensure your HELO string matches your reverse DNS</strong></p>
+
+<p>When your SMTP server sends email, it has to announce it's name in
+the HELO or EHLO command. Since you have your DNS setup correctly,
+you have a fully-qualified domain name (the reverse DNS name), so
+you can follow <a href="http://tools.ietf.org/html/rfc2821#section-4.1.1.1">RFC
+2821</a> and use it
+as your HELO/EHLO string:</p>
+
+<blockquote>
+  <p>The argument field contains the fully-qualified domain name of the
+  SMTP client if one is available</p>
+</blockquote>
+
+<p>Doing this provides another level of verification that your server
+is who it says it is.</p></li>
+<li><p><strong>Don't use Sender Address Verification</strong></p>
+
+<p>At first glance, Sender Address Verification (SAV) seems like a good
+idea. Because SMTP doesn't include include any intrinsic way to
+authenticate the MAIL FROM address, you just connect to the
+appropriate return host and check if the site will accept email for
+that address.</p>
+
+<p>Unfortunately SAV creates more problems than it solves. As <a href="http://taint.org/2007/03/16/134743a.html">noted by
+others</a>, it's easy to work
+around SAV, spammers just send with a valid MAIL FROM address. Given
+they're already spamming lots of valid addresses, they have lots to
+choose from.</p>
+
+<p>For spammers that don't use valid MAIL FROM addresses, the result
+will be that your system ends up looking like it's attempting to
+attack other systems. For instance, say a spammer sends you 1000
+emails with forged and invalid @fastmail.fm MAIL FROM addresses. To
+check them, your server contacts us 1000 times seeing if you can
+deliver to each address. However that's exactly the pattern that
+anyone trying to do a <a href="http://en.wikipedia.org/wiki/Directory_Harvest_Attack">dictionary harvest
+attack</a>
+against us would be doing! Without special precautions, your machine
+will now be treated as extremely suspicious because it just tried to
+send to lots of invalid addresses at our server.</p></li>
+</ol>
+
+<p>If you run an email server and have any more suggestions for this list,
+let me know at <a href="&#109;&#97;&#105;&#108;&#116;&#x6F;:&#114;&#x6F;&#98;&#x6D;&#64;&#x66;&#x61;s&#116;m&#x61;&#x69;&#x6C;&#46;&#102;&#109;">&#114;&#x6F;&#98;&#x6D;&#64;&#x66;&#x61;s&#116;m&#x61;&#x69;&#x6C;&#46;&#102;&#109;</a></p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2007/12/05/new-backup-system-finished/">New Backup System finished</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2007/12/17/email-checksums/">Email checksums</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

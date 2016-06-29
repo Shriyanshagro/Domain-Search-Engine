@@ -1,0 +1,1404 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="headTag"><meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="viewport" content="width=1060" /><meta name="keywords" content="sophos, technical, paper, admins, administrator, security" /><meta name="description" content="Sophos Technical Papers for Threat Detection and Prevention. The Leader in Antivirus, Spam, Malware Removal and Network Encryption for Business." />
+<link href="/fairfax/sophosfavicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link id="LegacyStyleSheets" href="/Styles/Bundles/Legacy.css?v=1" type="text/css" rel="stylesheet" /><!-- global script tags from the box go here -->
+<script src="/scripts/bundles/global.js?v=1" type="text/javascript"></script>
+<!-- end global scripts tags box -->
+
+<!--  Global Styles Box -->
+<link href="/Styles/Bundles/Global.css?v=1" type="text/css" rel="stylesheet"></link>
+<!-- End Global Styles -->
+
+<script type="text/javascript">if (typeof readCampaignAndWriteToCookie== 'function') {   readCampaignAndWriteToCookie(); }function GetCookie(k){return(document.cookie.match('(^|; )'+k+'=([^;]*)')||0)[2]}var campaignId = GetCookie('CampaignID');var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-737537-31'],['_setDomainName', '.sophos.com'],['_setAllowLinker', true],['_setAllowHash', false],['_setCustomVar', 4, 'CampaignID', campaignId, 3],['_trackPageview'],['o._setAccount', 'UA-737537-18'],['o._setDomainName', '.sophos.com'],['o._setAllowLinker', true],['o._setAllowHash', false],['o._setCustomVar', 4, 'CampaignID', campaignId, 3],['o._trackPageview']);(function() {var ga = document.createElement('script');ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script><script type="text/javascript" src="/en-us/medialibrary/scripts/tracking/nonhtmltracking.js"></script><script src="/en-us/medialibrary/Scripts/Tracking/gainjectmin.js?v=1" type="text/javascript"></script><script type="text/javascript">/* Instantiate and execute */$(function () {    window.sophosGaGuidStore.processGaToken({        useGoogleVid: true,        gaScope: 1,        gaNamespace: 'o',        gaAccount: 'UA-737537-18'    });});</script>
+    <!-- Head scripts Start -->
+    
+    <!-- Head scripts End -->
+    <title>
+	Security Whitepapers for System Administrators and IT Security Specialists | Sophos
+</title><!-- current language iso code for locale specific js --><script type="text/javascript">function getSitecoreCurrentLocale() { var locale = 'zh-CN'; if (locale == '') { return 'en'; } return locale; }</script></head>
+<body id="Body">
+    
+    <form name="form1" method="post" action="/zh-cn/threat-center/technical-papers.aspx" id="form1">
+<div>
+<input type="hidden" name="ToolkitScriptManager1_HiddenField" id="ToolkitScriptManager1_HiddenField" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMjA5MTA0NTc0Mw8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBFgQCAQ9kFghmDxYCHgRUZXh0ZWQCCA8WAh8BBbICPCEtLSBnbG9iYWwgc2NyaXB0IHRhZ3MgZnJvbSB0aGUgYm94IGdvIGhlcmUgLS0+CjxzY3JpcHQgc3JjPSIvc2NyaXB0cy9idW5kbGVzL2dsb2JhbC5qcz92PTEiIHR5cGU9InRleHQvamF2YXNjcmlwdCI+PC9zY3JpcHQ+CjwhLS0gZW5kIGdsb2JhbCBzY3JpcHRzIHRhZ3MgYm94IC0tPgoKPCEtLSAgR2xvYmFsIFN0eWxlcyBCb3ggLS0+CjxsaW5rIGhyZWY9Ii9TdHlsZXMvQnVuZGxlcy9HbG9iYWwuY3NzP3Y9MSIgdHlwZT0idGV4dC9jc3MiIHJlbD0ic3R5bGVzaGVldCI+PC9saW5rPgo8IS0tIEVuZCBHbG9iYWwgU3R5bGVzIC0tPgoKZAIKDxYCHwFlZAILDxYCHwFlZAIDD2QWCAIBDxYCHwFlZAIDEGRkFgYCDQ9kFgJmD2QWCgIBEA8WAh4JU0l0ZW1HdWlkKClYU3lzdGVtLkd1aWQsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSQ0ZTE1YjQ4My1jZjgyLTRkYTgtODU2Zi1mZjRiYjAyM2I2ZjhkZBYKZhAWAh8CKCsEJDRlMTViNDgzLWNmODItNGRhOC04NTZmLWZmNGJiMDIzYjZmOGRkAgEQFgIfAigrBCQ0ZTE1YjQ4My1jZjgyLTRkYTgtODU2Zi1mZjRiYjAyM2I2ZjhkZAICEBYCHwIoKwQkNGUxNWI0ODMtY2Y4Mi00ZGE4LTg1NmYtZmY0YmIwMjNiNmY4ZGQCAxAWAh8CKCsEJDRlMTViNDgzLWNmODItNGRhOC04NTZmLWZmNGJiMDIzYjZmOGRkAgQQFgIfAigrBCQ0ZTE1YjQ4My1jZjgyLTRkYTgtODU2Zi1mZjRiYjAyM2I2ZjhkZAIDEA8WAh8CKCsEJDk5YjEyYTVlLWJhN2EtNDA2NS04MzBlLTkyOWY5NmQ0ZTdmZWRkFgoCARAWAh8CKCsEJDk5YjEyYTVlLWJhN2EtNDA2NS04MzBlLTkyOWY5NmQ0ZTdmZWQWAmYPZBYCZg9kFgICARAWAh8CKCsEJDk5YjEyYTVlLWJhN2EtNDA2NS04MzBlLTkyOWY5NmQ0ZTdmZWRkAgMPFgIeC18hSXRlbUNvdW50AgUWCmYPZBYEAgEPFgIeB1Zpc2libGVoFgRmDxUBAGQCARAWAh8CKCsEJDcxNzllOGMzLTFjNDktNGYwZS05MjMwLWU1OTI2ZDM4ZWUxYmRkAgMPZBYGZg8VAQBkAgEQFgIfAigrBCQ3MTc5ZThjMy0xYzQ5LTRmMGUtOTIzMC1lNTkyNmQzOGVlMWJkZAIDEA8WAh8CKCsEJDcxNzllOGMzLTFjNDktNGYwZS05MjMwLWU1OTI2ZDM4ZWUxYmRkFgQCAQ8WAh8DAgIWBGYPZBYEAgEQFgIfAigrBCRlZWJlNWUwZi04MmYzLTRjM2ItOGEzNy1lZjQ5NDBhNTQ3YTlkZAIDDxYCHwMCBhYMZg9kFgICARAWAh8CKCsEJDUyZDMzZmU2LTdmZTQtNGFiZi1hNGNjLWVkYzkyOTY1MGU1NmQWAmYPZBYCZg9kFgYCARAWAh8CKCsEJDUyZDMzZmU2LTdmZTQtNGFiZi1hNGNjLWVkYzkyOTY1MGU1NmRkAgMQFgIfAigrBCQ1MmQzM2ZlNi03ZmU0LTRhYmYtYTRjYy1lZGM5Mjk2NTBlNTZkZAIFEBYCHwIoKwQkNTJkMzNmZTYtN2ZlNC00YWJmLWE0Y2MtZWRjOTI5NjUwZTU2ZGQCAQ9kFgICARAWAh8CKCsEJDc1MTA4MTE2LTZkZGMtNGI1NS1iMjJlLWZlZDRjNmNiZjA3ZGQWAmYPZBYCZg9kFgYCARAWAh8CKCsEJDc1MTA4MTE2LTZkZGMtNGI1NS1iMjJlLWZlZDRjNmNiZjA3ZGRkAgMQFgIfAigrBCQ3NTEwODExNi02ZGRjLTRiNTUtYjIyZS1mZWQ0YzZjYmYwN2RkZAIFEBYCHwIoKwQkNzUxMDgxMTYtNmRkYy00YjU1LWIyMmUtZmVkNGM2Y2JmMDdkZGQCAg9kFgICARAWAh8CKCsEJDBhMGZkNTQ4LTI0MmItNGQ4OS1iOTUyLTIwODhmYzg3OTNhY2QWAmYPZBYCZg9kFgYCARAWAh8CKCsEJDBhMGZkNTQ4LTI0MmItNGQ4OS1iOTUyLTIwODhmYzg3OTNhY2RkAgMQFgIfAigrBCQwYTBmZDU0OC0yNDJiLTRkODktYjk1Mi0yMDg4ZmM4NzkzYWNkZAIFEBYCHwIoKwQkMGEwZmQ1NDgtMjQyYi00ZDg5LWI5NTItMjA4OGZjODc5M2FjZGQCAw9kFgICARAWAh8CKCsEJDA1MDQ2MzNmLTY1NGUtNDk2OC1iMWVkLTM0NjBmNTBiM2MxM2QWAmYPZBYCZg9kFgYCARAWAh8CKCsEJDA1MDQ2MzNmLTY1NGUtNDk2OC1iMWVkLTM0NjBmNTBiM2MxM2RkAgMQFgIfAigrBCQwNTA0NjMzZi02NTRlLTQ5NjgtYjFlZC0zNDYwZjUwYjNjMTNkZAIFEBYCHwIoKwQkMDUwNDYzM2YtNjU0ZS00OTY4LWIxZWQtMzQ2MGY1MGIzYzEzZGQCBA9kFgICARAWAh8CKCsEJDQ5OTBkYWJiLWRhMmMtNGFjNS1iNDVmLWYyOGQyMGQ4MjdlYWQWAmYPZBYCZg9kFgYCARAWAh8CKCsEJDQ5OTBkYWJiLWRhMmMtNGFjNS1iNDVmLWYyOGQyMGQ4MjdlYWRkAgMQFgIfAigrBCQ0OTkwZGFiYi1kYTJjLTRhYzUtYjQ1Zi1mMjhkMjBkODI3ZWFkZAIFEBYCHwIoKwQkNDk5MGRhYmItZGEyYy00YWM1LWI0NWYtZjI4ZDIwZDgyN2VhZGQCBQ9kFgICARAWAh8CKCsEJDY4YWQxZjkwLTY2ZTctNGNkYi05ZTcxLTVmOWRjNWYyNTliZWQWAmYPZBYCZg9kFgYCARAWAh8CKCsEJDY4YWQxZjkwLTY2ZTctNGNkYi05ZTcxLTVmOWRjNWYyNTliZWRkAgMQFgIfAigrBCQ2OGFkMWY5MC02NmU3LTRjZGItOWU3MS01ZjlkYzVmMjU5YmVkZAIFEBYCHwIoKwQkNjhhZDFmOTAtNjZlNy00Y2RiLTllNzEtNWY5ZGM1ZjI1OWJlZGQCAQ9kFgQCARAWAh8CKCsEJGMyNGM0OGMxLTQ0YzctNDA0ZS1iNmRiLWFhMzU0ZDEyNTdmNGRkAgMPFgIfAwIFFgpmD2QWAgIBEBYCHwIoKwQkNzY2NmZlMDctOTY0NC00N2EzLWExYjYtMDM1OTYwYTA4Yzk5ZBYCZg9kFgJmD2QWBgIBEBYCHwIoKwQkNzY2NmZlMDctOTY0NC00N2EzLWExYjYtMDM1OTYwYTA4Yzk5ZGQCAxAWAh8CKCsEJDc2NjZmZTA3LTk2NDQtNDdhMy1hMWI2LTAzNTk2MGEwOGM5OWRkAgUQFgIfAigrBCQ3NjY2ZmUwNy05NjQ0LTQ3YTMtYTFiNi0wMzU5NjBhMDhjOTlkZAIBD2QWAgIBEBYCHwIoKwQkYmRkNDg1MjAtZDliYy00NGI3LWJlOGEtYjA0ZmQ5OWY0ZjNlZBYCZg9kFgJmD2QWBgIBEBYCHwIoKwQkYmRkNDg1MjAtZDliYy00NGI3LWJlOGEtYjA0ZmQ5OWY0ZjNlZGQCAxAWAh8CKCsEJGJkZDQ4NTIwLWQ5YmMtNDRiNy1iZThhLWIwNGZkOTlmNGYzZWRkAgUQFgIfAigrBCRiZGQ0ODUyMC1kOWJjLTQ0YjctYmU4YS1iMDRmZDk5ZjRmM2VkZAICD2QWAgIBEBYCHwIoKwQkYzM4Njk2NTctNzFmYS00NDU5LTg3MWMtNDAyMWJlZjY3OTJlZBYCZg9kFgJmD2QWBgIBEBYCHwIoKwQkYzM4Njk2NTctNzFmYS00NDU5LTg3MWMtNDAyMWJlZjY3OTJlZGQCAxAWAh8CKCsEJGMzODY5NjU3LTcxZmEtNDQ1OS04NzFjLTQwMjFiZWY2NzkyZWRkAgUQFgIfAigrBCRjMzg2OTY1Ny03MWZhLTQ0NTktODcxYy00MDIxYmVmNjc5MmVkZAIDD2QWAgIBEBYCHwIoKwQkMWIwYWYzYmQtMzJkYi00YzdhLTkwYmItNWZkZDhmNmVhYTRkZBYCZg9kFgJmD2QWBgIBEBYCHwIoKwQkMWIwYWYzYmQtMzJkYi00YzdhLTkwYmItNWZkZDhmNmVhYTRkZGQCAxAWAh8CKCsEJDFiMGFmM2JkLTMyZGItNGM3YS05MGJiLTVmZGQ4ZjZlYWE0ZGRkAgUQFgIfAigrBCQxYjBhZjNiZC0zMmRiLTRjN2EtOTBiYi01ZmRkOGY2ZWFhNGRkZAIED2QWAgIBEBYCHwIoKwQkMjM5MDIyMjgtNjkxYS00MWYzLWJkMzYtZGQ3OWE1Njg5ODhhZBYCZg9kFgJmD2QWBgIBEBYCHwIoKwQkMjM5MDIyMjgtNjkxYS00MWYzLWJkMzYtZGQ3OWE1Njg5ODhhZGQCAxAWAh8CKCsEJDIzOTAyMjI4LTY5MWEtNDFmMy1iZDM2LWRkNzlhNTY4OTg4YWRkAgUQFgIfAigrBCQyMzkwMjIyOC02OTFhLTQxZjMtYmQzNi1kZDc5YTU2ODk4OGFkZAIDDxYCHwMCAhYEZg9kFgICAQ8WAh8DAgMWBmYPZBYCAgEQFgIfAigrBCRlYTE3Mzc0Yi1hMTczLTRjNTItOTY4Yi0zMDRhZjgyZWM2Y2ZkFgJmD2QWAmYPZBYEAgEQFgIfAigrBCRlYTE3Mzc0Yi1hMTczLTRjNTItOTY4Yi0zMDRhZjgyZWM2Y2ZkZAIDEBYCHwIoKwQkZWExNzM3NGItYTE3My00YzUyLTk2OGItMzA0YWY4MmVjNmNmZGQCAQ9kFgICARAWAh8CKCsEJDlkOTYwMWI2LTM5OTQtNDIyYS1iZjViLTQxMDlmMDQ1ZGRmN2QWAmYPZBYCZg9kFgQCARAWAh8CKCsEJDlkOTYwMWI2LTM5OTQtNDIyYS1iZjViLTQxMDlmMDQ1ZGRmN2RkAgMQFgIfAigrBCQ5ZDk2MDFiNi0zOTk0LTQyMmEtYmY1Yi00MTA5ZjA0NWRkZjdkZAICD2QWAgIBEBYCHwIoKwQkZTJmODAyNDYtNTc4NC00MDlhLWI5ZDYtMjhjOGY0NjVjMjA0ZBYCZg9kFgJmD2QWBAIBEBYCHwIoKwQkZTJmODAyNDYtNTc4NC00MDlhLWI5ZDYtMjhjOGY0NjVjMjA0ZGQCAxAWAh8CKCsEJGUyZjgwMjQ2LTU3ODQtNDA5YS1iOWQ2LTI4YzhmNDY1YzIwNGRkAgEPZBYCAgEPFgIfAwIDFgZmD2QWAgIBEBYCHwIoKwQkOGYzZWZhY2ItYmMzMC00NDJmLWIyMzItNmNiOTQwODMzMWEwZBYCZg9kFgJmD2QWBAIBEBYCHwIoKwQkOGYzZWZhY2ItYmMzMC00NDJmLWIyMzItNmNiOTQwODMzMWEwZGQCAxAWAh8CKCsEJDhmM2VmYWNiLWJjMzAtNDQyZi1iMjMyLTZjYjk0MDgzMzFhMGRkAgEPZBYCAgEQFgIfAigrBCQ4Mjk4ZWE0NC1hM2FmLTRmYzgtODY3ZC01NDU3Nzc3MTBlMDdkFgJmD2QWAmYPZBYEAgEQFgIfAigrBCQ4Mjk4ZWE0NC1hM2FmLTRmYzgtODY3ZC01NDU3Nzc3MTBlMDdkZAIDEBYCHwIoKwQkODI5OGVhNDQtYTNhZi00ZmM4LTg2N2QtNTQ1Nzc3NzEwZTA3ZGQCAg9kFgICARAWAh8CKCsEJDVkODQ4MTI3LTM5ZDAtNGI0OC04NDRkLWNhMmMwOTYzNWMyZWQWAmYPZBYCZg9kFgQCARAWAh8CKCsEJDVkODQ4MTI3LTM5ZDAtNGI0OC04NDRkLWNhMmMwOTYzNWMyZWRkAgMQFgIfAigrBCQ1ZDg0ODEyNy0zOWQwLTRiNDgtODQ0ZC1jYTJjMDk2MzVjMmVkZAIBD2QWBAIBD2QWBGYPFQEQY2xhc3M9J3NlbGVjdGVkJ2QCARAWAh8CKCsEJDZmNjZjMTBmLTEzNTUtNDZhOC05OTQ5LTcwOTM1ZDU4MmRlY2QWAmYPZBYCZg9kFgICARAWAh8CKCsEJDZmNjZjMTBmLTEzNTUtNDZhOC05OTQ5LTcwOTM1ZDU4MmRlY2RkAgMPFgIfBGgWBmYPFQEQY2xhc3M9J3NlbGVjdGVkJ2QCARAWAh8CKCsEJDZmNjZjMTBmLTEzNTUtNDZhOC05OTQ5LTcwOTM1ZDU4MmRlY2RkAgMQDxYCHwIoKwQkNmY2NmMxMGYtMTM1NS00NmE4LTk5NDktNzA5MzVkNTgyZGVjZGQWBAIBDxYCHwMC/////w9kAgMPFgIfAwL/////D2QCAg9kFgQCAQ9kFgRmDxUBAGQCARAWAh8CKCsEJDY5MTMwZTExLWRhYjUtNDlhMC1iN2MyLWU4OTlhOGI1MjRjNWQWAmYPZBYCZg9kFgICARAWAh8CKCsEJDY5MTMwZTExLWRhYjUtNDlhMC1iN2MyLWU4OTlhOGI1MjRjNWRkAgMPFgIfBGgWBmYPFQEAZAIBEBYCHwIoKwQkNjkxMzBlMTEtZGFiNS00OWEwLWI3YzItZTg5OWE4YjUyNGM1ZGQCAxAPFgIfAigrBCQ2OTEzMGUxMS1kYWI1LTQ5YTAtYjdjMi1lODk5YThiNTI0YzVkZBYEAgEPFgIfAwL/////D2QCAw8WAh8DAv////8PZAIDD2QWBAIBD2QWBGYPFQEAZAIBEBYCHwIoKwQkNTg3MTAyYjItN2EwNS00YWVkLTgxZDYtOGU0YjRjMGUzNDliZBYCZg9kFgJmD2QWAgIBEBYCHwIoKwQkNTg3MTAyYjItN2EwNS00YWVkLTgxZDYtOGU0YjRjMGUzNDliZGQCAw8WAh8EaBYGZg8VAQBkAgEQFgIfAigrBCQ1ODcxMDJiMi03YTA1LTRhZWQtODFkNi04ZTRiNGMwZTM0OWJkZAIDEA8WAh8CKCsEJDU4NzEwMmIyLTdhMDUtNGFlZC04MWQ2LThlNGI0YzBlMzQ5YmRkFgQCAQ8WAh8DAv////8PZAIDDxYCHwMC/////w9kAgQPZBYEAgEPZBYEZg8VAQBkAgEQFgIfAigrBCRkMjY3ZmQ3ZS1lZmNjLTRlZjQtOTE3ZS0zOTdmMjlmZWYxYTdkFgJmD2QWAmYPZBYCAgEQFgIfAigrBCRkMjY3ZmQ3ZS1lZmNjLTRlZjQtOTE3ZS0zOTdmMjlmZWYxYTdkZAIDDxYCHwRoFgZmDxUBAGQCARAWAh8CKCsEJGQyNjdmZDdlLWVmY2MtNGVmNC05MTdlLTM5N2YyOWZlZjFhN2RkAgMQDxYCHwIoKwQkZDI2N2ZkN2UtZWZjYy00ZWY0LTkxN2UtMzk3ZjI5ZmVmMWE3ZGQWBAIBDxYCHwMC/////w9kAgMPFgIfAwL/////D2QCBQ9kFgICARAWAh8CKCsEJDk5YjEyYTVlLWJhN2EtNDA2NS04MzBlLTkyOWY5NmQ0ZTdmZWRkAgcPZBYCAgEQFgIfAigrBCQ5OWIxMmE1ZS1iYTdhLTQwNjUtODMwZS05MjlmOTZkNGU3ZmVkZAIJD2QWAgIBEBYEHgdUb29sVGlwBQdTaWduIEluHwIoKwQkOTliMTJhNWUtYmE3YS00MDY1LTgzMGUtOTI5Zjk2ZDRlN2ZlZBYCZg9kFgJmD2QWAgIBEBYCHwIoKwQkOTliMTJhNWUtYmE3YS00MDY1LTgzMGUtOTI5Zjk2ZDRlN2ZlZGQCBRAPFgIfAigrBCQ5OWIxMmE1ZS1iYTdhLTQwNjUtODMwZS05MjlmOTZkNGU3ZmVkZGQCBxBkZBYCAgEPFgIfAwIDFgZmD2QWAgIBEBYCHwIoKwQkNDkxZDE3MjgtZGU0OC00MTk1LTkyODgtNDlmMDEyZTkyZDc2ZBYCZg9kFgJmD2QWBAIBEBYCHwIoKwQkNDkxZDE3MjgtZGU0OC00MTk1LTkyODgtNDlmMDEyZTkyZDc2ZGQCAxAWAh8CKCsEJDQ5MWQxNzI4LWRlNDgtNDE5NS05Mjg4LTQ5ZjAxMmU5MmQ3NmRkAgEPZBYCAgEQFgIfAigrBCQ4MWY5NmE5Yy0zZGZiLTRhZjMtYTY3ZS0zYmVhYTMwNDc0ZTJkFgJmD2QWAmYPZBYEAgEQFgIfAigrBCQ4MWY5NmE5Yy0zZGZiLTRhZjMtYTY3ZS0zYmVhYTMwNDc0ZTJkZAIDEBYCHwIoKwQkODFmOTZhOWMtM2RmYi00YWYzLWE2N2UtM2JlYWEzMDQ3NGUyZGQCAg9kFgICARAWAh8CKCsEJGI4MDRhMDVhLTQ3YTgtNGM4Zi04NmExLWE5N2Q3N2VkYzQ2N2QWAmYPZBYCZg9kFgQCARAWAh8CKCsEJGI4MDRhMDVhLTQ3YTgtNGM4Zi04NmExLWE5N2Q3N2VkYzQ2N2RkAgMQFgIfAigrBCRiODA0YTA1YS00N2E4LTRjOGYtODZhMS1hOTdkNzdlZGM0NjdkZAIJEA8WAh8EZ2RkFgYCARAWBB8CKCsEJGFkNzZhYWU5LTU4ODYtNDZiMS04ZjVkLWRhZWNmY2QzMzk1ZR8EaGRkAgMQFgQfAigrBCRhZDc2YWFlOS01ODg2LTQ2YjEtOGY1ZC1kYWVjZmNkMzM5NWUfBGhkZAIHDw8WAh8EZ2QWAmYPFgIfAwIFFgpmD2QWBGYPFQEAZAIBEBYEHwIoKwQkNDU3YmI0MmItZWY5OS00MjA0LThmYWYtZDRhZThiNWM2YjQ0HghDc3NDbGFzc2VkFgJmD2QWAmYPZBYCZhAWAh8CKCsEJDQ1N2JiNDJiLWVmOTktNDIwNC04ZmFmLWQ0YWU4YjVjNmI0NGRkAgEPZBYEZg8VAQBkAgEQFgQfAigrBCQ4NTdiNTliZi1mNzk0LTQzYTAtOWU0Yy1mMmM3N2M0MWRjOTMfBmVkFgJmD2QWAmYPZBYCZhAWAh8CKCsEJDg1N2I1OWJmLWY3OTQtNDNhMC05ZTRjLWYyYzc3YzQxZGM5M2RkAgIPZBYEZg8VAQBkAgEQFgQfAigrBCRjMDg3OTg3Ni05OGNkLTQwY2MtOGIzYy1hNjc0ZWEyYTMzMzUfBmVkFgJmD2QWAmYPZBYCZhAWAh8CKCsEJGMwODc5ODc2LTk4Y2QtNDBjYy04YjNjLWE2NzRlYTJhMzMzNWRkAgMPZBYEZg8VAQBkAgEQFgQfAigrBCQ2MjZjMmQ1Yi03ZGRjLTQwZjQtODI3NC1jNjFiZjk3MWVmZmEfBmVkFgJmD2QWAmYPZBYCZhAWAh8CKCsEJDYyNmMyZDViLTdkZGMtNDBmNC04Mjc0LWM2MWJmOTcxZWZmYWRkAgQPZBYEZg8VAQBkAgEQFgQfAigrBCRkOTA5NzQ3OS1hMzFjLTRiMWQtOThhZC03N2MwMTRlN2FjNWYfBmVkFgJmD2QWAmYPZBYCZhAWAh8CKCsEJGQ5MDk3NDc5LWEzMWMtNGIxZC05OGFkLTc3YzAxNGU3YWM1ZmRkAhEPZBYCZg9kFgJmD2QWBAIBD2QWAmYPZBYCZhBkZBYCAgEPFgIfA2ZkAgMPZBYCZg9kFgJmD2QWCgIBD2QWAmYPZBYCZhAPFgIfAigrBCRhZDc2YWFlOS01ODg2LTQ2YjEtOGY1ZC1kYWVjZmNkMzM5NWVkZBYCZg8WAh8CKCsEJGFkNzZhYWU5LTU4ODYtNDZiMS04ZjVkLWRhZWNmY2QzMzk1ZRYCZg9kFgZmEBYCHwIoKwQkYWQ3NmFhZTktNTg4Ni00NmIxLThmNWQtZGFlY2ZjZDMzOTVlZGQCARAWBB8CKCsEJGFkNzZhYWU5LTU4ODYtNDZiMS04ZjVkLWRhZWNmY2QzMzk1ZR8EaGRkAgIQFgQfAigrBCRhZDc2YWFlOS01ODg2LTQ2YjEtOGY1ZC1kYWVjZmNkMzM5NWUfBGhkZAIDD2QWBmYPDxYCHwRoZBYCZhBkZBYCAgMPFgIfAQUOMDMg5LqU5pyIIDIwMTZkAgIPDxYCHwRoZBYCZhAPFgIfAigrBCQ0ZTUyZDM0OS1kMjE2LTRjMzMtODYxYy03YTE1MjJlNmJiNDdkZBYCAgEPFgIfAQX3DDxkaXYgY2xhc3M9ImFkZHRoaXNfdG9vbGJveCBhZGR0aGlzX2RlZmF1bHRfc3R5bGUgIj4NCjxhIGNsYXNzPSJhZGR0aGlzX2J1dHRvbl9mYWNlYm9va19saWtlIiBzdHlsZT0icGFkZGluZzogMCA1cHggMCAwO3dpZHRoOiA4MHB4OyBed2lkdGg6MTEwcHg7IiBmYjpsaWtlOmxheW91dD0iYnV0dG9uX2NvdW50IiA+PC9hPg0KDQo8YSBjbGFzcz0iYWRkdGhpc19idXR0b25fdHdlZXQiIHN0eWxlPSJwYWRkaW5nOiAwcHg7d2lkdGg6IDEwOHB4ICFpbXBvcnRhbnQ7IiB0dzp2aWE9IlNvcGhvc19OZXdzIiA+PC9hPg0KDQo8YSBjbGFzcz0iYWRkdGhpc19idXR0b25fbGlua2VkaW5fY291bnRlciIgc3R5bGU9InBhZGRpbmc6IDBweDt3aWR0aDogMTEwcHggIWltcG9ydGFudDsiPjwvYT4NCg0KPGEgY2xhc3M9ImFkZHRoaXNfYnV0dG9uX2dvb2dsZV9wbHVzb25lIiBzdHlsZT0icGFkZGluZzogMHB4O3dpZHRoOiA3MHB4O153aWR0aDo4NXB4OyIgZzpwbHVzb25lOnNpemU9Im1lZGl1bSIgPjwvYT4NCg0KPGEgY2xhc3M9ImFkZHRoaXNfYnV0dG9uX2VtYWlsIiAgc3R5bGU9InBhZGRpbmc6IDBweDsiPjxpbWcgc3JjPSJodHRwOi8vd3d3LnNvcGhvcy5jb20vbWVkaWFsaWJyYXJ5L0ltYWdlcy9Db21tb24vYWRkdGhpc2VtYWlsYnRuLmdpZiINCiAgICAgICAgd2lkdGg9IjU0IiBoZWlnaHQ9IjE2IiBib3JkZXI9IjAiIGFsdD0iRW1haWwiIC8+PC9hPg0KDQo8YSBjbGFzcz0iYWRkdGhpc19idXR0b24iIHN0eWxlPSJwYWRkaW5nOiAwIDAgMCAxMHB4O2Zsb2F0OmxlZnQ7IiBocmVmPSJodHRwOi8vd3d3LmFkZHRoaXMuY29tL2Jvb2ttYXJrLnBocCI+DQogICAgICAgICA8aW1nIHNyYz0iaHR0cDovL3M3LmFkZHRoaXMuY29tL3N0YXRpYy9idG4vc20tcGx1cy5naWYiDQogICAgICAgICB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGJvcmRlcj0iMCIgYWx0PSJTaGFyZSIgLz48L2E+IA0KPC9kaXY+DQoNCjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij4vLyA8IVtDREFUQVsNCnZhciBhZGR0aGlzX2NvbmZpZyA9IHsiZGF0YV90cmFja19hZGRyZXNzYmFyIjpmYWxzZSwiZGF0YV90cmFja19jbGlja2JhY2siOnRydWUsDQpzZXJ2aWNlc19jb21wYWN0OiJiaXRseSxkZWxpY2lvdXMsZmF2b3JpdGVzLGdvb2dsZSxnbWFpbCxyZWRkaXQsc3R1bWJsZXVwb24sdHVtYmxyLHdvcmRwcmVzcyx4aW5nIiwNCnNlcnZpY2VzX2V4Y2x1ZGU6ImJsb2dnZXIscGludGVyZXN0LHR3aXR0ZXIsZmFjZWJvb2siDQp9Ow0KLy8gXV0+DQoNCnZhciBhZGR0aGlzX3NoYXJlID0gew0KICAgIHVybF90cmFuc2Zvcm1zOiB7DQogICAgICAgIHNob3J0ZW46IHsNCiAgICAgICAgICAgIHR3aXR0ZXI6ICdiaXRseScNCiAgICAgICAgfQ0KICAgIH0sIA0Kc2hvcnRlbmVycyA6IHsNCiAgICAgYml0bHkgOiB7fSANCn0sDQpwYXNzdGhyb3VnaCA6IHsNCiAgICAgICAgICAgICAgICB0d2l0dGVyOiB7DQogICAgICAgICAgICAgICAgICAgICAgICB2aWE6ICJTb3Bob3NfTmV3cyINCiAgICAgICAgICAgICAgICB9DQogICAgICAgIH0NCn0NCg0KPC9zY3JpcHQ+DQo8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCIgc3JjPSJodHRwOi8vczcuYWRkdGhpcy5jb20vanMvMjUwL2FkZHRoaXNfd2lkZ2V0LmpzI3B1YmlkPXNvcGhvcyI+PC9zY3JpcHQ+ZAIED2QWAmYQDxYCHwRoZGQWAgIBDxYCHwNmFgRmD2QWAgIBDw8WBh4LTmF2aWdhdGVVcmxlHwEFBjwgUHJldh8EaGRkAgEPZBYCAgEPDxYGHwdlHwEFBk5leHQgPh8EaGRkAgUPZBYCZg9kFgJmD2QWAgIBD2QWBGYPZBYCZhBkZBYGZhAWBB8CKCsEJGFkNzZhYWU5LTU4ODYtNDZiMS04ZjVkLWRhZWNmY2QzMzk1ZR8EaGRkAgIQFgQfAigrBCRhZDc2YWFlOS01ODg2LTQ2YjEtOGY1ZC1kYWVjZmNkMzM5NWUfBGhkZAIEEBYCHwIoKwQkYWQ3NmFhZTktNTg4Ni00NmIxLThmNWQtZGFlY2ZjZDMzOTVlZGQCAQ9kFgJmEGRkFgJmEBYCHwIoKwQkMzk1ZmU3MGYtMzEwYy00M2Y4LWI1OTYtOTA1MTdkMWVhNjJhZGQCBw9kFghmD2QWAmYQZGQWAmYQFgIfAigrBCQ3MzRiMmFjYy02YzQ2LTQwYTItYmZmYi0yNWE1NmQ1NTk2NzhkZAIBD2QWAmYQZGQWAmYPFgIeBWNsYXNzBQx3aWRnZXQgZmlyc3QWCAIBEBYCHwIoKwQkNThjZDVjODMtMWIzYS00ODJkLWE5MzMtMzVlZTVlMmJhYjRhZGQCAxAWAh8CKCsEJDU4Y2Q1YzgzLTFiM2EtNDgyZC1hOTMzLTM1ZWU1ZTJiYWI0YWRkAgUQFgIfAigrBCQ1OGNkNWM4My0xYjNhLTQ4MmQtYTkzMy0zNWVlNWUyYmFiNGFkFgJmD2QWAgIBEBYCHwIoKwQkNThjZDVjODMtMWIzYS00ODJkLWE5MzMtMzVlZTVlMmJhYjRhZGQCBw8WAh8CKCsEJDU4Y2Q1YzgzLTFiM2EtNDgyZC1hOTMzLTM1ZWU1ZTJiYWI0YRYCZg9kFgQCAQ8WAh8DAgQWCAIBD2QWAgIBEGRkFgZmDxYCHwRoZAICD2QWAmYQFgIfAigrBCQyOWU4ZjdlNi1hNWIxLTRkZGEtOGI1YS1jNjVhMzE0ZDZmMDBkFgJmD2QWAmYPZBYCAgEQFgIfAigrBCQyOWU4ZjdlNi1hNWIxLTRkZGEtOGI1YS1jNjVhMzE0ZDZmMDBkZAIEDxYCHwRoZAICD2QWAgIBEGRkFgZmDxYCHwRoZAICD2QWAmYQFgIfAigrBCQ3MGY4MjA1Ny0yN2U2LTRlYWUtYTgwNC1iNTNiOTYzNTkwYmRkFgJmD2QWAmYPZBYCAgEQFgIfAigrBCQ3MGY4MjA1Ny0yN2U2LTRlYWUtYTgwNC1iNTNiOTYzNTkwYmRkZAIEDxYCHwRoZAIDD2QWAgIBEGRkFgZmDxYCHwRoZAICD2QWAmYQFgIfAigrBCRiYWE5MzRiMC01YTk2LTQ0NzgtYmJhOC00ZDIzOTBiYjA2ODZkFgJmD2QWAmYPZBYCAgEQFgIfAigrBCRiYWE5MzRiMC01YTk2LTQ0NzgtYmJhOC00ZDIzOTBiYjA2ODZkZAIEDxYCHwRoZAIED2QWAgIBEGRkFgZmDxYCHwRoZAICD2QWAmYQFgIfAigrBCQ5YmJiYzA4Ny05MjU4LTRhYmItOGVlYi05NTNhMGMyNTg5YWJkFgJmD2QWAmYPZBYCAgEQFgIfAigrBCQ5YmJiYzA4Ny05MjU4LTRhYmItOGVlYi05NTNhMGMyNTg5YWJkZAIEDxYCHwRoZAIDEGRkFgZmDxYCHwRoZAICDxYCHwRoZAIEDxYCHwRoZAICD2QWAmYQZGQWAmYPZBYIAgEQFgIfAigrBCQ3ZDlmYmQ0Ni1jMDRmLTQ1OWUtYTlkNy05NmZiYTI2ZjJjNmZkZAIDEBYCHwIoKwQkN2Q5ZmJkNDYtYzA0Zi00NTllLWE5ZDctOTZmYmEyNmYyYzZmZGQCBRAWAh8CKCsEJDdkOWZiZDQ2LWMwNGYtNDU5ZS1hOWQ3LTk2ZmJhMjZmMmM2ZmQWAmYPZBYCAgEQFgIfAigrBCQ3ZDlmYmQ0Ni1jMDRmLTQ1OWUtYTlkNy05NmZiYTI2ZjJjNmZkZAIHDxYCHwIoKwQkN2Q5ZmJkNDYtYzA0Zi00NTllLWE5ZDctOTZmYmEyNmYyYzZmFgJmD2QWBAIBDxYCHwMCARYCAgEPZBYCAgEQZGQWBmYPFgIfBGhkAgIPZBYCZhAWAh8CKCsEJDVkN2JiMmJiLWEzZDAtNGI5NC05OTlmLWY0NmY5NDgwMGU3OGQWAmYPZBYCZg9kFgICARAWAh8CKCsEJDVkN2JiMmJiLWEzZDAtNGI5NC05OTlmLWY0NmY5NDgwMGU3OGRkAgQPFgIfBGhkAgMQZGQWBmYPFgIfBGhkAgIPFgIfBGhkAgQPFgIfBGhkAgMPZBYCZhBkZBYCZg8WAh8IBQt3aWRnZXQgbGFzdBYIAgEQFgIfAigrBCQ0MjY1Nzk1My00OTBjLTQzZGYtYjNhNy0yZDliYzg4MGYzZGJkZAIDEBYCHwIoKwQkNDI2NTc5NTMtNDkwYy00M2RmLWIzYTctMmQ5YmM4ODBmM2RiZGQCBRAWAh8CKCsEJDQyNjU3OTUzLTQ5MGMtNDNkZi1iM2E3LTJkOWJjODgwZjNkYmQWAmYPZBYCAgEQFgIfAigrBCQ0MjY1Nzk1My00OTBjLTQzZGYtYjNhNy0yZDliYzg4MGYzZGJkZAIHDxYCHwIoKwQkNDI2NTc5NTMtNDkwYy00M2RmLWIzYTctMmQ5YmM4ODBmM2RiFgJmD2QWAgIDEGRkFgZmDxYCHwRoZAICDxYCHwRoZAIEDxYCHwRoZAIJD2QWAmYQZGQWBGYQFgIfAigrBCRhZDc2YWFlOS01ODg2LTQ2YjEtOGY1ZC1kYWVjZmNkMzM5NWVkZAICDxYCHwRoZAITD2QWAmYPZBYOZg8UKwACDxYEHgtfIURhdGFCb3VuZGcfAwIGZGQWAmYPZBYMAgEPZBYEAgEQZGQWAmYQFgYeBUZpZWxkBQVXaWR0aB8CKCsEJGVlOWJjYTMxLWMwNTktNDZkNi1iZmY1LWRkYzA2ZmZjZmE4NB4VRmllbGROb3RGb3VuZEludGVybmFsZ2RkAgUPFCsAAg8WBB8JZx8DAgNkZBYCZg9kFgYCAQ9kFgRmDxUBRy96aC1jbi9tZWRpYWxpYnJhcnkvU29waG9zTmV4dC9JbWFnZXMvU29jaWFsL2ZhY2Vib29rLWljb24ucG5nP2xhPXpoLUNOZAIBD2QWAgIBEGRkFgJmEBYEHwoFBFRleHQfAigrBCRiZmEyMDFjNC1mMzE4LTRlMjMtYTk1OS03MTAzMDc5OTM4NzlkZAICD2QWBGYPFQFGL3poLWNuL21lZGlhbGlicmFyeS9Tb3Bob3NOZXh0L0ltYWdlcy9Tb2NpYWwvdHdpdHRlci1pY29uLnBuZz9sYT16aC1DTmQCAQ9kFgICARBkZBYCZhAWBB8KBQRUZXh0HwIoKwQkN2JiNTQzOTUtZDFkNy00ZjdiLThhYjYtNDE1MDQ2MWRlYzg5ZGQCAw9kFgRmDxUBRi96aC1jbi9tZWRpYWxpYnJhcnkvU29waG9zTmV4dC9JbWFnZXMvU29jaWFsL3lvdXR1YmUtaWNvbi5wbmc/bGE9emgtQ05kAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJGMyYzdkZWRkLWUxZTUtNGQ4Ny05NWU4LTc0MThjOGU1ZjVmY2RkAgIPZBYEAgEQZGQWAmYQFgYfCgUFV2lkdGgfAigrBCRhNzMzZTZhYi0xMDgxLTQxMmYtOWUwZC0wNzFmMzI5NTFhYzcfC2dkZAIFDxQrAAIPFgQfCWcfAwIGZGQWAmYPZBYMAgEPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJGFhNTVhZGNkLTQwZjctNDQxMy05OTJjLTc2YWY2MDRjZDlkNmRkAgIPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDIwNTM5MmZiLWRmNzAtNGI0OC04MGNmLWRiNGFmMDg2YmUwMmRkAgMPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDQ3ODFlYTU3LWM1MzYtNDAyNi1hYTdkLTVlYTk4NGFkZWUxNmRkAgQPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDhhMTQ2NDdmLWE4NDMtNGY4My05N2I1LTViMzYyOTgyYzE1Y2RkAgUPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDA4NjM3MzY0LWQ4YmUtNGE1Zi04NmU5LTQ5NTRjM2U3NmMwY2RkAgYPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDBhMmVjODJmLTMzNWMtNDUxNS04MGMzLWUyMDExMzhhYjFmOGRkAgMPZBYEAgEQZGQWAmYQFgYfCgUFV2lkdGgfAigrBCRlOTkyYjllNi01YTI4LTRkZjktYjNkOC0wZGE1MzExNThlN2IfC2dkZAIFDxQrAAIPFgQfCWcfAwIFZGQWAmYPZBYKAgEPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDJjZGRhNzY3LTkzNWUtNGNlOS1hMmQ2LTBjOTlkOGEyOWQ2MmRkAgIPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDA3ZWVkMGEzLTAwZWItNDQzYS1hZjRiLWMzYWVlZDViMjY1M2RkAgMPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJGMxMjkyNzliLTM3ZTEtNDdiNC04YTYzLTllZTZiMGJmMDllOWRkAgQPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJGVjZDQwZjA1LTA0NzQtNDc1Mi04OTRiLWQ4MzZlYTM2MGY3NGRkAgUPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDE0NzFiZmExLTJkOWEtNGUwMy1hYWM1LTQ2OTJkYWZiZWVjOWRkAgQPZBYEAgEQZGQWAmYQFgYfCgUFV2lkdGgfAigrBCQzYTUzZjE4MC0yMDU2LTQwMDMtYjhlZS02MWZiZWIwMDFiYTcfC2dkZAIFDxQrAAIPFgQfCWcfAwIFZGQWAmYPZBYKAgEPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDRiY2MxODAyLTQyMDItNGQwZS1iZGNjLTNiYWMwMzZlYzI5M2RkAgIPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDE0YjFlNjM2LWIxNTktNDg3ZS05Y2Y3LTQ0MzczOWYxOGRjYmRkAgMPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDAwNTEzZGY5LTRlZTUtNDMwNS1hODRjLTE3NTQxMGNmY2FiNWRkAgQPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDYxNWExY2U4LWEyZjEtNDVmNi1hZWIwLTNiNmYwYmI5OTRlMWRkAgUPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDUxMTA2MmRlLTI5MTEtNDI4Ni05NjAwLWRiZDlhODkyMWMxOWRkAgUPZBYEAgEQZGQWAmYQFgYfCgUFV2lkdGgfAigrBCQ1MDI3NWU1Yi0xNzI4LTQwNDgtOTQ5Ni0zODA2ZDhlOGExNDgfC2dkZAIFDxQrAAIPFgQfCWcfAwIFZGQWAmYPZBYKAgEPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJGIwMDcyNTQyLTNmZGUtNDlhYi04NTZiLWMxY2JkZGRhZjZhYmRkAgIPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJGQxNGRlMzkxLTllZTUtNDg0Ny1iZWFkLTc4M2YyNWZkZThmMGRkAgMPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDJkZjI1Nzg0LWQyNjUtNGVhMS1hNDBmLWM3NTViYTRkYzZjN2RkAgQPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDAzMzg5MDU5LTdkMjEtNDAwNy1hMmQ2LWQ0ZDNhY2E1NzhkYWRkAgUPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJGY0Mzc1OWRkLWU4YzktNGY0OC1iMjJhLWIwYWU5MmJjNjVhZmRkAgYPZBYEAgEQZGQWAmYQFgYfCgUFV2lkdGgfAigrBCRhM2Y5NmEwNC1jOTcwLTQ0NzgtYWNhNy1lOTRjOWZiODRiMDkfC2dkZAIFDxQrAAIPFgQfCWcfAwIGZGQWAmYPZBYMAgEPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDdkNDc1ZTlhLTdiZjEtNDEzMi05ZTkyLWIyYzNlZjg5ODU3ZWRkAgIPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDJmODA2ZDE0LTNlMTQtNDRkMi04ZjNiLWM4ZDFhNjJkZjhjN2RkAgMPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDNmOThlOGRiLTRiYjktNGQ5OS1iNWU5LWFmOGVlNDMxYzNiZmRkAgQPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDExMGE4ZGVmLWQzMzAtNDRjMS04YzM4LTY3N2Y5ZWRjZDE5Y2RkAgUPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJGE5Mjc3YmZmLWFiNWYtNGMwNC05ZjUyLTlkMDZmNTg1NmFhY2RkAgYPZBYEZg8VAQBkAgEPZBYCAgEQZGQWAmYQFgQfCgUEVGV4dB8CKCsEJDU2YjkwNmM5LTdlZTgtNDdiYS04NDc0LWZhNmNjMThjYzZjMGRkAgEPZBYCAgEPZBYCZhAWBB8CKCsEJDE5NjdlOTFkLTFjMGUtNDg0Ni1iNmMzLWVlYjBiOGU5ZGM0OB8KBQRMb2dvZGQCAhBkZBYCZhAWBB8KBRRDb3B5cmlnaHQgU3RhcnQgWWVhch8CKCsEJDE5NjdlOTFkLTFjMGUtNDg0Ni1iNmMzLWVlYjBiOGU5ZGM0OGRkAgMQZGQWAmYQFgQfCgUOQ29weXJpZ2h0IFRleHQfAigrBCQxOTY3ZTkxZC0xYzBlLTQ4NDYtYjZjMy1lZWIwYjhlOWRjNDhkZAIEEGRkFgJmEBYEHwoFBFRleHQfAigrBCQzMDAxMDlmMC1mMzg4LTRiMzUtOWUzNy02MDA1OWE5NjAzNjNkZAIFDxQrAAIPFgQfCWcfAwIJZGQWAmYPZBYSAgEPZBYEAgEPFgIfBGdkAgMPDxYEHwEFDOeugOS9k+S4reaWhx8HBSovemgtY24vdGhyZWF0LWNlbnRlci90ZWNobmljYWwtcGFwZXJzLmFzcHhkZAICD2QWAgIDDw8WBB8BBQdFbmdsaXNoHwcFKi9lbi11cy90aHJlYXQtY2VudGVyL3RlY2huaWNhbC1wYXBlcnMuYXNweGRkAgMPZBYCAgMPDxYEHwEFCUZyYW7Dp2Fpcx8HBSovZnItZnIvdGhyZWF0LWNlbnRlci90ZWNobmljYWwtcGFwZXJzLmFzcHhkZAIED2QWAgIDDw8WBB8BBQdEZXV0c2NoHwcFKi9kZS1kZS90aHJlYXQtY2VudGVyL3RlY2huaWNhbC1wYXBlcnMuYXNweGRkAgUPZBYCAgMPDxYEHwEFCUl0YWxpYW5vIB8HBSovaXQtaXQvdGhyZWF0LWNlbnRlci90ZWNobmljYWwtcGFwZXJzLmFzcHhkZAIGD2QWAgIDDw8WBB8BBQnml6XmnKzoqp4fBwUqL2phLWpwL3RocmVhdC1jZW50ZXIvdGVjaG5pY2FsLXBhcGVycy5hc3B4ZGQCBw9kFgICAw8PFgQfAQUJ7ZWc6rWt7J2YHwcFFWh0dHA6Ly9rci5zb3Bob3MuY29tL2RkAggPZBYCAgMPDxYEHwEFCEVzcGHDsW9sHwcFKi9lcy1lcy90aHJlYXQtY2VudGVyL3RlY2huaWNhbC1wYXBlcnMuYXNweGRkAgkPZBYCAgMPDxYEHwEFDOe5gemrlOS4reaWhx8HBRVodHRwOi8vdHcuc29waG9zLmNvbS9kZAIGDxQrAAIPFgQfCWcfA2ZkZGQCBQ8WAh8BZWQCBw8WAh8BBfAKPCEtLSBHb29nbGUgQ29kZSBmb3IgUmVtYXJrZXRpbmcgdGFnIC0tPgo8IS0tIFJlbWFya2V0aW5nIHRhZ3MgbWF5IG5vdCBiZSBhc3NvY2lhdGVkIHdpdGggcGVyc29uYWxseSBpZGVudGlmaWFibGUgaW5mb3JtYXRpb24gb3IgcGxhY2VkIG9uIHBhZ2VzIHJlbGF0ZWQgdG8gc2Vuc2l0aXZlIGNhdGVnb3JpZXMuIEZvciBpbnN0cnVjdGlvbnMgb24gYWRkaW5nIHRoaXMgdGFnIGFuZCBtb3JlIGluZm9ybWF0aW9uIG9uIHRoZSBhYm92ZSByZXF1aXJlbWVudHMsIHJlYWQgdGhlIHNldHVwIGd1aWRlOiBnb29nbGUuY29tL2Fkcy9yZW1hcmtldGluZ3NldHVwIC0tPgo8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+Ci8qIDwhW0NEQVRBWyAqLwp2YXIgZ29vZ2xlX2NvbnZlcnNpb25faWQgPSA5ODc0MzMxMTE7CnZhciBnb29nbGVfY29udmVyc2lvbl9sYWJlbCA9ICI0UEppQ0pudWhnVVFsNUhzMWdNIjsKdmFyIGdvb2dsZV9jdXN0b21fcGFyYW1zID0gd2luZG93Lmdvb2dsZV90YWdfcGFyYW1zOwp2YXIgZ29vZ2xlX3JlbWFya2V0aW5nX29ubHkgPSB0cnVlOwovKiBdXT4gKi8KPC9zY3JpcHQ+CjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0IiBzcmM9Ii8vd3d3Lmdvb2dsZWFkc2VydmljZXMuY29tL3BhZ2VhZC9jb252ZXJzaW9uLmpzIj4KPC9zY3JpcHQ+Cjxub3NjcmlwdD4KPGRpdiBzdHlsZT0iZGlzcGxheTppbmxpbmU7Ij4KPGltZyBoZWlnaHQ9IjEiIHdpZHRoPSIxIiBzdHlsZT0iYm9yZGVyLXN0eWxlOm5vbmU7IiBhbHQ9IiIgc3JjPSIvL2dvb2dsZWFkcy5nLmRvdWJsZWNsaWNrLm5ldC9wYWdlYWQvdmlld3Rocm91Z2hjb252ZXJzaW9uLzk4NzQzMzExMS8/dmFsdWU9MS4wMCZhbXA7Y3VycmVuY3lfY29kZT1VU0QmYW1wO2xhYmVsPTRQSmlDSm51aGdVUWw1SHMxZ00mYW1wO2d1aWQ9T04mYW1wO3NjcmlwdD0wIi8+CjwvZGl2Pgo8L25vc2NyaXB0PgoKPCEtLSBEZW1hbmRiYXNlIHBsdWctaW4gZm9yIEdvb2dsZSBBbmFseXRpY3MgLS0+CjxzY3JpcHQ+CihmdW5jdGlvbihkLGIsYSxzLGUpeyB2YXIgdCA9IGIuY3JlYXRlRWxlbWVudChhKSwKICAgIGZzID0gYi5nZXRFbGVtZW50c0J5VGFnTmFtZShhKVswXTsgdC5hc3luYz0xOyB0LmlkPWU7CiAgICB0LnNyYz0oJ2h0dHBzOic9PWRvY3VtZW50LmxvY2F0aW9uLnByb3RvY29sID8gJ2h0dHBzOi8vJyA6ICdodHRwOi8vJykgKyBzOwogICAgZnMucGFyZW50Tm9kZS5pbnNlcnRCZWZvcmUodCwgZnMpOyB9KQood2luZG93LGRvY3VtZW50LCdzY3JpcHQnLCdzY3JpcHRzLmRlbWFuZGJhc2UuY29tL1d1RUZOZ2x6Lm1pbi5qcycsJ2RlbWFuZGJhc2VfanNfbGliJyk7Cjwvc2NyaXB0Pgo8IS0tIEVuZCBEZW1hbmRiYXNlIHBsdWctaW4gZm9yIEdvb2dsZSBBbmFseXRpY3MgLS0+CgoKZBgJBRtjdGwwNiRsc3R2VXRpbGl0eU5hdmlnYXRpb24PPCsADgMIZgxmDQL/////D2QFG2N0bDA2JGxzdHZQcmltYXJ5TmF2aWdhdGlvbg8UKwAOZGRkZGRkZDwrAAYAAgZkZGRmAv////8PZAUeY3RsMDYkbHN0dkdsb2JhbExhbmd1YWdlRm9vdGVyDxQrAA5kZGRkZGRkPCsACQACCWRkZGYC/////w9kBTNjdGwwNiRsc3R2UHJpbWFyeU5hdmlnYXRpb24kY3RybDEkbHN0dlN1YlF1aWNrTGlua3MPFCsADmRkZGRkZGQ8KwAGAAIGZGRkZgL/////D2QFM2N0bDA2JGxzdHZQcmltYXJ5TmF2aWdhdGlvbiRjdHJsNCRsc3R2U3ViUXVpY2tMaW5rcw8UKwAOZGRkZGRkZDwrAAUAAgVkZGRmAv////8PZAUzY3RsMDYkbHN0dlByaW1hcnlOYXZpZ2F0aW9uJGN0cmw1JGxzdHZTdWJRdWlja0xpbmtzDxQrAA5kZGRkZGRkPCsABgACBmRkZGYC/////w9kBTNjdGwwNiRsc3R2UHJpbWFyeU5hdmlnYXRpb24kY3RybDIkbHN0dlN1YlF1aWNrTGlua3MPFCsADmRkZGRkZGQ8KwAFAAIFZGRkZgL/////D2QFM2N0bDA2JGxzdHZQcmltYXJ5TmF2aWdhdGlvbiRjdHJsMyRsc3R2U3ViUXVpY2tMaW5rcw8UKwAOZGRkZGRkZDwrAAUAAgVkZGRmAv////8PZAUzY3RsMDYkbHN0dlByaW1hcnlOYXZpZ2F0aW9uJGN0cmwwJGxzdHZTdWJRdWlja0xpbmtzDxQrAA5kZGRkZGRkFCsAA2RkZAIDZGRkZgL/////D2RhGSKQRs7nBbIyd4rjgui/UF2aYw==" />
+</div>
+
+
+<script src="/WebResource.axd?d=qlvJR-CCb6c3PeoWdIdEYA8O-j8Sx2YvcgshicgTwC_svgnZcBiqMR72w49LC9X8GS52yO5rvDgXs5pPDHV3Y7I9meeUfcvi1S-IAdPVVZ--1EmVCCTmj37eRybKkNbHOVlYuBFvvvzhlUlRjM7Y_sCS2Ha85QdTQ_ouh2RB6jRTpmFW0Fg1YlaUAzz8B4mIxUM6aw2&amp;t=635973360947890199" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/Company/eventsfilters.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/Lightbox/fancybox1.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/Lightbox/productdemo1.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/SophosNext/jquerycolorboxmin.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/SophosNext/jquery190min.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/JQuery/jquerydetachit.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/querytoform.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/SophosNext/events.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/LP/publicsector/publicsector.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/JQuery/jquerybxslidermin.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/Easing/131.js?la=zh-CN" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/Threat Center/threatWidget.js?la=zh-CN" type="text/javascript"></script>
+<script src="https://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+<script src="/zh-cn/medialibrary/Scripts/Threat Center/threat-getJsonLabsData.js?la=zh-CN" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=BsN5d_eZ5SHqi__qUQyQywo4bNoPpZHh_R-4xrZlJpJWktbkQUA5EGJZ8V4mQi2So-q0MJIoFQYFQPttbhyaPiXCb2BV3jg-Twq0ObprWeOZQh8YT-eITRksCNPGH_NT-zqbWszOkseBEC9qKjCySbzHtY41&amp;t=5f9d5645" type="text/javascript"></script>
+    
+    
+    
+    
+    
+    
+    
+    
+
+<div class="nav" id="navigation">
+    
+<script type="text/javascript">
+    var sophosCookiePolicyCompliantCountries = ["AT","BG","CZ","DK","FI","FR","GR","HU","IE","LV","LT","LU","SK","SE","GB"];
+</script>
+<div id="cookie-policy-wrapper" class="cookie-policy-wrapper">
+    <div class="cookie-policy">
+        This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies.
+        <a href="#" class="button blue cookie-accept" id="cookie-accept">
+            <span class="go">
+                Continue
+            </span>
+        </a>
+        <a href="#" id="cookie-show-more" class="cookie-show-more">
+            Learn More
+        </a>
+    </div>
+</div>
+<div id="cookie-information" class="cookie-information">
+    <div class="cookie-detailed-text">
+        <p>Some cookies on this site are essential, and the site won't work as expected without them. These cookies are set when you submit a form, login or interact with the site by doing something that goes beyond clicking on simple links.</p>
+<p>We also use some non-essential cookies to anonymously track visitors or enhance your experience of the site. </p>
+<p>To control third party cookies, you can also adjust your browser settings.</p>
+<p>By using our site you accept the terms of our <a rel="nofollow" href="/legal/sophos-group-privacy-policy.aspx">Privacy Policy</a>.</p>
+        <a href="#" id="cookie-close-link">
+            Close
+        </a>
+    </div>
+</div>   
+    <div class="nav-wrapper">               
+        
+
+<div class="primary-header">
+    <div class="container">
+        <h2 class="logo">
+            <a href="https://www.sophos.com/zh-cn.aspx">
+                    <img src="/zh-cn/medialibrary/Images/Navigation/sophos-logo-white.png?la=zh-CN" alt="Sophos" width="102" height="18" />
+                </a>
+        </h2>
+        <ul>
+            
+                    
+                    
+                        <li >
+                            <a href="#">
+                                Products
+                                <i class="icon-nav-arrow"></i>
+                            </a>
+                        </li>
+                        
+
+<div class="menu-panel">
+    <div class="menu-panel-container">
+        <div class="menu-toggle">
+            <a id="close-products-panel" class="close-menu-panel" href="#">
+                <span class="icon-panel-close"></span>
+            </a>
+        </div>
+        <div class="primary-menu-section">
+            
+                    <div class="menu-box">
+                        <h3 class="menu-box-title">
+                            Network
+                        </h3>
+                        <ul class="link-board">
+                            
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/utm-9.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-utm.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="27" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    SG UTM
+                                                </div>
+                                                <div class="link-meta">
+                                                    The ultimate network security package.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/next-gen-firewall.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-firewall.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    XG Firewall
+                                                </div>
+                                                <div class="link-meta">
+                                                    The next thing in next-gen.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/secure-wifi.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-wifi.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    Secure Wi-Fi
+                                                </div>
+                                                <div class="link-meta">
+                                                    Super secure, super Wi-Fi.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/lp/choose-swg.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-web.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    Secure Web Gateway
+                                                </div>
+                                                <div class="link-meta">
+                                                    Complete web protection everywhere.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/secure-email-gateway.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-email.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    Secure Email Gateway
+                                                </div>
+                                                <div class="link-meta">
+                                                    Simple protection for a complex problem.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/puremessage.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-puremessage.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    PureMessage
+                                                </div>
+                                                <div class="link-meta">
+                                                    Good news for you. Bad news for spam.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                        </ul>
+                    </div>
+                
+                    <div class="menu-box">
+                        <h3 class="menu-box-title">
+                            Enduser & Server
+                        </h3>
+                        <ul class="link-board">
+                            
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/endpoint-antivirus.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-endpoint.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    Endpoint Protection
+                                                </div>
+                                                <div class="link-meta">
+                                                    Comprehensive security for users and data.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/cloud.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-cloud.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    Sophos Cloud
+                                                </div>
+                                                <div class="link-meta">
+                                                    Sophos Security. Cloud Simplicity.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/mobile-control.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-mobile.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    Mobile Control
+                                                </div>
+                                                <div class="link-meta">
+                                                    Countless devices, one solution.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/safeguard-encryption.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-encryption.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    SafeGuard Encryption
+                                                </div>
+                                                <div class="link-meta">
+                                                    Protecting your data, wherever it goes.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                                    <li class="link-item">
+                                        <a class="link-area" href="https://www.sophos.com/zh-cn/products/server-security.aspx">
+                                                <i class="link-area-icon">
+                                                    <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/product-encryption-serverpng.png?la=zh-CN&amp;mh=28&amp;mw=28" alt="" width="28" height="28" />
+                                                </i>
+                                                <div class="link-name">
+                                                    Server Security
+                                                </div>
+                                                <div class="link-meta">
+                                                    Security Optimized for Servers.
+                                                </div>
+                                            </a>
+                                    </li>
+                                
+                        </ul>
+                    </div>
+                
+        </div>
+        
+                <div class="secondary-menu-section">
+                    
+                            <div class="menu-box">
+                                <a class="link-area" href="https://www.sophos.com/zh-cn/products/free-trials.aspx">
+                                        <i class="link-area-icon">
+                                            <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/free-trials.png?la=zh-CN" alt="" width="19" height="25" />
+                                        </i>
+                                        <span class="link-text">
+                                            Free Trials
+                                        </span>
+                                    </a>
+                            </div>
+                        
+                            <div class="menu-box">
+                                <a class="link-area" href="https://www.sophos.com/zh-cn/support/professional-services.aspx">
+                                        <i class="link-area-icon">
+                                            <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/professional-services.png?la=zh-CN" alt="" width="19" height="19" />
+                                        </i>
+                                        <span class="link-text">
+                                            Professional Services
+                                        </span>
+                                    </a>
+                            </div>
+                        
+                            <div class="menu-box">
+                                <a class="link-area" href="https://www.sophos.com/zh-cn/solutions.aspx">
+                                        <i class="link-area-icon">
+                                            <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/solutions.png?la=zh-CN" alt="" width="19" height="22" />
+                                        </i>
+                                        <span class="link-text">
+                                            Solutions
+                                        </span>
+                                    </a>
+                            </div>
+                        
+                </div>
+            
+                <div class="secondary-menu-section">
+                    
+                            <div class="menu-box">
+                                <a class="link-area" href="https://www.sophos.com/zh-cn/products/free-tools.aspx">
+                                        <i class="link-area-icon">
+                                            <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/free-tools.png?la=zh-CN" alt="" width="18" height="19" />
+                                        </i>
+                                        <span class="link-text">
+                                            Free Tools
+                                        </span>
+                                    </a>
+                            </div>
+                        
+                            <div class="menu-box">
+                                <a class="link-area" href="https://www.sophos.com/zh-cn/partners/oem-and-technology.aspx">
+                                        <i class="link-area-icon">
+                                            <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/oem.png?la=zh-CN" alt="" width="18" height="18" />
+                                        </i>
+                                        <span class="link-text">
+                                            OEM
+                                        </span>
+                                    </a>
+                            </div>
+                        
+                            <div class="menu-box">
+                                <a class="link-area" href="https://www.sophos.com/zh-cn/lp/sophos-home.aspx">
+                                        <i class="link-area-icon">
+                                            <img src="/zh-cn/medialibrary/SophosNext/Images/Navigation/Main/sophos-home.png?la=zh-CN" alt="" width="18" height="19" />
+                                        </i>
+                                        <span class="link-text">
+                                            Sophos Home
+                                        </span>
+                                    </a>
+                            </div>
+                        
+                </div>
+            
+    </div>
+</div>
+
+                
+                    
+                        <li class='selected'>
+                            <a href="https://www.sophos.com/zh-cn/threat-center/threat-analyses.aspx">
+                                    Labs
+                                </a>
+                        </li>
+                    
+                    
+                
+                    
+                        <li >
+                            <a href="https://www.sophos.com/zh-cn/partners.aspx">
+                                    Partners
+                                </a>
+                        </li>
+                    
+                    
+                
+                    
+                        <li >
+                            <a href="https://www.sophos.com/zh-cn/support.aspx">
+                                    Support
+                                </a>
+                        </li>
+                    
+                    
+                
+                    
+                        <li >
+                            <a href="https://www.sophos.com/zh-cn/company.aspx">
+                                    Company
+                                </a>
+                        </li>
+                    
+                    
+                
+            <li id="ctl05_ctl01_downloadsListItem" class="nav-icon">
+                <a href="#" class="downloads-link" id="downloadsLink">
+                    <span style="display: none;">
+                        Downloads
+                    </span>
+                    <i class="icon-nav-downloads" id="iconNavDownloads"></i>
+                </a>
+            </li>
+            <li id="ctl05_ctl01_searchListItem" class="nav-icon">
+                <a href="#search" class="search-link" id="searchLink">
+                    <span style="display: none;">
+                        Search
+                    </span>
+                    <i class="icon-nav-search"></i>
+                </a>
+            </li>
+            <li id="ctl05_ctl01_signInLink" class="nav-icon">
+                <a title="Sign In" class="login-link" href="https://secure2.sophos.com/zh-cn/login.aspx">
+                        <span style="display: none;">
+                            Sign In
+                        </span>
+                        <i id="ctl05_ctl01_loginLink_mySophosIcon" class="icon-nav-account"></i>
+                    </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+        
+
+<div class="drop-search" id="dropSearch">
+    <div class="container">
+        <div class="search-field-wrapper">
+            <i class="drop-search-icon"></i>
+            
+            <input type="text" id="dropSearchField" class="drop-search-field" data-gsa-autosuggest="true"  SearchResultsUrl="https://www.sophos.com/zh-cn/search-results.aspx" placeholder="Search Sophos" autocomplete="off" /> 
+            <a class="drop-search-close-panel" id="dropSearchClosePanel" href="#">
+                <i class="drop-search-close-icon"></i>
+            </a>
+        </div>
+    </div>
+</div>
+        
+
+<div class="drop-downloads" id="dropDownloads">
+    
+            <a class="drop-downloads-link-area" href="https://www.sophos.com/en-us/products/free-trials.aspx">
+                    <div class="drop-downloads-item">
+                        <div class="link-name">
+                            Free Trials
+                        </div>
+                        <div class="link-description">
+                            All product trials in one place.
+                        </div>
+                    </div>
+                </a>
+        
+            <a class="drop-downloads-link-area" href="https://www.sophos.com/zh-cn/products/free-tools.aspx">
+                    <div class="drop-downloads-item">
+                        <div class="link-name">
+                            Free Tools
+                        </div>
+                        <div class="link-description">
+                            Try out tools for use at home.
+                        </div>
+                    </div>
+                </a>
+        
+            <a class="drop-downloads-link-area" href="https://www.sophos.com/zh-cn/products/request-a-quote.aspx">
+                    <div class="drop-downloads-item">
+                        <div class="link-name">
+                            Get Pricing
+                        </div>
+                        <div class="link-description">
+                            The right price every time.
+                        </div>
+                    </div>
+                </a>
+        
+</div>
+        
+    </div>
+</div>
+
+
+<div class="secondary-navigation">
+    <div class="container">
+        
+        <span class="secondary-navigation-text">
+            
+        </span>
+        <ul>
+            
+            
+        <li >
+            <a href="https://www.sophos.com/zh-cn/threat-center/threat-analyses.aspx" style="">Threat Analysis</a>
+        </li>
+    
+        <li >
+            <a href="https://www.sophos.com/zh-cn/threat-center/threat-monitoring/threatdashboard.aspx" style="">Threat Dashboard</a>
+        </li>
+    
+        <li >
+            <a href="https://www.sophos.com/zh-cn/products/free-trials.aspx" style="">Free Trials</a>
+        </li>
+    
+        <li >
+            <a href="https://www.sophos.com/zh-cn/products/request-a-quote.aspx" style="">Get Pricing</a>
+        </li>
+    
+        <li >
+            <a href="https://www.sophos.com/zh-cn/products/free-tools.aspx" style="">Free Tools</a>
+        </li>
+    
+
+        </ul>
+    </div>
+</div>
+    
+    <!-- START Main Content Area -->
+    
+    
+<div class="content">
+    
+
+<div class="lnav">
+    
+            <ul>
+        
+            </ul>
+        
+</div>
+
+    
+
+<div class="secondaryBump">
+	
+<div class="marquee marqImg">
+
+	           
+			<div class="marqTitle" style="background: url('/zh-cn/medialibrary/Images/Bumps/Secondary Marquees/sophoslabs.jpg?la=zh-CN') right top no-repeat;">
+				
+						<h1>
+					Technical Papers
+						</h1>
+					
+				
+                
+			</div>
+
+		
+
+	<div class="marqDivider"></div>
+
+</div>
+
+	
+    
+    <div class="bumpFlowWrapper">
+        <div class="topFlow">
+            
+
+
+            
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    
+        
+<div class="secondaryContent">
+           
+	
+    <p>Here you will find a range of papers aimed at system administrators and security specialists on a variety of topical issues. Some of these papers have been presented at security seminars and technical conferences around the world.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/Sophos-2015-Q4-Exploit-Stats-Szappanos.pdf?la=zh-CN">2015 Q4 Exploit Stats</a></h3>
+<p>In our	research we examined the attack reports related to Microsoft Office	 documents to figure out which exploits	 are the most common and what malware they are most actively distributing. CVE-2012-0158 has been topping our document exploit charts for many years. It seems that nothing endangers the reign of this dinosaur, even though challengers have appeared over recent years.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-office-exploit-generators-szappanos.pdf?la=zh-CN">Office Exploit Generators</a></h3>
+<p>Cybercriminals have realized that Microsoft Office documents offer an excellent way to spread their malware, as users wrongly consider them safe. As a result, recently we have seen a resurgence in document malware. Office exploit generators play a crucial role, making Office exploitation available to common cybercriminals.&nbsp;In this paper, we look at some of the most impactful Office exploit generators.&nbsp;</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-current-state-of-ransomware.pdf?la=zh-CN">The Current State of Ransomware</a></h3>
+<p>This paper gives an insight into the current state of ransomware, and presents a detailed analysis of the four most prevalent variants &ndash; CryptoWall, TorrentLocker, CTB-Locker and TeslaCrypt &ndash; as well as an analysis of more obscure variants that employ novel or interesting techniques.
+</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-yu-lee-android-containerization-VB2015.pdf?la=zh-CN">Will Android Trojan, Worm or Rootkit Survive in SEAndroid and Containerization?</a></h3>
+<p>Android 5.0 is trying to set itself up as a safe corporate mobile operating system by touting SEAndroid and containerization. The enforcements of SEAndroid and containerization have been changing the way OEMs and Security vendors respond to security issues. This paper by Rowland Yu and William Lee will prove that, even with these security enhancements, you can still be infected; still have data stolen; still have corporate data leaked; or experience exploration of kernel vulnerabilities. Presented at the Virus Bulletin 2015 conference.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-wyke-breaking-the-bank-VB2015.pdf?la=zh-CN">Breaking the Bank(er): Automated Configuration Data Extraction for Banking Malware</a></h3>
+<p>In this paper presented at Virus Bulletin 2015, James Wyke explores how we can provide more holistic protection against the new families of banking Trojans such as Vawtrak and Dyreza. He explains our sandboxed-based system for automatically extracting and storing valuable data, in a scalable way.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-szappanos-effectively-testing-APT-defenses-VB2015.pdf?la=zh-CN">Effectively Testing APT Defenses</a></h3>
+<p>In this paper presented at Virus Bulletin 2015, Gabor Szappanos addresses some of the challenges related to the testing of APT protection software suites and devices. He first looks at the subjective and confused range of definitions of what an APT even comprises. He then looks at some of the objections raised to testers' measurements of APT protection efficacy in light of these definitions. Finally, he offers some simple guidelines for those who are attempting to construct or interpret tests of APT protection.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-Lee-Wu-crossplatform-mobile-malware-VB2015.pdf?la=zh-CN">Cross-Platform Mobile Malware: Write Once, Run Everywhere</a></h3>
+<p>Presented at the Virus Bulletin 2015 conference, this paper by William Lee and Xinran Wu describes the feasibility of new cross-platform mobile malware, analyzes the package structures of such malware, discusses the technical issues and suggests a solution to the problem.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-microsoft-word-intruder-revealed.pdf?la=zh-CN">Microsoft Word Intruder Revealed</a></h3>
+<p>This paper describes the mechanics of the Microsoft Word Intruder (MWI) malware creation kit that was used by dozens of cybercrime groups in a series of campaigns between May and August 2015. It explains the history of malware creation kits, how they work, and dives into the infection mechanism of the MWI generator, pointing out the key characteristics differentiating the MWI samples from other exploited malicious documents.</p>
+<h3><a href="https://blogs.sophos.com/2015/07/21/a-closer-look-at-the-angler-exploit-kit/">A Closer Look at the Angler Exploit Kit</a></h3>
+<p>Since the demise of the Blackhole exploit kit in October 2013, when its alleged operators were arrested, other exploit kits have certainly flourished and shared the marketplace. In this research paper we take a close look at Angler, which first appeared in late 2013 and since then has grown significantly in popularity and in 2015 became dominant.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/plugx-goes-to-the-registry-and-india.pdf?la=zh-CN">PlugX Goes to the Registry (and India)</a></h3>
+<p>The notorious PlugX APT group is continuing to evolve and launch campaigns, most recently a five-month-long campaign targeting organizations in India. PlugX now uses a new backdoor technique &ndash; hiding the payload in the Windows registry instead of writing it as a file on disk &ndash; according to this new technical paper from SophosLabs Principal Researcher Gabor Szappanos. Although not unique to PlugX, this backdoor approach is still uncommon and limited to a few relatively sophisticated malware families.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-exploit-this-evaluating-exploit-skills-of-malware-groups.pdf?la=zh-CN">Exploit This: Evaluating the Exploit Skills of Malware Groups</a></h3>
+<p>Many highly effective hacking groups associated with malware and advanced persistent threats (APTs) appear to lack an understanding of the technical exploits they use. They also fail to adequately test their exploits for effectiveness before unleashing them on their victims. Gabor Szappanos of SophosLabs Hungary evaluated the malware and APT campaigns of several groups that all leveraged a particular exploit &mdash; a sophisticated attack against a specific version of Microsoft Office. Gabor details how none of the groups he analyzed were able to modify the attack enough to infect other versions of Office, even though several versions were theoretically vulnerable to the same type of attack.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-vawtrak-international-crimeware-as-a-service-tpna.pdf?la=zh-CN">Vawtrak - International Crimeware-as-a-Service</a></h3>
+<p>In this paper we will highlight the main infection vectors for Vawtrak. We will describe how it gains control on an infected machine and what functionality it is capable of. We will then demonstrate how that functionality is being used, what organisations are being targeted and how the mechanisms that are employed vary between targeted banks and targeted geographies. Finally we will show how the Vawtrak botnet is apparently being used as part of a Crimeware-as-a-Service (CaaS) business model where the output of the botnet can be adjusted on demand, with financial data effectively being stolen to order.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-rotten-tomato-campaign.pdf?la=zh-CN">The Rotten Tomato Campaign</a></h3>
+<p>This technical paper by SophosLabs Principal Researcher Gabor Szappanos explores the malware campaign called Rotten Tomato, in reference to the Tomato Garden campaign - and because some of the samples were rotten in the sense that they were not effectively executed - and shows how several different groups used the same zero-day Microsoft Word exploit. The term "used" means that they somehow get hold of a document that exploited the vulnerability, and then left the exploiting document part and the shellcode intact, and only changed the appended encrypted executable at the end.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/sophos-database-performance-comparison-tpna.pdf?la=zh-CN" target="_new">Telemetry Database Query Performance Review</a></h3>
+<p>This document is an overview of work done to attempt to rank some commonly used analytically-focused database technologies against our currently used infrastructure and traditional data storage approaches. We will attempt to improve our current systems based on the work done here which will enable us to make an informed decision as to which technology to adopt in the future.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/Wyke-VB2013.pdf?la=zh-CN.pdf" target="_new">Back Channels and Bitcoins: ZeroAccess' Secret C&amp;C Communications</a></h3>
+<p>In this paper, presented at the Virus Bulletin 2013 conference in Berlin, SophosLabs researcher James Wyke examines the secret communications channels used to administer the ZeroAccess botnet.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/Baccas-VB2013.pdf?la=zh-CN.pdf" target="_new">Between an RTF and OLE2 Place: An Analysis of CVE-2012-0158 Samples</a></h3>
+<p>In this paper, presented at the Virus Bulletin 2013 conference in Berlin, independent researcher Paul Baccas documents some pitfalls of the ﬁle formats that make detection problematic, with particular attention placed on high-profile attacks using Microsoft vulnerability CVE-2012-0158. Baccas used tools based on the proprietary Sophos Virus Description Language (VDL) in this research.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/Yu-VB2013.pdf?la=zh-CN.pdf" target="_new">GinMaster: A Case Study in Android Malware</a></h3>
+<p>This paper by SophosLabs researcher Rowland Yu, presented at the Virus Bulletin 2013 conference in Berlin, gives an overview of three generations of the GinMaster family, examines their core malicious functionality, tracks their evolution from source code, and presents notable techniques utilized by speciﬁc variants.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/SvajcerMcDonald-VB2013.pdf?la=zh-CN.pdf" target="_new">Classifying PUAs in the Mobile Environment</a></h3>
+<p>This paper by SophosLabs researchers Vanja Svajcer and Sean McDonald introduces a structured PUA taxonomy for mobile apps, which can be applied both by security vendors and by mobile app developers. It was presented at the Virus Bulletin 2013 conference in Berlin.</p>
+<h3><a href="/zh-cn/medialibrary/PDFs/technical papers/HuqSzabo-VB2013.pdf?la=zh-CN.pdf" target="_new">Trapping Unknown Malware in a Context Web</a></h3>
+<p>In this paper, SophosLabs researchers Numaan Huq and Peter Szabo demonstrate combining URL information, e.g., keywords,  patterns, paths, etc., with ﬁle properties to create web-context detections (WCD). It was presented at the Virus Bulletin 2013 conference in Berlin.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/ransomware-next-generation-fake-antivirus.aspx">Ransomware: Next-Generation Fake Antivirus</a>
+</h3>
+<p>Ransomware may often be compared to fake antivirus in the way it operates and the motivation behind it. However, fake antivirus plays on the security fears and calls for the user to take actions in self-preservation, whereas ransomware works either as extortion or punishment. This paper describes in detail our findings about the motivations, strategies and techniques utilized in creating and propagating ransomware.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/inside-a-black-hole-part-2.aspx">Inside a Black Hole: Part 2</a> </h3>
+<p>The first part of this paper concluded in the deobfuscation of the server code which, while not complete, was still sufficient for a general understanding of the operation. It enabled us to follow the procession of the events both from the client and server side. The client side events we have already documented in detail. This paper attempts to fill in the missing server side piece.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/inside-a-black-hole.aspx">Inside a Black Hole</a> </h3>
+<p>Without exception the most actively deployed exploit kit in the past year was the Blackhole exploit kit. Now that the much heralded 2.0 version of the kit is out, it is safe to gradually release information about the previous 1.x version. The first portion of this paper will concentrate on the stolen 1.0.2 version of the exploit kit. A more comprehensive version of this material was published in the October issue of the Virus Bulletin magazine.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/zeroaccess-botnet.aspx">The ZeroAccess Botnet: Mining and Fraud for Massive Financial Gain</a> </h3>
+<p>Since our last paper on ZeroAccess the authors have made significant changes. In this paper we will examine those changes and take a closer look at the ZeroAccess botnet itself, exploring its size, functionality and purpose. We will explain in detail how the peer-to-peer protocol works, what network traffic is created, and how the bot phones home during installation. Then we will examine the plugin files that the botnet downloads: what these files are, what they do and how they work.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/exploring-the-blackhole-exploit-kit.aspx">Exploring the Blackhole Exploit Kit</a> </h3>
+<p>This paper lifts the lid on the Blackhole kit, describing how it works and detailing the various components that are used to exploit victim machines infecting them with malware.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/zeroaccess.aspx">ZeroAccess</a>&nbsp;</h3>
+<p>In this paper we will explore the ZeroAccess threat; from the distribution mechanisms used to spread it, through the installation procedure, memory residence and payload. We examine how ZeroAccess works and what its ultimate goal is.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/fake-antivirus.aspx">Fake Antivirus: Journey from Trojan to a Persistent Threat</a> </h3>
+<p>&nbsp;In this paper, we study the evolution of FakeAV over the last three-and-a-half years. We analyze the major FakeAV events, infection vectors and some important anti-emulation/anti-reverse engineering (RE) tricks used by FakeAV packers.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/a-time-based-analysis-of-rich-text-format-manipulations.aspx">
+</a>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/a-time-based-analysis-of-rich-text-format-manipulations.aspx">A time-based analysis of Rich Text Format manipulations: a deeper analysis of the RTF exploit CVE-2010-3333</a>&nbsp;</h3>
+<p>This paper explores the continued distribution of the exploit CVE-2010-3333. By examining the differences seen the paper will explore the reasons for the continued prevalence.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/popureb-a-small-rootkit-with-a-big-reputation.aspx">Popureb - A small rootkit with a big reputation</a> </h3>
+<p>New rootkits always garner attention from the malware research community and often panic among end-users. This paper dissects the workings of Popureb and explains how to safely restore affected computers to their original state.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/what-is-zeus.aspx">What is Zeus?</a>&nbsp;</h3>
+<p>This paper will explore the various components of the Zeus kit from the Builder through to the configuration file; examine in detail the functionality and behaviour of the Zbot binary; and assess emerging and future trends in the Zeus world.&nbsp;</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/digital-signature-abuse.aspx">Want my autograph? The use and abuse of digital signatures by malware</a> </h3>
+<p>This paper discusses the abuses of digital signatures and possible approaches to turn the criminals' investment in their fraudulent reputation into additional protection mechanisms.</p>
+<p>This paper was presented at Virus Bulletin in Vancouver, 2010</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/malicious-pdfs.aspx">Finding rules for heuristic detection of malicious PDFs: With analysis of embedded exploit code</a> </h3>
+<p>This paper, presented at Virus Bulletin 2010 in Vancouver, shows tips and tricks to help with classification and detection of malicious PDFs. </p>
+<p>This paper was presented at Virus Bulletin in Vancouver, 2010</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/malware-with-your-mocha.aspx">Malware with your Mocha? Obfuscation and antiemulation tricks in malicious JavaScript</a> </h3>
+<p>Fraser Howard of SophosLabs describes the tactics that attackers use to hide malicious JavaScript from detection and analysis.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/sophos-seo-insights.aspx">Poisoned search results: How hackers have automated search engine poisoning attacks to distribute malware</a> </h3>
+<p>Fraser Howard and Onur Komili of SophosLabs describe in this paper recent research by SophosLabs into how attackers are using blackhat Search Engine Optimization (SEO) techniques to stuff legitimate websites with content designed to rank highly in search engine results, yet redirect users to malicious sites.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/partnerka.aspx">The Partnerka &mdash; What is it, and why should you care?</a> </h3>
+<p>In this paper Dmitry Samosseiko of SophosLabs Canada discusses and analyzes the Russian 'partnerka' networks, their economic model, and their relation to spam and malware. It will reveal some &lsquo;insider&rsquo; statistics and information, show the tools used for &lsquo;black SEO&rsquo; (search engine optimizations), and explain its terminology and techniques. This technical paper also discusses how traditional email spam evolved into a complex web-based industry, creating new challenges for law enforcement, user education and for security labs.</p>
+<p>This paper was presented at the Virus Bulletin Conference in Geneva, 2009.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/affiliate-web-based-malware.aspx">Affiliate web-based malware</a> </h3>
+<p>This paper will attempt to show some straightforward affiliate networks, with more detailed analysis of some affiliate malware delivery systems.</p>
+<p>This paper was presented at Virus Bulletin in 2008.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/mac-data-theft.aspx">10 steps to better secure your Mac laptop from physical data theft</a> </h3>
+<p>This paper describes the steps that Mac users can take to improve the physical security of their laptops &mdash; away from the safety of the corporate environment with its security controls and into new environments with new risks and threats &mdash; discussing the context and benefits of each change.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/securing-websites.aspx">Securing websites</a> </h3>
+<p>In this updated paper Fraser Howard, principal virus researcher at Sophos, discusses some of the common ways that web servers are attacked, the reasons why they are targeted, and details various techniques in which they &mdash; and the websites they host &mdash; can be protected.</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/modern-web-attacks.aspx">Modern web attacks</a> </h3>
+<p>In this paper, Fraser Howard, principal virus researcher at Sophos, explores how modern malware uses the web to infect victims. The increased use of compromised websites in attacks is discussed and illustrated with examples of real attacks. Finally, methods to defend against such attacks are discussed. </p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/game-on.aspx">The game goes on: An analysis of modern spam techniques</a> </h3>
+<p>This paper analyses the many modern anti-anti-spam techniques, with statistical reports and real-life examples. Methods of combating these often highly effective and 'popular' spam techniques are explored.</p>
+<p>This paper was presented at the VB Conference 2006</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/phishing-and-fraud.aspx">Can strong authentication sort out phishing and fraud?</a> </h3>
+<p>Leading anti-malware expert, Paul Ducklin, addresses the following questions: can strong authentication (especially so-called two factor authentication) sort out phishing and fraud? Will smarter technology leave us safe from organized crime, or are there aspects of phishing and on-line fraud which will allow the bad guys to keep stealing from unfortunate victims no matter what we do?</p>
+<p>This paper was presented at the VB Conference 2006</p>
+<h3>
+<a href="https://www.sophos.com/zh-cn/threat-center/technical-papers/detecting-and-removing.aspx">The challenge of detecting and removing installed threats</a> </h3>
+<p>In this paper, Jason Bruce, Detection Development Manager at SophosLabs, discusses scanning techniques for detecting and removing threats that have been installed on computers, with a focus on the difficulties faced in removing threats that are comprised of many installed components. Jason concludes by highlighting that the measure of success of threat removal is not always as clear cut as the measures used in the detection tests the industry has become used to.</p>
+<p>This paper was presented at the VB Conference 2006</p>
+
+		<p class="footerPromo">
+
+<a href="https://www.sophos.com/zh-cn/products/free-tools/virus-removal-tool.aspx">
+<img class="left" style="WIDTH: 25px; HEIGHT: 25px" alt="download" src="/zh-cn/medialibrary/Images/Common/download25x25.gif?la=zh-CN?w=25&amp;h=25&amp;as=1" />
+<strong>Download our free Virus Removal Tool</strong><br />Find what your antivirus missed</a>
+
+</p>
+
+
+</div>
+
+    </div>
+	    
+    <div class="rRail">
+        
+		<div class="callToAction">
+       <h3><a href="https://www.sophos.com/zh-cn/products/free-tools/virus-removal-tool.aspx"><img width="25" height="25" alt="Download a free Virus Removal Tool" src="/zh-cn/medialibrary/Images/Common/download25x25.gif?la=zh-CN?w=25&amp;h=25&amp;as=1" />Download a free Virus Removal Tool</a></h3>
+</div>
+
+<div id="main_0_right_0_detailright_1_WidgetDiv" class="widget first">
+	
+	
+			<h3>
+		热门话题
+			</h3>
+		
+
+	
+
+	
+			
+		
+
+	
+
+			
+					<ul>
+				
+					<li>
+						
+
+    <a href="http://blogs.sophos.com/">
+                Sophos 博客
+            </a>
+
+    
+					</li>
+				
+					<li>
+						
+
+    <a rel="external" href="https://nakedsecurity.sophos.com/">
+                Naked Security
+            </a>
+
+    
+					</li>
+				
+					<li>
+						
+
+    <a href="https://www.sophos.com/zh-cn/security-news-trends/whitepapers.aspx">
+                Sophos 白皮书
+            </a>
+
+    
+					</li>
+				
+					<li>
+						
+
+    <a href="https://www.sophos.com/zh-cn/products/free-trials.aspx">
+                免费试用
+            </a>
+
+    
+					</li>
+				
+					</ul>
+				
+
+			
+
+		
+	
+</div>
+
+<div id="main_0_right_0_detailright_2_WidgetDiv" class="widget">
+	
+	
+			<h3>
+		Security news
+			</h3>
+		
+
+	
+
+	
+			
+		
+
+	
+
+			
+					<ul>
+				
+					<li>
+						
+
+    <a href="http://feeds.feedburner.com/NakedSecurity">
+                View all
+            </a>
+
+    
+					</li>
+				
+					</ul>
+				
+
+			
+
+		
+	
+</div>
+
+<div id="main_0_right_0_detailright_3_WidgetDiv" class="widget last">
+	
+	
+			<h3>
+		Connect with us
+			</h3>
+		
+
+	
+		<div style="padding-top: 10px;">
+    </div>
+<div class="left paddingRight"> <img width=" 16" height="16" alt="Facebook" src="/zh-cn/medialibrary/Images/Common/facebook.jpg?la=zh-CN?w=16&amp;h=16&amp;as=1" />
+    </div>
+    <div class="left widgetSupport">
+      <p>
+        <a href="https://www.facebook.com/securitybysophos">Facebook</a> </p>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="left paddingRight"> <img width="16" height="16" alt="Twitter" src="/zh-cn/medialibrary/Images/Common/twitter_25x25.jpg?la=zh-CN?w=16&amp;h=16&amp;as=1" /></div>
+    <div class="left widgetSupport">
+      <p>
+        <a href="https://twitter.com/Sophos_News">Twitter</a> </p>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="left paddingRight"> <img width="16" height="16" alt="LinkedIn" src="/zh-cn/medialibrary/Images/Common/linkedin.jpg?la=zh-CN?w=16&amp;h=16&amp;as=1" /></div>
+    <div class="left widgetSupport">
+      <p>
+        <a href="http://www.linkedin.com/company/5053?trk=tyah">LinkedIn</a> </p>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="left paddingRight"> <img width="16" height="16" alt="Google Plus" src="/zh-cn/medialibrary/Images/Common/googleplus.jpg?la=zh-CN?w=16&amp;h=16&amp;as=1" /></div>
+    <div class="left widgetSupport">
+      <p>
+        <a href="https://plus.google.com/118163283509008765806/posts">Google+ </a>
+      </p>
+    </div>
+    <div class="clear">
+    </div>
+
+	
+			
+		
+
+	
+
+			
+
+			
+
+		
+	
+</div>
+
+
+        
+
+    </div>
+
+    
+
+    <div class="bottomFlow">
+         
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="clear"></div>
+
+</div>
+
+    <!-- END Main Content Area -->
+    
+
+<script type="text/javascript">
+    $jq(document).ready(function () {
+        var menuCloseDelay;
+        function registerFooterPopupEvents($navitem, $menu) {
+            //Stop contextual clicks from going up to the body, allowing these to stay open
+            $navitem.click(function (event) { event.stopPropagation(); });
+            $menu.click(function (event) { event.stopPropagation(); });
+
+            // Navigation item mouse enter
+            $navitem.mouseenter(function () {
+                //console.log('mouseenter', $navitem);
+                clearTimeout(menuCloseDelay); // clear any timeout
+                // if this menu is not visible
+                if (!$menu.is(':visible')) {
+                    $('.popup').hide(); // hide all popups
+                    $menu.fadeIn(100); // show this popup
+                }
+            });
+            // Popup mouse enter
+            $menu.mouseenter(function () {
+                //console.log('mouseenter', $menu);
+                clearTimeout(menuCloseDelay);
+            });
+            // Navigation item mouse leave
+            $navitem.mouseleave(function () {
+                //console.log('mouseleave', $menu);
+                menuCloseDelay = setTimeout(function () {
+                    $menu.fadeOut(100);
+                }, 1500);
+            });
+            // Popup mouse leave
+            $menu.mouseleave(function () {
+                //console.log('mouseleave', $menu);
+                menuCloseDelay = setTimeout(function () {
+                    $menu.fadeOut(100);
+                }, 1500);
+            });
+        }
+
+        registerFooterPopupEvents($('.global-footer'), $('#popup-global-footer'));
+    });
+</script>
+
+
+        <div id="footer" class="alt-footer">
+            <div class="container clear">
+                
+        <div style='width:'>
+            <h5></h5>
+            
+                    <ul>
+                        
+                    <li iconurl="/zh-cn/medialibrary/SophosNext/Images/Social/facebook-icon.png?la=zh-CN">
+						<a href="http://www.facebook.com/securitybysophos">
+
+							Facebook
+						</a>
+                    </li>
+                
+                    <li iconurl="/zh-cn/medialibrary/SophosNext/Images/Social/twitter-icon.png?la=zh-CN">
+						<a href="https://twitter.com/Sophos_News">
+
+							Twitter
+						</a>
+                    </li>
+                
+                    <li iconurl="/zh-cn/medialibrary/SophosNext/Images/Social/youtube-icon.png?la=zh-CN">
+						<a href="http://www.youtube.com/sophoslabs">
+
+							Youtube
+						</a>
+                    </li>
+                
+                    </ul>
+                
+        </div>           
+    
+        <div style='width:'>
+            <h5>热点信息</h5>
+            
+                    <ul>
+                        
+                    <li iconurl="">
+						<a href="/zh-cn/products/free-trials.aspx">
+
+							免费试用
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/products/free-tools.aspx">
+
+							免费工具
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/security-news-trends/whitepapers.aspx">
+
+							白皮书
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/threat-center/technical-papers.aspx">
+
+							技术文献
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/company/contact.aspx">
+
+							联系我们
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="https://shop.sophos.com/" target="_blank">
+
+							Sophos Brand Store
+						</a>
+                    </li>
+                
+                    </ul>
+                
+        </div>           
+    
+        <div style='width:'>
+            <h5>社群</h5>
+            
+                    <ul>
+                        
+                    <li iconurl="">
+						<a href="http://blogs.sophos.com/">
+
+							Sophos 博客
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/company/community.aspx">
+
+							社会网络
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="http://nakedsecurity.sophos.com">
+
+							裸机安全新闻
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a>
+
+							Podcasts
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/about-us/rss-feeds.aspx">
+
+							RSS
+						</a>
+                    </li>
+                
+                    </ul>
+                
+        </div>           
+    
+        <div style='width:'>
+            <h5>与我们合作</h5>
+            
+                    <ul>
+                        
+                    <li iconurl="">
+						<a href="/zh-cn/partners/partner-application.aspx">
+
+							成为合作伙伴
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="http://partnerportal.sophos.com/">
+
+							合作伙伴门户（登录）
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/partners/resellers.aspx">
+
+							经销商
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/partners.aspx">
+
+							技术合作伙伴
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/partners/oem-and-technology.aspx">
+
+							OEM
+						</a>
+                    </li>
+                
+                    </ul>
+                
+        </div>           
+    
+        <div style='width:'>
+            <h5>关于 Sophos</h5>
+            
+                    <ul>
+                        
+                    <li iconurl="">
+						<a href="/zh-cn/company/careers.aspx">
+
+							工作/职位
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/products.aspx">
+
+							产品
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/about-us/site-feedback.aspx">
+
+							反馈
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/company/contact.aspx">
+
+							联系我们
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/company/press.aspx">
+
+							新闻发布
+						</a>
+                    </li>
+                
+                    </ul>
+                
+        </div>           
+    
+        <div style='width:'>
+            <h5>支持</h5>
+            
+                    <ul>
+                        
+                    <li iconurl="">
+						<a href="/zh-cn/support/technical-support.aspx">
+
+							担保
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/support/knowledgebase.aspx">
+
+							知识库
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="http://www.sophos.com/zh-cn/support/downloads.aspx">
+
+							下载和更新
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/support/documentation.aspx">
+
+							技术文档
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/support/professional-services.aspx">
+
+							Professional Services
+						</a>
+                    </li>
+                
+                    <li iconurl="">
+						<a href="/zh-cn/about-us/training/course-catalog.aspx">
+
+							培训
+						</a>
+                    </li>
+                
+                    </ul>
+                
+        </div>           
+    
+          </div>
+        </div>
+    
+
+
+
+<!-- Logo and legal -->
+<div id="legal" class="alt-footer">
+    <div class="container clear">
+        <div id="footer-logo">
+            <a>
+                <img src="/zh-cn/medialibrary/SophosNext/Images/Callouts/sophos-logo-footer.png?la=zh-CN" alt="Sophos" width="73" height="15" />
+            </a>
+            <p>
+                &copy;
+                1997
+                - 2016
+                Sophos Ltd. All rights reserved.
+            </p>
+        </div>
+
+        <ul>
+            <li id="globalLanguageLink" class="global-footer">
+                    <img src="/SophosNext/Assets/Images/footer-globe.png" class="img-footer-globe"/>
+                
+                <a href="#globalsitesfooter">
+                    简体中文
+                </a>
+                    <img src="/SophosNext/Assets/Images/footer-arrow.png" class="img-footer-arrow"/>
+
+                <!-- Global Sites Popup -->
+                
+                        <div id="popup-global-footer" class="popup">
+                            <div class="popup-wrap">
+                                <div class="popup-content">
+                                    <ul>
+                                        
+                        <li>
+                            <img src="/SophosNext/Assets/Images/footer-check.png" id="ctl06_lstvGlobalLanguageFooter_ctrl0_LanguageSelectedTick" class="selected" />
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl0_LanguageHyperlink" href="/zh-cn/threat-center/technical-papers.aspx">简体中文</a>
+                        </li>
+                    
+                        <li>
+                            
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl1_LanguageHyperlink" href="/en-us/threat-center/technical-papers.aspx">English</a>
+                        </li>
+                    
+                        <li>
+                            
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl2_LanguageHyperlink" href="/fr-fr/threat-center/technical-papers.aspx">Français</a>
+                        </li>
+                    
+                        <li>
+                            
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl3_LanguageHyperlink" href="/de-de/threat-center/technical-papers.aspx">Deutsch</a>
+                        </li>
+                    
+                        <li>
+                            
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl4_LanguageHyperlink" href="/it-it/threat-center/technical-papers.aspx">Italiano </a>
+                        </li>
+                    
+                        <li>
+                            
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl5_LanguageHyperlink" href="/ja-jp/threat-center/technical-papers.aspx">日本語</a>
+                        </li>
+                    
+                        <li>
+                            
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl6_LanguageHyperlink" href="http://kr.sophos.com/">한국의</a>
+                        </li>
+                    
+                        <li>
+                            
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl7_LanguageHyperlink" href="/es-es/threat-center/technical-papers.aspx">Español</a>
+                        </li>
+                    
+                        <li>
+                            
+                            <a id="ctl06_lstvGlobalLanguageFooter_ctrl8_LanguageHyperlink" href="http://tw.sophos.com/">繁體中文</a>
+                        </li>
+                    
+                                    </ul>
+                                </div>
+                                <!-- /popup-content -->
+                            </div>
+                            <!-- /popup-wrap -->
+                            <span class="arrow"></span>
+                        </div>
+                    
+                <!-- /Global Sites Popup -->
+            </li>
+
+            
+
+        </ul>
+
+
+    </div>
+</div>
+
+
+
+
+
+    <div id="cboxOverlay" style="opacity: 1; cursor: auto; visibility: visible; display: none;">
+    </div>
+    <div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none; visibility: visible;
+        top: 378px; left: 248px; position: absolute; width: 842px; height: 670px; opacity: 1;
+        cursor: auto;">
+        <div id="cboxWrapper" style="height: 670px; width: 842px;">
+            <div>
+                <div id="cboxTopLeft" style="float: left;">
+                </div>
+                <div id="cboxTopCenter" style="float: left; width: 800px;">
+                </div>
+                <div id="cboxTopRight" style="float: left;">
+                </div>
+            </div>
+            <div style="clear: left;">
+                <div id="cboxMiddleLeft" style="float: left; height: 628px;">
+                </div>
+                <div id="cboxContent" style="float: left; width: 800px; height: 628px;">
+                    <div id="cboxTitle" style="float: left; display: block;">
+                    </div>
+                    <div id="cboxCurrent" style="float: left; display: block;">
+                        1 of 5</div>
+                    <button type="button" id="cboxPrevious" style="display: block;">
+                        previous</button>
+                    <button type="button" id="cboxNext" style="display: block;">
+                            next</button>
+                    <button id="cboxSlideshow" style="display: none;">
+                            </button>
+                    <div id="cboxLoadingOverlay" style="float: left; display: none;">
+                    </div>
+                    <div id="cboxLoadingGraphic" style="float: left; display: none;">
+                    </div>
+                    <button type="button" id="cboxClose" style="display: inline-block;">
+                        close</button></div>
+                <div id="cboxMiddleRight" style="float: left; height: 628px;">
+                </div>
+            </div>
+            <div style="clear: left;">
+                <div id="cboxBottomLeft" style="float: left;">
+                </div>
+                <div id="cboxBottomCenter" style="float: left; width: 800px;">
+                </div>
+                <div id="cboxBottomRight" style="float: left;">
+                </div>
+            </div>
+        </div>
+        <div style="position: absolute; width: 9999px; visibility: hidden; display: none;">
+        </div>
+    </div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+externalLinks();//]]>
+</script>
+</form>
+    
+    <!-- Google Code for Remarketing tag -->
+<!-- Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. For instructions on adding this tag and more information on the above requirements, read the setup guide: google.com/ads/remarketingsetup -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 987433111;
+var google_conversion_label = "4PJiCJnuhgUQl5Hs1gM";
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/987433111/?value=1.00&amp;currency_code=USD&amp;label=4PJiCJnuhgUQl5Hs1gM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Demandbase plug-in for Google Analytics -->
+<script>
+(function(d,b,a,s,e){ var t = b.createElement(a),
+    fs = b.getElementsByTagName(a)[0]; t.async=1; t.id=e;
+    t.src=('https:'==document.location.protocol ? 'https://' : 'http://') + s;
+    fs.parentNode.insertBefore(t, fs); })
+(window,document,'script','scripts.demandbase.com/WuEFNglz.min.js','demandbase_js_lib');
+</script>
+<!-- End Demandbase plug-in for Google Analytics -->
+
+
+
+    <!-- Footer scripts Start -->
+    
+    <!-- Footer scripts End -->
+</body>
+</html>

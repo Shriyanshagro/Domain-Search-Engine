@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Best SQL group by &#8211; find, select and remove duplicate rows | Developer</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="http://developer.azurewebsites.net/xmlrpc.php">
+	<!--[if lt IE 9]>
+	<script src="http://developer.azurewebsites.net/wp-content/themes/twentyfourteen/./js/html5.js"></script>
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Developer &raquo; Feed" href="http://developer.azurewebsites.net/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Developer &raquo; Comments Feed" href="http://developer.azurewebsites.net/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Developer &raquo; Best SQL group by &#8211; find, select and remove duplicate rows Comments Feed" href="http://developer.azurewebsites.net/2014/09/better-sql-group-by-find-duplicate-data/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/developer.azurewebsites.net\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
+			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='twentyfourteen-lato-css'  href='https://fonts.googleapis.com/css?family=Lato%3A300%2C400%2C700%2C900%2C300italic%2C400italic%2C700italic&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://developer.azurewebsites.net/wp-content/themes/twentyfourteen/./genericons/genericons.css?ver=3.0.3' type='text/css' media='all' />
+<link rel='stylesheet' id='twentyfourteen-style-css'  href='http://developer.azurewebsites.net/wp-content/themes/twentyfourteen/./style.css?ver=4.4.2' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentyfourteen-ie-css'  href='http://developer.azurewebsites.net/wp-content/themes/twentyfourteen/./css/ie.css?ver=20131205' type='text/css' media='all' />
+<![endif]-->
+<script type='text/javascript' src='http://developer.azurewebsites.net/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://developer.azurewebsites.net/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<link rel='https://api.w.org/' href='http://developer.azurewebsites.net/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://developer.azurewebsites.net/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://developer.azurewebsites.net/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='TFS ignore NuGet packages' href='http://developer.azurewebsites.net/2014/08/tfs-ignore-nuget-packages/' />
+<link rel='next' title='Completely disable UAC in Windows' href='http://developer.azurewebsites.net/2014/12/completely-disable-uac-in-windows/' />
+<meta name="generator" content="WordPress 4.4.2" />
+<link rel="canonical" href="http://developer.azurewebsites.net/2014/09/better-sql-group-by-find-duplicate-data/" />
+<link rel='shortlink' href='http://developer.azurewebsites.net/?p=481' />
+<link rel="alternate" type="application/json+oembed" href="http://developer.azurewebsites.net/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdeveloper.azurewebsites.net%2F2014%2F09%2Fbetter-sql-group-by-find-duplicate-data%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://developer.azurewebsites.net/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdeveloper.azurewebsites.net%2F2014%2F09%2Fbetter-sql-group-by-find-duplicate-data%2F&#038;format=xml" />
+
+	<!--wp code prettify-->		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<!-- Tracking code easily added by NK Google Analytics -->
+<script type="text/javascript"> 
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ 
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), 
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) 
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); 
+ga('create', 'UA-46789818-2', 'developer.azurewebsites.net'); 
+ga('send', 'pageview'); 
+</script> 
+</head>
+
+<body class="single single-post postid-481 single-format-standard masthead-fixed full-width singular">
+<div id="page" class="hfeed site">
+	
+	<header id="masthead" class="site-header" role="banner">
+		<div class="header-main">
+			<h1 class="site-title"><a href="http://developer.azurewebsites.net/" rel="home">Developer</a></h1>
+
+			<div class="search-toggle">
+				<a href="#search-container" class="screen-reader-text" aria-expanded="false" aria-controls="search-container">Search</a>
+			</div>
+
+			<nav id="primary-navigation" class="site-navigation primary-navigation" role="navigation">
+				<button class="menu-toggle">Primary Menu</button>
+				<a class="screen-reader-text skip-link" href="#content">Skip to content</a>
+				<div id="primary-menu" class="nav-menu"></div>
+			</nav>
+		</div>
+
+		<div id="search-container" class="search-box-wrapper hide">
+			<div class="search-box">
+				<form role="search" method="get" class="search-form" action="http://developer.azurewebsites.net/">
+				<label>
+					<span class="screen-reader-text">Search for:</span>
+					<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" title="Search for:" />
+				</label>
+				<input type="submit" class="search-submit" value="Search" />
+			</form>			</div>
+		</div>
+	</header><!-- #masthead -->
+
+	<div id="main" class="site-main">
+
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+			
+<article id="post-481" class="post-481 post type-post status-publish format-standard hentry category-uncategorized">
+	
+	<header class="entry-header">
+				<div class="entry-meta">
+			<span class="cat-links"><a href="http://developer.azurewebsites.net/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+		</div>
+		<h1 class="entry-title">Best SQL group by &#8211; find, select and remove duplicate rows</h1>
+		<div class="entry-meta">
+			<span class="entry-date"><a href="http://developer.azurewebsites.net/2014/09/better-sql-group-by-find-duplicate-data/" rel="bookmark"><time class="entry-date" datetime="2014-09-16T20:42:06+00:00">2014-09-16</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="http://developer.azurewebsites.net/author/admin/" rel="author">admin</a></span></span>			<span class="comments-link"><a href="http://developer.azurewebsites.net/2014/09/better-sql-group-by-find-duplicate-data/#respond">Leave a comment</a></span>
+					</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p>Ever wanted to find duplicate data and <strong>select the actual rows</strong>?<br />
+<a href="/wp-content/uploads/2015/01/sql-duplicates-demo.zip" onClick="ga('send', 'event', 'download', 'click', 'sql-duplicates-demo.zip');">Download complete example as sql-script</a></p>
+<pre class="prettyprint">
+with MYCTE  as (
+  SELECT DuplicateKey1
+        ,DuplicateKey2 --optional
+        ,count(*) X
+  FROM MyTable
+  group by DuplicateKey1, DuplicateKey2
+  having count(*) &gt; 1
+) 
+SELECT E.*
+FROM MyTable E
+JOIN MYCTE cte
+ON E.DuplicateKey1=cte.DuplicateKey1
+   AND E.DuplicateKey2=cte.DuplicateKey2
+ORDER BY E.DuplicateKey1, E.DuplicateKey2, CreatedAt
+</pre>
+<p>If you want to <strong>keep only one of the rows</strong>. Choose if you keep the newest or oldest data.</p>
+<pre class="prettyprint">
+with MYCTE as (
+  SELECT ROW_NUMBER() OVER (
+    PARTITION BY DuplicateKey1
+                ,DuplicateKey2 -- optional
+    ORDER BY CreatedAt -- the first row among duplicates will be kept, other rows will be removed
+ -- ORDER BY NEWID() -- if the duplicates are identical and you dont care which of the duplicates will be kept
+  ) RN
+  FROM MyTable
+)
+DELETE FROM MYCTE
+WHERE RN &gt; 1
+</pre>
+	</div><!-- .entry-content -->
+	
+	</article><!-- #post-## -->
+	<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Post navigation</h1>
+		<div class="nav-links">
+			<a href="http://developer.azurewebsites.net/2014/08/tfs-ignore-nuget-packages/" rel="prev"><span class="meta-nav">Previous Post</span>TFS ignore NuGet packages</a><a href="http://developer.azurewebsites.net/2014/12/completely-disable-uac-in-windows/" rel="next"><span class="meta-nav">Next Post</span>Completely disable UAC in Windows</a>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+<div id="comments" class="comments-area">
+
+	
+					<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2014/09/better-sql-group-by-find-duplicate-data/#respond" style="display:none;">Cancel reply</a></small></h3>				<form action="http://developer.azurewebsites.net/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+					<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8"  aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='481' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="06fb4887e8" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="129"/></p>				</form>
+					</div><!-- #respond -->
+		
+</div><!-- #comments -->
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+<div id="secondary">
+		<h2 class="site-description">Developer world</h2>
+	
+	
+		<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+		<aside id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="http://developer.azurewebsites.net/">
+				<label>
+					<span class="screen-reader-text">Search for:</span>
+					<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" title="Search for:" />
+				</label>
+				<input type="submit" class="search-submit" value="Search" />
+			</form></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h1 class="widget-title">Recent Posts</h1>		<ul>
+					<li>
+				<a href="http://developer.azurewebsites.net/2015/11/net-c-build-release-mode-with-full-stack-trace-and-line-numbers/">.NET C# build RELEASE mode with full stack trace and line numbers</a>
+						</li>
+					<li>
+				<a href="http://developer.azurewebsites.net/2015/01/mssql-searchalltables/">MSSQL SearchAllTables</a>
+						</li>
+					<li>
+				<a href="http://developer.azurewebsites.net/2014/12/completely-disable-uac-in-windows/">Completely disable UAC in Windows</a>
+						</li>
+					<li>
+				<a href="http://developer.azurewebsites.net/2014/09/better-sql-group-by-find-duplicate-data/">Best SQL group by &#8211; find, select and remove duplicate rows</a>
+						</li>
+					<li>
+				<a href="http://developer.azurewebsites.net/2014/08/tfs-ignore-nuget-packages/">TFS ignore NuGet packages</a>
+						</li>
+				</ul>
+		</aside>		<aside id="recent-comments-2" class="widget widget_recent_comments"><h1 class="widget-title">Recent Comments</h1><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">Adam</span> on <a href="http://developer.azurewebsites.net/2015/01/mssql-searchalltables/#comment-241332">MSSQL SearchAllTables</a></li><li class="recentcomments"><span class="comment-author-link">Guilherme</span> on <a href="http://developer.azurewebsites.net/2014/08/tfs-ignore-nuget-packages/#comment-241331">TFS ignore NuGet packages</a></li><li class="recentcomments"><span class="comment-author-link">Giannis Gotsos</span> on <a href="http://developer.azurewebsites.net/2014/08/highchart-datetime-json/#comment-241291">HighChart datetime json</a></li><li class="recentcomments"><span class="comment-author-link"><a href='http://www.speakerbus.com' rel='external nofollow' class='url'>Simon Gymer</a></span> on <a href="http://developer.azurewebsites.net/2014/08/find-changeset-by-comment-2013-for-visual-studio-2013/#comment-241261">Find Changeset By Comment 2013 for Visual Studio 2013</a></li><li class="recentcomments"><span class="comment-author-link">Alexandre</span> on <a href="http://developer.azurewebsites.net/2014/08/find-changeset-by-comment-2013-for-visual-studio-2013/#comment-226581">Find Changeset By Comment 2013 for Visual Studio 2013</a></li></ul></aside><aside id="archives-2" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<ul>
+			<li><a href='http://developer.azurewebsites.net/2015/11/'>November 2015</a></li>
+	<li><a href='http://developer.azurewebsites.net/2015/01/'>January 2015</a></li>
+	<li><a href='http://developer.azurewebsites.net/2014/12/'>December 2014</a></li>
+	<li><a href='http://developer.azurewebsites.net/2014/09/'>September 2014</a></li>
+	<li><a href='http://developer.azurewebsites.net/2014/08/'>August 2014</a></li>
+	<li><a href='http://developer.azurewebsites.net/2012/06/'>June 2012</a></li>
+		</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h1 class="widget-title">Categories</h1>		<ul>
+	<li class="cat-item cat-item-42"><a href="http://developer.azurewebsites.net/category/advanced-users/" >Advanced users</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://developer.azurewebsites.net/category/autohotkey/" >AutoHotKey</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://developer.azurewebsites.net/category/developers/" >Developers</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://developer.azurewebsites.net/category/sql/" >SQL</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://developer.azurewebsites.net/category/system-administrators/" >System administrators</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://developer.azurewebsites.net/category/todo/" >todo</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://developer.azurewebsites.net/category/uncategorized/" >Uncategorized</a>
+</li>
+		</ul>
+</aside><aside id="meta-2" class="widget widget_meta"><h1 class="widget-title">Meta</h1>			<ul>
+						<li><a href="http://developer.azurewebsites.net/wp-login.php">Log in</a></li>
+			<li><a href="http://developer.azurewebsites.net/feed/">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://developer.azurewebsites.net/comments/feed/">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>			</ul>
+			</aside>	</div><!-- #primary-sidebar -->
+	</div><!-- #secondary -->
+
+	<!--wp code prettify-->
+	<script type="text/javascript">
+	function $(id) {return !id ? null : document.getElementById(id);}
+
+	loadPrettifyCss = function () {
+		if(!$('prettify_css')) {
+			css = document.createElement('link');
+			css.id = 'prettify_css';
+			css.type = 'text/css';
+			css.rel = 'stylesheet';
+			css.href = 'http://developer.azurewebsites.net/wp-content/plugins/wp-code-prettify/css/prettify.css';
+			var headNode = document.getElementsByTagName("head")[0];
+			headNode.appendChild(css);
+		} else {
+			$('prettify_css').href = 'http://developer.azurewebsites.net/wp-content/plugins/wp-code-prettify/css/prettify.css';
+		}
+
+		if(!$('prettify_custom')) {
+			css = document.createElement('style');
+			css.id = 'prettify_custom';
+			css.type = 'text/css';
+			css.rel = 'stylesheet';
+			css.innerHTML = 'pre.prettyprint { margin:5px; padding:10px;  max-height:500px; overflow:auto; background-color:#f8f8f8; width:auto; white-space: pre; word-wrap:normal; }';
+			var headNode = document.getElementsByTagName("head")[0];
+			headNode.appendChild(css);
+		} else {
+			$('prettify_css').innerHTML = 'pre.prettyprint { margin:5px; padding:10px;  max-height:500px; overflow:auto; background-color:#f8f8f8; width:auto; white-space: pre; word-wrap:normal; }';
+		}
+	}
+	</script>
+	<script type="text/javascript">
+		loadPrettifyCss();
+	</script>
+
+	<script type="text/javascript" src="http://developer.azurewebsites.net/wp-content/plugins/wp-code-prettify/js/prettify.js"></script>
+	<script type="text/javascript">
+		function wpCodePrettifyOnLoad(func){
+			var wpCodePrettifyOldOnLoad = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func
+			} else {
+				window.onload = function () {
+					wpCodePrettifyOldOnLoad();
+					func()
+				}
+			}
+		}
+
+		wpCodePrettifyOnLoad(function(){prettyPrint();});
+	</script>
+	<!--//wp code prettify-->
+	
+		</div><!-- #main -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+
+			
+			<div class="site-info">
+								<a href="https://wordpress.org/">Proudly powered by WordPress</a>
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- #page -->
+
+	<script type='text/javascript' src='http://developer.azurewebsites.net/wp-content/plugins/akismet/_inc/form.js?ver=3.1.6'></script>
+<script type='text/javascript' src='http://developer.azurewebsites.net/wp-includes/js/comment-reply.min.js?ver=4.4.2'></script>
+<script type='text/javascript' src='http://developer.azurewebsites.net/wp-content/themes/twentyfourteen/./js/functions.js?ver=20150315'></script>
+<script type='text/javascript' src='http://developer.azurewebsites.net/wp-includes/js/wp-embed.min.js?ver=4.4.2'></script>
+</body>
+</html>

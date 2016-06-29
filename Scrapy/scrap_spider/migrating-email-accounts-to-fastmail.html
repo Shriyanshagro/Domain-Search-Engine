@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="I keep planning to add this to the documentation, but I thought I'd write it up quickly as a blog post.">
+<title>Migrating email accounts to FastMail | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Migrating email accounts to FastMail">
+<meta property="og:description" content="I keep planning to add this to the documentation, but I thought I'd write it up quickly as a blog post.">
+<meta property="og:url" content="https://blog.fastmail.com/2008/06/24/migrating-email-accounts-to-fastmail/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2008/06/24/migrating-email-accounts-to-fastmail/">
+<meta name="twitter:title" content="Migrating email accounts to FastMail">
+<meta name="twitter:description" content="I keep planning to add this to the documentation, but I thought I'd write it up quickly as a blog post.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2008/06/24/migrating-email-accounts-to-fastmail/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2008/06/24/migrating-email-accounts-to-fastmail/'>Migrating email accounts to FastMail</a></h1>
+<p class="blog-author">Rob Mueller &ndash; 24 June 2008</p>
+<p>I keep planning to add this to the documentation, but I thought I'd
+write it up quickly as a blog post.</p>
+
+<p>One recurring question we have get is people asking the best way of
+migrating accounts from an existing system to a new FastMail
+family/business package. Basically there's two main approaches:</p>
+
+<ol>
+<li>All in one go</li>
+<li>One account at a time</li>
+</ol>
+
+<p>The documentation below helps explain these two approaches, and the
+other tools we provide to help you migrate accounts from other services
+to FastMail.</p>
+
+<h5>All in one go</h5>
+
+<p>The main advantage of this process is that it's a decisive cut-over from
+the old system to the new. The disadvantage is that after you change the
+MX records, you have to run the <strong>IMAP Migrate</strong> for all users so they
+get their existing email at FastMail, and if any users use email
+software (eg Outlook Express, Thunderbird, etc), you have to update all
+of them to use the new server names at once after the MX change over.</p>
+
+<ul>
+<li>Signup your family/business at FastMail (just follow the links near
+the bottom of the login screen at <a href="http://www.fastmail.fm">http://www.fastmail.fm</a>)</li>
+<li>During the signup, add any domains you want to use, even if they're
+currently hosted externally</li>
+<li>Create the accounts you want (eg <a href="&#109;&#x61;&#x69;&#x6C;&#116;&#111;:&#106;&#x6F;&#x68;&#110;&#64;&#101;&#120;&#97;&#109;p&#108;&#101;&#x2E;&#99;&#111;&#109;">&#106;&#x6F;&#x68;&#110;&#64;&#101;&#120;&#97;&#109;p&#108;&#101;&#x2E;&#99;&#111;&#109;</a>, etc) and any
+aliases you want</li>
+<li>When all the accounts &amp; aliases are setup and ready, switch the MX
+records for your domain to point to us. Depending on the TTL of the
+domain, after about an hour all new email should be delivered to
+FastMail servers, and thus the FastMail accounts</li>
+<li>Use the <strong>Options</strong> -> <strong>IMAP Migrate</strong> feature for each user to
+copy email from the old accounts to the new accounts</li>
+</ul>
+
+<h5>One account at a time</h5>
+
+<p>The main advantage of this process is that it allows you to move one
+account at a time from the old system to FastMail giving you time to
+gradually move users. For each user, you can migrate them, update that
+users email software to access our servers, and generally ensure that
+each transfer is smooth and complete, before moving onto the next user.</p>
+
+<p>Signup your family/business at FastMail (just follow the links near the
+bottom of the login screen at <a href="http://www.fastmail.fm">http://www.fastmail.fm</a>)</p>
+
+<p>During the signup, add any domains you want to use, even if they're
+currently hosted externally</p>
+
+<p>For each user you want to migrate, repeat the following steps:</p>
+
+<ol>
+<li>Create the account at FastMail (eg <a href="&#x6D;&#97;&#105;&#x6C;&#x74;&#x6F;:&#106;&#x6F;&#104;&#x6E;&#64;&#101;&#x78;&#97;&#109;&#x70;&#108;e&#46;&#99;&#x6F;m">&#106;&#x6F;&#104;&#x6E;&#64;&#101;&#x78;&#97;&#109;&#x70;&#108;e&#46;&#99;&#x6F;m</a>)</li>
+<li>At your existing site, setup a forward to forward all email arriving
+at the old site for <a href="&#x6D;&#97;&#x69;&#x6C;&#x74;&#x6F;:&#x6A;&#111;&#104;&#x6E;&#64;&#x65;&#x78;&#97;m&#x70;&#x6C;&#x65;&#x2E;&#x63;&#x6F;&#109;">&#x6A;&#111;&#104;&#x6E;&#64;&#x65;&#x78;&#97;m&#x70;&#x6C;&#x65;&#x2E;&#x63;&#x6F;&#109;</a> to us via one of our
+forwarding tunnel addresses (see below). Once you've done that, any
+new email that arrives at the old site will be forwarded to us</li>
+<li>Login to the <a href="&#109;&#97;&#x69;&#108;&#116;&#111;:&#106;&#x6F;&#104;&#x6E;&#64;&#101;x&#x61;&#109;&#112;&#108;&#101;.&#99;&#x6F;m">&#106;&#x6F;&#104;&#x6E;&#64;&#101;x&#x61;&#109;&#112;&#108;&#101;.&#99;&#x6F;m</a> account at FastMail, and use
+<strong>Options</strong> -> <strong>IMAP Migrate</strong> to copy all the email from your old
+server to us</li>
+<li>At this point all old mail will have been copied to us, and any new
+email will be forwarded to us</li>
+<li>Update the users email software to connect to our servers and/or
+tell them to login to are webmail interface</li>
+</ol>
+
+<p>Once you've done all accounts, change the MX records to point to us,
+completely removing the old site from handling your email. Everything
+moved over, no downtime, no lost email, no interruption</p>
+
+<h5>Forwarding Tunnel</h5>
+
+<p>The forwarding tunnel (previously documented
+<a href="http://blog.fastmail.fm/2008/03/20/migrating-multiple-accounts-easily-new-forwarding-tunnel-domain/">here</a>)
+allows you to forward email from an existing service to an account with
+the same name at FastMail. eg Say you have the account
+<a href="&#x6D;&#97;i&#x6C;&#x74;&#111;:&#x6A;&#111;&#x68;&#x6E;&#64;&#x65;&#120;a&#109;&#112;&#x6C;&#101;&#46;&#99;&#x6F;&#109;">&#x6A;&#111;&#x68;&#x6E;&#64;&#x65;&#120;a&#109;&#112;&#x6C;&#101;&#46;&#99;&#x6F;&#109;</a> at an existing service. You want to create your
+account as <a href="&#109;&#97;&#105;&#108;&#x74;&#x6F;:&#106;&#111;&#104;&#110;&#64;&#x65;&#120;&#x61;&#109;&#112;&#x6C;e&#46;&#x63;&#111;&#109;">&#106;&#111;&#104;&#110;&#64;&#x65;&#120;&#x61;&#109;&#112;&#x6C;e&#46;&#x63;&#111;&#109;</a> at FastMail, but how do you forward from
+the old <a href="&#x6D;&#x61;&#105;&#x6C;&#x74;&#x6F;:&#106;&#x6F;&#104;&#110;&#64;&#x65;&#120;&#x61;&#x6D;&#x70;&#x6C;&#101;&#x2E;&#99;o&#109;">&#106;&#x6F;&#104;&#110;&#64;&#x65;&#120;&#x61;&#x6D;&#x70;&#x6C;&#101;&#x2E;&#99;o&#109;</a> account to the FastMail <a href="&#x6D;&#x61;&#105;&#108;&#116;&#x6F;:&#106;&#111;&#104;&#110;&#64;&#101;&#x78;&#x61;&#109;&#x70;&#108;&#x65;&#x2E;c&#x6F;&#x6D;">&#106;&#111;&#104;&#110;&#64;&#101;&#x78;&#x61;&#109;&#x70;&#108;&#x65;&#x2E;c&#x6F;&#x6D;</a>
+account while the DNS still points to the old server? This is what the
+forwarding tunnel solves.</p>
+
+<p>It basically gives an extended email address syntax that you can forward
+email to, which will deliver to our servers, and then decode to the
+account name. There are 3 encoding options because some providers are
+limited by what characters you can put in an email address to forward
+to.</p>
+
+<p>To forward email to the FastMail account <a href="&#x6D;&#97;&#105;&#108;&#x74;&#111;:&#x6A;&#111;&#x68;&#x6E;&#64;&#x65;&#x78;&#97;&#x6D;&#x70;&#x6C;e&#x2E;&#99;o&#x6D;">&#x6A;&#111;&#x68;&#x6E;&#64;&#x65;&#x78;&#97;&#x6D;&#x70;&#x6C;e&#x2E;&#99;o&#x6D;</a>, you can
+forward to any of these 3 addresses:</p>
+
+<ul>
+<li><john#example.com@forward.messagingengine.com></li>
+<li><a href="mailto:john%example.com@forward.messagingengine.com">john%example.com@forward.messagingengine.com</a></li>
+<li><a href="ma&#105;&#108;&#116;&#x6F;:&#x6A;&#111;&#104;&#x6E;&#64;&#x65;&#120;&#97;&#109;&#x70;&#108;e&#x2E;&#x63;&#x6F;&#x6D;&#46;f&#111;&#x72;&#119;&#x61;&#x72;&#100;&#46;&#109;&#x65;&#x73;&#x73;&#x61;&#103;&#105;&#110;&#x67;&#x65;&#110;&#103;&#x69;&#110;e&#x2E;&#99;o&#109;">&#x6A;&#111;&#104;&#x6E;&#64;&#x65;&#120;&#97;&#109;&#x70;&#108;e&#x2E;&#x63;&#x6F;&#x6D;&#46;f&#111;&#x72;&#119;&#x61;&#x72;&#100;&#46;&#109;&#x65;&#x73;&#x73;&#x61;&#103;&#105;&#110;&#x67;&#x65;&#110;&#103;&#x69;&#110;e&#x2E;&#99;o&#109;</a></li>
+</ul>
+
+<h5>IMAP Migrate</h5>
+
+<p>The <strong>Options</strong> -> <strong>IMAP Migrate</strong> feature allows you to migrate email
+from an existing IMAP server to FastMail. During the migration, it will
+attempt to preserve the existing folder structure, emails and email
+state (eg seen or unseen) from the existing server. The migration may
+take some time depending on the size of the account it's migrating. The
+migration will run in the background, and will email you when it's
+completed with a status report of what it did and if it encountered any
+problems. In general if it does encounter problems, it will try several
+times on a folder before giving up and moving to the next folder.</p>
+
+<p>The most common reason for problems are:</p>
+
+<ol>
+<li>Buggy IMAP servers - we've seen buggy IMAP servers that just "crash"
+and close the connection when trying to retrieve some emails.
+Unfortunately when this happens there's not much we can do to
+retrieve the problem emails</li>
+<li>Hidden rate limits - this seems to be a particular problem with
+large gmail accounts. Technically google never advertise that gmail
+accounts have any limits, but it seems if you retrieve a large
+number of emails from a gmail account in a short time, it will just
+close the connection to the other side with no explanation or
+warning. The IMAP Migrate feature gives you the option to migrate
+individual folders at a time, so if you do have disconnect problems,
+you can migrate problem folders individually</li>
+</ol>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2008/06/20/os-x-mail-app-configuration/">OS X Mail App configuration</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2008/07/21/one-time-and-sms-passwords/">One-time and SMS passwords</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

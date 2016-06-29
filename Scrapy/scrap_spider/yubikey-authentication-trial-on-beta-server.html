@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="We're currently running a trial of Yubikey authentication on our beta server.">
+<title>Yubikey authentication trial on beta server | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Yubikey authentication trial on beta server">
+<meta property="og:description" content="We're currently running a trial of Yubikey authentication on our beta server.">
+<meta property="og:url" content="https://blog.fastmail.com/2010/01/20/yubikey-authentication-trial-on-beta-server/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2010/01/20/yubikey-authentication-trial-on-beta-server/">
+<meta name="twitter:title" content="Yubikey authentication trial on beta server">
+<meta name="twitter:description" content="We're currently running a trial of Yubikey authentication on our beta server.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2010/01/20/yubikey-authentication-trial-on-beta-server/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2010/01/20/yubikey-authentication-trial-on-beta-server/'>Yubikey authentication trial on beta server</a></h1>
+<p class="blog-author">Rob Mueller &ndash; 19 January 2010</p>
+<p>We're currently running a trial of
+<a href="http://www.yubico.com/products/yubikey/">Yubikey</a> authentication on our
+beta server.</p>
+
+<p>To enable this, just login and go to <strong>Options</strong> -> <strong>Alternate
+Logins</strong>, and create a new Yubikey login set. For the Base Password,
+just touch your Yubikey button to generate a new one-time code to allow
+us to associate your particular Yubikey with your account. Currently
+these logins only work on the beta server web interface.</p>
+
+<p>The Yubikey is a small USB authentication device that you can use to
+login to your FastMail account (beta web interface only at the moment)
+instead of your regular password. The Yubikey doesn't need any client
+software. You just plug it into a USB port and it acts like a USB
+keyboard that most OS's automatically support. It has one button on it,
+that when you press it, it generates a new one-time 44 character
+password.</p>
+
+<p>The main advantage of a Yubikey login over a regular static password
+login is that to login, you must have the physical Yubikey token plugged
+into your machine, and you must press the button on it to generate a new
+one-time password. You can't re-enter an already used one-time password,
+or copy and paste an existing one-time password. This prevents replay
+attacks if someone captures any of your logins (eg keylogger, tcp dump,
+malware root kit, etc).</p>
+
+<p>Here's the way it works:</p>
+
+<ol>
+<li>Each device has a unique id, that's the first 12 chars</li>
+<li>Each device has an internal "shared secret" AES encryption key</li>
+<li>Each time you press the button, it generates a new one-time value
+that encrypted with that key, that's the other 32 characters</li>
+</ol>
+
+<p>The way it generates the one-time value is like this:</p>
+
+<ol>
+<li>It takes some internal values and joins them together</li>
+<li>It then encrypts that data using a symmetric cipher with the shared
+AES key that's stored in the Yubikey, and also on the Yubico server
+so the server can decrypt it</li>
+</ol>
+
+<p>The internal values that are joined and encrypted include:</p>
+
+<ol>
+<li>A private internal value</li>
+<li>A number of counter fields (each time you plug the key into a
+machine, or generate a new key, internal non-volatile counters are
+incremented)</li>
+<li>Timer field (an internal 8hz counter value)</li>
+<li>A random number</li>
+<li>A CRC checksum</li>
+</ol>
+
+<p>So at the receiving side, you get the 44 char value. The first 12 chars
+normally let you work out who's key it is (we still need to ask for your
+login name, because we you allow you to associate your Yubikey with
+multiple different accounts if you want). With the other 32 bytes, they
+are decrypted using the shared AES key, and then all the values are
+checked to make sure they are valid (eg counters are all higher than
+their previous values, checksum is valid, etc). There's more details at
+the <a href="http://www.yubico.com/">Yubico</a> website (<a href="http://www.yubico.com/files/YubiKey_Manual_2009-12-03.pdf">PDF
+manual</a>).</p>
+
+<p>So with this approach, you can validate a login, and be sure that if
+someone captures your keystrokes/one-time password value, it's useless,
+because it can't be used again.</p>
+
+<p>We don't actually store the AES key or do the decryption. That's done
+with the <a href="http://www.yubico.com/developers/api/">Yubico web API
+service</a>. So the shared key is
+stored in the Yubikey itself, and on the Yubico web service API server.</p>
+
+<p>You can order Yubikeys from the <a href="http://www.yubico.com/o.php?refid=160&amp;rno=1767767686">Yubico website order
+page</a>.</p>
+
+<p>If you want to ask more questions, there's a forum thread about this you
+can check out: <a href="http://www.emaildiscussions.com/showthread.php?t=58584">Yubikey forum
+thread</a>.</p>
+
+<p><strong>Update 22 Jan 2010</strong>: We’ve now added a two factor Yubikey
+authentication option. With this method, you need to enter both a
+password, and touch your Yubikey button to generate a one-time password.
+The advantage of this approach is that if you login on a machine with a
+keylogger/malware/root kit that captures your username + password +
+yubikey one time password, it doesn’t matter, because the yubikey one
+time password can’t be reused. If someone steals your physical Yubikey,
+then it doesn’t matter, because they don’t know your fixed static
+password. This is why it’s called “two factor” authentication. (Of
+course it doesn’t protect against the case of both the static password
+and physical key being stolen, but that’s a lot less likely)</p>
+
+<p>Off topic: Just as an FYI, this isn't related to the FastMail
+implementation, but it is neat. If you're a business that wants to use
+Yubikeys for authenticating people within your own organisation, you can
+run your own <a href="http://www.yubico.com/developers/library/">Yubikey validation
+server</a> rather than using the
+Yubico Web API one. In that case what you'd do is before handing the
+Yubikeys to people in your organisation, you'd reprogram them with
+you're own <a href="http://www.yubico.com/developers/personalization/">new random AES
+code</a>. You'd also
+store that AES code on your own validation server. This means staff
+could then use their Yubikey to validate against your organisations
+validation server. Of course it wouldn't work for other externally run
+services that validate against the Yubico web API anymore, because the
+shared AES key is no longer valid in that case.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2010/01/17/new-website-throttling-feature-available/">New website throttling feature available</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2010/01/29/opportunistic-ssltls-encryption-on-outgoing-emails/">Opportunistic SSL/TLS encryption on outgoing emails</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

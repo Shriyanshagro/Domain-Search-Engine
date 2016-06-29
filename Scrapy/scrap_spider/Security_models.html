@@ -1,0 +1,509 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Security Models</title>
+<link rel="stylesheet" type="text/css" href="../../CSS/main.css">
+</head>
+
+<body>
+
+<basefont face="Times" size="3">
+<table border="0" width="100%" id="table1" height="135">
+<tr>
+<td rowspan="2" width="40%">
+
+<p align="center"><font face="Bernard MT Condensed" color="#FF0000" size="7">
+<a target="_blank" href="http://www.softpanorama.org/index.shtml"><font color="#FF0000">Softpanorama</font></a></font><b><br>
+</b><i><b><font size="2">May the source be with you, but remember the KISS principle ;-)</font></b></i></p>
+</td>
+<td colspan="6" align="center" valign="bottom">
+<form action="http://www.google.com/cse" id="cse-search-box">
+<input type="hidden" name="cx" value="partner-pub-4031247137266443:ye0t3e-czf5" />
+<input type="hidden" name="ie" value="ISO-8859-1" />
+<input type="text" name="q" size="60" /> <input type="submit" name="sa" value="Search" />
+<img src="http://www.google.com/images/poweredby_transparent/poweredby_999999.gif" alt="Google" />
+</form>
+</td>
+</tr>
+<tr>
+<td bgcolor="#F5F5F5" align="center" width="9%"><b><a href="/switchboard.shtml">Contents</a></b></td>
+<td bgcolor="#F5F5F5" align="center" width="7%"><b>
+<a href="/bulletin.shtml">Bulletin</a></b></td>
+<td bgcolor="#F5F5F5" align="center" width="16%"><b><font size="2">
+<a href="/scriptorama.shtml">Scripting in shell and Perl</a></font></b></td>
+<td bgcolor="#F5F5F5" align="center" width="10%"><b><font size="2">
+<a href="/netorama.shtml">Network troubleshooting</a></font></b></td>
+<td bgcolor="#F5F5F5" align="center" width="7%"><b><a href="/History/index.shtml">History</a></b></td>
+<td bgcolor="#F5F5F5" align="center" width="7%"><b><a href="/Bulletin/Humor/index.shtml">Humor</a></b></td>
+</tr>
+</table>
+
+<center>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- top_large_banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:970px;height:90px"
+     data-ad-client="ca-pub-4031247137266443"
+     data-ad-slot="9138796897"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+ </center>
+<hr width="100%" noshade size="5" color="#FF0000">
+
+
+<h1 align="center">Security Models </h1>
+
+<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" bgcolor="#FFFFCC" >
+	<tr>
+		<td width="14%" align="center">News</td>
+		<td width="14%" align="center"><a href="#Recommended_Links">Recommended 
+		Links</a></td>
+		<td width="14%" align="center"><a href="#Glossary">Glossary</a></td>
+		<td width="14%" align="center">
+		<b>
+		<a href="../../Authentication/index.shtml">Authentication and Accounts Security</a></b></td>
+		<td width="14%" align="center">
+		<b>
+		<a href="../../Authentication/kerberos.shtml">Kerberos</a></b></td>
+	</tr>
+	<tr>
+		<td width="14%" align="center">
+		<b>
+		<a href="#Protection domains">Domains and assess matrix</a></b></td>
+		<td width="14%" align="center">
+		<b>
+		<a href="#Protection matrix">Protection matrix</a></b></td>
+		<td width="14%" align="center"><b><a href="#Capabilities">Capabilities</a></b></td>
+		<td width="14%" align="center"><b>
+		<a target="_blank" href="../mac.shtml">Mandatory access control (MAC</a>)</b></td>
+		<td width="14%" align="center"><b>
+		<a href="../../Commercial_linuxes/Suse/Security/apparmor.shtml">AppArmor</a></b></td>
+	</tr>
+	<tr>
+		<td width="14%" align="center">
+		<b>
+		<a target="_blank" href="bell_lapadula_security_model.shtml">Bell LaPadula 
+		Security Model</a></b></td>
+		<td width="14%" align="center">
+		<b>
+		<a target="_blank" href="biba_model.shtml">THE BIBA MODEL</a></b></td>
+		<td width="14%" align="center">
+		<b>
+		<a target="_blank" href="clark_wilson.shtml">The Clark Wilson Model</a></b></td>
+		<td width="14%" align="center"><b><a href="../role_engineering.shtml">RBAC, 
+		SOX and Role Engineering in Large Organizations</a></b></td>
+		<td width="14%" align="center">
+		<b><a href="../../Solaris/Security/solaris_rbac.shtml">Solaris RBAC</a></b></td>
+	</tr>
+</table>
+<div align="left">
+<table border="0" width="178" height="620" align="right" cellspacing="4" bgcolor="#FFFFFF">
+<tr><td>
+<table border="1" width="174" height="616" align="center" bgcolor="#FF0000">
+<tr><td>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Upper skyscaper -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-4031247137266443"
+     data-ad-slot="0371843916"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</td></tr></table>
+</td></tr></table>
+</div>
+
+
+<p>There are three classes of security model each with several subclasses:
+<ol>
+<li><p><b>Access Control Models</b></p>
+<ul>
+	<li>
+
+	<p>The Access Matrix</p>
+	</li>
+	<li>
+
+	<p>Take Grant Model</p>
+	</li>
+	<li>
+
+	<p>Bell LaPadula</p>
+	</li>
+</ul>
+
+<li><p><b>Integrity Models</b></p>
+<ul>
+	<li>
+	<p>Biba</p>
+	</li>
+	<li>
+	<p>The Clack-Wilson</p>
+	</li>
+</ul>
+
+<li><p><b>Information flow models</b></p>
+<ul>
+	<li>
+
+	<p>Non-interference model</p>
+	</li>
+	<li>
+
+	<p>Composition theories</p>
+	</li>
+</ul>
+</ol>
+
+<!---google box ------->
+<table border="0" width="310" align="left" cellspacing="7" cellpadding="4">
+<tr><td width="340" bgcolor="#FFFF00" valign="center" align="center">
+<center>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Top Large Rectangle -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-4031247137266443"
+     data-ad-slot="3274064497"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></center>
+</td></tr>
+</table>
+<!---end of google box ------->
+None of those is completely satisfactory. Moreover several practical Unix security implementation does not fit any of those. 
+One notable example is
+<a href="../../Commercial_linuxes/Suse/Security/apparmor.shtml">AppArmor</a> -- 
+a very elegant security model used in Suse and Ubuntu. A good intro to Apparmor can be found in Ubuntu Community Forum post
+<a rel="nofollow" href="http://ubuntuforums.org/showthread.php?t=1008906">&nbsp;Introduction to 
+AppArmor </a>  
+
+<h2 align="center"><a name="Recommended_Links">Recommended Links</a></h2>
+
+<table border="0" width="100%" height="110">
+<tr>
+<td width="100%" align="center">	
+
+<h3><a href="/topvisited_history.shtml">Softpanorama Top Visited</a></h3>
+<iframe src="/topvisited.shtml" width="100%" height="330"><p>Your browser does not support iframes.</p>
+</iframe>
+</td>
+</table>
+<h3>Softpanorama Recommended</h3>
+
+
+<p>
+<a target="_blank" href="http://216.239.51.100/search?q=cache:evrwMMUqMX0C:www.itsecconsulting.com/Publications.htm+Clark+and+wilson+model&hl=en&ie=UTF-8">
+IT Security Publications</a></p>
+
+<p>
+<a target="_blank" href="http://www.itsecconsulting.com/pubs/ExternalConsistency.htm">
+Modeling External Consistency of Automated Systems</a></p>
+
+<p>
+<a target="_blank" href="http://www.cs.unc.edu/~dewan/242/f96/notes/prot/node1.html">
+Protection</a></p>
+
+<p>
+<a target="_blank" href="http://www.cs.unc.edu/~dewan/242/f96/notes/prot/node13.html">
+Bell LaPadula Model</a></p>
+<blockquote>
+
+	<p>This discussion is taken from HongHai Shen&#39;s thesis. </p>
+
+	<p>The Bell-LaPadula Model (BLM), also called the multi-level model, was proposed 
+	by Bell and LaPadula for enforcing access control in government and military 
+	applications. In such applications, subjects and objects are often partitioned 
+	into different security levels. A subject can only access objects at certain 
+	levels determined by his security level. For instance, the following are two 
+	typical access specifications: ``Unclassified personnel cannot read data at 
+	confidential levels&#39;&#39; and ``Top-Secret data cannot be written into the files 
+	at unclassified levels&#39;&#39;. This </p>
+
+	<p><i>mandatory access control</i>, which, according to the United States Department 
+	of Defense Trusted Computer System Evaluation Criteria is ``a means of restricting 
+	access to objects based on the sensitivity (as represented by a label) of the 
+	information contained in the objects and the formal authorization (e.g., clearance) 
+	of subjects to access information of such sensitivity&quot;. </p>
+
+	<p>The converse of mandatory access control is <i>discretionary access control</i>, 
+	which is defined as ``a means of restricting access to objects based on the 
+	identity of subject and/or groups to which they belong. The controls are discretionary 
+	in the sense that a subject with a certain access permission is capable of passing 
+	that permission (perhaps indirectly) to any other subject&quot;. </p>
+
+	<p><i><b>The Bell-LaPadula model supports mandatory access control by determining 
+	the access rights from the security levels associated with subjects and objects.</b></i> 
+	It also supports discretionary access control by checking access rights from 
+	an access matrix. With respect to specification, we can regard the multi-level 
+	model as adding higher-level mechanisms to the matrix model. In addition to 
+	supporting arbitrary access specifications to the access matrix, the model groups 
+	protected objects according to different security labels and decides user privileges 
+	by their authorized security clearance levels (It is awkward, though not impossible, 
+	to specify this kind of access definition using the matrix model.). </p>
+
+	<p><font face="Arial">More formally, each object is associated with a security 
+	level of the form (classification level, set of categories). Each subject is 
+	also associated with a maximum and current security level, <i><b>which can be 
+	changed dynamically.</b></i> The set of classification levels is ordered by 
+	a $&lt;$ relationship. For instance, it can be the set </font><kbd>top-secret,</kbd>
+	<kbd>secret,</kbd> <kbd>confidential,</kbd> <kbd>unclassified,</kbd> where
+	</p>
+	<pre>unclassified &lt; confidential &lt; secret &lt; top-secret
+</pre>
+
+	<p><font face="Arial">A category is a set of names such as </font><kbd>Nuclear</kbd> 
+	and <kbd>NATO.</kbd> Security level A <i>dominates</i> B if and only if A&#39;s 
+	classification level &gt; B&#39;s classification level, and A&#39;s category set contains 
+	B&#39;s. For instance, </p>
+	<pre>top-secret, {Nuclear, NATO}
+</pre>
+
+	<p>dominates </p>
+	<pre>secret, {NATO}
+</pre>
+
+	<p>because </p>
+	<pre>top-secret &gt; secret
+</pre>
+
+	<p>and the set </p>
+	<pre>{Nuclear, NATO}
+</pre>
+
+	<p>contains </p>
+	<pre>{NATO}
+</pre>
+
+	<p>In the model, an access request (subj, obj, acc) is granted if and only if 
+	all of the following properties are satisfied: </p>
+
+	<p>simple security property (no read up): if acc is read, then level(subj) should 
+	dominate level(obj). </p>
+
+	<p>*-property (no write down): if acc = append, then level(obj) should dominate 
+	level(subj); if acc = write, then level(obj) should be equal to level(subj).
+	</p>
+
+	<p>discretionary security property: the (subj, obj) cell in the matrix contains 
+	acc. </p>
+
+	<p><i><b>Like Multics, this model has the problems of hierarchical access control 
+	and does not always support the need to know principle except in rigid military 
+	situations. </b></i></p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p><a target="_blank" href="http://www.seas.upenn.edu/~cis70006/l7.txt">l7</a></p>
+<pre>Security news
+	Failure to scrub filename
+		../.. leads to command execution
+	Macro flaw in database query
+		lets user add terms to query
+	mod_ssl and Apache ssl bug
+		asn.1 parse!
+
+How do you know if a system is secure?
+	What is &quot;secure&quot;?
+	DoD is interested...
+	DoD&#39;s concern:  secrecy
+
+Bell-Lapadula model
+	<i><b>Often cited, seldom read</b></i>
+	Models military classification hierarchy
+	specified as a lattice
+		(partial ordering)
+	levels - ordered; categories - subset
+		<top-secret,(nuclear,nato)></top-secret,(nuclear,nato)> &quot;dominates&quot; <secret,(nato)></secret,(nato)>
+	no &quot;read up&quot;
+		can only read files if subject dominates or equal object
+		i.e., cannot read informaiton more classified
+	no &quot;write down&quot;
+		called &quot;*-property&quot;
+		Btw -- usual implementation is &quot;write if equal&quot; only
+	called &quot;mandatory access control&quot; -- user cannot change own
+	level or object&#39;s level
+
+Discretionary access control
+	Programmer can control
+	Unix:  chmod
+	Bell-Lapadula: matrix
+	Multics:  ACL -- list of
+		user,group	perm
+		* == all	read,write,execute,append
+
+No integrity in Bell-Lapadula!
+	(ab)use &quot;no write down&quot;
+	system routines at *low* confidentiality level
+
+DoD wrote security spec with Bell-Lapadula at core
+	&quot;Orange Book&quot;
+	Part of &quot;rainbow series&quot;
+
+Orange Book
+	Specified security levels
+	Specified features for each level
+	Specified assurance
+	Notion of TCB -- &quot;trusted computing base&quot;
+
+Levels:
+	D -- minimal protection
+		default level
+	C1 -- discretionary access
+		authentication
+		discretionary access control
+		TCB protection
+		TCB validation
+		testing for assurance -- &quot;no obvious ways&quot;
+			(2 B.S.-level people)
+		documentation:
+			user features
+			admin
+			test process for evaluators
+			design document
+	C2 -- controlled access
+		C1+
+		finer-grained access control
+		no object reuse (clear memory)
+		audit trail of object use
+		more testing
+	B1 -- labeled security protection
+		DAC
+		MAC
+			security labels for subjects, objects
+			labels protected by TCB
+			label output
+		Assurance
+			testing: 2 B.S., 1 M.S.
+			mandate separate address space
+			more testing, audit (including object code)
+				protect agains DoS!
+			remove all flaws
+			security policy model
+			detailed design model
+	B2 -- structured protection
+		trusted path
+		covert channels identified and measured
+			timing channel
+				burst of disk i/o
+			storage channel
+				fill disk
+				file names in /tmp
+		audit admin, operator actions
+		assurance
+			&quot;carefully structured TCB&quot;
+			much more testing and review
+			configuration management during development
+			config management for specs
+			major design document
+	B3 -- Security domains
+		exclude non-critical code from tcb
+		very careful tcb design process
+		assurance
+			no design flaws, only a few implementation flaws
+			even strong design documents
+	A1 -- verified design
+		no new features
+		formal security model, formal top-level spec
+		abstract definitions of TCB functions
+		formal verification when possible
+		formal analysis to find covert channels
+		config management for everything, including diff tools
+		testing -- 1 B.S., 2 M.S.
+
+Networks
+	Red Book -- &quot;Trusted Network Interpretation&quot;
+	Explains network in terms of Orange Book
+
+What do you do with this?
+	Formal testing process
+	Slow, expensive proces
+	B1+ requires work at design time
+	All but impossible to retrofit B2+ protection
+	Tests *specific* versions, configuration of hardware, software
+
+Typical designs
+	Some look like Unix on steroids
+		Add levels, ACLs
+	Log in at level; files have attributes
+	Floating label scheme
+		Write to file -- it gets your level
+		Read from file -- you get its level
+
+Common Criteria
+	Product of joint work with UK, Canada, Germany, France, Netherlands
+	Separates features, assurance
+	Building blocks:
+		Audit
+		Cryptographic Support
+		Communications
+		User Data Protection 
+		Identification and Authentication
+		Security Management
+		Privacy
+		Protection of the TOE Security Functions 
+		Resource Utilisation
+		TOE Access
+		Trusted Path/Channels 
+	Assurance:
+		EAL1 - functionally tested
+		EAL2 - structurally tested
+		EAL3 - methodically tested and checked
+		EAL4 - methodically designed, tested and reviewed
+		EAL5 - semiformally designed and tested
+		EAL6 - semiformally verified design and tested
+		EAL7 - formally verified design and tested
+	Security policy not built in
+
+What are the problems?
+	Slow testing process
+		Hardware, software obsolete when test is done
+	Configurations are weird
+		No network?  
+	Hard to accomodate minor changes
+
+What are the *major* problems?
+	Users don&#39;t want to buy them
+	Doesn&#39;t match commercial security needs
+	Model is obsolete
+
+Orange Book based on model of 70&#39;s timesharing system
+	What is the TCB?
+		What was the TCB?
+			Kernel
+			root-invoked utilities
+			compiler!
+				Thompson story
+	What is the role of Word?  Email?
+	How do you read email?
+		(windowing done ~1988)
+	Classification level of aggregate?
+
+Bell-Lapadula wrong commercially
+	Need more integrity
+	Secrecy model often too strict
+	Doesn&#39;t accomodate networking well
+	What would be good?
+		Web hosting
+			Multiple customers
+			private data
+			shared base
+			virtual network statck</pre>
+<blockquote>
+
+	<p><br>
+&nbsp;</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>

@@ -1,0 +1,1363 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-US" class="static detail-page contents">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="application-name" content="Microsoft Content Hub">
+    <meta name="viewport" content="width=device-width, user-scalable=1, target-densitydpi=device-dpi">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta name="google-site-verification" content="H_3SfFuQ_JNoHSLQLsEbRkvUnnKTTU7Xk00T59NiENQ" />
+    <title>Office Dev Center - Docs - get-the-whole-document-from-an-add-in-for-powerpoint-or-word</title>
+    <script type="text/javascript">
+        (function () {
+            if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
+                var msViewportStyle = document.createElement("style");
+                msViewportStyle.appendChild(
+                    document.createTextNode("@-ms-viewport{width:auto!important}")
+                );
+                document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+            }
+        })();
+    </script>
+    <script src="//cdn.optimizely.com/js/2209430092.js"></script>
+    <link href="/Themes/DevOffice/Styles/Layout-Style-Bundle.min.css" rel="stylesheet" type="text/css" />
+<link href="/Modules/DevOffice.Common/Styles/For-Layout-Bundle.min.css" rel="stylesheet" type="text/css" />
+<link href="/Modules/Orchard.Search/Styles/orchard-search-search.css" rel="stylesheet" type="text/css" />
+<link href="/Modules/DevOffice.Documents/Styles/document.min.css" rel="stylesheet" type="text/css" />
+<link href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.min.css" rel="stylesheet" type="text/css" />
+<link href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.components.min.css" rel="stylesheet" type="text/css" />
+<script src="/Modules/Orchard.jQuery/scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="/Themes/DevOffice/scripts/Layout-script-bundle.min.js" type="text/javascript"></script>
+<script src="/Modules/DevOffice.Documents/scripts/officeDocument.min.js" type="text/javascript"></script>
+<script src="/Modules/DevOffice.Documents/scripts/ratingsDevX/rating.min.js" type="text/javascript"></script>
+<!--[if lt IE 9]>
+<script src="/Themes/DevOffice/scripts/html5.js" type="text/javascript"></script>
+<![endif]-->
+<script src="/Themes/DevOffice/scripts/redirectSearch.min.js" type="text/javascript"></script>
+<meta content="Orchard" name="generator" />
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+<link href="/Themes/DevOffice/Content/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+
+    <script>
+    //appInsights telemetry
+    var appInsightInstrumentationKey = "26fb3bba-0fdf-4493-b54e-e974c37cc5bc"; //prod Key
+    if (window.location.host.toLowerCase().indexOf('localhost') != -1 || window.location.host.toLowerCase().indexOf('azurewebsites') != -1) {
+        appInsightInstrumentationKey = "49bc8c7a-c997-4078-819c-f5d51d975aeb"; //staging key
+    }
+    var appInsights = window.appInsights || function (config) {
+        function s(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, r = document, f = window, e = "script", o = r.createElement(e), i, u; for (o.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", r.getElementsByTagName(e)[0].parentNode.appendChild(o), t.cookie = r.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) s("track" + i.pop()); return config.disableExceptionTracking || (i = "onerror", s("_" + i), u = f[i], f[i] = function (config, r, f, e, o) { var s = u && u(config, r, f, e, o); return s !== !0 && t["_" + i](config, r, f, e, o), s }), t
+    }({
+        instrumentationKey: appInsightInstrumentationKey
+    });
+    window.appInsights = appInsights;
+    appInsights.trackPageView();
+    </script>
+
+</head>
+
+<body>
+    
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+<div ng-app="devOfficeApp">
+    <div id="layout-wrapper">
+        <header id="layout-header" role="banner">
+            <div id="header" class="navigation container-fluid">
+                <div class="zone zone-header">
+<article class="widget-header widget-search-form widget">
+    
+
+
+
+<form action="/Search" class="search-form" method="get">    <fieldset>
+        <input id="q" name="q" type="text" value="" />
+        <input id="culture" name="culture" type="hidden" value="en-US" />
+        <button type="submit">Search</button>
+    </fieldset>
+</form>
+</article>
+<div id="branding">
+    <a href="/"><img class="img-responsive" src="/Themes/DevOffice/Content/Images/devOffice_logo.png" alt="Office Dev Office Center logo" /></a>
+</div></div>
+            </div>
+        </header>
+            <div id="layout-navigation">
+            <div class="navigation container-fluid">
+                <div class="zone zone-navigation">
+<article class="widget-navigation widget-menu-widget widget">
+    
+<nav class="col navbar navbar-default navbar-static-top" id="nav" role="navigation" aria-label="Main menu">
+    <div class="">
+        
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a href="/"><img class="menu-logo" src="/themes/devoffice/content/images/dev-office-mobile.png" /></a>
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-1" role="menubar">
+            <form action="/search" method="get" class="search mobile mobile-nav--visible">
+                <fieldset>
+                    <input type="text" id="q" name="q" />
+                    <button type="submit"></button>
+                </fieldset>
+            </form>
+
+            <ul class="nav navbar-nav">
+                        <li aria-label="Explore" class="subnav__item dropdown-toggle dropdown" role="menuitem">
+
+                            
+                                <a href="/" >Explore<span class="arrow"></span></a>
+                                <div class="dropdown-menu tier-1">
+
+                                    <div class="container-fluid navigation">                                    
+                                        <ul class="col-md-3 col-sm-3 tier-1__list">
+                                                <li aria-label="Why Office?" role="menuitem" class="">
+                                                    <a href="/opportunity" >Why Office?</a>
+      </li>
+                                                <li aria-label="Office UI Fabric" role="menuitem" class="">
+                                                    <a href="/fabric" >Office UI Fabric</a>
+      </li>
+                                                <li aria-label="Microsoft Graph" role="menuitem" class="">
+                                                    <a href="http://graph.microsoft.io" >Microsoft Graph</a>
+      </li>
+
+                                        </ul>
+                                
+                                            <div class="tier-2 col-md-3 col-sm-4">
+                                                <h4 class="tier__header mobile-nav--visible" data-nav-drop=".tier-2__list">Products <span class="arrow"></span></h4>
+                                                <ul class="tier-2__list">
+                                                        <li class="mega-menu__item">
+                                                            <a href="/word" > 
+ <span class="devoffice-product devoffice-word bg--word-theme"></span>
+                                                                Word
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/excel" > 
+ <span class="devoffice-product devoffice-excel bg--excel-theme"></span>
+                                                                Excel
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/powerpoint" > 
+ <span class="devoffice-product devoffice-powerpoint bg--powerpoint-theme"></span>
+                                                                PowerPoint
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="http://dev.outlook.com"    target="_external"  > 
+ <span class="devoffice-product devoffice-outlook bg--outlook-theme"></span>
+                                                                Outlook
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="http://dev.onedrive.com"    target="_external"  > 
+ <span class="devoffice-product devoffice-onedrive bg--onedrive-theme"></span>
+                                                                OneDrive
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="http://dev.onenote.com"    target="_external"  > 
+ <span class="devoffice-product devoffice-onenote bg--onenote-theme"></span>
+                                                                OneNote
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="https://msdn.microsoft.com/en-us/library/office/dn833469.aspx"    target="_external"  > 
+ <span class="devoffice-product devoffice-sharepoint bg--sharepoint-theme"></span>
+                                                                SharePoint
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/skype"    target="_external"  > 
+ <span class="devoffice-product devoffice-skype bg--skype-theme"></span>
+                                                                Skype
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="https://msdn.microsoft.com/en-us/library/office/dn605890.aspx"    target="_external"  > 
+ <span class="devoffice-product devoffice-access bg--access-theme"></span>
+                                                                Access
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="https://msdn.microsoft.com/en-us/library/office/ms512767.aspx"    target="_external"  > 
+ <span class="devoffice-product devoffice-project bg--project-theme"></span>
+                                                                Project
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="http://dev.yammer.com"    target="_external"  > 
+ <span class="devoffice-product devoffice-yammer bg--yammer-theme"></span>
+                                                                Yammer
+                                                            </a>
+                                                        </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="tier-3 col-md-6 col-sm-5">
+                                                <h4 class="tier__header mobile-nav--visible" data-nav-drop=".tier-3__list">Technology <span class="arrow"></span></h4>
+                                                <ul class="tier-3__list">
+                                                        <li class="mega-menu__item">
+                                                            <a href="/android" >
+                                                                    <span class="devoffice-product devoffice-android"></span>
+                                                                Android
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/asp-dot-net" >
+                                                                    <span class="devoffice-product devoffice-aspnet"></span>
+                                                                ASP .NET
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/ios" >
+                                                                    <span class="devoffice-product devoffice-ios"></span>
+                                                                iOS
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/js" >
+                                                                    <span class="devoffice-product devoffice-javascript"></span>
+                                                                JavaScript
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/node" >
+                                                                    <span class="devoffice-product devoffice-node"></span>
+                                                                Node.js
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/getting-started/office365apis?platform=option-php#setup" >
+                                                                    <span class="devoffice-product devoffice-php"></span>
+                                                                PHP (coming soon)
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/getting-started/office365apis?platform=option-python#setup" >
+                                                                    <span class="devoffice-product devoffice-python"></span>
+                                                                Python (coming soon)
+                                                            </a>
+                                                        </li>
+                                                        <li class="mega-menu__item">
+                                                            <a href="/getting-started/office365apis?platform=option-ruby#setup" >
+                                                                    <span class="devoffice-product devoffice-ruby"></span>
+                                                                Ruby (coming soon)
+                                                            </a>
+                                                        </li>
+                                                </ul>
+                                            </div>
+                                    </div>
+                                </div>
+
+                        </li>
+                        <li aria-label="Getting Started" class="subnav__item dropdown-toggle" role="menuitem">
+
+                            
+                                <a href="/getting-started" >Getting Started</a>
+
+                        </li>
+                        <li aria-label="Code Samples" class="subnav__item dropdown-toggle" role="menuitem">
+
+                            
+                                <a href="/code-samples" >Code Samples</a>
+
+                        </li>
+                        <li aria-label="Resources" class="subnav__item dropdown-toggle dropdown" role="menuitem">
+
+                            
+                                <a href="/" >Resources<span class="arrow"></span></a>
+                                <div class="dropdown-menu tier-1">
+
+                                    <div class="container-fluid navigation">                                    
+                                        <ul class="col-md-3 col-sm-3 tier-1__list">
+                                                <li aria-label="Patterns and Practices" role="menuitem" class="">
+                                                    <a href="/patterns-and-practices" >Patterns and Practices</a>
+      </li>
+                                                <li aria-label="App Registration Tool" role="menuitem" class="">
+                                                    <a href="/app-registration" >App Registration Tool</a>
+      </li>
+                                                <li aria-label="Events" role="menuitem" class="">
+                                                    <a href="/events" >Events</a>
+      </li>
+                                                <li aria-label="Podcasts" role="menuitem" class="">
+                                                    <a href="/podcasts" >Podcasts</a>
+      </li>
+                                                <li aria-label="Training" role="menuitem" class="">
+                                                    <a href="/training" >Training</a>
+      </li>
+                                                <li aria-label="Mini-Labs" role="menuitem" class="">
+                                                    <a href="/mini-labs" >Mini-Labs</a>
+      </li>
+                                                <li aria-label="Videos" role="menuitem" class="">
+                                                    <a href="/videos" >Videos</a>
+      </li>
+                                                <li aria-label="Snack Demo Videos" role="menuitem" class="">
+                                                    <a href="/snack-videos" >Snack Demo Videos</a>
+      </li>
+                                                <li aria-label="Showcase" role="menuitem" class="">
+                                                    <a href="/showcase" >Showcase</a>
+      </li>
+                                                <li aria-label="Transform" role="menuitem" class="">
+                                                    <a href="/transform" >Transform</a>
+      </li>
+                                                <li aria-label="API Sandbox" role="menuitem" class="">
+                                                    <a href="http://apisandbox.msdn.microsoft.com"   target="_external"    >API Sandbox</a>
+      </li>
+
+                                        </ul>
+                                
+
+                                    </div>
+                                </div>
+
+                        </li>
+                        <li aria-label="Documentation" class="subnav__item dropdown-toggle dropdown" role="menuitem">
+
+                            
+                                <a href="http://msdn.microsoft.com/office/" >Documentation<span class="arrow"></span></a>
+                                <div class="dropdown-menu tier-1">
+
+                                    <div class="container-fluid navigation">                                    
+                                        <ul class="col-md-3 col-sm-3 tier-1__list">
+                                                <li aria-label="Office Add-ins" role="menuitem" class="">
+                                                    <a href="/docs/add-ins/overview/office-add-ins" >Office Add-ins</a>
+      </li>
+                                                <li aria-label="Office Add-in Availability" role="menuitem" class="">
+                                                    <a href="/add-in-availability" >Office Add-in Availability</a>
+      </li>
+                                                <li aria-label="Office Add-ins Changelog" role="menuitem" class="">
+                                                    <a href="/changelog" >Office Add-ins Changelog</a>
+      </li>
+                                                <li aria-label="Microsoft Graph API" role="menuitem" class="">
+                                                    <a href="http://graph.microsoft.io"   target="_external"    >Microsoft Graph API</a>
+      </li>
+                                                <li aria-label="Office 365 Connectors" role="menuitem" class="">
+                                                    <a href="http://dev.outlook.com/connectors"   target="_external"    >Office 365 Connectors</a>
+      </li>
+                                                <li aria-label="Office 365 REST APIs" role="menuitem" class="">
+                                                    <a href="/chooseapiendpoint" >Office 365 REST APIs</a>
+      </li>
+                                                <li aria-label="SharePoint Add-ins" role="menuitem" class="">
+                                                    <a href="https://msdn.microsoft.com/en-us/library/office/fp179930.aspx"   target="_external"    >SharePoint Add-ins</a>
+      </li>
+                                                <li aria-label="Office UI Fabric" role="menuitem" class="">
+                                                    <a href="/fabric/getting-started/" >Office UI Fabric</a>
+      </li>
+                                                <li aria-label="Submit to the Office Store" role="menuitem" class="">
+                                                    <a href="https://msdn.microsoft.com/en-us/library/office/jj220037.aspx " >Submit to the Office Store</a>
+      </li>
+                                                <li aria-label="All Documentation" role="menuitem" class="">
+                                                    <a href="/docs" >All Documentation</a>
+      </li>
+
+                                        </ul>
+                                
+
+                                    </div>
+                                </div>
+
+                        </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_custom_sharing pull-right hidden-xs hidden-sm" id="header-social">
+    <a href="http://feeds.feedburner.com/office/fmNx" target="_external">
+        <span class="icon_rss" style="color: white;font-size: 12px;margin-left: 18px; float:right;margin-top:7px;" title="RSS"></span>
+    </a>
+    <a href="http://officedevslack.azurewebsites.net " target="_external">
+        <span class="devoffice-product devoffice-slack" style="color: white;font-size: 16px;float:right;padding: 7px; margin-right: 5px;margin-top: 11px;" title="Slack"></span>
+    </a>
+</div>
+</article></div>
+            </div>
+        </div>
+        <div id="layout-main-container" role="main">
+        <div id="layout-main">
+            <div id="layout-content" class='clearfix'>
+                
+
+
+                    <div id="content" class="clearfix">
+                        <div class="zone zone-content">
+<article class="page content-item">
+    <header>
+        
+
+
+
+    </header>
+    
+<script>
+    $(document).ready(function () {
+        //banner is different dimensions on homepage
+        if (window.location.pathname == "/") {
+            $("#banner-image").addClass("homepage-banner");
+            $(".banner-title").addClass("page-title");
+        }
+
+        //card nav on pages like Getting Started steps need to be flush with banner
+        if ($(".cardNavBar").length > 0) {
+            $("#banner-image").css("margin-bottom", 0);
+        }
+    });
+
+</script>
+
+<div style="background-image:url('/Themes/DevOffice/Content/Images/devOffice_banner_default.png')" class=" banner-image banner-with-description media-library-picker-field" id="banner-image" aria-label="Docs Banner">
+
+    <!-- banner content box -->
+    <div class='container-fluid banner-contents-container'>
+        <div class='banner-contents'>
+            <div class="banner-text" id="banner-text">
+                <h1 class="banner-title" data-lines="1">
+                    Docs
+                </h1>
+                            </div>
+
+        </div>
+    </div>
+    <!-- profile image -->
+
+</div>
+
+
+</article>
+<article class="widget-OfficeDocument widget-content widget-office-document-widget widget">
+    
+<script>
+    var feedback = new ratingDevX("feedbackDiv", "/Modules/Devoffice.Documents/Scripts/ratingsDevX");
+</script>
+<div class="full-width-container" style="background-color: #eee;margin-top:-10px;">
+    <div class="container-fluid" id="docDiv">
+            <div id="docNavMenu" style="background-color:transparent !important;float:left;width:200px;margin-top:60px;margin-left:10px;margin-right:10px;margin-bottom:5px;">
+        <span id="toggleLeftPanelContainer" style="display:block;"><span id="toggleLeftPanel" class="glyphicon"></span></span>
+        <div id="menu-content" style="display:none;background-color:#ffffff !important">
+            <div id="productFilter" style="border-bottom:1px solid #aaa;width:100%;">
+                <select class="form-control" aria-label="ProductFilter" style="color:#000;" onchange="docTocProductChange(this)">
+                        <option aria-label="Office">Office</option>
+        <option  aria-label="Word">Word</option>
+        <option  aria-label="Excel">Excel</option>
+        <option  aria-label="Outlook">Outlook</option>
+        <option  aria-label="PowerPoint">PowerPoint</option>
+        <option  aria-label="OneNote">OneNote</option>
+        <option  aria-label="Project">Project</option>
+        <option  aria-label="Access">Access</option>
+
+                </select>
+            </div>
+            <div id="menu-items" style="float: left; width: 100%; margin-bottom:25px !important; padding-left: 0 !important; padding-right: 0 !important; border: 0 !important; margin-left: 0 !important; ">
+                <nav class="nav-blade gray-d3-bgc" id="home-nav-blade" style="width: 100%">
+                    <ul class="home-nav-list nav-list">
+                                        <li aria-label="Overview">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/overview" data-target="#item1">Overview</a>
+                    <ul class="collapse " id="item1">
+                                        <li aria-label="Platform overview">
+                    <a class="" href="/docs/add-ins/overview/office-add-ins">Platform overview</a>
+                </li>
+                <li aria-label="Requirements for running add-ins">
+                    <a class="" href="/docs/add-ins/overview/requirements-for-running-office-add-ins">Requirements for running add-ins</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Get Started">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/get-started" data-target="#item2">Get Started</a>
+                    <ul class="collapse " id="item2">
+                                        <li aria-label="Use Visual Studio">
+                    <a class="" href="/docs/add-ins/get-started/create-and-debug-office-add-ins-in-visual-studio">Use Visual Studio</a>
+                </li>
+                <li aria-label="Use any editor">
+                    <a class="" href="/docs/add-ins/get-started/create-an-office-add-in-using-any-editor">Use any editor</a>
+                </li>
+                <li aria-label="Use Napa">
+                    <a class="" href="/docs/add-ins/get-started/create-an-office-add-in-with-napa">Use Napa</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Design">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/design/add-in-design" data-target="#item3">Design</a>
+                    <ul class="collapse " id="item3">
+                                        <li aria-label="Add-in development best practices">
+                    <a class="" href="/docs/add-ins/design/add-in-development-best-practices">Add-in development best practices</a>
+                </li>
+                <li aria-label="UI Elements">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/design/ui-elements/ui-elements" data-target="#item4">UI Elements</a>
+                    <ul class="collapse " id="item4">
+                                        <li aria-label="Interaction Patterns">
+                    <a class="" href="/docs/add-ins/design/ui-elements/interaction-patterns">Interaction Patterns</a>
+                </li>
+                <li aria-label="Layout for content add-ins">
+                    <a class="" href="/docs/add-ins/design/ui-elements/layout-for-content-add-ins">Layout for content add-ins</a>
+                </li>
+                <li aria-label="Layout for task pane add-ins">
+                    <a class="" href="/docs/add-ins/design/ui-elements/layout-for-task-pane-add-ins">Layout for task pane add-ins</a>
+                </li>
+                <li aria-label="Layouts for Outlook add-ins">
+                    <a class="" href="/docs/add-ins/design/ui-elements/layouts-for-outlook-add-ins">Layouts for Outlook add-ins</a>
+                </li>
+                <li aria-label="Using Office UI Fabric">
+                    <a class="" href="/docs/add-ins/design/ui-elements/using-office-ui-fabric">Using Office UI Fabric</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Add-in commands for Excel, Word, and PowerPoint">
+                    <a class="" href="/docs/add-ins/design/add-in-commands">Add-in commands for Excel, Word, and PowerPoint</a>
+                </li>
+                <li aria-label="Design Office Add-ins for the iPad">
+                    <a class="" href="/docs/add-ins/design/design-office-add-ins-for-the-ipad">Design Office Add-ins for the iPad</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Develop">
+                    <a class="active-submenu" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/develop" data-target="#item5">Develop</a>
+                    <ul class="collapse in active-submenu" id="item5">
+                                        <li aria-label="Add-in development lifecycle">
+                    <a class="" href="/docs/add-ins/design/add-in-development-lifecycle">Add-in development lifecycle</a>
+                </li>
+                <li aria-label="Install the latest Office version">
+                    <a class="" href="/docs/add-ins/develop/install-latest-office-version">Install the latest Office version</a>
+                </li>
+                <li aria-label="Manifest">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/overview/add-in-manifests" data-target="#item6">Manifest</a>
+                    <ul class="collapse " id="item6">
+                                        <li aria-label="Specify Office hosts">
+                    <a class="" href="/docs/add-ins/overview/specify-office-hosts-and-api-requirements">Specify Office hosts</a>
+                </li>
+                <li aria-label="Requesting permissions for API use in content and task pane add-ins">
+                    <a class="" href="/docs/add-ins/develop/requesting-permissions-for-api-use-in-content-and-task-pane-add-ins">Requesting permissions for API use in content and task pane add-ins</a>
+                </li>
+                <li aria-label="Update API and manifest version">
+                    <a class="" href="/docs/add-ins/develop/update-your-javascript-api-for-office-and-manifest-schema-version">Update API and manifest version</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Office JavaScript API">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/develop/understanding-the-javascript-api-for-office" data-target="#item7">Office JavaScript API</a>
+                    <ul class="collapse " id="item7">
+                                        <li aria-label="Support for content and task pane add-ins">
+                    <a class="" href="/docs/add-ins/develop/support-for-task-pane-and-content-add-ins">Support for content and task pane add-ins</a>
+                </li>
+                <li aria-label="Reference Office.js">
+                    <a class="" href="/docs/add-ins/develop/referencing-the-javascript-api-for-office-library-from-its-cdn">Reference Office.js</a>
+                </li>
+                <li aria-label="Load Office.js">
+                    <a class="" href="/docs/add-ins/develop/loading-the-dom-and-runtime-environment">Load Office.js</a>
+                </li>
+                <li aria-label="Asynchronous programming in Office Add-ins">
+                    <a class="" href="/docs/add-ins/develop/asynchronous-programming-in-office-add-ins">Asynchronous programming in Office Add-ins</a>
+                </li>
+                <li aria-label="Persist state and settings">
+                    <a class="" href="/docs/add-ins/develop/persisting-add-in-state-and-settings">Persist state and settings</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Privacy and security">
+                    <a class="" href="/docs/add-ins/develop/privacy-and-security">Privacy and security</a>
+                </li>
+                <li aria-label="Address same origin policy limitations">
+                    <a class="" href="/docs/add-ins/develop/addressing-same-origin-policy-limitations">Address same origin policy limitations</a>
+                </li>
+                <li aria-label="Localization">
+                    <a class="" href="/docs/add-ins/develop/localization">Localization</a>
+                </li>
+                <li aria-label="Performance">
+                    <a class="" href="/docs/add-ins/develop/resource-limits-and-performance-optimization">Performance</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Test">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/testing" data-target="#item8">Test</a>
+                    <ul class="collapse " id="item8">
+                                        <li aria-label="Use F12 developer tools on Windows 10">
+                    <a class="" href="/docs/add-ins/testing/debug-add-ins-using-f12-developer-tools-on-windows-10">Use F12 developer tools on Windows 10</a>
+                </li>
+                <li aria-label="Debug in Office Online">
+                    <a class="" href="/docs/add-ins/testing/debug-add-ins-in-office-online">Debug in Office Online</a>
+                </li>
+                <li aria-label="Sideload Office Add-ins for testing">
+                    <a class="" href="/docs/add-ins/testing/sideload-office-add-ins-for-testing">Sideload Office Add-ins for testing</a>
+                </li>
+                <li aria-label="Sideload Outlook Add-ins for testing">
+                    <a class="" href="/docs/add-ins/testing/sideload-outlook-add-ins-for-testing">Sideload Outlook Add-ins for testing</a>
+                </li>
+                <li aria-label="Sideload on iPad and Mac">
+                    <a class="" href="/docs/add-ins/testing/sideload-an-office-add-in-on-ipad-and-mac">Sideload on iPad and Mac</a>
+                </li>
+                <li aria-label="Debug on iPad and Mac">
+                    <a class="" href="/docs/add-ins/testing/debug-office-add-ins-on-ipad-and-mac">Debug on iPad and Mac</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Publish">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/publish/publish" data-target="#item9">Publish</a>
+                    <ul class="collapse " id="item9">
+                                        <li aria-label="Create a network shared folder catalog for task pane and content add-ins">
+                    <a class="" href="/docs/add-ins/publish/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins">Create a network shared folder catalog for task pane and content add-ins</a>
+                </li>
+                <li aria-label="Host an Office Add-in on Microsoft Azure">
+                    <a class="" href="/docs/add-ins/publish/host-an-office-add-in-on-microsoft-azure">Host an Office Add-in on Microsoft Azure</a>
+                </li>
+                <li aria-label="Package your add-in using Napa or Visual Studio">
+                    <a class="" href="/docs/add-ins/publish/package-your-add-in-using-napa-or-visual-studio">Package your add-in using Napa or Visual Studio</a>
+                </li>
+                <li aria-label="Publish task pane and content add-ins to an add-in catalog">
+                    <a class="" href="/docs/add-ins/publish/publish-task-pane-and-content-add-ins-to-an-add-in-catalog">Publish task pane and content add-ins to an add-in catalog</a>
+                </li>
+                <li aria-label="Set up an add in catalog on Office 365">
+                    <a class="" href="/docs/add-ins/publish/set-up-an-add-in-catalog-on-office-365">Set up an add in catalog on Office 365</a>
+                </li>
+                <li aria-label="Set up an add-in catalog on SharePoint">
+                    <a class="" href="/docs/add-ins/publish/set-up-an-add-in-catalog-on-sharepoint">Set up an add-in catalog on SharePoint</a>
+                </li>
+                <li aria-label="Troubleshoot user errors">
+                    <a class="" href="/docs/add-ins/testing/testing-and-troubleshooting">Troubleshoot user errors</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Word">
+                    <a class="active-submenu" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/word" data-target="#item10">Word</a>
+                    <ul class="collapse in active-submenu" id="item10">
+                                        <li aria-label="Word JavaScript API programming overview">
+                    <a class="" href="/docs/add-ins/word/word-add-ins-programming-overview">Word JavaScript API programming overview</a>
+                </li>
+                <li aria-label="Build your first Word add-in">
+                    <a class="" href="/docs/add-ins/word/word-add-ins">Build your first Word add-in</a>
+                </li>
+                <li aria-label="Create better add-ins for Word with Office Open XML">
+                    <a class="" href="/docs/add-ins/word/create-better-add-ins-for-word-with-office-open-xml">Create better add-ins for Word with Office Open XML</a>
+                </li>
+                <li aria-label="Dictionary task pane add-ins">
+                    <a class="" href="/docs/add-ins/word/dictionary-task-pane-add-ins">Dictionary task pane add-ins</a>
+                </li>
+                <li aria-label="Get the whole document from an add-in for PowerPoint or Word">
+                    <a class="active" href="/docs/add-ins/develop/get-the-whole-document-from-an-add-in-for-powerpoint-or-word">Get the whole document from an add-in for PowerPoint or Word</a>
+                </li>
+                <li aria-label="Read and write data to the active selection in a document or spreadsheet">
+                    <a class="" href="/docs/add-ins/develop/read-and-write-data-to-the-active-selection-in-a-document-or-spreadsheet">Read and write data to the active selection in a document or spreadsheet</a>
+                </li>
+                <li aria-label="Bind to regions in a document or spreadsheet">
+                    <a class="" href="/docs/add-ins/develop/bind-to-regions-in-a-document-or-spreadsheet">Bind to regions in a document or spreadsheet</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Excel">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/excel" data-target="#item11">Excel</a>
+                    <ul class="collapse " id="item11">
+                                        <li aria-label="Excel JavaScript API programming overview">
+                    <a class="" href="/docs/add-ins/excel/excel-add-ins-javascript-programming-overview">Excel JavaScript API programming overview</a>
+                </li>
+                <li aria-label="Build your first Excel add-in">
+                    <a class="" href="/docs/add-ins/excel/build-your-first-excel-add-in">Build your first Excel add-in</a>
+                </li>
+                <li aria-label="Excel JavaScript API reference">
+                    <a class="" href="/docs/add-ins/excel/excel-add-ins-javascript-api-reference">Excel JavaScript API reference</a>
+                </li>
+                <li aria-label="Format tables in add-ins for Excel">
+                    <a class="" href="/docs/add-ins/excel/format-tables-in-add-ins-for-excel">Format tables in add-ins for Excel</a>
+                </li>
+                <li aria-label="Read and write data to the active selection in a document or spreadsheet">
+                    <a class="" href="/docs/add-ins/develop/read-and-write-data-to-the-active-selection-in-a-document-or-spreadsheet">Read and write data to the active selection in a document or spreadsheet</a>
+                </li>
+                <li aria-label="Bind to regions in a document or spreadsheet">
+                    <a class="" href="/docs/add-ins/develop/bind-to-regions-in-a-document-or-spreadsheet">Bind to regions in a document or spreadsheet</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Outlook">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/outlook/outlook-add-ins" data-target="#item12">Outlook</a>
+                    <ul class="collapse " id="item12">
+                                        <li aria-label="Overview">
+                    <a class="" href="/docs/add-ins/outlook/overview">Overview</a>
+                </li>
+                <li aria-label="Add-in commands for Outlook">
+                    <a class="" href="/docs/add-ins/outlook/add-in-commands-for-outlook">Add-in commands for Outlook</a>
+                </li>
+                <li aria-label="Contextual Outlook add-ins">
+                    <a class="" href="/docs/add-ins/outlook/contextual-outlook-add-ins">Contextual Outlook add-ins</a>
+                </li>
+                <li aria-label="Custom pane Outlook add-ins">
+                    <a class="" href="/docs/add-ins/outlook/custom-pane-outlook-add-ins">Custom pane Outlook add-ins</a>
+                </li>
+                <li aria-label="Module extension Outlook add-ins">
+                    <a class="" href="/docs/add-ins/outlook/extension-module-outlook-add-ins">Module extension Outlook add-ins</a>
+                </li>
+                <li aria-label="APIs">
+                    <a class="" href="/docs/add-ins/outlook/apis">APIs</a>
+                </li>
+                <li aria-label="Manifests">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/outlook/manifests" data-target="#item13">Manifests</a>
+                    <ul class="collapse " id="item13">
+                                        <li aria-label="Manifests">
+                    <a class="" href="/docs/add-ins/outlook/manifests/manifests">Manifests</a>
+                </li>
+                <li aria-label="Activation rules">
+                    <a class="" href="/docs/add-ins/outlook/manifests/activation-rules">Activation rules</a>
+                </li>
+                <li aria-label="Define add-in commands">
+                    <a class="" href="/docs/add-ins/outlook/manifests/define-add-in-commands">Define add-in commands</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Get and set item data in read or compose forms">
+                    <a class="" href="/docs/add-ins/outlook/item-data">Get and set item data in read or compose forms</a>
+                </li>
+                <li aria-label="Get and set add-in metadata">
+                    <a class="" href="/docs/add-ins/outlook/metadata-for-an-outlook-add-in">Get and set add-in metadata</a>
+                </li>
+                <li aria-label="Privacy and security">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/outlook/privacy-and-security" data-target="#item14">Privacy and security</a>
+                    <ul class="collapse " id="item14">
+                                        <li aria-label="Understanding Outlook add-in permissions">
+                    <a class="" href="/docs/add-ins/outlook/understanding-outlook-add-in-permissions">Understanding Outlook add-in permissions</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Read scenario">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/outlook/read-scenario" data-target="#item15">Read scenario</a>
+                    <ul class="collapse " id="item15">
+                                        <li aria-label="Use regular expressions to show an Outlook add-in">
+                    <a class="" href="/docs/add-ins/outlook/use-regular-expressions-to-show-an-outlook-add-in">Use regular expressions to show an Outlook add-in</a>
+                </li>
+                <li aria-label="Match strings in an item as well-known entities">
+                    <a class="" href="/docs/add-ins/outlook/match-strings-in-an-item-as-well-known-entities">Match strings in an item as well-known entities</a>
+                </li>
+                <li aria-label="Extract entity strings from an item">
+                    <a class="" href="/docs/add-ins/outlook/extract-entity-strings-from-an-item">Extract entity strings from an item</a>
+                </li>
+                <li aria-label="Get attachments of an Outlook item">
+                    <a class="" href="/docs/add-ins/outlook/get-attachments-of-an-outlook-item">Get attachments of an Outlook item</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Compose scenario">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/outlook/compose-scenario" data-target="#item16">Compose scenario</a>
+                    <ul class="collapse " id="item16">
+                                        <li aria-label="Add and remove attachments to an item in a compose form">
+                    <a class="" href="/docs/add-ins/outlook/add-and-remove-attachments-to-an-item-in-a-compose-form">Add and remove attachments to an item in a compose form</a>
+                </li>
+                <li aria-label="Get and set item data in a compose form">
+                    <a class="" href="/docs/add-ins/outlook/get-and-set-item-data-in-a-compose-form">Get and set item data in a compose form</a>
+                </li>
+                <li aria-label="Get, set, or add recipients">
+                    <a class="" href="/docs/add-ins/outlook/get-set-or-add-recipients">Get, set, or add recipients</a>
+                </li>
+                <li aria-label="Get or set the subject">
+                    <a class="" href="/docs/add-ins/outlook/get-or-set-the-subject">Get or set the subject</a>
+                </li>
+                <li aria-label="Insert data in the body">
+                    <a class="" href="/docs/add-ins/outlook/insert-data-in-the-body">Insert data in the body</a>
+                </li>
+                <li aria-label="Get or set the location of an appointment">
+                    <a class="" href="/docs/add-ins/outlook/get-or-set-the-location-of-an-appointment">Get or set the location of an appointment</a>
+                </li>
+                <li aria-label="Get or set the time of an appointment">
+                    <a class="" href="/docs/add-ins/outlook/get-or-set-the-time-of-an-appointment">Get or set the time of an appointment</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Call web services">
+                    <a class="" href="/docs/add-ins/outlook/web-services">Call web services</a>
+                </li>
+                <li aria-label="Authentication">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/outlook/authentication" data-target="#item17">Authentication</a>
+                    <ul class="collapse " id="item17">
+                                        <li aria-label="Inside the identity token">
+                    <a class="" href="/docs/add-ins/outlook/inside-the-identity-token">Inside the identity token</a>
+                </li>
+                <li aria-label="Call a service by using an identity token">
+                    <a class="" href="/docs/add-ins/outlook/call-a-service-by-using-an-identity-token">Call a service by using an identity token</a>
+                </li>
+                <li aria-label="Use the token validation library">
+                    <a class="" href="/docs/add-ins/outlook/use-the-token-validation-library">Use the token validation library</a>
+                </li>
+                <li aria-label="Validate an identity token">
+                    <a class="" href="/docs/add-ins/outlook/validate-an-identity-token">Validate an identity token</a>
+                </li>
+                <li aria-label="Use PHP to validate an identity token">
+                    <a class="" href="/docs/add-ins/outlook/use-php-to-validate-an-identity-token">Use PHP to validate an identity token</a>
+                </li>
+                <li aria-label="Authenticate a user with an identity token">
+                    <a class="" href="/docs/add-ins/outlook/authenticate-a-user-with-an-identity-token">Authenticate a user with an identity token</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Testing and tips">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/outlook/testing-and-tips" data-target="#item18">Testing and tips</a>
+                    <ul class="collapse " id="item18">
+                                        <li aria-label="Compare Outlook add-in support in Outlook for Mac">
+                    <a class="" href="/docs/add-ins/outlook/compare-outlook-add-in-support-in-outlook-for-mac">Compare Outlook add-in support in Outlook for Mac</a>
+                </li>
+                <li aria-label="Tips for handling date values in Outlook add-ins">
+                    <a class="" href="/docs/add-ins/outlook/tips-for-handling-date-values-in-outlook-add-ins">Tips for handling date values in Outlook add-ins</a>
+                </li>
+                <li aria-label="Limits for activation and JavaScript API for Outlook add-ins">
+                    <a class="" href="/docs/add-ins/outlook/limits-for-activation-and-javascript-api-for-outlook-add-ins">Limits for activation and JavaScript API for Outlook add-ins</a>
+                </li>
+                <li aria-label="Troubleshoot Outlook add-in activation">
+                    <a class="" href="/docs/add-ins/outlook/troubleshoot-outlook-add-in-activation">Troubleshoot Outlook add-in activation</a>
+                </li>
+
+                    </ul>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="PowerPoint">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/powerpoint/powerpoint-add-ins" data-target="#item19">PowerPoint</a>
+                    <ul class="collapse " id="item19">
+                                        <li aria-label="Use document themes in your PowerPoint add-ins">
+                    <a class="" href="/docs/add-ins/powerpoint/use-document-themes-in-your-powerpoint-add-ins">Use document themes in your PowerPoint add-ins</a>
+                </li>
+                <li aria-label="Get the whole document from an add-in for PowerPoint or Word">
+                    <a class="active" href="/docs/add-ins/develop/get-the-whole-document-from-an-add-in-for-powerpoint-or-word">Get the whole document from an add-in for PowerPoint or Word</a>
+                </li>
+                <li aria-label="Office Mix">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/powerpoint/office-mix" data-target="#item20">Office Mix</a>
+                    <ul class="collapse " id="item20">
+                                        <li aria-label="Office Mix add-ins">
+                    <a class="" href="/docs/add-ins/powerpoint/office-mix/office-mix-add-ins">Office Mix add-ins</a>
+                </li>
+                <li aria-label="Configuring and editing LabsJS labs for Office Mix">
+                    <a class="" href="/docs/add-ins/powerpoint/office-mix/configuring-and-editing-labsjs-labs-for-office-mix">Configuring and editing LabsJS labs for Office Mix</a>
+                </li>
+                <li aria-label="Get started with LabsJS for Office Mix">
+                    <a class="" href="/docs/add-ins/powerpoint/office-mix/get-started-with-labsjs-for-office-mix">Get started with LabsJS for Office Mix</a>
+                </li>
+                <li aria-label="Walkthrough: Creating your first lab for Office Mix">
+                    <a class="" href="/docs/add-ins/powerpoint/office-mix/creating-your-first-lab-for-office-mix">Walkthrough: Creating your first lab for Office Mix</a>
+                </li>
+                <li aria-label="Guidelines for creating labs for Mix using LabsJS">
+                    <a class="" href="/docs/add-ins/powerpoint/office-mix/guidelines-for-creating-labs-for-mix-using-labsjs">Guidelines for creating labs for Mix using LabsJS</a>
+                </li>
+                <li aria-label="LabsJS lab components">
+                    <a class="" href="/docs/add-ins/powerpoint/office-mix/labsjs-lab-components">LabsJS lab components</a>
+                </li>
+                <li aria-label="LabsJS labs for Office Mix examples">
+                    <a class="" href="/docs/add-ins/powerpoint/office-mix/labsjs-labs-for-office-mix-examples">LabsJS labs for Office Mix examples</a>
+                </li>
+
+                    </ul>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="OneNote">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/onenote" data-target="#item21">OneNote</a>
+                    <ul class="collapse " id="item21">
+                                        <li aria-label="OneNote JavaScript API programming overview (Preview)">
+                    <a class="" href="/docs/add-ins/onenote/onenote-add-ins-programming-overview">OneNote JavaScript API programming overview (Preview)</a>
+                </li>
+                <li aria-label="Build your first OneNote add-in (Preview)">
+                    <a class="" href="/docs/add-ins/onenote/onenote-add-ins-getting-started">Build your first OneNote add-in (Preview)</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Project">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/project" data-target="#item22">Project</a>
+                    <ul class="collapse " id="item22">
+                                        <li aria-label="Project add-ins">
+                    <a class="" href="/docs/add-ins/project/project-add-ins">Project add-ins</a>
+                </li>
+                <li aria-label="Create a Project add-in that uses REST with an on-premises OData service">
+                    <a class="" href="/docs/add-ins/project/create-a-project-add-in-that-uses-rest-with-an-on-premises-odata-service">Create a Project add-in that uses REST with an on-premises OData service</a>
+                </li>
+                <li aria-label="Create your first task pane add-in for Project by using a text editor">
+                    <a class="" href="/docs/add-ins/project/create-your-first-task-pane-add-in-for-project-by-using-a-text-editor">Create your first task pane add-in for Project by using a text editor</a>
+                </li>
+
+                    </ul>
+                </li>
+                <li aria-label="Access">
+                    <a class="" style="text-transform: uppercase; font-weight:bold; font-size: 12px !important;" href="/docs/add-ins/access" data-target="#item23">Access</a>
+                    <ul class="collapse " id="item23">
+                                        <li aria-label="Access web app add-ins">
+                    <a class="" href="/docs/add-ins/access/access-web-app-add-ins">Access web app add-ins</a>
+                </li>
+
+                    </ul>
+                </li>
+
+                    </ul>
+                </nav>
+                <div style="height:20px;background-color:#ffffff;width:100%"></div>
+            </div>
+        </div>
+    </div>
+
+        <div id="docContent" style="float:left;margin-left:10px;margin-right:10px;">
+            <table id="OfficeDocHeader" style="width:100%">
+                    <tr>
+        <td class=current style="width:35px;font-size:21px;"><a href="/docs/add-ins/overview/office-add-ins" style="color:#000">Docs</a></td>
+        <td style="width:30px;"></td>
+        <td  style="width:130px;font-size:21px;"><a href="/reference/add-ins/javascript-api-for-office" style="color:#000">API Reference</a></td>
+        <td></td>
+
+        
+
+    </tr>
+
+            </table>
+            <div id="OfficeDocDiv" class="ms-fabric">
+    <div id="GitHubInfo"><a target="_blank" href="https://github.com/OfficeDev/office-js-docs/tree/master/docs/develop/get-the-whole-document-from-an-add-in-for-powerpoint-or-word.md">Edit in GitHub</a></div>
+    <div id="holder">
+        <!-- HTML Page Content Start -->
+        <div class="container wrapper" id="body">
+                <div>
+                    <h1 id="get-the-whole-document-from-an-add-in-for-powerpoint-or-word">Get the whole document from an add-in for PowerPoint or Word</h1>
+<p>You can create an Office Add-in to provide one-click sending or publishing of a Word 2013 or PowerPoint 2013 document to a remote location. This article demonstrates how to build a simple task pane add-in for PowerPoint 2013 that gets all of the presentation as a data object and sends that data to a web server via an HTTP request.</p>
+<h2 id="prerequisites-for-creating-an-add-in-for-powerpoint-or-word">Prerequisites for creating an add-in for PowerPoint or Word</h2>
+<p>This article assumes that you are using a text editor to create the task pane add-in for PowerPoint or Word. To create the task pane add-in, you must create the following files:</p>
+<ul>
+<li>
+<p>On a shared network folder or on a web server, you need the following files:</p>
+<ul>
+<li>
+<p>An HTML file (GetDoc_App.html) that contains the user interface plus links to the JavaScript files (including office.js and host-specific .js files) and Cascading Style Sheet (CSS) files.</p>
+</li>
+<li>
+<p>A JavaScript file (GetDoc_App.js) to contain the programming logic of the add-in.</p>
+</li>
+<li>
+<p>A CSS file (Program.css) to contain the styles and formatting for the add-in.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>An XML manifest file (GetDoc_App.xml) for the add-in, available on a shared network folder or add-in catalog. The manifest file must point to the location of the HTML file mentioned previously.</p>
+</li>
+</ul>
+<p>You can also create an add-in for PowerPoint or Word by using Visual Studio 2015 or Napa Office 365 Development Tools. For more information about how to create Office Add-ins, see Table 1.</p>
+<h3 id="core-concepts-to-know-for-creating-a-task-pane-add-in">Core concepts to know for creating a task pane add-in</h3>
+<p>Before you begin creating this add-in for PowerPoint or Word, you should be familiar with building Office Add-ins and working with HTTP requests. This article does not discuss how to decode Base64-encoded text from an HTTP request on a web server. </p>
+<h2 id="create-the-manifest-for-the-add-in">Create the manifest for the add-in</h2>
+<p>The XML manifest file for the add-in for PowerPoint provides important information about the add-in: what applications can host it, the location of the HTML file, the add-in title and description, and many other characteristics.</p>
+<ul>
+<li>In a text editor, add the following code to the manifest file.</li>
+</ul>
+<pre><code class="XML">  
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
+&lt;OfficeApp xmlns=&quot;http://schemas.microsoft.com/office/appforoffice/1.1&quot; 
+  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+  xsi:type=&quot;TaskPaneApp&quot;&gt;
+    &lt;Id&gt;[Replace_With_Your_GUID]&lt;/Id&gt; 
+    &lt;Version&gt;1.0&lt;/Version&gt; 
+    &lt;ProviderName&gt;[Provider Name]&lt;/ProviderName&gt; 
+    &lt;DefaultLocale&gt;EN-US&lt;/DefaultLocale&gt; 
+    &lt;DisplayName DefaultValue=&quot;Get Doc add-in&quot; /&gt; 
+    &lt;Description DefaultValue=&quot;My get PowerPoint or Word document add-in.&quot; /&gt; 
+    &lt;IconUrl DefaultValue=&quot;http://officeimg.vo.msecnd.net/_layouts/images/general/office_logo.jpg&quot; /&gt; 
+    &lt;Hosts&gt;
+      &lt;Host Name=&quot;Document&quot; /&gt; 
+      &lt;Host Name=&quot;Presentation&quot; /&gt; 
+    &lt;/Hosts&gt;
+    &lt;DefaultSettings&gt;
+      &lt;SourceLocation DefaultValue=&quot;[Network location of app]/GetDoc_App.html&quot; /&gt; 
+    &lt;/DefaultSettings&gt;
+    &lt;Permissions&gt;ReadWriteDocument&lt;/Permissions&gt; 
+&lt;/OfficeApp&gt;
+</code></pre>
+
+<ul>
+<li>Save the file as GetDoc_App.xml using UTF-8 encoding to a network location or to an add-in catalog.</li>
+</ul>
+<h2 id="create-the-user-interface-for-the-add-in">Create the user interface for the add-in</h2>
+<p>For the user interface of the add-in, you can use HTML, written directly into the GetDoc_App.html file. The programming logic and functionality of the add-in must be contained in a JavaScript file (for example, GetDoc_App.js).</p>
+<p>Use the following procedure to create a simple user interface for the add-in that includes a heading and a single button.</p>
+<ul>
+<li>In a new file in the text editor, add the following HTML.</li>
+</ul>
+<pre><code class="HTML">  
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot; /&gt;
+        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;/&gt;
+        &lt;title&gt;Publish presentation&lt;/title&gt;
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;Program.css&quot; /&gt;
+        &lt;script src=&quot;http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;GetDoc_App.js&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;form&gt;
+        &lt;h1&gt;Publish presentation&lt;/h1&gt;
+        &lt;br /&gt;
+        &lt;div&gt;&lt;input id='submit' type=&quot;button&quot; value=&quot;Submit&quot; /&gt;&lt;/div&gt;
+        &lt;br /&gt;
+        &lt;div&gt;&lt;h2&gt;Status&lt;/h2&gt; 
+            &lt;div id=&quot;status&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<ul>
+<li>Save the file as GetDoc_App.html using UTF-8 encoding to a network location or to a web server.</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>  Be sure that the <strong>head</strong> tags of the add-in contains a <strong>script</strong> tag with a valid link to the office.js file. </p>
+</blockquote>
+<p>We'll use some CSS to give the add-in a simple, yet modern and professional appearance. Use the following CSS to define the style of the add-in.</p>
+<ul>
+<li>In a new file in the text editor, add the following CSS.</li>
+</ul>
+<pre><code>  
+body
+{
+    font-family: &quot;Segoe UI Light&quot;,&quot;Segoe UI&quot;,Tahoma,sans-serif;
+}
+h1,h2
+{
+    text-decoration-color:#4ec724;
+}
+input [type=&quot;submit&quot;], input[type=&quot;button&quot;] 
+{ 
+    height:24px; 
+    padding-left:1em; 
+    padding-right:1em; 
+    background-color:white; 
+    border:1px solid grey; 
+    border-color: #dedfe0 #b9b9b9 #b9b9b9 #dedfe0; 
+    cursor:pointer; 
+}
+</code></pre>
+
+<ul>
+<li>Save the file as Program.css using UTF-8 encoding to the network location or to the web server where the GetDoc_App.html file is located.</li>
+</ul>
+<h2 id="add-the-javascript-to-get-the-document">Add the JavaScript to get the document</h2>
+<p>In the code for the add-in, a handler to the <a href="../../reference/shared/office.initialize.htm">Office.initialize</a> event adds a handler to the click event of the <strong>Submit</strong> button on the form and informs the user that the add-in is ready.</p>
+<p>The following code example shows the event handler for the  <strong>Office.initialize</strong> event along with a helper function, <code>updateStatus</code>, for writing to the status div.</p>
+<pre><code class="js">// The initialize function is required for all add-ins.
+Office.initialize = function (reason) {
+    // Checks for the DOM to load using the jQuery ready function.
+    $(document).ready(function () {
+
+      // After the DOM is loaded, add-in-specific code can run.
+      document.getElementById('submit').addEventListener(&quot;click&quot;,
+          function () {
+              sendFile();
+          });}
+      updateStatus(&quot;Ready to send file.&quot;);
+    });
+}
+
+// Create a function for writing to the status div. 
+function updateStatus(message) {
+    var statusInfo = document.getElementById(&quot;status&quot;);
+    statusInfo.innerHTML += message + &quot;&lt;br/&gt;&quot;;
+}
+</code></pre>
+
+<p>When you choose the  <strong>Submit</strong> button in the UI, the add-in calls the <code>sendFile</code> function, which contains a call to the <a href="../../reference/shared/document.getfileasync.htm">Document.getFileAsync</a> method. The <strong>getFileAsync</strong> method uses the asynchronous pattern, similar to other methods in the JavaScript API for Office. It has one required parameter, <em>fileType</em>, and two optional parameters,  <em>options</em> and <em>callback</em>. </p>
+<p>The  <em>fileType</em> parameter expects one of three constants from the <a href="../../reference/shared/filetype-enumeration.htm">FileType</a> enumeration: <strong>Office.FileType.Compressed</strong> (&quot;compressed&quot;), <strong>Office.FileType.PDF</strong> (&quot;pdf&quot;), or <strong>Office.FileType.Text</strong> (&quot;text&quot;). PowerPoint supports only <strong>Compressed</strong> as an argument; Word supports all three. When you pass in <strong>Compressed</strong> for the <em>fileType</em> parameter, the <strong>getFileAsync</strong> method returns the document as a PowerPoint 2013 presentation file (<em>.pptx) or Word 2013 document file (</em>.docx) by creating a temporary copy of the file on the local computer.</p>
+<p>The  <strong>getFileAsync</strong> method returns a reference to the file as a <a href="../../reference/shared/file.htm">File</a> object. The <strong>File</strong> object exposes four members: the <a href="../../reference/shared/file.size.htm">size</a> property, <a href="../../reference/shared/file.slicecount.htm">sliceCount</a> property, <a href="../../reference/shared/file.getsliceasync.htm">getSliceAsync</a> method, and <a href="../../reference/shared/file.closeasync.htm">closeAsync</a> method. The <strong>size</strong> property returns the number of bytes in the file. The <strong>sliceCount</strong> returns the number of <a href="../../reference/shared/document.htm">Slice</a> objects (discussed later in this article) in the file.</p>
+<p>Use the following code to get the PowerPoint or Word document as a  <strong>File</strong> object using the <strong>Document.getFileAsync</strong> method and then makes a call to the locally defined <code>getSlice</code> function. Note that the <strong>File</strong> object, a counter variable, and the total number of slices in the file are passed along in the call to <code>getSlice</code> in an anonymous object.</p>
+<pre><code class="js">
+// Get all of the content from a PowerPoint or Word document in 100-KB chunks of text.
+function sendFile() {
+
+    Office.context.document.getFileAsync(&quot;compressed&quot;,
+        { sliceSize: 100000 },
+        function (result) {
+
+            if (result.status == Office.AsyncResultStatus.Succeeded) {
+
+                // Get the File object from the result.
+                var myFile = result.value;
+                var state = {
+                    file: myFile,
+                    counter: 0,
+                    sliceCount: myFile.sliceCount
+                };
+
+                updateStatus(&quot;Getting file of &quot; + myFile.size +
+                    &quot; bytes&quot;);
+
+                getSlice(state);
+            }
+            else {
+                updateStatus(result.status);
+            }
+    });
+}
+</code></pre>
+
+<p>The local function  <code>getSlice</code> makes a call to the <strong>File.getSliceAsync</strong> method to retrieve a slice from the <strong>File</strong> object. The <strong>getSliceAsync</strong> method returns a <strong>Slice</strong> object from the collection of slices. It has two required parameters, <em>sliceIndex</em> and <em>callback</em>. The  <em>sliceIndex</em> parameter takes an integer as an indexer into the collection of slices. Like other functions in the JavaScript API for Office, the <strong>getSliceAsync</strong> method also takes a callback function as a parameter to handle the results from the method call.</p>
+<p>The  <strong>Slice</strong> object gives you access to the data contained in the file. Unless otherwise specified in the <em>options</em> parameter of the <strong>getFileAsync</strong> method, the <strong>Slice</strong> object is 4 MB in size. The <strong>Slice</strong> object exposes three properties: <a href="../../reference/shared/slice.size.htm">size</a>, <a href="../../reference/shared/slice.data.htm">data</a>, and <a href="../../reference/shared/slice.index.htm">index</a>. The  <strong>size</strong> property gets the size, in bytes, of the slice. The <strong>index</strong> property gets an integer that represents the slice's position in the collection of slices.</p>
+<pre><code class="js">
+// Get a slice from the file and then call sendSlice.
+function getSlice(state) {
+
+    state.file.getSliceAsync(state.counter, function (result) {
+        if (result.status == Office.AsyncResultStatus.Succeeded) {
+
+            updateStatus(&quot;Sending piece &quot; + (state.counter + 1) +
+                &quot; of &quot; + state.sliceCount);
+
+            sendSlice(result.value, state);
+        }
+        else {
+            updateStatus(result.status);
+        }
+    });
+}
+</code></pre>
+
+<p>The  <strong>Slice.data</strong> property returns the raw data of the file as a byte array. If the data is in text format (that is, XML or plain text), the slice contains the raw text. If you pass in <strong>Office.FileType.Compressed</strong> for the <em>fileType</em> parameter of <strong>Document.getFileAsync</strong>, the slice contains the binary data of the file as a byte array. In the case of a PowerPoint or Word file, the slices contain byte arrays.</p>
+<p>You must implement your own function (or use an available library) to convert byte array data to a Base64-encoded string. For information about Base64 encoding with JavaScript, see <a href="https://developer.mozilla.org/docs/Web/JavaScript/Base64_encoding_and_decoding" target="_blank">Base64 encoding and decoding</a>.</p>
+<p>Once you have converted the data to Base64, you can then transmit it to a web server in several ways -- including as the body of an HTTP POST request.</p>
+<p>Add the following code to send a slice to a web service.</p>
+<blockquote>
+<p><strong>Note</strong>  This code sends a PowerPoint or Word file to the web server in multiple slices. The web server or service must compile each individual slice into a single .pptx file before you can perform any manipulations on it.</p>
+</blockquote>
+<pre><code class="js">
+function sendSlice(slice, state) {
+    var data = slice.data;
+
+    // If the slice contains data, create an HTTP request.
+    if (data) {
+
+        // Encode the slice data, a byte array, as a Base64 string.
+        // NOTE: The implementation of myEncodeBase64(input) function isn't 
+        // included with this example. For information about Base64 encoding with
+        // JavaScript, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Base64_encoding_and_decoding.
+        var fileData = myEncodeBase64(data);
+
+        // Create a new HTTP request. You need to send the request 
+        // to a webpage that can receive a post.
+        var request = new XMLHttpRequest();
+
+        // Create a handler function to update the status 
+        // when the request has been sent.
+        request.onreadystatechange = function () {
+            if (request.readyState == 4) {
+
+                updateStatus(&quot;Sent &quot; + slice.size + &quot; bytes.&quot;);
+                state.counter++;
+
+                if (state.counter &lt; state.sliceCount) {
+                    getSlice(state);
+                }
+                else {
+                    closeFile(state);
+                }
+            }
+        }
+
+        request.open(&quot;POST&quot;, &quot;[Your receiving page or service]&quot;);
+        request.setRequestHeader(&quot;Slice-Number&quot;, slice.index);
+
+        // Send the file as the body of an HTTP POST 
+        // request to the web server.
+        request.send(fileData);
+    }
+}
+</code></pre>
+
+<p>As the name implies, the  <strong>File.closeAsync</strong> method closes the connection to the document and frees up resources. Although the Office Add-ins sandbox garbage collects out-of-scope references to files, it is still a best practice to explicitly close files once your code is done with them. The <strong>closeAsync</strong> method has a single parameter, <em>callback</em>, that specifies the function to call on the completion of the call.</p>
+<pre><code class="js">
+function closeFile(state) {
+
+    // Close the file when you're done with it.
+    state.file.closeAsync(function (result) {
+
+        // If the result returns as a success, the
+        // file has been successfully closed.
+        if (result.status == &quot;succeeded&quot;) {
+            updateStatus(&quot;File closed.&quot;);
+        }
+        else {
+            updateStatus(&quot;File couldn't be closed.&quot;);
+        }
+    });
+}
+</code></pre>
+
+
+                </div>
+        </div>
+        <!-- HTML Page Content End -->
+    </div>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="full-width-container" style="margin-bottom:0px;padding:0 0 0 0;background-color:#262425 !important">
+    <div class="container-fluid" id="feedbackDiv" style="background-color:transparent !important"></div>
+</div>
+<script>
+    adjustDocContentWidth();
+</script>
+
+
+</article></div>
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+            <footer id="layout-footer" class="container-fluid" role="contentinfo">
+            <div class="zone zone-footer">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4" style="z-index:50;">
+            <div class="heading">Community Resources</div>
+            <ul class="links">
+                <li><a href="https://www.yammer.com/itpronetwork" target="_blank">Office 365 Technical Network</a></li>
+                <li><a href="http://social.msdn.microsoft.com/Forums/office/en-US/home?category=apps,officedev,sharepoint,exchangeserver,lync,msproject" target="_blank">MSDN Forums</a></li>
+                <li><a href="http://officespdev.uservoice.com/" target="_blank">UserVoice</a></li>
+                <li><a href="http://stackoverflow.com/questions/tagged/ms-office" target="_blank">Stack Overflow</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 follow-footer-zone">
+            <div class="heading">Follow Us</div>
+            <ul class="links">
+                <li><a href="https://twitter.com/OfficeDev" target="_blank">Twitter</a></li>
+                <li><a href="https://www.facebook.com/OfficeDev" target="_blank">Facebook</a></li>
+            </ul>
+        </div>
+        <div class='col-md-4 pull-right'>
+            <div class="bing-translator-wrapper hidden-xs">
+                <div class="Light pull-right hidden-xs" id="MicrosoftTranslatorWidget" style="color: white; background-color: transparent;" translate="no"></div>
+                <script type="text/javascript">setTimeout(function () { { var s = document.createElement('script'); s.type = 'text/javascript'; s.charset = 'UTF-8'; s.src = ((location && location.href && location.href.indexOf('https') == 0) ? 'https://ssl.microsofttranslator.com' : 'http://www.microsofttranslator.com') + '/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**&ctf=False&ui=true&settings=Manual&from=en'; var p = document.getElementsByTagName('head')[0] || document.documentElement; p.insertBefore(s, p.firstChild); } }, 0);</script>
+            </div>
+        </div>
+        <div class="clearfix"/>
+        <div class="col-md-12 bottom-footer-zone">
+            <div class="row">
+                <div class="col-xs-6 hidden-md hidden-lg">
+                    <ul class="contact-us">
+                        <li><a href="http://www.microsoft.com/info/privacy.mspx" target="_blank">Privacy</a></li>
+                        <li><a href="http://msdn.microsoft.com/en-US/cc300389" target="_blank">Terms of use</a></li>
+                        <li><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx" target="_blank">Trademarks</a></li>
+                        <li>&copy; 2015 Microsoft</li>
+                    </ul>
+                </div>
+                <div><img class="microsoft-logo" src="/Themes/DevOffice/Content/Images/microsoftLogo.png" alt="Microsoft logo"/></div>
+                <div class="col-xs-6 col-md-12 col-lg-12 visible-md visible-lg privacy-links">
+                    <ul class="contact-us contact-us-inline">
+                        <li>&copy; 2015 Microsoft</li>
+                        <li><a href="http://www.microsoft.com/info/privacy.mspx" target="_blank">Privacy Statement</a></li>
+                        <li><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx" target="_blank">Trademarks</a></li>
+                        <li><a href="http://msdn.microsoft.com/en-US/cc300389" target="_blank">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+        </footer>
+
+    <script>
+        // Attach site-wide multi-line ellipsis support
+        (function ($) {
+            $(function () {
+                $('.pk-ellipsis').ellipsis();
+
+                $(window).load(function () {
+                    $('.pk-ellipsis').not('.pk-ellipsis-rendered').ellipsis();
+                });
+            });
+        })(jQuery);
+    </script>
+    </div>
+</div>
+    <script src="/Themes/DevOffice/Scripts/nav.min.js?v={2/string}" type="text/javascript"></script>
+<script src="/Modules/DevOffice.Documents/scripts/menuStyleUpdate.min.js" type="text/javascript"></script>
+<script src="/Modules/DevOffice.Documents/scripts/insight.min.js" type="text/javascript"></script>
+<script src="/Modules/Orchard.jQuery/scripts/ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/Modules/DevOffice.Documents/scripts/run_prettify.min.js" type="text/javascript"></script>
+
+   
+    
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53e944d61ebade5f" async="async"></script>
+    
+    
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    
+    
+
+    
+    <script type="text/JavaScript">
+            var varSegmentation = 0;
+            var varClickTracking = 1;
+            var varCustomerTracking = 1;
+            var varAutoFirePV = 1;
+            var Route = "50000";
+            var Ctrl = "SD300";
+            document.write("<script type='text/javascript' src='" + (window.location.protocol) + "//c.microsoft.com/ms.js'" + "'><\/script>");
+        </script>
+        <noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+    
+
+    
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        if (window.location.host.indexOf('localhost') != -1 || window.location.host.indexOf('azurewebsites') != -1) {
+            ga('create', 'UA-65962112-1', 'auto'); //staging and Dev GA
+        } else {
+            ga('create', 'UA-54271502-1', 'auto'); //prod GA
+        }
+        ga('require', 'displayfeatures');
+        ga('require', 'linkid', 'linkid.js');
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

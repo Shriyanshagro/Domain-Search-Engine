@@ -1,0 +1,3131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+
+
+<script type="text/javascript" src="/static/js/analytics.js"></script>
+<script type="text/javascript">archive_analytics.values.server_name="wwwb-app17.us.archive.org";archive_analytics.values.server_ms=843;</script>
+<link type="text/css" rel="stylesheet" href="/static/css/banner-styles.css"/>
+
+
+<title>Security Bugs and Full Disclosure | KernelTrap</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="/web/20080719130436im_/http://kerneltrap.org/sites/default/themes/foundation/favicon.ico" type="image/x-icon" />
+<style type="text/css" media="all">@import "/web/20080719130436cs_/http://kerneltrap.org/files/css/f005639e4c5ee8e2a3546ad8f037461f.css";</style>
+<script type="text/javascript" src="/web/20080719130436js_/http://kerneltrap.org/misc/jquery.js"></script>
+<script type="text/javascript" src="/web/20080719130436js_/http://kerneltrap.org/misc/drupal.js"></script>
+<script type="text/javascript" src="/web/20080719130436js_/http://kerneltrap.org/sites/default/modules/jstools/jstools.js"></script>
+<script type="text/javascript" src="/web/20080719130436js_/http://kerneltrap.org/sites/default/modules/jstools/activemenu/activemenu.js"></script>
+<script type="text/javascript">Drupal.extend({ settings: { "jstools": { "cleanurls": true, "basePath": "/" }, "activemenu": { "#block-book-0": "activemenu/book", "#block-menu-1": "activemenu/menu", "#block-menu-62": "activemenu/menu", "#block-menu-166": "activemenu/menu", "#block-user-1": "activemenu/menu" } } });</script>
+<script type="text/javascript"> </script>
+</head>
+<body class="body-right" >
+
+
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script type="text/javascript" src="/static/js/disclaim-element.js" ></script>
+<script type="text/javascript" src="/static/js/graph-calc.js" ></script>
+<script type="text/javascript">//<![CDATA[
+var __wm = (function(imgWidth,imgHeight,yearImgWidth,monthImgWidth){
+var wbPrefix = "/web/";
+var wbCurrentUrl = "http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure";
+
+var firstYear = 1996;
+var displayDay = "19";
+var displayMonth = "Jul";
+var displayYear = "2008";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var $D=document,$=function(n){return document.getElementById(n)};
+var trackerVal,curYear = -1,curMonth = -1;
+var yearTracker,monthTracker;
+function showTrackers(val) {
+  if (val===trackerVal) return;
+  var $ipp=$("wm-ipp");
+  var $y=$("displayYearEl"),$m=$("displayMonthEl"),$d=$("displayDayEl");
+  if (val) {
+    $ipp.className="hi";
+  } else {
+    $ipp.className="";
+    $y.innerHTML=displayYear;$m.innerHTML=displayMonth;$d.innerHTML=displayDay;
+  }
+  yearTracker.style.display=val?"inline":"none";
+  monthTracker.style.display=val?"inline":"none";
+  trackerVal = val;
+}
+function trackMouseMove(event,element) {
+  var eventX = getEventX(event);
+  var elementX = getElementX(element);
+  var xOff = Math.min(Math.max(0, eventX - elementX),imgWidth);
+  var monthOff = xOff % yearImgWidth;
+
+  var year = Math.floor(xOff / yearImgWidth);
+  var monthOfYear = Math.min(11,Math.floor(monthOff / monthImgWidth));
+  // 1 extra border pixel at the left edge of the year:
+  var month = (year * 12) + monthOfYear;
+  var day = monthOff % 2==1?15:1;
+  var dateString = zeroPad(year + firstYear) + zeroPad(monthOfYear+1,2) +
+    zeroPad(day,2) + "000000";
+
+  $("displayYearEl").innerHTML=year+firstYear;
+  $("displayMonthEl").innerHTML=prettyMonths[monthOfYear];
+  // looks too jarring when it changes..
+  //$("displayDayEl").innerHTML=zeroPad(day,2);
+  var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+  $("wm-graph-anchor").href=url;
+
+  if(curYear != year) {
+    var yrOff = year * yearImgWidth;
+    yearTracker.style.left = yrOff + "px";
+    curYear = year;
+  }
+  if(curMonth != month) {
+    var mtOff = year + (month * monthImgWidth) + 1;
+    monthTracker.style.left = mtOff + "px";
+    curMonth = month;
+  }
+}
+function hideToolbar() {
+  $("wm-ipp").style.display="none";
+}
+function bootstrap() {
+  var $spk=$("wm-ipp-sparkline");
+  yearTracker=$D.createElement('div');
+  yearTracker.className='yt';
+  with(yearTracker.style){
+    display='none';width=yearImgWidth+"px";height=imgHeight+"px";
+  }
+  monthTracker=$D.createElement('div');
+  monthTracker.className='mt';
+  with(monthTracker.style){
+    display='none';width=monthImgWidth+"px";height=imgHeight+"px";
+  }
+  $spk.appendChild(yearTracker);
+  $spk.appendChild(monthTracker);
+
+  var $ipp=$("wm-ipp");
+  $ipp&&disclaimElement($ipp);
+}
+return{st:showTrackers,mv:trackMouseMove,h:hideToolbar,bt:bootstrap};
+})(525, 27, 25, 2);//]]>
+</script>
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  min-width:800px !important;
+}
+</style>
+<div id="wm-ipp" lang="en" style="display:none;">
+
+<div style="position:fixed;left:0;top:0;width:100%!important">
+<div id="wm-ipp-inside">
+   <table style="width:100%;"><tbody><tr>
+   <td id="wm-logo">
+       <a href="/web/" title="Wayback Machine home page"><img src="/static/images/toolbar/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" height="39" border="0" /></a>
+   </td>
+   <td class="c">
+       <table style="margin:0 auto;"><tbody><tr>
+       <td class="u" colspan="2">
+       <form target="_top" method="get" action="/web/form-submit.jsp" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure" style="width:400px;" onfocus="this.focus();this.select();" /><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20080719130436" /><input type="submit" value="Go" /><span id="wm_tb_options" style="display:block;"></span></form>
+       </td>
+       <td class="n" rowspan="2">
+           <table><tbody>
+           <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+           <tr class="m">
+           	<td class="b" nowrap="nowrap">
+		
+		    Jun
+		
+		</td>
+		<td class="c" id="displayMonthEl" title="You are here: 13:04:36 Jul 19, 2008">JUL</td>
+		<td class="f" nowrap="nowrap">
+		
+		    <a href="/web/20080821043539/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure" title="21 Aug 2008"><strong>AUG</strong></a>
+		
+                </td>
+	    </tr>
+           <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+           <tr class="d">
+               <td class="b" nowrap="nowrap">
+               
+                       <img src="/static/images/toolbar/wm_tb_prv_off.png" alt="Previous capture" width="14" height="16" border="0" />
+               
+               </td>
+               <td class="c" id="displayDayEl" style="width:34px;font-size:24px;" title="You are here: 13:04:36 Jul 19, 2008">19</td>
+	       <td class="f" nowrap="nowrap">
+               
+		   <a href="/web/20080720173456/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure" title="17:34:56 Jul 20, 2008"><img src="/static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a>
+	       
+	       </td>
+           </tr>
+           <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+           <tr class="y">
+	       <td class="b" nowrap="nowrap">
+               
+                   2007
+               
+               </td>
+               <td class="c" id="displayYearEl" title="You are here: 13:04:36 Jul 19, 2008">2008</td>
+	       <td class="f" nowrap="nowrap">
+               
+	           <a href="/web/20090930083953/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure" title="30 Sep 2009"><strong>2009</strong></a>
+	       
+	       </td>
+           </tr>
+           </tbody></table>
+       </td>
+       </tr>
+       <tr>
+       <td class="s">
+           <a class="t" href="/web/20080719130436*/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure" title="See a list of every capture for this URL">39 captures</a>
+           <div class="r" title="Timespan for captures of this URL">19 Jul 08 - 5 Jan 13</div>
+       </td>
+       <td class="k">
+       <a href="" id="wm-graph-anchor">
+       <div id="wm-ipp-sparkline" title="Explore captures for this URL">
+	 <img id="sparklineImgId" alt="sparklines"
+		 onmouseover="__wm.st(1)" onmouseout="__wm.st(0)"
+		 onmousemove="__wm.mv(event,this)"
+		 width="525"
+		 height="27"
+		 border="0"
+		 src="/web/jsp/graph.jsp?graphdata=525_27_1996:-1:000000000000_1997:-1:000000000000_1998:-1:000000000000_1999:-1:000000000000_2000:-1:000000000000_2001:-1:000000000000_2002:-1:000000000000_2003:-1:000000000000_2004:-1:000000000000_2005:-1:000000000000_2006:-1:000000000000_2007:-1:000000000000_2008:6:000000a80201_2009:-1:010000001000_2010:-1:100002010111_2011:-1:010002010100_2012:-1:001020000000_2013:-1:100000000000_2014:-1:000000000000_2015:-1:000000000000_2016:-1:000000000000" />
+       </div>
+       </a>
+       </td>
+       </tr></tbody></table>
+   </td>
+   <td class="r">
+       <a href="#close" onclick="__wm.h();return false;" style="background-image:url(/static/images/toolbar/wm_tb_close.png);top:5px;" title="Close the toolbar">Close</a>
+       <a href="http://faq.web.archive.org/" style="background-image:url(/static/images/toolbar/wm_tb_help.png);bottom:5px;" title="Get some help using the Wayback Machine">Help</a>
+   </td>
+   </tr></tbody></table>
+</div>
+</div>
+</div>
+<script type="text/javascript">__wm.bt();</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+
+<div id="logo">
+    <a href="/web/20080719130436/http://kerneltrap.org/"><img src="/web/20080719130436im_/http://kerneltrap.org/sites/default/themes/foundation/images/newlogo.png" alt="" class="logo" height="134" width="287" /></a>
+</div>
+
+<div class="header">
+
+  
+  <div id="block-block-24" class="block block-block">
+  
+  <div class="content"><p><!--Ad Bard Banner ads, 468 pixels wide by 60 pixels high, begin --> </p>
+<script type="text/javascript"> var adbard_key="e73d04e72743899cf8dc6b81c15e825c"; var abq=1; var abs=2; var aba=2; </script><script type="text/javascript" src="/web/20080719130436js_/http://cdn2.adbard.net/js/ab21d.js"></script><p> <!--Ad Bard, end--> </p>
+</div>
+</div>
+
+<div id="block-block-11" class="block block-block">
+    <div class="title">login</div>
+  
+  <div class="content"><a href="/web/20080719130436/http://kerneltrap.org/user/login">Login</a> / <a href="/web/20080719130436/http://kerneltrap.org/user/register">Register</a></div>
+</div>
+
+<div id="block-search-0" class="block block-search">
+    <div class="title">Search</div>
+  
+  <div class="content"><form action="/web/20080719130436/http://kerneltrap.org/search/node"  method="post" id="search-block-form">
+<div><div class="container-inline"><div class="form-item">
+ <input type="text" maxlength="128" name="search_block_form_keys" id="edit-search-block-form-keys"  size="15" value="" title="Enter the terms you wish to search for." class="form-text" />
+</div>
+<input type="submit" name="op" id="edit-submit" value="Search"  class="form-submit" />
+<input type="hidden" name="form_id" id="edit-search-block-form" value="search_block_form"  />
+</div>
+</div></form>
+</div>
+</div>
+
+<div id="block-block-12" class="block block-block">
+    <div class="title">Header Space</div>
+  
+  <div class="content"><p>&nbsp;<br />
+&nbsp;</p>
+</div>
+</div>
+
+</div>
+
+<!-- Navigation Lists -->
+<div id="navcontainer">
+<ul id="navlist">
+<li><a href="/web/20080719130436/http://kerneltrap.org/forum" title="Forums">Forums</a></li>
+<li><a href="/web/20080719130436/http://kerneltrap.org/news" title="News">News</a></li>
+<li><div id="menu-jobs"><a href="/web/20080719130436/http://kerneltrap.org/jobs" title="Jobs">Jobs</a></div></li>
+<li><a href="/web/20080719130436/http://kerneltrap.org/blogs" title="Blogs">Blogs</a></li>
+<li><a href="/web/20080719130436/http://kerneltrap.org/features" title="Features">Features</a></li>
+<li><a href="/web/20080719130436/http://kerneltrap.org/man" title="Man Pages">Man Pages</a></li>
+<li><a href="/web/20080719130436/http://kerneltrap.org/site" title="Site">Site</a></li>
+</ul>
+</div>
+
+
+<div class="container">
+  
+  <div class="page">
+    <div class="wrapper">
+        <div class="breadcrumb"><div class="breadcrumb"><a href="/web/20080719130436/http://kerneltrap.org/">Home</a></div></div>
+    
+    
+    <div id="block-block-34" class="block block-block">
+  
+  <div class="content"><p><!--Ad Bard Text link ads, up to 26 characters, begin --> </p>
+<script type="text/javascript"> var adbard_key="e73d04e72743899cf8dc6b81c15e825c"; var abq=3; var abs=1; var aba=0; </script><script type="text/javascript" src="/web/20080719130436js_/http://cdn3.adbard.net/js/ab30b2-0625.js"></script><p> <!--Ad Bard, end--> </p>
+</div>
+</div>
+
+
+    
+        <h2 class="title">Security Bugs and Full Disclosure</h2>
+    
+    
+    
+    <div id="node-16395" class="node node-story">
+  
+  
+    <div class="date">July 16, 2008 - 8:57am</div>
+  <!-- <div class="author">Submitted by <a href="/user/1" title="View user profile.">Jeremy</a></div> -->
+  <div class="author">Submitted by <a href="/web/20080719130436/http://kerneltrap.org/user/1" title="View user profile.">Jeremy</a> on July 16, 2008 - 8:57am.</div>
+  
+  <div class="taxonomy_image">
+    <img src='/web/20080719130436im_/http://kerneltrap.org/files/category_pictures/K-Linux_0.gif' width='75' height='75' alt='Linux news' alt='Linux news' />  </div>
+
+  <div class="content">
+  <p>In an <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/3/2332494">announcement for the 2.6.25.10 stable kernel</a>, Greg KH noted, "<i>it contains a number of assorted bugfixes all over the tree.  And once again, any users of the 2.6.25 kernel series are STRONGLY encouraged to upgrade to this release.</i>"  The emphasis on the word <em>strongly</em> led to a lengthy discussion about how security fixes are handled in the Linux Kernel.  Linus Torvalds <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2497674">replied</a>, "<i>I personally consider security bugs to be just 'normal bugs'. I don't cover them up, but I also don't have any reason what-so-ever to think it's a good idea to track them and announce them as something special.</i>"  Later in the thread he went on to explain, "<i>one reason I refuse to bother with the whole security circus is that I think it glorifies - and thus encourages - the wrong behavior.  It makes 'heroes' out of security people, as if the people who don't just fix normal bugs aren't as important.  In fact, all the boring normal bugs are _way_ more important, just because there's a lot more of them. I don't think some spectacular security hole should be glorified or cared about as being any more 'special' than a random spectacular crash due to bad locking.</i>"</p>
+<p>Theodore T'so <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2508024">pointed out</a> that other developers had different beliefs about disclosure than Linus and referred to mailing lists such as the private security@ list described in the <a href="/web/20080719130436/http://git.kernel.org/gitweb.cgi?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob;f=Documentation/SecurityBugs;h=26c3b3635d9fa1b017f2b23e35c342fb92e76977;hb=HEAD">SecurityBugs documentation</a>, originally <a href="/web/20080719130436/http://kerneltrap.org/node/4540">created in early 2005</a>.  He then described Linus' stance, "<i>if Linus finds out about a security bug, he will fix it and check it into the public git repository right away.  But he's very honest in telling you that is what he will do --- so you can choose whether or not to include him in any disclosures that you might choose to make.</i>"  Regarding whether Full Disclosure is the best policy, Ted highlighted the fact that the debate has been going on for several decades, "<i>it is clear that we're not going settle this debate now, and certainly not on the Linux Kernel Mailing List.</i>"  Later in the discussion, Linus offered a succinct summary of his viewpoint, "<i>my responsibility is to do a good job. And not pander to the people who want to turn security into a media circus.</i>"</p><div class="autolinks">Submit to: <a href="/web/20080719130436/http://reddit.com/submit?url=http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure&amp;title=Security%20Bugs%20and%20Full%20Disclosure">Reddit</a>, <a href="/web/20080719130436/http://digg.com/submit?phase=2&amp;url=http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure&amp;title=Security%20Bugs%20and%20Full%20Disclosure">Digg</a>, <a href="/web/20080719130436/http://slashdot.org/submit.pl?url=http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure&amp;title=Security%20Bugs%20and%20Full%20Disclosure">Slashdot</a>, <a href="/web/20080719130436/http://del.icio.us/post?url=http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure&amp;title=Security%20Bugs%20and%20Full%20Disclosure">Del.icio.us</a>, <a href="/web/20080719130436/http://osnews.com/submit.php?url=http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure&amp;title=Security%20Bugs%20and%20Full%20Disclosure">OSNews</a></div>
+<p><hr /></p>
+<p><div class="mailarchive-message" id="2332494,2339864,2340144,2341074,2368484,2455154,2497484,2497674,2505894,2508024"><pre><b>From: Greg KH &lt;gregkh@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/3/2332494" title="Click to view this message in the linux-kernel mail archive.">Linux 2.6.25.10
+</a>Date: Jul 2, 8:58 pm 2008
+
+We (the -stable team) are announcing the release of the 2.6.25.10
+kernel.
+
+It contains a number of assorted bugfixes all over the tree.  And once
+again, any users of the 2.6.25 kernel series are STRONGLY encouraged to
+upgrade to this release.
+
+I&#039;ll also be replying to this message with a copy of the patch between
+2.6.25.9 and 2.6.25.10
+
+The updated 2.6.25.y git tree can be found at:
+        git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.25.y.git
+and can be browsed at the normal kernel.org git web browser:
+        <a href="/web/20080719130436/http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=summary" title="http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=summary">http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.25.y.git;a=summary</a>
+
+thanks,
+
+greg k-h
+
+-------------
+
+ Makefile                                    |    2 
+ arch/x86/kernel/i387.c                      |    4 -
+ arch/x86/kernel/ptrace.c                    |   45 +++++++------
+ arch/x86/kernel/smpboot_64.c                |    1 
+ drivers/char/drm/i915_drv.c                 |    1 
+ drivers/infiniband/hw/mthca/mthca_memfree.c |    6 +
+ drivers/net/hamradio/6pack.c                |    2 
+ drivers/net/hamradio/mkiss.c                |    8 +-
+ drivers/net/irda/irtty-sir.c                |    4 -
+ drivers/net/ppp_async.c                     |    3 
+ drivers/net/ppp_synctty.c                   |    3 
+ drivers/net/slip.c                          |   14 +++-
+ drivers/net/wan/x25_asy.c                   |   10 ++-
+ drivers/net/wireless/strip.c                |    3 
+ include/asm-x86/msr.h                       |    2 
+ kernel/futex.c                              |   93 +++++++++++++++++++++-------
+ kernel/sched.c                              |    1 
+ 17 files changed, 147 insertions(+), 55 deletions(-)
+
+
+Alan Cox (1):
+      TTY: fix for tty operations bugs
+
+Dmitry Adamushko (1):
+      sched: fix cpu hotplug
+
+Eli Cohen (1):
+      IB/mthca: Clear ICM pages before handing to FW
+
+Greg Kroah-Hartman (1):
+      Linux 2.6.25.10
+
+Jie Luo (1):
+      DRM: enable bus mastering on i915 at resume time
+
+Max Asbock (1):
+      x86: shift bits the right way in native_read_tscp
+
+Roland McGrath (1):
+      x86_64 ptrace: fix sys32_ptrace task_struct leak
+
+TAKADA Yoshihito (1):
+      ptrace GET/SET FPXREGS broken
+
+Thomas Gleixner (1):
+      futexes: fix fault handling in futex_lock_pi
+
+Yanmin Zhang (1):
+      x86: fix cpu hotplug crash
+
+--
+<br />
+<b>From: Bart Van Assche &lt;bart.vanassche@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/3/2339864" title="Click to view this message in the linux-kernel mail archive.">Re: Linux 2.6.25.10
+</a>Date: Jul 3, 10:08 am 2008
+
+On Thu, Jul 3, 2008 at 5:58 AM, Greg KH &lt;gregkh@suse.de&gt; wrote:
+&gt; We (the -stable team) are announcing the release of the 2.6.25.10
+&gt; kernel.
+&gt;
+&gt; It contains a number of assorted bugfixes all over the tree.  And once
+&gt; again, any users of the 2.6.25 kernel series are STRONGLY encouraged to
+&gt; upgrade to this release.
+
+Hello Greg,
+
+Thanks for all the work you and the stable team are doing on the
+stable series. To me the above message is a little bit cryptic however
+-- which bugs have been fixed, and what was their impact ? I know it
+takes time to write down such information, sometimes called release
+notes. But I think including this information with the announcements
+of the stable releases would be a great service to the people reading
+these announcements.
+
+Bart.
+--
+<br />
+<b>From: Greg KH &lt;gregkh@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/3/2340144" title="Click to view this message in the linux-kernel mail archive.">Re: Linux 2.6.25.10
+</a>Date: Jul 3, 10:29 am 2008
+
+On Thu, Jul 03, 2008 at 07:08:48PM +0200, Bart Van Assche wrote:
+&gt; On Thu, Jul 3, 2008 at 5:58 AM, Greg KH &lt;gregkh@suse.de&gt; wrote:
+&gt; &gt; We (the -stable team) are announcing the release of the 2.6.25.10
+&gt; &gt; kernel.
+&gt; &gt;
+&gt; &gt; It contains a number of assorted bugfixes all over the tree.  And once
+&gt; &gt; again, any users of the 2.6.25 kernel series are STRONGLY encouraged to
+&gt; &gt; upgrade to this release.
+&gt; 
+&gt; Hello Greg,
+&gt; 
+&gt; Thanks for all the work you and the stable team are doing on the
+&gt; stable series. To me the above message is a little bit cryptic however
+&gt; -- which bugs have been fixed, and what was their impact ? I know it
+&gt; takes time to write down such information, sometimes called release
+&gt; notes. But I think including this information with the announcements
+&gt; of the stable releases would be a great service to the people reading
+&gt; these announcements.
+
+The release notes are there in the shortlog in the email announcement
+and full Changelog on the kernel.org site for exactly what specifically
+was fixed:
+	<a href="/web/20080719130436/http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25.10" title="http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25.10">http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25.10</a>
+
+If you have any specific questions about any of the individual changes,
+please let us, and the developers who made those fixes know.
+
+thanks,
+
+greg k-h
+--
+<br />
+<b>From: Greg KH &lt;greg@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/3/2341074" title="Click to view this message in the linux-kernel mail archive.">Re: Linux 2.6.25.10
+</a>Date: Jul 3, 11:57 am 2008
+
+On Thu, Jul 03, 2008 at 10:29:14AM -0700, Greg KH wrote:
+&gt; On Thu, Jul 03, 2008 at 07:08:48PM +0200, Bart Van Assche wrote:
+&gt; &gt; On Thu, Jul 3, 2008 at 5:58 AM, Greg KH &lt;gregkh@suse.de&gt; wrote:
+&gt; &gt; &gt; We (the -stable team) are announcing the release of the 2.6.25.10
+&gt; &gt; &gt; kernel.
+&gt; &gt; &gt;
+&gt; &gt; &gt; It contains a number of assorted bugfixes all over the tree.  And once
+&gt; &gt; &gt; again, any users of the 2.6.25 kernel series are STRONGLY encouraged to
+&gt; &gt; &gt; upgrade to this release.
+&gt; &gt; 
+&gt; &gt; Hello Greg,
+&gt; &gt; 
+&gt; &gt; Thanks for all the work you and the stable team are doing on the
+&gt; &gt; stable series. To me the above message is a little bit cryptic however
+&gt; &gt; -- which bugs have been fixed, and what was their impact ? I know it
+&gt; &gt; takes time to write down such information, sometimes called release
+&gt; &gt; notes. But I think including this information with the announcements
+&gt; &gt; of the stable releases would be a great service to the people reading
+&gt; &gt; these announcements.
+&gt; 
+&gt; The release notes are there in the shortlog in the email announcement
+&gt; and full Changelog on the kernel.org site for exactly what specifically
+&gt; was fixed:
+&gt; 	<a href="/web/20080719130436/http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25.10" title="http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25.10">http://www.kernel.org/pub/linux/kernel/v2.6/ChangeLog-2.6.25.10</a>
+&gt; 
+&gt; If you have any specific questions about any of the individual changes,
+&gt; please let us, and the developers who made those fixes know.
+
+Adding 2 more addresses to this thread, as they were said to have
+questions about this kernel release.
+
+Again, if the above information is somehow insufficient as to what
+exactly is fixed in the -stable releases, and anyone has questions about
+how these release announcements are created, please let me know.
+
+thanks,
+
+greg k-h
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/3/2368484" title="Click to view this message in the linux-kernel mail archive.">Re: Linux 2.6.25.10
+</a>Date: Jul 3, 12:31 pm 2008
+
+[spender&#039;s asked to be off the CC]
+
+On 3 Jul 2008 at 11:57, Greg KH wrote:
+
+&gt; On Thu, Jul 03, 2008 at 10:29:14AM -0700, Greg KH wrote:
+&gt; Adding 2 more addresses to this thread, as they were said to have
+&gt; questions about this kernel release.
+
+not only this one, but every commit for the past few years that fixed
+bugs with security impact. for reference:
+
+<a href="/web/20080719130436/http://lwn.net/Articles/285438/" title="http://lwn.net/Articles/285438/">http://lwn.net/Articles/285438/</a>
+<a href="/web/20080719130436/http://lwn.net/Articles/286263/" title="http://lwn.net/Articles/286263/">http://lwn.net/Articles/286263/</a>
+<a href="/web/20080719130436/http://lwn.net/Articles/287339/" title="http://lwn.net/Articles/287339/">http://lwn.net/Articles/287339/</a>
+<a href="/web/20080719130436/http://lwn.net/Articles/288473/" title="http://lwn.net/Articles/288473/">http://lwn.net/Articles/288473/</a>
+
+&gt; Again, if the above information is somehow insufficient as to what
+&gt; exactly is fixed in the -stable releases, and anyone has questions about
+&gt; how these release announcements are created, please let me know.
+
+what is the disclosure policy used for commits fixing bugs with security
+impact (both vanilla and -stable, especially if there&#039;s a difference)?
+
+what do you include/omit?
+
+how does it relate to what is declared in Documentation/SecurityBugs?
+
+--
+<br />
+<b>From: Greg KH &lt;greg@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/14/2455154" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 14, 5:04 am 2008
+
+Sorry for the delay, was on vacation...
+
+On Thu, Jul 03, 2008 at 09:31:45PM +0200, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; [spender&#039;s asked to be off the CC]
+
+Chicken :)
+
+&gt; On 3 Jul 2008 at 11:57, Greg KH wrote:
+&gt; 
+&gt; &gt; On Thu, Jul 03, 2008 at 10:29:14AM -0700, Greg KH wrote:
+&gt; &gt; Adding 2 more addresses to this thread, as they were said to have
+&gt; &gt; questions about this kernel release.
+&gt; 
+&gt; not only this one, but every commit for the past few years that fixed
+&gt; bugs with security impact. for reference:
+&gt; 
+&gt; <a href="/web/20080719130436/http://lwn.net/Articles/285438/" title="http://lwn.net/Articles/285438/">http://lwn.net/Articles/285438/</a>
+&gt; <a href="/web/20080719130436/http://lwn.net/Articles/286263/" title="http://lwn.net/Articles/286263/">http://lwn.net/Articles/286263/</a>
+&gt; <a href="/web/20080719130436/http://lwn.net/Articles/287339/" title="http://lwn.net/Articles/287339/">http://lwn.net/Articles/287339/</a>
+&gt; <a href="/web/20080719130436/http://lwn.net/Articles/288473/" title="http://lwn.net/Articles/288473/">http://lwn.net/Articles/288473/</a>
+
+As I&#039;m somewhere there is no web access, mind summarizing these if they
+are relevant?
+
+&gt; &gt; Again, if the above information is somehow insufficient as to what
+&gt; &gt; exactly is fixed in the -stable releases, and anyone has questions about
+&gt; &gt; how these release announcements are created, please let me know.
+&gt; 
+&gt; what is the disclosure policy used for commits fixing bugs with security
+&gt; impact (both vanilla and -stable, especially if there&#039;s a difference)?
+
+What is outlined in Documentation/SecurityBugs.
+
+&gt; what do you include/omit?
+
+Personally, I omit posting full &quot;and here is explicitly how to exploit
+this problem&quot; notices as that is foolish.
+
+But also remember that -stable releases are just a compilation of
+patches that developers have sent to the stable developers, we use the
+original commit messages as published in the main kernel tree, except
+where the patch differs, which is rare.  So it&#039;s not like these releases
+are any different than the main kernel releases on descriptions of
+patches and issues surrounding them.
+
+&gt; how does it relate to what is declared in Documentation/SecurityBugs?
+
+That deals with how security bugs that are sent to <a href="mailto:security@kernel.org">security@kernel.org</a>
+are handled, which is totally different from -stable releases, right?
+
+thanks,
+
+greg k-h
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2497484" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 14, 7:14 pm 2008
+
+On 14 Jul 2008 at 5:04, Greg KH wrote:
+
+&gt; Sorry for the delay, was on vacation...
+
+a collective one, i take it, as noone else bothered to respond either ;).
+
+anyway, you must have been at an interesting place i suppose as you
+even managed to slip a mail through a wormhole that somehow arrived
+here on 8th ;).
+
+&gt; &gt; On 3 Jul 2008 at 11:57, Greg KH wrote:
+&gt; &gt; 
+&gt; &gt; &gt; On Thu, Jul 03, 2008 at 10:29:14AM -0700, Greg KH wrote:
+&gt; &gt; &gt; Adding 2 more addresses to this thread, as they were said to have
+&gt; &gt; &gt; questions about this kernel release.
+&gt; &gt; 
+&gt; &gt; not only this one, but every commit for the past few years that fixed
+&gt; &gt; bugs with security impact. for reference:
+&gt; &gt; 
+&gt; &gt; <a href="/web/20080719130436/http://lwn.net/Articles/285438/" title="http://lwn.net/Articles/285438/">http://lwn.net/Articles/285438/</a>
+&gt; &gt; <a href="/web/20080719130436/http://lwn.net/Articles/286263/" title="http://lwn.net/Articles/286263/">http://lwn.net/Articles/286263/</a>
+&gt; &gt; <a href="/web/20080719130436/http://lwn.net/Articles/287339/" title="http://lwn.net/Articles/287339/">http://lwn.net/Articles/287339/</a>
+&gt; &gt; <a href="/web/20080719130436/http://lwn.net/Articles/288473/" title="http://lwn.net/Articles/288473/">http://lwn.net/Articles/288473/</a>
+&gt; 
+&gt; As I&#039;m somewhere there is no web access, mind summarizing these if they
+&gt; are relevant?
+
+they&#039;re very relevant and rather long, you should take your time and read
+them whenever you&#039;re back on the normal net. or you can do like RMS and
+surf the web through email ;).
+
+&gt; &gt; what is the disclosure policy used for commits fixing bugs with security
+&gt; &gt; impact (both vanilla and -stable, especially if there&#039;s a difference)?
+&gt; 
+&gt; What is outlined in Documentation/SecurityBugs.
+
+so it&#039;s full disclosure for both vanilla and -stable, there&#039;s no difference?
+just because at the end of your mail you say:
+
+&gt; &gt; how does it relate to what is declared in Documentation/SecurityBugs?
+&gt; 
+&gt; That deals with how security bugs that are sent to <a href="mailto:security@kernel.org">security@kernel.org</a>
+&gt; are handled, which is totally different from -stable releases, right?
+
+now are they totally different or not? ;)
+
+in any case, you say the full disclosure policy applies. what does that mean
+for you? does it mean omitting security impact information you know about
+(not &#039;here is a working exploit&#039; but &#039;this is a buffer overflow&#039; or &#039;this
+is an exploitable bug&#039;)? because such omissions have repeatedly occured for
+the past many years (you&#039;ll find several examples pointed out at those LWN
+URLs) and they&#039;re hard to reconcile with your declared disclosure policy.
+
+&gt; &gt; what do you include/omit?
+&gt; 
+&gt; Personally, I omit posting full &quot;and here is explicitly how to exploit
+&gt; this problem&quot; notices as that is foolish.
+
+do you also omit any of the usual security related words, such as, say,
+&#039;buffer overflow&#039;, &#039;security&#039; when describing a bug? say, look at today&#039;s
+2.6.25.11 and its single fix that doesn&#039;t say anything about &#039;security&#039;,
+heck, not even its announcement does. do you think it&#039;s what constitutes
+full disclosure? ;)
+
+&gt; But also remember that -stable releases are just a compilation of
+&gt; patches that developers have sent to the stable developers, we use the
+&gt; original commit messages as published in the main kernel tree, except
+&gt; where the patch differs, which is rare.
+
+you at least add CVE IDs on occasion, mainline commits are even worse in
+that regard.
+
+&gt;  So it&#039;s not like these releases are any different than the main kernel
+&gt; releases on descriptions of patches and issues surrounding them. 
+
+yes, the real and more important problem is with the mainline development
+itself, you&#039;re mostly suffering collateral damage, so to speak. but since
+you&#039;re also part of that development process, you can&#039;t hide behind that.
+
+so guys (meaning not only Greg but Andrew, Linus, et al.), when will you
+publicly explain why you&#039;re covering up security impact of bugs? and even
+more importantly, when will you change your policy or bring your process
+in line with what you declared?
+
+cheers,
+  PaX Team
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2497674" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 14, 7:27 pm 2008
+
+On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; 
+&gt; so guys (meaning not only Greg but Andrew, Linus, et al.), when will you
+&gt; publicly explain why you&#039;re covering up security impact of bugs? and even
+&gt; more importantly, when will you change your policy or bring your process
+&gt; in line with what you declared?
+
+We went through this discussion a couple of weeks ago, and I had 
+absolutely zero interest in explaining it again.
+
+I personally don&#039;t like embargoes. I don&#039;t think they work. That means 
+that I want to fix things asap. But that also means that there is never a 
+time when you can &quot;let people know&quot;, except when it&#039;s not an issue any 
+more, at which point there is no _point_ in letting people know any more.
+
+So I personally consider security bugs to be just &quot;normal bugs&quot;. I don&#039;t 
+cover them up, but I also don&#039;t have any reason what-so-ever to think it&#039;s 
+a good idea to track them and announce them as something special. 
+
+So there is no &quot;policy&quot;. Nor is it likely to change. 
+
+			Linus
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2505894" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 8:31 am 2008
+
+On 14 Jul 2008 at 19:27, Linus Torvalds wrote:
+
+&gt; We went through this discussion a couple of weeks ago, and I had 
+&gt; absolutely zero interest in explaining it again.
+
+sorry, i was unaware of that discussion. any quick URLs?
+
+&gt; I personally don&#039;t like embargoes. I don&#039;t think they work. That means 
+&gt; that I want to fix things asap. But that also means that there is never a 
+&gt; time when you can &quot;let people know&quot;, except when it&#039;s not an issue any 
+&gt; more, at which point there is no _point_ in letting people know any more.
+
+i don&#039;t follow you here. you&#039;re making 4 statements essentially:
+
+A. &#039;i want to fix bugs asap&#039;
+B. &#039;i can let people know only when it&#039;s not an issue any more&#039;
+C. &#039;there is no point in letting people know when it&#039;s not an issue any more&#039;
+D. A implies B and/or C
+
+let&#039;s see them one by one.
+
+A: fine and even commendable.
+
+B: that&#039;s part of the disclosure policy, so be it, although it raises
+   the question of *when* a bug is no longer an issue. when the fix is
+   in your git tree? in all/some affected vendor trees? in all affected
+   linux trees in existence? or does it depend on when x % of the
+   affected machines is running it? what&#039;s your criterion?
+
+C: do you realize what you just said? effectively, &#039;there&#039;s no point
+   in disclosure&#039;. that&#039;s diametrically opposite to what you previously
+   argued for (rather vehemently, as vendor-sec readers surely remember).
+   to remind yourself of your own words:
+
+     <a href="/web/20080719130436/http://lkml.org/lkml/2005/1/12/205" title="http://lkml.org/lkml/2005/1/12/205">http://lkml.org/lkml/2005/1/12/205</a>
+     <a href="/web/20080719130436/http://lkml.org/lkml/2005/1/12/363" title="http://lkml.org/lkml/2005/1/12/363">http://lkml.org/lkml/2005/1/12/363</a>
+     <a href="/web/20080719130436/http://lkml.org/lkml/2005/1/13/305" title="http://lkml.org/lkml/2005/1/13/305">http://lkml.org/lkml/2005/1/13/305</a>
+
+   in any case, who decided this? you? did you ask anyone actually
+   affected (vendors, users, whatnot)? in case you missed about two
+   decades of security problems and their (mis)handling by proprietary
+   vendors, this was the *exact* reason why they got shamed repeatedly
+   in public (does bugtraq mean anything to you?) and why we have
+   public security mailing lists and a whole industry nowadays.
+
+D: this one is a non-sequitur, the timeline (or even willingness) of
+   fixing bugs does not imply their disclosure policy. you can surely
+   fix a bug independently of telling about it. so the question stays:
+   why do you think not disclosing security impact info at all is good,
+   and is what users want?
+
+&gt; So I personally consider security bugs to be just &quot;normal bugs&quot;.
+
+security bugs aren&#039;t just &#039;normal bugs&#039;, the more serious of them
+allow to completely break the security model of the kernel. the world
+at large has long ago decided that such bugs *are* special and there&#039;s
+an entire industry dedicated to finding/fixing/exploiting/etc them,
+not to mention academic research of the same. you can&#039;t ignore reality
+like that, i&#039;m afraid.
+
+&gt; I don&#039;t cover them up,
+
+by &#039;cover up&#039; i meant that even when you know better, you quite
+consciously do *not* report the security impact of said bugs - that&#039;s
+the part called &#039;cover up&#039; because it&#039;s about the opposite of full
+disclosure that you also advocated in the past. now you made it clear
+that you don&#039;t actually (want to) practice it (i&#039;m not arguing with
+that choice btw, just pointing out the inconsistency between your
+declared words and actual actions).
+
+&gt; but I also don&#039;t have any reason what-so-ever to think it&#039;s 
+&gt; a good idea to track them and announce them as something special. 
+
+see my comment about reality above. heck, even linux vendors do track
+and announce them, it&#039;s part of the support they provide to paying
+customers (and even non-paying users).
+
+&gt; So there is no &quot;policy&quot;. Nor is it likely to change. 
+
+obviously there *is* a policy, it&#039;s just not what you guys declared
+earlier in Documentation/SecurityBugs. would you care to update it
+or, more properly, remove it altogether as it currently says:
+
+  Linux kernel developers take security very seriously.  As such, we&#039;d
+  like to know when a security bug is found so that it can be fixed and
+                      ^^^^^^^^^^^^
+  disclosed as quickly as possible.  Please report security bugs to the
+  ^^^^^^^^^
+  Linux kernel security team.
+
+and what you said above about disclosure and treatment of security bugs
+is the opposite of it. there is no reason for the kernel security list
+to exist, basically (you already have lkml and bugzilla to discuss bugs,
+which, according to you, security bugs are as well, there&#039;s no need for
+special treatment).
+
+cheers,
+  PaX Team
+
+PS: i do wonder however, how do you and others expect people to track the
+quality of the development process if you apparently refuse to properly
+account for security bugs? at this moment the Jeff Jones of the world are
+smacking their head realizing the extent their statistics were flawed and
+will no doubt have a field day with your statements.
+
+--
+<br />
+<b>From: Theodore Tso &lt;tytso@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2508024" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 11:33 am 2008
+
+On Tue, Jul 15, 2008 at 05:31:09PM +0200, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; obviously there *is* a policy, it&#039;s just not what you guys declared
+&gt; earlier in Documentation/SecurityBugs. would you care to update it
+&gt; or, more properly, remove it altogether as it currently says:
+
+Hi, so I&#039;m guessing you&#039;re new to the Linux kernel.  What you are
+missing is while *Linus* is unwilling to play the disclosure game,
+there are kernel developers (many of whom work for distributions, and
+who *do* want some extra time to prepare a package for release to
+their customers) who do.  So what Linus has expressed is his personal
+opinion, and he is simply is not on any of the various mailing lists
+that receive limited-disclosure information, such as the general
+<a href="mailto:vendor-sec@lst.de">vendor-sec@lst.de</a> mailing list, or the <a href="mailto:security@kernel.org">security@kernel.org</a> list
+mentioned in Documentation/SecurityBugs.
+
+Both vendor-sec and <a href="mailto:security@kernel.org">security@kernel.org</a> are not formal organizations,
+so they can not sign NDAs, but they will honor non disclosure
+requests, and the subscription list for both lists is carefully
+controlled.
+
+People like Linus who have a strong, principled stand for Full
+Disclosure simply choose not to request to be placed on those mailing
+lists.  And if Linus finds out about a security bug, he will fix it
+and check it into the public git repository right away.  But he&#039;s very
+honest in telling you that is what he will do --- so you can choose
+whether or not to include him in any disclosures that you might choose
+to make.
+
+The arguments about whether or not Full Disclosure is a good idea or
+not, and whether or not the &quot;black hat&quot; and &quot;grey hat&quot; and &quot;white hat&quot;
+security research firms are unalloyed forces for good, or whether they
+have downsides (and some might say very serious downsides) have been
+arguments that I have personally witnessed for over two decades
+(Speaking as someone who helped to dissect the Robert T. Morris
+Internet Worm in 1988, led the Kerberos development team at MIT for
+many years, and chaired the IP SEC Working Group for the IETF, I have
+more than my fair share of experience).  It is clear that we&#039;re not
+going settle this debate now, and certainly not on the Linux Kernel
+Mailing List.
+
+Suffice it to say, though, that there are people whose views on these
+matters span the entire gamut, and I know many reasonable people who
+hold very different positions along the entire continuum --- and this
+is true both in the Internet community at large, and in the Linux
+Kernel development community specifically.
+
+Best regards,
+
+					- Ted
+--</pre></div></p>
+<p><div class="mailarchive-message" id="2506064,2506154,2509264,2511884"><pre><b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2506064" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 9:07 am 2008
+
+On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; 
+&gt; by &#039;cover up&#039; i meant that even when you know better, you quite
+&gt; consciously do *not* report the security impact of said bugs
+
+Yes. Because the only place I consider appropriate is the kernel 
+changelogs, and since those get published with the sources, there is no 
+way I can convince myself that it&#039;s a good idea to say &quot;Hey script 
+kiddies, try this&quot; unless it&#039;s already very public indeed.
+
+&gt; see my comment about reality above. heck, even linux vendors do track
+&gt; and announce them, it&#039;s part of the support they provide to paying
+&gt; customers (and even non-paying users).
+
+Umm. And they mostly do a crap job at it, only focusing on a small 
+percentage (the ones that were considered to be &quot;big issues&quot;), and because 
+they do the reporting they also feel they have to have embargoes in place.
+
+That&#039;s why I don&#039;t do reporting - it almost inevitably leads to embargoes.
+
+So as far as I&#039;m concerned, &quot;disclosing&quot; is the fixing of the bug. It&#039;s 
+the &quot;look at the source&quot; approach.
+
+		Linus
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2506154" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 9:13 am 2008
+
+On Tue, 15 Jul 2008, Linus Torvalds wrote:
+&gt; 
+&gt; So as far as I&#039;m concerned, &quot;disclosing&quot; is the fixing of the bug. It&#039;s 
+&gt; the &quot;look at the source&quot; approach.
+
+Btw, and you may not like this, since you are so focused on security, one 
+reason I refuse to bother with the whole security circus is that I think 
+it glorifies - and thus encourages - the wrong behavior.
+
+It makes &quot;heroes&quot; out of security people, as if the people who don&#039;t just 
+fix normal bugs aren&#039;t as important.
+
+In fact, all the boring normal bugs are _way_ more important, just because 
+there&#039;s a lot more of them. I don&#039;t think some spectacular security hole 
+should be glorified or cared about as being any more &quot;special&quot; than a 
+random spectacular crash due to bad locking.
+
+Security people are often the black-and-white kind of people that I can&#039;t 
+stand. I think the OpenBSD crowd is a bunch of masturbating monkeys, in 
+that they make such a big deal about concentrating on security to the 
+point where they pretty much admit that nothing else matters to them.
+
+To me, security is important. But it&#039;s no less important than everything 
+*else* that is also important!
+
+			Linus
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2509264" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 12:03 pm 2008
+
+On 15 Jul 2008 at 9:07, Linus Torvalds wrote:
+
+&gt; On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; &gt; 
+&gt; &gt; by &#039;cover up&#039; i meant that even when you know better, you quite
+&gt; &gt; consciously do *not* report the security impact of said bugs
+&gt; 
+&gt; Yes. Because the only place I consider appropriate is the kernel 
+&gt; changelogs, and since those get published with the sources, there is no 
+&gt; way I can convince myself that it&#039;s a good idea to say &quot;Hey script 
+&gt; kiddies, try this&quot; unless it&#039;s already very public indeed.
+
+if you worry about script kiddies (btw, for someone not bothering with
+the whole security circus you surely do use their terms as bogeymen
+to rationalize your stand) triggering or even exploiting local kernel
+bugs then you imply that they&#039;re already local users on that box and
+that in turn means they have already been having fun all that time.
+just remember how Andrew put it:
+
+  But there are so many ways to cripple a Linux box once you have
+  local access. (<a href="/web/20080719130436/http://lkml.org/lkml/2005/1/12/379" title="http://lkml.org/lkml/2005/1/12/379">http://lkml.org/lkml/2005/1/12/379</a>)
+
+in other words, try a better argument, possibly without bogeymen.
+
+next, what about, say, sysadmins	, bigger and smaller distro maintainers,
+etc trying to figure out whether they need to backport a given fix or
+not? do you think you&#039;re helping them too?
+
+on a sidenote, what do you know about script kiddies? how do you think
+they operate? do you think they&#039;re watching a real-time rss from kernel.org
+to catch the latest and greatest security fixes? do you think they can
+write PoC or actual exploit code based on commits?
+
+last but not least, if i submitted a security fix with the commit message
+actually saying that it fixes a security problem, would you remove that
+information before committing? based on the above that sounds as a &#039;yes&#039;,
+but i&#039;d like to have that explicitly on the record.
+
+&gt; &gt; see my comment about reality above. heck, even linux vendors do track
+&gt; &gt; and announce them, it&#039;s part of the support they provide to paying
+&gt; &gt; customers (and even non-paying users).
+&gt; 
+&gt; Umm. And they mostly do a crap job at it, only focusing on a small 
+&gt; percentage (the ones that were considered to be &quot;big issues&quot;), and because 
+&gt; they do the reporting they also feel they have to have embargoes in place.
+
+people consider and backport patches that come to their attention,
+which in turn happens by their scanning the changes, following various
+threads of discussions (both public and private, depending on what they
+have access to), etc. if you withhold security impact information then
+you&#039;re skewing their &#039;big issue&#039; detector as well, further reducing
+*their* users&#039; security.
+
+&gt; That&#039;s why I don&#039;t do reporting - it almost inevitably leads to embargoes.
+
+i don&#039;t see you embargo normal bug fixes, why would you embargo security
+bug fixes? they&#039;re just normal bugs, aren&#039;t they?
+
+&gt; So as far as I&#039;m concerned, &quot;disclosing&quot; is the fixing of the bug. It&#039;s 
+&gt; the &quot;look at the source&quot; approach.
+
+when you fix a bug, the commit describes what it fixes without omitting
+anything relevant. when you fix a security bug, its commit doesn&#039;t say
+what it fixes (not even that it&#039;s a security fix, never mind actual
+impact information), that is, you omit relevant information (based on
+some ill-conceived argument that i deconstructed at the beginning). in
+other words, you&#039;re *not* treating security bugs as normal bugs. for
+all intents and purposes, you cover them up. i *wish* you did treat
+them as normal bugs however.
+
+cheers,
+  Pax Team
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2511884" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 12:16 pm 2008
+
+On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; 
+&gt; in other words, try a better argument, possibly without bogeymen.
+
+You know what - when nobody does embargoes, I&#039;ll consider your argument to 
+have a point.
+
+In the meantime, I&#039;m not in the least interested in your idiotic 
+arguments. Especially as you can&#039;t even read what I wrote:
+
+&gt; i don&#039;t see you embargo normal bug fixes, why would you embargo security
+&gt; bug fixes? they&#039;re just normal bugs, aren&#039;t they?
+
+Exactly. I don&#039;t embargo them. I refuse to have anything to even _do_ with 
+organizations like vendor-sec that I think is a corrupt cluster-fuck of 
+people who just want to cover their own ass.
+
+They&#039;re just normal bugs.
+
+But that also doesn&#039;t mean that I see any reason to make it obvious what 
+to do to trigger them, and cause problems at universities and such. So I 
+don&#039;t do &quot;here&#039;s how to exploit it&quot; commit logs, for example.
+
+(If you haven&#039;t been at a univerisity, you don&#039;t know how many smart young 
+people want to &quot;try it to see&quot;. And if you have been there, and don&#039;t 
+think it&#039;s a problem when they do and wouldn&#039;t be happier if they didn&#039;t, 
+you probably don&#039;t know what the word &quot;empathy&quot; means).
+
+			Linus
+--</pre></div></p>
+<p><div class="mailarchive-message" id="2512714,2512844,2513184,2514064,2514154,2515504,2516894,2517354,2517594,2517854,2518314"><pre><b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2512714" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 1:18 pm 2008
+
+On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt;
+&gt; in any case, i don&#039;t see why you can&#039;t put keywords into the commit
+&gt; that say the bug being fixed is &#039;security related&#039; or &#039;potentially 
+&gt; exploitable&#039;, etc. people can then decide how to prioritize them.
+
+Because I see no point. Quite often, we don&#039;t even realize some random bug 
+could have been a security issue.
+
+It&#039;s not worth my energy, in other words. 
+
+			Linus
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2512844" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 1:23 pm 2008
+
+On 15 Jul 2008 at 13:18, Linus Torvalds wrote:
+
+&gt; 
+&gt; 
+&gt; On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; &gt;
+&gt; &gt; in any case, i don&#039;t see why you can&#039;t put keywords into the commit
+&gt; &gt; that say the bug being fixed is &#039;security related&#039; or &#039;potentially 
+&gt; &gt; exploitable&#039;, etc. people can then decide how to prioritize them.
+&gt; 
+&gt; Because I see no point. Quite often, we don&#039;t even realize some random bug 
+&gt; could have been a security issue.
+&gt; 
+&gt; It&#039;s not worth my energy, in other words. 
+
+i understand and i think noone expects that. in fact, i know how much
+expertise and time it takes to determine that. but what happens when
+you do figure out the security relevance of a bug during bug submission
+(say, it goes directly to <a href="mailto:security@kernel.org">security@kernel.org</a> with a PoC to trigger it)
+or while working out the fix or you see that it falls into an well-known
+exploitable bug class? you have the information yet you still make no
+mention of it. *that* at least can be fixed, if you chose so.
+
+cheers,
+ PaX Team
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2513184" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 1:42 pm 2008
+
+On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; 
+&gt; i understand and i think noone expects that. in fact, i know how much
+&gt; expertise and time it takes to determine that. but what happens when
+&gt; you do figure out the security relevance of a bug during bug submission
+
+The issue is that I think it&#039;s then _misleading_ to mark that kind of 
+commit specially, when I actually believe that it&#039;s in the minority.
+
+If people think that they are safer for only applying (or upgrading to) 
+certain patches that are marked as being security-specific, they are 
+missing all the ones that weren&#039;t marked as such. Making them even 
+_believe_ that the magic security marking is meaningful is simply a lie. 
+It&#039;s not going to be.
+
+So why would I add some marking that I most emphatically do not believe in 
+myself, and think is just mostly security theater?
+
+I generally do not remove peoples changelog entries, although I _will_ 
+do even that if I think it&#039;s just too much of an actual exploit 
+description (of course - the patch itself can make the exploit fairly 
+clear). So you&#039;ll find CVE entries etc in the logs if you look.
+
+But I do hope that anybody who looks for them is _aware_ that it&#039;s just a 
+small minority of possible problems.
+
+Don&#039;t get me wrong - I&#039;m not saying that security bugs are _common_, but 
+especially some local DoS thing for a specific driver or filesystem or 
+whatever can be a big security problem for _somebody_.
+
+			Linus
+
+
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2514064" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 2:18 pm 2008
+
+On 15 Jul 2008 at 13:42, Linus Torvalds wrote:
+
+&gt; On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; &gt; 
+&gt; &gt; i understand and i think noone expects that. in fact, i know how much
+&gt; &gt; expertise and time it takes to determine that. but what happens when
+&gt; &gt; you do figure out the security relevance of a bug during bug submission
+&gt; 
+&gt; The issue is that I think it&#039;s then _misleading_ to mark that kind of 
+&gt; commit specially, when I actually believe that it&#039;s in the minority.
+&gt; 
+&gt; If people think that they are safer for only applying (or upgrading to) 
+&gt; certain patches that are marked as being security-specific, they are 
+&gt; missing all the ones that weren&#039;t marked as such.
+
+and how is that different from today&#039;s situation where they aren&#039;t told
+at all? in other words, they already learned to live with that risk. if
+you tell them about a security bug, they will build that knowledge into
+their risk assessment process (which is what security is all about in
+the end). anything you omit will skew their decision making process (in
+particular, expose them to exploits if they fail to apply a fix because
+they make a bad judgement call).
+
+in other words, you should not be worrying about people not learning about
+all security fixes, they already know it&#039;s not possible to provide such
+information. however sharing your knowledge that you do have will *help*
+them because 1. they can know for sure it&#039;s something important to apply
+(no need to use their limited human resources to make that judgement),
+2. they can spend more of their resources on analyzing the *other* unmarked
+fixes. overall this can only improve everyone&#039;s security.
+
+what you&#039;re afraid of is that people will take your &#039;we mark security
+fixes we learn about&#039; as &#039;we mark ALL security fixes that are such&#039;. well,
+make that very clear in a public document (Documentation/SecurityBugs is
+a good place) and that&#039;s it, people will know you&#039;re doing a best effort
+disclosure and not more.
+
+cheers,
+  PaX Team
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2514154" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 2:26 pm 2008
+
+On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; 
+&gt; and how is that different from today&#039;s situation where they aren&#039;t told
+&gt; at all?
+
+Umm. They are. They are told to upgrade to the stable kernel, which 
+should have everything we know about.
+
+I&#039;m just saying that why mark things, when the marking have no meaning? 
+People who believe in them are just _wrong_.
+
+		Linus
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2515504" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 3:08 pm 2008
+
+On 15 Jul 2008 at 14:26, Linus Torvalds wrote:
+
+&gt; 
+&gt; 
+&gt; On Tue, 15 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; &gt; 
+&gt; &gt; and how is that different from today&#039;s situation where they aren&#039;t told
+&gt; &gt; at all?
+&gt; 
+&gt; Umm. They are. They are told to upgrade to the stable kernel, which 
+&gt; should have everything we know about.
+
+you should check out the last few -stable releases then and see how
+the announcement doesn&#039;t ever mention the word &#039;security&#039; while fixing
+security bugs (see my analysis at <a href="/web/20080719130436/http://lwn.net/Articles/288473/" title="http://lwn.net/Articles/288473/">http://lwn.net/Articles/288473/</a>).
+
+unless one digs into the actual commits and determines what&#039;s going on,
+it&#039;s easy to make a bad judgement call even for -stable. you know, there
+are places that can&#039;t just reboot into a new kernel every week for no
+reason (Microsoft has patch Tuesday once a month only).
+
+also what about people running older kernels, outside of -stable focus?
+do you determine how far back a fix should be applied? i don&#039;t think so,
+but people maintaining older series will do that, provided they get a hint.
+
+in other words, it&#039;s all the more reason to have the commit say it&#039;s
+fixing a security issue.
+
+&gt; I&#039;m just saying that why mark things, when the marking have no meaning? 
+&gt; People who believe in them are just _wrong_.
+
+what is wrong in particular? when you know that you&#039;re about to commit a
+patch that fixes a security bug, why is it wrong to say so in the commit?
+in what way will people reading that commit be misled? they will see it&#039;s
+fixing a security bug and they can prioritize it for whatever processes they
+have for backports, analysis, etc. if they don&#039;t see such marks, they will
+have to do a whole lot more work (effectively duplicating your own and even
+each other&#039;s efforts) to figure out the same. why not save them time and
+tell them directly what you already know?
+
+cheers,
+  PaX Team
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2516894" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 4:28 pm 2008
+
+On Wed, 16 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt;
+&gt; you should check out the last few -stable releases then and see how
+&gt; the announcement doesn&#039;t ever mention the word &#039;security&#039; while fixing
+&gt; security bugs
+
+Umm. What part of &quot;they are just normal bugs&quot; did you have issues with?
+
+I expressly told you that security bugs should not be marked as such, 
+because bugs are bugs. 
+
+&gt; in other words, it&#039;s all the more reason to have the commit say it&#039;s
+&gt; fixing a security issue.
+
+No.
+
+&gt; &gt; I&#039;m just saying that why mark things, when the marking have no meaning? 
+&gt; &gt; People who believe in them are just _wrong_.
+&gt; 
+&gt; what is wrong in particular?
+
+You have two cases:
+
+ - people think the marking is somehow trustworthy.
+
+   People are WRONG, and are misled by the partial markings, thinking that 
+   unmarked bugfixes are &quot;less important&quot;. They aren&#039;t.
+
+ - People don&#039;t think it matters
+
+   People are right, and the marking is pointless.
+
+In either case it&#039;s just stupid to mark them. I don&#039;t want to do it, 
+because I don&#039;t want to perpetuate the myth of &quot;security fixes&quot; as a 
+separate thing from &quot;plain regular bug fixes&quot;.
+
+They&#039;re all fixes. They&#039;re all important. As are new features, for that 
+matter.
+
+&gt; when you know that you&#039;re about to commit a patch that fixes a security 
+&gt; bug, why is it wrong to say so in the commit?
+
+It&#039;s pointless and wrong because it makes people think that other bugs 
+aren&#039;t potential security fixes.
+
+What was unclear about that?
+
+		Linus
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2517354" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 5:04 pm 2008
+
+On 15 Jul 2008 at 16:28, Linus Torvalds wrote:
+
+&gt; On Wed, 16 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; &gt;
+&gt; &gt; you should check out the last few -stable releases then and see how
+&gt; &gt; the announcement doesn&#039;t ever mention the word &#039;security&#039; while fixing
+&gt; &gt; security bugs
+&gt; 
+&gt; Umm. What part of &quot;they are just normal bugs&quot; did you have issues with?
+
+oh, we&#039;re back to that. i told you that already, here it is again (just
+quoting myself back):
+
+  when you fix a bug, the commit describes what it fixes without omitting
+  anything relevant. when you fix a security bug, its commit doesn&#039;t say
+  what it fixes (not even that it&#039;s a security fix, never mind actual
+  impact information), that is, you omit relevant information (based on
+  some ill-conceived argument that i deconstructed at the beginning). in
+  other words, you&#039;re *not* treating security bugs as normal bugs. for
+  all intents and purposes, you cover them up. i *wish* you did treat
+  them as normal bugs however.
+
+we went through this and you yourself said that security bugs are *not*
+treated as normal bugs because you do omit relevant information from such
+commits whereas you do *not* omit relevant information from normal commits.
+for security bugs the fact that they fix a security issue is relevant
+information.
+
+&gt; I expressly told you that security bugs should not be marked as such, 
+&gt; because bugs are bugs. 
+
+repeating the same thing doesn&#039;t make the self-contradiction above go
+away. bugs are properly described in the commits, security bugs aren&#039;t
+(you said so yourself), therefore they can&#039;t be of the same category.
+
+what you&#039;re still trying to justify is why you are covering up security
+bugs, plain and simple.
+
+&gt; &gt; &gt; I&#039;m just saying that why mark things, when the marking have no meaning? 
+&gt; &gt; &gt; People who believe in them are just _wrong_.
+&gt; &gt; 
+&gt; &gt; what is wrong in particular?
+&gt; 
+&gt; You have two cases:
+&gt; 
+&gt;  - people think the marking is somehow trustworthy.
+&gt; 
+&gt;    People are WRONG, and are misled by the partial markings, thinking that 
+&gt;    unmarked bugfixes are &quot;less important&quot;. They aren&#039;t.
+
+why would people think that unmarked bugfixes are less important? who are
+you to make that judgement for them anyway? the importance of bugs is
+*orthogonal* to their classification (security, etc). it&#039;s up to the people
+and their decision making processes to deal with that. all you should do
+is help them by not withholding relevant information. in case it wasn&#039;t
+clear, i&#039;m not talking about just about any person like my grandma, but
+people whose work involves following kernel development, who can use all
+the extra information to make judgement calls about what to prioritize.
+they&#039;re certainly not dumb and would not think that only commits marked
+as such are security related.
+
+&gt;  - People don&#039;t think it matters
+&gt; 
+&gt;    People are right, and the marking is pointless.
+
+you have yet to prove why it&#039;s pointless. the above attempt failed to do so.
+
+&gt; In either case it&#039;s just stupid to mark them. I don&#039;t want to do it, 
+&gt; because I don&#039;t want to perpetuate the myth of &quot;security fixes&quot; as a 
+&gt; separate thing from &quot;plain regular bug fixes&quot;.
+
+it&#039;s not a myth, it&#039;s called reality. a bugfix that gets my pc speaker beep
+again is very different from a fix that stops the tcp/ip stack sending out
+random kernel memory to the net (just made them up, before anyone starts
+looking). you&#039;re desperately trying to ignore the importance of security
+bugs but you&#039;re failing. the world has decided that security bugs *are*
+important and deserve special attention. and it&#039;s not as if you had to do
+any extra work, you already have the information, you should just not
+*withhold* it.
+
+&gt; They&#039;re all fixes. They&#039;re all important. As are new features, for that 
+&gt; matter.
+
+&#039;importance&#039; is not a big grey goo that applies equally to all fixes. you
+want to make it appear so, but that doesn&#039;t make it so.
+
+&gt; &gt; when you know that you&#039;re about to commit a patch that fixes a security 
+&gt; &gt; bug, why is it wrong to say so in the commit?
+&gt; 
+&gt; It&#039;s pointless and wrong because it makes people think that other bugs 
+&gt; aren&#039;t potential security fixes.
+
+why does it make people think that? did you ask them? what if you told them
+as i suggested (and you conveniently skipped) what to expect? do you think
+people dealing with kernel maintenance at companies, distros, etc are that
+dumb?
+
+cheers,
+  PaX Team
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2517594" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 5:24 pm 2008
+
+On Wed, 16 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; 
+&gt; we went through this and you yourself said that security bugs are *not*
+&gt; treated as normal bugs because you do omit relevant information from such
+&gt; commits
+
+Actually, we disagree on one fundamental thing. We disagree on 
+that single word: &quot;relevant&quot;.
+
+I do not think it&#039;s helpful _or_ relevant to explicitly point out how to 
+tigger a bug. It&#039;s very helpful and relevant when we&#039;re trying to chase 
+the bug down, but once it is fixed, it becomes irrelevant.
+
+You think that explicitly pointing something out as a security issue is 
+really important, so you think it&#039;s always &quot;relevant&quot;. And I take mostly 
+the opposite view. I think pointing it out is actually likely to be 
+counter-productive.
+
+For example, the way I prefer to work is to have people send me and the 
+kernel list a patch for a fix, and then in the very next email send (in 
+private) an example exploit of the problem to the security mailing list 
+(and that one goes to the private security list just because we don&#039;t want 
+all the people at universities rushing in to test it). THAT is how things 
+should work.
+
+Should I document the exploit in the commit message? Hell no.  It&#039;s 
+private for a reason, even if it&#039;s real information. It was real 
+information for the developers to explain why a patch is needed, but once 
+explained, it shouldn&#039;t be spread around unnecessarily.
+
+			Linus
+--
+<br />
+<b>From: &lt;pageexec@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2517854" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 5:56 pm 2008
+
+On 15 Jul 2008 at 17:24, Linus Torvalds wrote:
+
+&gt; On Wed, 16 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; &gt; 
+&gt; &gt; we went through this and you yourself said that security bugs are *not*
+&gt; &gt; treated as normal bugs because you do omit relevant information from such
+&gt; &gt; commits
+&gt; 
+&gt; Actually, we disagree on one fundamental thing. We disagree on 
+&gt; that single word: &quot;relevant&quot;.
+
+we&#039;ll see :)
+
+&gt; I do not think it&#039;s helpful _or_ relevant to explicitly point out how to 
+&gt; tigger a bug.
+
+nor did i say that (actually, what i said is that it didn&#039;t belong into
+the commit message, see below for more).
+
+&gt; It&#039;s very helpful and relevant when we&#039;re trying to chase 
+&gt; the bug down, but once it is fixed, it becomes irrelevant.
+
+you&#039;re wrong on that however. it is important for many people to able
+to perform the same verification that you do. just imagine the backports
+to versions that you don&#039;t do yourselves. but organizing the dissemination
+of such code is not what i&#039;ve been talking about all this time.
+ 
+&gt; You think that explicitly pointing something out as a security issue is 
+&gt; really important, so you think it&#039;s always &quot;relevant&quot;.
+
+don&#039;t mistake my presence in this thread as me, an invidual arguing for his
+own benefit. i already know when you fix security bugs, even when you don&#039;t
+sometimes. so when i say something is relevant, it&#039;s not merely my opinion,
+it&#039;s what most people dealing with security issues (both inside and outside
+the linux universe) think. with that said, let&#039;s move on:
+
+&gt; And I take mostly the opposite view. I think pointing it out is
+&gt; actually likely to be counter-productive. 
+
+you keep saying that, but you don&#039;t explain *why*.
+
+&gt; For example, the way I prefer to work is to have people send me and the 
+&gt; kernel list a patch for a fix, and then in the very next email send (in 
+&gt; private) an example exploit of the problem to the security mailing list 
+&gt; (and that one goes to the private security list just because we don&#039;t want 
+&gt; all the people at universities rushing in to test it). THAT is how things 
+&gt; should work.
+
+fine with me, i wasn&#039;t talking about that at all though ;).
+
+&gt; Should I document the exploit in the commit message? Hell no.
+
+fully understood and agreed. never even asked for that.
+
+&gt;  It&#039;s private for a reason, even if it&#039;s real information. It was real
+&gt; information for the developers to explain why a patch is needed, but
+&gt; once explained, it shouldn&#039;t be spread around unnecessarily. 
+
+agreed (with the same additonal thoughts as above on the trigger code).
+
+ok, so let&#039;s make it simpler for everyone to understand what is at issue
+here. it seems that we agree that there&#039;re several levels of information
+that exist when it comes to security bugs and we don&#039;t understand each
+other as to what should go into a commit and what should stay out. let
+me propose a categorization and you tell me what you think you would be
+willing to put into a commit (feel free to break them up further if that&#039;s
+what it takes).
+
+1. simple words/phrases that one can grep for (mentally or automated)
+   examples: &#039;security&#039;, &#039;exploitable&#039;, &#039;DoS&#039;, &#039;buffer overflow&#039;, etc
+
+2. simple sentence describing roughly what kind of security bug it is
+   example: fix exploitable null function pointer dereference in foo.
+
+3. sample code able to trigger the bug and cause an oops/crash but not
+   privilege elevation, no effort made to be &#039;weapons grade&#039; (does not
+   support several archs, kernel versions, etc)
+
+4. proof-of-concept exploit that triggers the bug, and demonstrates its
+   effect (say privilege elevation) with manual tweaking (say, you look
+   up an address in System.map and the like, but nothing automated)
+
+5. full blown weaponized exploit
+
+i believe 3-5 are definitely not commit message material. 1 or 2 are.
+5 should never be published or disseminated, 3 and 4 may be distributed
+to interested parties.
+
+cheers,
+  PaX Team
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2518314" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 6:08 pm 2008
+
+On Wed, 16 Jul 2008, <a href="mailto:pageexec@freemail.hu">pageexec@freemail.hu</a> wrote:
+&gt; 
+&gt; &gt; And I take mostly the opposite view. I think pointing it out is
+&gt; &gt; actually likely to be counter-productive. 
+&gt; 
+&gt; you keep saying that, but you don&#039;t explain *why*.
+&gt; 
+&gt; &gt; For example, the way I prefer to work is to have people send me and the 
+&gt; &gt; kernel list a patch for a fix, and then in the very next email send (in 
+&gt; &gt; private) an example exploit of the problem to the security mailing list 
+&gt; &gt; (and that one goes to the private security list just because we don&#039;t want 
+&gt; &gt; all the people at universities rushing in to test it). THAT is how things 
+&gt; &gt; should work.
+&gt; 
+&gt; fine with me, i wasn&#039;t talking about that at all though ;).
+
+Oh, so now you&#039;re suddenly fine with not doing &quot;full disclosure&quot;?
+
+Just a few emails ago you berated me for not doing full disclosure, but 
+now you&#039;re saying it is fine?
+
+Can you now admit that it&#039;s a gray line, and that we just have very 
+different opinions of where the line is drawn?
+
+&gt; 1. simple words/phrases that one can grep for (mentally or automated)
+&gt;    examples: &#039;security&#039;, &#039;exploitable&#039;, &#039;DoS&#039;, &#039;buffer overflow&#039;, etc
+
+I literally draw the line at anything that is simply greppable for. If 
+it&#039;s not a very public security issue already, I don&#039;t want a simple &quot;git 
+log + grep&quot; to help find it.
+
+That said, I don&#039;t _plan_ messages or obfuscate them, so &quot;overflow&quot; might 
+well be part of the message just because it simply describes the fix. So 
+I&#039;m not claiming that the messages can never help somebody pinpoint 
+interesting commits to look at, I&#039;m just also not at all interested in 
+doing so reliably.
+
+&gt; i believe 3-5 are definitely not commit message material. 1 or 2 are.
+&gt; 5 should never be published or disseminated, 3 and 4 may be distributed
+&gt; to interested parties.
+
+And I believe you now at least understand the difference. I draw the line 
+between 0 and 1, where 0 is &quot;explain the fix&quot; - which is something that 
+any - and every - commit message should do.
+
+			Linus
+--</pre></div></p>
+<p><div class="mailarchive-message" id="2518324,2518944,2522864,2523154,2523214,2523364,2523374"><pre><b>From: Theodore Tso &lt;tytso@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2518324" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 6:08 pm 2008
+
+On Tue, Jul 15, 2008 at 09:00:19PM -0300, Tiago Assumpcao wrote:
+&gt; For all the above: no. And this is the point of divergence.
+&gt; For you, as a person who &quot;writes software&quot;, every bug is equivalent. You  
+&gt; need to resolve problems, not classify them.
+&gt;
+&gt; However, as I previously explained [http://lkml.org/lkml/2008/7/15/654],  
+&gt; security issues are identified and communicated through what can be a  
+&gt; long and complicated (due to DNAs, etc.) process. If it culminates at  
+&gt; implementation, without proper information forwarding from the  
+&gt; development team, it will never reach the &quot;upper layers&quot; -- vendors,  
+&gt; distributors, end users, et al.
+
+Look if you want this, pay $$$ to a distribution and get their
+supported distribution.  It costs time and effort to classify bugs as
+security related (or not), and the people who care about this the most
+also want to freeze a kernel version to simplify their application
+testing, *but* get new drivers and bus support code back-ported so
+they can use the latest hardware (while still keeping their
+applications and 3rd party proprietary kernel modules from Nvidia and
+Vertias stable and working) *and* they want the latest security fixes
+(and only security fixes, since other fixes might destablize their
+application).  People who want this can get it, today.  Just pick up
+the phone and give a call to your favoriate enterprise Linux
+distribution.  It will cost you money, but hey, the people who want
+this sort of thing typically are willing to pay for the service.
+
+I&#039;ll note that trying to classify bugs as being &quot;security-related&quot; at
+the kernel.org level often doesn&#039;t help the distro&#039;s, since many of
+these bugs won&#039;t even apply to whatever version of the kernel the
+distro&#039;s snapshotted 9-18 months ago.  So if the distro snapshotted
+2.6.18 in Fall 2006, and their next snapshot will be sometime two
+years later in the fall of this year, they will have no use for some
+potential local denial of service attack that was introduced by
+accident in 2.6.24-rc3, and fixed in 2.6.25-rc1.  It just doesn&#039;t
+matter to them.
+
+So basically, if there are enough kernel.org users who care, they can
+pay someone to classify and issue CVE numbers for each and every
+potential &quot;security bug&quot; that might appear and then disappear.  Or
+they can volunteer and do it themselves.  Of course, this will provide
+aid and comfort to Microsoft-shills masquerading as analysts who
+misuse CVE numbers to generate reports &quot;proving&quot; that Microsoft is
+more secure (because they don&#039;t do their development in the open, so
+issues that appear and disappear in development snapshots don&#039;t get
+CVE numbers assigned), but hopefully most users are sophsitcated
+enough not to get taken in by that kind of bogus study.  :-)
+
+The one thing which is really pointless to do is to ask kernel
+developers to do all of this classification work to get CVE numbers,
+etc., for free.  In free software, people do what they (or their
+company) deem to be valuable for them.  Flaming and complaining that
+the kernel git logs aren&#039;t providing free marketing for PaX/grsecurity
+isn&#039;t going to do much good.
+
+      	    					- Ted
+--
+<br />
+<b>From: Tiago Assumpcao &lt;tiago@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2518944" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 6:53 pm 2008
+
+Theodore Tso wrote:
+&gt; Look if you want this, pay $$$ to a distribution and get their
+&gt; supported distribution.  It costs time and effort to classify bugs as
+&gt; security related (or not), (...)
+
+That&#039;s fallacious. Assuming that you have good programmers, and you do, 
+it&#039;s of very low cost the act of identifying what *is likely to be* a 
+security bug. In most cases, they are easy to spot. And, hey, we are not 
+asking for an absurd amount of care. You must not pay 0 /hour for 
+someone to review your software. All I, personally, ask for is that the 
+basic attention is given. With this simple act, I&#039;m sure you would cover 
+the majority of the bugs.
+
+&gt; It will cost you money, but hey, the people who want
+&gt; this sort of thing typically are willing to pay for the service.
+&gt; 
+
+So, only those willing to pay have the right of respect? Because, you 
+see, this is rather a matter of respect with those who choose to use 
+your solution. And, no, the &quot;free will&quot; argument does not qualify 
+herein. My mother is not aware of your absurd acts.
+
+&gt; I&#039;ll note that trying to classify bugs as being &quot;security-related&quot; at
+&gt; the kernel.org level often doesn&#039;t help the distro&#039;s, since many of
+&gt; these bugs won&#039;t even apply to whatever version of the kernel the
+&gt; distro&#039;s snapshotted 9-18 months ago.  So if the distro snapshotted
+ &gt; 2.6.18 in Fall 2006, and their next snapshot will be sometime two
+&gt; years later in the fall of this year, they will have no use for some
+&gt; potential local denial of service attack that was introduced by
+&gt; accident in 2.6.24-rc3, and fixed in 2.6.25-rc1.  It just doesn&#039;t
+&gt; matter to them.
+
+I don&#039;t follow what you have just said. What is the problem with 
+&quot;versioning&quot; and the strictness of its relation to bugs, security or not?
+
+&gt; 
+&gt; So basically, if there are enough kernel.org users who care, they can
+&gt; pay someone to classify and issue CVE numbers for each and every
+&gt; potential &quot;security bug&quot; that might appear and then disappear.
+
+I think, CVE registration or the alike would be too much for what I call 
+&quot;act of decency&quot;. A single parenthesis note on the bug itself would be 
+of great help and of small effort.
+
+
+--t
+
+
+
+
+
+
+
+--
+<br />
+<b>From: Casey Schaufler &lt;casey@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2522864" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 8:27 pm 2008
+
+Tiago Assumpcao wrote:
+&gt; Theodore Tso wrote:
+&gt;&gt; Look if you want this, pay $$$ to a distribution and get their
+&gt;&gt; supported distribution.  It costs time and effort to classify bugs as
+&gt;&gt; security related (or not), (...)
+&gt;
+&gt; That&#039;s fallacious. Assuming that you have good programmers, and you 
+&gt; do, it&#039;s of very low cost the act of identifying what *is likely to 
+&gt; be* a security bug.
+
+That is based on lots and lots of assumptions that are just not true.
+Ted Tso, Stephen Smalley and I are all recognized as security experts
+and we can&#039;t even agree on whether sockets are objects or not, much
+less what constitutes a security bug and even less what is likely to
+be a security bug. Goodness, there are some of us who would argue
+that since DNS is itself a security bug it is just not possible for
+DNS to have a security bug, as an example.
+
+&gt; In most cases, they are easy to spot.
+
+Err, no, in the kernel environment a real security flaw is likely to
+be pretty subtle.
+
+&gt; And, hey, we are not asking for an absurd amount of care. You must not 
+&gt; pay 0 /hour for someone to review your software. All I, personally, 
+&gt; ask for is that the basic attention is given. With this simple act, 
+&gt; I&#039;m sure you would cover the majority of the bugs.
+&gt;
+&gt;&gt; It will cost you money, but hey, the people who want
+&gt;&gt; this sort of thing typically are willing to pay for the service.
+&gt;&gt;
+&gt;
+&gt; So, only those willing to pay have the right of respect? Because, you 
+&gt; see, this is rather a matter of respect with those who choose to use 
+&gt; your solution. And, no, the &quot;free will&quot; argument does not qualify 
+&gt; herein. My mother is not aware of your absurd acts.
+&gt;
+&gt;&gt; I&#039;ll note that trying to classify bugs as being &quot;security-related&quot; at
+&gt;&gt; the kernel.org level often doesn&#039;t help the distro&#039;s, since many of
+&gt;&gt; these bugs won&#039;t even apply to whatever version of the kernel the
+&gt;&gt; distro&#039;s snapshotted 9-18 months ago.  So if the distro snapshotted
+&gt; &gt; 2.6.18 in Fall 2006, and their next snapshot will be sometime two
+&gt;&gt; years later in the fall of this year, they will have no use for some
+&gt;&gt; potential local denial of service attack that was introduced by
+&gt;&gt; accident in 2.6.24-rc3, and fixed in 2.6.25-rc1.  It just doesn&#039;t
+&gt;&gt; matter to them.
+&gt;
+&gt; I don&#039;t follow what you have just said. What is the problem with 
+&gt; &quot;versioning&quot; and the strictness of its relation to bugs, security or not?
+&gt;
+&gt;&gt;
+&gt;&gt; So basically, if there are enough kernel.org users who care, they can
+&gt;&gt; pay someone to classify and issue CVE numbers for each and every
+&gt;&gt; potential &quot;security bug&quot; that might appear and then disappear.
+&gt;
+&gt; I think, CVE registration or the alike would be too much for what I 
+&gt; call &quot;act of decency&quot;. A single parenthesis note on the bug itself 
+&gt; would be of great help and of small effort.
+&gt;
+&gt;
+&gt; --t
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt; -- 
+&gt; To unsubscribe from this list: send the line &quot;unsubscribe 
+&gt; linux-kernel&quot; in
+&gt; the body of a message to <a href="mailto:majordomo@vger.kernel.org">majordomo@vger.kernel.org</a>
+&gt; More majordomo info at  <a href="/web/20080719130436/http://vger.kernel.org/majordomo-info.html" title="http://vger.kernel.org/majordomo-info.html">http://vger.kernel.org/majordomo-info.html</a>
+&gt; Please read the FAQ at  <a href="/web/20080719130436/http://www.tux.org/lkml/" title="http://www.tux.org/lkml/">http://www.tux.org/lkml/</a>
+&gt;
+&gt;
+
+--
+<br />
+<b>From: Tiago Assumpcao &lt;tiago@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2523154" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 9:13 pm 2008
+
+Casey Schaufler wrote:
+&gt; Ted Tso, Stephen Smalley and I are all recognized as security experts
+&gt; and we can&#039;t even agree on whether sockets are objects or not, much
+&gt; less what constitutes a security bug and even less what is likely to
+&gt; be a security bug. Goodness, there are some of us who would argue
+&gt; that since DNS is itself a security bug it is just not possible for
+&gt; DNS to have a security bug, as an example.
+&gt; 
+&gt;&gt; In most cases, they are easy to spot.
+&gt; 
+&gt; Err, no, in the kernel environment a real security flaw is likely to
+&gt; be pretty subtle.
+
+You do not hesitate in categorizing yourself as something as obscure 
+as... what&#039;s that term again? &quot;Expert&quot;. But then you fail on basic 
+pragmatism when attempting to define what, nearly always, is a true or 
+false question?
+
+Jeez ;)
+
+--t
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2523214" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 9:21 pm 2008
+
+On Wed, 16 Jul 2008, Tiago Assumpcao wrote:
+&gt; 
+&gt; You do not hesitate in categorizing yourself as something as obscure as...
+&gt; what&#039;s that term again? &quot;Expert&quot;. But then you fail on basic pragmatism when
+&gt; attempting to define what, nearly always, is a true or false question?
+
+I would suggest you maintain your own kernel version, since you&#039;re so 
+obviously more competent at it than we are. 
+
+Then, when you inevitably show your superiority, people will start using 
+your version of the kernel. That&#039;s the point of open source, after all. It 
+keeps us all honest - at any point, we can be overtaken by somebody 
+better.
+
+I&#039;ve actually been waiting for this moment for over fifteen years now: 
+finding that person who can take over so that I don&#039;t have to bother any 
+more. I&#039;ll continue to do my own maintenance in parallel while you get up 
+to speed, but I expect that everybody will have dropped my feeble efforts 
+soon enough, so you can probably just ignore that. 
+
+Thanks,
+
+		Linus
+--
+<br />
+<b>From: Tiago Assumpcao &lt;tiago@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2523364" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 10:02 pm 2008
+
+Linus Torvalds wrote:
+&gt; I would suggest you maintain your own kernel version, since you&#039;re so 
+&gt; obviously more competent at it than we are.
+
+Raising an honest question and following with one, not less sincere, 
+debate makes me all that competent? I don&#039;t understand.
+
+&gt; I&#039;ve actually been waiting for this moment for over fifteen years now: 
+&gt; finding that person who can take over so that I don&#039;t have to bother any 
+&gt; more. I&#039;ll continue to do my own maintenance in parallel while you get up 
+&gt; to speed, but I expect that everybody will have dropped my feeble efforts 
+&gt; soon enough, so you can probably just ignore that. 
+&gt; 
+&gt; Thanks,
+&gt; 
+&gt; 		Linus
+&gt; 
+
+No, thank you. I&#039;ll stick up with poetry.
+
+--t
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2523374" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 10:13 pm 2008
+
+On Wed, 16 Jul 2008, Tiago Assumpcao wrote:
+&gt; 
+&gt; Raising an honest question and following with one, not less sincere, debate
+&gt; makes me all that competent? I don&#039;t understand.
+
+No, you must be more competent that everybody you talk to, since you seem 
+to always know the answers and can dismiss their concerns. That&#039;s all I 
+tried to say,
+
+		Linus
+--</pre></div></p>
+<p><div class="mailarchive-message" id="2518994"><pre><b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2518994" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 7:02 pm 2008
+
+On Tue, 15 Jul 2008, Tiago Assumpcao wrote:
+&gt; 
+&gt; So, only those willing to pay have the right of respect?
+
+You keep using that word. I do not think it means what you think it means.
+
+How about respecting my opinion instead?
+
+But no, you claim I must respect you, because you have some other notion 
+of what should be done, even though I&#039;ve explained why I don&#039;t agree.
+
+It cuts both ways. 
+
+		Linus
+--</pre></div></p>
+<p><div class="mailarchive-message" id="2517384,2517724,2517844,2518604,2518854"><pre><b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2517384" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 5:16 pm 2008
+
+On Tue, 15 Jul 2008, Tiago Assumpcao wrote:
+&gt; 
+&gt; However, as I previously explained [http://lkml.org/lkml/2008/7/15/654],
+&gt; security issues are identified and communicated through what can be a long and
+&gt; complicated (due to DNAs, etc.) process. If it culminates at implementation,
+&gt; without proper information forwarding from the development team, it will never
+&gt; reach the &quot;upper layers&quot; -- vendors, distributors, end users, et al.
+
+Umm. That shouldn&#039;t be our worry. If others had a long and involved (and 
+broken) process, they should be the ones that track the fixes too. We 
+weren&#039;t involved, we didn&#039;t see that, we simply _cannot_ care.
+
+&gt; Therefore, yes, it is of major importance that you people, too, buy the
+&gt; problem and support the process as a whole. Otherwise... well, otherwise,
+&gt; we&#039;re back to where we started, 20 years ago. Good luck Linux users.
+
+Umm. What was wrong with 20 years ago exactly?
+
+Are you talking about all the wonderful work that the DNS people did for 
+that new bug, and how they are heroes for synchronizing a fix and keeping 
+it all under wraps?
+
+And isn&#039;t that the same bug that djb talked about and fixed in djbdns from 
+the start? Which he did about ten YEARS ago?
+
+Excuse me for not exactly being a huge fan of &quot;security lists&quot; and best 
+practices. They seem to be _entirely_ be based on PR and how much you can 
+talk up a specific bug. No thank you,
+
+			Linus
+--
+<br />
+<b>From: Tiago Assumpcao &lt;tiago@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2517724" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 5:38 pm 2008
+
+Linus Torvalds wrote:
+&gt; 
+&gt; On Tue, 15 Jul 2008, Tiago Assumpcao wrote:
+&gt;&gt; However, as I previously explained [http://lkml.org/lkml/2008/7/15/654],
+&gt;&gt; security issues are identified and communicated through what can be a long and
+&gt;&gt; complicated (due to DNAs, etc.) process. If it culminates at implementation,
+&gt;&gt; without proper information forwarding from the development team, it will never
+&gt;&gt; reach the &quot;upper layers&quot; -- vendors, distributors, end users, et al.
+&gt; 
+&gt; Umm. That shouldn&#039;t be our worry.
+
+Yeah, at this point, it is clear to the world. No needs for repeated 
+wording ;)
+
+&gt; If others had a long and involved (and broken) process, they should be the ones that track the fixes too. We 
+&gt; weren&#039;t involved, we didn&#039;t see that, we simply _cannot_ care.
+
+You weren&#039;t involved? Hold on, aren&#039;t you the developers, thence, those 
+who commit mistakes, a.k.a the bug inducing point?
+
+&gt; 
+&gt;&gt; Therefore, yes, it is of major importance that you people, too, buy the
+&gt;&gt; problem and support the process as a whole. Otherwise... well, otherwise,
+&gt;&gt; we&#039;re back to where we started, 20 years ago. Good luck Linux users.
+&gt; 
+&gt; Umm. What was wrong with 20 years ago exactly?
+
+What was wrong for the computer theoretic people about 100 years ago? 
+Lack of development? Not sure. Perhaps the same that existed for 
+information security 20 years ago. Just perhaps.
+
+I apologize for assuming you hold such information, anyway.
+
+&gt; 
+&gt; Are you talking about all the wonderful work that the DNS people did for 
+&gt; that new bug, and how they are heroes for synchronizing a fix and keeping 
+&gt; it all under wraps?
+&gt; 
+&gt; And isn&#039;t that the same bug that djb talked about and fixed in djbdns from 
+&gt; the start? Which he did about ten YEARS ago?
+
+Are you trying to justify your irresponsibly indulgent act towards the 
+operating system that my mother is likely to use with one alone 
+exception? Because it rains umbrellas are a waste of time?
+
+&gt; 
+&gt; Excuse me for not exactly being a huge fan of &quot;security lists&quot; and best 
+&gt; practices. They seem to be _entirely_ be based on PR and how much you can 
+&gt; talk up a specific bug. No thank you,
+&gt; 
+&gt; 			Linus
+
+Personally, I, too, have a major disgust for most crap seen in the so 
+called info-sec world. I hand you my agreement on this one.
+Except, it changes in nothing your responsibilities.
+
+Take good care,
+--t
+
+
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2517844" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 5:51 pm 2008
+
+On Tue, 15 Jul 2008, Tiago Assumpcao wrote:
+&gt; 
+&gt; You weren&#039;t involved? Hold on, aren&#039;t you the developers, thence, those who
+&gt; commit mistakes, a.k.a the bug inducing point?
+
+Umm. And if the whole discussion it was hidden from us on some private 
+vendor list, why should we then help track their hidden state?
+
+That&#039;s what you claimed we should do, wasn&#039;t it?
+
+&gt; Personally, I, too, have a major disgust for most crap seen in the so called
+&gt; info-sec world. I hand you my agreement on this one.
+&gt; Except, it changes in nothing your responsibilities.
+
+My responsibility is to do a good job. And not pander to the people who 
+want to turn security into a media circus.
+
+Which is exactly what I&#039;m doing. No media circus.
+
+		Linus
+--
+<br />
+<b>From: Tiago Assumpcao &lt;tiago@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2518604" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 6:10 pm 2008
+
+Linus Torvalds wrote:
+&gt; 
+&gt; Umm. And if the whole discussion it was hidden from us on some private 
+&gt; vendor list, why should we then help track their hidden state?
+&gt; 
+&gt; That&#039;s what you claimed we should do, wasn&#039;t it?
+
+How can I expect one to treat the unknown? If you are not aware of it, 
+you do nothing. Whenever a software organization is informed of a 
+problem in some product of their responsibility, they act upon it. On 
+the contrary, no, I don&#039;t expect any magic from you. Thanks for 
+bothering, though.
+
+&gt; 
+&gt;&gt; Personally, I, too, have a major disgust for most crap seen in the so called
+&gt;&gt; info-sec world. I hand you my agreement on this one.
+&gt;&gt; Except, it changes in nothing your responsibilities.
+&gt; 
+&gt; My responsibility is to do a good job. And not pander to the people who 
+&gt; want to turn security into a media circus.
+
+And I thank you for that. No to the &quot;security media circus&quot;.
+
+&gt; 
+&gt; Which is exactly what I&#039;m doing. No media circus.
+&gt; 
+&gt; 		Linus
+&gt; 
+
+Wrong. This is not &quot;media circus&quot;.
+Whoever reads this thread with the basic understanding of software 
+development procedures, the reality of information security and with 
+legit judgment will clearly understand what you are doing and what 
+&quot;pageexec&quot; and I claim for. Further, I claim for decency from your part.
+
+All I ask for is to receive the &quot;There are updates available.&quot; message 
+as soon as one security problem is reported, understood and treated by 
+your development part. And that is, the sooner possible, if you please.
+Plus, if one bothers, to be able to know the exact location of this bug 
+and its characteristics.
+
+However, for these to happen, we need your collaboration. Or, with two 
+words, your responsibility.
+
+
+Thanks,
+--t
+
+--
+<br />
+<b>From: Linus Torvalds &lt;torvalds@...&gt;</b>
+Subject: <a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/16/2518854" title="Click to view this message in the linux-kernel mail archive.">Re: [stable] Linux 2.6.25.10
+</a>Date: Jul 15, 6:41 pm 2008
+
+On Tue, 15 Jul 2008, Tiago Assumpcao wrote:
+&gt; 
+&gt; How can I expect one to treat the unknown? If you are not aware of it, you do
+&gt; nothing.
+
+Well, some people keep it secret and track it on vendor-sec or similar, 
+hidden from us.
+
+But then when they are ready to announce it, they want our help to glorify 
+their corrupt process when they finally deign to let us know. And that 
+really irritates me.
+
+&gt; All I ask for is to receive the &quot;There are updates available.&quot; message as soon
+&gt; as one security problem is reported, understood and treated by your
+&gt; development part. And that is, the sooner possible, if you please.
+
+Umm. You&#039;re talking to _entirely_ the wrong person.
+
+The people who want to track security issues don&#039;t run my development 
+kernels. They usually don&#039;t even run the _stable_ kernels. They tend to 
+run the kernels from some commercial distribution, and usually one that is 
+more than six months old as far as I - and other kernel developers - are 
+concerned.
+
+IOW, when we fix security issues, it&#039;s simply not even appropriate or 
+relevant to you. More importantly, when we fix them, your vendor probably 
+won&#039;t have the fix for at least another week or two in most cases anyway.
+
+So ask yourself - what would happen if I actually made a big deal out of 
+every bug we find that could possibly be a security issue. HONESTLY now!
+
+We&#039;d basically be announcing a bug that (a) may not be relevant to you, 
+but (b) _if_ it is relevant to you, you almost certainly won&#039;t actually 
+have fixed packages until a week or two later available to you!
+
+Do you see?
+
+I would not actually be helping you. I&#039;d be helping the people you want to 
+protect against!
+
+			Linus
+--</pre></div></p>
+<hr /><div class="item-list"><h3>Related links:</h3><ul><li><a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/3/2332494" title="Subject: Linux 2.6.25.10">Archive of above thread</a></li><li><a href="/web/20080719130436/http://kerneltrap.org/mailarchive/linux-kernel/2008/7/15/2512714" title="Subject: Re: [stable] Linux 2.6.25.10">Archive of above thread</a></li></ul></div>  <div class="free-tags">Tags: <a href="/web/20080719130436/http://kerneltrap.org/2.6.25" title="">2.6.25</a>, <a href="/web/20080719130436/http://kerneltrap.org/bugs" title="">bugs</a>, <a href="/web/20080719130436/http://kerneltrap.org/Greg_KH" title="">Greg KH</a>, <a href="/web/20080719130436/http://kerneltrap.org/Linus_Torvalds" title="">Linus Torvalds</a>, <a href="/web/20080719130436/http://kerneltrap.org/Linux" title="">Linux</a>, <a href="/web/20080719130436/http://kerneltrap.org/security" title="">security</a>, <a href="/web/20080719130436/http://kerneltrap.org/taxonomy/term/405" title="">Theodore T&#039;so</a></div>  </div>
+
+  <div class="links"><ul class="links inline"><li class="first comment_add"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395#comment-form" title="Share your thoughts and opinions related to this posting." class="comment_add">Add new comment</a></li>
+<li class="last print"><a href="/web/20080719130436/http://kerneltrap.org/node/16395/print" title="Display a printer friendly version of this page." class="print">Printer friendly version</a></li>
+</ul></div>
+</div>
+
+<div id="comments"><a id="comment-304053"></a>
+<div id="comment-304053" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304053" class="active">The recent DNS hole</a>      </h4>
+  
+  
+    <div class="date">July 16, 2008 - 9:49am</div>
+  <div class="author"><a href="/web/20080719130436/http://kerneltrap.org/user/50" title="View user profile.">Mr_Z</a></div>
+  
+  <div class="content"><p>Linus says:</p>
+<blockquote><p>
+Btw, and you may not like this, since you are so focused on security, one<br />
+reason I refuse to bother with the whole security circus is that I think<br />
+it glorifies - and thus encourages - the wrong behavior.</p>
+<p>It makes "heroes" out of security people, as if the people who don't just<br />
+fix normal bugs aren't as important.<br />
+</p></blockquote>
+<p>That reminds me quite a bit of the recent DNS hoopla.  Is it sad that we hear more about <I>who</i> found it and is so great having found it, and not so much about what the vulnerability is?  The DNS patch rollout is the poster child illustrating the behavior Linus is complaining about.  Not have they told us that there's a bug and that their's patches available, but also they've asked us not to speculate what the bug might be and wait until Mr. Hero details it at a conference <I>a month from now.</i>  Until then, it's "Trust me!"   Erm... yeah.</p>
+<p>--<br />
+<A href="/web/20080719130436/http://sdk-1600.spatula-city.org/">Program Intellivision</a> and <A href="/web/20080719130436/http://spatula-city.org/~im14u2c/intv/spteaser">play Space Patrol!</a></p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304053" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304088"></a>
+<div id="comment-304088" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304088" class="active">dns hoopla</a>      </h4>
+  
+  
+    <div class="date">July 16, 2008 - 8:34pm</div>
+  <div class="author">ted u (not verified)</div>
+  
+  <div class="content"><p>If you've been paying attention, you should know what the vulnerability is.  DNS requests aren't random enough.  What you don't know is how to effectively exploit this.  Waiting to patch until after the exploit comes out is pretty foolish.</p>
+<p>
+<i>"Until then, it's "Trust me!" Erm... yeah."</i></p>
+<p>
+What's that supposed to mean?  Do you use random ports or not?  What's not to trust?</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304088" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304105"></a>
+<div id="comment-304105" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304105" class="active">If the problem is obscure</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 4:14am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>If the problem is obscure enough that you can't see how to exploit it by looking at the patch, what makes you so sure that the patch itself (while seeming to be harmless) doesn't contain some sort of exploit introduced by the author (deliberately or not)?</p>
+<p>People should not apply patches blindly. People should not blindly trust people who offer them a patch and say "look, apply this or you'll be vulnerable, but I can't tell you exactly why!". That is irresponsible behavior (both from the person who applies the patch and the one who supplies it).</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304105" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304115"></a>
+<div id="comment-304115" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304115" class="active">Because it&#039;s harder to guess</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 7:38am</div>
+  <div class="author">ted u (not verified)</div>
+  
+  <div class="content"><p>Because it's harder to guess a random number than it is to determine that 53 is not a random number.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304115" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304133"></a>
+<div id="comment-304133" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304133" class="active">53?</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 5:43pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>And how the hell do you determine that?  X is not a random number.  Great.  Where did X <em>come</em> from?  What is the next X?  "53 is not a random number" is like saying "42 is not the answer to everything".</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304133" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304137"></a>
+<div id="comment-304137" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304137" class="active">53 is obviously not random</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 5:58pm</div>
+  <div class="author">Jack Ripoff (not verified)</div>
+  
+  <div class="content"><p>We know it's not random because he said 53. If he had said 17, that would be random.</p>
+<p><a href="/web/20080719130436/http://metasploit.com/users/hdm/tools/debian-openssl/tcv80ipepkza7.jpg" title="http://metasploit.com/users/hdm/tools/debian-openssl/tcv80ipepkza7.jpg">http://metasploit.com/users/hdm/tools/debian-openssl/tcv80ipepkza7.jpg</a></p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304137" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304139"></a>
+<div id="comment-304139" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304139" class="active">17?</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 6:07pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>But, but ... that code says 4!  17 is ... you know ... it doesn't go along with 4 so great.  You seem confused.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304139" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304140"></a>
+<div id="comment-304140" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304140" class="active">!</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 6:09pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>OK, so spare us the mathematical comments about what 4! is ... thanks ;-&gt;</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304140" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<a id="comment-304142"></a>
+<div id="comment-304142" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304142" class="active">That&#039;s the problem with randomness, you never know!</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 8:24pm</div>
+  <div class="author">Jack Ripoff (not verified)</div>
+  
+  <div class="content"><p>Yes, that code shows us just how Debian is lame. If they were smart, they would have used 17.</p>
+<p><a href="/web/20080719130436/http://itre.cis.upenn.edu/~myl/languagelog/archives/003951.html" title="http://itre.cis.upenn.edu/~myl/languagelog/archives/003951.html">http://itre.cis.upenn.edu/~myl/languagelog/archives/003951.html</a></p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304142" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304176"></a>
+<div id="comment-304176" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304176" class="active">It show us how you are lame.</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 3:55pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>It show us how you are lame. If you were smart you wouldn't judge entire system by such a thing.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304176" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304182"></a>
+<div id="comment-304182" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304182" class="active">There is more.</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 11:30pm</div>
+  <div class="author">Jack Ripoff (not verified)</div>
+  
+  <div class="content"><p>This is just the tip of the iceberg...</p>
+<p><a href="/web/20080719130436/http://beranger.org/feature/sorryfeature.php?page=17" title="http://beranger.org/feature/sorryfeature.php?page=17">http://beranger.org/feature/sorryfeature.php?page=17</a></p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304182" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304183"></a>
+<div id="comment-304183" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304183" class="active">It&#039;s just drop in the ocean</a>      </h4>
+  
+  
+    <div class="date">July 19, 2008 - 4:02am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>It's just drop in the ocean compared to *bsd. Just read their ml...</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304183" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304186"></a>
+<div id="comment-304186" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304186" class="active">Hmm</a>      </h4>
+  
+  
+    <div class="date">July 19, 2008 - 5:41am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Seems someone isn't getting the joke, or are not very good at being sarcastic ;-)</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304186" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div></div></div></div></div></div><a id="comment-304141"></a>
+<div id="comment-304141" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304141" class="active">53</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 8:05pm</div>
+  <div class="author">ted u (not verified)</div>
+  
+  <div class="content"><p>53 is (was) the source port for DNS queries.  We were talking about DNS right?  And how it's bad to use a fixed source port?  And how the patch changes things to use a random port?</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304141" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304166"></a>
+<div id="comment-304166" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304166" class="active">Don&#039;t confuse source and dest</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 3:04pm</div>
+  <div class="author"><a href="/web/20080719130436/http://kerneltrap.org/user/50" title="View user profile.">Mr_Z</a></div>
+  
+  <div class="content"><p>53 is the destination port for DNS queries.  User-space unprivileged tasks cannot generally bind "privileged" ports--that is, port numbers under 1024.  Unprivileged tasks can make DNS queries directly--they don't need a local privileged daemon to make them on their behalf.  So, in a sense, we've been using arbitrary source ports for awhile, since all these unprivileged tasks have been binding arbitrary ports above 1023 for the source port of their requests.  (Note that I said "arbitrary," not "random.")</p>
+<p>One issue is that many resolvers use a single port for all requests, making it easy to forge replies to a client that'll make multiple requests.  That is, it binds the port once saying "Just give me an arbitrary port number", and it'll send multiple requests from that same port.  If you've managed to see one request go out from a client, you know future requests will go out via the same port.  This is a real problem for long-lived clients.  If you run a local DNS caching server then every program on your machine could be affected.</p>
+<p>The change apparently is to  bind to a different port for each request, and to explicitly randomize the port number rather than rely on the arbitrary port numbers handed out by the OS.  </p>
+<p>Note that you can arrange to find out what port number a client is sending requests on by tricking it into sending a DNS server you control a request.  (Kaminsky's DNS checker works on this principle.)  This could be through a 1 pixel GIF on a webpage or other such trickery.  If whatever resolver sends the request to your hacked DNS server is vulnerable to this hole, then you know what port it's sending requests out on and now have ammunition for attacking it.  If it's a caching DNS server at an ISP, then can start flooding it with queries and bogus responses and with any luck your bogus responses take hold.</p>
+<p>Beyond that, I don't know what Dan Kaminsky found.  The above is just speculation that I've been able to piece together following discussions around various sites. </p>
+<p>--<br />
+<A href="/web/20080719130436/http://sdk-1600.spatula-city.org/">Program Intellivision</a> and <A href="/web/20080719130436/http://spatula-city.org/~im14u2c/intv/spteaser">play Space Patrol!</a></p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304166" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div></div></div></div><a id="comment-304165"></a>
+<div id="comment-304165" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304165" class="active">How can I trust its completeness?</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 2:45pm</div>
+  <div class="author"><a href="/web/20080719130436/http://kerneltrap.org/user/50" title="View user profile.">Mr_Z</a></div>
+  
+  <div class="content"><p>If this hole is truly inherent in the DNS protocol itself, and has survived this long, it's likely very subtle.  Without knowing what the bug is, how do I know that this is a complete fix?  It might solve one case but not another.  Or, it might only mitigate the problem without solving it.</p>
+<p>The lack of disclosure about the exact nature of the hole, coupled with the heads up that there IS definitely at least one hole and it's in a particular area means that someone might rush in there and find a different, related hole.  It's really an arms race.  Why not at least arm the other security experts as well as you can?</p>
+<p>--<br />
+<A href="/web/20080719130436/http://sdk-1600.spatula-city.org/">Program Intellivision</a> and <A href="/web/20080719130436/http://spatula-city.org/~im14u2c/intv/spteaser">play Space Patrol!</a></p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304165" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div></div><a id="comment-304062"></a>
+<div id="comment-304062" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304062" class="active">Important</a>      </h4>
+  
+  
+    <div class="date">July 16, 2008 - 11:57am</div>
+  <div class="author"><a href="/web/20080719130436/http://fsf.org/">Anonymous</a> (not verified)</div>
+  
+  <div class="content"><p>It is important to point out which bugs are security vulnerabilities.<br />
+If it its just a minor bug in a software that make it crash, or something appear out of place, then it don't not so important for me to get a new version.<br />
+If it is a security vulnerability then it is very important for me to get the update as soon as possible.</p>
+<p>Not mentioning security vulnerabilities is something I would expect from Microsoft and other proprietary vendors who want to avoid bad publicity and falsely tricking their users into a false sense of security.<br />
+With open source software, I expect the developers to me honest, straight and transparent with me about security vulnerabilities.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304062" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304162"></a>
+<div id="comment-304162" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304162" class="active">Importance is relative</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 10:25am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Well, if your software is running on a box inside a closed network, interacting with nothing but other boxes inside that closed network, then maybe a bug that makes it crash or something appear out of place is much more important than a security fix.</p>
+<p>That's the whole point. Security fixes are just as important as any other fix, because importance is dependent on the specifics of where and how the software is being used.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304162" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div><a id="comment-304065"></a>
+<div id="comment-304065" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304065" class="active">&quot;I think the OpenBSD crowd</a>      </h4>
+  
+  
+    <div class="date">July 16, 2008 - 12:55pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>"I think the OpenBSD crowd is a bunch of masturbating monkeys,"</p>
+<p>Jesus fucking Christ Linus, do you realize how much hate mail this is going to generate? From Theo ALONE?! Try to be a BIT more diplomatic next time.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304065" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304074"></a>
+<div id="comment-304074" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304074" class="active">Ironically fixing real bugs</a>      </h4>
+  
+  
+    <div class="date">July 16, 2008 - 3:36pm</div>
+  <div class="author">Nony Mouse (not verified)</div>
+  
+  <div class="content"><p>Ironically fixing real bugs and correctness of code is the OpenBSD approach to security. I think Linus is feeling a little vulnerable.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304074" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304075"></a>
+<div id="comment-304075" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304075" class="active">Openbsd people are</a>      </h4>
+  
+  
+    <div class="date">July 16, 2008 - 4:05pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Openbsd people are concentrating on some bugs, but they can miss a lot of others. I think that Linus is right and I think that people who complain about security on lkml are just jealous openbsd devs/guys/fanboys. I hope that Linus will just ignore those idiots which waste his time and which see fictitious problems.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304075" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304083"></a>
+<div id="comment-304083" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304083" class="active">Miss a lot of other</a>      </h4>
+  
+  
+    <div class="date">July 16, 2008 - 7:20pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Miss a lot of other problems? I'm left out of the loop here, could you help me out?</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304083" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304101"></a>
+<div id="comment-304101" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304101" class="active">There&#039;s a little word -</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 3:55am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>There's a little word - could. It's logical that if you concentrate too much on some thing you can't pay too much attention for others.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304101" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304130"></a>
+<div id="comment-304130" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304130" class="active">Linus cannot back up his</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 3:52pm</div>
+  <div class="author">Nony Mouse (not verified)</div>
+  
+  <div class="content"><p>Linus cannot back up his statement, saying that the OpenBSD devs could miss other bugs as they only focus on security shows that he is taking pot shots without knowing what he is talking about. Did you spot the bug in YACC that was uncovered by a more secure memory allocator ? or the seekdir() bug that everyone else just worked around ?</p>
+<p>OpenBSD focuses on correctness of code and security is a by product of that.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304130" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304143"></a>
+<div id="comment-304143" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304143" class="active">All the correctness in the</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 8:33pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>All the correctness in the world didn't stop them having unfixed bugs for thirty years.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304143" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304145"></a>
+<div id="comment-304145" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304145" class="active">OpenBSD hasn&#039;t been around</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 9:54pm</div>
+  <div class="author">Nony Mouse (not verified)</div>
+  
+  <div class="content"><p>OpenBSD hasn't been around thirty years, but it is the correctness of code that found the bug you are talking about.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304145" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304149"></a>
+<div id="comment-304149" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304149" class="active">code audits</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 10:19pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Supposedly openbsd "audit" all their code for security problems (as if code audit is some wonderful thing eg that Linux devs don't do).</p>
+<p>Shows how good their audits were.</p>
+<p>Linux did not have the seekdir bug, and it does not tend to use yacc.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304149" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304170"></a>
+<div id="comment-304170" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304170" class="active">What is your point ? there</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 3:45pm</div>
+  <div class="author">Nony Mouse (not verified)</div>
+  
+  <div class="content"><p>What is your point ? there were bugs which weren't security issues and as this code does not exist in the linux codebase, linux is somehow better ? that the audit should have flushed out these bugs ?</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304170" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304172"></a>
+<div id="comment-304172" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304172" class="active">&gt; and as this code does not</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 3:49pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>&gt; and as this code does not exist in the linux codebase, linux is somehow better ?</p>
+<p>Indeed. Linux don't use code from decades (maybe some trivial code).</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304172" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div></div></div></div></div></div></div><a id="comment-304117"></a>
+<div id="comment-304117" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304117" class="active">the idea that pax team is a</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 8:34am</div>
+  <div class="author">ted u (not verified)</div>
+  
+  <div class="content"><p>the idea that pax team is a jealous openbsd fanboy is perhaps the funniest thing i'll read all week, even in a week full of some great trolling.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304117" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304118"></a>
+<div id="comment-304118" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304118" class="active">There&#039;s also other topic</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 9:55am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>There's also other topic Security of Kernel or something like that. Do you have any proofs that this moron from PaX team is not cooperating with obsd?</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304118" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304120"></a>
+<div id="comment-304120" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304120" class="active">Yes.</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 11:25am</div>
+  <div class="author">ted u (not verified)</div>
+  
+  <div class="content"><p>I just checked my mailbox again.  No new email from PaX.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304120" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304121"></a>
+<div id="comment-304121" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304121" class="active">Check others too ;p Writing</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 11:49am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Check others too ;p Writing my first comment I thought about this crap: The state of linux security (posted by chicken with significant nick: Cheradenine Zakalwe). I wrote about obsd, because this bsd fanboy - David Newall (his still working on Linux! amazing) mentioned about it.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304121" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304124"></a>
+<div id="comment-304124" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304124" class="active">I have no idea who those</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 12:09pm</div>
+  <div class="author">ted u (not verified)</div>
+  
+  <div class="content"><p>I have no idea who those people are, but they don't contribute to OpenBSD.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304124" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304158"></a>
+<div id="comment-304158" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304158" class="active">It was only my supposition</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 6:05am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>It was only my supposition (but not so smart). David Newall is one of the Linux devs, but he's a bsd fanboy (especially bsd license). Person with significant nick which I mentioned before is too stupid to be OpenBSD dev or even dev....</p>
+<p>Btw. The worst enemies of systems are fanboys, because that what they say do harm to what they love (they provoke others to attack).</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304158" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div></div></div><a id="comment-304122"></a>
+<div id="comment-304122" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304122" class="active">Please.
+&quot;[...] moron from</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 11:56am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Please.</p>
+<p>"[...] moron from PaX team".</p>
+<p>Anyone who has even remotely followed the open source infosec in the past decade recognizes this [these] "moron[s]" with great respect, not due occasional moronic comments but due brilliant technical work.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304122" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div></div></div></div><a id="comment-304092"></a>
+<div id="comment-304092" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304092" class="active">Masturbating monkeys do not</a>      </h4>
+  
+  
+    <div class="date">July 16, 2008 - 9:22pm</div>
+  <div class="author">spanky (not verified)</div>
+  
+  <div class="content"><p>Masturbating monkeys do not expect diplomacy from the linux camp.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304092" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304108"></a>
+<div id="comment-304108" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304108" class="active">Great example of</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 5:48am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Great example of masturbating monkey:</p>
+<p>&gt; Hi guys,<br />
+&gt; i want to make a presentation to introduce OpenBSD into the public of my<br />
+&gt; university. Someone can give me ideas to capture the public? Most of my<br />
+&gt; public work with linux, so i think i have to spent some words into the<br />
+&gt; difference between linux and OBSD.<br />
+&gt; Ideas?</p>
+<p>It's from obsd mailing list so I think that Linus is right :D.<br />
+Btw. when we talk about security, bugs etc:</p>
+<p>pfctl -f /etc/pf.conf this command could hang machine with obsd, so it looks like focusing on some bugs and ignoring other things is not so good...</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304108" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304126"></a>
+<div id="comment-304126" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304126" class="active">Sounds familiar?</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 12:27pm</div>
+  <div class="author">Jack Ripoff (not verified)</div>
+  
+  <div class="content"><p>&gt; Hi guys,<br />
+&gt; i want to make a presentation to introduce Linux into the public of my<br />
+&gt; university. Someone can give me ideas to capture the public? Most of my<br />
+&gt; public work with windows, so i think i have to spent some words into the<br />
+&gt; difference between windows and Linux.<br />
+&gt; Ideas?</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304126" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304156"></a>
+<div id="comment-304156" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304156" class="active">It seems that you don&#039;t</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 5:17am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>It seems that you don't understand my comment... Btw. Linux is better than windows and *bsd, so your comment is idiotic and as I mentioned already you didn't understand my previous comment.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304156" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304168"></a>
+<div id="comment-304168" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304168" class="active">Your original comment made</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 3:31pm</div>
+  <div class="author">Nony Mouse (not verified)</div>
+  
+  <div class="content"><p>Your original comment made no sense, and this last one made less sense "Btw. Linux is better than windows and *bsd", like it's a fact, talk about idiotic.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304168" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div></div><a id="comment-304134"></a>
+<div id="comment-304134" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304134" class="active">Bugs</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 5:51pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><blockquote><p>pfctl -f /etc/pf.conf this command could hang machine with obsd</p></blockquote>
+<p>Every OS has bugs, you just demonstrated one bug that allegedly has been. How thrilling ...</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304134" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304155"></a>
+<div id="comment-304155" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304155" class="active">It&#039;s so critical bug that</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 5:13am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>It's so critical bug that you can't even imagine.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304155" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304169"></a>
+<div id="comment-304169" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304169" class="active">I can&#039;t imagine it, would</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 3:42pm</div>
+  <div class="author">Nony Mouse (not verified)</div>
+  
+  <div class="content"><p>I can't imagine it, would you like to show us how ?</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304169" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304174"></a>
+<div id="comment-304174" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304174" class="active">I can&#039;t, but no one can</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 3:51pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>I can't, but no one can better explain that, than those who where using obsd and typed this command. If you can't imagine such trivial thing it's your problem.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304174" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304178"></a>
+<div id="comment-304178" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304178" class="active">Perhaps your ruleset is</a>      </h4>
+  
+  
+    <div class="date">July 18, 2008 - 4:03pm</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Perhaps your ruleset is messed up in that example. Check pf.conf(5), or perhaps chmod(1) if you don't have proper permissions.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304178" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304184"></a>
+<div id="comment-304184" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304184" class="active">I can&#039;t, because my system</a>      </h4>
+  
+  
+    <div class="date">July 19, 2008 - 4:08am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>I can't, because my system don't have this issue. Obsd devs probably fixed it too, but it was more critical than a lot of 'security' issues.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304184" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<div class="indented"><a id="comment-304187"></a>
+<div id="comment-304187" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304187" class="active">Critical</a>      </h4>
+  
+  
+    <div class="date">July 19, 2008 - 5:56am</div>
+  <div class="author">foo (not verified)</div>
+  
+  <div class="content"><blockquote><p>[...] it was more critical than a lot of 'security' issues.</p></blockquote>
+<p>What where the "more critical" issues?</p>
+<p>If this bug <em>did</em> exist (I don't know, but let's just assume it did) it isn't much of a security threat.  Yeah, the root user (or anyone able to sudo pfctl) can crash the machine.  The <em>root</em> user.  Big deal!  </p>
+<p>Sure, it's a bug and it must be fixed, but a SECURITY issue?  Give me a break.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304187" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div></div></div></div></div></div></div></div><a id="comment-304109"></a>
+<div id="comment-304109" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304109" class="active">come on ...</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 5:52am</div>
+  <div class="author">Anonymouse (not verified)</div>
+  
+  <div class="content"><p>You can't take Linus seriously when he says things like that - he doesn't use *BSD nor does he care about their mailing lists, so he doesn't know what he's talking about.  I'd be surprised if anyone BUT Theo wasted any time poo-pooing Linus, but I suspect even Theo wouldn't say too much because the comment is so unimportant; a simple "you know where to stick that one, Linus" would do.</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304109" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+<a id="comment-304123"></a>
+<div id="comment-304123" class="comment">
+    <h4 class="title">
+    <a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure#comment-304123" class="active">Hate mail? An OpenBSD</a>      </h4>
+  
+  
+    <div class="date">July 17, 2008 - 11:59am</div>
+  <div class="author">Anonymous (not verified)</div>
+  
+  <div class="content"><p>Hate mail? An OpenBSD developer already registered masturbatingmonkeys.com and there's a t-shirt. You can take almost everything Linus said in that thread and put it into official OpenBSD policy. If having the OpenBSD attitude towards bugs makes you a masturbating monkey, Linus can borrow my baboon porn and banana lube any time. OOOOOh OOOOOOh OOOOOh!</p>
+</div>
+
+  <div class="links"><ul class="links"><li class="first last comment_reply"><a href="/web/20080719130436/http://kerneltrap.org/comment/reply/16395/304123" class="comment_reply">reply</a></li>
+</ul></div>
+</div>
+
+</div><div class="pager"><span class="pager-list"><strong class="pager-current">1</strong><a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure?page=1" class="pager-last active" title="Go to page 2">2</a></span><a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure?page=1" class="pager-last active" title="Go to next page">next ›</a><a href="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure?page=1" class="pager-last active" title="Go to last page">last »</a></div><form action="/web/20080719130436/http://kerneltrap.org/Linux/Security_Bugs_and_Full_Disclosure"  method="post" id="comment-controls">
+<div><div class="box">
+    <h3 class="title">Comment viewing options</h3>
+  
+  <div class="content"><div class="container-inline"><input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4" selected="selected">Threaded list - expanded</option></select>
+</div>
+<div class="form-item">
+ <select name="order" class="form-select" id="edit-order" ><option value="1">Date - newest first</option><option value="2" selected="selected">Date - oldest first</option></select>
+</div>
+<div class="form-item">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10">10 comments per page</option><option value="30">30 comments per page</option><option value="50" selected="selected">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div></div>
+</div>
+
+</div></form>
+</div>    </div>
+  </div>
+
+    <div class="sidebar sidebar-right"><div id="block-user-1" class="block block-user">
+    <div class="title">Navigation</div>
+  
+  <div class="content">
+<ul class="menu">
+<li class="collapsed"><a href="/web/20080719130436/http://kerneltrap.org/node/add">Create content</a></li>
+<li class="leaf"><a href="/web/20080719130436/http://kerneltrap.org/mailarchive">Mailing list archives</a></li>
+<li class="leaf"><a href="/web/20080719130436/http://kerneltrap.org/tracker">Recent posts</a></li>
+
+</ul>
+</div>
+</div>
+
+<div id="block-block-14" class="block block-block">
+  
+  <div class="content"><p><!--Ad Bard Block ads, 175 pixels wide by 125 pixels high, begin --> </p>
+<script type="text/javascript"> var adbard_key="e73d04e72743899cf8dc6b81c15e825c"; var abq=1; var abs=1; var aba=1; </script><script type="text/javascript" src="/web/20080719130436js_/http://cdn1.adbard.net/ab20a.js"></script><p> <!--Ad Bard, end--> </p>
+</div>
+</div>
+
+<div id="block-forum_addons-0" class="block block-forum_addons">
+    <div class="title">Latest forum posts</div>
+  
+  <div class="content"><table>
+ <thead><tr><th></th><th></th><th></th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="/web/20080719130436/http://kerneltrap.org/node/16406">Questions about modules</a></td><td>8 minutes ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/linux/kernel">Linux kernel</a></td> </tr>
+ <tr class="even"><td><a href="/web/20080719130436/http://kerneltrap.org/node/7669">USB2.0 Flash disk error(SCSI error: return code = 0x10070000)，anybody has solutions?</a></td><td>3 hours ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/linux/kernel">Linux kernel</a></td> </tr>
+ <tr class="odd"><td><a href="/web/20080719130436/http://kerneltrap.org/node/5610">Why Windows is better than Linux</a></td><td>10 hours ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/linux/general">Linux general</a></td> </tr>
+ <tr class="even"><td><a href="/web/20080719130436/http://kerneltrap.org/node/16408">Open Hardware Foundation &amp; Open Cores</a></td><td>12 hours ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/other/hardware">Hardware</a></td> </tr>
+ <tr class="odd"><td><a href="/web/20080719130436/http://kerneltrap.org/node/6494">Which Graphiccard should be used to get the most GPL for the money</a></td><td>16 hours ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/other/hardware">Hardware</a></td> </tr>
+ <tr class="even"><td><a href="/web/20080719130436/http://kerneltrap.org/node/16407">IO memory vs. memory</a></td><td>17 hours ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/linux/kernel">Linux kernel</a></td> </tr>
+ <tr class="odd"><td><a href="/web/20080719130436/http://kerneltrap.org/node/14847">Unable to mount ramdisk image using UBoot while upgrading to 2.6.15 kernel for a MPC8540 based target</a></td><td>21 hours ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/linux/kernel">Linux kernel</a></td> </tr>
+ <tr class="even"><td><a href="/web/20080719130436/http://kerneltrap.org/node/16405">%cpu in top over 100?</a></td><td>1 day ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/linux/general">Linux general</a></td> </tr>
+ <tr class="odd"><td><a href="/web/20080719130436/http://kerneltrap.org/node/2465">How to Compile 2.6 kernel for RedHat</a></td><td>1 day ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/linux/kernel">Linux kernel</a></td> </tr>
+ <tr class="even"><td><a href="/web/20080719130436/http://kerneltrap.org/node/16401">asynchronous wait</a></td><td>1 day ago</td><td><a href="/web/20080719130436/http://kerneltrap.org/forum/linux/kernel">Linux kernel</a></td> </tr>
+</tbody></table>
+<div class="more-link"><a href="/web/20080719130436/http://kerneltrap.org/forum" title="Read the latest forum postings.">Show all forums...</a></div></div>
+</div>
+
+<div id="block-tagadelic-7" class="block block-tagadelic">
+    <div class="title">Recent Tags</div>
+  
+  <div class="content"><a href="/web/20080719130436/http://kerneltrap.org/security" class="tagadelic level2">security</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/Linus_Torvalds" class="tagadelic level5">Linus Torvalds</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/USB" class="tagadelic level1">USB</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/taxonomy/term/1294" class="tagadelic level1">Openmoko</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/2.6.26" class="tagadelic level4">2.6.26</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/taxonomy/term/1297" class="tagadelic level1">Neo FreeRunner</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/quote" class="tagadelic level4">quote</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/-rc" class="tagadelic level1">-rc</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/development_process" class="tagadelic level1">development process</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/taxonomy/term/405" class="tagadelic level1">Theodore T&#039;so</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/taxonomy/term/1295" class="tagadelic level1">phone</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/2.6.25" class="tagadelic level1">2.6.25</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/release" class="tagadelic level1">release</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/Linux" class="tagadelic level6">Linux</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/Al_Viro" class="tagadelic level1">Al Viro</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/Greg_KH" class="tagadelic level1">Greg KH</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/taxonomy/term/438" class="tagadelic level1">Linux Kernel Archives</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/taxonomy/term/272" class="tagadelic level1">Jesse Barnes</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/Andrew_Morton" class="tagadelic level1">Andrew Morton</a> 
+<a href="/web/20080719130436/http://kerneltrap.org/-rc9" class="tagadelic level1">-rc9</a> 
+<div class='more-link'><a href="/web/20080719130436/http://kerneltrap.org/tags">more tags</a></div></div>
+</div>
+
+<div id="block-block-4" class="block block-block">
+  
+  <div class="content"><center><small>Colocation donated by:</small><br /><a href="/web/20080719130436/http://osuosl.org/"><img src="/web/20080719130436im_/http://kerneltrap.org/files/pictures/thumbnail_small.gif" /></a></center></div>
+</div>
+
+<div id="block-user-3" class="block block-user">
+    <div class="title">Who's online</div>
+  
+  <div class="content">There are currently <em>4 users</em> and <em>1003 guests</em> online.<div class="item-list"><h3>Online users</h3><ul><li><a href="/web/20080719130436/http://kerneltrap.org/user/1" title="View user profile.">Jeremy</a></li><li><a href="/web/20080719130436/http://kerneltrap.org/user/50" title="View user profile.">Mr_Z</a></li><li><a href="/web/20080719130436/http://kerneltrap.org/user/9532" title="View user profile.">puntmuts</a></li><li><a href="/web/20080719130436/http://kerneltrap.org/user/3754" title="View user profile.">memphis</a></li></ul></div></div>
+</div>
+
+<div id="block-node-0" class="block block-node">
+    <div class="title">Syndicate</div>
+  
+  <div class="content"><a href="/web/20080719130436/http://kerneltrap.org/node/feed" class="feed-icon"><img src="/web/20080719130436im_/http://kerneltrap.org/misc/feed.png" alt="Syndicate content" title="Syndicate content" width="16" height="16" /></a></div>
+</div>
+
+</div>
+  
+  <div style="clear:both"></div>
+</div>
+
+<div class="footer">
+  <a href="">&copy; 2007 KernelTrap.</a> &nbsp;|&nbsp; Powered by <a href="/web/20080719130436/http://www.drupal.org/">Drupal</a>. &nbsp;|&nbsp; <a href="">Legal statement.</a>
+</div>
+
+<div style="display: none;"><a href="/web/20080719130436/http://kerneltrap.org/forumgroovy.php">speck-geostationary</a></div>
+
+</body>
+</html>
+
+
+
+
+
+
+<!--
+     FILE ARCHIVED ON 13:04:36 Jul 19, 2008 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:29:04 May 5, 2016.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->

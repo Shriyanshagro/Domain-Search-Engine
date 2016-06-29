@@ -1,0 +1,940 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<title>Character Model for the World Wide Web 1.0: Normalization</title>
+<link rel="stylesheet" type="text/css" href="localstyle.css" />
+<link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-WD" />
+</head>
+
+
+<body><div class="head"><p><a href="http://www.w3.org/"><img src="http://www.w3.org/Icons/w3c_home" alt="W3C" height="48" width="72" /></a></p>
+<h1><a name="title" id="title" />Character Model for the World Wide Web 1.0: Normalization</h1>
+<h2><a name="w3c-doctype" id="w3c-doctype" />W3C Working Draft 1 May 2012</h2><dl><dt>This version:</dt>
+<dd>
+			<a href="http://www.w3.org/TR/2012/WD-charmod-norm-20120501/">http://www.w3.org/TR/2012/WD-charmod-norm-20120501/</a>
+		</dd><dt>Latest version:</dt><dd>
+			<a href="http://www.w3.org/TR/charmod-norm/">http://www.w3.org/TR/charmod-norm/</a>
+		</dd><dt>Previous versions:</dt>
+        <dd><a href="http://www.w3.org/TR/2005/WD-charmod-norm-20051027/">http://www.w3.org/TR/2005/WD-charmod-norm-20051027/</a></dd>
+        <dd><a href="http://www.w3.org/TR/2004/WD-charmod-norm-20040225/">http://www.w3.org/TR/2004/WD-charmod-norm-20040225/</a></dd><dt>Editors:</dt><dd>François Yergeau, Invited Expert (and before at Alis Technologies)</dd><dd>Martin J. Dürst, (until Dec 2004 while at W3C)</dd><dd>  Richard Ishida, W3C (and before at Xerox)</dd><dd>Addison Phillips, Invited Expert (and before at WebMethods)</dd><dd>Misha Wolf, (until Dec 2002 while at Reuters Ltd.)</dd><dd>Tex Texin, (until Dec 2004 while an Invited Expert, and before at Progress Software)</dd></dl><p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2012 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.eu/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p></div><hr /><div>
+<h2><a name="abstract" id="abstract" />Abstract</h2><p>Based on <cite>Character Model for the World Wide Web 1.0: Fundamentals</cite>
+				<a href="#charmod1">[CharMod]</a>, this Architectural Specification provides authors of specifications, software developers, and content developers with a common reference on the use of normalization of text and string identity  
+matching on the Web. The goal of this specification is to improve interoperable text manipulation on the World Wide Web.</p></div><div>
+<h2><a name="status" id="status" />Status of this Document</h2><p>
+				<em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+                <p class="backlight">
+This version of this document was published to indicate the Internationalization Core Working Group's intention to substantially alter or replace the recommendations found here with very different recommendations in the near future. Other than this note, this Working Draft is identical to the draft of 2005-10-27.</p>
+			<p>This is an updated W3C Working Draft of this document. The main difference from previous versions of this document is that it no longer proposes to rely exclusively on Early Uniform Normalization. Comments may
+		  be submitted by email to 
+		      <a href="mailto:www-international@w3.org">www-international@w3.org</a> (<a href="http://lists.w3.org/Archives/Public/www-international/">public
+		    archive</a>). A list of comments from an earlier last call  with their status can be found in the disposition of comments (<a href="http://www.w3.org/2002/06/charmod-lastcall2/">public version</a>, <a href="http://www.w3.org/International/Group/2002/charmod-lc/">Members only version</a>).</p><p>This document is published as part of the 
+		  <a href="http://www.w3.org/International/Activity">W3C
+			 Internationalization Activity</a> by the <a href="http://www.w3.org/International/core/">Internationalization Core Working Group</a>. The Working Group expects to advance this Working Draft to Recommendation Status (see <a href="http://www.w3.org/2004/02/Process-20040205/tr.html#maturity-levels">W3C document maturity levels</a>).</p><p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p>
+             
+             <p> This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>. W3C maintains a <a rel="disclosure" href="http://www.w3.org/2004/01/pp-impl/32113/status">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+             
+             
+             </div><div class="toc">
+<h2><a name="contents" id="contents" />Table of Contents</h2><p class="toc">1 <a href="#sec-Intro">Introduction</a><br />
+    1.1 <a href="#sec-GoalsScope">Goals and Scope</a><br />
+    1.2 <a href="#sec-Background">Background</a><br />
+    1.3 <a href="#sec-Notation">Terminology and Notation</a><br />
+2 <a href="#sec-Conformance">Conformance</a><br />
+3 <a href="#sec-Normalization">Normalization</a><br />
+    3.1 <a href="#sec-NormalizationMotivation">Motivation</a><br />
+        3.1.1 <a href="#sec-WhyNormalization">Why do we need character normalization?</a><br />
+        3.1.2 <a href="#sec-EarlyUniformNormalization">Early or late normalization</a><br />
+        3.1.3 <a href="#sec-ChoiceNFC">The choice of Normalization Form</a><br />
+    3.2 <a href="#sec-TextNormalization">Definitions for W3C Text Normalization</a><br />
+        3.2.1 <a href="#sec-NormalizingTranscoder">
+						Normalizing Transcoder
+					</a><br />
+        3.2.2 <a href="#sec-UnicodeNormalized">Unicode-normalized text</a><br />
+        3.2.3 <a href="#sec-IncludeNormalized">Include-normalized text</a><br />
+        3.2.4 <a href="#sec-FullyNormalized">Fully-normalized text</a><br />
+        3.2.5 <a href="#d0e799">
+						Normalization-sensitive operations
+					</a><br />
+        3.2.6 <a href="#d0e843">
+						Text-processing component
+					</a><br />
+        3.2.7 <a href="#d0e854">
+						Certified and suspect text
+					</a><br />
+    3.3 <a href="#sec-NormalizationExamples">Examples</a><br />
+        3.3.1 <a href="#sec-GeneralExamples">General examples</a><br />
+        3.3.2 <a href="#sec-XMLExamples">Examples of XML in a Unicode
+				encoding form</a><br />
+        3.3.3 <a href="#sec-Restrictions">Examples of restrictions on the use
+				of combining characters</a><br />
+    3.4 <a href="#sec-NormalizationApplication">Responsibility for Normalization</a><br />
+4 <a href="#sec-IdentityMatching">String Identity Matching</a><br />
+</p>
+<h3><a name="appendices" id="appendices" />Appendices</h3><p class="toc">A <a href="#sec-References">References</a><br />
+    A.1 <a href="#sec-NormativeReferences">Normative References</a><br />
+    A.2 <a href="#sec-OtherReferences">Other References</a><br />
+B <a href="#sec-ComposingChars">Composing Characters</a> (Non-Normative)<br />
+C <a href="#sec-n11n-resources">Resources for
+Normalization</a> (Non-Normative)<br />
+D <a href="#sec-Acknowledgements">Acknowledgements</a> (Non-Normative)<br />
+</p></div><hr /><div class="body"><div class="div1">
+<h2><a name="sec-Intro" id="sec-Intro" />1 Introduction</h2><div class="div2">
+<h3><a name="sec-GoalsScope" id="sec-GoalsScope" />1.1 Goals and Scope</h3><p>The goal of the Character Model for the World Wide
+Web is to facilitate use of the Web by all people,
+regardless of their language, script, writing system, and cultural conventions,
+in accordance with the <a href="http://www.w3.org/Consortium/mission"><cite>W3C
+goal of universal access</cite></a>. One basic prerequisite to achieve this goal
+is to be able to transmit and process the characters used around the world in a
+well-defined and well-understood way.</p><p>The main target audience of this specification is W3C specification developers. This specification
+and parts of it can be referenced from other W3C specifications. It defines conformance criteria for W3C specifications
+as well as other specifications.</p><p>Other audiences of this specification
+include software developers, content
+developers, and authors of specifications outside the W3C. Software developers
+and content developers implement and use W3C specifications. This
+specification
+defines some conformance criteria for implementations (software) and content
+that implement and use W3C specifications. It also helps software developers and
+content developers to understand the character-related provisions in W3C
+specifications.</p><p>The character model described in this specification
+provides authors of
+specifications, software developers, and content developers with a common
+reference for consistent, interoperable text manipulation on the World Wide Web.
+Working together, these three groups can build a more international Web.</p><p>Topics addressed in this part of the Character Model for the World Wide Web
+include early uniform
+normalization, late normalization and string identity matching.</p><p>Other parts of the Character Model address the fundamental aspects of
+the model (<a href="#charmod1">[CharMod]</a>) and Internationalized Resource Identifiers
+(IRI) conventions (<a href="#charmod3">[CharIRI]</a>).</p><p>Topics as yet not addressed or barely touched include fuzzy
+matching, and language tagging. Some of these topics may be addressed in a
+future version of this specification.</p><p>At the core of the model is the Universal Character Set (UCS), defined
+jointly by the Unicode Standard <a href="#unicode">[Unicode]</a> and ISO/IEC 10646
+<a href="#iso10646">[ISO/IEC 10646]</a>. In this document, <span class="new-term"> Unicode</span> is used as a
+synonym for the Universal Character Set. The model will allow Web documents
+authored in the world's scripts (and on different platforms) to be exchanged,
+read, and searched by Web users around the world.</p></div><div class="div2">
+<h3><a name="sec-Background" id="sec-Background" />1.2 Background</h3><p>This section provides some historical background on the topics
+addressed in this specification.</p><p>Starting with <cite>Internationalization of the Hypertext Markup Language
+</cite>
+					<a href="#rfc2070">[RFC 2070]</a>, the Web community has recognized the need
+for a character model for the World Wide Web. The first step towards building
+this model was the adoption of Unicode as the document character set for HTML.</p><p>The choice of Unicode was motivated by the fact that Unicode:
+
+  </p><ul><li><p>is the only universal character repertoire available,</p></li><li><p>provides a way of referencing characters independent of the
+      encoding of the text,</p></li><li><p>is being updated/completed carefully,</p></li><li><p>is widely accepted and implemented by industry.</p></li></ul><p>
+				</p><p>W3C adopted Unicode as the document character set for HTML in <a href="#html40">[HTML 4.0]</a>. The same approach was later used for specifications such as XML 1.0
+<a href="#xml10">[XML 1.0]</a> and CSS2 <a href="#css2">[CSS2]</a>. W3C specifications and
+applications now use Unicode as the common reference character set.</p><p>When data transfer on the Web remained mostly unidirectional (from server to
+browser), and where the main purpose was to render documents, the use of Unicode
+without specifying additional details was sufficient. However, the Web has
+grown:
+
+  </p><ul><li><p>Data transfers among servers, proxies, and clients, in all
+      directions, have increased.</p></li><li><p>Non-ASCII characters <a href="#iso646">[ISO/IEC 646]</a> are being used in
+      more and more places.</p></li><li><p>Data transfers between different protocol/format elements (such as
+        element/attribute names, URI components, and textual content) have
+        increased.</p></li><li><p>More and more APIs are defined, not just protocols and
+      formats.</p></li></ul><p>
+				</p><p>In short, the Web may be seen as a single, very large application (see
+<a href="#Nicol">[Nicol]</a>), rather than as a collection of small independent
+applications.</p><p>While these developments strengthen the requirement that Unicode be the basis
+of a character model for the Web, they also create the need for additional
+specifications on the application of Unicode to the Web. Some aspects of Unicode
+that require additional specification for the Web include:
+
+  </p><ul><li><p>Choice of Unicode encoding forms (UTF-8, UTF-16, UTF-32).</p></li><li><p>Counting characters, measuring string length in the presence
+      of variable-length character encodings and combining characters.</p></li><li><p>Duplicate encodings of characters (e.g. precomposed vs decomposed).</p></li><li><p>Use of control codes for various purposes (e.g. bidirectionality
+      control, symmetric swapping, etc.).</p></li></ul><p>
+				</p><p id="def-legacyEnc">It should be noted that such aspects also exist for legacy
+encodings (where <span class="new-term">legacy encoding</span> is taken to mean any character
+encoding not based on Unicode), and in many cases have been inherited by Unicode
+in one way or another from such legacy encodings.</p><p>The remainder of this specification presents
+additional requirements to ensure an interoperable character model for the Web, taking into
+account earlier work (from W3C, ISO and IETF).</p><p>The first few chapters of the Unicode Standard <a href="#unicode">[Unicode]</a>
+provide very useful background reading. The policies adopted by the  IETF for on
+the use of character sets on the Internet are documented in <a href="#rfc2277">[RFC 2277]</a>.</p><p>For information about the requirements that informed the development of
+important parts of this specification, see <cite>Requirements for String
+Identity Matching and String Indexing</cite>
+					<a href="#CharReq">[CharReq]</a>.</p></div><div class="div2">
+<h3><a name="sec-Notation" id="sec-Notation" />1.3 Terminology and Notation</h3><p id="def-recipient-producer">For the purpose of this specification, the
+<span class="new-term">producer</span> of text data is the sender of the data in the case of
+protocols, and the tool that produces the data in the case of formats. The
+<span class="new-term">recipient</span> of text data is the software module that receives the
+data.</p><div class="note"><p><span class="note-head">NOTE: </span>A software module may be both a recipient and a producer.</p></div><p>Unicode code points are denoted as U+hhhh, where "hhhh" is a
+sequence of at least four, and at most six hexadecimal digits.</p><p>Characters have been used in various examples that will not appear as
+intended unless you have the appropriate font. Care has been taken to ensure
+that the examples nevertheless remain understandable.</p></div></div><div class="div1">
+<h2><a name="sec-Conformance" id="sec-Conformance" />2 Conformance</h2><p>The key words "<span class="rfc2119">MUST</span>", "<span class="rfc2119">MUST
+		NOT</span>", "<span class="rfc2119">REQUIRED</span>", "<span class="rfc2119">SHALL</span>",
+		"<span class="rfc2119">SHALL NOT</span>", <span class="rfc2119">SHOULD</span>", "<span class="rfc2119">SHOULD
+		NOT</span>", "<span class="rfc2119">RECOMMENDED</span>", "<span class="rfc2119">MAY</span>" and
+		"<span class="rfc2119">OPTIONAL</span>" in this document are to be interpreted as
+		described in RFC 2119 <a href="#rfc2119">[RFC 2119]</a>.</p><div class="note"><p><span class="note-head">NOTE: </span>RFC 2119 makes it clear that requirements that use
+		    <span class="rfc2119">SHOULD</span> are not optional and must be complied with unless
+			 there are specific reasons not to: "<span class="quote">This word, or the adjective
+			 "RECOMMENDED", mean that there may exist valid reasons in particular
+			 circumstances to ignore a particular item, but the full implications must be
+			 understood and carefully weighed before choosing a different
+			 course.</span>"
+				</p></div><p>This specification places conformance criteria
+		  on specifications, on software and on Web content. To aid the reader, all
+		  conformance criteria are
+		  preceded by '<span class="qterm">[X]</span>' where '<span class="qchar">X</span>' is one of
+		  '<span class="qchar">S</span>' for specifications, '<span class="qchar">I</span>' for software
+		  implementations, and '<span class="qchar">C</span>' for Web content. These markers indicate
+		  the relevance of the conformance criteria and allow the
+		  reader to quickly locate relevant conformance criteria by searching through this document.</p><p>Specifications conform to this document if they:</p><ol type="1"><li><p> do not violate any conformance criteria preceded by [S],</p></li><li><p>document the reason for any deviation from criteria where the imperative is <span class="rfc2119">SHOULD</span>, <span class="rfc2119">SHOULD NOT</span>, or <span class="rfc2119">RECOMMENDED</span>,</p></li><li><p> make it a conformance requirement for implementations to conform to this document,</p></li><li><p> make it a conformance requirement for content to conform to this document.</p></li></ol><p>Software conforms to this document if it does not
+		  violate any conformance criteria preceded by [I].</p><p>Content conforms to this document if it does not violate any conformance criteria preceded by [C].</p><div class="note"><p><span class="note-head">NOTE: </span>Requirements placed on specifications might indirectly cause requirements to be placed on implementations or content that claim to conform to those specifications.</p></div><p>Where this specification contains
+		  a procedural description, it is to be understood as a way to
+		  specify the desired external behavior. Implementations can
+		  use other means of achieving the same results, as
+		  long as observable behavior is not affected.</p></div><div class="div1">
+<h2><a name="sec-Normalization" id="sec-Normalization" />3 Normalization</h2><p>This chapter discusses text normalization for the Web.
+		  <a href="#sec-NormalizationMotivation"><b>3.1 Motivation</b></a> discusses the need for
+		  normalization.
+		  <a href="#sec-TextNormalization"><b>3.2 Definitions for W3C Text Normalization</b></a> defines the various types of
+		  normalization and <a href="#sec-NormalizationExamples"><b>3.3 Examples</b></a> gives supporting
+		  examples. <a href="#sec-NormalizationApplication"><b>3.4 Responsibility for Normalization</b></a> assigns responsibilities
+		  to various components and situations. The requirements for early uniform
+		  normalization are discussed in <a href="#CharReq">[CharReq]</a>, <a href="http://www.w3.org/TR/WD-charreq#3">section 3</a>.</p><div class="div2">
+<h3><a name="sec-NormalizationMotivation" id="sec-NormalizationMotivation" />3.1 Motivation</h3><div class="div3">
+<h4><a name="sec-WhyNormalization" id="sec-WhyNormalization" />3.1.1 Why do we need character normalization?</h4><p>Text in computers can be encoded in one of many character encodings. In
+				addition, some character encodings allow multiple representations for the
+				'<span class="qterm">same</span>' string, and Web languages have escape mechanisms that
+				introduce even more equivalent representations. For instance, in ISO 8859-1 the
+				letter '<span class="qchar">ç</span>' can only be represented as the single character E7
+				'<span class="qchar">ç</span>', but in a Unicode encoding it can be represented as the single
+				character U+00E7 '<span class="qchar">ç</span>'
+						<em>or</em> the sequence U+0063
+				'<span class="qchar">c</span>' U+0327 '<span class="qchar">¸</span>'.  In HTML it could be additionally
+				represented as <code>&amp;ccedil;</code> or <code>&amp;#xE7;</code> or <code>&amp;#231;</code> (five equivalent representations in total).</p><p>There are a number of fundamental operations that are sensitive to
+				these multiple representations: string matching, indexing, searching, sorting,
+				regular expression matching, selection, etc. In particular, the proper
+				functioning of the Web (and of much other software) depends to a large extent
+				on string matching. Examples of string matching abound: parsing element and
+				attribute names in Web documents, matching CSS selectors to the nodes in a
+				document, matching font names in a style sheet to the names known to the
+				operating system, matching URI pieces to the resources in a server, matching
+				strings embedded in an ECMAScript program to strings typed in by a Web form
+				user, matching the parts of an XPath expression (element names, attribute names
+				and values, content, etc.) to what is found in an XML instance, etc.</p><p>String matching is usually taken for granted and performed by
+				comparing two strings byte for byte, but the existence on the Web of multiple
+				character representations means that it is actually non-trivial. Binary
+				comparison <em>does not work</em> if the strings are not in the same
+				character encoding (e.g. an EBCDIC style sheet being directly applied to an ASCII
+				document, or a font specification in a Shift_JIS style sheet directly used on a
+				system that maintains font names in UTF-16) or if they are in the same character encoding
+				but show variations allowed for the '<span class="qterm">same</span>' string by the use of
+				combining characters or by the constructs of Web languages.</p><p>Incorrect string matching can have far reaching consequences,
+				including the creation of security holes. Consider a contract, encoded in XML,
+				for buying goods: each item sold is described in a <code>Stück</code> element;
+				unfortunately, "<span class="quote">Stück</span>" is subject to different representations
+				in the character encoding of the contract. Suppose that the contract is viewed
+				and signed by means of a user agent that looks for <code>Stück</code> elements,
+				extracts them (matching on the element name), presents them to the user and
+				adds up their prices. If different instances of the <code>Stück</code> element
+				happen to be represented differently in a particular contract, then the buyer
+				and seller may see (and sign) different contracts if their respective user
+				agents perform string identity matching differently, which is fairly likely in
+				the absence of a well-defined specification for string matching. The absence of
+				a well-defined specification would also mean that there would be no way to
+				resolve the ensuing contractual dispute.</p><p>Solving the string matching problem involves normalization, which
+				in a nutshell means bringing the two strings to be compared to a common,
+				canonical encoding prior to performing binary matching. (For additional steps
+				involved in string matching see <a href="#sec-IdentityMatching"><b>4 String Identity Matching</b></a>.)</p><p>There are options in the exact way normalization can be used to
+				achieve correct behavior of normalization-sensitive operations such as string
+				matching. These options lie along two axes: i) <em>when</em> normalization is performed, and ii) <em>what</em> canonical encoding is used. The next subsections discuss these axes.</p></div><div class="div3">
+<h4><a name="sec-EarlyUniformNormalization" id="sec-EarlyUniformNormalization" />3.1.2 Early or late normalization</h4><p>The first axis is a choice of <em>when</em> normalization
+				occurs: early (when strings are created) or late (when strings are compared).
+				The former amounts to establishing a canonical encoding for all data that is
+				transmitted or stored, so that it doesn't need any normalization later, before
+				being used. The latter is the equivalent of mandating '<span class="qterm">smart</span>'
+				compare functions, which will take care of any encoding differences.</p><p>There are several advantages to <em>early</em> normalization, as follows: 
+				</p><ul><li><p>Almost all legacy data as well as data created by current
+						software is normalized (if using <a title="" href="#sec-ChoiceNFC">NFC</a>).</p></li><li><p>The number of Web components that generate or transform text
+						is considerably smaller than the number of components that receive text and
+						need to perform matching or other processes requiring normalized text.</p></li><li><p>Current receiving components (browsers, XML parsers, etc.)
+						implicitly assume early normalization by not performing or verifying
+						normalization themselves. This is a vast legacy.</p></li><li><p>Web components that generate and process text are in a much
+						better position to do normalization than other components; in particular, they
+						may be aware that they deal with a restricted repertoire only, which simplifies
+						the process of normalization.</p></li><li><p>Not all components of the Web that implement functions such
+						as string matching can reasonably be expected to do normalization. This, in
+						particular, applies to very small components and components in the lower layers
+						of the architecture.</p></li><li><p>Forward-compatibility issues can be dealt with more easily:
+						less software needs to be updated, namely only the software that generates
+						newly introduced characters.</p></li><li><p>It is a prerequisite for comparison of encrypted strings
+						(see <a href="#CharReq">[CharReq]</a>, 
+						<a href="http://www.w3.org/TR/WD-charreq#2.7">section
+						  2.7</a>).</p></li></ul><p>
+					</p><p>Early normalization also has downsides: everyone must play by the same rules, and things break down when a producer of text data doesn't play by the rules.  Furthermore, the location of the error (typically at a recipient that assumes proper normalization) is remote from the source (the faulty producer).</p><p>When recipients cannot count on early normalization, then some form of late normalization is the only way to ensure proper results of string comparison and other normalization-sensitive operations.</p></div><div class="div3">
+<h4><a name="sec-ChoiceNFC" id="sec-ChoiceNFC" />3.1.3 The choice of Normalization Form</h4><p>The second axis is a choice of canonical encoding. This choice
+				needs only be made if early normalization is chosen. With late normalization,
+				the canonical encoding would be an internal matter of the smart compare
+				function, which doesn't need any wide agreement or standardization.</p><p>By choosing a single canonical encoding, it is
+				ensured that normalization is uniform throughout
+			 the web. Hence the two axes lead us to the name '<span class="qterm">early uniform
+			 normalization</span>'.</p><p>The Unicode Consortium provides four standard normalization forms
+				(see <cite>Unicode Normalization Forms</cite>
+						<a href="#UTR15">[UTR #15]</a>).
+				These forms differ in 1) whether they normalize towards decomposed characters
+				(NFD, NFKD) or precomposed characters (NFC, NFKC) and 2) whether 
+						the normalization process erases compatibility distinctions (NFKD, NFKC) or not (NFD, NFC).</p><p>For use on the Web, it is important not to lose the so-called
+				compatibility distinctions, which may be important (see <a href="#UXML">[UXML]</a>
+						<a href="http://www.w3.org/TR/unicode-xml/#Compatibility">Chapter
+				4</a> for a discussion). The NFKD and NFKC normalization forms are therefore
+				excluded. Among the remaining two forms, NFC has the advantage that almost all
+				legacy data (if transcoded trivially, one-to-one, to a Unicode encoding) as well as data created by
+				current software is already in this form; NFC also has a slight compactness
+				advantage and a better match to user expectations with respect to the character
+				vs. <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-grapheme-string">grapheme</a> issue. This document
+				therefore chooses NFC as the base for Web-related early normalization.</p><div class="note"><p><span class="note-head">NOTE: </span>Roughly speaking, <span class="new-term">NFC</span> is defined such that each
+				  combining character sequence (a base character followed by one or more
+				  combining characters) is replaced, as far as possible, by a canonically
+				  equivalent precomposed character. Text in a
+				  <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a> is said to
+				  be in NFC if it doesn't contain any combining sequence that could be replaced
+				  and if any remaining combining sequence is in canonical order.</p></div><p>For a list of programming resources related to normalization, see
+				<a href="#sec-n11n-resources"><b>C Resources for
+Normalization</b></a>.</p></div></div><div class="div2">
+<h3><a name="sec-TextNormalization" id="sec-TextNormalization" />3.2 Definitions for W3C Text Normalization</h3><p>For use on the Web, this document defines Web-related text
+			 normalization forms by starting with Unicode Normalization Form C (<a title="" href="#sec-ChoiceNFC">NFC</a>),
+			 and additionally addressing the issues of <a title="" href="#def-legacyEnc">legacy
+			 encodings</a>, character escapes, includes, and character and markup
+			 boundaries. Examples illustrating some of these definitions can be found in
+			 <a href="#sec-NormalizationExamples"><b>3.3 Examples</b></a>.</p><div class="div3">
+<h4><a name="sec-NormalizingTranscoder" id="sec-NormalizingTranscoder" />3.2.1 
+						Normalizing Transcoder
+					</h4><p id="def-normalizing-transcoder">A <span class="new-term">normalizing
+				transcoder</span> is a transcoder that converts from a
+				<a title="" href="#def-legacyEnc">legacy encoding</a> to a
+				<a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a>
+						<em>and</em> ensures that the result is in Unicode Normalization Form C
+				 (see <a href="#sec-UnicodeNormalized"><b>3.2.2 Unicode-normalized text</b></a>). For most legacy encodings, it is
+				 possible to construct a normalizing transcoder (by using any transcoder
+				 followed by a normalizer); it is not possible to do so if
+				 the encoding's <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-repertoire">repertoire</a> contains
+				 characters not represented in Unicode.</p></div><div class="div3">
+<h4><a name="sec-UnicodeNormalized" id="sec-UnicodeNormalized" />3.2.2 Unicode-normalized text</h4><p>Text is, for the purposes of this specification,
+				<span class="new-term">Unicode-normalized</span> if it is in a
+				<a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a>
+						<em>and</em> is in Unicode Normalization Form C, according to a version of
+				Unicode Standard Annex #15: Unicode Normalization Forms <a href="#UTR15">[UTR #15]</a>
+				at least as recent as the oldest version of the Unicode Standard that contains all the
+				characters actually present in the text, but no earlier than version 3.2
+				<a href="#unicode32">[Unicode  3.2]</a>.</p></div><div class="div3">
+<h4><a name="sec-IncludeNormalized" id="sec-IncludeNormalized" />3.2.3 Include-normalized text</h4><p id="def-include">Markup languages, style languages and programming
+				languages often offer facilities for including a piece of text inside another.
+				An <span class="new-term">include</span> is an instance of a syntactic device specified in a
+				language to include text at the position of the include,
+				replacing the include itself. Examples of includes are entity references in
+				XML, @import rules in CSS and the #include preprocessor statement in C/C++.
+				<a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#sec-Escaping">Character escapes</a> are a special case of
+				includes where the included entity is predetermined by the language.</p><p>Text is <span class="new-term">include-normalized</span> if: 
+				</p><ol type="1"><li><p>the text is <a title="" href="#sec-UnicodeNormalized">Unicode-normalized</a>
+									<em>and</em> does
+						not contain any <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#sec-Escaping">character escapes</a> or
+						<a title="" href="#def-include">includes</a> whose expansion would cause the
+						text to become no longer Unicode-normalized; or</p></li><li><p>the text is in a <a title="" href="#def-legacyEnc">legacy
+						encoding</a>
+									<em>and</em>, if it were transcoded to a
+						<a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a> by a
+						<a href="#def-normalizing-transcoder">normalizing transcoder</a>, the
+						resulting text would satisfy clause 1 above.</p></li></ol><p>
+					</p><div class="note"><p><span class="note-head">NOTE: </span>A consequence of this definition is that legacy text (i.e. text
+				  in a legacy encoding) is always include-normalized unless i) a normalizing
+				  transcoder cannot exist for that encoding (e.g. because the repertoire contains
+				  characters not in Unicode) or ii) the text contains character escapes or
+				  includes which, once expanded, result in un-normalized text.</p></div><div class="note"><p><span class="note-head">NOTE: </span>The specification of include-normalization relies on the
+				syntax for character escapes and includes defined by the (computer) language in
+				use. For plain text (no character escapes or
+				includes) in a Unicode encoding form, include-normalization and
+				Unicode-normalization are equivalent.</p></div></div><div class="div3">
+<h4><a name="sec-FullyNormalized" id="sec-FullyNormalized" />3.2.4 Fully-normalized text</h4><p id="def-construct">Formal languages define
+				<span class="new-term">constructs</span>, which are identifiable pieces, occurring in instances
+				of the language, such as comments, identifiers, element tags, processing
+				instructions, runs of <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-char-data">character data</a>,
+				etc. During the normal processing of <a title="" href="#sec-IncludeNormalized">include-normalized</a> text, these various
+				constructs may be moved, removed (e.g. removing comments) or merged (e.g.
+				merging all the <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-char-data">character data</a> within an
+				element as done by the <code>string()</code> function of XPath), creating opportunities for text to become
+				denormalized. The software performing those operations, or other software down the line that needs to perform normalization-sensitive operations, then has to re-normalize
+				the result, which is a burden. One way to avoid such denormalization is to make
+				sure that the various important constructs never begin with a character such
+				that appending that character to a normalized string can cause the string to
+				become denormalized. A <span class="new-term">composing character</span> is a character that is
+				one or both of the following: 
+				</p><ol type="1"><li><p>the second character in the canonical decomposition mapping of some
+character that is not listed in the Composition Exclusion Table defined in 
+						<a href="#UTR15">[UTR #15]</a>, or</p></li><li><p>of non-zero canonical combining class as defined in
+						<a href="#unicode">[Unicode]</a>
+									.</p></li></ol><p>
+					</p><p>Please consult Appendix <a href="#sec-ComposingChars"><b>B Composing Characters</b></a> for a
+				discussion of composing characters, which are not exactly the same as Unicode
+				combining characters.</p><p>Text is <span class="new-term">fully-normalized</span> if: 
+				</p><ol type="1"><li><p>the text is in a <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a>, is
+						<a title="" href="#sec-IncludeNormalized">include-normalized</a> and none of
+						the constructs comprising the text begin with a <a title="" href="#def-construct">composing character</a> or a
+						<a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#sec-Escaping">character escape</a> representing a composing
+						character; or</p></li><li><p>the text is in a <a title="" href="#def-legacyEnc">legacy
+						encoding</a> and, if it were transcoded to a
+						<a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a> by a
+						<a href="#def-normalizing-transcoder">normalizing transcoder</a>, the
+						resulting text would satisfy clause 1 above.</p></li></ol><p>
+					</p><div class="note"><p><span class="note-head">NOTE: </span>Full-normalization is specified against the context of a
+				  (computer) language (or the absence thereof), which specifies the form of
+				  character escapes and <a title="" href="#def-include">includes</a> and the
+				  separation into constructs. For plain text (no includes, no constructs, no
+				  character escapes) in a Unicode encoding form, full-normalization and
+				  Unicode-normalization are equivalent.</p></div><p>Identification of the constructs that should be prohibited from
+				beginning with a <a title="" href="#def-construct">composing character</a>
+				(the <span class="new-term">relevant constructs</span>) is language-dependent. As specified in
+				<a href="#sec-NormalizationApplication"><b>3.4 Responsibility for Normalization</b></a>, it is the responsibility of the
+				specification for a language to specify exactly what constitutes a relevant
+				construct. This may be done by specifying important boundaries, taking into
+				account which operations would benefit the most from being protected against
+				denormalization. The relevant constructs are then defined as the spans of text
+				between the boundaries. At a minimum, for those languages which have these
+				notions, the important boundaries are entity (include) boundaries as well as
+				the boundaries between most <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-char-data">markup</a> and
+				<a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-char-data">character data</a>. Many languages will
+				benefit from defining more boundaries and therefore finer-grained
+				full-normalization constructs.</p><div class="note"><p><span class="note-head">NOTE: </span>In general, it will be advisable <em>not</em> to include
+				  character escapes designed to express arbitrary characters among the relevant
+				  constructs; the reason is that including them would prevent the expression of
+				  combining sequences using character escapes (e.g. '<span class="qchar">q&amp;#x30C;</span>'
+				  for q-caron), which is especially important in legacy encodings that lack the
+				  desired combining marks.</p></div><div class="note"><p><span class="note-head">NOTE: </span>Full-normalization is closed under concatenation: the
+				  concatenation of two fully-normalized strings is also fully-normalized. As a
+				  result, a side benefit of including entity boundaries in the set of boundaries
+				  important for full-normalization is that the state of normalization of a
+				  document that includes entities can be assessed <em>without</em> expanding
+				  the <a title="" href="#def-include">includes</a>, if the included entities are
+				  known to be fully-normalized. If all the entities are known to be
+				  include-normalized <em>and</em> not to start with a
+				  <a title="" href="#def-construct">composing character</a>, then it can be
+				  concluded that including the entities would not denormalize the document.</p></div></div><div class="div3">
+<h4><a name="d0e799" id="d0e799" />3.2.5 
+						Normalization-sensitive operations
+					</h4><p id="def-normalization-sensitive">An operation
+				 is <span class="new-term">normalization-sensitive</span> if its output(s) are different
+				 depending on the state of normalization of the input(s); if the output(s) are
+				 textual, they are deemed different only if they would remain different were
+				 they to be normalized. These operations are any that involve comparison of
+				 characters or character counting, as well as some other operations such as
+				 ‘delete first character’ or ‘delete last character’. 
+			    </p><div class="example"><p><span class="example-head">EXAMPLE: </span>Consider the string <code>normalisé</code>, where the '<span class="qchar">é</span>' may be a single 
+	character (in NFC) or two.  The following are three examples of  normalization-sensitive operations involving this string. Counting the number of characters may yield either 9 or 10, depending 
+	on the state of normalization.  Deleting the last character may yield either <code>normalis</code> or
+	<code>normalise</code> (no accent). 
+							Binary-comparing
+							<code>normalisé</code> to <code>normalisé</code>
+	matches if both are in the same state of normalization, but doesn't match otherwise.</p></div><div class="example"><p><span class="example-head">EXAMPLE: </span>Examples of operations that are <em>not</em> normalization-sensitive are normalization, and the copying or deletion of an entire document.</p></div></div><div class="div3">
+<h4><a name="d0e843" id="d0e843" />3.2.6 
+						Text-processing component
+					</h4><p id="def-TPC">A <span class="new-term">text-processing component</span> is a component
+				 that recognizes data as text. This specification does not specify the
+				 boundaries of a text-processing component, which may be as small as one line of
+				 code or as large as a complete application. A text-processing component may
+				 receive text, produce text, or both.</p></div><div class="div3">
+<h4><a name="d0e854" id="d0e854" />3.2.7 
+						Certified and suspect text
+					</h4><p>
+						In the following definitions, the word '<span class="qterm">normalized</span>'
+				may stand for either '<span class="qterm">include-normalized</span>' or
+				'<span class="qterm">fully-normalized</span>', depending on which is most appropriate for
+				the specification or implementation under consideration.
+					</p><p>
+						<span class="new-term">Certified text</span> is text which
+			 satisfies at least one of the following conditions: 
+			 </p><ol type="1"><li><p>it has been confirmed through inspection that the text is in
+					 normalized form</p></li><li><p>the source of the text (a 
+									<a title="" href="#def-TPC">text-processing
+					 component</a>
+									) is 
+									known to produce only normalized
+					 text.</p></li></ol><p>
+					</p><p id="def-suspect-text">
+						<span class="new-term">Suspect text</span> is text which is not certified.</p><div class="note"><p><span class="note-head">NOTE: </span>To normalize text, it is in general sufficient to store the last seen character, but in certain cases (a sequence of combining marks) a buffer of theoretically unlimited length is necessary. However, for normalization checking no such buffer is necessary, only a few variables.  <a href="#sec-n11n-resources"><b>C Resources for
+Normalization</b></a> points to some compact code that shows how to check normalization without an expanding buffer.</p></div></div></div><div class="div2">
+<h3><a name="sec-NormalizationExamples" id="sec-NormalizationExamples" />3.3 Examples</h3><p>In some of the following examples, '<span class="qchar">¸</span>' is used to
+			 depict the character U+0327 <span class="uname">COMBINING CEDILLA</span>, for the purposes
+			 of illustration. Had a real U+0327 been used instead of this spacing
+			 (non-combining) variant, some browsers might combine it with a preceding
+			 '<span class="qchar">c</span>', resulting in a display indistinguishable from a U+00E7
+			 '<span class="qchar">ç</span>' and a loss of understandability of the examples. In addition,
+			 if the sequence c + combining cedilla were present, this document would not be
+			 include-normalized.</p><p>It is also assumed that the example strings are relevant constructs
+			 for the purposes of full-normalization.</p><div class="div3">
+<h4><a name="sec-GeneralExamples" id="sec-GeneralExamples" />3.3.1 General examples</h4><p>The string <code>suçon</code> (U+0073 U+0075 U+00E7 U+006F U+006E) encoded in a <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a>, is Unicode-normalized, include-normalized and fully-normalized. The same
+				string encoded in a <a title="" href="#def-legacyEnc">legacy encoding</a> for
+				which there exists a normalizing transcoder would be both include-normalized
+				and fully-normalized but not Unicode-normalized (since not in a Unicode
+				encoding form).</p><p>In an XML or HTML context, the string <code>su&amp;#xE7;on</code> is also include-normalized, fully-normalized and, if encoded in a
+				Unicode encoding form, Unicode-normalized. Expanding &amp;#xE7; yields <code>suçon</code> as above, which contains no replaceable combining sequence.</p><p>The string <code>suc¸on</code> (U+0073 U+0075 U+0063 <em>U+0327</em> U+006F U+006E), where U+0327
+				is the <span class="uname">COMBINING CEDILLA</span>, encoded in a Unicode encoding form, is
+				not Unicode-normalized (since the combining sequence '<span class="qchar">c¸</span>' (U+0063
+				U+0327) should appear instead as the precomposed '<span class="qchar">ç</span>' (U+00E7)). As a
+				consequence this string is neither include-normalized (since in a Unicode
+				encoding form but not Unicode-normalized) nor fully-normalized (since not
+				include-normalized). Note however that the string <code>sub¸on</code> (U+0073 U+0075 <em>U+0062</em> U+0327 U+006F U+006E) in a Unicode
+				encoding form <em>is</em> Unicode-normalized since there is no precomposed form
+				of '<span class="qchar">b</span>' plus cedilla. It is also include-normalized and
+				fully-normalized.</p><p>In plain text the string <code>suc&amp;#x0327;on</code> is Unicode-normalized, since plain text doesn't recognize that
+				&amp;#x0327; represents a character in XML or HTML and considers it just a
+				sequence of non-replaceable characters.</p><p>In an XML or HTML context, however, expanding &amp;#x0327; yields
+				the string <code>suc¸on</code> (U+0073 U+0075 U+0063 <em>U+0327</em> U+006F U+006E) which is not
+				Unicode-normalized ('<span class="qchar">c¸</span>' is
+			 replaceable by '<span class="qchar">ç</span>'). As a consequence the string is neither
+			 include-normalized nor fully-normalized. As another example, if the entity
+			 reference <code>&amp;word-end;</code> refers to an entity containing <code>¸on</code> (U+0327 U+006F U+006E), then the string <code>suc&amp;word-end;</code> is not include-normalized for the same reasons.</p><p>In an XML or HTML context, expanding &amp;#x0327; in the string <code>sub&amp;#x0327;on</code> yields the string <code>sub¸on</code> which <em>is</em> Unicode-normalized since there is no precomposed
+				character for '<span class="qterm">b cedilla</span>' in NFC. This string is therefore also
+				include-normalized. Similarly, the string <code>sub&amp;word-end;</code> (with <code>&amp;word-end;</code> as above) is include-normalized, for the same reasons.</p><p>In an XML or HTML context, the strings <code>¸on</code> (U+0327 U+006F U+006E) and <code>&amp;#x0327;on</code> are not fully-normalized, as they begin with a composing character
+				(after expansion of the character escape for the second). However, both are
+				Unicode-normalized (if expressed in a Unicode encoding form) and
+				include-normalized.</p><p>The following table consolidates the above examples. Normalized
+				forms are indicated using '<span class="qchar">Y</span>', a hyphen means '<span class="qterm">not
+				normalized</span>'.</p><div class="figure" align="center"><table border="1" cellpadding="5" cellspacing="0" summary="Consolidated table of normalization examples"><thead><tr><th>String</th><th>Encoding</th><th>Context</th><th>Unicode-normalized</th><th>Include-normalized</th><th>Fully-normalized</th></tr></thead><tbody><tr align="center"><td rowspan="4">suçon</td><td rowspan="2">Unicode</td><td>Plain
+						text</td><td>Y</td><td>Y</td><td>Y</td></tr><tr align="center"><td>XML/HTML</td><td>Y</td><td>Y</td><td>Y</td></tr><tr align="center"><td rowspan="2">Legacy</td><td>Plain
+						text</td><td>-</td><td>Y</td><td>Y</td></tr><tr align="center"><td>XML/HTML</td><td>-</td><td>Y</td><td>Y</td></tr><tr align="center"><td rowspan="4">su&amp;#xE7;on</td><td rowspan="2">Unicode</td><td>Plain text</td><td>Y</td><td>Y</td><td>Y</td></tr><tr align="center"><td>XML/HTML</td><td>Y</td><td>Y</td><td>Y</td></tr><tr align="center"><td rowspan="2">Legacy</td><td>Plain
+						text</td><td>-</td><td>Y</td><td>Y</td></tr><tr align="center"><td>XML/HTML</td><td>-</td><td>Y</td><td>Y</td></tr><tr align="center"><td rowspan="2">suc¸on</td><td rowspan="2">Unicode</td><td>Plain text</td><td>-</td><td>-</td><td>-</td></tr><tr align="center"><td>XML/HTML</td><td>-</td><td>-</td><td>-</td></tr><tr align="center"><td rowspan="4">suc&amp;#x327;on</td><td rowspan="2">Unicode</td><td>Plain text</td><td>Y</td><td>Y</td><td>Y</td></tr><tr align="center"><td>XML/HTML</td><td>Y</td><td>-</td><td>-</td></tr><tr align="center"><td rowspan="2">Legacy</td><td>Plain
+						text</td><td>-</td><td>Y</td><td>Y</td></tr><tr align="center"><td>XML/HTML</td><td>-</td><td>-</td><td>-</td></tr><tr align="center"><td rowspan="2">¸on</td><td rowspan="2">Unicode</td><td>Plain
+						text</td><td>Y</td><td>Y</td><td>-</td></tr><tr align="center"><td>XML/HTML</td><td>Y</td><td>Y</td><td>-</td></tr><tr align="center"><td rowspan="4">&amp;#x327;on</td><td rowspan="2">Unicode</td><td>Plain text</td><td>Y</td><td>Y</td><td>Y</td></tr><tr align="center"><td>XML/HTML</td><td>Y</td><td>Y</td><td>-</td></tr><tr align="center"><td rowspan="2">Legacy</td><td>Plain
+						text</td><td>-</td><td>Y</td><td>Y</td></tr><tr align="center"><td>XML/HTML</td><td>-</td><td>Y</td><td>-</td></tr></tbody></table></div></div><div class="div3">
+<h4><a name="sec-XMLExamples" id="sec-XMLExamples" />3.3.2 Examples of XML in a Unicode
+				encoding form</h4><p>Here is another summary table, with more examples but limited to
+				XML in a <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a>. The following list describes what the entities
+				contain and special character usage. Normalized forms are indicated using
+				'<span class="qchar">Y</span>'. There is no precomposed '<span class="qterm">b with cedilla</span>' in NFC.
+				
+				</p><ul><li><p>
+									"<span class="quote">&amp;ccedil;</span>"
+									<span class="uname">LATIN SMALL LETTER C WITH
+						CEDILLA</span>
+								</p></li><li><p>
+									"<span class="quote">&amp;cedilla;</span>"
+									<span class="uname">CEDILLA</span>
+						(combining)</p></li><li><p>
+									"<span class="quote">&amp;c;</span>"
+									<span class="uname">LATIN SMALL LETTER
+						C</span>
+								</p></li><li><p>
+									"<span class="quote">&amp;b;</span>"
+									<span class="uname">LATIN SMALL LETTER
+						B</span>
+								</p></li><li><p>
+									"<span class="quote">¸</span>"
+									<span class="uname">CEDILLA</span> (combining)</p></li><li><p>
+									"<span class="quote">/</span>" (immediately before '<span class="qterm">on</span>' in
+						last example) <span class="uname">COMBINING LONG SOLIDUS OVERLAY</span>
+								</p></li></ul><p>
+					</p><div class="figure" align="center"><table border="1" cellpadding="5" cellspacing="0" summary="A table summarising what combinations of characters, character escapes, includes and constructs correspond to what type of normalization."><thead><tr><th>
+						String</th><th align="center">Unicode-normalized</th><th align="center">Include-normalized</th><th align="center">Fully-normalized</th></tr></thead><tbody><tr><td>suçon</td><td align="center">Y</td><td align="center">Y</td><td align="center">Y</td></tr><tr><td>sub¸on</td><td align="center">Y</td><td align="center">Y</td><td align="center">Y</td></tr><tr><td>su&amp;#xE7;on</td><td align="center">Y</td><td align="center">Y</td><td align="center">Y</td></tr><tr><td>sub&amp;#x327;on</td><td align="center">Y</td><td align="center">Y</td><td align="center">Y</td></tr><tr><td>su&amp;#x62;¸on</td><td align="center">Y</td><td align="center">Y</td><td align="center">Y</td></tr><tr><td>su&amp;ccedill;on</td><td align="center">Y</td><td align="center">Y</td><td align="center">Y</td></tr><tr><td>su&lt;![CDATA[çon]]&gt;</td><td align="center">Y</td><td align="center">Y</td><td align="center">Y</td></tr><tr><td>su&amp;b;¸on</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>sub&amp;cedilla;on</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>suc&lt;!--comment--&gt;¸on</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>sub&lt;!--comment--&gt;¸on</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>suc&lt;em&gt;¸&lt;/em&gt;on</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>sub&lt;em&gt;¸&lt;/em&gt;on</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>suc&lt;?proc-instr?&gt;¸on</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>sub&lt;?proc-instr?&gt;¸on</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>sub&lt;![CDATA[¸on]]&gt;</td><td align="center">Y</td><td align="center">Y</td><td align="center">-</td></tr><tr><td>su&amp;c;¸on</td><td align="center">Y</td><td align="center">-</td><td align="center">-</td></tr><tr><td>suc&amp;#x327;on</td><td align="center">Y</td><td align="center">-</td><td align="center">-</td></tr><tr><td>su&amp;#x63;¸on</td><td align="center">Y</td><td align="center">-</td><td align="center">-</td></tr><tr><td>suc&amp;cedilla;on</td><td align="center">Y</td><td align="center">-</td><td align="center">-</td></tr><tr><td>suc&lt;![CDATA[¸on]]&gt;</td><td align="center">Y</td><td align="center">-</td><td align="center">-</td></tr><tr><td>suc¸on</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr><tr><td>suç&lt;em&gt;/on&lt;/em&gt;</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr></tbody></table></div><div class="note"><p><span class="note-head">NOTE: </span> From the last example in the table above, it follows that it is
+				  impossible to produce a normalized XML or HTML document containing the
+				  character U+0338 <span class="uname">COMBINING LONG SOLIDUS OVERLAY</span> immediately
+				  following an element tag, comment, CDATA section or processing instruction,
+				  since the U+0338 '<span class="qchar">/</span>' combines with the '<span class="qchar">&gt;</span>'
+				  (yielding U+226F <span class="uname">NOT GREATER-THAN</span>). It is noteworthy that U+0338
+				  <span class="uname">COMBINING LONG SOLIDUS OVERLAY</span> also combines with
+				  '<span class="qchar">&lt;</span>', yielding U+226E <span class="uname">NOT LESS-THAN</span>.
+				  Consequently, U+0338 <span class="uname">COMBINING LONG SOLIDUS OVERLAY</span> should
+				  remain excluded from the initial character of XML identifiers.</p></div></div><div class="div3">
+<h4><a name="sec-Restrictions" id="sec-Restrictions" />3.3.3 Examples of restrictions on the use
+				of combining characters</h4><p>Include-normalization and full-normalization create restrictions
+				on the use of combining characters. The following examples discuss various such
+				potential restrictions and how they can be addressed.</p><p>Full-normalization prevents the markup of an isolated combining
+				mark, for example for styling it differently from its base character (<code>Benoi&lt;span style='color: blue'&gt;^&lt;/span&gt;t</code>, where '<span class="qchar">^</span>' represents a combining circumflex). However,
+				the equivalent effect can be achieved by assigning a class to the accents in an
+				SVG font or using equivalent technology. 
+				<a href="images/benoit.svg">View an example using SVG</a> (SVG-enabled
+				browsers only).</p><p>Full-normalization prevents the use of entities for expressing
+				composing characters. This limitation can be circumvented by using character
+				escapes or by using entities representing complete combining character
+				sequences. With appropriate entity definitions, instead of <code>A&amp;acute;</code>, write <code>&amp;Aacute;</code> (or better, use '<span class="qchar">Á</span>' directly).</p></div></div><div class="div2">
+<h3><a name="sec-NormalizationApplication" id="sec-NormalizationApplication" />3.4 Responsibility for Normalization</h3><p>This section defines the W3C Text Normalization Model. This model aims to describe the steps and precautions that are necessary to ensure that text processing on the Web is not made incorrect by denormalization of the text (multiple possible representations of "the same text").
+				</p><p>Unless otherwise specified, the word '<span class="qterm">normalization</span>' in
+			 this section may refer to '<span class="qterm">include-normalization</span>' or
+			 '<span class="qterm">full-normalization</span>', depending on which is most appropriate for
+			 the specification or implementation under consideration.</p><p>Given the definitions and considerations above, specifications, implementations and
+           content have some responsibilities which are listed below. Specifications, implementations and content ought to follow as many of the responsibilities as possible and make sure that this is done in a way that is consistent overall.
+					
+				</p><ul><li><p>
+							<a id="C300" name="C300" href="#C300"><span class="reqId">C300</span></a> <span class="req">
+								<span class="requirement-type">[C]</span> 
+								
+								  Text content <span class="rfc2119">SHOULD</span> be in 
+								  <a title="" href="#sec-FullyNormalized">fully-normalized</a> form and if not
+								  <span class="rfc2119">SHOULD</span> at least be in <a title="" href="#sec-IncludeNormalized">include-normalized</a>
+								   form.
+							</span>
+						</p></li><li><p>
+							<a id="C301" name="C301" href="#C301"><span class="reqId">C301</span></a> <span class="req">
+								<span class="requirement-type">[S]</span> 
+								Specifications of
+								  text-based formats and protocols <span class="rfc2119">SHOULD</span>, as part of their
+								  syntax definition, require that the text be in normalized
+								  form.
+							</span>
+						</p></li><li><p>
+							<a id="C302" name="C302" href="#C302"><span class="reqId">C302</span></a> <span class="req">
+								<span class="requirement-type">[S]</span> 
+								<span class="requirement-type">[I]</span> 
+								A
+								  <a title="" href="#def-TPC">text-processing component</a> that receives
+								  <a title="" href="#def-suspect-text">suspect text</a>
+									
+									
+										<span class="rfc2119">MUST NOT</span>
+									
+								  perform any <a title="" href="#def-normalization-sensitive">normalization-sensitive</a> operations
+								  unless it has first either confirmed through inspection that the text is in normalized
+								  form or it has re-normalized the text itself.
+									 Private agreements
+								  <span class="rfc2119">MAY</span>, however, be created within private systems which are
+								  not subject to these rules, but any externally observable results
+								  
+									
+										<span class="rfc2119">MUST</span>
+									 be the same as if the rules had been
+								  obeyed.
+							</span>
+						</p></li><li><p>
+							<a id="C303" name="C303" href="#C303"><span class="reqId">C303</span></a> <span class="req">
+								<span class="requirement-type">[I]</span> 
+								A <a title="" href="#def-TPC">text-processing component</a> which modifies text and
+				  performs <a title="" href="#def-normalization-sensitive">normalization-sensitive</a> operations
+				   
+									
+										<span class="rfc2119">MUST</span>
+									 behave <em>as if</em> normalization took place
+				  after each modification, so that any subsequent
+				  <a title="" href="#def-normalization-sensitive">normalization-sensitive</a>
+				  operations always behave <em>as if</em> they were dealing with normalized
+				  text.
+							</span>
+						</p><div class="example"><p><span class="example-head">EXAMPLE: </span>If the '<span class="qchar">z</span>' is deleted
+      from the (normalized) string <code>cz¸</code> (where '<span class="qchar">¸</span>' represents a combining
+      cedilla, U+0327), normalization is necessary to turn the denormalized result <code>c¸</code>
+      into the properly normalized <code>ç</code>. If the software that deletes the '<span class="qchar">z</span>' later uses the string in a
+      <a title="" href="#def-normalization-sensitive">normalization-sensitive</a> operation, it needs to normalize the string before this operation to
+      ensure correctness; otherwise, normalization may be deferred until the data is
+      exposed. Analogous cases exist for insertion and
+      concatenation (e.g.
+<code>xf:concat(xf:substring('cz¸', 1, 1), xf:substring('cz¸', 3, 1))</code> in
+XQuery <a href="#xquery-operators">[XQuery Operators]</a>).</p></div><div class="note"><p><span class="note-head">NOTE: </span>Software that denormalizes a string such as in the deletion
+					 example above does not need to perform a potentially expensive re-normalization
+					 of the whole string to ensure that the string is normalized. It is sufficient
+					 to go back to the last non-<a title="" href="#def-construct">composing
+					 character</a> and re-normalize forward to the next non-composing
+					 character; if the string was normalized before the denormalizing operation, it
+					 will now be re-normalized.</p></div></li><li><p>
+							<a id="C304" name="C304" href="#C304"><span class="reqId">C304</span></a> <span class="req">
+								<span class="requirement-type">[S]</span> 
+								Specifications of
+				  text-based languages and protocols <span class="rfc2119">SHOULD</span> define precisely
+				  the <a title="" href="#def-construct">construct</a> boundaries necessary to
+				  obtain a complete definition of <a title="" href="#sec-FullyNormalized">full-normalization</a>. These definitions
+				   <span class="rfc2119">SHOULD</span> include at least the boundaries between
+				  <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-char-data">markup</a> and <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-char-data">character data</a> as well as entity boundaries (if
+				  the language has any include mechanism)
+									,
+									<span class="rfc2119">SHOULD</span> include
+				  any other boundary that may create denormalization when instances of the
+				  language are processed, but <span class="rfc2119">SHOULD NOT</span> include
+				  character escapes designed to express arbitrary characters.
+							</span>
+						</p></li><li><p>
+							<a id="C305" name="C305" href="#C305"><span class="reqId">C305</span></a> <span class="req">
+								<span class="requirement-type">[C]</span> 
+								Even when authoring in a
+				  (formal) language that does not mandate <a title="" href="#sec-FullyNormalized">full-normalization</a>, content developers
+				  <span class="rfc2119">SHOULD</span> avoid <a title="" href="#def-construct">composing
+				  characters</a> at the beginning of <a title="" href="#def-construct">constructs</a> that may be significant, such as at
+				  the beginning of an entity that will be included, immediately after a
+				  <a title="" href="#def-construct">construct</a> that causes inclusion or
+				  immediately after <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-char-data">markup</a>.
+							</span>
+						</p></li><li><p>
+							<a id="C306" name="C306" href="#C306"><span class="reqId">C306</span></a> <span class="req">
+								<span class="requirement-type">[I]</span> 
+								Authoring tool
+				  implementations for a (formal) language that does not mandate
+				  <a title="" href="#sec-FullyNormalized">full-normalization</a>
+									<span class="rfc2119">SHOULD</span>
+									either prevent users from creating content with
+				  <a title="" href="#def-construct">composing characters</a> at the beginning of
+				  <a title="" href="#def-construct">constructs</a> that may be significant, such
+				  as at the beginning of an entity that will be included, immediately after a
+				  <a title="" href="#def-construct">construct</a> that causes inclusion or
+				  immediately after <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-char-data">markup</a>, or
+				  <span class="rfc2119">SHOULD</span> warn users when they do so.
+							</span>
+						</p></li><li><p>
+							<a id="C307" name="C307" href="#C307"><span class="reqId">C307</span></a> <span class="req">
+								<span class="requirement-type">[I]</span> 
+								Implementations which
+				  transcode text from a <a title="" href="#def-legacyEnc">legacy encoding</a> to
+				  a <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a>
+									<span class="rfc2119">SHOULD</span> use a <a href="#def-normalizing-transcoder">normalizing transcoder</a>.
+							</span>
+						</p><div class="note"><p><span class="note-head">NOTE: </span>Except when an encoding's <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#def-repertoire">repertoire</a> contains characters
+				 not represented in Unicode, it is always possible to construct a normalizing transcoder by using any transcoder
+        			 followed by a normalizer.</p></div></li><li><p>
+							<a id="C308" name="C308" href="#C308"><span class="reqId">C308</span></a> <span class="req">
+								<span class="requirement-type">[S]</span> 
+								Where operations may produce unnormalized output from normalized text
+    input, specifications of API components (functions/methods) that implement
+    these operations <span class="rfc2119">MUST</span> define whether normalization is the responsibility
+    of the caller or the callee. Specifications <span class="rfc2119">MAY</span> state that
+				  performing normalization is optional for some API components; in
+				  this case the default <span class="rfc2119">SHOULD</span> be that normalization is
+				  performed, and an explicit option <span class="rfc2119">SHOULD</span> be used to switch
+				  normalization off. Specifications  <span class="rfc2119">SHOULD NOT</span> make the
+				  implementation of normalization optional.
+							</span>
+						</p><div class="example"><p><span class="example-head">EXAMPLE: </span>The concatenation operation may either concatenate sequences of
+    codepoints without normalization at the boundary, or may take normalization
+    into account to avoid producing unnormalized output from normalized input.
+    An API specification must define whether the operation normalizes at the
+    boundary or leaves that responsibility to the application using the API.</p></div></li><li><p>
+							<a id="C309" name="C309" href="#C309"><span class="reqId">C309</span></a> <span class="req">
+								<span class="requirement-type">[S]</span> 
+								Specifications that define
+				  a mechanism (for example an API or a defining language) for producing textual data object <span class="rfc2119">SHOULD</span> require that the final output of this
+				  mechanism be normalized.
+							</span>
+						</p><div class="example"><p><span class="example-head">EXAMPLE: </span>XSL Transformations <a href="#xslt">[XSLT]</a> and the DOM Load &amp; Save specification 
+<a href="#dom3ls">[DOM3 LS]</a> are examples of specifications that define text output and that should
+specify that this output be in normalized form.</p></div><div class="note"><p><span class="note-head">NOTE: </span>As an optimization, it is perfectly acceptable for a
+					 <em>system</em> to define the <a title="" href="#def-recipient-producer">producer</a> to be the actual producer (e.g.
+					 a small device) together with a remote component (e.g. a server serving as a
+					 kind of proxy) to which normalization is delegated. In such a case, the
+					 communications channel between the device and proxy server is considered to be
+					 <em>internal</em> to the system, not part of the Web. Only data normalized
+					 by the proxy server is to be exposed to the Web at large, as shown in the
+					 illustration below:</p><div class="figure" align="center"><img align="middle" src="images/producer_proxy.png" alt="Illustration&#xA;&#x9;&#x9;&#x9;&#x9;  of a text producer defined as including a proxy." height="450" width="500" /><div class="caption">Illustration of a text producer defined as including a
+					 proxy.</div></div><p>A similar case would be that of a Web repository receiving
+					 content from a user and noticing that the content is not properly normalized.
+					 If the user so requests, it would certainly be proper for the repository to
+					 normalize the content on behalf of the user, the repository becoming
+					 effectively part of the <a title="" href="#def-recipient-producer">producer</a> for the duration of that
+					 operation.</p></div></li></ul><p>
+					<a id="C310" name="C310" href="#C310"><span class="reqId">C310</span></a> <span class="req">
+						<span class="requirement-type">[S]</span> 
+						<span class="requirement-type">[I]</span> 
+						Specifications and implementations
+             <span class="rfc2119">MUST</span> document any deviation from the above requirements.
+					</span>
+				</p><p>
+					<a id="C311" name="C311" href="#C311"><span class="reqId">C311</span></a> <span class="req">
+						<span class="requirement-type">[S]</span> 
+						Specifications
+			 <span class="rfc2119">MUST</span> document any known security issues related to
+			 normalization.
+					</span>
+				</p></div></div><div class="div1">
+<h2><a name="sec-IdentityMatching" id="sec-IdentityMatching" />4 String Identity Matching</h2><p>One important operation that depends on early normalization is
+		  <span class="new-term">string identity matching</span>
+				<a href="#CharReq">[CharReq]</a>, which is a
+		  subset of the more general problem of string matching. There are various
+		  degrees of specificity for string matching, from approximate matching such as
+		  regular expressions or phonetic matching, to more specific matches such as
+		  case-insensitive or accent-insensitive matching and finally to identity
+		  matching. In the Web environment, where multiple character encodings are used to
+		  represent strings, including some character encodings which allow multiple
+		  representations for the same thing, <span class="new-term">identity</span> is defined to occur
+		  if and only if the compared strings contain no user-identifiable distinctions.
+		  This definition is such that strings do not match when they differ in case or
+		  accentuation, but do match when they differ only in non-semantically
+		  significant ways such as character encoding, use of <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#sec-Escaping">character escapes</a> (of potentially different kinds), or use of precomposed vs.
+		  decomposed character sequences.</p><p id="sid-steps">To avoid unnecessary conversions and, more importantly,
+		  to ensure predictability and correctness, it is necessary for all components of
+		  the Web to use the same identity testing mechanism. Conformance to the rule
+		  that follows meets this requirement and supports the above definition of
+		  identity.</p><p><a id="C312" name="C312" href="#C312"><span class="reqId">C312</span></a><span class="req"><span class="requirement-type">[S]</span> <span class="requirement-type">[I]</span> </span><span class="req">String
+		  identity matching <span class="rfc2119">MUST</span> be performed as if the following
+		  steps were followed:</span></p><div class="req"><ol type="1"><li><p>Early uniform normalization to fully-normalized form, as defined
+				  in <a href="#sec-FullyNormalized"><b>3.2.4 Fully-normalized text</b></a>. In accordance with section
+				  <a href="#sec-Normalization"><b>3 Normalization</b></a>, this step <span class="rfc2119">MUST</span> be
+				  performed by the <em>producers</em> of the strings to be compared.</p></li><li><p>Conversion to a common <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#Unicode_Encoding_Form">Unicode encoding form</a>, if necessary.</p></li><li><p>Expansion of all recognized <a href="http://www.w3.org/TR/2004/WD-charmod-20040225/#sec-Escaping">character escapes</a> and <a title="" href="#def-include">includes</a>.</p></li><li><p>Testing for bit-by-bit identity.</p></li></ol></div><p>Step 1 ensures 1) that the identity matching process can produce
+		  correct results using the next three steps and 2) that a minimum of effort is
+		  spent on solving the problem.</p><div class="note"><p><span class="note-head">NOTE: </span>The expansion of character escapes and includes (step 3 above) is
+			 dependent on context, i.e. on which markup or programming language is
+			 considered to apply when the string matching operation is performed. Consider a
+			 search for the string '<span class="qterm">suçon</span>' in an XML document containing <code>su&amp;#xE7;on</code> but not <code>suçon</code>. If the search is performed in a plain text editor, the context is
+			 <span class="new-term">plain text</span> (no markup or programming language applies), the
+			 &amp;#xE7; character escape is not recognized, hence not expanded and the
+			 search fails. If the search is performed in an XML browser, the context is
+			 <span class="new-term">XML</span>, the character escape (defined by XML) is expanded and the
+			 search succeeds. </p><p>An intermediate case would be an XML editor that
+			 <em>purposefully</em> provides a view of an XML document with entity
+			 references left unexpanded. In that case, a search over that pseudo-XML view
+			 will deliberately <em>not</em> expand entities: in that particular context,
+			 entity references are not considered includes and need not be expanded.</p></div><p><a id="C313" name="C313" href="#C313"><span class="reqId">C313</span></a><span class="req"><span class="requirement-type">[S]</span> <span class="requirement-type">[I]</span> </span><span class="req">Forms of
+		  string matching other than identity matching <span class="rfc2119">SHOULD</span> be
+		  performed as if the following steps were followed:</span></p><div class="req"><ol type="1"><li><p>Steps 1 to 3 for 
+				  <a href="#sid-steps">string identity matching</a>.</p></li><li><p>Matching the strings in a way that is appropriate to the
+				  application.</p></li></ol></div><p>Appropriate methods of matching text outside of string identity
+		  matching can include such things as case-insensitive matching,
+		  accent-insensitive matching, matching characters against Unicode compatibility
+		  forms, expansion of abbreviations, matching of stemmed words, phonetic
+		  matching, etc.</p><div class="example"><p><span class="example-head">EXAMPLE: </span>A user who specifies a search for the  string <code>suçon</code> against a Unicode encoded XML document would expect to find string identity matches against the strings <code>su&amp;#xE7;on</code>, <code>su&amp;#231;on</code> and <code>su&amp;ccedill;on</code> (where the entity &amp;ccedil; represents the precomposed character '<span class="qchar">ç</span>'). Identity matches should also be found whether the string was encoded as <code>73 75 C3 A7 6F 6E</code> (in UTF-8) or  <code>0073 0075 00E7 006F 006E</code> (in UTF-16), or any other character encoding that can be transcoded into normalized Unicode characters.</p><p>It should never be the case that a match would be attempted against strings such as <code>suc&amp;#x327;on</code> or <code>suc¸on</code> since these are not fully-normalized and should cause the text to be rejected.  If, however, matching is done against such strings they should also match since they are canonically equivalent.</p><p>Forms of matching other than identity, if supported by the application, would have to be used to produce a match against the following strings: <code>SUÇON</code> (case-insensitive matching), <code>sucon</code> (accent-insensitive matching), <code>suçons</code> (matched stems), <code>suçant</code> (phonetic matching), etc.</p></div></div></div><div class="back"><div class="div1">
+<h2><a name="sec-References" id="sec-References" />A References</h2><div class="div2">
+<h3><a name="sec-NormativeReferences" id="sec-NormativeReferences" />A.1 Normative References</h3><dl><dt class="label"><a name="charmod1" id="charmod1" />CharMod</dt><dd>Martin J. Dürst,
+					François Yergeau, Richard Ishida, Misha Wolf, Tex Texin.
+					<a href="http://www.w3.org/TR/2005/REC-charmod-20050215/"><cite>Character Model for the World Wide Web 1.0: Fundamentals</cite></a>.
+					W3C Recommendation 15 February 2005. Available at <a href="http://www.w3.org/TR/2005/REC-charmod-20050215/">http://www.w3.org/TR/2005/REC-charmod-20050215/</a>. The latest version of <a href="http://www.w3.org/TR/charmod/">CharMod</a> is available at http://www.w3.org/TR/charmod/.</dd><dt class="label"><a name="iso10646" id="iso10646" />ISO/IEC 10646</dt><dd>ISO/IEC 10646-1:2000,
+				<a href="http://www.iso.ch/iso/en/CatalogueDetailPage.CatalogueDetail?CSNUMBER=29819"><cite>Information
+				technology -- Universal Multiple-Octet Coded Character Set (UCS) -- Part 1:
+				Architecture and Basic Multilingual Plane</cite></a> and ISO/IEC 10646-2:2001,
+				<a href="http://www.iso.ch/iso/en/CatalogueDetailPage.CatalogueDetail?CSNUMBER=33208"><cite>Information
+				technology -- Universal Multiple-Octet Coded Character Set (UCS) -- Part 2:
+				Supplementary Planes</cite></a>, as, from time to time, amended, replaced by a
+				new edition or expanded by the addition of new parts. The latest version of <a href="http://www.iso.org/iso/home.html">UCS Part 1 and Part 2</a> is available at http://www.iso.ch .</dd><dt class="label"><a name="iso646" id="iso646" />ISO/IEC 646</dt><dd>ISO/IEC 646:1991, <a href="http://www.ecma-international.org/publications/standards/Ecma-006.htm"><cite>Information technology -- ISO 7-bit coded character set for information interchange</cite></a>.  This standard defines an International Reference Version (IRV) which corresponds exactly to what is widely known as ASCII or US-ASCII.  ISO/IEC 646 was based on the earlier standard ECMA-6. ECMA has maintained its standard up to date with respect to ISO/IEC 646. An electronic copy of <a href="http://www.ecma-international.org/publications/standards/Ecma-006.htm">ECMA</a> is available at http://www.ecma-international.org/publications/standards/Ecma-006.htm
+					.</dd><dt class="label"><a name="rfc2119" id="rfc2119" />RFC 2119</dt><dd>S. Bradner.
+				<a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words for use in RFCs
+				to Indicate Requirement Levels</cite></a>. IETF RFC 2119 March 1997. Available at  
+				<a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a>.</dd><dt class="label"><a name="rfc2396" id="rfc2396" />RFC 2396</dt><dd>T. Berners-Lee, R. Fielding, L.
+				Masinter. <a href="http://www.ietf.org/rfc/rfc2396.txt"><cite>Uniform Resource
+				Identifiers (URI): Generic Syntax</cite></a>. IETF RFC 2396 August 1998. Available at <a href="http://www.ietf.org/rfc/rfc2396.txt">http://www.ietf.org/rfc/rfc2396.txt</a>.</dd><dt class="label"><a name="unicode" id="unicode" />Unicode</dt><dd>The Unicode Consortium.
+				<a href="http://www.unicode.org/versions/Unicode4.0.0/"><cite>The Unicode Standard, Version 4</cite></a>. ISBN 0-321-18578-1, as
+				updated from time to time by the publication of new versions. The latest version of <a href="http://www.unicode.org/standard/versions/">Unicode</a>
+				and additional information on versions of the standard
+				and of the Unicode Character Database is available at http://www.unicode.org/unicode/standard/versions/.</dd><dt class="label"><a name="unicode32" id="unicode32" />Unicode  3.2</dt><dd>The Unicode Consortium.
+				<a href="http://www.unicode.org/standard/versions/enumeratedversions.html"><cite>The Unicode Standard, Version 3.2.0</cite></a> is defined by
+				<a href="http://www.unicode.org/reports/tr28/"><cite>The Unicode Standard, Version 3.0</cite></a>, ISBN 0-201-61633-5, as amended by the <a href="http://www.unicode.org/reports/tr27/"><cite>Unicode
+				Standard Annex #27: Unicode 3.1</cite></a> (see 
+				<a href="http://www.unicode.org/reports/tr27/">http://www.unicode.org/reports/tr27/</a>)
+				and by the <a href="http://www.unicode.org/reports/tr28/"><cite>Unicode Standard Annex #28: Unicode 3.2</cite></a> (see 
+				<a href="http://www.unicode.org/reports/tr28/">http://www.unicode.org/reports/tr28</a>).</dd><dt class="label"><a name="UTR15" id="UTR15" />UTR #15</dt><dd>Mark Davis, Martin Dürst. <a href="http://www.unicode.org/reports/tr15/tr15-25.html"><cite>Unicode
+				Normalization Forms</cite></a> Unicode Standard Annex #15 March 2005. Available at <a href="http://www.unicode.org/reports/tr15/tr15-25.html">http://www.unicode.org/reports/tr15/tr15-25.html</a>. The latest version of <a href="http://www.unicode.org/reports/tr15/">Unicode Normalization Forms</a> is available at http://www.unicode.org/reports/tr15/.</dd></dl></div><div class="div2">
+<h3><a name="sec-OtherReferences" id="sec-OtherReferences" />A.2 Other References</h3><dl><dt class="label"><a name="charmod3" id="charmod3" />CharIRI</dt><dd>Martin J. Dürst,
+                    François Yergeau, Richard Ishida, Misha Wolf, Tex Texin.
+                    <a href="http://www.w3.org/TR/2004/CR-charmod-resid-20041122/"><cite>Character Model for the World Wide Web 1.0: Resource Identifiers</cite></a>.
+                    W3C Canidate Recommendation 22 November 2004. Available at <a href="http://www.w3.org/TR/2004/CR-charmod-resid-20041122/">http://www.w3.org/TR/2004/CR-charmod-resid-20041122/</a>. The latest version of <a href="http://www.w3.org/TR/charmod-resid/">CharIRI</a> is available at http://www.w3.org/TR/charmod-resid/.</dd><dt class="label"><a name="CharReq" id="CharReq" />CharReq</dt><dd>Martin J. Dürst.
+				<a href="http://www.w3.org/TR/1998/WD-charreq-19980710"><cite>Requirements for String
+				Identity Matching and String Indexing</cite></a>. W3C Working Draft 10 July 1998. Available at <a href="http://www.w3.org/TR/1998/WD-charreq-19980710">http://www.w3.org/TR/1998/WD-charreq-19980710</a>. The latest version of <a href="http://www.w3.org/TR/WD-charreq">CharReq</a> is available at http://www.w3.org/TR/WD-charreq.</dd><dt class="label"><a name="css2" id="css2" />CSS2</dt><dd>Bert Bos, Håkon Wium Lie, Chris Lilley,
+				Ian Jacobs, Eds. <a href="http://www.w3.org/TR/1998/REC-CSS2-19980512/"><cite>Cascading
+				Style Sheets, level 2</cite></a>. W3C Recommendation 12 May 1998. Available at <a href="http://www.w3.org/TR/1998/REC-CSS2-19980512/">http://www.w3.org/TR/1998/REC-CSS2-19980512/</a>. The latest version of <a href="http://www.w3.org/TR/CSS2/">CSS2</a> is available at http://www.w3.org/TR/REC-CSS2/.</dd><dt class="label"><a name="dom3ls" id="dom3ls" />DOM3 LS</dt><dd>Johnny Stenback, Andy Heninger, Eds. <a href="http://www.w3.org/TR/2004/REC-DOM-Level-3-LS-20040407/"><cite>Document Object Model
+				(DOM) Level 3 Load and Save Specification</cite></a>. W3C Recommendation 7 April 2007.
+				Available at  <a href="http://www.w3.org/TR/2004/REC-DOM-Level-3-LS-20040407/">http://www.w3.org/TR/2004/REC-DOM-Level-3-LS-20040407/</a>. The latest version of <a href="http://www.w3.org/TR/DOM-Level-3-LS/">DOM3 LS</a> is available at http://www.w3.org/TR/DOM-Level-3-LS/.</dd><dt class="label"><a name="html40" id="html40" />HTML 4.0</dt><dd>Dave Raggett, Arnaud Le Hors, Ian
+				Jacobs, Eds. <a href="http://www.w3.org/TR/REC-html40-971218/"><cite>HTML 4.0
+				Specification</cite></a>. W3C Recommendation 18 December 1997. Available at <a href="http://www.w3.org/TR/REC-html40-971218/">http://www.w3.org/TR/REC-html40-971218/</a>. The latest version of <a href="http://www.w3.org/TR/REC-html40/">HTML 4.0</a> is available at http://www.w3.org/TR/REC-html40/.</dd><dt class="label"><a name="iso14651" id="iso14651" />ISO/IEC 14651</dt><dd>ISO/IEC 14651:2000. 
+				<a href="http://www.iso.org/iso/home.html"><cite>Information technology --
+				  International string ordering and comparison -- Method for comparing character
+				  strings and description of the common template tailorable ordering</cite></a> as,
+				from time to time, amended, replaced by a new edition or expanded by the
+				addition of new parts. The latest version of <a href="http://www.iso.org/iso/home.html">ISO/IEC 14651</a> is available at http://www.iso.ch/.</dd><dt class="label"><a name="Nicol" id="Nicol" />Nicol</dt><dd>Gavin Nicol.
+				<a href="http://www.mind-to-mind.com/library/papers/multilingual/multilingual-www.html"><cite>The
+				Multilingual World Wide Web</cite></a>, Chapter 2: The WWW As A Multilingual
+				Application. Available at 
+				<a href="http://www.mind-to-mind.com/library/papers/multilingual/multilingual-www.html">http://www.mind-to-mind.com/library/papers/multilingual/multilingual-www.html</a>.</dd><dt class="label"><a name="rfc2070" id="rfc2070" />RFC 2070</dt><dd>François Yergeau, Gavin. Nicol, G. Adams, Martin
+				Dürst. <a href="http://www.ietf.org/rfc/rfc2070.txt"><cite>Internationalization of the
+				Hypertext Markup Language</cite></a>. IETF RFC 2070 January 1997.  Available at <a href="http://www.ietf.org/rfc/rfc2070.txt">http://www.ietf.org/rfc/rfc2070.txt</a>.</dd><dt class="label"><a name="rfc2277" id="rfc2277" />RFC 2277</dt><dd>H. Alvestrand.
+				<a href="http://www.ietf.org/rfc/rfc2277.txt"><cite>IETF Policy on Character
+				Sets and Languages</cite></a>. IETF RFC 2277, BCP 18 January 1998. Available at <a href="http://www.ietf.org/rfc/rfc2277.txt">http://www.ietf.org/rfc/rfc2277.txt</a>.</dd><dt class="label"><a name="UXML" id="UXML" />UXML</dt><dd>Martin Dürst and Asmus Freytag.
+				<a href="http://www.unicode.org/reports/tr20/tr20-7.html"><cite>Unicode in XML and other
+				Markup Languages</cite></a>. Unicode Technical Report #20 and W3C Note 13 June 2003. Available at <a href="http://www.unicode.org/reports/tr20/tr20-7.html">http://www.unicode.org/reports/tr20/tr20-7.html</a>. The latest version of <a href="http://www.unicode.org/reports/tr20/">UXML</a> is available at http://www.unicode.org/reports/tr20/.</dd><dt class="label"><a name="xml10" id="xml10" />XML 1.0</dt><dd>Tim Bray, Jean Paoli, C. Michael
+				Sperberg-McQueen, Eve Maler, Eds.
+				<a href="http://www.w3.org/TR/2004/REC-xml-20040204/"><cite>Extensible Markup Language (XML)
+				1.0 (Third Edition)</cite></a>. W3C Recommendation 4 February 2004. Available at <a href="http://www.w3.org/TR/2004/REC-xml-20040204/">http://www.w3.org/TR/2004/REC-xml-20040204</a>. The latest version of <a href="http://www.w3.org/TR/REC-xml/">XML 1.0</a> is available at http://www.w3.org/TR/REC-xml/.</dd><dt class="label"><a name="xquery-operators" id="xquery-operators" />XQuery Operators</dt><dd>Ashok Malhotra,
+				Jim Melton, Jonathan Robie, Norman Walsh, Eds.
+				<a href="http://www.w3.org/TR/2005/WD-xpath-functions-20050915/"><cite>XQuery 1.0 and XPath
+				2.0 Functions and Operators</cite></a>. W3C Working Draft 15 September 2005. Available at <a href="http://www.w3.org/TR/2005/WD-xpath-functions-20050915/">http://www.w3.org/TR/2005/WD-xpath-functions-20050915/</a>. The latest version of <a href="http://www.w3.org/TR/xquery-operators/">XQuery Operators</a> is available at http://www.w3.org/TR/xquery-operators/.</dd><dt class="label"><a name="xslt" id="xslt" />XSLT</dt><dd>James Clark Ed.,
+				<a href="http://www.w3.org/TR/1999/REC-xslt-19991116"><cite>XSL Transformations
+				(XSLT)</cite></a>. W3C Recommendation 16 November 1999. Available at <a href="http://www.w3.org/TR/1999/REC-xslt-19991116">http://www.w3.org/TR/1999/REC-xslt-19991116</a>. The latest version of <a href="http://www.w3.org/TR/xslt">XSLT</a> is available at http://www.w3.org/TR/xslt.</dd></dl></div></div><div class="div1">
+<h2><a name="sec-ComposingChars" id="sec-ComposingChars" />B Composing Characters (Non-Normative)</h2><p>As specified in <a href="#sec-FullyNormalized"><b>3.2.4 Fully-normalized text</b></a>, a composing
+		  character is any character that is 
+		  </p><ol type="1"><li><p>the second character in the canonical decomposition mapping of some
+character that is not listed in the Composition Exclusion Table defined in 
+						<a href="#UTR15">[UTR #15]</a>, or</p></li><li><p>of non-zero canonical combining class (as defined in
+				  <a href="#unicode">[Unicode]</a>).</p></li></ol><p> These two categories are highly but not exactly overlapping.
+		  The first category includes a few class-zero characters that <em>do
+		  compose</em> with a previous character in <a title="" href="#sec-ChoiceNFC">NFC</a>; this is the case for some vowel and length
+		  marks in Brahmi-derived scripts, as well as for the modern non-initial
+		  conjoining jamos of the Korean Hangul script. The second category includes some
+		  combining characters that <em>do not compose</em> in NFC, for the simple
+		  reason that there is no precomposed character involving them. They must
+		  nevertheless be taken into account as composing characters because their
+		  presence may make reordering of combining marks necessary, to maintain
+		  normalization under concatenation or deletion. Therefore, composing characters
+		  as defined in <a href="#sec-FullyNormalized"><b>3.2.4 Fully-normalized text</b></a> include all characters of
+		  non-zero canonical combining class plus the following (as of Unicode 3.2):</p><div class="figure" align="center"><table cellpadding="5" cellspacing="5" summary="Table of all composing but not combining characters"><thead><tr><th id="no">Unicode number</th><th id="char">Character</th><th id="name">Name</th></tr></thead><tbody><tr><th id="brahmi" colspan="3" align="left">
+								<em>Brahmi-derived
+				  scripts</em>
+							</th></tr><tr><td headers="no brahmi">09BE</td><td headers="char brahmi">
+				  া</td><td headers="name brahmi">
+								<span class="uname">BENGALI VOWEL SIGN AA</span>
+							</td></tr><tr><td headers="no brahmi">09D7</td><td headers="char brahmi">
+				  ৗ</td><td headers="name brahmi">
+								<span class="uname">BENGALI AU LENGTH MARK</span>
+							</td></tr><tr><td headers="no brahmi">0B3E</td><td headers="char brahmi">
+				  ା</td><td headers="name brahmi">
+								<span class="uname">ORIYA VOWEL SIGN AA</span>
+							</td></tr><tr><td headers="no brahmi">0B56</td><td headers="char brahmi">
+				  ୖ</td><td headers="name brahmi">
+								<span class="uname">ORIYA AI LENGTH MARK</span>
+							</td></tr><tr><td headers="no brahmi">0B57</td><td headers="char brahmi">
+				  ୗ</td><td headers="name brahmi">
+								<span class="uname">ORIYA AU LENGTH MARK</span>
+							</td></tr><tr><td headers="no brahmi">0BBE</td><td headers="char brahmi">
+				  ா</td><td headers="name brahmi">
+								<span class="uname">TAMIL VOWEL SIGN AA</span>
+							</td></tr><tr><td headers="no brahmi">0BD7</td><td headers="char brahmi">
+				  ௗ</td><td headers="name brahmi">
+								<span class="uname">TAMIL AU LENGTH MARK</span>
+							</td></tr><tr><td headers="no brahmi">0CC2</td><td headers="char brahmi">
+				  ೂ</td><td headers="name brahmi">
+								<span class="uname">KANNADA VOWEL SIGN UU</span>
+							</td></tr><tr><td headers="no brahmi">0CD5</td><td headers="char brahmi">
+				  ೕ</td><td headers="name brahmi">
+								<span class="uname">KANNADA LENGTH MARK</span>
+							</td></tr><tr><td headers="no brahmi">0CD6</td><td headers="char brahmi">
+				  ೖ</td><td headers="name brahmi">
+								<span class="uname">KANNADA AI LENGTH MARK</span>
+							</td></tr><tr><td headers="no brahmi">0D3E</td><td headers="char brahmi">
+				  ാ</td><td headers="name brahmi">
+								<span class="uname">MALAYALAM VOWEL SIGN AA</span>
+							</td></tr><tr><td headers="no brahmi">0D57</td><td headers="char brahmi">
+				  ൗ</td><td headers="name brahmi">
+								<span class="uname">MALAYALAM AU LENGTH MARK</span>
+							</td></tr><tr><td headers="no brahmi">0DCF</td><td headers="char brahmi">
+				  ා</td><td headers="name brahmi">
+								<span class="uname">SINHALA VOWEL SIGN
+				  AELA-PILLA</span>
+							</td></tr><tr><td headers="no brahmi">0DDF</td><td headers="char brahmi">
+				  ෟ</td><td headers="name brahmi">
+								<span class="uname">SINHALA VOWEL SIGN
+				  GAYANUKITTA</span>
+							</td></tr><tr><td headers="no brahmi">102E</td><td headers="char brahmi">
+				  ီ</td><td headers="name brahmi">
+								<span class="uname">MYANMAR VOWEL SIGN II</span>
+							</td></tr><tr><th id="jung" colspan="3" align="left">
+								<em>Hangul
+				  vowels</em>
+							</th></tr><tr><td headers="no jung">1161</td><td headers="char jung"> ᅡ</td><td headers="name jung">
+								<span class="uname">HANGUL JUNGSEONG A</span>
+							</td></tr><tr><td headers="no jung">
+								<em>to</em>
+							</td><td colspan="2"> </td></tr><tr><td headers="no jung">1175</td><td headers="char jung"> ᅵ</td><td headers="name jung">
+								<span class="uname">HANGUL JUNGSEONG I</span>
+							</td></tr><tr><th id="jong" colspan="3" align="left">
+								<em>Hangul trailing
+				  consonants</em>
+							</th></tr><tr><td headers="no jong">11A8</td><td headers="char jong"> ᆨ</td><td headers="name jong">
+								<span class="uname">HANGUL JONGSEONG KIYEOK</span>
+							</td></tr><tr><td headers="no jung">
+								<em>to</em>
+							</td><td colspan="2"> </td></tr><tr><td headers="no jong">11C2</td><td headers="char jong"> ᇂ</td><td headers="name jong">
+								<span class="uname">HANGUL JONGSEONG HIEUH</span>
+							</td></tr></tbody></table></div><div class="note"><p><span class="note-head">NOTE: </span>The characters in the second column of the above table may or may
+			 not appear, or may appear as blank rectangles, depending on the capabilities of
+			 your browser and on the fonts installed in your system.</p></div></div><div class="div1">
+<h2><a name="sec-n11n-resources" id="sec-n11n-resources" />C Resources for
+Normalization (Non-Normative)</h2><p>The following are freely available programming resources related to
+		  normalization:</p><ul><li><p>Charlint (<a href="http://www.w3.org/International/charlint/">http://www.w3.org/International/charlint/</a>),
+				in Perl and written more for clarity than efficiency, in particular because it
+reads in the whole Unicode data file before doing anything.</p></li><li><p>Normalization Demo (<a href="http://www.unicode.org/reports/tr15/Normalizer.html">http://www.unicode.org/unicode/reports/tr15/Normalizer.html</a>),
+				a small demo working on a subset of base and combining characters.</p></li><li><p>ICU (<a href="http://icu.sourceforge.net/userguide/normalization.html">http://icu.sourceforge.net/userguide/normalization.html</a>).</p></li><li><p>Unicode::Normalize (<a href="http://homepage1.nifty.com/nomenclator/perl/Unicode-Normalize.html">http://homepage1.nifty.com/nomenclator/perl/Unicode-Normalize.html</a>),
+				a Perl module.</p></li><li><p>Normalization checking code (<a href="http://www.w3.org/2003/06/xml1.1test/">http://www.w3.org/2003/06/xml1.1test/</a>), compact code that shows how to check normalization without an expanding buffer.</p></li></ul></div><div class="div1">
+<h2><a name="sec-Acknowledgements" id="sec-Acknowledgements" />D Acknowledgements (Non-Normative)</h2><p>Asmus Freytag and in early stages Ian Jacobs provided significant help in the authoring and editing process of this document. The W3C I18N Working Group and Interest Group, as well as others, provided many comments and
+suggestions.</p></div></div></body></html>

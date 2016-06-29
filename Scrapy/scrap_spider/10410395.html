@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/QAPage">
+<head>
+
+<title>opencv - Kalman filters with four input parameters - Stack Overflow</title>
+    <link rel="shortcut icon" href="//cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src" href="//cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com"/>
+    <meta property="og:type" content="website" />    
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="http://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded&a" />
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="Kalman filters with four input parameters" />
+    <meta name="twitter:description" property="og:description" itemprop="description" content="I have been studying the operation of the Kalman filter for a couple of days now to improve the performance of my face detection program. From the information I have gathered I have put together a ..." />
+    <meta property="og:url" content="http://stackoverflow.com/questions/10410395/kalman-filters-with-four-input-parameters"/>
+    <link rel="canonical" href="http://stackoverflow.com/questions/10410395/kalman-filters-with-four-input-parameters" />
+
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//cdn.sstatic.net/Js/stub.en.js?v=9f29d4637438"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.sstatic.net/Sites/stackoverflow/all.css?v=fa9dc9346d8c">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;Kalman filters with four input parameters&#39;" href="/feeds/question/10410395">
+            <meta name="twitter:app:country" content="US" />
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:iphone" content="871299723" />
+            <meta name="twitter:app:url:iphone" content="se-zaphod://stackoverflow.com/questions/10410395/kalman-filters-with-four-input-parameters" />
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:ipad" content="871299723" />
+            <meta name="twitter:app:url:ipad" content="se-zaphod://stackoverflow.com/questions/10410395/kalman-filters-with-four-input-parameters" />
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://stackoverflow.com/questions/10410395/kalman-filters-with-four-input-parameters">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                    
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.initSnippetRenderer();
+                    });
+                    
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:0,shownCommentCount:0,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:10410395});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('1', '10410395');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","serverTime":1462503446,"routeName":"Questions/Show","styleCode":true,"enableUserHovercards":true,"snippets":{"enabled":true,"domain":"stacksnippets.net"},"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"id":1,"enableSocialMediaInSharePopup":true},"user":{"fkey":"a13af72b54e2677d414be5d78af7b54f","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"a24272958576","js/moderator.en.js":"c03231fe5b71","js/full-anon.en.js":"2d056e2ca428","js/full.en.js":"7d693b85c710","js/wmd.en.js":"d0f86019f995","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"2c293de7dc9e","js/help.en.js":"54b998574be9","js/tageditor.en.js":"c60a03f7d1b0","js/tageditornew.en.js":"62824612e045","js/inline-tag-editing.en.js":"7889156f8595","js/revisions.en.js":"2faaeaae2529","js/review.en.js":"8f9862efdb76","js/tagsuggestions.en.js":"d1ff9b84abe5","js/post-validation.en.js":"474816b68716","js/explore-qlist.en.js":"e71f14781288","js/events.en.js":"e8771c54f4dc","js/keyboard-shortcuts.en.js":"78c6e003d20a","js/external-editor.en.js":"692898ad9a5b","js/external-editor.en.js":"692898ad9a5b","js/snippet-javascript.en.js":"d8543098b8b3","js/snippet-javascript-codemirror.en.js":"46d989920d4b"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+</head>
+<body class="question-page new-topbar">
+    <noscript><div id="noscript-padding"></div></noscript>
+    
+        <script>(function () { var old = $.fn.contents; $.fn.contents = function () { try { return old.apply(this, arguments); } catch (e) { return $([]); } } })()</script>
+        <iframe id="adzerk-user-match" width="0" height="0" frameborder="0" scrolling="no" onload="window.AUMIframeDone=true"
+                src="https://ssum-sec.casalemedia.com/usermatch?s=183712&amp;cb=https%3A%2F%2Fengine.adzerk.net%2Fudb%2F22%2Fsync%2Fi.gif%3FpartnerId%3D1%26userId%3D"
+                style="display: none;" marginheight="0" marginwidth="0"></iframe>
+
+
+
+
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="//stackoverflow.com">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+                    <a href="http://chat.stackoverflow.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:6 })"
+>chat</a>
+            </div>
+
+
+
+
+    <a href="//stackoverflow.com"
+       class="current-site-link site-link js-gps-track"
+       data-id="1"
+       data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.stackoverflow.com"
+       class="site-link js-gps-track"
+       data-id="552"
+       data-gps-track="
+            site.switch({ target_site:552, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link js-gps-track"
+                       href="//careers.stackoverflow.com?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=multicollider"
+                            data-gps-track="site_switcher.click({ item_type:9 })"
+>
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Stack Overflow Careers
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f10410395%2fkalman-filters-with-four-input-parameters" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:10 })"
+>Sign up</a> or <a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f10410395%2fkalman-filters-with-four-input-parameters" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:11 })"
+>log in</a> to customize your list.
+            </div>
+    </div>
+    <div class="header">
+        <h3><a href="//stackexchange.com/sites">more stack exchange communities</a></h3>
+        <a href="http://blog.stackoverflow.com" class="fr">company blog</a>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+
+            <a href="//stackexchange.com"
+               class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track"
+               data-gps-track="site_switcher.show"
+               title="A list of all 155 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+
+    <a href="#"
+       class="topbar-icon icon-inbox yes-hover js-inbox-button"
+       title="Recent inbox messages">
+        <span class="hidden-text">Inbox</span>
+        <span class="unread-count" style="display:none"></span>
+    </a>
+    <a href="#"
+       class="topbar-icon icon-achievements yes-hover js-achievements-button "
+       data-unread-class=""
+       title="Recent achievements: reputation, badges, and privileges earned">
+        <span class="hidden-text">Reputation and Badges</span>
+        <span class="unread-count" style="display:none">
+            
+        </span>
+    </a>
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                    <a href="https://stackoverflow.com/users/signup?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f10410395%2fkalman-filters-with-four-input-parameters" class="login-link">sign up</a>
+                                <a href="https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f10410395%2fkalman-filters-with-four-input-parameters" class="login-link">log in</a>
+
+                        <a href="/tour">tour</a>
+                            <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="//meta.stackoverflow.com" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="http://stackoverflow.com/company/about" class="js-gps-track" data-gps-track="help_popup.click({ item_type:6 })">
+                        About Us
+                        <span class="item-summary">
+                            Learn more about Stack Overflow the company
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://business.stackoverflow.com/?ref=topbar_help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:7 })">
+                        Business
+                        <span class="item-summary">
+                            Learn more about hiring developers or posting ads with us
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+                    </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="Search Q&amp;A" value="" tabindex="1" autocomplete="off" maxlength="240" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="/" >
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="/questions">Questions</a></li>
+                            <li><a id="nav-jobs" href="/jobs">Jobs</a></li>
+                        <li><a id="nav-tags" href="/tags">Tags</a></li>
+                        <li><a id="nav-users" href="/users">Users</a></li>
+                        <li><a id="nav-badges" href="/help/badges">Badges</a></li>
+                                            </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion"  href="/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content" class="snippet-hidden">
+            
+
+<div itemscope itemtype="http://schema.org/Question">
+    <link itemprop="image" href="//cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+
+<div id="herobox">
+    <div id="hero-content">
+            <div id="close"><a title="click to minimize">_</a></div>
+        <div id="blurb">
+            Stack Overflow is a community of 4.7 million programmers, just like you, helping each other.
+            <br/>
+                <br/>Join them; it only takes a minute:<br/>
+            <br/>
+            <a href="/users/signup?ssrc=hero&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f10410395%2fkalman-filters-with-four-input-parameters" id="tell-me-more" class="button">Sign up</a>
+        </div>
+        <div id="desc">
+            <b>Join the Stack Overflow community to:</b>
+            <ol id="hiw">
+                <li id="q">Ask programming questions
+                </li>
+                <li id="an">Answer and help your peers
+                </li>
+                <li id="b">Get recognized for your expertise
+                </li>
+            </ol>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <script>
+        StackExchange.ready(function () {
+
+            var location = 0;
+            if ($("body").hasClass("questions-page")) {
+                location = 1;;
+            } else if ($("body").hasClass("question-page")) {
+                location = 1;;
+            } else if ($("body").hasClass("faq-page")) {
+                location = 5;;
+            } else if ($("body").hasClass("home-page")) {
+                location = 3;;
+            }
+
+            $('#tell-me-more').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+                });
+            });
+            $('#herobox #close').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: "minimize", location: location }, true);
+                });
+                $.cookie("hero", "mini", { path: "/", expires: 365 });
+                $.ajax({
+                    url: "/hero-mini",
+                    success: function (data) {
+                        $("#herobox").fadeOut("fast", function () {
+                            $("#herobox").replaceWith(data);
+                            $("#herobox-mini").fadeIn("fast");
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+
+    </script>
+</div>
+			<div id="question-header">
+                <h1 itemprop="name"><a href="/questions/10410395/kalman-filters-with-four-input-parameters" class="question-hyperlink">Kalman filters with four input parameters</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="10410395"  id="question">
+
+    <script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk101445139",4).setZone(43); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk101445139">
+            </div>    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="10410395">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">6</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="#">favorite</a>
+        <div class="favoritecount"><b>3</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>I have been studying the operation of the Kalman filter for a couple of days now to improve the performance of my face detection program. From the information I have gathered I have put together a code. The code for the Kalman filter part is as follows.</p>
+
+<pre><code>int Kalman(int X,int faceWidth,int Y,int faceHeight, IplImage *img1){
+CvRandState rng; 
+const float T = 0.1;
+
+// Initialize Kalman filter object, window, number generator, etc
+cvRandInit( &amp;rng, 0, 1, -1, CV_RAND_UNI );
+
+//IplImage* img = cvCreateImage( cvSize(500,500), 8, 3 );
+CvKalman* kalman = cvCreateKalman( 4, 4, 0  );
+
+// Initializing with random guesses
+// state x_k
+CvMat* state = cvCreateMat( 4, 1, CV_32FC1 );
+cvRandSetRange( &amp;rng, 0, 0.1, 0 );
+rng.disttype = CV_RAND_NORMAL;
+cvRand( &amp;rng, state );
+
+// Process noise w_k
+CvMat* process_noise = cvCreateMat( 4, 1, CV_32FC1 );
+
+// Measurement z_k
+CvMat* measurement = cvCreateMat( 4, 1, CV_32FC1 );
+cvZero(measurement);
+
+/* create matrix data */   
+ const float A[] = {    
+        1, 0, T, 0,   
+        0, 1, 0, T,   
+        0, 0, 1, 0,   
+        0, 0, 0, 1   
+    }; 
+
+ const float H[] = {    
+        1, 0, 0, 0,   
+        0, 0, 0, 0,   
+        0, 0, 1, 0,   
+        0, 0, 0, 0   
+    };
+
+ //Didn't use this matrix in the end as it gave an error:'ambiguous call to overloaded function' 
+/* const float P[] = {   
+        pow(320,2), pow(320,2)/T, 0, 0,   
+        pow(320,2)/T, pow(320,2)/pow(T,2), 0, 0,   
+        0, 0, pow(240,2), pow(240,2)/T,   
+        0, 0, pow(240,2)/T, pow(240,2)/pow(T,2)   
+        }; */
+
+ const float Q[] = {   
+        pow(T,3)/3, pow(T,2)/2, 0, 0,   
+        pow(T,2)/2, T, 0, 0,   
+        0, 0, pow(T,3)/3, pow(T,2)/2,   
+        0, 0, pow(T,2)/2, T   
+        };   
+
+ const float R[] = {   
+        1, 0, 0, 0,   
+        0, 0, 0, 0,   
+        0, 0, 1, 0,   
+        0, 0, 0, 0   
+        };   
+
+//Copy created matrices into kalman structure
+memcpy( kalman-&gt;transition_matrix-&gt;data.fl, A, sizeof(A));   
+memcpy( kalman-&gt;measurement_matrix-&gt;data.fl, H, sizeof(H));   
+memcpy( kalman-&gt;process_noise_cov-&gt;data.fl, Q, sizeof(Q));   
+//memcpy( kalman-&gt;error_cov_post-&gt;data.fl, P, sizeof(P));   
+memcpy( kalman-&gt;measurement_noise_cov-&gt;data.fl, R, sizeof(R)); 
+
+//Initialize other Kalman Filter parameters
+//cvSetIdentity( kalman-&gt;measurement_matrix, cvRealScalar(1) );
+//cvSetIdentity( kalman-&gt;process_noise_cov, cvRealScalar(1e-5) );
+/*cvSetIdentity( kalman-&gt;measurement_noise_cov, cvRealScalar(1e-1) );*/
+cvSetIdentity( kalman-&gt;error_cov_post, cvRealScalar(1e-5) );
+
+/* choose initial state */  
+kalman-&gt;state_post-&gt;data.fl[0]=X;   
+kalman-&gt;state_post-&gt;data.fl[1]=faceWidth;   
+kalman-&gt;state_post-&gt;data.fl[2]=Y;   
+kalman-&gt;state_post-&gt;data.fl[3]=faceHeight;
+
+//cvRand( &amp;rng, kalman-&gt;state_post );
+
+/* predict position of point  */
+const CvMat* prediction=cvKalmanPredict(kalman,0);
+
+//generate measurement (z_k)
+cvRandSetRange( &amp;rng, 0, sqrt(kalman-&gt;measurement_noise_cov-&gt;data.fl[0]), 0 );   
+cvRand( &amp;rng, measurement ); 
+cvMatMulAdd( kalman-&gt;measurement_matrix, state, measurement, measurement );
+
+//Draw rectangles in detected face location
+cvRectangle( img1,
+            cvPoint( kalman-&gt;state_post-&gt;data.fl[0], kalman-&gt;state_post-&gt;data.fl[2] ),
+            cvPoint( kalman-&gt;state_post-&gt;data.fl[1], kalman-&gt;state_post-&gt;data.fl[3] ),
+            CV_RGB( 0, 255, 0 ), 1, 8, 0 );
+
+cvRectangle( img1,
+            cvPoint( prediction-&gt;data.fl[0], prediction-&gt;data.fl[2] ),
+            cvPoint( prediction-&gt;data.fl[1], prediction-&gt;data.fl[3] ),
+            CV_RGB( 0, 0, 255 ), 1, 8, 0 );
+
+cvShowImage("Kalman",img1);
+
+//adjust kalman filter state
+cvKalmanCorrect(kalman,measurement);
+
+cvMatMulAdd(kalman-&gt;transition_matrix, state, process_noise, state);
+
+return 0;
+}
+</code></pre>
+
+<p>In the face detection part(not shown), a box is drawn for the face detected. 'X, Y, faceWidth and faceHeight' are coordinates of the box and the width and the height passed into the Kalman filter. 'img1' is the current frame of a video.</p>
+
+<p>Results: </p>
+
+<p>Although I do get two new rectangles from the 'state_post' and 'prediction' data (as seen in the code), none of them seem to be any more stable than the initial box drawn without the Kalman filter.   </p>
+
+<p>Here are my questions:</p>
+
+<ol>
+<li>Are the matrices initialized (transition matrix A, measurement matrix H etc.), correct for this four input case? (eg.4*4 matrices for four inputs?)</li>
+<li>Can't we set every matrix to be an identity matrix? </li>
+<li>Is the method I followed till plotting the rectangles theoretically correct? I followed the examples in <a href="http://dasl.mem.drexel.edu/~noahKuntz/openCVTut9.html">this</a> and the book 'Learning OpenCV' which don't use external inputs. </li>
+</ol>
+
+<p>Any help regarding this would be much appreciated!</p>
+    </div>
+    <div class="post-taglist">
+        <a href="/questions/tagged/opencv" class="post-tag" title="show questions tagged &#39;opencv&#39;" rel="tag">opencv</a> <a href="/questions/tagged/input" class="post-tag" title="show questions tagged &#39;input&#39;" rel="tag">input</a> <a href="/questions/tagged/filter" class="post-tag" title="show questions tagged &#39;filter&#39;" rel="tag">filter</a> <a href="/questions/tagged/matrix" class="post-tag" title="show questions tagged &#39;matrix&#39;" rel="tag">matrix</a> <a href="/questions/tagged/kalman-filter" class="post-tag" title="show questions tagged &#39;kalman-filter&#39;" rel="tag">kalman-filter</a> 
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/q/10410395" title="short permalink to this question" class="short-link" id="link-post-10410395">share</a><span class="lsep">|</span><a href="/posts/10410395/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2012-05-02 08:44:16Z" class="relativetime">May 2 '12 at 8:44</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/1369341/kavo"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/8fb0efbee9f2a71086f9f20e86d5ddfd?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/1369341/kavo">Kavo</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">41</span><span title="1 silver badge"><span class="badge2"></span><span class="badgecount">1</span></span><span title="3 bronze badges"><span class="badge3"></span><span class="badgecount">3</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-10410395" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-10410395" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>        </table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								1 Answer
+                                <span style="display:none;" itemprop="answerCount">1</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a class="youarehere" href="/questions/10410395/kalman-filters-with-four-input-parameters?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active">
+            active</a>
+        <a href="/questions/10410395/kalman-filters-with-four-input-parameters?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest">
+            oldest</a>
+        <a href="/questions/10410395/kalman-filters-with-four-input-parameters?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes">
+            votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="10740855"></a>
+<div id="answer-10740855" class="answer" data-answerid="10740855"  itemscope itemtype="http://schema.org/Answer">
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="10740855">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">4</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>H[] should be identity if you measure directly from the image. If you have 4 measurements and you make 0 some values on the diagonal, you are making those expected measurements (x*H) 0, when it is not true. Then the innovation ( z- x*H) on the kalman filter will be high.</p>
+
+<p>R[] should also be diagonal, though the covariance of the error of measurement can be different from one. If you have normalized coordinates ( the width=height=1), R could be something like 0.01. If you are dealing with pixel coordinates, R=diagonal_ones means an error of one pixel, and that's ok. You can try with 2,3,4, etc...</p>
+
+<p>Your transition matrix A[], which is supposed to propagate the state on each frame, looks like a transition matrix for a state composed of x,y, v_x and v_y. You don't mention velocity in your model, you only talk about measurements. Be careful, do not confuse State (describes position of the face) with Measurements (used to update the state). Your state can be position, velocity and acceleration, and your measurements can be n points in the image. Or the x and y position of the face.</p>
+
+<p>Hope this helps.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/10740855" title="short permalink to this answer" class="short-link" id="link-post-10740855">share</a><span class="lsep">|</span><a href="/posts/10740855/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-05-24 15:45:31Z" class="relativetime">May 24 '12 at 15:45</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/744859/jav-rock"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/0e0ac290b833189cfaab8b5b060db879?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/744859/jav-rock">Jav_Rock</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 14,566" dir="ltr">14.6k</span><span title="12 gold badges"><span class="badge1"></span><span class="badgecount">12</span></span><span title="81 silver badges"><span class="badge2"></span><span class="badgecount">81</span></span><span title="133 bronze badges"><span class="badge3"></span><span class="badgecount">133</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-10740855" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-14744853" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thank you very much for the informative answer! I didn&#39;t get to change anything though because I decided to leave out the Kalman filter for this stage. But I am sure someone will find your answer helpful! Thanks again.</span>
+                    &ndash;&nbsp;<a href="/users/1369341/kavo"
+                       title="41 reputation"
+                       class="comment-user owner">Kavo</a>
+                <span class="comment-date" dir="ltr"><span title="2012-06-27 12:35:42Z" class="relativetime-clean">Jun 27 '12 at 12:35</span></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-10740855" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+									<a name='new-answer'></a>
+						<form id="post-form" action="/questions/10410395/answer/submit" method="post"  class="post-form">
+						    <input type="hidden" id="post-id" value="10410395" />
+                            <input type="hidden" id="qualityBanWarningShown" name="qualityBanWarningShown" value="false" />
+                            <input type="hidden" name="referrer" value="http://stackoverflow.com/questions/tagged/kalman-filter"/>
+							<h2 class="space">Your Answer</h2>
+
+
+            <script>
+            StackExchange.ifUsing("editor", function () {
+                StackExchange.using("externalEditor", function () {
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.init();
+                    });
+                });
+            }, "code-snippets");
+        </script>
+    
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+                // Have to fire editor after snippets, if snippets enabled
+                if (StackExchange.options.snippets.enabled) {
+                    StackExchange.using("snippets", function() {
+                        createEditor();
+                    });
+                }
+                else {
+                    createEditor();
+                }
+            });
+
+            function createEditor() {
+                prepareEditor({
+                    heartbeatType: 'answer',
+                convertImagesToLinks: true,
+                reputationToPostImages: 10,
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                    ,immediatelyShowMarkdownHelp:true
+                    });
+                
+
+        }
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor js-post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="a13af72b54e2677d414be5d78af7b54f">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+							<div style="position: relative;">
+								
+								            <div class="form-item dno new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="/users/login?ssrc=question_page&returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f10410395%2fkalman-filters-with-four-input-parameters%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Email and Password</span></p>
+                        </div>
+                    </div>
+                    <input type="hidden" name="manual-openid" class="manual-openid" />
+                    <input type="hidden" name="use-facebook" class="use-facebook" value="false" />
+                    <input type="hidden" name="use-google" class="use-google" value="false" />
+                    <input type="button" class="submit-openid" value="Submit" style="display:none" />
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', 'http%3a%2f%2fstackoverflow.com%2fquestions%2f10410395%2fkalman-filters-with-four-input-parameters%23new-answer', 'question_page');
+                    }
+                );
+            </script>
+            <noscript>
+                        <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+            </noscript>
+
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" type="submit" value="Post Your Answer" tabindex="110">
+									<a href="#" class="btn-clear discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href='http://stackexchange.com/legal/privacy-policy' target='_blank'>privacy policy</a> and <a href='http://stackexchange.com/legal/terms-of-service' target='_blank'>terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1" />								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you&#39;re looking for?							Browse other questions tagged <a href="/questions/tagged/opencv" class="post-tag" title="show questions tagged &#39;opencv&#39;" rel="tag">opencv</a> <a href="/questions/tagged/input" class="post-tag" title="show questions tagged &#39;input&#39;" rel="tag">input</a> <a href="/questions/tagged/filter" class="post-tag" title="show questions tagged &#39;filter&#39;" rel="tag">filter</a> <a href="/questions/tagged/matrix" class="post-tag" title="show questions tagged &#39;matrix&#39;" rel="tag">matrix</a> <a href="/questions/tagged/kalman-filter" class="post-tag" title="show questions tagged &#39;kalman-filter&#39;" rel="tag">kalman-filter</a>  or <a href="/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2012-05-02 08:44:16Z"><b>4 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>2715 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="?lastactivity" class="lastactivity-link" title="2012-05-24 15:45:31Z">3 years ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </table>
+			    </div>
+			<div class="module community-bulletin" data-tracker="cb=1">
+    <div class="related">
+                <div class="bulletin-title">
+                    Blog
+                </div>
+                <hr />
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <a href="http://blog.stackoverflow.com/2016/05/welcoming-stack-overflows-new-cmo-adrianna-burrows/" class="question-hyperlink">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>                </a>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://blog.stackoverflow.com/2016/05/welcoming-stack-overflows-new-cmo-adrianna-burrows/" class="question-hyperlink">Welcoming Stack Overflow’s New CMO – Adrianna Burrows</a>
+                </div>
+                <br class="cbt" />
+            </div>
+    </div>
+</div>			
+			<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,8277,"adzerk937637531",[5,17,2221]).setZone(45); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk937637531">
+            </div>
+        <div id="hireme">
+            <script>
+;"use strict";(function(n){function it(n,i,r){var u=t.createElement("script"),e="onreadystatechange",o="onload",f="readyState",s=!1;u.async=!0;u.src=n;typeof i=="function"&&(u[o]=u[e]=function(){s||u[f]&&u[f]!=="loaded"&&u[f]!=="complete"||(s=!0,typeof i=="function"&&i(u),u[o]=u[e]=null,r&&u.parentNode.removeChild(u))});ft.appendChild(u)}function rt(n){var i=t.createElement("link");i.type="text/css";i.rel="stylesheet";i.href=n;et.appendChild(i)}function ct(){var n=i.StackExchange,t="options",r="user";return n&&n[t]&&n[t][r]&&n[t][r].accountId}function lt(n){var t,i;return n=ot(f.hash?f.hash.substr(1):"",n||{}),t=n.ac||n.accountId||ct(),t&&(n.ac=t),n.tags||(i=tt(),i.length>0&&(n.tags=i.join(";"))),n.host=f.host.replace(/\.internal$/,""),n}function at(n,t,i,u){var c=h(n);if(c===null)return function(){};var e=null,f=null,l=r(),a=function a(){g(c)?(s(e),u(!1,r()-l)):f=o(a,t)};return f=o(a,t),i!==undefined&&(e=o(function(){s(f);u(!0,r()-l)},i)),function(){s(f);s(e)}}function vt(n){var u=f.hash.indexOf("large=1")!==-1,e=y(),o=u||!e||n,s=o?1:2,h=a(["hireme","clc-sb"],v),t=[s+"="+h],r=a(["careers1","clc-tlb"],v),i;return r&&t.push("5="+r),i=a(["careers3","clc-mlb"],v),i&&t.push("6="+i),t.join("&")}function ut(n,t){var e=!!h("#careersadsdoublehigh"),s=k({},u,{zones:u.zones||vt(e)}),f=lt(s),o;n&&(f.azt=1);t&&(f.lw=t);typeof i.innerWidth=="number"&&(f.bw=i.innerWidth);b&&(f.ver=b);o=p()-(e+0);o>0&&(f.az="1");var c=st(f,["zones","ip","ac","eng","prov","tags","theme","at","remote","seed","lw","azt","sysadmin","bw","nocpm","jobview","cpview","ver","host","cp","az"]),a=w+"?"+c;l=r();it(a)}function yt(n){function h(){f.forEach(rt);e.forEach(function(n){return pt(n,t[n],s,o)});typeof i.clc_after_load=="function"&&i.clc_after_load()}var t=n.cr,u=n.h,f=n.st,e=Object.keys(t),o=l?r()-l:0,s="//"+u+"/ct";h()}function pt(n,t,i,r){var s=t.cl,c=t.cn,f=t.an,l=t.tr,o=(s||[]).join(" "),u=h("#"+n);u&&(o&&(u.className+=" "+o),u.innerHTML=c.replace("&pt=0","&pt="+(r||0)),u.onmousedown=function(n){for(var t=n.target,r,o,s;t.tagName!=="A"&&t!==u;)t=t.parentNode;t!==u&&(r=[],f&&r.push("an="+f),o=[].filter.call(t.attributes,function(n){return/^data-/.test(n.name)}),o.length>0&&o.forEach(function(n){var t=n.name.replace(/^data-/,"");r.push(e(t)+"="+e(n.value))}),r.push("tr="+l),s="",r.length>0&&(s="?"+r.join("&")),t.href=i+s)})}function wt(n){var i=t.createElement("a");return i.href=n,i.host}function bt(){var i,n;y()?(n=at("#sidebar "+c,20,i,ut),o(function(){var r=h(c),i;g(r)||(r.parentNode.removeChild(r),typeof n=="function"&&n(),i=t.createElement("img"),i.src="//"+wt(w)+"/to.gif",i.style.display="none",t.body.appendChild(i))},2e3)):ut()}var w=n.u,u=n.o,b=n.c,y,p;u=u||{};var k=Object.assign||function(n){for(var i,r,t=1;t<arguments.length;t++){i=arguments[t];for(r in i)Object.prototype.hasOwnProperty.call(i,r)&&(n[r]=i[r])}return n},i=window,f=i.location,e=i.encodeURIComponent,d=i.decodeURIComponent,t=i.document,ft=t.body,et=t.getElementsByTagName("head")[0],o=i.setTimeout,s=i.clearTimeout,c="[id^=adzerk].everyonelovesstackoverflow",l=0,r=function(){return(new Date).getTime()},ot=function(n,t){return n.split(/\&/g).reduce(function(n,t){var i=t.split("=");return n[d(i[0])]=d(i[1]),n},t||{})},st=function(n,t){return Object.keys(n).filter(function(n){return t.indexOf(n)!==-1}).map(function(t){return e(t)+"="+e(n[t])}).join("&")},g=function(n){return n.innerHTML.replace(/\s+$/g,"")},nt=t.querySelectorAll.bind(t),h=t.querySelector.bind(t),ht=t.getElementById.bind(t),a=function(n,t){return n.filter(t)[0]},tt=function(){return[].map.call(nt(".post-taglist .post-tag"),function(n){return n.textContent})},v=function(n){return!!ht(n)};y=function(){return p()>0};p=function(){return nt(c).length};i.clc=k(window.clc||{},{init:yt,load:bt,ls:it,as:rt,tags:tt})}).call(null, {"c":"955d59b","u":"//clc.stackoverflow.com/p.js"});"use strict";var allowedHosts=["stackoverflow.com","serverfault.com"];(allowedHosts[0]==="*"||allowedHosts.indexOf(location.hostname)!==-1)&&window.clc.load();            </script>
+        </div>
+			  
+    
+            
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer">
+<a href="/q/9229878" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">5
+    </div>
+</a><a href="/questions/9229878/kalman-filter-and-quality-of-internal-state-variables" class="question-hyperlink">Kalman filter and quality of internal state variables</a>
+</div>
+<div class="spacer">
+<a href="/q/17874871" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">2
+    </div>
+</a><a href="/questions/17874871/better-estimation-of-homography-using-kalman-filter" class="question-hyperlink">Better estimation of Homography using Kalman filter?</a>
+</div>
+<div class="spacer">
+<a href="/q/19537884" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">13
+    </div>
+</a><a href="/questions/19537884/explain-process-noise-terminology-in-kalman-filter" class="question-hyperlink">Explain process noise terminology in Kalman Filter</a>
+</div>
+<div class="spacer">
+<a href="/q/24630949" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">3
+    </div>
+</a><a href="/questions/24630949/kalman-opencv-estimation-without-measurement" class="question-hyperlink">Kalman OpenCV Estimation Without Measurement</a>
+</div>
+<div class="spacer">
+<a href="/q/25494595" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">2
+    </div>
+</a><a href="/questions/25494595/multiple-object-tracking-with-kalman-filter" class="question-hyperlink">Multiple Object Tracking with Kalman Filter</a>
+</div>
+<div class="spacer">
+<a href="/q/25774793" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/25774793/initializing-transitionmatrix-in-kalman-filter" class="question-hyperlink">initializing transitionMatrix in kalman filter</a>
+</div>
+<div class="spacer">
+<a href="/q/27186394" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">-1
+    </div>
+</a><a href="/questions/27186394/arguments-of-the-kalman-filter-in-opencv" class="question-hyperlink">Arguments of the Kalman Filter in OpenCV</a>
+</div>
+<div class="spacer">
+<a href="/q/28105771" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">3
+    </div>
+</a><a href="/questions/28105771/using-kalman-filter-with-acceleration-and-position-inputs" class="question-hyperlink">Using Kalman filter with acceleration and position inputs</a>
+</div>
+<div class="spacer">
+<a href="/q/31263495" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="/questions/31263495/implementation-of-data-fusion-through-extended-kalman-filter-in-opencv-c" class="question-hyperlink">Implementation of Data Fusion through (Extended) Kalman-Filter in OpenCV/C++</a>
+</div>
+<div class="spacer">
+<a href="/q/33873500" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/33873500/java-opencv-kalman-filter" class="question-hyperlink">Java OpenCV Kalman filter</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="//stackexchange.com/questions?tab=hot" 
+           class="js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-chemistry" title="Chemistry Stack Exchange"></div><a href="http://chemistry.stackexchange.com/questions/50704/what-is-the-ph-of-ice" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:431 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is the pH of ice?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/79444/finite-cantors-diagonal" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Finite Cantor&#39;s Diagonal
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-mathoverflow" title="MathOverflow"></div><a href="http://mathoverflow.net/questions/237987/is-it-possible-to-have-a-research-career-while-checking-the-proof-of-every-theor" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:504 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it possible to have a research career while checking the proof of every theorem that you cite?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/40949/whats-the-smallest-change-to-physics-required-to-allow-magic" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What&#39;s the smallest change to physics required to allow magic?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-english" title="English Language &amp; Usage Stack Exchange"></div><a href="http://english.stackexchange.com/questions/323630/is-there-any-idiom-or-expression-that-would-mean-all-my-efforts-wasted" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:97 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is there any idiom or expression that would mean &quot;all my efforts wasted&quot;?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-wordpress" title="WordPress Development Stack Exchange"></div><a href="http://wordpress.stackexchange.com/questions/225802/get-php-var-inside-javascript-file-making-plugin" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:110 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Get php var inside javascript file (making plugin)
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-gaming" title="Arqade"></div><a href="http://gaming.stackexchange.com/questions/264726/how-to-upgrade-torbjorns-turret" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:41 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to upgrade Torbjorn&#39;s turret?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="http://security.stackexchange.com/questions/122417/can-malware-bridge-external-storage-hw-power-off-switches" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can malware bridge external storage HW power-off switches?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/79459/matrix-trigonometry" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Matrix Trigonometry
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mechanics" title="Motor Vehicle Maintenance &amp; Repair Stack Exchange"></div><a href="http://mechanics.stackexchange.com/questions/29392/how-can-an-oil-plug-just-fall-out-after-three-months-and-3-000-miles-and-the-car" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:224 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can an oil plug just fall out after three months and 3,000 miles and the car has just 35,000 miles on it, 2014 Ford Escape
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-english" title="English Language &amp; Usage Stack Exchange"></div><a href="http://english.stackexchange.com/questions/323671/turning-a-celebrity-into-a-non-person" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:97 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Turning a celebrity into a non-person?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/31761/guard-gets-fired-after-saving-ceos-life" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Guard gets fired after saving CEO&#39;s life
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-cs" title="Computer Science Stack Exchange"></div><a href="http://cs.stackexchange.com/questions/57003/boolean-search-explained" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:419 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Boolean search explained
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="http://physics.stackexchange.com/questions/253944/if-we-threw-a-baseball-from-the-iss-could-we-deorbit-the-ball" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    If we threw a baseball from the ISS, could we deorbit the ball?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/114452/replace-for-with-if-in-mathematica-way" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Replace For with If in Mathematica way
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/31999/thing-that-does-not-dry-in-sunlight" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Thing that does not dry in sunlight
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/79241/the-rice-and-chess-problem" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    The rice and chess problem
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/67897/i-dont-want-to-kill-any-more-mice-but-my-advisor-insists-that-i-must-in-order" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    I don&#39;t want to kill any more mice, but my advisor insists that I must in order to get my PhD
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="http://rpg.stackexchange.com/questions/79763/is-lost-mines-of-phandelvers-young-green-dragon-to-much-for-a-group-of-level-3" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is Lost Mines of Phandelver&#39;s Young Green Dragon to much for a group of level 3 characters?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/41215/how-can-i-set-up-the-environment-so-that-my-creatures-dont-get-sick" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can I set up the environment so that my creatures don&#39;t get sick?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/37051199/should-this-be-called-some-special-case-of-object-slicing" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Should this be called some special case of object slicing?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-money" title="Personal Finance &amp; Money Stack Exchange"></div><a href="http://money.stackexchange.com/questions/63737/the-price-dropped-on-an-item-i-purchased-8-days-ago-what-can-i-do" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:93 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    The price dropped on an item I purchased 8 days ago. What can I do?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-dba" title="Database Administrators Stack Exchange"></div><a href="http://dba.stackexchange.com/questions/137704/rules-related-to-transaction-count" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:182 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Rules related to Transaction count
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-electronics" title="Electrical Engineering Stack Exchange"></div><a href="http://electronics.stackexchange.com/questions/232528/regular-not-zener-diode-as-voltage-regulator" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:135 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Regular (not Zener) Diode as Voltage Regulator
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="/feeds/question/10410395" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/10410395/ivc/2f18');});
+</script>
+<noscript>
+    <div><img src="/posts/10410395/ivc/2f18" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang"></div></div>
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                    <a href="http://stackoverflow.com/company/about">about us</a>
+                        <a href="/tour">tour</a>
+                    <a href="/help">help</a>
+                    <a href="http://blog.stackoverflow.com?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com">chat</a>
+                    <a href="http://data.stackexchange.com">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackoverflow.com/company/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tr>
+            <th colspan=3>
+                Technology
+            </th>
+            <th >
+                Life / Arts
+            </th>
+            <th >
+                Culture / Recreation
+            </th>
+            <th >
+                Science
+            </th>
+            <th >
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="//stackoverflow.com" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="//serverfault.com" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="//superuser.com" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="//webapps.stackexchange.com" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="//askubuntu.com" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="//webmasters.stackexchange.com" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="//gamedev.stackexchange.com" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="//tex.stackexchange.com" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//programmers.stackexchange.com" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="//unix.stackexchange.com" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                        <li><a href="//apple.stackexchange.com" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="//wordpress.stackexchange.com" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="//gis.stackexchange.com" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="//electronics.stackexchange.com" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="//android.stackexchange.com" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="//security.stackexchange.com" title="information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//dba.stackexchange.com" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="//drupal.stackexchange.com" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="//sharepoint.stackexchange.com" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="//ux.stackexchange.com" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="//mathematica.stackexchange.com" title="users of Mathematica">Mathematica</a></li>
+                        <li><a href="//salesforce.stackexchange.com" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                        <li><a href="//expressionengine.stackexchange.com" title="administrators, end users, developers and designers for ExpressionEngine&#174; CMS">ExpressionEngine&#174; Answers</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (13)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//photo.stackexchange.com" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="//scifi.stackexchange.com" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="//graphicdesign.stackexchange.com" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="//movies.stackexchange.com" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                        <li><a href="//cooking.stackexchange.com" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="//diy.stackexchange.com" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="//money.stackexchange.com" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="//academia.stackexchange.com" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (9)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//english.stackexchange.com" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="//skeptics.stackexchange.com" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="//judaism.stackexchange.com" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="//travel.stackexchange.com" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="//christianity.stackexchange.com" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="//gaming.stackexchange.com" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="//bicycles.stackexchange.com" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="//rpg.stackexchange.com" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//math.stackexchange.com" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="//stats.stackexchange.com" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="//cstheory.stackexchange.com" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="//physics.stackexchange.com" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="//mathoverflow.net" title="professional mathematicians">MathOverflow</a></li>
+                        <li><a href="//chemistry.stackexchange.com" title="scientists, academics, teachers and students">Chemistry</a></li>
+                        <li><a href="//biology.stackexchange.com" title="biology researchers, academics, and students">Biology</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (5)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//stackapps.com" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="//meta.stackexchange.com" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="//area51.stackexchange.com" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="//careers.stackoverflow.com">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</table>
+                </div>
+            </div>
+            <div id="copyright">
+                site design / logo &#169; 2016 Stack Exchange Inc; user contributions licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2016.5.5.3549
+            </div>
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Stack Overflow works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    
+    
+        
+        ados.run.push(function () {
+                setTimeout(function () { $("#adzerk-user-match").remove(); }, window.AUMIframeDone ? 0 : 2000);
+                ados_setKeywords('opencv,input,filter,matrix,kalman-filter');; ados_load();
+        });   
+        
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-1');
+                        ga('set', 'dimension2', '|opencv|input|filter|matrix|kalman-filter|');         ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>
+        
+    
+    </body>
+</html>

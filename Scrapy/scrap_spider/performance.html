@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>Performance | Microsoft Application Lifecycle Management</title>
+
+	<meta name="description" content="Learn to use Visual Studio, Visual Studio Team Services, Application Insights and Team Foundation Server to decrease rework, increase transparency into your application and increase the rate at which you can ship high quality software throughout the application lifecycle">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.msdn.microsoft.com/visualstudioalm/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Comments Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Performance Tag Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/feed/" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/visualstudioalm/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('http://i.technet.microsoft.com/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #68217a;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+  text-align: center;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 0 !important;
+	display: inline-block !important;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	color: #fff;
+        border: 0 !important;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+}
+@media (min-width:60em){ 
+
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #442059;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 35px;
+	display: table-cell;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	border-right: 10px solid transparent; 
+	color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/cloud-platform/images/favicon-msdn.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="archive tag tag-performance tag-73 msdn-46023 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.msdn.microsoft.com/developer-tools">Developer Tools Blogs</a> > Microsoft Application Lifecycle Management</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.msdn.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-developer-tools-blogs-main-menu-container"><ul id="menu-developer-tools-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Executive Bloggers</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-103"><a href="http://weblogs.asp.net/scottgu/">Scott Guthrie</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-133"><a href="http://blogs.msdn.microsoft.com/stevengu/">Steve Guggenheimer</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Visual Studio</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="http://blogs.msdn.microsoft.com/visualstudio">Visual Studio</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="http://blogs.msdn.microsoft.com/vscode/">Visual Studio Code</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-723"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-163"><a href="http://blogs.msdn.microsoft.com/lightswitch/">LightSwitch</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-383"><a href="http://blogs.msdn.microsoft.com/heaths/">Setup &amp; Install by Heath Stewart</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Application Lifecycle Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/insights/">Application Insights</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-393"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/release-management/">Release Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-server/">Team Foundation Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-412"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/testing/">Testing</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="http://www.visualstudio.com/news/release-archive-vso">Visual Studio Team Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/">All</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Languages</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-453"><a href="http://blogs.msdn.microsoft.com/vcblog/">Visual C++</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="http://blogs.msdn.microsoft.com/fsharpteam/">Visual F#</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.msdn.microsoft.com/visualstudio/tag/javascript/">JavaScript</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="http://blogs.msdn.microsoft.com/typescript/">TypeScript</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1075"><a href="https://blogs.msdn.microsoft.com/pythonengineering/">Python</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">.NET</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="http://blogs.msdn.microsoft.com/dotnet/">.NET</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1052"><a href="http://blogs.msdn.microsoft.com/bethmassi/tag/devcenter/">.NET with Beth Massi</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1071"><a href="http://blogs.msdn.com/b/pfxteam/">.NET Parallel Programming</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-503"><a href="http://blogs.msdn.com/b/adonet/">ADO.NET (Managed Providers, DataSet &amp; EF)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-513"><a href="http://www.hanselman.com/blog/CategoryView.aspx?category=ASP.NET">ASP.NET by Scott Hanselman</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-724"><a href="http://blogs.msdn.com/b/odatateam/">Odata Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-533"><a href="http://blogs.msdn.microsoft.com/wpf/">WPF</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Platform Development</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-273"><a href="http://blogs.windows.com/buildingapps/">Apps for Windows</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1032"><a href="http://blogs.msdn.com/b/bingdevcenter/">Bing</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1063"><a href="http://blogs.windows.com/msedgedev/">Edge</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-553"><a href="http://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-563"><a href="http://blogs.msdn.microsoft.com/vsto/">Office</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-573"><a href="http://blogs.office.com/dev?filter=true&#038;filter-product=sharepoint">Office 365 Development</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-583"><a href="http://blogs.msdn.microsoft.com/webdev/">Web</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+			<aside id="text-6" class="widget widget_text">			<div class="textwidget"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ 
+  ga('create', 'UA-62780441-3', 'auto');
+  ga('send', 'pageview');
+ 
+</script></div>
+		</aside>		</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm">Microsoft Application Lifecycle Management</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description">Learn to use Visual Studio, Visual Studio Team Services, Application Insights and Team Foundation Server to decrease rework, increase transparency into your application and increase the rate at which you can ship high quality software throughout the application lifecycle </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+					<a href=https://blogs.msdn.microsoft.com/visualstudioalm/ title="Microsoft Application Lifecycle Management" rel="home"><img src="http://msdnshared.blob.core.windows.net/media/2015/05/8814.VisualStudioClean11.png" alt="Microsoft Application Lifecycle Management" /></a>				</div>
+
+			</div>
+
+			<aside id="text-6" class="widget widget_text">			<div class="textwidget"><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ 
+  ga('create', 'UA-62780441-3', 'auto');
+  ga('send', 'pageview');
+ 
+</script></div>
+		</aside>
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Comments Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Microsoft Application Lifecycle Management &raquo; Performance Tag Feed" href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/feed/" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.msdn.microsoft.com/visualstudioalm/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('http://i.technet.microsoft.com/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #68217a;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+  text-align: center;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 0 !important;
+	display: inline-block !important;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	color: #fff;
+        border: 0 !important;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+}
+@media (min-width:60em){ 
+
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+	font-size: 14px;
+	font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+	font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #68217a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #442059;
+	border-bottom-color: #442059;
+}
+
+.main-navigation li:hover {
+  background: #442059;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #442059;
+}
+
+.sub-menu.active li:hover{
+  background: #68217a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #68217a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #68217a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #68217a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #442059;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #442059;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.developer-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+	#all-rss-link a { font-size: 13px; color: #00749e; }
+	#all-rss-link a:hover { text-decoration: underline; }
+	#all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */	
+
+/*Social Tile links*/
+.sidebar-tiles {
+	clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+	float: left;
+	margin: 0 5px 5px 0;
+	padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+	background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+	background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+	background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+	background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+	background: #68217a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+	color: #fff;
+	background-color: #442059;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+	background-color: #68217a;
+}
+.sidebar-btn-green {
+	background-color: #009E49;
+}
+.sidebar-btn-cyan {
+	background-color: #0072C6;
+}
+.sidebar-btn a {
+	line-height: 34px; 
+	font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+	padding: 0 30px 0 35px;
+	display: table-cell;
+	vertical-align: middle;
+	background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+	border-right: 10px solid transparent; 
+	color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/cloud-platform/images/favicon-msdn.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+
+<section id="content" class="site-content">
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		
+			<header class="page-header">
+				<h1 class="page-title">
+					Tag: Performance				</h1>
+			</header><!-- .page-header -->
+
+										
+<div class="post-wrap">
+	<article id="post-8293" class="post-8293 post type-post status-publish format-standard hentry category-uncategorized tag-alm tag-announcement tag-applications-behind-firewall tag-cloud-load-testing tag-devops tag-load-testing tag-performance tag-testing tag-visual-studio-2013 tag-visual-studio-online">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2015/03/23/announcing-100-core-support-for-vso-cloud-based-load-testing-and-more/" rel="bookmark">Announcing 100 core support for VSO Cloud-based Load testing and more!</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-8293" class="wds-ratings" data-rating="0" data-userrating="0" data-postid="8293">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2015-03-23T09:25:00+00:00">March 23, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="46593b2329c94999b1704d1f58993df4" href="https://social.msdn.microsoft.com/profile/Jimson+Chalissery+%5BMSFT%5D">Jimson Chalissery [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2015/03/23/announcing-100-core-support-for-vso-cloud-based-load-testing-and-more/#comments">2 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Cloud-based Load Testing&nbsp;with Visual Studio Online now supports&nbsp; up to 100 cores for a single load test run. Until now in Cloud-based Load Testing, you could use up to 20 cores (10 agents) in a single load test run. With the support for 100 cores, you should be able to generate 5 times the concurrent&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2015/03/23/announcing-100-core-support-for-vso-cloud-based-load-testing-and-more/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/alm/">ALM</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/announcement/">Announcement</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/applications-behind-firewall/">Applications Behind Firewall</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/cloud-load-testing/">cloud load testing</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/devops/">DevOps</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/load-testing/">Load Testing</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/testing/">Testing</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2013/">Visual studio 2013</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-online/">Visual Studio Online</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-503" class="post-503 post type-post status-publish format-standard hentry category-uncategorized tag-announcement tag-devops tag-load-testing tag-performance tag-visual-studio-2013 tag-visual-studio-online">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/11/03/cloud-based-load-testing-from-europe-is-now-possible/" rel="bookmark">Cloud-based Load Testing from Europe is now possible</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-503" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="503">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-11-03T04:37:00+00:00">November 3, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="46593b2329c94999b1704d1f58993df4" href="https://social.msdn.microsoft.com/profile/Jimson+Chalissery+%5BMSFT%5D">Jimson Chalissery [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/11/03/cloud-based-load-testing-from-europe-is-now-possible/#comments">3 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>While the announcement regarding VSO availability in Europe was&nbsp;made a few days back, this post outlines what that means in the context of Cloud-based Load Testing with Visual Studio Online. For details on how to create a VSO&nbsp;account in Europe and what it means to have a VSO&nbsp;account in Europe, please refer to the&nbsp;announcement. For&nbsp;Cloud-based&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/11/03/cloud-based-load-testing-from-europe-is-now-possible/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/announcement/">Announcement</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/devops/">DevOps</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/load-testing/">Load Testing</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2013/">Visual studio 2013</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-online/">Visual Studio Online</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-513" class="post-513 post type-post status-publish format-standard hentry category-uncategorized tag-announcement tag-automated-testing tag-devops tag-load-testing tag-performance tag-visual-studio-2013 tag-visual-studio-online">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/11/02/cloud-based-load-testing-rest-apis-are-here/" rel="bookmark">Cloud-based Load Testing REST APIs are here</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-513" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="513">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-11-02T18:25:00+00:00">November 2, 2014</time><time class="updated" datetime="2016-04-19T14:04:59+00:00">April 19, 2016</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="46593b2329c94999b1704d1f58993df4" href="https://social.msdn.microsoft.com/profile/Jimson+Chalissery+%5BMSFT%5D">Jimson Chalissery [MSFT]</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/11/02/cloud-based-load-testing-rest-apis-are-here/#comments">2 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Many of you are looking at being more agile when it comes to testing, and with increased focus on automation, there are quite a few who wants to integrate Load Testing as a regular test practice. This could be either for those validating performance of their nightly/weekly builds or those that just does not want&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/11/02/cloud-based-load-testing-rest-apis-are-here/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/announcement/">Announcement</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/automated-testing/">Automated Testing</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/devops/">DevOps</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/load-testing/">Load Testing</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2013/">Visual studio 2013</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-online/">Visual Studio Online</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-813" class="post-813 post type-post status-publish format-standard hentry category-uncategorized tag-announcement tag-diagnostics tag-performance tag-performance-and-diagnostics-hub tag-profiler">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/08/18/perftips-performance-information-at-a-glance-while-debugging-with-visual-studio/" rel="bookmark">PerfTips: Performance Information at-a-glance while Debugging with Visual Studio</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-813" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="813">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-08-18T10:10:00+00:00">August 18, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="1bec3aeb806845f8be0034346dea9bea" href="https://social.msdn.microsoft.com/profile/Dan+Taylor+MSFT">Dan Taylor MSFT</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/08/18/perftips-performance-information-at-a-glance-while-debugging-with-visual-studio/#comments">25 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Note: this post has been updated for Visual Studio 2015 RTM. You are probably all familiar with the debugger DataTips that let you see the value of a variable when you hover over it in the editor. This post introduces the new PerfTips feature in Visual Studio 2015 for C#/VB, and C++ developers on all&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/08/18/perftips-performance-information-at-a-glance-while-debugging-with-visual-studio/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/announcement/">Announcement</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance-and-diagnostics-hub/">Performance and Diagnostics hub</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/profiler/">Profiler</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-993" class="post-993 post type-post status-publish format-standard hentry category-uncategorized tag-diagnostics tag-performance tag-performance-and-diagnostics-hub tag-profiler">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/07/03/view-source-in-the-cpu-usage-tool/" rel="bookmark">View Source in the CPU Usage tool</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-993" class="wds-ratings" data-rating="4" data-userrating="0" data-postid="993">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-07-03T11:00:00+00:00">July 3, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="1bec3aeb806845f8be0034346dea9bea" href="https://social.msdn.microsoft.com/profile/Dan+Taylor+MSFT">Dan Taylor MSFT</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/07/03/view-source-in-the-cpu-usage-tool/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>In Update 2 of Visual Studio 2013, we added the CPU Usage tool into the Performance and Diagnostics hub which allows you to see where the CPU is spending time executing your code. In Update 3 of Visual Studio 2013, we have made a small but important improvement to this tool: the ability to navigate&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/07/03/view-source-in-the-cpu-usage-tool/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance-and-diagnostics-hub/">Performance and Diagnostics hub</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/profiler/">Profiler</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-1483" class="post-1483 post type-post status-publish format-standard hentry category-uncategorized tag-debugging tag-diagnostics tag-performance">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/04/phone-debugging-in-visual-studio-2013-update-2/" rel="bookmark">Phone Debugging in Visual Studio 2013 Update 2</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-1483" class="wds-ratings" data-rating="0" data-userrating="0" data-postid="1483">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-04-04T16:21:00+00:00">April 4, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="03bdbe27242b4f949e40ce7c0f338fce" href="https://social.msdn.microsoft.com/profile/Andrew+Chan+-+MSFT">Andrew Chan - MSFT</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/04/phone-debugging-in-visual-studio-2013-update-2/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>Visual Studio 2013 Update 2 introduced several exciting changes for mobile development. You are now able to use the same programming model that you use to build Windows Store apps for Windows 8.1, to build XAML apps Windows Phone 8.1. In this post, I will remind you of the most important diagnostic capabilities that you&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/04/phone-debugging-in-visual-studio-2013-update-2/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/debugging/">Debugging</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-1513" class="post-1513 post type-post status-publish format-standard hentry category-uncategorized tag-debugging tag-diagnostics tag-performance">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/04/diagnosing-mobile-website-issues-on-windows-phone-8-1-with-visual-studio/" rel="bookmark">Diagnosing Mobile Website Issues on Windows Phone 8.1 with Visual Studio</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-1513" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="1513">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-04-04T07:30:00+00:00">April 4, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="916a9f27f8064fceb015709ea9d9fa24" href="https://social.msdn.microsoft.com/profile/Andrew+B+Hall+-+MSFT">Andrew B Hall - MSFT</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/04/diagnosing-mobile-website-issues-on-windows-phone-8-1-with-visual-studio/#comments">19 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>If you have spent time trying to make a compelling mobile version of your website you have likely hit issues with it not looking or working correctly on mobile browsers.&nbsp; To help with this on Windows Phone, we&rsquo;re very excited to announce that in Visual Studio 2013 Update 2 we have enabled the use of&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/04/diagnosing-mobile-website-issues-on-windows-phone-8-1-with-visual-studio/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/debugging/">Debugging</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-1533" class="post-1533 post type-post status-publish format-standard hentry category-uncategorized tag-devops tag-insights tag-performance">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/03/case-study-application-performance-monitoring-with-application-insights/" rel="bookmark">Case study: Application Performance Monitoring with Application Insights</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-1533" class="wds-ratings" data-rating="0" data-userrating="0" data-postid="1533">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-04-03T10:47:00+00:00">April 3, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="" href="https://blogs.msdn.microsoft.com/visualstudioalm/author/alan-cameron-wills/">Alan Cameron Wills</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/03/case-study-application-performance-monitoring-with-application-insights/#comments">0 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>James Beeson, Alan Wills &#8211; Our group runs about 20 web applications, serving a community of about 100k users spread around the world. Since we started using Application Insights, we&rsquo;ve found we have a much clearer view of our applications&rsquo; performance, and as a result, our users are seeing better performing and more useful apps&#8230;. <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/03/case-study-application-performance-monitoring-with-application-insights/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/devops/">DevOps</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/insights/">insights</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-1593" class="post-1593 post type-post status-publish format-standard hentry category-uncategorized tag-diagnostics tag-modern-app tag-performance tag-visual-studio tag-visual-studio-2013 tag-vs-update-2 tag-windows-store-app">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/02/diagnosing-memory-issues-with-the-new-memory-usage-tool-in-visual-studio/" rel="bookmark">Diagnosing memory issues with the new Memory Usage Tool in Visual Studio</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-1593" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="1593">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-04-02T16:10:00+00:00">April 2, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="95ce7797d39145eba6b30062cd343434" href="https://social.msdn.microsoft.com/profile/Harikrishna+Menon">Harikrishna Menon</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/02/diagnosing-memory-issues-with-the-new-memory-usage-tool-in-visual-studio/#comments">22 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>As part of our continued effort to provide great diagnostic tools for developers, Visual Studio 2013 introduces a new Memory Usage tool as a part of the Performance and Diagnostics hub. The Memory Usage tool supports Windows Store and Windows Phone Store apps using C#/VB/C++ and XAML. This blog post gives you an overview of&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/04/02/diagnosing-memory-issues-with-the-new-memory-usage-tool-in-visual-studio/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/modern-app/">modern app</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio/">Visual Studio</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2013/">Visual studio 2013</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/vs-update-2/">vs update 2</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/windows-store-app/">Windows Store app</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+							
+<div class="post-wrap">
+	<article id="post-1803" class="post-1803 post type-post status-publish format-standard hentry category-uncategorized tag-diagnostics tag-performance">
+
+		<header class="entry-header">
+			<h2 class="entry-title"><a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/02/28/new-cpu-usage-tool-in-the-performance-and-diagnostics-hub-in-visual-studio-2013/" rel="bookmark">New CPU Usage tool in the Performance and Diagnostics hub in Visual Studio 2013</a></h2>
+			<div class="rating-wrap">
+		<div id="star-rating-1803" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="1803">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		</header>
+		<div class="entry-meta row">
+			<div class="post-info">
+				<span class="posted-on"><time class="entry-date published" datetime="2014-02-28T16:18:00+00:00">February 28, 2014</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="1bec3aeb806845f8be0034346dea9bea" href="https://social.msdn.microsoft.com/profile/Dan+Taylor+MSFT">Dan Taylor MSFT</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/02/28/new-cpu-usage-tool-in-the-performance-and-diagnostics-hub-in-visual-studio-2013/#comments">17 Comments</a>			</div>
+		</div>
+
+		<div class="entry-summary">
+			<p>This blog post will give an overview of the features of the new CPU Usage tool in Visual Studio 2013 Update 2, and then walk through a specific example of how to use the CPU Usage tool to understand what functions are using the CPU so that you can prioritize your time optimizing the functions&#8230; <a href="https://blogs.msdn.microsoft.com/visualstudioalm/2014/02/28/new-cpu-usage-tool-in-the-performance-and-diagnostics-hub-in-visual-studio-2013/" class="read-more">Read more</a></p>
+						<ul class="in-categories"><li class="post-category">Tags: <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/">Diagnostics</a>, <a href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/">Performance</a></li></ul>		</div>
+
+			</article><!-- #post-## -->
+</div>
+			
+			<div class="row paging-wrap post-wrap">
+						<nav class="navigation paging-navigation" role="navigation">
+			<h2 class="screen-reader-text">Posts navigation</h2>
+			<div class="nav-links">
+				<span class='page-numbers current'>1</span>
+<a class='page-numbers' href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/page/2/'>2</a>
+<a class="next page-numbers" href="https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/page/2/">Next &raquo;</a>
+			</div><!-- .nav-links -->
+		</nav><!-- .navigation -->
+				</div>
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="text-4" class="widget widget_text">			<div class="textwidget"><div class="sidebar-btn sidebar-btn-purple">
+    <a href="http://www.microsoft.com/click/services/Redirect2.ashx?CR_CC=200657580" title="Visual Studio" onclick="window.appInsights && window.appInsights.logEvent('leave_to/download_visual_studio'); return true;">Download Visual Studio</a>
+</div>
+
+<div class="sidebar-btn sidebar-btn-green">
+    <a href="http://www.microsoft.com/click/services/Redirect2.ashx?CR_CC=200657581" title="Visual Studio" onclick="window.appInsights && window.appInsights.logEvent('leave_to/download_visual_studio'); return true;">Download TFS 2015</a>
+</div>
+
+<div class="sidebar-btn sidebar-btn-cyan">
+    <a href="http://www.microsoft.com/click/services/Redirect2.ashx?CR_CC=200657582" title="Visual Studio" onclick="window.appInsights && window.appInsights.logEvent('leave_to/download_visual_studio'); return true;">Visual Studio Team Services</a>
+</div>
+
+<ul class="sidebar-tiles">
+  <li class="first">
+    <a href="https://blogs.msdn.microsoft.com/visualstudioalm/feed/" class="sidebar-tile-subscribe">Subscribe</a>
+  </li>
+  <li class="mid">
+    <a href="https://blogs.msdn.microsoft.com/visualstudioalm/comments/feed/" class="sidebar-tile-comments">Comments</a>  </li>
+  <!--<li class="last">
+    <a href="#" class="sidebar-tile-contact">Contact</a>
+  </li>-->
+</ul></div>
+		</aside><aside id="blog_subscription-3" class="widget msdn_subscription_widget"><h2 class="widget-title color-highlight-bg">Subscribe Blog via Email</h2>
+<div class="msdn-subscribe-text"><p>Subscribe to this blog and receive notifications of new posts by email.</p></div>        <div>
+            <p>
+                <input type="hidden" id="_msdn_subscribe_nonce" name="_msdn_subscribe_nonce" value="6f57997be0" />                    <input type="email" name="email" class="msdn-subscribe-email" value=""
+                           placeholder="Email Address"/>
+                    <button type="button" class="msdn-subscribe-button unregistered-user">
+                        Subscribe!
+                    </button>
+                    <button type="button" class="msdn-unsubscribe-button unregistered-user">
+                        Unsubscribe
+                    </button>
+                
+                <label class="msdn-subscribe-message" style="display: none;"></label>
+            </p>
+
+        </div>
+        
+</aside><aside id="msdn_bing_social_search-4" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=Microsoft%2BApplication%2BLifecycle%2BManagement&rq=site%3Ahttp%3A%2F%2Fblogs.msdn.com%2Fb%2Fvisualstudioalm" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="rss-2" class="widget widget_rss"><h2 class="widget-title color-highlight-bg"><a class='rsswidget' href='http://sxp.microsoft.com/feeds/3.0/devblogs'><img style='border:0' width='14' height='14' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/images/rss.png' alt='RSS' /></a> <a class='rsswidget' href='http://sxp.microsoft.com/stream/item?channelid=devblogs&#038;v=3'>Live Now on Developer Tools Blogs</a></h2><ul><li><a class='rsswidget' href='https://blogs.windows.com/buildingapps/2016/05/05/kickstart-uwp-app-creation-with-windows-app-studios-open-source-uwp-libraries-and-samples-app/'>Kickstart UWP app creation with Windows App Studio’s open source UWP libraries and Samples App</a></li><li><a class='rsswidget' href='https://blogs.msdn.microsoft.com/dotnet/2016/05/05/tooling-to-facilitate-framework-migrations/'>Tooling to Facilitate Framework Migrations</a></li><li><a class='rsswidget' href='https://blogs.msdn.microsoft.com/vcblog/2016/05/04/test/'>test</a></li></ul></aside><aside id="text-2" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Related Resources</h2>			<div class="textwidget"><ul class="widget-link-list">
+
+	<li><a href="https://www.visualstudio.com/features/debugging-and-diagnostics-vs" rel="kin" target="blank">Debug, Profile, Diagnose with VS</a></li>
+
+	<li><a href="http://channel9.msdn.com/Events/Visual-Studio/Connect-Live/" rel="me" target="blank">Visual Studio Videos</a></li>
+
+
+	<li><a href="http://blogs.msdn.com/b/visualstudioalm/archive/2015/05/05/the-easiest-way-to-file-bugs-and-send-error-logs-for-visual-studio-2015.aspx" target="blank">Filing a bug/giving feedback on Visual Studio 2015</a></li>
+
+
+	<li><a href="http://msdn.microsoft.com/vstudio/ff637362.aspx" target="blank">Team Foundation Server Documentation</a></li>
+
+	<li><a href="http://blogs.msdn.com/b/visualstudioalm/archive/2013/01/30/getting-started-with-git-in-visual-studio-and-team-foundation-service.aspx" rel="kin" target="blank">Getting Started with Git in Visual Studio and Team Foundation Service</a></li>
+
+
+	<li><a href="http://blogs.msdn.com/b/visualstudioalmrangers" rel="kin" target="blank">Visual Studio ALM Rangers</a></li>
+
+
+
+	<li><a href="http://blogs.msdn.com/b/visualstudioalm/archive/2013/02/06/set-up-connect-and-publish-using-visual-studio-with-git.aspx">Create, Connect, and Publish using Visual Studio with Git</a></li>
+
+
+	<li>
+	<a href="http://www.visualstudio.com">Visual Studio Downloads</a>
+	</li>
+
+	<li>
+	<a href="http://blogs.msdn.com/b/visualstudioalm/archive/2015/02/05/video-diagnostic-tools-in-visual-studio-2015.aspx">Video: Diagnostic Tools in Visual Studio 2015 </a>
+	</li>
+
+
+</ul></div>
+		</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/administration/' class='tag-link-653' title='16 topics' style='font-size: 9.6842105263158pt;'>Administration</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/agile/' class='tag-link-473' title='38 topics' style='font-size: 14.610526315789pt;'>Agile</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/alm/' class='tag-link-213' title='120 topics' style='font-size: 21.315789473684pt;'>ALM</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/announcement/' class='tag-link-23' title='81 topics' style='font-size: 18.989473684211pt;'>Announcement</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/automated-testing/' class='tag-link-413' title='25 topics' style='font-size: 12.147368421053pt;'>Automated Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/azure/' class='tag-link-323' title='18 topics' style='font-size: 10.368421052632pt;'>Azure</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/build-process/' class='tag-link-533' title='14 topics' style='font-size: 9pt;'>Build Process</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/coded-ui-test/' class='tag-link-733' title='26 topics' style='font-size: 12.421052631579pt;'>Coded UI Test</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/coded-ui-testing/' class='tag-link-513' title='28 topics' style='font-size: 12.831578947368pt;'>Coded UI Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/code-visualization/' class='tag-link-423' title='17 topics' style='font-size: 10.094736842105pt;'>Code Visualization</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/customizing/' class='tag-link-673' title='20 topics' style='font-size: 10.915789473684pt;'>Customizing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/debugging/' class='tag-link-363' title='36 topics' style='font-size: 14.336842105263pt;'>Debugging</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/devops/' class='tag-link-63' title='55 topics' style='font-size: 16.8pt;'>DevOps</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/diagnostics/' class='tag-link-33' title='134 topics' style='font-size: 22pt;'>Diagnostics</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/extensibility/' class='tag-link-953' title='24 topics' style='font-size: 12.010526315789pt;'>Extensibility</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/feedback/' class='tag-link-943' title='16 topics' style='font-size: 9.6842105263158pt;'>Feedback</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/git/' class='tag-link-353' title='35 topics' style='font-size: 14.2pt;'>Git</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/guidance/' class='tag-link-183' title='37 topics' style='font-size: 14.473684210526pt;'>Guidance</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/insights/' class='tag-link-93' title='55 topics' style='font-size: 16.8pt;'>insights</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/intellitrace/' class='tag-link-153' title='26 topics' style='font-size: 12.421052631579pt;'>IntelliTrace</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/load-testing/' class='tag-link-43' title='26 topics' style='font-size: 12.421052631579pt;'>Load Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/managing-technical-debt/' class='tag-link-1221' title='19 topics' style='font-size: 10.642105263158pt;'>Managing Technical Debt</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/manual-testing/' class='tag-link-683' title='18 topics' style='font-size: 10.368421052632pt;'>Manual Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/performance/' class='tag-link-73' title='15 topics' style='font-size: 9.2736842105263pt;'>Performance</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/process-templates/' class='tag-link-563' title='21 topics' style='font-size: 11.189473684211pt;'>Process Templates</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/rangers/' class='tag-link-483' title='49 topics' style='font-size: 16.115789473684pt;'>Rangers</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/release-management/' class='tag-link-13' title='46 topics' style='font-size: 15.705263157895pt;'>Release Management</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/sharepoint/' class='tag-link-913' title='14 topics' style='font-size: 9pt;'>SharePoint</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/sonarqube/' class='tag-link-1542' title='20 topics' style='font-size: 10.915789473684pt;'>SonarQube</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-build/' class='tag-link-783' title='28 topics' style='font-size: 12.831578947368pt;'>Team Foundation Build</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-sdk/' class='tag-link-793' title='16 topics' style='font-size: 9.6842105263158pt;'>Team Foundation SDK</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/team-foundation-server/' class='tag-link-463' title='112 topics' style='font-size: 20.905263157895pt;'>Team Foundation Server</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/testing/' class='tag-link-293' title='76 topics' style='font-size: 18.715789473684pt;'>Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/test-management/' class='tag-link-693' title='29 topics' style='font-size: 13.105263157895pt;'>Test Management</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/tfs/' class='tag-link-193' title='69 topics' style='font-size: 18.168421052632pt;'>TFS</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/tfservice/' class='tag-link-813' title='30 topics' style='font-size: 13.242105263158pt;'>TFService</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/unit-testing/' class='tag-link-253' title='25 topics' style='font-size: 12.147368421053pt;'>Unit Testing</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/version-control/' class='tag-link-603' title='23 topics' style='font-size: 11.736842105263pt;'>Version Control</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio/' class='tag-link-263' title='41 topics' style='font-size: 15.021052631579pt;'>Visual Studio</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2010/' class='tag-link-873' title='29 topics' style='font-size: 13.105263157895pt;'>Visual Studio 2010</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2012/' class='tag-link-623' title='26 topics' style='font-size: 12.421052631579pt;'>Visual Studio 2012</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-2013/' class='tag-link-303' title='35 topics' style='font-size: 14.2pt;'>Visual studio 2013</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-alm/' class='tag-link-243' title='88 topics' style='font-size: 19.536842105263pt;'>Visual Studio ALM</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/visual-studio-online/' class='tag-link-3' title='68 topics' style='font-size: 18.031578947368pt;'>Visual Studio Online</a>
+<a href='https://blogs.msdn.microsoft.com/visualstudioalm/tag/work-items/' class='tag-link-553' title='42 topics' style='font-size: 15.157894736842pt;'>Work Items</a></div>
+</aside><aside id="rss-5" class="widget widget_rss"><h2 class="widget-title color-highlight-bg"><a class='rsswidget' href='http://s.ch9.ms/Events/Visual-Studio/Connect-Live/RSS'><img style='border:0' width='14' height='14' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-includes/images/rss.png' alt='RSS' /></a> <a class='rsswidget' href='http://s.ch9.ms/Events/Visual-Studio/Connect-Live'>Videos</a></h2><ul><li><a class='rsswidget' href='http://s.ch9.ms/Events/Visual-Studio/Connect-Live/Tools-for-React-Native-ConnectLive--QA'>Tools for React Native - Connect(&quot;Live&quot;); // Q&amp;A</a> <span class="rss-date">April 6, 2016</span> <cite>Jonathan Carter, Seth Juarez, Brent Vatne, parashuram N</cite></li><li><a class='rsswidget' href='http://s.ch9.ms/Events/Visual-Studio/Connect-Live/Tools-for-Apache-Cordova-TACO-ConnectLive--QA'>Tools for Apache Cordova (TACO) - Connect(&quot;Live&quot;); // Q&amp;A</a> <span class="rss-date">February 9, 2016</span> <cite>Seth Juarez, Jordan Matthiesen, Ryan J. Salva, Raymond Camden, Carlos Santana</cite></li></ul></aside><aside id="msdn-archive-widget-2" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/05/'>May 2016</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/04/'>April 2016</a>&nbsp;(18)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/03/'>March 2016</a>&nbsp;(24)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/02/'>February 2016</a>&nbsp;(13)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/01/'>January 2016</a>&nbsp;(22)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2016/'>All of 2016</a>&nbsp;(79)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2015/'>All of 2015</a>&nbsp;(186)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2014/'>All of 2014</a>&nbsp;(173)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2013/'>All of 2013</a>&nbsp;(154)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2012/'>All of 2012</a>&nbsp;(207)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2011/'>All of 2011</a>&nbsp;(81)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2010/'>All of 2010</a>&nbsp;(28)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2009/'>All of 2009</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2008/'>All of 2008</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2007/'>All of 2007</a>&nbsp;(30)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2006/'>All of 2006</a>&nbsp;(76)</li>
+	<li><a href='https://blogs.msdn.microsoft.com/visualstudioalm/2005/'>All of 2005</a>&nbsp;(22)</li>
+</aside>
+	</div><!-- #secondary -->
+
+</section><!-- section -->
+
+
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-10272" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10272"><a href="http://msdn.microsoft.com/cc300389">Terms of Use</a></li>
+<li id="menu-item-10282" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10282"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-10291" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10291"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/visualstudioalm/tag/performance/' );
+			$.cookie( 'aadsso-redirect', '/visualstudioalm/tag/performance/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<link rel='stylesheet' id='msdn-subscription-css-css'  href='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/msdn-subscription/msdn-subscription.css?ver=4.1.5' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":""};
+var msdnparent = {"is_search":"","is_singular":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ajax_object = {"ajax_url":"https:\/\/blogs.msdn.microsoft.com\/visualstudioalm\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/plugins/msdn-subscription/msdn-subscription.js?ver=1.0.1'></script>
+<script type='text/javascript' src='https://blogs.msdn.microsoft.com/visualstudioalm/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]>              <html lang="en" dir="ltr"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:article="http://ogp.me/ns/article#"
+  xmlns:book="http://ogp.me/ns/book#"
+  xmlns:profile="http://ogp.me/ns/profile#"
+  xmlns:video="http://ogp.me/ns/video#"
+  xmlns:product="http://ogp.me/ns/product#" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>                 <html lang="en" dir="ltr"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:article="http://ogp.me/ns/article#"
+  xmlns:book="http://ogp.me/ns/book#"
+  xmlns:profile="http://ogp.me/ns/profile#"
+  xmlns:video="http://ogp.me/ns/video#"
+  xmlns:product="http://ogp.me/ns/product#" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>                 <html lang="en" dir="ltr"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:article="http://ogp.me/ns/article#"
+  xmlns:book="http://ogp.me/ns/book#"
+  xmlns:profile="http://ogp.me/ns/profile#"
+  xmlns:video="http://ogp.me/ns/video#"
+  xmlns:product="http://ogp.me/ns/product#" class="no-js ie8"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+
+<html lang="en" dir="ltr" 
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:article="http://ogp.me/ns/article#"
+  xmlns:book="http://ogp.me/ns/book#"
+  xmlns:profile="http://ogp.me/ns/profile#"
+  xmlns:video="http://ogp.me/ns/video#"
+  xmlns:product="http://ogp.me/ns/product#" class="no-js">
+<!--<![endif]-->
+
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style class="vjs-styles-defaults">    .video-js {
+    }</style><meta name="citation_title" content="On the Security of RC4 in TLS" />
+<link rel="shortcut icon" href="https://www.usenix.org/sites/default/files/waves_favicon.ico" type="image/vnd.microsoft.icon" />
+<meta name="citation_author" content="Nadhem AlFardan" />
+<meta name="citation_author_institution" content="Royal Holloway, University of London" />
+<meta name="citation_author_email" content="Nadhem.Alfardan.2009@live.rhul.ac.uk" />
+<meta name="citation_author" content="Daniel J. Bernstein" />
+<meta name="citation_author_institution" content="University of Illinois at Chicago and Technische Universiteit Eindhoven" />
+<meta name="citation_author_email" content="djb@cr.yp.to" />
+<meta name="citation_author" content="Kenneth G. Paterson" />
+<meta name="citation_author_institution" content="Royal Holloway, University of London" />
+<meta name="citation_author_email" content="kenny.paterson@rhul.ac.uk" />
+<meta name="citation_author" content="Bertram Poettering" />
+<meta name="citation_author_institution" content="Royal Holloway, University of London" />
+<meta name="citation_author_email" content="bertram.poettering@rhul.ac.uk" />
+<meta name="citation_author" content="Jacob C. N. Schuldt" />
+<meta name="citation_author_institution" content="Royal Holloway, University of London" />
+<meta name="citation_author_email" content="jacob.schuldt@rhul.ac.uk" />
+<meta name="citation_publication_date" content="2013" />
+<meta name="citation_conference_title" content="Presented as part of the 22nd USENIX Security Symposium (USENIX Security 13)" />
+<meta name="citation_firstpage" content="305" />
+<meta name="citation_lastpage" content="320" />
+<meta name="citation_isbn" content="978-1-931971-03-4" />
+<meta name="citation_pdf_url" content="https://www.usenix.org/system/files/conference/usenixsecurity13/sec13-paper_alfardan.pdf" />
+<!-- TODO: add the following meta tags to $head via theme_settings -->
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+       Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,t,n){function r(n){if(!t[n]){var o=t[n]={exports:{}};e[n][0].call(o.exports,function(t){var o=e[n][1][t];return r(o||t)},o,o.exports)}return t[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(e,t,n){function r(e,t){return function(){o(e,[(new Date).getTime()].concat(a(arguments)),null,t)}}var o=e("handle"),i=e(2),a=e(3);"undefined"==typeof window.newrelic&&(newrelic=NREUM);var u=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit"],c=["addPageAction"],f="api-";i(u,function(e,t){newrelic[t]=r(f+t,"api")}),i(c,function(e,t){newrelic[t]=r(f+t)}),t.exports=newrelic,newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),o("err",[e,(new Date).getTime()])}},{}],2:[function(e,t,n){function r(e,t){var n=[],r="",i=0;for(r in e)o.call(e,r)&&(n[i]=t(r,e[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;t.exports=r},{}],3:[function(e,t,n){function r(e,t,n){t||(t=0),"undefined"==typeof n&&(n=e?e.length:0);for(var r=-1,o=n-t||0,i=Array(0>o?0:o);++r<o;)i[r]=e[t+r];return i}t.exports=r},{}],ee:[function(e,t,n){function r(){}function o(e){function t(e){return e&&e instanceof r?e:e?u(e,a,i):i()}function n(n,r,o){e&&e(n,r,o);for(var i=t(o),a=l(n),u=a.length,c=0;u>c;c++)a[c].apply(i,r);var s=f[g[n]];return s&&s.push([m,n,r,i]),i}function p(e,t){w[e]=l(e).concat(t)}function l(e){return w[e]||[]}function d(e){return s[e]=s[e]||o(n)}function v(e,t){c(e,function(e,n){t=t||"feature",g[n]=t,t in f||(f[t]=[])})}var w={},g={},m={on:p,emit:n,get:d,listeners:l,context:t,buffer:v};return m}function i(){return new r}var a="nr@context",u=e("gos"),c=e(2),f={},s={},p=t.exports=o();p.backlog=f},{}],gos:[function(e,t,n){function r(e,t,n){if(o.call(e,t))return e[t];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,t,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[t]=r,r}var o=Object.prototype.hasOwnProperty;t.exports=r},{}],handle:[function(e,t,n){function r(e,t,n,r){o.buffer([e],r),o.emit(e,t,n)}var o=e("ee").get("handle");t.exports=r,r.ee=o},{}],id:[function(e,t,n){function r(e){var t=typeof e;return!e||"object"!==t&&"function"!==t?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");t.exports=r},{}],loader:[function(e,t,n){function r(){if(!w++){var e=v.info=NREUM.info,t=s.getElementsByTagName("script")[0];if(e&&e.licenseKey&&e.applicationID&&t){c(l,function(t,n){e[t]||(e[t]=n)});var n="https"===p.split(":")[0]||e.sslForHttp;v.proto=n?"https://":"http://",u("mark",["onload",a()],null,"api");var r=s.createElement("script");r.src=v.proto+e.agent,t.parentNode.insertBefore(r,t)}}}function o(){"complete"===s.readyState&&i()}function i(){u("mark",["domContent",a()],null,"api")}function a(){return(new Date).getTime()}var u=e("handle"),c=e(2),f=window,s=f.document;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:f.XMLHttpRequest,REQ:f.Request,EV:f.Event,PR:f.Promise,MO:f.MutationObserver},e(1);var p=""+location,l={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-918.min.js"},d=window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent),v=t.exports={offset:a(),origin:p,features:{},xhrWrappable:d};s.addEventListener?(s.addEventListener("DOMContentLoaded",i,!1),f.addEventListener("load",r,!1)):(s.attachEvent("onreadystatechange",o),f.attachEvent("onload",r)),u("mark",["firstbyte",a()],null,"api");var w=0},{}]},{},["loader"]);</script><!--  Mobile viewport optimized: j.mp/bplateviewport -->
+	<meta name="google-site-verification" content="NWZh1b4m1muqzcGTUY41ERnLVVU1U0nU1knFu0v-Y5g" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+
+    <title>On the Security of RC4 in TLS | USENIX</title><link type="text/css" rel="stylesheet" href="https://www.usenix.org/sites/default/files/css/css_xAloA06fO9MfqH5oB7olBlEMNSCK_bXmI744B3VBaGU.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.usenix.org/sites/default/files/css/css_slI_Ww2GfUN8fu03eDLyTbI7sVgB_1UHLPVBdRVB1LQ.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.usenix.org/sites/default/files/css/css__w1JVcf9gMAnXRMJopE7lfmKAn-fzVmrmnBtdeIsM2E.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.usenix.org/sites/default/files/css/css_1Cns3L1_TrifKTSgp644ViF6O9TZ1O0lZsCwyMt9kfE.css" media="screen" />
+<link type="text/css" rel="stylesheet" href="https://www.usenix.org/sites/default/files/css/css_47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU.css" media="print" />
+
+<!--[if lte IE 8]>
+<link type="text/css" rel="stylesheet" href="https://www.usenix.org/sites/all/themes/waves/css/ie.css?o6p7lz" media="all" />
+<![endif]-->
+<!--     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,800italic,600,400,800' rel='stylesheet' type='text/css'> -->
+<!--     <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'> -->
+    <link href="./css/ie.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://www.usenix.org/sites/default/files/js/js_UWQINlriydSoeSiGQxToOUdv493zEa7dpsXC1OtYlZU.js"></script>
+<script type="text/javascript" src="https://www.usenix.org/sites/default/files/js/js_IE1tR0MJwQVLroCSS5Sy4yftAmfwZ4RgT9sBLauhG2o.js"></script>
+<script type="text/javascript" src="https://www.usenix.org/sites/default/files/js/js_aEjwpfDqZG2ldVMI7zLtxBVaC22DJuiGO8Z7qLzuk2U.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","https://www.usenix.org/sites/default/files/googleanalytics/analytics.js?o6p7lz","ga");ga("create", "UA-3633391-4", {"cookieDomain":"auto"});ga("set", "anonymizeIp", true);ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://www.usenix.org/sites/default/files/js/js_Vo6bEtGhdNGQk1Slh3L1zOpzpxJhqPweQQL6FNyKT78.js"></script>
+<script type="text/javascript" src="https://www.usenix.org/sites/default/files/js/js_ByQqoFmos53DlLDLfNaeXBXbxiumZmAoP08wXIegdFk.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"usenix_conference_lisa13","theme_token":"auXneMjjsCIhepF_NQ1Ofgc4g8y7b2Lz8nCEl1drSLs","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/beautytips\/js\/jquery.bt.min.js":1,"sites\/all\/modules\/beautytips\/js\/beautytips.min.js":1,"sites\/all\/themes\/waves\/js\/search.js":1,"sites\/all\/themes\/waves\/js\/modernizr-1.6.min.js":1,"sites\/all\/themes\/waves\/js\/usenix.js":1,"sites\/all\/modules\/views_slideshow\/js\/views_slideshow.js":1,"sites\/all\/modules\/beautytips\/other_libs\/jquery.hoverIntent.minified.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/modules\/field_group\/field_group.js":1,"sites\/all\/libraries\/videojs\/video.js":1,"sites\/all\/modules\/usenix\/usenix_media\/swf_assets\/swfobject\/swfobject.js":1,"sites\/all\/modules\/usenix\/usenix_media\/swf_assets\/audio-player\/audio-player.js":1,"sites\/all\/modules\/usenix\/usenix_media\/js\/usenix_audio.js":1,"sites\/all\/themes\/waves\/js\/ad-blocks-leaderboard.js":1,"sites\/all\/libraries\/jquery.cycle\/jquery.cycle.all.js":1,"sites\/all\/modules\/views_slideshow\/contrib\/views_slideshow_cycle\/js\/views_slideshow_cycle.js":1,"sites\/all\/themes\/rubik\/js\/rubik.js":1},"css":{"modules\/comment\/comment.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"sites\/all\/modules\/mollom\/mollom.css":1,"modules\/poll\/poll.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/views_slideshow\/views_slideshow.css":1,"sites\/all\/modules\/biblio\/biblio.css":1,"sites\/all\/libraries\/videojs\/video-js.min.css":1,"sites\/all\/modules\/views\/css\/views-admin.seven.css":1,"sites\/all\/modules\/views_slideshow\/contrib\/views_slideshow_cycle\/views_slideshow_cycle.css":1,"sites\/all\/themes\/tao\/reset.css":1,"sites\/all\/themes\/tao\/base.css":1,"sites\/all\/themes\/waves\/css\/screen.css":1,"sites\/all\/themes\/waves\/system.css":1,"sites\/all\/themes\/waves\/views.css":1,"sites\/all\/themes\/usenix_conference_base\/css\/conference_base.css":1,"sites\/all\/themes\/usenix_conference_lisa13\/css\/conference.css":1,"sites\/all\/themes\/tao\/drupal.css":1,"sites\/all\/themes\/waves\/core.css":1,"sites\/all\/themes\/waves\/icons.css":1,"sites\/all\/themes\/waves\/style.css":1,"sites\/all\/themes\/waves\/print.css":1,"sites\/all\/themes\/waves\/base.css":1,"sites\/all\/themes\/waves\/reset.css":1,"sites\/all\/themes\/waves\/css\/ie.css":1}},"beautytips":{".beautytips":{"fill":"#F4F4F4","strokeStyle":"#666666","spikeLength":20,"spikeGirth":10,"width":350,"overlap":0,"centerPointY":1,"cornerRadius":0,"cssStyles":{"fontFamily":"\u0026quot;Lucida Grande\u0026quot;,Helvetica,Arial,Verdana,sans-serif","fontSize":"12px","padding":"10px 14px"},"shadow":1,"shadowColor":"rgba(0,0,0,.5)","shadowBlur":8,"shadowOffsetX":4,"shadowOffsetY":4,"cssSelect":".beautytips","list":["fill","strokeStyle","spikeLength","spikeGirth","width","overlap","centerPointY","cornerRadius","cssStyles","shadow","shadowColor","shadowBlur","shadowOffsetX","shadowOffsetY"]}},"jcarousel":{"ajaxPath":"\/jcarousel\/ajax\/views"},"viewsSlideshow":{"sponsor_slideshow-block_1":{"methods":{"goToSlide":["viewsSlideshowPager","viewsSlideshowSlideCounter","viewsSlideshowCycle"],"nextSlide":["viewsSlideshowPager","viewsSlideshowSlideCounter","viewsSlideshowCycle"],"pause":["viewsSlideshowControls","viewsSlideshowCycle"],"play":["viewsSlideshowControls","viewsSlideshowCycle"],"previousSlide":["viewsSlideshowPager","viewsSlideshowSlideCounter","viewsSlideshowCycle"],"transitionBegin":["viewsSlideshowPager","viewsSlideshowSlideCounter"],"transitionEnd":[]},"paused":0}},"viewsSlideshowCycle":{"#views_slideshow_cycle_main_sponsor_slideshow-block_1":{"num_divs":27,"id_prefix":"#views_slideshow_cycle_main_","div_prefix":"#views_slideshow_cycle_div_","vss_id":"sponsor_slideshow-block_1","effect":"fade","transition_advanced":0,"timeout":5000,"speed":700,"delay":0,"sync":1,"random":0,"pause":1,"pause_on_click":0,"action_advanced":1,"start_paused":0,"remember_slide":0,"remember_slide_days":1,"pause_when_hidden":0,"pause_when_hidden_type":"full","amount_allowed_visible":"","nowrap":0,"fixed_height":1,"items_per_slide":1,"wait_for_image_load":0,"wait_for_image_load_timeout":3000,"cleartype":0,"cleartypenobg":0,"advanced_options":"{}"}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|epub|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mobi|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip"},"field_group":{"div":"full"},"usenix_media":{"pathToSWFVideoPlayer":"https:\/\/www.usenix.org\/sites\/all\/modules\/usenix\/usenix_media\/swf_assets\/jwplayer\/player.swf","supportsVideo":"unset","videos":[{"uniqueDIV":"usenix-media-video-1","h264VideoURL":"https:\/\/2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com\/sec13\/alfardan.mp4","oggVideoURL":false,"webmVideoURL":"https:\/\/2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com\/sec13\/alfardan.webm","jpg":"https:\/\/www.usenix.org\/sites\/default\/files\/styles\/video-thumbnail\/public\/conference\/video\/alfardan.jpeg?itok=FFqye_Q5"}],"pathToSWFAudioPlayer":"https:\/\/www.usenix.org\/sites\/all\/modules\/usenix\/usenix_media\/swf_assets\/audio-player\/player.swf","supportsAudio":"unset","audio":[{"uniqueDIV":"usenix-media-audio-1","mp3AudioUrl":"https:\/\/2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com\/sec13\/alfardan.mp3","oggAudioUrl":"https:\/\/2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com\/sec13\/alfardan.ogg"}]},"ogContext":{"groupType":"node","gid":"166495"}});
+//--><!]]>
+</script>
+<!--[if (gte IE 6)&(lte IE 8)]><script type="text/javascript" src="sites/all/themes/waves/js/mootools-core-1.4.1-full-nocompat-yc.js"></script><script type="text/javascript" src="sites/all/themes/waves/js/selectivizr/selectivizr-min.js"></script><![endif]--><!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script type="application/ld+json">
+	{ "@context" : "http://schema.org",
+	  "@type" : "Organization",
+	  "name" : "USENIX Association",
+	  "url" : "https://www.usenix.org",
+	  "sameAs" : [ "https://www.facebook.com/usenixassociation",
+	    "http://www.twitter.com/usenix",
+	    "https://plus.google.com/108588319090208187909/posts", 
+	    "http://www.linkedin.com/groups/USENIX-Association-49559/about", 
+	    "http://www.youtube.com/user/USENIXAssociation"] 
+	}
+	</script>
+
+</head>
+
+<body class="html not-front not-logged-in page-node page-node- page-node-174765 node-type-paper context-conference og-context og-context-node og-context-node-166495 tao one-sidebar sidebar-left" >
+    <div id="skip-link">
+        <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
+    </div>
+
+<!-- start conference nav -->
+
+<div id='top-outer'>
+  <div id='top' class='limiter'>
+    <div id='top-inner'>
+      <div class="top-left">
+                  <div id="site-name"><a href="/">USENIX</a></div>
+              </div>
+
+<!-- start conference top nav -->
+      <div id="top-right">
+        <nav id="conference-top">
+                      <ul class="menu"><li class="first leaf"><a href="/conferences" title="">Conferences</a></li>
+<li class="last leaf"><a href="/students" title="">Students</a></li>
+</ul>          
+                      <span class="conference-header-login"><a href="/user?destination=node/174765">Sign in</a></span>                  </nav>
+      </div>
+<!-- end conference top nav -->
+
+    </div>
+  </div>
+</div>
+<!-- start conference header -->
+<div id="conference-header">
+  <div id='header'>
+          <a href="/conference/usenixsecurity13">
+        <div id="header-main" class="header-main-replaced" style="background-image: url('https://www.usenix.org/sites/default/files/styles/conference_header/public/sec13_banner.png?itok=7K8CYoRi');">
+          <div class="header-main-background"></div>
+        </div>
+      </a>
+      </div>  
+</div>
+<!-- end conference header -->
+
+
+
+<div id="container">
+  
+  <div id='page' class='clearfix limiter page-content'>
+          <div id='sidebar-left'>  <div class="region region-left">
+    
+<div class='block block-og-menu clearfix'  id="block-og-menu-og-single-menu-block">
+  
+  
+  
+  
+      <div  class="block-content clearfix"><ul class="menu"><li class="first leaf"><a href="/conference/usenixsecurity13" title="">Overview</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/symposium-organizers" title="">Symposium Organizers</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/registration-information">Registration Information</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/registration-discounts">Registration Discounts</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/glance">At a Glance</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/calendar" title="">Calendar</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/technical-sessions">Technical Sessions</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/birds-feather-sessions">Birds-of-a-Feather Sessions</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/purchase-video-box-set" title="">Purchase the Box Set</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/poster-session">Poster Session</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/sponsorship" title="">Sponsorship</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/workshops" title="">Workshops</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/activities">Activities</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/hotel-and-travel-information">Hotel and Travel Information</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/services" title="">Services</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/students" title="">Students</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/questions" title="">Questions</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/help-promote-usenix-security-13" title="">Help Promote!</a></li>
+<li class="leaf"><a href="https://www.usenix.org/sites/default/files/sec13_web_flyer.pdf" title="">Flyer PDF</a></li>
+<li class="leaf"><a href="/conference/usenixsecurity13/participants" title="">For Participants</a></li>
+<li class="collapsed"><a href="/conference/usenixsecurity13/call-for-papers" title="">Call for Papers</a></li>
+<li class="last leaf"><a href="https://www.usenix.org/conferences/byname/108" title="">Past Symposia</a></li>
+</ul></div>
+  
+  </div>
+
+
+<div class='block block-views srecon-sidebar clearfix'  id="block-views-sponsor-slideshow-block-1">
+  
+      <h2  class="block-title clearfix">
+            sponsors    </h2>
+  
+  
+  
+      <div  class="block-content clearfix"><div class="view view-sponsor-slideshow view-id-sponsor_slideshow view-display-id-block_1 view-dom-id-a829d00443b7a28d273b7be29cf53371">
+        
+  
+  
+      <div class="view-content">
+      
+<div class="skin-default">
+  
+  <div id="views_slideshow_cycle_main_sponsor_slideshow-block_1" class="views_slideshow_cycle_main views_slideshow_main"><div id="views_slideshow_cycle_teaser_section_sponsor_slideshow-block_1" class="views-slideshow-cycle-main-frame views_slideshow_cycle_teaser_section">
+  <div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_0" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-1 views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Silver Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.nsf.gov" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/nsf_90x80_0.png?itok=dOlOuVy5" width="90" height="80" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_1" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-2 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Silver Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://research.google.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/google_150x50_3.png?itok=5jVYcCSz" width="200" height="66" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_2" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-3 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Silver Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.microsoft.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/microsoft_research_150x42_2.png?itok=xKRBJBDv" width="150" height="42" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_3" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-4 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Bronze Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.arbornetworks.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/arbor_networks_150x42.png?itok=3FDVpxm6" width="200" height="56" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_4" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-5 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Bronze Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.akamai.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/akamai_150x62.png?itok=Y36EY31P" width="150" height="62" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_5" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-6 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Bronze Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.facebook.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/facebook_5.png?itok=xcWIQMlS" width="200" height="70" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_6" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-7 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Bronze Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.cert.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/cmu_cert_150x73.png?itok=DmK5e31U" width="150" height="73" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_7" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-8 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Bronze Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.research.ibm.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/ibm_research_150x60.png?itok=bePA3FhA" width="150" height="60" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_8" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-9 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.infosecnews.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/infosecnews_150x38.png?itok=doufrJVB" width="150" height="38" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_9" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-10 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.nostarch.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/nostarch_150x60_0.png?itok=eupACz44" width="150" height="60" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_10" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-11 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://lxer.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/lxer_150x60.png?itok=7uypivvk" width="150" height="60" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_11" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-12 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.linuxpromagazine.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/linux_pro_150x60.png?itok=imeku27z" width="150" height="60" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_12" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-13 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://tci.taborcommunications.com/HPCwireLogo_Usenix" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/hpcwire_150x55_0.png?itok=ZLIarqq-" width="150" height="55" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_13" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-14 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.linuxjournal.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/linux_journal_150x72_2.png?itok=9GGu85Gi" width="150" height="72" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_14" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-15 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.freesoftwaremagazine.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/fsm_150x86_2.png?itok=7_c9cbFQ" width="150" height="86" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_15" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-16 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.computer.org/portal/web/computingnow/securityandprivacy" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/ieee_sp_150x36_4.png?itok=7WiE2Afz" width="150" height="36" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_16" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-17 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.userfriendly.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/userfriendly_150x60.png?itok=KgI0smfR" width="150" height="60" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_17" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-18 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.oreilly.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/oreilly_150x28_3.png?itok=qzuUeUpM" width="150" height="28" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_18" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-19 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.securityorb.com/" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/security_orb_tagline_150x47.png?itok=X3fFyRn-" width="150" height="47" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_19" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-20 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.serverfault.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/serverfault_150x35_0.png?itok=Eq8tBFVo" width="150" height="35" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_20" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-21 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.computer.org/portal/web/computingnow/computer" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/computer_150x33_0.png?itok=4bpHUoX_" width="150" height="33" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_21" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-22 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.admin-magazine.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/admin_150x60.png?itok=2siKcfnL" width="150" height="60" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_22" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-23 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.virusbulletin.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/virus_bulletin_150x60.png?itok=MpqJisnL" width="150" height="60" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_23" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-24 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.datacenterjournal.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/dcj_150x27_3.png?itok=v89sdh4x" width="150" height="27" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_24" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-25 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://queue.acm.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/acmqueue_150x48_3.png?itok=llhuka-R" width="150" height="48" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_25" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-26 views_slideshow_cycle_hidden views-row-even">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Media Sponsor</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.devconnections.com/dev13/public/mainhall.aspx" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/it_dev_150x39.png?itok=loBGXr4y" width="200" height="53" alt="" /></a></div>  </div></div>
+</div>
+<div id="views_slideshow_cycle_div_sponsor_slideshow-block_1_26" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-27 views_slideshow_cycle_hidden views-row-odd">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+    
+  <div class="views-field views-field-field-sponsor-level">        <div class="field-content">Industry Partner</div>  </div>  
+  <div class="views-field views-field-field-sponsor-image">        <div class="field-content"><a href="http://www.dmtf.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_slideshow_front/public/sponsor_images/dmtf_150x60.png?itok=mdRDuy7D" width="150" height="60" alt="" /></a></div>  </div></div>
+</div>
+</div>
+</div>
+  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div></div>
+  
+  </div>
+
+
+<div class='block block-block clearfix'  id="block-block-40">
+  
+      <h2  class="block-title clearfix">
+            twitter    </h2>
+  
+  
+  
+      <div  class="block-content clearfix prose"><a class="twitter-timeline" height="300" href="https://twitter.com/usenix" data-widget-id="319586868192755712">Tweets by @usenix</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+  
+  </div>
+
+
+<div class='block block-block srecon-sidebar clearfix'  id="block-block-55">
+  
+      <h2  class="block-title clearfix">
+            usenix conference policies    </h2>
+  
+  
+  
+      <div  class="block-content clearfix prose">        <ul>
+            <li><a href="/conferences/coc">Event Code of Conduct</a></li>
+
+            <li><a href="/conferences/network-policy">Conference Network Policy</a></li>
+
+            <li><a href="/conferences/environmental-responsibility">Statement on Environmental Responsibility Policy</a></li>
+        </ul>
+</div>
+  
+  </div>
+
+  </div>
+</div>
+        
+    <div id='content' class=
+      'left-sidebar'
+            > <!-- closing content class -->
+      <div id="breadcrumb-container">
+      	<h2 class="element-invisible">You are here</h2><div class="breadcrumb"><a href="/">Home</a> » <strong>On the Security of RC4 in TLS</strong></div>
+	      <div id="share-social-links">
+		
+		      <!-- Place this tag where you want the +1 button to render. -->
+		      <div class="gplusone-container">
+		        <div class="g-plusone" data-size="medium" data-align="right"></div>
+		
+		        <!-- Place this tag after the last +1 button tag. -->
+		        <script type="text/javascript">
+		          (function() {
+		            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		            po.src = 'https://apis.google.com/js/plusone.js';
+		            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		          })();
+		        </script>
+		      </div>
+		
+		      <!-- Twitter Tweet button -->
+		      <a href="https://twitter.com/share" class="twitter-share-button" data-align="right">Tweet</a>
+		      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+		      <!-- Facebook Like button -->
+		      <div id="fb-root"></div>
+		      <script>(function(d, s, id) {
+		          var js, fjs = d.getElementsByTagName(s)[0];
+		          if (d.getElementById(id)) return;
+		          js = d.createElement(s); js.id = id;
+		          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+		          fjs.parentNode.insertBefore(js, fjs);
+		        }(document, 'script', 'facebook-jssdk'));
+		      </script>
+		      <div class="fb-share-button" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+<!-- 		      <div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div> -->
+	      </div>
+      </div>
+
+      <div class='below-breadcrumb clearfix'></div>
+      
+      <div id="social-link-icons">
+        <h4 class="block-title clearfix">connect with us</h4>
+              <div class="view view-conference-node-element-blocks view-id-conference_node_element_blocks view-display-id-block_2 view-dom-id-18b629fd578fc8515732f879f232869f">
+        
+  
+  
+      <div class="view-content">
+          <div class="miniad odd">
+      
+      <div>
+  
+    
+      <a href="http://twitter.com/usenixsecurity">http://twitter.com/usenixsecurity</a>
+      </div>
+  
+    </div>
+      <div class="miniad even">
+      
+      <div>
+  
+    
+      <a href="https://www.facebook.com/usenixassociation">https://www.facebook.com/usenixassociation</a>
+      </div>
+  
+    </div>
+      <div class="miniad odd">
+      
+      <div>
+  
+    
+      <a href="http://www.linkedin.com/groups/USENIX-Association-49559/about">http://www.linkedin.com/groups/USENIX-Association-49559/about</a>
+      </div>
+  
+    </div>
+      <div class="miniad even">
+      
+      <div>
+  
+    
+      <a href="https://plus.google.com/108588319090208187909/posts">https://plus.google.com/108588319090208187909/posts</a>
+      </div>
+  
+    </div>
+      <div class="miniad odd">
+      
+      <div>
+  
+    
+      <a href="http://www.youtube.com/user/USENIXAssociation">http://www.youtube.com/user/USENIXAssociation</a>
+      </div>
+  
+    </div>
+      </div>
+  
+  
+  
+  
+  
+  
+</div>      </div>
+      
+          
+      <h1 class='page-title '>
+                On the Security of RC4 in TLS      </h1>
+
+            
+            
+              <div id='tabs'>
+          <div class='page-tabs limiter clearfix'>
+                      </div>
+        </div>
+      
+      
+              <div class='content-wrapper clearfix'>  <div class="region region-content">
+    
+<div class='block-system block-page-content clearfix'  id="block-system-main">
+  
+  
+  
+  
+      <div  class="block-content clearfix">
+<div id="node-174765" class="node node-paper paper-type-0 clearfix" id="node-174765">
+
+  
+      
+  
+  <div class="content" class="node-content clearfix prose">
+    <div class='field field-name-field-paper-description-long field-type-text-long field-label-hidden'><p>The Transport Layer Security (TLS) protocol aims to provide confidentiality and integrity of data in transit across untrusted networks. TLS has become the de facto protocol standard for secured Internet and mobile applications.
+TLS supports several symmetric encryption options, including a scheme based on the RC4 stream cipher. In this paper, we present ciphertext-only plaintext recovery attacks against TLS when RC4 is selected for encryption. Our attacks build on recent advances in the statistical analysis of RC4, and on new findings announced in this paper. Our results are supported by an experimental evaluation of the feasibility of the attacks. We also discuss countermeasures.</p></div><div class="field field-name-field-paper-people-text field-type-text-long field-label-above"><div class="field-label">Authors:&nbsp;</div><div class="field-items"><div class="field-item even"> <p>Nadhem AlFardan, <em>Royal Holloway, University of London;</em> Daniel J. Bernstein, <em>University of Illinois at Chicago and Technische Universiteit Eindhoven;</em> Kenneth G. Paterson, <em>Bertram Poettering,</em> and Jacob C.N. Schuldt, <em>Royal Holloway, University of London</em></p> </div></div></div><div class="field field-name-field-paper-people field-type-node-reference field-label-hidden"><div class="field-items"><div class="field-item even">
+<div id="node-175247" class="node node-speaker node-teaser clearfix" id="node-175247">
+
+  
+        <h2 class="node-title clearfix"><a href="/conference/usenixsecurity13/speaker-or-organizer/nadhem-alfardan-royal-holloway-university-london"></a></h2>
+    
+  
+  <div class="content" class="node-content clearfix prose">
+      </div>
+
+  
+</div>
+
+</div><div class="field-item odd">
+<div id="node-175248" class="node node-speaker node-teaser clearfix" id="node-175248">
+
+  
+        <h2 class="node-title clearfix"><a href="/conference/usenixsecurity13/speaker-or-organizer/daniel-j-bernstein-university-chicago"></a></h2>
+    
+  
+  <div class="content" class="node-content clearfix prose">
+      </div>
+
+  
+</div>
+
+</div><div class="field-item even">
+<div id="node-175249" class="node node-speaker node-teaser clearfix" id="node-175249">
+
+  
+        <h2 class="node-title clearfix"><a href="/conference/usenixsecurity13/speaker-or-organizer/kenneth-g-paterson-royal-holloway-university-london"></a></h2>
+    
+  
+  <div class="content" class="node-content clearfix prose">
+      </div>
+
+  
+</div>
+
+</div><div class="field-item odd">
+<div id="node-175250" class="node node-speaker node-teaser clearfix" id="node-175250">
+
+  
+        <h2 class="node-title clearfix"><a href="/conference/usenixsecurity13/speaker-or-organizer/bertram-poettering-royal-holloway-university-london"></a></h2>
+    
+  
+  <div class="content" class="node-content clearfix prose">
+      </div>
+
+  
+</div>
+
+</div><div class="field-item even">
+<div id="node-175251" class="node node-speaker node-teaser clearfix" id="node-175251">
+
+  
+        <h2 class="node-title clearfix"><a href="/conference/usenixsecurity13/speaker-or-organizer/jacob-c-n-schuldt-royal-holloway-university-london"></a></h2>
+    
+  
+  <div class="content" class="node-content clearfix prose">
+      </div>
+
+  
+</div>
+
+</div></div></div><div id="node-paper-full-group-open-access-content" class=" group-open-access-content field-group-div"><h2><span>Open Access Content</span></h2><div class="description"><p>USENIX is committed to Open Access to the research presented at our events. Papers and proceedings are freely available to everyone once the event begins. Any video, audio, and/or slides that are posted after the event are also free and open to everyone. <a href="/annual-fund">Support USENIX</a> and our commitment to Open Access.</p></div><div class="field field-name-field-presentation-pdf field-type-file field-label-hidden"><div class="field-items"><div class="field-item even"><span class="file"> <a href="https://www.usenix.org/system/files/conference/usenixsecurity13/sec13-paper_alfardan.pdf" type="application/pdf; length=2188136" title="sec13-paper_alfardan.pdf">AlFardan PDF</a></span></div></div></div><div class="field field-name-field-paper-slides field-type-file field-label-hidden"><div class="field-items"><div class="field-item even"><div class="usenix-schedule-slides"><a href="https://www.usenix.org/sites/default/files/conference/protected-files/alfardan_sec13_slides.pdf">View the slides</a></div></div></div></div><div class="field field-name-field-bibtex-node field-type-node-reference field-label-hidden"><div class="field-items"><div class="field-item even"><span class="bibtex">BibTeX</span></div></div></div><div class="field field-name-field-text-of-bibtex-entry field-type-text-long field-label-above"><div class="field-label">Text of BibTeX entry:&nbsp;</div><div class="field-items"><div class="field-item even">@inproceedings {182942,
+	author = {Nadhem AlFardan and Daniel J. Bernstein and Kenneth G. Paterson and Bertram Poettering and Jacob C. N. Schuldt},
+	title = {On the Security of RC4 in TLS},
+	booktitle = {Presented as part of the 22nd USENIX Security Symposium (USENIX Security 13)},
+	year = {2013},
+	isbn = {978-1-931971-03-4},
+	address = {Washington, D.C.},
+	pages = {305--320},
+	url = {https://www.usenix.org/conference/usenixsecurity13/technical-sessions/paper/alFardan},
+	publisher = {USENIX},
+}
+&lt;br&gt;&lt;a href=&quot;/biblio/export/bibtex/182942&quot;&gt;Download&lt;/a&gt;</div></div></div></div><div class="field field-name-field-paper-description field-type-text-long field-label-above"><div class="field-label">Abstract:&nbsp;</div><div class="field-items"><div class="field-item even"> <p>The Transport Layer Security (TLS) protocol aims to provide confidentiality and integrity of data in transit across untrusted networks. TLS has become the de facto protocol standard for secured Internet and mobile applications.
+TLS supports several symmetric encryption options, including a scheme based on the RC4 stream cipher. In this paper, we present ciphertext-only plaintext recovery attacks against TLS when RC4 is selected for encryption. Our attacks build on recent advances in the statistical analysis of RC4, and on new findings announced in this paper. Our results are supported by an experimental evaluation of the feasibility of the attacks. We also discuss countermeasures.</p> </div></div></div>
+<script type="text/javascript">
+   function videoPlay() {
+     var video_title = "On the Security of RC4 in TLS";
+     if (typeof _gaq !== "undefined") {
+       _gaq.push(['_trackEvent', 'Video', 'Play', video_title]);
+     }
+   }
+   jQuery(document).ready(
+                          function() {
+                            var video_id = "usenix-media-video-1";
+                            var video = document.getElementById(video_id);
+                            video.addEventListener("play", videoPlay, false);
+                          });
+</script>
+
+<div class="usenix-video-field">
+  <h4>presentation video</h4>
+    <video width="640" height="480"  id="usenix-media-video-1" data-setup="{}" height="419" width="744" poster="https://www.usenix.org/sites/default/files/styles/video-thumbnail/public/conference/video/alfardan.jpeg?itok=FFqye_Q5" class="video-js vjs-default-skin vjs-big-play-centered" preload="auto" controls>
+    <source src='https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/sec13/alfardan.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+               <source src='https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/sec13/alfardan.webm' type='video/webm; codecs="vp8.0, vorbis"'>
+        <object type="application/x-shockwave-flash" data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" width="640" height="480">
+       <param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
+       <param name="allowFullScreen" value="true">
+       <param name="wmode" value="transparent">
+       <param name="flashVars" value="config={'playlist':['https%3A%2F%2Fwww.usenix.org%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fvideo-thumbnail%2Fpublic%2Fconference%2Fvideo%2Falfardan.jpeg%3Fitok%3DFFqye_Q5',{'url':'https%3A%2F%2F2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com%2Fsec13%2Falfardan.mp4','autoPlay':false}]}">
+       <img src="https://www.usenix.org/sites/default/files/styles/video-thumbnail/public/conference/video/alfardan.jpeg?itok=FFqye_Q5" width="640" height="480" title="No video playback capabilities. Please install Adobe Flash Player or download the video below">
+    </object>
+  </video>
+  
+  <p><a href="https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/sec13/alfardan.mp4">Download Video</a></p>
+</div>
+<h4>presentation audio</h4>
+<div id="usenix-media-audio-1">
+  <audio controls>
+          <source src='https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/sec13/alfardan.mp3'>
+              <source src='https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/sec13/alfardan.ogg'>
+              <a href="https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/sec13/alfardan.mp3">MP3 Download</a>
+              <a href="https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/sec13/alfardan.ogg">OGG Download</a>
+      </audio>
+</div>
+  </div>
+
+      <div class='node-links clearfix'><ul class="links inline"><li class="comment_forbidden first last"><span><a href="/user/login?destination=comment/reply/174765%23comment-form">Log in</a>&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/register?destination=comment/reply/174765%23comment-form">Register</a> to post comments</span></li>
+</ul></div>
+  
+</div>
+
+</div>
+  
+  </div>
+
+  </div>
+</div>
+                </div>
+
+    
+	
+  </div>
+</div>
+
+<div id="footer-outer"><div id='footer' class='limiter clearfix'>
+    <div id='pre-footer'>
+    <div id='pre-footer-inner'>  <div class="region region-pre-footer">
+    
+<div class='block block-views clearfix'  id="block-views-sponsors-conference-block-4">
+  
+      <h2  class="block-title clearfix">
+            Silver Sponsors    </h2>
+  
+  
+  
+      <div  class="block-content clearfix"><div class="view view-sponsors-conference view-id-sponsors_conference view-display-id-block_4 view-dom-id-1f71a0ac0ab6a1c3dd895eb0b8632295">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+          <a href="http://research.google.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_interest_color/public/sponsor_images/google_150x50_3.png?itok=RWGKWZEP" width="115" height="38" alt="" /></a>    </div>
+  <div class="views-row views-row-2 views-row-even">
+      
+          <a href="http://www.microsoft.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_interest_color/public/sponsor_images/microsoft_research_150x42_2.png?itok=jLWZAcKJ" width="115" height="32" alt="" /></a>    </div>
+  <div class="views-row views-row-3 views-row-odd views-row-last">
+      
+          <a href="http://www.nsf.gov" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_interest_color/public/sponsor_images/nsf_90x80_0.png?itok=KHNbK5_k" width="90" height="80" alt="" /></a>    </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div></div>
+  
+  </div>
+
+
+<div class='block block-views clearfix'  id="block-views-sponsors-conference-block-5">
+  
+      <h2  class="block-title clearfix">
+            Bronze Sponsors    </h2>
+  
+  
+  
+      <div  class="block-content clearfix"><div class="view view-sponsors-conference view-id-sponsors_conference view-display-id-block_5 view-dom-id-20711e02609664221357081f05da6141">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+          <a href="http://www.akamai.com" target="_blank"></a>    
+          <a href="http://www.akamai.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_interest_color/public/sponsor_images/akamai_150x62.png?itok=sIqtCcBD" width="115" height="48" alt="" /></a>    </div>
+  <div class="views-row views-row-2 views-row-even">
+      
+          <a href="http://www.arbornetworks.com" target="_blank"></a>    
+          <a href="http://www.arbornetworks.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_interest_color/public/sponsor_images/arbor_networks_150x42.png?itok=ddgMawLh" width="115" height="32" alt="" /></a>    </div>
+  <div class="views-row views-row-3 views-row-odd">
+      
+          <a href="http://www.cert.org" target="_blank"></a>    
+          <a href="http://www.cert.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_interest_color/public/sponsor_images/cmu_cert_150x73.png?itok=jaIrxuAx" width="115" height="56" alt="" /></a>    </div>
+  <div class="views-row views-row-4 views-row-even">
+      
+          <a href="http://www.facebook.com" target="_blank"></a>    
+          <a href="http://www.facebook.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_interest_color/public/sponsor_images/facebook_5.png?itok=TbfUxALE" width="115" height="40" alt="" /></a>    </div>
+  <div class="views-row views-row-5 views-row-odd views-row-last">
+      
+          <a href="http://www.research.ibm.com" target="_blank"></a>    
+          <a href="http://www.research.ibm.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_interest_color/public/sponsor_images/ibm_research_150x60.png?itok=j38DxrBg" width="115" height="46" alt="" /></a>    </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div></div>
+  
+  </div>
+
+
+<div class='block block-views clearfix'  id="block-views-sponsors-conference-block-6">
+  
+      <h2  class="block-title clearfix">
+            Media Sponsors &amp; Industry Partners    </h2>
+  
+  
+  
+      <div  class="block-content clearfix"><div class="view view-sponsors-conference view-id-sponsors_conference view-display-id-block_6 view-dom-id-16946021a8a7bf60c9df8f291e6cf8a6">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+          <a href="http://queue.acm.org"></a>    
+          <a href="http://queue.acm.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/acmqueue_150x48_3.png?itok=JQ69wn8L" width="90" height="29" alt="" /></a>    </div>
+  <div class="views-row views-row-2 views-row-even">
+      
+          <a href="http://www.admin-magazine.com"></a>    
+          <a href="http://www.admin-magazine.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/admin_150x60.png?itok=2B7x46bY" width="90" height="36" alt="" /></a>    </div>
+  <div class="views-row views-row-3 views-row-odd">
+      
+          <a href="http://www.computer.org/portal/web/computingnow/computer"></a>    
+          <a href="http://www.computer.org/portal/web/computingnow/computer" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/computer_150x33_0.png?itok=4BClVq_s" width="90" height="20" alt="" /></a>    </div>
+  <div class="views-row views-row-4 views-row-even">
+      
+          <a href="http://www.datacenterjournal.com"></a>    
+          <a href="http://www.datacenterjournal.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/dcj_150x27_3.png?itok=dWHnYbvq" width="90" height="16" alt="" /></a>    </div>
+  <div class="views-row views-row-5 views-row-odd">
+      
+          <a href="http://www.dmtf.org"></a>    
+          <a href="http://www.dmtf.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/dmtf_150x60.png?itok=BIAuQtf8" width="90" height="36" alt="" /></a>    </div>
+  <div class="views-row views-row-6 views-row-even">
+      
+          <a href="http://www.freesoftwaremagazine.com"></a>    
+          <a href="http://www.freesoftwaremagazine.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/fsm_150x86_2.png?itok=PRVqnV4i" width="90" height="52" alt="" /></a>    </div>
+  <div class="views-row views-row-7 views-row-odd">
+      
+          <a href="http://tci.taborcommunications.com/HPCwireLogo_Usenix"></a>    
+          <a href="http://tci.taborcommunications.com/HPCwireLogo_Usenix" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/hpcwire_150x55_0.png?itok=hNvtX7NF" width="90" height="33" alt="" /></a>    </div>
+  <div class="views-row views-row-8 views-row-even">
+      
+          <a href="http://www.computer.org/portal/web/computingnow/securityandprivacy"></a>    
+          <a href="http://www.computer.org/portal/web/computingnow/securityandprivacy" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/ieee_sp_150x36_4.png?itok=IXaJ7Lj2" width="90" height="22" alt="" /></a>    </div>
+  <div class="views-row views-row-9 views-row-odd">
+      
+          <a href="http://www.infosecnews.org"></a>    
+          <a href="http://www.infosecnews.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/infosecnews_150x38.png?itok=-AldpFV_" width="90" height="23" alt="" /></a>    </div>
+  <div class="views-row views-row-10 views-row-even">
+      
+          <a href="http://www.devconnections.com/dev13/public/mainhall.aspx"></a>    
+          <a href="http://www.devconnections.com/dev13/public/mainhall.aspx" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/it_dev_150x39.png?itok=FBFpNTIC" width="90" height="24" alt="" /></a>    </div>
+  <div class="views-row views-row-11 views-row-odd">
+      
+          <a href="http://www.linuxjournal.com"></a>    
+          <a href="http://www.linuxjournal.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/linux_journal_150x72_2.png?itok=qO6Jv42x" width="90" height="43" alt="" /></a>    </div>
+  <div class="views-row views-row-12 views-row-even">
+      
+          <a href="http://www.linuxpromagazine.com"></a>    
+          <a href="http://www.linuxpromagazine.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/linux_pro_150x60.png?itok=QjTMHjL2" width="90" height="36" alt="" /></a>    </div>
+  <div class="views-row views-row-13 views-row-odd">
+      
+          <a href="http://lxer.com"></a>    
+          <a href="http://lxer.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/lxer_150x60.png?itok=qju-ykfL" width="90" height="36" alt="" /></a>    </div>
+  <div class="views-row views-row-14 views-row-even">
+      
+          <a href="http://www.nostarch.com"></a>    
+          <a href="http://www.nostarch.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/nostarch_150x60_0.png?itok=43cqLncq" width="90" height="36" alt="" /></a>    </div>
+  <div class="views-row views-row-15 views-row-odd">
+      
+          <a href="http://www.oreilly.com"></a>    
+          <a href="http://www.oreilly.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/oreilly_150x28_3.png?itok=j9zhRUFz" width="90" height="17" alt="" /></a>    </div>
+  <div class="views-row views-row-16 views-row-even">
+      
+          <a href="http://www.securityorb.com/"></a>    
+          <a href="http://www.securityorb.com/" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/security_orb_tagline_150x47.png?itok=aS_Zezqd" width="90" height="28" alt="" /></a>    </div>
+  <div class="views-row views-row-17 views-row-odd">
+      
+          <a href="http://www.serverfault.com"></a>    
+          <a href="http://www.serverfault.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/serverfault_150x35_0.png?itok=D1iUT9GE" width="90" height="21" alt="" /></a>    </div>
+  <div class="views-row views-row-18 views-row-even">
+      
+          <a href="http://www.userfriendly.org"></a>    
+          <a href="http://www.userfriendly.org" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/userfriendly_150x60.png?itok=dNSuFJHS" width="90" height="36" alt="" /></a>    </div>
+  <div class="views-row views-row-19 views-row-odd views-row-last">
+      
+          <a href="http://www.virusbulletin.com"></a>    
+          <a href="http://www.virusbulletin.com" target="_blank"><img src="https://www.usenix.org/sites/default/files/styles/sponsor_front_color/public/sponsor_images/virus_bulletin_150x60.png?itok=uNJcBKFX" width="90" height="36" alt="" /></a>    </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div></div>
+  
+  </div>
+
+  </div>
+</div>
+  </div>
+    
+        <div id='footer-region'>
+        <div class="region region-footer">
+    
+<div class='block block-block clearfix'  id="block-block-27">
+  
+  
+  
+  
+      <div  class="block-content clearfix prose"><div style="float: right;">
+<p style="text-align: center;">© USENIX 2016</p>
+</div></div>
+  
+  </div>
+
+
+<div class='block block-menu clearfix'  id="block-menu-menu-footer">
+  
+  
+  
+  
+      <div  class="block-content clearfix"><ul class="menu"><li class="first leaf"><a href="/privacy-statement">Privacy Statement</a></li>
+<li class="leaf"><a href="/contact" title="">Contact Us</a></li>
+<li class="last leaf"><a href="/blog/rss.xml" title="">USENIX Update RSS Feed</a></li>
+</ul></div>
+  
+  </div>
+
+  </div>
+    </div>
+  </div></div>
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"d823139095","applicationID":"509444","transactionName":"YVJVZksCXkEEVhIMWFgYdlFNCl9cSkAVAFlfT2hAXAdZQABWEhZoWFhTV2YTUVUAahAMUkE=","queueTime":0,"applicationTime":898,"ttGuid":"","agentToken":"","atts":"TRVWEAMYTU8=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

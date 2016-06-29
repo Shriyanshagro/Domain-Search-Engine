@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="Over the last 24 hours, we’ve rolled out a new POP/IMAP server version for all users. This new server is the result of months of great work by Bron and includes many improvements and fixes. Not that many of the fixes are currently user visible changes, but they are significant internal improvements that help improve reliability, conformance and performance, and will allow us to build some future features we’re looking at.">
+<title>New POP/IMAP server version | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="New POP/IMAP server version">
+<meta property="og:description" content="Over the last 24 hours, we’ve rolled out a new POP/IMAP server version for all users. This new server is the result of months of great work by Bron and includes many improvements and fixes. Not that many of the fixes are currently user visible changes, but they are significant internal improvements that help improve reliability, conformance and performance, and will allow us to build some future features we’re looking at.">
+<meta property="og:url" content="https://blog.fastmail.com/2010/07/27/new-popimap-server-version/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2010/07/27/new-popimap-server-version/">
+<meta name="twitter:title" content="New POP/IMAP server version">
+<meta name="twitter:description" content="Over the last 24 hours, we’ve rolled out a new POP/IMAP server version for all users. This new server is the result of months of great work by Bron and includes many improvements and fixes. Not that many of the fixes are currently user visible changes, but they are significant internal improvements that help improve reliability, conformance and performance, and will allow us to build some future features we’re looking at.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2010/07/27/new-popimap-server-version/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2010/07/27/new-popimap-server-version/'>New POP/IMAP server version</a></h1>
+<p class="blog-author">Rob Mueller &ndash; 27 July 2010</p>
+<p>Over the last 24 hours, we’ve rolled out a new POP/IMAP server version
+for all users. This new server is the result of <a href="http://github.com/brong/cyrus-imapd/tree/fastmail">months of great work by
+Bron</a> and includes
+many improvements and fixes. Not that many of the fixes are currently
+user visible changes, but they are significant internal improvements
+that help improve reliability, conformance and performance, and will
+allow us to build some future features we’re looking at.</p>
+
+<ul>
+<li><p>Email replication improvements</p>
+
+<p>Email replication has been made much more efficient and reliable.
+The format includes
+<a href="http://en.wikipedia.org/wiki/Cyclic_redundancy_check">CRC</a>
+auto-integrity checking features, so that any unexpected mismatches
+between both ends are automatically detected and fixed. It can also
+recover automatically from unclean shutdowns or machine crashes
+where “split brain” has occurred, automatically fixing up mailboxes
+and messages. The format has also been made future extensible,
+allowing more features to be added without compatibility problems.</p></li>
+<li><p>Performance and integrity improvements</p>
+
+<p>The internal mailbox format used to store emails has been
+significantly reworked. The new format has reliable locking
+semantics to remove all <a href="http://en.wikipedia.org/wiki/Race_condition">race
+conditions</a>. It also
+stores and checks
+<a href="http://en.wikipedia.org/wiki/Cyclic_redundancy_check">CRCs</a> on all
+record data and cache data, and SHA1 checks on all message files.
+This ensures that any corruption in any data is detected early and
+can be dealt with. By moving around some of the data (such as the
+user seen state), and only lazily opening files as needed, the new
+format also improves performance in many common cases.</p></li>
+<li><p>Strict MODSEQ, QRESYNC support and full IMAP test suite conformance</p>
+
+<p>Recent extensions to IMAP allow clients to more quickly synchronise
+data between the server and the client (eg.
+<a href="http://tools.ietf.org/html/rfc4551">CONDSTORE/MODSEQ</a> and
+<a href="http://tools.ietf.org/html/rfc5162.html">QRESYNC</a>). While the
+server has supported CONDSTORE/MODSEQ for a while, unfortunately it
+was a bit buggy in some situations, causing message seen state to
+get out of sync. The server now correctly and accurately support
+CONDSTORE/MODSEQ, and also supports the current QRESYNC standard
+that will allow clients that support it to sync even faster. We also
+now correctly pass detailed IMAP stress tests.</p></li>
+<li><p>Major code cleanups</p>
+
+<p>All of these improvements have also been done with major internal
+code cleanups. This will allow us to continue building additional
+functionality and features more easily in the future, and to more
+easily fix and debug any other issues that are encountered.</p></li>
+</ul>
+
+<p>Unfortunately no good deed goes unpunished, and even though we’ve been
+testing this code ourselves and on a sub-set of users for weeks with
+continuous improvements, unfortunately some bugs did get through when we
+finally rolled out to all users. Then in the attempt to fix these issues
+as quickly as possible, we also introduced some other issues. The net
+result was that for about 12 hours, there was a sequence of small but
+potentially annoying bugs that would have affected different sets of
+users.</p>
+
+<ul>
+<li>On first access, we upgrade a mailbox to the new format. During the
+upgrade, we found some existing caches had allowed invalid data to
+enter them, causing corruptions on upgrading which caused problems
+when accessing these mailboxes. These cases are now caught and new
+cache data is built from the underlying message files</li>
+<li>While reconstructing the mailboxes that had been incorrectly
+upgraded by the above code, a quota error caused some peoples quota
+to temporarily be double their actual used amount. This has been
+fixed now. If this bug sent a user over quota temporarily, it
+shouldn't be a problem. When a user is over quota, we return a
+temporary 4xx error, which means no messages should have been lost,
+the other side should just have re-delivered when they were back
+under quota.</li>
+<li>IMAP IDLE wasn't returning new messages, only updating existing
+messages, causing pushing of new messages to most email clients to
+not work</li>
+<li>Mail App has a bug with parsing IMAP IDLE unsolicited fetch
+responses that contain more than flags information. We've added a
+workaround for this Mail App bug</li>
+<li>The IMAP COPYUID response was producing a non-conformant result,
+which caused some programs to report an error (Outlook 2010)</li>
+<li>POP3 was using an optimised mode if a mailbox was empty.
+Unfortunately the code to mark a mailbox as "non empty" wasn't
+working properly when messages were delivered, but was working for
+IMAP logins. This meant that messages delivered wouldn't be
+downloaded by POP until you did an IMAP or web login</li>
+<li>The POP3 TOP command wasn't working, causing some programs (Outlook
+in POP mode) that download email headers to fail</li>
+<li>The POP3 UIDL command with a message ID was producing a
+non-conformant result, which was parsed incorrectly by some
+programs. This caused some POP programs to download the same message
+more than once, or to delete off the server before it should have</li>
+<li><strong>Update</strong>: An update to UID sequence handling  caused the mailbox
+status command to report unread messages as read and vice-versa,
+causing the unread count on folders to actually be the read count
+for a short while.</li>
+<li><strong>Update</strong>: The XLIST extension wasn't working. This has been added
+back, so client that support it will automatically pick the right
+Sent Items, Drafts, Trash, Junk Mail folders when setting up a new
+account</li>
+<li><strong>Update</strong>: NOOP on Mac Mail. Like the bug above with Mac Mail and
+IDLE, this was affecting the NOOP command as well</li>
+<li><strong>Update</strong>: Storing the \Seen flag + another flag on a message that
+already had the \Seen flag would cause \Seen to actually
+disappear. This mostly manifested as when deleting a message, it
+would cause it to become marked as "unread" again</li>
+</ul>
+
+<p>All these issues have now been fixed, and we’re closely monitoring all
+the server logs to see if there’s any other issues, but at this stage we
+believe that the new server and code is working correctly for all cases
+we’re aware of and for all clients, IMAP and POP.</p>
+
+<p>All this new code is part of the <a href="http://cyrusimap.web.cmu.edu/">open source project
+cyrus</a>, and we’ll be pushing this code
+back to the main cyrus code base, which will eventually form the basis
+for a new cyrus version 2.4. For those interested in technical details,
+Bron will post to the <a href="http://cyrusimap.web.cmu.edu/lists.html#archives">cyrus mailing
+lists</a> when he’s had a
+bit of time to compile all the documentation and technical details.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2010/05/30/quota-increase-for-all-accounts/">Quota increase for all accounts</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2010/07/29/archive-billing-enabled-for-business-accounts/">Archive billing enabled for Business accounts</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

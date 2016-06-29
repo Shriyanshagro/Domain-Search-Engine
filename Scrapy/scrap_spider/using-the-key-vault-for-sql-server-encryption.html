@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="pingback" href="https://blogs.technet.microsoft.com/kv/xmlrpc.php">
+		<!--[if lt IE 9]>
+	<script src="https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft/js/html5.js"></script>
+	<![endif]-->
+	<title>Using the Key Vault for SQL Server Encryption | The Official Azure Key Vault Team Blog</title>
+<link rel="alternate" type="application/rss+xml" title="The Official Azure Key Vault Team Blog &raquo; Using the Key Vault for SQL Server Encryption Comments Feed" href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/feed/" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.technet.microsoft.com/kv/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.technet.microsoft.com/kv/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds-ratings-css'  href='https://blogs.technet.microsoft.com/kv/wp-content/plugins/wds-ratings/wds-ratings.css?ver=4.1.5' type='text/css' media='all' />
+<link rel='stylesheet' id='microsoft-parent-style-css'  href='https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft/style.css?ver=04152016' type='text/css' media='all' />
+<link rel='stylesheet' id='microsoft-child-style-css'  href='https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft-technet/style.css?ver=04152016' type='text/css' media='all' />
+<script type='text/javascript' src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/kv/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft/js/single.js?ver=04152016'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft/js/social-counts.js?ver=04152016'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/kv/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/kv/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/kv/?p=27' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+						</style><!-- End Custom CSS -->
+			    <link rel="shortcut icon" href="https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft-technet/images/favicon-technet.png">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Using the Key Vault for SQL Server Encryption" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/" />
+<meta property="og:site_name" content="The Official Azure Key Vault Team Blog" />
+<meta property="og:description" content="Welcome! In our first blog Azure Key Vault &#8211; Making the cloud safer, we introduced you to the Azure Key Vault and then in the second blog Azure Key Vault &ndash; Step by Step we got your hands dirty in setting one up for yourself. If you were on the more adventurous side, we even..." />
+<meta property="og:image" content="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/03/78/6076.SQLServerConnector.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Using the Key Vault for SQL Server Encryption" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/" />
+<meta name="twitter:description" content="Welcome! In our first blog Azure Key Vault &#8211; Making the cloud safer, we introduced you to the Azure Key Vault and then in the second blog Azure Key Vault &ndash; Step by Step we got your hands dirty in setting one up for yourself. If you were on the more adventurous side, we even..." />
+<meta name="twitter:image" content="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/03/78/6076.SQLServerConnector.png" />
+</head>
+
+<body class="single single-post postid-27 single-format-standard">
+<div id="page" class="site container-fluid">
+
+	<header id="site-header" class="site-header row" role="banner">
+		<div id="site-header-global-wrapper" class="site-header-global-wrapper">
+			<div id="site-header-global" class="site-header-global">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#site-profile-menu">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div id="site-logo" class="col-sm-5 row navbar-header">
+					<div id="header-microsoft-logo">
+						<a id="home-link" href="https://www.microsoft.com/">
+							<img id="header-microsoft-logo-svg" src="https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft/images/ms-logo-gray.svg">
+							<span id="brand">
+								<span id="brand-separator">|</span>
+								<span id="brand-name"></span>
+							</span>
+						</a>
+					</div>
+				</div>
+				<div id="site-header-global-right" class="col-sm-7">
+					<div id="site-profile-menu" class="navbar-collapse collapse">
+						<div id="search-form-wrapper">
+														<form id="search-form" role="search" action="https://social.msdn.microsoft.com/search/en-US" home-url="https://blogs.technet.microsoft.com/kv" autocomplete="off">
+								<div class="input-group">
+																			<input name="rq" value="site:blogs.technet.microsoft.com/kv" type="hidden">
+										<input name="rn" value="kv" type="hidden">
+																		<input type="text" class="form-control" placeholder="Search" name="query" id="srch-term">
+									<div class="input-group-btn">
+										<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+									</div>
+								</div>
+							</form>
+							<div id="search-option">
+								<div class="search-filter" id="search-filter-site">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									<span class="search-text">Search MSDN</span>
+								</div>
+								<div class="search-filter" id="search-filter-all-blogs">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									<span class="search-text">Search all blogs</span>
+								</div>
+																	<div class="search-filter selected" id="search-filter-this-blog">
+										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										<span class="search-text">Search this blog</span>
+									</div>
+															</div>
+						</div>
+						<div id="me-control">
+															<a href="https://blogs.technet.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a>
+													</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<div id="site-header-blog-wrapper" class="site-header-blog-wrapper ms-blog-header clear-both">
+			<div id="site-header-blog" class="site-header-blog">
+				<nav class="navbar navbar-inverse">
+					<div id="blog-logo-area" class="navbar-header">
+						<div id="blog-logo" data-toggle="collapse" data-target="#blog-menu">
+														<div id="blog-logo-text">
+				<h1 class="site-title ms-blog-title">
+					<a href="https://blogs.technet.microsoft.com/kv" class="for-desktop">
+						The Official Azure Key Vault Team Blog					</a>
+					<a href="https://blogs.technet.microsoft.com/kv" class="for-mobile">
+						The Official Azure Key Vault Team Blog					</a>
+				</h1>
+				<p class="site-description ms-blog-description">Your official source for all the latest news and tech tips for Microsoft Azure Key Vault and enlightened workloads.</p>
+			</div>
+									</div>
+					</div>
+									</nav>
+			</div>
+		</div>
+		<div id="site-header-image-wrapper" class="ms-blog-banner">
+			<div id="site-header-image">
+											</div>
+		</div>
+	</header>
+
+	<div id="site-content" class="site-content row">
+
+	<div id="primary" class="content-area col-sm-9">
+		<div id="single-content" class="div-content">
+
+			
+				
+<article id="post-27" class="post-27 post type-post status-publish format-standard hentry category-uncategorized tag-azure tag-azure-kv tag-dan tag-key-vault tag-sumedh tag-sunil">
+
+	<header class="entry-header single">
+		<h1 class="entry-title">Using the Key Vault for SQL Server Encryption</h1>		<div class="rating-wrap">
+		<div id="star-rating-27" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="27">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>		<div class="clear-both"></div>
+		<div class="entry-meta">
+			<span class="posted-on"><span class="screen-reader-text"> </span><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/" rel="bookmark"><time class="entry-date published updated" datetime="2015-01-12T13:03:03+00:00">January 12, 2015</time></a></span><span class="byline">By <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="f8e3c373f6c64ee08475933954dd9e59" href="https://social.technet.microsoft.com/profile/Dan+Plastina+%5BMSFT%5D">Dan Plastina [MSFT]</a></span></span><span class="comments-link"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comments" title="Comment on Using the Key Vault for SQL Server Encryption">11</a></span>				<span class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/", "text": "Using the Key Vault for SQL Server Encryption"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/", "text": "Using the Key Vault for SQL Server Encryption"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/", "text": "Using the Key Vault for SQL Server Encryption"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</span><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+		<hr>
+	</header><!-- .entry-header -->
+
+	<div class="entry-content single">
+		<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Welcome!</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">In our first blog <a href="/b/kv/archive/2015/01/08/azure-key-vault-making-the-cloud-safer.aspx">Azure Key Vault &#8211; Making the cloud safer</a>, we introduced you to the <strong>Azure Key Vault</strong> and then in the second blog <span style="color:#0000ff;"><a href="/b/kv/archive/2015/01/09/azure-key-vault-step-by-step.aspx">Azure Key Vault &ndash; Step by Step</a> </span>we got your hands dirty in setting one up for yourself. If you were on the more adventurous side, we even got you to build a Key Vault enlightened application using our simple sample project. Today we are going to introduce you to using the Key Vault with Microsoft SQL Server in an Azure Virtual Machine. We suggest that you review the previous blogs in this series before moving on.</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Along with the Key Vault preview release, we are previewing the <strong><a href="http://msdn.microsoft.com/en-us/library/dn198405.aspx">SQL Server Connector</a></strong>. It is available as a <a href="http://www.microsoft.com/en-us/download/details.aspx?id=45344">download</a>&nbsp;now on the Microsoft Download Center (more on the setup below). This connector enables <a href="http://msdn.microsoft.com/en-us/library/bb510663.aspx">SQL Server encryption</a> to leverage the Key Vault as an <a href="http://technet.microsoft.com/en-us/library/bb895340(v=sql.120).aspx">Extensible Key Management (EKM)</a> module for more secure key protection. Sunil will discuss how these two products combined enable SQL Server applications with sensitive data to move into the cloud.&nbsp;You will be setting up both an Azure Key Vault and an Azure VM running SQL Server. Have fun!</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">As always, thanks for your support!</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">&nbsp;&nbsp; Dan (<a href="https://twitter.com/TheRMSGuy">twitter</a>) on behalf of the Azure Key Vault Team</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><i>We value your input so please take a moment to <a href="https://twitter.com/TheRMSGuy">follow us</a></i><i>,&nbsp;join our <a href="http://eepurl.com/3zw6z">advisory board</a>,</i><i>&nbsp;</i><i>send us <a href="mailto:azurekeyvault@microsoft.com?subject=KVBlog">private feedback</a>, and/or visit our <a href="https://social.msdn.microsoft.com/Forums/en-US/AzureKeyVault">forum</a></i><strong>.</strong></span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">&nbsp;</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Hi, Sunil here. I&rsquo;m a Principal Program Manager on the Azure Security team. I&rsquo;ll setup a bit of context and then we will quickly dive into real work configurations. </span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Today, organizations can use <a href="http://msdn.microsoft.com/en-us/library/bb510663.aspx">SQL Server encryption</a> to protect sensitive data at rest. SQL Server encryption includes <a href="http://msdn.microsoft.com/en-us/library/bb934049.aspx">transparent data encryption (TDE)</a>, <a href="http://msdn.microsoft.com/en-us/library/ms179331.aspx">column level encryption (CLE)</a>, and <a href="http://msdn.microsoft.com/en-us/library/dn449489.aspx">backup encryption</a>. In all of these cases the data is encrypted using a symmetric data encryption key. The symmetric data encryption key is further protected by using a hierarchy of keys on the SQL Server machine. Alternatively, the <a href="http://technet.microsoft.com/en-us/library/bb895340(v=sql.110).aspx">EKM provider</a> architecture lets SQL Server use an asymmetric key stored outside of SQL Server in an external cryptographic provider to protect its symmetric data encryption keys. This adds additional security by allowing organizations to implement separation of duties in&nbsp;the management of keys and data.</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">This is where Azure Key Vault comes in. Given all the benefits it provides, we have wired up the Azure Key Vault as an EKM module using the <b>SQL Server Connector. </b>The connector thus permits SQL Server to use the Key Vault&rsquo;s tightly controlled and monitored <a href="http://en.wikipedia.org/wiki/FIPS_140-2">FIPS-validated</a>&nbsp;Hardware security modules for higher level of protection for the all-important asymmetric keys used by the SQL Server TDE, CLE, and backup encryption features. It also enables IT to separate the management of keys from the management of SQL server data encryption. That is a pretty big deal!</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Let&rsquo;s next review how Contoso can use the Key Vault to protect its SQL Server workloads&hellip;</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><b>Contoso wants to be in cloud. They also want to preserve security over sensitive SQL Server workloads</b> </span></p>
+<p><span style="font-family:Calibri;font-size:medium;"><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Like most organizations, the Contoso IT team has a number of SQL Server Line of Business applications. Given the initial success of shifting applications to Azure, there is a desire to shift SQL Server workloads as well to Azure Virtual machines (VMs). The SQL Server databases on-premises in these sensitive workloads have been encrypted at rest in keeping with internal compliance requirements using encryption keys protected on the SQL Server machines.&nbsp;Contoso IT has always wanted to&nbsp;improve the security of this implementation by shifting the&nbsp;SQL Server encryption keys off-box to an EKM&nbsp;</span></span><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><span><span>but have never setup HSMs on premises to achieve this.&nbsp;</span></span><span>With the move to Azure Virtual machines, IT has however drawn a line in the sand and mandated this separation.</span></span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><span>Contoso has two options for this:</span></span></p>
+<ol>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;">They can run their SQL Server in an Azure&nbsp;VM and install and use an on-premises HSM to store the master key, if that HSM vendor supports this configuration. There are some additional best practices to keep in mind to secure this configuration; but that is not the focus of this article.</span></li>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;">They can run their SQL Server in an Azure virtual machine and configure it to use Azure Key Vault to store the key. The rest of this article describes how to do that.</span></li>
+</ol>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><b>Contoso&rsquo;s LOB application developer learns about the SQL Server Connector.&nbsp;</b></span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">The SQL Server developer, Sarah,&nbsp;knows of&nbsp;EKM.&nbsp;She reads about the Azure Key Vault service and the new SQL Server Connector for the Key Vault.&nbsp;The <a href="http://msdn.microsoft.com/library/dn198405.aspx">Extensible key management using Key Vault (SQL Server)</a>&nbsp;topic helps her with a step-by-step guide on how to&nbsp;set up SQL Server Encryption using the Azure Key Vault as an EKM.&nbsp;The graphic below helps her understand all the moving parts:</span><strong><span style="font-size:medium;"><span style="font-family:Times New Roman;font-size:medium;">&nbsp;</span><br /></span></strong><strong><span style="font-size:medium;"><span style="font-family:Times New Roman;font-size:medium;"><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/03/78/EKM.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-03-78/EKM.png"></a><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/03/78/EKM.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-03-78/EKM.png"></a><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/03/78/6076.SQLServerConnector.png" original-url="http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-03-78/6076.SQLServerConnector.png"><img alt=" " src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/01/03/78/6076.SQLServerConnector.png" original-url="http://blogs.technet.com/resized-image.ashx/__size/550x0/__key/communityserver-blogs-components-weblogfiles/00-00-01-03-78/6076.SQLServerConnector.png" border="0" /></a><br /></span></span></strong></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Sarah next decides to prototype configuring an Azure VM hosting SQL Server with the <b>SQL Server Connector for Microsoft Azure Key Vault</b> to use the Azure Key Vault as an EKM provider. The steps she takes are pretty simple:</span></p>
+<ol>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Spins up a SQL Server 2014 Enterprise&nbsp;image on an Azure Virtual Machine in a matter of minutes and then loads&nbsp;a test database on this.</span></p>
+</li>
+<li><a href="http://www.microsoft.com/en-us/download/details.aspx?id=45344"></a><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://www.microsoft.com/en-us/download/details.aspx?id=45344">Downloads and installs the SQL Server Connector</a> on the virtual machine along with a set of sample scripts.&nbsp;The install also opens a help topic on the web.</span></li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Uses&nbsp;the &quot;EKM Setup Sample&quot; script&nbsp;to register the connector with&nbsp;the SQL Server instance to enable the use of the Azure Key Vault as a cryptographic provider.</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Creates a new test key vault, cleverly named &lsquo;SarahsTestVault&rsquo;</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Creates an inexpensive software-protected asymmetric key in this new test vault.</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Registers the SQL Server&nbsp;instance with Azure AD, getting credentials to identify the instance to Azure AD.</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Uses this SQL Server instance Azure AD identity to authorize&nbsp;it&nbsp;to use the test vault giving it very specific permissions.</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Uses&nbsp;the &quot;Setup Credentials&quot;&nbsp;script provided to set up credentials in the SQL Server instance to be able to identify the&nbsp;instance to Azure AD and use&nbsp;the test vault.</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Finally, she uses&nbsp;the &quot;TDE sample&quot; script&nbsp;provided to open the asymmetric key in the test vault, create a database encryption key protected by this asymmetric key and turn on TDE for&nbsp;the database.&nbsp;</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Voila, within&nbsp;15-20 minutes she is done!</span></p>
+</li>
+</ol>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">With transparent data encryption (TDE) enabled for the databases, Sarah feels confident that she has met the goals set for her by the IT leadership team. Knowing that the same connector also works with SQL Server column level encryption (CLE) and backup encryption as well, she can offer those services to the IT team as well. In fact, for her other application, she plans to leverage column level encryption (CLE) to protect Social Security Numbers given that is the only sensitive data in that database. &nbsp;Again in this situation, her CLE key protection will be delegated to the Azure Key Vault.</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><b>Contoso CIO gives the go-ahead for further testing</b></span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Impressed with the storyline of IT running SQL Server in an Azure VM while having its &lsquo;root of trust&rsquo; managed by IT staff in the (more trustworthy) CSO&rsquo;s organization, the CIO authorizes rapid migration of key workloads to the cloud. Deeper testing now begins. &nbsp;</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">At this point the CSO formalizes a team of <b>Vault Administrators</b> for the Contoso High Business Impact (HBI) workloads. The CIO&rsquo;s IT manager notifies his general IT staff about this new segregation of duty. The general IT team is happy to let the &lsquo;security experts&rsquo; deal with the crypto stuff so they can get on with the real work of actually deploying, managing, and maintaining these High Business Impact (HBI) workloads in Azure.&nbsp; The teams begin their usual practice of &lsquo;war games&rsquo; to see if anyone can get past their respective safety nets:</span></p>
+<ol>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">IT sets up the Azure VM. They do not grant permission to the VMs, databases, and supporting services to anyone outside of their team.</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">The CSO&rsquo;s team sets up Vaults (and logs, when available) as well as asymmetric keys to use for SQL Encryption. They do not grant permission to the Vaults or logs to anyone outside of their team.&nbsp;</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">When both teams are ready, the IT staff registers their application in Azure AD and request the CSO&rsquo;s team trust those applications to access the Vault.&nbsp;After this is done they turn on SQL Server Encryption.</span></p>
+</li>
+</ol>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">All systems are now up. IT staff cannot see the keys used by their SQL Server VMs. They cannot abuse keys (without the logs indicating the abuse).</span></p>
+<ol>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">One IT leader copies the database file and tries to mount it on another database server. They cannot decrypt it&nbsp;since they cannot use the key (unauthorized application).</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Another IT Leader tries to finds ways to export the all-important asymmetric keys and the Key Vault provider rejects this operation (key vault does not allow this).</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Another IT leader tries to delete the asymmetric key from the vault to render the databases unreadable and is again foiled by the vault (no permissions granted).&nbsp;</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">And so on and so forth&hellip;.</span></p>
+</li>
+<li>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Finally, the CSO and IT do an incident drill and successfully revoke access for the application to the vault in case of a suspected compromise.&nbsp;</span></p>
+</li>
+</ol>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><b>The final production deployment</b></span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">It is show time now! The same teams perform the same operations, just now they use HSM-backed keys to roll out the application in production.&nbsp; </span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><b>Hey, the cloud can even make my on premises offering better!</b></span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">With all of this great learning, several of the IT staff realize that this&nbsp;implementation is far better than the standard operating procedures (SOPs) they had in place for on premises SQL Server workloads. Because they had not invested in HSMs so far, segregation of management of data and keys did not exist at all. With the success of using Azure Key Vault for SQL Server in Azure VMs, one of the IT staff suggests,</span><span style="font-family:arial,helvetica,sans-serif;font-size:small;"> &ldquo;Why don&rsquo;t we just use the Azure Key Vault for our remaining on premises workloads too!&rdquo;? The argument being on premises databases could benefit from their TDE, CLE, and backup encryption keys being managed more securely in the Key Vault. No added risk was introduced in this model and tons of extra benefits leveraged the work they already did for the cloud-hosted workloads. It is a big win-win!!</span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">We hope that you will agree with us when we say that the SQL Server Connector showcases some of the incredible benefits of using the Azure Key Vault. With that, we will close by offering links that will help you explore the SQL Server Connector for yourself:</span></p>
+<ul>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://www.microsoft.com/en-us/download/details.aspx?id=45344">SQL Server Connector Download</a> on the Microsoft Download Center</span></li>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://msdn.microsoft.com/library/dn198405.aspx">Extensible Key Management using Azure Key Vault</a></span><span style="font-family:arial,helvetica,sans-serif;font-size:small;"></span></li>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://msdn.microsoft.com/en-us/library/azure/jj823132.aspx">SQL Server in Azure Virtual Machines</a></span></li>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://msdn.microsoft.com/en-us/library/bb510663.aspx">SQL Server Encryption</a></span></li>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://technet.microsoft.com/en-us/library/bb895340(v=sql.120).aspx">Extensible Key Management (EKM)</a></span><span style="font-family:arial,helvetica,sans-serif;font-size:small;"></span></li>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://msdn.microsoft.com/en-us/library/bb934049.aspx">Transparent data encryption (TDE)</a></span></li>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://msdn.microsoft.com/en-us/library/ms179331.aspx">Column level encryption (CLE)</a><br /></span></li>
+<li><span style="font-family:arial,helvetica,sans-serif;font-size:small;"><a href="http://msdn.microsoft.com/en-us/library/dn449489.aspx">SQL Server backup encryption</a></span></li>
+</ul>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Thank you&nbsp;for your interest and support!&nbsp; <span>We are looking forward to your feedback. Please take a moment to&nbsp;<a href="mailto:azurekeyvault@microsoft.com"><span style="color:#00749e;">send us feedback&nbsp;</span></a>and to join our&nbsp;<span><a href="http://eepurl.com/3zw6z"><span style="color:#00749e;">advisory board</span></a></span>. </span></span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">Also, watch out for our next blog that will cover how CloudLink SecureVM can be integrated&nbsp;with Azure Key Vault and help enhance data security for Azure Virtual Machines as well as for SQL Server Encryption.</span></p>
+</p>
+<p><span style="font-family:arial,helvetica,sans-serif;font-size:small;">&nbsp;&nbsp; Sunil on behalf of the Azure Key Vault Team</span></p>
+	</div><!-- .entry-content -->
+
+
+	<footer class="entry-footer single">
+					<div class="tags">
+				<span>Tags </span>
+				<span>
+					<a href="https://blogs.technet.microsoft.com/kv/tag/azure/" rel="tag">Azure</a> <a href="https://blogs.technet.microsoft.com/kv/tag/azure-kv/" rel="tag">Azure KV</a> <a href="https://blogs.technet.microsoft.com/kv/tag/dan/" rel="tag">Dan</a> <a href="https://blogs.technet.microsoft.com/kv/tag/key-vault/" rel="tag">Key Vault</a> <a href="https://blogs.technet.microsoft.com/kv/tag/sumedh/" rel="tag">Sumedh</a> <a href="https://blogs.technet.microsoft.com/kv/tag/sunil/" rel="tag">Sunil</a>				</span>
+			</div>
+				<hr>
+	</footer><!-- .entry-footer -->
+
+</article><!-- #post-## -->
+
+			
+		</div><!-- #single-content -->
+
+		
+<div id="comments" class="comments-area">
+	<div class="comments-title">
+		Comments (11)	</div>
+
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow" id="cancel-comment-reply-link" href="/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="https://blogs.technet.microsoft.com/kv/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="4" aria-required="true"></textarea></p>												<p class="form-submit">
+							<input name="submit" type="submit" id="submit" class="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='27' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="5dd2cae65d" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="46"/></p>					</form>
+							</div><!-- #respond -->
+			
+			<div class="navigation pagination clear-both">
+					</div>
+
+		<ol class="comment-list">
+					<li class="comment even thread-even depth-1" id="comment-223">
+				<div id="div-comment-223" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/21e8d889304b01afcca1a607a92f6016?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-223">
+			May 5, 2016 at 4:04 pm</a>		</div>
+
+		<p>Hello Bob,<br />
+Azure SQL DB does not support TDE yet. You will have to use SQL IaaS if you want to use SQL Server with TDE today, and you can do that with Azure Key Vault or an on-premises HSM.</p>
+<p>Here is the voting link for this feature. You are certainly not the first to ask!<br />
+<a href="http://feedback.azure.com/forums/217321-sql-database/suggestions/402425-enable-transparent-data-encryption"><br />
+</a><a href="http://feedback.azure.com/forums/217321-sql-database/suggestions/402425-enable-transparent-data-encryption" rel="nofollow">http://feedback.azure.com/forums/217321-sql-database/suggestions/402425-enable-transparent-data-encryption</a></p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=223#respond' onclick='return addComment.moveForm( "div-comment-223", "223", "respond", "27" )' aria-label='Reply to '>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-243">
+				<div id="div-comment-243" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/21e8d889304b01afcca1a607a92f6016?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-243">
+			May 5, 2016 at 4:04 pm</a>		</div>
+
+		<p>Hello Ada,<br />
+Yes it does. The steps to connect and authenticate to the Azure Key Vault are the same.</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=243#respond' onclick='return addComment.moveForm( "div-comment-243", "243", "respond", "27" )' aria-label='Reply to '>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-253">
+				<div id="div-comment-253" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/21e8d889304b01afcca1a607a92f6016?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-253">
+			May 5, 2016 at 4:04 pm</a>		</div>
+
+		<p>Kalpana &#8211; Can you please send email to <a href="mailto:azurekeyvault@Microsoft.com">azurekeyvault@Microsoft.com</a>? We will need more information to help troubleshoot your issue.</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=253#respond' onclick='return addComment.moveForm( "div-comment-253", "253", "respond", "27" )' aria-label='Reply to '>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-bob odd alt thread-odd thread-alt depth-1" id="comment-233">
+				<div id="div-comment-233" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/6ad0da35aed0e1cf78494a8abc5cb34e?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Bob</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-233">
+			January 22, 2015 at 1:17 pm</a>		</div>
+
+		<p>Is there any chance of Key Store being used to help encrypt data in SQL Azure?</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=233#respond' onclick='return addComment.moveForm( "div-comment-233", "233", "respond", "27" )' aria-label='Reply to Bob'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-263">
+				<div id="div-comment-263" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">ada</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-263">
+			February 13, 2015 at 6:48 pm</a>		</div>
+
+		<p>thanks for the great article. one question &#8211; does azure key vault support on-premises sql servers (as long as the vault url can be reached by the sql server) or those located at other cloud providers? i cannot find a clear information on this subject anywhere.</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=263#respond' onclick='return addComment.moveForm( "div-comment-263", "263", "respond", "27" )' aria-label='Reply to ada'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-kalpana odd alt thread-odd thread-alt depth-1" id="comment-213">
+				<div id="div-comment-213" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/260a5ef108211c1352612cfa9129b984?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">kalpana</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-213">
+			February 20, 2015 at 7:14 am</a>		</div>
+
+		<p>thanks for this superb article. i have followed the same steps on-premises db but while trying to create Asymetric key i&#39;m getting the error &quot;Cannot open session for cryptographic provider&#39; . why it is so?</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=213#respond' onclick='return addComment.moveForm( "div-comment-213", "213", "respond", "27" )' aria-label='Reply to kalpana'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-nick even thread-even depth-1" id="comment-341">
+				<div id="div-comment-341" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/fe089d2026010ba6af7035eaa7d197af?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Nick</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-341">
+			June 25, 2015 at 1:45 pm</a>		</div>
+
+		<p>Great article, we are looking to implement this in our Azure environment. Does this support in house AD on servers hosted in Azure or does it require AzureAD?</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=341#respond' onclick='return addComment.moveForm( "div-comment-341", "341", "respond", "27" )' aria-label='Reply to Nick'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-sumedh-barde-microsoft odd alt thread-odd thread-alt depth-1" id="comment-331">
+				<div id="div-comment-331" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/21e8d889304b01afcca1a607a92f6016?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Sumedh Barde [Microsoft]</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-331">
+			June 25, 2015 at 7:28 pm</a>		</div>
+
+		<p>Nick &#8211; authentication to Key Vault requires Azure AD, which you get with your Azure subscription.</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=331#respond' onclick='return addComment.moveForm( "div-comment-331", "331", "respond", "27" )' aria-label='Reply to Sumedh Barde [Microsoft]'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-sumedh-barde-microsoft even thread-even depth-1" id="comment-321">
+				<div id="div-comment-321" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/21e8d889304b01afcca1a607a92f6016?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Sumedh Barde [Microsoft]</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-321">
+			June 25, 2015 at 7:33 pm</a>		</div>
+
+		<p>Nick (and others) &#8211; btw if you have further questions please use <a href="mailto:AzureKeyVault@microsoft.com">AzureKeyVault@microsoft.com</a> or the MSDN forum for Key Vault. Those will get the quickest responses (this blog site doesn&#8217;t alert us).</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=321#respond' onclick='return addComment.moveForm( "div-comment-321", "321", "respond", "27" )' aria-label='Reply to Sumedh Barde [Microsoft]'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-anonymous odd alt thread-odd thread-alt depth-1" id="comment-481">
+				<div id="div-comment-481" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-481">
+			August 20, 2015 at 5:09 am</a>		</div>
+
+		<p>Today’s blog post comes courtesy of Sunil Pai and myself. As a SQL database administrator you know that</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=481#respond' onclick='return addComment.moveForm( "div-comment-481", "481", "respond", "27" )' aria-label='Reply to Anonymous'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-anonymous even thread-even depth-1" id="comment-441">
+				<div id="div-comment-441" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/294de3557d9d00b3d2d8a1e6aab028cf?s=56&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&amp;r=G' class='avatar avatar-56 photo' height='56' width='56' />			<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://blogs.technet.microsoft.com/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/#comment-441">
+			October 27, 2015 at 11:14 pm</a>		</div>
+
+		<p>If you are currently using the SQL Server Connector to interface with your Azure Key Vault, please make</p>
+
+		<div class="reply"><a class='comment-reply-link' href='/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/?replytocom=441#respond' onclick='return addComment.moveForm( "div-comment-441", "441", "respond", "27" )' aria-label='Reply to Anonymous'>Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		<div class="navigation pagination">
+					</div>
+
+	
+	
+</div><!-- .comments-area -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="sidebar col-sm-3">
+
+					<div id="sidebar-widget-area" class="sidebar-widget-area" role="complementary">
+					<aside id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title">Popular Tags</h2><div class="tagcloud"><a href='https://blogs.technet.microsoft.com/kv/tag/key-vault/' class='tag-link-281' title='4 topics' style='font-size: 14px;'>Key Vault</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/azure/' class='tag-link-241' title='4 topics' style='font-size: 14px;'>Azure</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/azure-key-vault/' class='tag-link-21' title='3 topics' style='font-size: 14px;'>Azure Key Vault</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/azure-kv/' class='tag-link-301' title='2 topics' style='font-size: 14px;'>Azure KV</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/hsm/' class='tag-link-11' title='2 topics' style='font-size: 14px;'>hsm</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/kv/' class='tag-link-261' title='2 topics' style='font-size: 14px;'>KV</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/dan/' class='tag-link-291' title='1 topic' style='font-size: 14px;'>Dan</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/ga/' class='tag-link-31' title='1 topic' style='font-size: 14px;'>GA</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/sumedh-barde/' class='tag-link-271' title='1 topic' style='font-size: 14px;'>Sumedh Barde</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/secrets/' class='tag-link-41' title='1 topic' style='font-size: 14px;'>secrets</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/general-availability/' class='tag-link-51' title='1 topic' style='font-size: 14px;'>General Availability</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/cloudlink/' class='tag-link-341' title='1 topic' style='font-size: 14px;'>CloudLink</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/azure-china/' class='tag-link-351' title='1 topic' style='font-size: 14px;'>Azure China</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/azure-government/' class='tag-link-361' title='1 topic' style='font-size: 14px;'>Azure Government</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/amit-bapat/' class='tag-link-81' title='1 topic' style='font-size: 14px;'>Amit Bapat</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/secure-boot-vm/' class='tag-link-331' title='1 topic' style='font-size: 14px;'>Secure boot VM</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/sunil/' class='tag-link-311' title='1 topic' style='font-size: 14px;'>Sunil</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/kms/' class='tag-link-61' title='1 topic' style='font-size: 14px;'>KMS</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/sumedh/' class='tag-link-321' title='1 topic' style='font-size: 14px;'>Sumedh</a>
+<a href='https://blogs.technet.microsoft.com/kv/tag/keys/' class='tag-link-71' title='1 topic' style='font-size: 14px;'>keys</a></div>
+</aside><aside id="msdn-archive-widget-2" class="widget msdn-archive-widget"><h2 class="widget-title">Archives</h2>	<li><a href='https://blogs.technet.microsoft.com/kv/2016/01/'>January 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/kv/2015/11/'>November 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/kv/2015/09/'>September 2015</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.technet.microsoft.com/kv/2015/08/'>August 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/kv/2015/07/'>July 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/kv/2016/'>All of 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/kv/2015/'>All of 2015</a>&nbsp;(11)</li>
+</aside>				</div>
+			
+</div><!-- #secondary -->
+</div><!-- .site-content -->
+
+<footer id="site-footer" class="site-footer row" role="contentinfo">
+	<div id="site-info" class="site-info">
+		<div id="footer-text" class="col-sm-4 col-sm-offset-6">
+			<span>
+				<a href="https://msdn.microsoft.com/dn529288">Privacy & Cookies</a>
+			</span>
+			<span>
+				<a href="https://msdn.microsoft.com/cc300389">Terms of Use</a>
+			</span>
+			<span>
+				<a href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx">Trademarks</a>
+			</span>
+		</div>
+		<div id="footer-far" class="col-sm-2">
+			<div id="footer-microsoft-logo">
+				<a href="https://www.microsoft.com">
+					<img id="footer-microsoft-logo-svg" src="https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft/images/ms-logo-white-text.svg">
+				</a>
+			</div>
+			<div id="copyright">
+				© 2016 Microsoft
+			</div>
+		</div>
+	</div><!-- .site-info -->
+</footer><!-- .site-footer -->
+
+</div><!-- .site -->
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/' );
+			$.cookie( 'aadsso-redirect', '/kv/2015/01/12/using-the-key-vault-for-sql-server-encryption/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='485' post-id='27'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.technet.microsoft.com/kv/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/kv/wp-content/plugins/akismet/_inc/form.js?ver=3.1.5'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/kv\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/kv\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/kv/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://code.jquery.com/jquery-migrate-1.3.0.min.js'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft/js/theme-merged.js?ver=04152016'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/kv/wp-content/themes/microsoft/js/vendor/jquery.cookie.js?ver=11092015'></script>
+
+</body>
+</html>

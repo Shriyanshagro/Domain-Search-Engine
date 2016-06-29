@@ -1,0 +1,792 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <title>Web Application Description Language</title>
+<style type="text/css">
+        pre { background-color : menu ; font-family : monospace ; margin-left : 0 }
+        td, th { border: 1px solid black }
+        table { border-collapse : collapse }
+</style>
+  <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM">
+</head>
+<body>
+  <div class="head">
+    <p><a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"></a> <a href="http://www.w3.org/Submission/"><img height="48" width="211" src="http://www.w3.org/Icons/member_subm" alt="W3C Member Submission"></a></p>
+    <h1 id="title">Web Application Description Language</h1>
+    <h2 id="W3C-doctype">W3C Member Submission 31 August 2009</h2>
+    <dl>
+      <dt>This version:</dt>
+      <dd><a href="http://www.w3.org/Submission/2009/SUBM-wadl-20090831/">http://www.w3.org/Submission/2009/SUBM-wadl-20090831/</a></dd>
+      <dt>Latest version:</dt>
+      <dd><a href="http://www.w3.org/Submission/wadl/">http://www.w3.org/Submission/wadl/</a></dd>
+      <dt>Authors:</dt>
+      <dd><a href="http://weblogs.java.net/blog/mhadley/" title="Marc Hadley">Marc Hadley</a> - <a href="http://www.sun.com/" title="Sun Microsystems">Sun Microsystems, Inc</a></dd>
+    </dl>
+    <p class="copyright">Copyright 2005-2009 Sun Microsystems, Inc., 4150 Network Circle, Santa Clara, California 95054, U.S.A. All rights reserved.</p>
+    <p>This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document License</a>. See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notice and Legal Disclaimers</a> for additional information.</p>
+  </div>
+  <hr>
+  <h2 id="abstract">Abstract</h2>
+  <p>This specification describes the Web Application Description Language (WADL). An increasing number of Web-based enterprises (Google, Yahoo, Amazon, Flickr to name but a few) are developing HTTP-based applications that provide programatic access to their internal data. Typically these applications are described using textual documentation that is sometimes supplemented with more formal specifications such as XML schema for XML-based data formats. WADL is designed to provide a machine process-able description of such HTTP-based Web applications.</p>
+  <hr>
+  <h2 id="status">Status of This Document</h2>
+  <p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+  <p>WADL and related specifications are provided as-is and for review and evaluation only. Sun Microsystems makes no warrantees or representations regarding the specifications in any manner whatsoever.</p>
+  <p>By publishing this document, W3C acknowledges that the <a href="/Submission/2009/03/#submitting_parties">Submitting Members</a> have made a formal Submission request to W3C for discussion. Publication of this document by W3C indicates no endorsement of its content by W3C, nor that W3C has, is, or will be allocating any resources to the issues addressed by it. This document is not the product of a chartered W3C group, but is published as potential input to the <a href="/Consortium/Process">W3C Process</a>. A <a href="/Submission/2009/03/Comment">W3C Team Comment</a> has been published in conjunction with this Member Submission. Publication of acknowledged Member Submissions at the W3C site is one of the benefits of <a href="/Consortium/Prospectus/Joining">W3C Membership</a>. Please consult the requirements associated with Member Submissions of <a href="/Consortium/Patent-Policy-20030520.html#sec-submissions">section 3.3 of the W3C Patent Policy</a>. Please consult the complete <a href="/Submission">list of acknowledged W3C Member Submissions</a>.</p>
+  <hr>
+  <h2 id="toc">Table of Contents</h2>
+  <div>
+    1 <a href="#x3-10001" id="QQ2-3-1" name="QQ2-3-1">Introduction</a><br>
+    &nbsp;1.1 <a href="#x3-20001.1" id="QQ2-3-2" name="QQ2-3-2">Web Applications</a><br>
+    &nbsp;1.2 <a href="#x3-30001.2" id="QQ2-3-3" name="QQ2-3-3">Use Cases</a><br>
+    &nbsp;1.3 <a href="#x3-40001.3" id="QQ2-3-4" name="QQ2-3-4">Example WADL Description</a><br>
+    2 <a href="#x3-50002" id="QQ2-3-5" name="QQ2-3-5">Description Components</a><br>
+    &nbsp;2.1 <a href="#x3-60002.1" id="QQ2-3-6" name="QQ2-3-6">Cross Referencing</a><br>
+    &nbsp;2.2 <a href="#x3-70002.2" id="QQ2-3-7" name="QQ2-3-7">Application</a><br>
+    &nbsp;2.3 <a href="#x3-80002.3" id="QQ2-3-8" name="QQ2-3-8">Documentation</a><br>
+    &nbsp;2.4 <a href="#x3-90002.4" id="QQ2-3-9" name="QQ2-3-9">Grammars</a><br>
+    &nbsp;&nbsp;2.4.1 <a href="#x3-100002.4.1" id="QQ2-3-10" name="QQ2-3-10">Include</a><br>
+    &nbsp;2.5 <a href="#x3-110002.5" id="QQ2-3-11" name="QQ2-3-11">Resources</a><br>
+    &nbsp;2.6 <a href="#x3-120002.6" id="QQ2-3-12" name="QQ2-3-12">Resource</a><br>
+    &nbsp;&nbsp;2.6.1 <a href="#x3-130002.6.1" id="QQ2-3-13" name="QQ2-3-13">Generating Resource Identifiers</a><br>
+    &nbsp;2.7 <a href="#x3-140002.7" id="QQ2-3-14" name="QQ2-3-14">Resource Type</a><br>
+    &nbsp;2.8 <a href="#x3-150002.8" id="QQ2-3-15" name="QQ2-3-15">Method</a><br>
+    &nbsp;&nbsp;2.8.1 <a href="#x3-160002.8.1" id="QQ2-3-16" name="QQ2-3-16">Method Reference</a><br>
+    &nbsp;&nbsp;2.8.2 <a href="#x3-170002.8.2" id="QQ2-3-17" name="QQ2-3-17">Method Definition</a><br>
+    &nbsp;2.9 <a href="#x3-180002.9" id="QQ2-3-18" name="QQ2-3-18">Request</a><br>
+    &nbsp;&nbsp;2.9.1 <a href="#x3-190002.9.1" id="QQ2-3-19" name="QQ2-3-19">Query Parameters</a><br>
+    &nbsp;2.10 <a href="#x3-200002.10" id="QQ2-3-20" name="QQ2-3-20">Response</a><br>
+    &nbsp;2.11 <a href="#x3-210002.11" id="QQ2-3-21" name="QQ2-3-21">Representation</a><br>
+    &nbsp;&nbsp;2.11.1 <a href="#x3-220002.11.1" id="QQ2-3-22" name="QQ2-3-22">Representation Reference</a><br>
+    &nbsp;&nbsp;2.11.2 <a href="#x3-230002.11.2" id="QQ2-3-23" name="QQ2-3-23">Representation Definition</a><br>
+    &nbsp;&nbsp;2.11.3 <a href="#x3-240002.11.3" id="QQ2-3-24" name="QQ2-3-24">Representation Parameters</a><br>
+    &nbsp;2.12 <a href="#x3-250002.12" id="QQ2-3-25" name="QQ2-3-25">Parameter</a><br>
+    &nbsp;&nbsp;2.12.1 <a href="#x3-260002.12.1" id="QQ2-3-26" name="QQ2-3-26">Parameter Reference</a><br>
+    &nbsp;&nbsp;2.12.2 <a href="#x3-270002.12.2" id="QQ2-3-27" name="QQ2-3-27">Parameter Definition</a><br>
+    &nbsp;&nbsp;2.12.3 <a href="#x3-280002.12.3" id="QQ2-3-29" name="QQ2-3-29">Option</a><br>
+    &nbsp;&nbsp;2.12.4 <a href="#x3-290002.12.4" id="QQ2-3-30" name="QQ2-3-30">Link</a><br>
+    &nbsp;2.13 <a href="#x3-300002.13" id="QQ2-3-31" name="QQ2-3-31">Extensibility</a><br>
+    3 <a href="#x3-310003" id="QQ2-3-32" name="QQ2-3-32">Use of RelaxNG with WADL</a><br>
+    4 <a href="#x3-320004" id="QQ2-3-33" name="QQ2-3-33">Use of W3C XML Schema with WADL</a><br>
+    5 <a href="#x3-330005" id="QQ2-3-34" name="QQ2-3-34">WADL Media Type</a><br>
+    A <a href="#x3-34000A" id="QQ2-3-35" name="QQ2-3-35">Additional Examples</a><br>
+    &nbsp;A.1 <a href="#x3-35000A.1" id="QQ2-3-36" name="QQ2-3-36">Amazon Item Search</a><br>
+    &nbsp;A.2 <a href="#x3-36000A.2" id="QQ2-3-37" name="QQ2-3-37">Atom Publishing Protocol</a><br>
+    B <a href="#x3-37000B" id="QQ2-3-38" name="QQ2-3-38">RelaxNG Schema for WADL</a><br>
+    C <a href="#x3-38000C" id="QQ2-3-39" name="QQ2-3-39">XML Schema for WADL</a><br>
+    D <a href="#x3-40000D" id="QQ2-3-41" name="QQ2-3-41">Document History</a><br>
+    &nbsp;D.1 <a href="#x3-41000D.1" id="QQ2-3-42" name="QQ2-3-42">Changes since November 2006 Publication</a>
+  </div>
+  <h2>1. <a id="x3-10001" name="x3-10001"></a>Introduction</h2>
+  <p>This specification describes the Web Application Description Language (WADL). WADL is designed to provide a machine process-able description of HTTP-based Web applications.</p>
+  <h3>1.1. <a id="x3-20001.1" name="x3-20001.1"></a>Web Applications</h3>
+  <p>For the purposes of this specification, a Web application is defined as a HTTP-based application whose interactions are amenable to machine processing. While many existing Web sites are examples of HTTP-based applications, a large number of those require human cognitive function for successful non-brittle use. Typically Web applications:</p>
+  <ul>
+    <li>Are based on existing Web architecture and infrastructure</li>
+    <li>Are platform and programming language independent</li>
+    <li>Promote re-use of the application beyond the browser</li>
+    <li>Enable composition with other Web or desktop applications</li>
+    <li>Require semantic clarity in content (representations) exchanged during their use</li>
+  </ul>
+  <p>The latter requirement can be fulfilled by the use of a self-describing data format such as XML or JSON. XML is particularly suitable since it allows the definition of a complete custom schema for the application domain or the embedding of a custom micro-format in an existing schema using its extensibility points.</p>
+  <p>Given the above definition of a Web application, one can see that the following aspects of an application could be usefully described in a machine processable format:</p>
+  <dl>
+    <dt>Set of resources</dt>
+    <dd>Analogous to a site map showing the resources on offer.</dd>
+    <dt>Relationships between resources</dt>
+    <dd>Describing the links between resources, both referential and causal.</dd>
+    <dt>Methods that can be applied to each resource</dt>
+    <dd>The HTTP methods that can be applied to each resource, the expected inputs and outputs and their supported formats.</dd>
+    <dt>Resource representation formats</dt>
+    <dd>The supported MIME types and data schemas in use.</dd>
+  </dl>
+  <h3>1.2 <a id="x3-30001.2" name="x3-30001.2"></a>Use Cases</h3>
+  <p>The current state-of-the-art in Web application description is textual documentation plus one or more data format definitions, e.g. XML schemata. Whilst entirely adequate for human consumption, this level of description precludes the following use cases which require a more machine-friendly description format:</p>
+  <dl>
+    <dt>Application Modelling and Visualization</dt>
+    <dd>Support for development of resource modelling tools for resource relationship and choreography analysis and manipulation.</dd>
+    <dt>Code Generation</dt>
+    <dd>Automated generation of stub and skeleton code and code for manipulation of resource representations.</dd>
+    <dt>Configuration</dt>
+    <dd>Configuration of client and server using a portable format.</dd>
+  </dl>
+  <p>It would also be useful to have a common foundation for individual applications and protocols to re-use and perhaps extend rather than each inventing a new description format.</p>
+  <h3>1.3 <a id="x3-40001.3" name="x3-40001.3"></a>Example WADL Description</h3>
+  <p>The following listing shows an example of a WADL description for the Yahoo News Search[<a href="#Xyahoows">1</a>] application.</p>
+  <pre>
+ 1 &lt;?xml version="1.0"?&gt; 
+ 2 &lt;application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ 3  xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+ 4  xmlns:tns="urn:yahoo:yn" 
+ 5  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ 6  xmlns:yn="urn:yahoo:yn" 
+ 7  xmlns:ya="urn:yahoo:api" 
+ 8  xmlns="http://wadl.dev.java.net/2009/02"&gt; 
+ 9   &lt;grammars&gt; 
+10     &lt;include 
+11       href="NewsSearchResponse.xsd"/&gt; 
+12     &lt;include 
+13       href="Error.xsd"/&gt; 
+14   &lt;/grammars&gt; 
+15 
+16   &lt;resources base="http://api.search.yahoo.com/NewsSearchService/V1/"&gt; 
+17     &lt;resource path="newsSearch"&gt; 
+18       &lt;method name="GET" id="search"&gt; 
+19         &lt;request&gt; 
+20           &lt;param name="appid" type="xsd:string" 
+21             style="query" required="true"/&gt; 
+22           &lt;param name="query" type="xsd:string" 
+23             style="query" required="true"/&gt; 
+24           &lt;param name="type" style="query" default="all"&gt; 
+25             &lt;option value="all"/&gt; 
+26             &lt;option value="any"/&gt; 
+27             &lt;option value="phrase"/&gt; 
+28           &lt;/param&gt; 
+29           &lt;param name="results" style="query" type="xsd:int" default="10"/&gt; 
+30           &lt;param name="start" style="query" type="xsd:int" default="1"/&gt; 
+31           &lt;param name="sort" style="query" default="rank"&gt; 
+32             &lt;option value="rank"/&gt; 
+33             &lt;option value="date"/&gt; 
+34           &lt;/param&gt; 
+35           &lt;param name="language" style="query" type="xsd:string"/&gt; 
+36         &lt;/request&gt; 
+37         &lt;response status="200"&gt; 
+38           &lt;representation mediaType="application/xml" 
+39             element="yn:ResultSet"/&gt; 
+40         &lt;/response&gt; 
+41         &lt;response status="400"&gt; 
+42           &lt;representation mediaType="application/xml" 
+43             element="ya:Error"/&gt; 
+44         &lt;/response&gt; 
+45       &lt;/method&gt; 
+46     &lt;/resource&gt; 
+47   &lt;/resources&gt; 
+48 
+49 &lt;/application&gt;
+</pre>
+  <p>Lines 2-8 begin an application description and define the XML namespaces used elsewhere in the service description. Lines 9-14 define the XML grammars used by the service, in this case two W3C XML Schema files are included by reference. Lines 16-45 describe the Yahoo News Search Web resource and the HTTP methods it supports. Lines 18-43 describe the 'search' GET method: lines 19-36 describe the input; lines 37-42 describe the possible outputs.</p>
+  <h2>2. <a id="x3-50002" name="x3-50002"></a>Description Components</h2>
+  <p>All WADL elements have the following XML namespace name:</p>
+  <blockquote>
+    http://wadl.dev.java.net/2009/02
+  </blockquote>
+  <p>This section describes each component of a WADL document in detail.</p>
+  <h3>2.1 <a id="x3-60002.1" name="x3-60002.1"></a>Cross Referencing</h3>
+  <p>Several WADL components support references to other components. Note that references are URI references, not ID references, and therefore support both intra- and inter-document cross referencing. Intra-document references are made using fragment identifiers, e.g. #someid. Inter-document references are made using a URI to identify the document and a fragment identifier to identify the component within the referenced document, e.g. somefile.wadl#someid. Absolute or relative URIs are allowed.</p>
+  <h3>2.2 <a id="x3-70002.2" name="x3-70002.2"></a>Application</h3>
+  <p>The <code>application</code> element forms the root of a WADL description and contains the following:</p>
+  <ol>
+    <li id="x3-7002x1">Zero or more <code>doc</code> elements - see section <a href="#x3-80002.3">2.3</a>.</li>
+    <li id="x3-7004x2">An optional <code>grammars</code> element - see section <a href="#x3-90002.4">2.4</a>.</li>
+    <li id="x3-7006x3">Zero or more <code>resources</code> elements - see section <a href="#x3-110002.5">2.5</a>.</li>
+    <li id="x3-7008x4">Zero or more of the following:
+      <ul>
+        <li><code>resource_type</code> elements - see section <a href="#x3-140002.7">2.7</a>.</li>
+        <li><code>method</code> elements - see section <a href="#x3-150002.8">2.8</a>.</li>
+        <li><code>representation</code> elements - see section <a href="#x3-210002.11">2.11</a>.</li>
+        <li><code>param</code> elements - see section <a href="#x3-250002.12">2.12</a>.</li>
+      </ul>
+    </li>
+  </ol>
+  <h3>2.3 <a id="x3-80002.3" name="x3-80002.3"></a>Documentation</h3>
+  <p>Each WADL-defined element can have one or more child <code>doc</code> elements that can be used to document that element. The <code>doc</code> element has the following attributes:</p>
+  <dl>
+    <dt><code>xml:lang</code></dt>
+    <dd>Defines the language for the <code>title</code> attribute value and the contents of the <code>doc</code> element. If an element contains more than one <code>doc</code> element then they MUST have distinct values for their <code>xml:lang</code> attribute.</dd>
+    <dt><code>title</code></dt>
+    <dd>A short plain text description of the element being documented, the value SHOULD be suitable for use as a title for the contained documentation.</dd>
+  </dl>
+  <p>The <code>doc</code> element has mixed content and may contain text and zero or more child elements that form the body of the documentation. It is RECOMMENDED that the child elements be members of the text, list or table modules of XHTML[<a href="#Xxhtmlmodularization">2</a>].</p>
+  <h3>2.4 <a id="x3-90002.4" name="x3-90002.4"></a>Grammars</h3>
+  <p>The <code>grammars</code> element acts as a container for definitions of the format of data exchanged during execution of the protocol described by the WADL document. Such definitions may be included inline or by reference using the <code>include</code> element (see section <a href="#x3-100002.4.1">2.4.1</a> ). No particular data format definition language language is mandated; sections <a href="#x3-310003">3</a> and <a href="#x3-320004">4</a> describe use of RelaxNG and W3C XML Schema with WADL, respectively.</p>
+  <p>It is permissible to include multiple definitions of a particular format: such definitions are assumed to be equivalent and consumers of a WADL description are free to choose amongst the alternatives or even combine them if they support that capability.</p>
+  <h4>2.4.1 <a id="x3-100002.4.1" name="x3-100002.4.1"></a>Include</h4>
+  <p>The <code>include</code> element allows the definitions of one or more data format descriptions to be included by reference. The <code>href</code> attribute provides a URI for the referenced definitions and is of type <code>xsd:anyURI</code>. Use of the <code>include</code> element is logically equivalent to in-lining the referenced document within the WADL <code>grammars</code> element.</p>
+  <h3>2.5 <a id="x3-110002.5" name="x3-110002.5"></a>Resources</h3>
+  <p>The <code>resources</code> element acts as a container for the resources provided by the application. A <code>resources</code> element has a <code>base</code> attribute of type <code>xsd:anyURI</code> that provides the base URI for each child resource identifier. Descendent <code>resource</code> elements (see section <a href="#x3-120002.6">2.6</a> ) describe the resources provided by the application.</p>
+  <h3>2.6 <a id="x3-120002.6" name="x3-120002.6"></a>Resource</h3>
+  <p>A <code>resource</code> element describes a set of resources, each identified by a URI that follows a common pattern. A <code>resource</code> element has the following attributes:</p>
+  <dl>
+    <dt><code>id</code></dt>
+    <dd>An optional attribute of type <code>xsd:ID</code> that identifies the <code>resource</code> element.</dd>
+    <dt><code>path</code></dt>
+    <dd>An optional attribute of type <code>xsd:string</code>. If present, it provides a relative URI template for the identifier of the resource. The resource's base URI is given by the <code>resource</code> element's parent <code>resource</code> or <code>resources</code> element.</dd>
+    <dt><code>type</code></dt>
+    <dd>An optional attribute whose type is a space-separated list of of <code>xsd:anyURI</code>. Each value in the list is a cross reference (see section <a href="#x3-60002.1">2.1</a> ) that identifies a <code>resource_type</code> element (see section <a href="#x3-140002.7">2.7</a> ) that defines a set of methods supported by the resource.</dd>
+    <dt><code>queryType</code></dt>
+    <dd>Defines the media type for the query component of the resource URI. Defaults to 'application/x-www-form-urlencoded' if not specified which results in query strings being formatted as specified in section 17.13 of HTML 4.01[<a href="#Xhtml401">3</a>].</dd>
+  </dl>
+  <p>A <code>resource</code> element contains the following child elements:</p>
+  <ul>
+    <li>Zero or more <code>doc</code> elements - see section <a href="#x3-80002.3">2.3</a> .</li>
+    <li>Zero or more <code>param</code> elements (see section <a href="#x3-250002.12">2.12</a> ) with one of the following values for its <code>style</code> attribute:
+      <dl>
+        <dt><code>template</code></dt>
+        <dd>Provides additional information about an embedded template parameter, see above. Child <code>param</code> elements whose <code>name</code> attribute value does not match the <code>name</code> of an embedded template parameter are ignored.</dd>
+        <dt><code>matrix</code></dt>
+        <dd>Specifies a matrix URI parameter</dd>
+        <dt><code>query</code></dt>
+        <dd>Specifies a global URI query parameter for all child <code>method</code> elements of the resource. Does not apply to methods inherited from a <code>resource_type</code> specified using the <code>type</code> attribute.</dd>
+        <dt><code>header</code></dt>
+        <dd>Specifies a global HTTP header for use in the request part of all child <code>method</code> elements of the resource. Does not apply to methods inherited from a <code>resource_type</code> specified using the <code>type</code> attribute.</dd>
+      </dl>
+    </li>
+    <li>Zero or more <code>method</code>(see section <a href="#x3-150002.8">2.8</a> ) elements, each of which describes the input to and output from an HTTP protocol method that can be applied to the resource. Such locally-defined methods are added to any methods included in <code>resource_type</code> elements referred to using the <code>type</code> attribute.</li>
+    <li>Zero or more <code>resource</code> elements that describe sub-resources. Such sub-resources inherit matrix and template parameters from the parent resource since their URI is relative to that of the parent resource but they do not inherit query or header parameters specified globally for the parent resource.</li>
+  </ul>
+  <p>The value of the <code>path</code> attribute may be static or may contain embedded template parameters. At runtime, the values of template parameters are substituted into the resource identifier when the resource is used, see section <a href="#x3-130002.6.1">2.6.1</a> for a detailed example.</p>
+  <p>Additional information about embedded template parameters can be conveyed using a child <code>param</code> element with a <code>style</code> attribute value 'template' whose <code>name</code> attribute value matches the name of the parameter embedded in the template. E.g., in the following the type of the <code>widgetId</code> template parameter is specified by the child <code>param</code> element:</p>
+  <pre>
+1 &lt;resource path="widgets/{widgetId}"&gt;  
+2   &lt;param name="widgetId" style="template" type="xsd:int"/&gt;  
+3   ...  
+4 &lt;/resource&gt;
+</pre>
+  <h4>2.6.1 <a id="x3-130002.6.1" name="x3-130002.6.1"></a>Generating Resource Identifiers</h4>
+  <p>The URI for a <code>resource</code> element is obtained using the following rules:</p>
+  <ol>
+    <li id="x3-13002x1">Set <code>identifier</code> equal to the URI computed (using this process) for the parent element (<code>resource</code> or <code>resources</code>)</li>
+    <li id="x3-13004x2">If <code>identifier</code> doesn't end with a '/' then append a '/' character to <code>identifier</code></li>
+    <li id="x3-13006x3">Substitute the values of any URI template parameters into the value of the <code>path</code> attribute</li>
+    <li id="x3-13008x4">Append the value obtained in the previous step to <code>identifier</code></li>
+    <li id="x3-13010x5">For each child <code>param</code> element (see section <a href="#x3-250002.12">2.12</a>), in document order, that has a value of 'matrix' for its <code>style</code> attribute, append a representation of the parameter value to <code>identifier</code> according to the following rules:
+      <ul>
+        <li>Non-boolean matrix parameters are represented as: ';' <code>name</code> '=' <code>value</code></li>
+        <li>Boolean matrix parameters are represented as: ';' <code>name</code> when <code>value</code> is <code>true</code> and are omitted from <code>identifier</code> when <code>value</code> is <code>false</code></li>
+      </ul>
+      <p>where <code>name</code> is the value of the <code>param</code> element's <code>name</code> attribute and <code>value</code> is the runtime value of the parameter.</p>
+    </li>
+  </ol>
+  <p>The following example illustrates these rules and shows an extract from a Web application description that provides multiple resources:</p>
+  <pre>
+ 1 &lt;resources base="http://example.com/"&gt;  
+ 2   &lt;resource path="widgets"&gt;  
+ 3     &lt;resource path="reports/stock"&gt;  
+ 4       &lt;param name="instockonly" style="matrix"  
+ 5         type="xsd:boolean"/&gt;  
+ 6       ...  
+ 7     &lt;/resource&gt;  
+ 8     &lt;resource path="{widgetId}"&gt;  
+ 9       ...  
+10     &lt;/resource&gt;  
+11     ...  
+12   &lt;/resource&gt;  
+13   &lt;resource path="accounts/{accountId}"&gt;  
+14     ...  
+15   &lt;/resource&gt;  
+16 &lt;/resources&gt;
+</pre>
+  <p>The above describes the following resources:</p>
+  <ul>
+    <li>A resource identified by a static URI: http://example.com/widgets</li>
+    <li>A resource identified by a static URI: http://example.com/widgets/reports/stock</li>
+    <li>A resource identified by a matrix URI: http://example.com/widgets/reports/stock;instockonly</li>
+    <li>Multiple resources identified by generative URIs: http://example.com/widgets/<em>widgetId</em>, where the <em>widgetId</em> component of the URI is replaced at runtime with the value of a runtime parameter called <code>widgetId</code>.</li>
+    <li>Multiple resources identified by generative URIs: http://example.com/accounts/<em>accountId</em>, where the <em>accountId</em> component of the URI is replaced at runtime with the value of a runtime parameter called <code>accountId</code>.</li>
+  </ul>
+  <h3>2.7 <a id="x3-140002.7" name="x3-140002.7"></a>Resource Type</h3>
+  <p>A <code>resource_type</code> element describes a set of methods that, together, define the behavior of a type of resource. A <code>resource_type</code> may be used to define resource behavior that is expected to be supported by multiple resources.</p>
+  <p>A <code>resource_type</code> element has the following attributes:</p>
+  <dl>
+    <dt><code>id</code></dt>
+    <dd>A required attribute of type <code>xsd:ID</code> that identifies the <code>resource_type</code> element.</dd>
+  </dl>
+  <p>A <code>resource_type</code> element contains the following child elements:</p>
+  <ul>
+    <li>Zero or more <code>doc</code> elements - see section <a href="#x3-80002.3">2.3</a> .</li>
+    <li>Zero or more <code>param</code> elements (see section <a href="#x3-250002.12">2.12</a> ) with one of the following values for its <code>style</code> attribute:
+      <dl>
+        <dt><code>query</code></dt>
+        <dd>Specifies a URI query parameter for all child <code>method</code> elements of the resource type.</dd>
+        <dt><code>header</code></dt>
+        <dd>Specifies a HTTP header for use in the request part of all child <code>method</code> elements of the resource type.</dd>
+      </dl>
+    </li>
+    <li>Zero or more <code>method</code> (see section <a href="#x3-150002.8">2.8</a> ) elements, each of which describes an HTTP protocol method that can be applied to a resource of this type.</li>
+    <li>Zero or more <code>resource</code> elements that describe sub-resources of resources of this type. The URI of such sub-resources is provided by the <code>path</code> attribute of the <code>resource</code> element and is relative to that of the parent resource.</li>
+  </ul>
+  <h3>2.8 <a id="x3-150002.8" name="x3-150002.8"></a>Method</h3>
+  <p>A <code>method</code> element describes the input to and output from an HTTP protocol method that may be applied to a resource. A <code>method</code> element can either be a method definition or a reference to a method defined elsewhere.</p>
+  <h4>2.8.1 <a id="x3-160002.8.1" name="x3-160002.8.1"></a>Method Reference</h4>
+  <p>A <code>method</code> reference element is a child of a <code>resource</code> element that has an <code>href</code> attribute whose type is <code>xsd:anyURI</code>. The value of the <code>href</code> attribute is a cross reference (see section <a href="#x3-60002.1">2.1</a> ) to a <code>method</code> definition element. A <code>method</code> reference element MUST NOT have any other WADL-defined attributes or contain any WADL-defined child elements.</p>
+  <p>This form of <code>method</code> element may be used to reduce duplication when the same method applies to more than one resource.</p>
+  <h4>2.8.2 <a id="x3-170002.8.2" name="x3-170002.8.2"></a>Method Definition</h4>
+  <p>A <code>method</code> definition element is a child of a <code>resource</code> or <code>application</code> element and has the following attributes:</p>
+  <dl>
+    <dt><code>name</code></dt>
+    <dd>Indicates the HTTP method used.</dd>
+    <dt><code>id</code></dt>
+    <dd>An identifier for the method, required for globally defined methods, not allowed on locally embedded methods. Methods are identified by an XML ID and are referred to using a URI reference.</dd>
+  </dl>
+  <p>It is permissible to have multiple child <code>method</code> elements that have the same value of the <code>name</code> attribute for a given resource; such siblings represent distinct variations of the same HTTP method and will typically have different input data.</p>
+  <p>A <code>method</code> element has the following child elements:</p>
+  <dl>
+    <dt><code>doc</code></dt>
+    <dd>Zero or more <code>doc</code> elements - see section <a href="#x3-80002.3">2.3</a> .</dd>
+    <dt><code>request</code></dt>
+    <dd>Describes the input to the method as a collection of parameters and an optional resource representation - see section <a href="#x3-180002.9">2.9</a> .</dd>
+    <dt><code>response</code></dt>
+    <dd>Zero or more <code>response</code> elements that describe the possible outputs of the method - see section <a href="#x3-200002.10">2.10</a> .</dd>
+  </dl>
+  <h3>2.9 <a id="x3-180002.9" name="x3-180002.9"></a>Request</h3>
+  <p>A <code>request</code> element describes the input to be included when applying an HTTP method to a resource. A <code>request</code> element has no attributes and may contain the following child elements:</p>
+  <ol>
+    <li id="x3-18002x1">Zero or more <code>doc</code> elements - see section <a href="#x3-80002.3">2.3</a>.</li>
+    <li id="x3-18004x2">Zero or more <code>representation</code> elements - see section <a href="#x3-210002.11">2.11</a>. Note that use of <code>representation</code> elements is confined to HTTP methods that accept an entity body in the request (e.g., PUT or POST). Sibling <code>representation</code> elements represent logically equivalent alternatives, e.g., a particular resource might support multiple XML grammars for a particular request.</li>
+    <li id="x3-18006x3">Zero or more <code>param</code> elements (see section <a href="#x3-250002.12">2.12</a>) with one of the following values for their <code>style</code> attribute:
+      <dl>
+        <dt><code>query</code></dt>
+        <dd>Specifies a URI query parameter for all methods that apply to this resource, see section <a href="#x3-190002.9.1">2.9.1</a></dd>
+        <dt><code>header</code></dt>
+        <dd>Specifies a HTTP header for use in the request</dd>
+      </dl>
+    </li>
+  </ol>
+  <h4>2.9.1 <a id="x3-190002.9.1" name="x3-190002.9.1"></a>Query Parameters</h4>
+  <p>Child <code>param</code> elements (see section <a href="#x3-250002.12">2.12</a> ) of a <code>resource</code> or <code>request</code> with a <code>style</code> value of 'query' represent URI query parameters as described in section 17.13 of HTML 4.01[<a href="#Xhtml401">3</a>]. The runtime values of query parameters are sent as URI query parameters when the HTTP method is invoked.</p>
+  <p>The following example shows a resource with a generative URI that supports a single HTTP method with a two optional query parameters:</p>
+  <pre>
+ 1 &lt;resources base="http://example.com/widgets"&gt;  
+ 2   &lt;resource path="{widgetId}"&gt;  
+ 3     &lt;param name="customerId" style="query"/&gt;  
+ 4     &lt;method name="GET"&gt;  
+ 5       &lt;request&gt;  
+ 6         &lt;param name="verbose" style="query" type="xsd:boolean"/&gt;  
+ 7       &lt;/request&gt;  
+ 8       &lt;response&gt;  
+ 9         ...  
+10       &lt;/response&gt;  
+11     &lt;/method&gt;  
+12   &lt;/resource&gt;  
+13 &lt;/resources&gt;
+</pre>
+  <p>If the value of the <code>widgetId</code> parameter is '123456' the value of the <code>customerId</code> parameter is 'cust1234' and the value of the <code>verbose</code> parameter is 'true' then the URI on which the HTTP GET will be performed is:</p>
+  <blockquote>
+    http://example.com/widgets/123456?customerId=cust1234&amp;verbose=true
+  </blockquote>
+  <h3>2.10 <a id="x3-200002.10" name="x3-200002.10"></a>Response</h3>
+  <p>A <code>response</code> element describes the output that results from performing an HTTP method on a resource. It has the following attributes:</p>
+  <dl>
+    <dt><code>status</code></dt>
+    <dd>Optionally present on responses, provides a list of HTTP status codes associated with a particular response.</dd>
+  </dl>
+  <p>A <code>response</code> element may contain the following child elements:</p>
+  <ul>
+    <li>Zero or more <code>doc</code> elements (see section <a href="#x3-80002.3">2.3</a> ).</li>
+    <li>Zero or more <code>representation</code> elements (see section <a href="#x3-210002.11">2.11</a> ), each of which describes a resource representation that may result from performing the method. Sibling <code>representation</code> elements indicate logically equivalent alternatives; normal HTTP content negotiation mechanisms may be used to select a particular alternative.</li>
+    <li>Zero or more <code>param</code> elements (see section <a href="#x3-250002.12">2.12</a> ) with a value of 'header' for their <code>style</code> attribute, each of which specifies the details of a HTTP header for the response</li>
+  </ul>
+  <h3>2.11 <a id="x3-210002.11" name="x3-210002.11"></a>Representation</h3>
+  <p>A <code>representation</code> element describes a representation of a resource's state. A <code>representation</code> element can either be a representation definition or a reference to a representation defined elsewhere.</p>
+  <h4>2.11.1 <a id="x3-220002.11.1" name="x3-220002.11.1"></a>Representation Reference</h4>
+  <p>A <code>representation</code> reference element can be a child of a <code>request</code> or <code>response</code> element. It has a <code>href</code> attribute of type <code>xsd:anyURI</code>. The value of the <code>href</code> attribute is a cross reference (see section <a href="#x3-60002.1">2.1</a> ) to a <code>representation</code> definition element. A <code>representation</code> reference element MUST NOT have any other WADL-defined attributes or contain any WADL-defined child elements.</p>
+  <p>This form of <code>representation</code> element may be used to reduce duplication when the same representation is used in multiple locations.</p>
+  <h4>2.11.2 <a id="x3-230002.11.2" name="x3-230002.11.2"></a>Representation Definition</h4>
+  <p>A <code>representation</code> definition element can be a child of a <code>request</code>, <code>response</code> or <code>application</code> element. It has the following attributes:</p>
+  <dl>
+    <dt><code>id</code></dt>
+    <dd>An identifier for the representation, required for globally defined representations, not allowed on locally embedded representations. Representations are identified by an XML ID and are referred to using a URI reference.</dd>
+    <dt><code>mediaType</code></dt>
+    <dd>Indicates the media type of the representation. Media ranges (e.g. <code>text/*</code>) are acceptable and indicate that any media type in the specified range is supported.</dd>
+    <dt><code>element</code></dt>
+    <dd>For XML-based representations, specifies the qualified name of the root element as described within the <code>grammars</code> section - see section <a href="#x3-90002.4">2.4</a> .</dd>
+    <dt><code>profile</code></dt>
+    <dd>Similar to the HTML <code>profile</code> attribute, gives the location of one or more meta data profiles, separated by white space. The meta-data profiles define the meaning of the <code>rel</code> and <code>rev</code> attributes of descendent <code>link</code> elements (see section <a href="#x3-290002.12.4">2.12.4</a> ).</dd>
+  </dl>
+  <p>In addition to the attributes listed above, a <code>representation</code> definition element can have zero or more child <code>doc</code> elements (see section <a href="#x3-80002.3">2.3</a> ) and <code>param</code> elements (see section <a href="#x3-240002.11.3">2.11.3</a> ).</p>
+  <h4>2.11.3 <a id="x3-240002.11.3" name="x3-240002.11.3"></a>Representation Parameters</h4>
+  <p>A child <code>param</code> element (see section <a href="#x3-250002.12">2.12</a> ) is used to parameterize its parent <code>representation</code> element. Representation parameters can have one of two different functions depending on the media type of the representation:</p>
+  <ol>
+    <li id="x3-24002x1">Define the content of the representation. For <code>representation</code> elements with a <code>mediaType</code> attribute whose value is either 'application/x-www-form-urlencoded' or 'multipart/form-data' the representation parameters define the content of the representation which is formatted according to the media type. The same may apply to other media types.</li>
+    <li id="x3-24004x2">Provide a hint to processors about items of interest within a representation. For XML based representations, representation parameters can be used to identify items of interest with the XML. The <code>path</code> attribute of a representation parameter indicates the path to the value of the parameter within the representation. For XML-based representations this is an XPath expression.</li>
+  </ol>
+  <h3>2.12 <a id="x3-250002.12" name="x3-250002.12"></a>Parameter</h3>
+  <p>A <code>param</code> element describes a parameterized component of its parent element. A <code>param</code> element can either be a parameter definition or a reference to a parameter defined elsewhere.</p>
+  <h4>2.12.1 <a id="x3-260002.12.1" name="x3-260002.12.1"></a>Parameter Reference</h4>
+  <p>A <code>param</code> reference element is a <code>param</code> element that has an <code>href</code> attribute whose type is <code>xsd:anyURI</code>. The value of the <code>href</code> attribute is a cross reference (see section <a href="#x3-60002.1">2.1</a> ) to a <code>param</code> definition element. A <code>param</code> reference element MUST NOT have any other WADL-defined attributes or contain any WADL-defined child elements.</p>
+  <p>This form of <code>param</code> element may be used to reduce duplication when the same parameter applies to more than one parent.</p>
+  <h4>2.12.2 <a id="x3-270002.12.2" name="x3-270002.12.2"></a>Parameter Definition</h4>
+  <p>A <code>param</code> definition element describes a parameterized component of its parent element and may be a child of a <code>resource</code> (see section <a href="#x3-120002.6">2.6</a> ), <code>application</code> (see section <a href="#x3-70002.2">2.2</a> ), <code>request</code> (see section <a href="#x3-180002.9">2.9</a> ), <code>response</code> (see section <a href="#x3-200002.10">2.10</a> ), or a <code>representation</code> (see section <a href="#x3-210002.11">2.11</a> ) element. A <code>param</code> definition element has zero or more <code>doc</code> child elements (see section <a href="#x3-80002.3">2.3</a> ), zero or more <code>option</code> child elements (see section <a href="#x3-280002.12.3">2.12.3</a> ), an optional <code>link</code> child element (see section <a href="#x3-290002.12.4">2.12.4</a> ) and has the following attributes:</p>
+  <dl>
+    <dt><code>id</code></dt>
+    <dd>An optional identifier that may be used to refer to a parameter definition using a URI reference.</dd>
+    <dt><code>name</code></dt>
+    <dd>The name of the parameter as an xsd:NMTOKEN. Required.</dd>
+    <dt><code>style</code></dt>
+    <dd>Indicates the parameter style, table <a href="#x3-270011">1</a> on page <a href="#x3-270011">25</a> lists the allowed values and shows the context(s) in which each value may be used.</dd>
+    <dt><code>type</code></dt>
+    <dd>Optionally indicates the type of the parameter as an XML qualified name, defaults to <code>xsd:string</code>.</dd>
+    <dt><code>default</code></dt>
+    <dd>Optionally provides a value that is considered identical to an unspecified parameter value.</dd>
+    <dt><code>path</code></dt>
+    <dd>When the parent element is a <code>representation</code> element, this attribute optionally provides a path to the value of the parameter within the representation. For XML representations, use of XPath 1.0[<a href="#Xxpath10">4</a>] is recommended.</dd>
+    <dt><code>required</code></dt>
+    <dd>Optionally indicates whether the parameter is required to be present or not, defaults to false (parameter not required).</dd>
+    <dt><code>repeating</code></dt>
+    <dd>Optionally indicates whether the parameter is single valued or may have multiple values, defaults to false (parameter is single valued).</dd>
+    <dt><code>fixed</code></dt>
+    <dd>Optionally provides a fixed value for the parameter.</dd>
+  </dl>
+  <p>Note that some combinations of the above attributes might not make sense in all cases. E.g. matrix URI parameters are normally optional so a <code>param</code> element with a <code>style</code> value of 'matrix' and a <code>required</code> value of 'true' might be unwise.</p>
+  <div>
+    <a id="x3-270011" name="x3-270011"></a>
+    <table border="1" summary="Values of style attribute and context for use">
+      <caption>
+        Table 1: Values of <code>style</code> attribute and context for use.
+      </caption>
+      <tr>
+        <th style="white-space:nowrap; text-align:left;">Value</th>
+        <th style="white-space:nowrap; text-align:left;">Parent Element(s) of <code>param</code></th>
+        <th style="white-space:nowrap; text-align:left;">Usage</th>
+      </tr>
+      <tr id="TBL-4-2-">
+        <td id="TBL-4-2-1">matrix</td>
+        <td id="TBL-4-2-2">resource</td>
+        <td id="TBL-4-2-3">Specifies a matrix URI component.</td>
+      </tr>
+      <tr id="TBL-4-3-">
+        <td id="TBL-4-3-1">header</td>
+        <td id="TBL-4-3-2">resource, resource_type, request or response</td>
+        <td id="TBL-4-3-3">Specifies a HTTP header that pertains to the HTTP request (resource or request) or HTTP response (response)</td>
+      </tr>
+      <tr id="TBL-4-4-">
+        <td id="TBL-4-4-1">query</td>
+        <td id="TBL-4-4-2">resource, resource_type or request</td>
+        <td id="TBL-4-4-3">Specifies a URI query parameter represented according to the rules for the query component media type specified by the queryType attribute.</td>
+      </tr>
+      <tr id="TBL-4-5-">
+        <td id="TBL-4-5-1">query</td>
+        <td id="TBL-4-5-2">representation</td>
+        <td id="TBL-4-5-3">Specifies a component of the representation as a name value pair formatted according to the rules of the media type. Typically used with media type 'application/x-www-form-urlencoded' or 'multipart/form-data'.</td>
+      </tr>
+      <tr id="TBL-4-6-">
+        <td id="TBL-4-6-1">template</td>
+        <td id="TBL-4-6-2">resource</td>
+        <td id="TBL-4-6-3">The parameter is represented as a string encoding of the parameter value and is substituted into the value of the path attribute of the resource element as described in section <a href="#x3-130002.6.1">2.6.1</a>.</td>
+      </tr>
+      <tr id="TBL-4-7-">
+        <td id="TBL-4-7-1">plain</td>
+        <td id="TBL-4-7-2">representation</td>
+        <td id="TBL-4-7-3">Specifies a component of the representation formatted as a string encoding of the parameter value according to the rules of the media type.</td>
+      </tr>
+    </table>
+  </div>
+  <h4>2.12.3 <a id="x3-280002.12.3" name="x3-280002.12.3"></a>Option</h4>
+  <p>An <code>option</code> element defines one of a set of possible values for the parameter represented by its parent <code>param</code> element. An <code>option</code> element has the following attributes:</p>
+  <dl>
+    <dt><code>value</code></dt>
+    <dd>A required attribute that defines one of the possible values of the parent parameter.</dd>
+    <dt><code>mediaType</code></dt>
+    <dd>When present this indicates that the parent parameter acts as a media type selector for responses. The value of the attribute is the media type that is expected when the parameter has the value given in the <code>value</code> attribute.</dd>
+  </dl>
+  <p>The following example shows a resource method with a query parameter that may be used to request a particular response format:</p>
+  <pre>
+ 1 &lt;method name="GET"&gt;  
+ 2   &lt;request&gt;  
+ 3     &lt;param name="format" style="query"&gt;  
+ 4       &lt;option value="xml" mediaType="application/xml"/&gt;  
+ 5       &lt;option value="json" mediaType="application/json"/&gt;  
+ 6     &lt;/param&gt;  
+ 7     ...  
+ 8   &lt;/request&gt;  
+ 9   &lt;response&gt;  
+10     &lt;representation mediaType="application/xml"/&gt;  
+11     &lt;representation mediaType="application/json"/&gt;  
+12   &lt;/response&gt;  
+13 &lt;/method&gt;
+</pre>
+  <p>An <code>option</code> element may have zero or more <code>doc</code> elements that document the meaning of the value.</p>
+  <h4>2.12.4 <a id="x3-290002.12.4" name="x3-290002.12.4"></a>Link</h4>
+  <p>A <code>link</code> element is used to identify links to resources within representations. A <code>link</code> element is a child of a <code>param</code> element whose <code>path</code> attribute identifies the portion of its parent representation that contains a link URI.</p>
+  <p>A <code>link</code> element contains zero or more <code>doc</code> elements (see section <a href="#x3-80002.3">2.3</a>) and has the following attributes:</p>
+  <dl>
+    <dt><code>resource_type</code></dt>
+    <dd>An optional cross reference (see section <a href="#x3-60002.1">2.1</a>) to a <code>resource_type</code> element that defines the capabilities of the resource that the link identifies.</dd>
+    <dt><code>rel</code></dt>
+    <dd>An optional token that identifies the relationship of the resource identified by the link to the resource whose representation the link is embedded in. The value is scoped by the value of the ancestor <code>representation</code> element's <code>profile</code> attribute.</dd>
+    <dt><code>rev</code></dt>
+    <dd>An optional token that identifies the relationship of the resource whose representation the link is embedded in to the resource identified by the link. This is the reverse relationship to that identified by the <code>rel</code> attribute. The value is scoped by the value of the ancestor <code>representation</code> element's <code>profile</code> attribute.</dd>
+  </dl>
+  <p>The following example shows an XML-based resource representation and two possible alternative WADL representation elements:</p>
+  <pre>
+ 1 &lt;!-- XML-based representation of a widget --&gt;  
+ 2 &lt;w:widget xmlns:w="http://example.com/widgets"&gt;  
+ 3   &lt;w:loc&gt;http://example.com/widgets/110113&lt;/w:loc&gt;  
+ 4   &lt;w:name&gt;A Widget&lt;/w:name&gt;  
+ 5   &lt;w:description&gt;A very useful gizmo.&lt;/w:description&gt;  
+ 6   &lt;w:price currency="USD"&gt;19.99&lt;/w:price&gt;  
+ 7   &lt;w:list&gt;http://example.com/widgets&lt;/w:list&gt;  
+ 8 &lt;/w:widget&gt;  
+ 9  
+10 &lt;!-- WADL fragment describing the widget representation  
+11      without parameters--&gt;  
+12 &lt;representation mediaType="application/xml"  
+13   element="w:widget"/&gt;  
+14  
+15 &lt;!-- WADL fragment describing the widget representation  
+16      with parameters --&gt;  
+17 &lt;representation mediaType="application/xml"  
+18   element="w:widget"&gt;  
+19   &lt;param name="location" style="plain"  
+20     type="xsd:anyURI" path="/w:widget/w:loc"&gt;  
+21     &lt;link resource_type="#widget" rel="self"/&gt;  
+22   &lt;/param&gt;  
+23   &lt;param name="index" style="plain"  
+24     type="xsd:anyURI" path="/w:widget/w:list"&gt;  
+25     &lt;link resource_type="#widgets" rel="index" rev="child"/&gt;  
+26   &lt;/param&gt;  
+27 &lt;/representation&gt;
+</pre>
+  <p>The second version identifies two links within a widget representation:</p>
+  <dl>
+    <dt>location</dt>
+    <dd>The URI of a widget resource. A widget resource is described by the WADL <code>resource_type</code> element whose <code>id</code> is 'widget'.</dd>
+    <dt>index</dt>
+    <dd>The URI of a resource that acts as an index of widgets. The index resource is described by the WADL <code>resource_type</code> element whose <code>id</code> is 'widgets'.</dd>
+  </dl>
+  <h3>2.13 <a id="x3-300002.13" name="x3-300002.13"></a>Extensibility</h3>
+  <p>Most WADL-defined elements are extensible using either elements or attributes from foreign namespaces. A WADL processor MAY ignore extensions that it does not understand and extension authors should design extensions with this in mind.</p>
+  <h2>3 <a id="x3-310003" name="x3-310003"></a>Use of RelaxNG with WADL</h2>
+  <p>One or more legal RelaxNG schemas may be embedded within a WADL <code>grammars</code> element or may be included by reference using an <code>include</code> element. Multiple RelaxNG schemas may be combined within a single schema using the facilities provided by RelaxNG (e.g., <code>rng:include</code>). The default namespace for an included RelaxNG grammar is the default namespace of the WADL <code>grammars</code> element.</p>
+  <p>The <code>element</code> attribute of <code>representation</code> element refers to a corresponding RelaxNG element pattern using the XML qualified name of the element.</p>
+  <h2>4 <a id="x3-320004" name="x3-320004"></a>Use of W3C XML Schema with WADL</h2>
+  <p>One or more legal W3C XML Schemas may be embedded within a WADL <code>grammars</code> element or may be included by reference using a <code>include</code> element. Multiple W3C XML Schemas may be combined within a single schema using the facilities provided by W3C XML Schema (e.g., <code>xsd:include</code>).</p>
+  <p>The <code>element</code> attribute of <code>representation</code> element refers to a corresponding W3C XML Schema global element declaration using the XML qualified name of the element.</p>
+  <h2>5 <a id="x3-330005" name="x3-330005"></a>WADL Media Type</h2>
+  <p>WADL documents should be served using the <code>application/vnd.sun.wadl+xml</code> media type and use a <code>.wadl</code> filename extension. See the WADL media type registration[<a href="#Xwadlmedia">5</a>] for full details.</p>
+  <h2>A <a id="x3-34000A" name="x3-34000A"></a>Additional Examples</h2>
+  <h3>A.1 <a id="x3-35000A.1" name="x3-35000A.1"></a>Amazon Item Search</h3>
+  <p>The following shows a WADL description of the Amazon item search service[<a href="#Xamazonws">6</a>]:</p>
+  <pre>
+ 1 &lt;application xmlns="http://wadl.dev.java.net/2009/02" 
+ 2   xmlns:aws="http://webservices.amazon.com/AWSECommerceService/2005-07-26" 
+ 3   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ 4   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ 5   xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd"&gt; 
+ 6 
+ 7   &lt;grammars&gt; 
+ 8     &lt;include href="AWSECommerceService.xsd"/&gt; 
+ 9   &lt;/grammars&gt; 
+10 
+11   &lt;resources base="http://webservices.amazon.com/onca/"&gt; 
+12     &lt;resource path="xml"&gt; 
+13       &lt;method href="#ItemSearch"/&gt; 
+14     &lt;/resource&gt; 
+15   &lt;/resources&gt; 
+16 
+17   &lt;method name="GET" id="ItemSearch"&gt; 
+18     &lt;request&gt; 
+19       &lt;param name="Service" style="query" 
+20         fixed="AWSECommerceService"/&gt; 
+21       &lt;param name="Version" style="query" fixed="2005-07-26"/&gt; 
+22       &lt;param name="Operation" style="query" fixed="ItemSearch"/&gt; 
+23       &lt;param name="SubscriptionId" style="query" 
+24          type="xsd:string" required="true"/&gt; 
+25       &lt;param name="SearchIndex" style="query" 
+26          type="aws:SearchIndexType" required="true"&gt; 
+27          &lt;option value="Books"/&gt; 
+28          &lt;option value="DVD"/&gt; 
+29          &lt;option value="Music"/&gt; 
+30       &lt;/param&gt; 
+31       &lt;param name="Keywords" style="query" 
+32         type="aws:KeywordList" required="true"/&gt; 
+33       &lt;param name="ResponseGroup" style="query" 
+34         type="aws:ResponseGroupType" repeating="true"&gt; 
+35          &lt;option value="Small"/&gt; 
+36          &lt;option value="Medium"/&gt; 
+37          &lt;option value="Large"/&gt; 
+38          &lt;option value="Images"/&gt; 
+39       &lt;/param&gt; 
+40     &lt;/request&gt; 
+41     &lt;response&gt; 
+42       &lt;representation mediaType="text/xml" 
+43         element="aws:ItemSearchResponse"/&gt; 
+44     &lt;/response&gt; 
+45   &lt;/method&gt; 
+46 &lt;/application&gt;
+</pre>
+  <p>Note the following:</p>
+  <ul>
+    <li>The method is attached to the resource as a reference to a globally defined method rather than being embedded directly. In this instance there is no need to do this beyond illustrating the capability but this is useful where one method can be applied to multiple resources.</li>
+    <li>A number of the query parameters are marked as fixed value. The Amazon API uses query parameters to identify services and operations within those services, use of the fixed attribute can be used to allow description of multiple logical methods on the same resource. Without the ability to fix values in this way, the Amazon API would look like one single method with many parameters.</li>
+    <li>The SearchIndex and ResponseGroup parameters both have an enumerated set of possible values. In both cases only a subset of possible values is shown to minimize the length of the example.</li>
+  </ul>
+  <h3>A.2 <a id="x3-36000A.2" name="x3-36000A.2"></a>Atom Publishing Protocol</h3>
+  <p>The Atom publishing protocol[<a href="#Xatompub">7</a>] defines a set of methods to introspect, view and update entries in an Atom feed. The publishing protocol is bootstrapped by performing a HTTP GET on a known URI for a particular set of feeds. The response consists of an XML document, of media type application/atomserv+xml, that describes the available feeds. An example of such is shown below:</p>
+  <pre>
+ 1 &lt;service xmlns="http://www.w3.org/2007/app"  
+ 2      xmlns:atom="http://www.w3.org/2005/Atom"&gt;  
+ 3   &lt;workspace&gt;  
+ 4     &lt;atom:title&gt;Main Site&lt;/atom:title&gt;  
+ 5     &lt;collection  
+ 6         href="http://example.org/blog/main" &gt;  
+ 7       &lt;atom:title&gt;Main Site&lt;/atom:title&gt;  
+ 8     &lt;/collection&gt;  
+ 9     &lt;collection  
+10       href="http://example.org/blog/pic" &gt;  
+11       &lt;atom:title&gt;Pictures&lt;/atom:title&gt;  
+12       &lt;accept&gt;image/*&lt;/accept&gt;  
+13     &lt;/collection&gt;  
+14   &lt;/workspace&gt;  
+15 &lt;/service&gt;
+</pre>
+  <p>Note the similarity between the Atom service document and WADL, both describe a set of resources and methods that may be applied to them. In the case of an Atom service document the applicable methods are implicit as they are defined by the Atom Publishing Protocol. An Atom service document also defines some additional metadata (the feed title) specific to the protocol domain. One could replicate the information in an Atom service document using WADL as follows.</p>
+  <p>The first step is to create a WADL document that contains the Atom protocol methods associated with feeds, associated representations and resource types. This only needs to be done once since the contents of this document can then be re-used by WADL documents specific to each site.</p>
+  <pre>
+ 1 &lt;application xmlns="http://wadl.dev.java.net/2009/02"  
+ 2   xmlns:app="http://www.w3.org/2007/app"  
+ 3   xmlns:atom="http://www.w3.org/2005/Atom"&gt;  
+ 4  
+ 5   &lt;grammars&gt;  
+ 6     &lt;include href="http://www.w3.org/2007/app/app.xsd"/&gt;  
+ 7   &lt;/grammars&gt;  
+ 8  
+ 9   &lt;resource_type id="entry_feed"&gt;  
+10     &lt;method href="#getFeed"/&gt;  
+11     &lt;method href="#addEntryCollectionMember"/&gt;  
+12   &lt;/resource&gt;  
+13  
+14   &lt;resource_type id="media_feed"&gt;  
+15     &lt;method href="#getFeed"/&gt;  
+16     &lt;method href="#addImageCollectionMember"/&gt;  
+17   &lt;/resource&gt;  
+18  
+19   &lt;resource_type id="entry"&gt;  
+20     ...  
+21   &lt;/resource_type&gt;  
+22  
+23   &lt;representation id="entry" mediaType="application/atom+xml"  
+24     element="atom:entry"/&gt;  
+25  
+26   &lt;representation id="feed" mediaType="application/atom+xml"  
+27     element="atom:feed"&gt;  
+28     &lt;param name="first_link" style="plain"  
+29       path="/atom:feed/atom:link[@rel='first']"&gt;  
+30       &lt;link resource_type="#entry_feed" rel="first"/&gt;  
+31     &lt;/representation&gt;  
+32     &lt;param name="next_link" style="plain"  
+33       path="/atom:feed/atom:link[@rel='next']"&gt;  
+34       &lt;link resource_type="#entry_feed" rel="next" rev="previous"/&gt;  
+35     &lt;/param&gt;  
+36     &lt;param name="prev_link" style="plain"  
+37       path="/atom:feed/atom:link[@rel='previous']"&gt;  
+38       &lt;link resource_type="#entry_feed" rel="previous" rev="next"/&gt;  
+39     &lt;/param&gt;  
+40     &lt;param name="last_link" style="plain"  
+41       path="/atom:feed/atom:link[@rel='last']"&gt;  
+42       &lt;link resource_type="#entry_feed" rel="last"/&gt;  
+43     &lt;/param&gt;  
+44   &lt;/representation&gt;  
+45  
+46   &lt;method name="GET" id="getFeed"&gt;  
+47     &lt;response&gt;  
+48       &lt;representation href="#feed"/&gt;  
+49     &lt;/response&gt;  
+50   &lt;/method&gt;  
+51  
+52   &lt;method name="POST" id="addEntryCollectionMember"&gt;  
+53     &lt;request&gt;  
+54       &lt;representation href="#entry"/&gt;  
+55     &lt;/request&gt;  
+56     &lt;response status="201"&gt;  
+57       &lt;param name="location" style="header" type="xsd:anyURI"  
+58         required="true"&gt;  
+59         &lt;link resource_type="#entry" rel="self"/&gt;  
+60       &lt;/param&gt;  
+61       &lt;representation href="#entry"/&gt;  
+62     &lt;/response&gt;  
+63   &lt;/method&gt;  
+64  
+65   &lt;method name="POST" id="addImageCollectionMember"&gt;  
+66     &lt;request&gt;  
+67       &lt;representation mediaType="image/*"/&gt;  
+68     &lt;/request&gt;  
+69     &lt;response status="201"&gt;  
+70       &lt;param name="location" style="header" type="xsd:anyURI"  
+71         required="true"&gt;  
+72         &lt;link resource_type="#entry" rel="self"/&gt;  
+73       &lt;/param&gt;  
+74       &lt;representation href="#entry"/&gt;  
+75     &lt;/response&gt;  
+76   &lt;/method&gt;  
+77  
+78 &lt;/application&gt;
+</pre>
+  <p>Note that the above WADL doesn't define any concrete resources only resource types, methods and representations. Given the preceding document located at http://www.w3.org/2007/app.wadl, one can create a WADL alternative to the Atom service document as follows:</p>
+  <pre>
+ 1 &lt;application xmlns="http://wadl.dev.java.net/2009/02"  
+ 2   xmlns:app="http://www.w3.org/2007/app"  
+ 3   xmlns:atom="http://www.w3.org/2005/Atom"&gt;  
+ 4  
+ 5   &lt;resources base="http://example.org/"&gt;  
+ 6     &lt;resource path="blog/main"  
+ 7       type="http://www.w3.org/2007/app.wadl#entry_feed"&gt;  
+ 8       &lt;doc title="Main Site"/&gt;  
+ 9     &lt;/resource&gt;  
+10     &lt;resource path="blog/pic"  
+11       type="http://www.w3.org/2007/app.wadl#media_feed"&gt;  
+12       &lt;doc title="Pictures"/&gt;  
+13     &lt;/resource&gt;  
+14   &lt;/resources&gt;  
+15 &lt;/application&gt;
+</pre>
+  <p>The above WADL document describes the following resources in terms of the resource types we defined earlier:</p>
+  <ul>
+    <li><code>http://example.org/blog/main</code><br>
+    This resource supports HTTP GET to retrieve an Atom feed document and HTTP POST to add a new entry to the feed.</li>
+    <li><code>http://example.org/blog/pic</code><br>
+    This resource supports HTTP GET to retrieve an Atom feed document and HTTP POST to add a new image to the feed.</li>
+  </ul>
+  <h2>B <a id="x3-37000B" name="x3-37000B"></a>RelaxNG Schema for WADL</h2>
+  <p>A normative RelaxNG schema for the WADL vocabulary can be found <a href="wadl.rnc">at this link</a>.</p>
+  <h2>C <a id="x3-38000C" name="x3-38000C"></a>XML Schema for WADL</h2>
+  <p>A normative XML schema for the WADL vocabulary can be found <a href="wadl.xsd">at this link</a>.</p>
+  <h2 class="likesectionHead"><a id="x3-39000C" name="x3-39000C"></a>References</h2>
+  <p class="bibitem">[1] <a id="Xyahoows" name="Xyahoows"></a>Yahoo! Web APIs.
+  Technical report, Yahoo!, 2005. See <a href="http://developer.yahoo.net">http://developer.yahoo.net/</a>.</p>
+  <p class="bibitem">[2] <a id="Xxhtmlmodularization"
+  name="Xxhtmlmodularization"></a>Murray Altheim, Frank Boumphrey, Sam Dooley,
+  Shane McCarron, Sebastian Schnitzenbaumer, and Ted Wugofski. Modularization
+  of XHTML. Recommendation, W3C, April 2001. See <a href="http://www.w3.org/TR/xhtml-modularization">http://www.w3.org/TR/xhtml-modularization</a>.</p>
+  <p class="bibitem">[3] <a id="Xhtml401" name="Xhtml401"></a>Dave Raggett,
+  Arnaud Le Hors, and Ian Jacobs. HTML 4.01 Specification. Recommendation,
+  W3C, December 1999. See <a href="http://www.w3.org/TR/html4/">http://www.w3.org/TR/html4/</a>.</p>
+  <p class="bibitem">[4] <a id="Xxpath10" name="Xxpath10"></a>James Clark and
+  Steve DeRose. XML Path Language (XPath) 1.0. Recommendation, W3C, November
+  1999. See <a href="http://www.w3.org/TR/xpath">http://www.w3.org/TR/xpath</a>.</p>
+  <p class="bibitem">[5] <a id="Xwadlmedia" name="Xwadlmedia"></a>M. Hadley.
+  The application/vnd.sun.wadl+xml Media Type. Media Type, IANA, March 2006.
+  See <a href="http://www.iana.org/assignments/media-types/application/vnd.sun.wadl+xml">http://www.iana.org/assignments/media-types/application/vnd.sun.wadl+xml</a>.</p>
+  <p class="bibitem">[6] <a id="Xamazonws" name="Xamazonws"></a>Amazon.com.
+  Amazon Web Services. Technical report, Amazon.com, 2005. See <a
+  href="http://www.amazon.com/">http://www.amazon.com/</a>.</p>
+  <p class="bibitem">[7] <a id="Xatompub" name="Xatompub"></a>J. Gregorio and
+  B. de hOra. The Atom Publishing Protocol. Internet Draft, IETF, October 2007. See <a href="http://www.ietf.org/rfc/rfc5023.txt">http://www.ietf.org/rfc/rfc5023.txt</a>.</p>
+  <h2>D <a id="x3-40000D" name="x3-40000D"></a>Document History</h2>
+  <p>This section lists changes to the specification and grammar of WADL for each release. Changes may reference issues which may be viewed in the issue tracker at:</p>
+  <blockquote>
+    https://wadl.dev.java.net/issues/show_bug.cgi?id=<em>issueNumber</em>
+  </blockquote>
+  <p>where <em>issueNumber</em> is the number of the issue.</p>
+  <h3>D.1 <a id="x3-41000D.1" name="x3-41000D.1"></a>Changes since November 2006 Publication</h3>
+  <ul>
+    <li>The namespace was changed to http://wadl.dev.java.net/2009/02.</li>
+    <li>Resolved issue 13. The <code>status</code> attribute was moved from the <code>representation</code> element to the <code>response</code> element. The cardinality of the <code>response</code> element was changed from 0-1 to 0-many. The <code>fault</code> element was removed.</li>
+    <li>Resolved issue 17. Allow parameters at top level and parameter references to prevent repetition when a parameter is used in multiple places.</li>
+    <li>Resolved issue 18. A <code>resource_type</code> element may now contain <code>resource</code> child elements.</li>
+    <li>Resolved issue 20. Allow multiple resources elements within an application.</li>
+    <li>Updated the Atompub example to RFC syntax.</li>
+  </ul>
+  <h2><a id="x3-42000D.1" name="x3-42000D.1"></a>Acknowledgments</h2>
+  <p>Thanks to the members of the <a
+  href="http://lists.w3.org/Archives/Public/public-web-http-desc/">http://lists.w3.org/Archives/Public/public-web-http-desc/</a> and <a href="http://wadl.dev.java.net/servlets/SummarizeList?listName=users">http://wadl.dev.java.net/servlets/SummarizeList?listName=users</a> mailing lists who provided useful feedback on several iterations of this specification. Mark Nottingham and John Nienart (Yahoo!) provided extensive feedback and helped structure the overall design.</p>
+  <h3 class="likesectionHead"><a id="x3-43000D.1" name="x3-43000D.1"></a>Copyright Notice</h3>
+  <p>Copyright 2005-2009 Sun Microsystems, Inc., 4150 Network Circle, Santa Clara, California 95054, U.S.A. All rights reserved.</p>
+  <p>Unlimited copying without fee is permitted provided that the copies are not made nor distributed for direct commercial advantage, and credit to the source is given. Otherwise, no part of this work covered by copyright may be reproduced in any form or by any means graphic, electronic, or mechanical, including photocopying, recording, taping, or storage in an information retrieval system, without the prior written permission of the copyright owner.</p>
+  <p>U.S. Government Rights - Commercial software. Government users are subject to the Sun Microsystems, Inc. standard license agreement and applicable provisions of the FAR and its supplements.</p>
+  <p>Sun, Sun Microsystems and the Sun logo are trademarks or registered trademarks of Sun Microsystems, Inc. in the U.S. and other countries.</p>
+  <p>DOCUMENTATION IS PROVIDED "AS IS" AND ALL EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT, ARE DISCLAIMED, EXCEPT TO THE EXTENT THAT SUCH DISCLAIMERS ARE HELD TO BE LEGALLY INVALID.</p>
+</body>
+</html>

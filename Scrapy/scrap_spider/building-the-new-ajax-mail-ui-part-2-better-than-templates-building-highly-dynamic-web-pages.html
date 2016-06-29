@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="This is part 2 of a series of technical posts documenting some of the interesting work and technologies we’ve used to power the new interface (see also part 1, Instant notifications of new emails via eventsource/server-sent events). Regular users can skip these posts, but we hope technical users find them interesting.">
+<title>Building the new AJAX mail UI part 2: Better than templates, building highly dynamic web pages | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Building the new AJAX mail UI part 2: Better than templates, building highly dynamic web pages">
+<meta property="og:description" content="This is part 2 of a series of technical posts documenting some of the interesting work and technologies we’ve used to power the new interface (see also part 1, Instant notifications of new emails via eventsource/server-sent events). Regular users can skip these posts, but we hope technical users find them interesting.">
+<meta property="og:url" content="https://blog.fastmail.com/2012/02/20/building-the-new-ajax-mail-ui-part-2-better-than-templates-building-highly-dynamic-web-pages/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2012/02/20/building-the-new-ajax-mail-ui-part-2-better-than-templates-building-highly-dynamic-web-pages/">
+<meta name="twitter:title" content="Building the new AJAX mail UI part 2: Better than templates, building highly dynamic web pages">
+<meta name="twitter:description" content="This is part 2 of a series of technical posts documenting some of the interesting work and technologies we’ve used to power the new interface (see also part 1, Instant notifications of new emails via eventsource/server-sent events). Regular users can skip these posts, but we hope technical users find them interesting.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2012/02/20/building-the-new-ajax-mail-ui-part-2-better-than-templates-building-highly-dynamic-web-pages/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2012/02/20/building-the-new-ajax-mail-ui-part-2-better-than-templates-building-highly-dynamic-web-pages/'>Building the new AJAX mail UI part 2: Better than templates, building highly dynamic web pages</a></h1>
+<p class="blog-author">Rob Mueller &ndash; 20 February 2012</p>
+<p>This is part 2 of a series of technical posts documenting some of the
+interesting work and technologies we’ve used to power the new interface
+(see also part 1, <a href="http://blog.fastmail.fm/2012/01/09/building-the-new-ajax-mail-ui-part-1-instant-notifications-of-new-emails-via-eventsourceserver-sent-events/">Instant notifications of new emails via
+eventsource/server-sent
+events</a>).
+Regular users can skip these posts, but we hope technical users find
+them interesting.</p>
+
+<p>As dynamic websites constructed entirely on the client side become de
+rigueur, there are a number of templating languages battling it out to
+become the One True Way™ of rendering your page. All follow essentially
+the same style: introduce extra control tags to intersperse with HTML.
+But if we go back to basics, HTML is simply a way of serialising a tree
+structure into a text format that is relatively easy for humans to edit.
+Once the browser receives this, it then has to parse it to generate an
+internal DOM tree representation before it can draw the page.</p>
+
+<p>In an AJAX style application, we don’t transmit HTML directly to the
+browser. Instead, we generate the HTML on the client side, and often
+update the HTML in different parts of the page over time as the user
+interacts with the application. As string manipulation for building HTML
+from data objects is hard to write and error-prone, we normally use a
+template language and a library that compiles these snippets into code;
+this executes with a data context, producing a string of HTML that may
+be set as an element’s innerHTML property. The browser then builds a DOM
+tree, which we can query to update nodes and add event listeners.</p>
+
+<p>There is, however, another alternative for building the DOM tree:
+directly in JavaScript. Modern browsers are very fast at parsing and
+executing JavaScript. What if, with the help of a liberal sprinkling of
+syntactic sugar, we were to build the DOM tree in code instead? Start by
+considering a simple function <code>el</code> to declare an element.</p>
+
+<pre><code>el( 'div' )
+</code></pre>
+
+<p>OK, so far we’ve just renamed the <code>document.createElement</code> method. What
+next? Well, we’re going to want to add class names and ids to elements a
+lot. Let’s use the CSS syntax which everyone knows and loves.</p>
+
+<pre><code>el( 'div#id.class1.class2' );
+</code></pre>
+
+<p>Hmm, that’s quite clean and readable compared to:</p>
+
+<pre><code>&lt;div id="id" class="class1 class2"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>What else? Well, there may be other attributes. Let’s pass them as a
+standard hash:</p>
+
+<pre><code>el( 'div#id', { tabindex: -1, title: 'My div' })
+</code></pre>
+
+<p>That’s pretty neat. Let’s have a quick look at the html for comparison:</p>
+
+<pre><code>&lt;div id="id" tabindex="-1" title="My div"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>A node’s not much use on its own. Let’s define a tree:</p>
+
+<pre><code>var items = [ 1, 2, 3, 4 ];
+el( 'div#message', [
+    el( 'a.biglink', { href: 'http://www.google.com' }, [
+        'A link to Google'
+    ]),
+    el( 'ul', [
+        items.forEach( function( item ) {
+            return el( 'li.item', [ item + '. Item ] );
+        })
+    ]),
+    items.length &gt; 1 ? 'There are lots of items'.localise() + '. ' : null,
+    'This is just plain text. &lt;script&gt;I have no effect&lt;/script&gt;'
+])
+</code></pre>
+
+<p>So what have we achieved? We’ve got a different way of writing a
+document tree, which is essentially very similar to HTML but changes the
+punctuation slightly to make it valid JavaScript syntax instead. So
+what? Well, the point is this readable declaration is directly
+executable code; we just need to define the <code>el</code> function:
+<a href="https://gist.github.com/1532562">https://gist.github.com/1532562</a>. As it’s pure JS, we can replace
+static strings with variables. We can easily add conditional nodes, as
+shown in the example above. We can call other functions to generate a
+portion of the DOM tree or use array iterators to cleanly write loops.
+Wrap it all in a function and we can pass different data into the
+function each time to render our DOM nodes… we have ourselves a
+template.</p>
+
+<h2>Performance</h2>
+
+<p>While innerHTML used to be much faster than JS DOM methods, this no
+longer holds for modern browsers. Let’s have a look at a benchmark:
+<a href="http://jsperf.com/innerhtml-or-dom/4">http://jsperf.com/innerhtml-or-dom/4</a></p>
+
+<p>Here we have four different methods of rendering the same bit of HTML.
+This is a real-world snippet, taken from a core part of our new webmail
+application (<a href="https://beta.fastmail.fm">https://beta.fastmail.fm</a>), with just a few class names
+changed. Let’s first look at the hand-optimised innerHTML method and
+hand-optimised DOM method. In Chrome the DOM version is over 50% faster
+than using innerHTML and in Safari it’s 45% faster. Firefox is just as
+fast with either, while Opera is marginally faster using innerHTML. IE
+is still twice as fast using innerHTML rather than DOM methods. Perhaps
+most interesting though is to look at mobile browser performance. On
+desktop, computers are fast enough these days that the performance
+differences are less of an issue. On mobile it’s crucial, and here we
+find that the DOM method is anywhere from 45% to 100% faster in mobile
+WebKit browsers, such as Safari on the iPhone and the default Android
+browser, and level with innerHTML on Opera Mobile.</p>
+
+<p>A few things to note before we look at the real-world tests. Firstly,
+for maximum speed, the innerHTML method is assuming all text is already
+escaped; a very dangerous assumption. The DOM method on the other hand
+needs to make no such assumptions, as text is added to the DOM tree by
+creating text nodes. Since the text is never parsed as HTML, there is
+zero chance of accidentally injecting a malicious script tag. Secondly,
+if you need a reference to any of the DOM nodes you’re creating (for
+example to save for updating later or to add event listeners), with the
+innerHTML method you must query the DOM after you’ve constructed it.
+With direct DOM construction, you already have the node reference; you
+just save it as you create it.</p>
+
+<p>These hand-optimised functions are fast, but unmaintainable and a pain
+to write. Let’s move on to something we would use on a real website.</p>
+
+<p>Handlebars is a popular JS templating language, and claims to be one of
+the fastest around. It produces a string for use with innerHTML to
+construct the DOM elements. Let’s compare that to the JS declarative
+approach I outlined above (which I’m going to call Sugared DOM).
+Compared to the raw methods, the Sugared DOM was more-or-less equal in
+performance to the hand-optimised innerHTML in Chrome and Safari, even
+on the iPhone. It’s equal to or faster than Handlebars templates
+(sometimes by a significant margin) in all browsers other than IE, and
+crucially on mobile browsers it’s anywhere from 50% to 100% faster. Note
+too that the initial compilation time for Handlebars templates is not
+included in these benchmarks.</p>
+
+<h2>Conclusion</h2>
+
+<p>On almost all modern browsers the Sugared DOM method is faster than
+normal templates, even when ignoring the compile-time cost the latter
+have. There are other benefits as well:</p>
+
+<ul>
+<li>Easy to debug (the template declaration is the code).</li>
+<li>The sugar code is much smaller than any decent templating library.</li>
+<li>No need to query the DOM, as you can just save references to nodes
+you’ll need later as you create them. This is faster and may remove
+the need for a whole JS library you currently use (like Sizzle).</li>
+<li>No escaping worries; zero chance of XSS bugs. When you include a
+string in the declaration it is explicitly set as a text node, so is
+never parsed as HTML. <code>&lt;script&gt;</code> tags are harmless!</li>
+<li>No extraneous white-space text nodes. White space between
+block-level nodes in HTML does not affect the rendering, but it does
+add extra nodes to the DOM. These can be a pain when you’re
+manipulating it later (the firstChild property may not return what
+you expect) and increases the memory usage of the page.</li>
+<li>As it’s pure JS, the templates can be easily included inline as part
+of view classes that also handle the behaviour of the view, or kept
+in separate files.</li>
+<li>JSHint will validate your syntax; much easier than tracking down
+syntax errors from a template’s compiler.</li>
+<li>Flexibility to use the full power of JS; easily call other functions
+to generate parts of your DOM tree, localise a string, or do
+whatever else you like.</li>
+</ul>
+
+<p>What are the downsides? Well, it’s slightly slower in Internet Explorer
+(although still plenty fast enough in real world use) and the difference
+in syntax to HTML may take a little time to become accustomed to,
+especially if templates are written by designers rather than coders
+(then again every template introduces its own syntax, so I’m not sure
+there’s much difference here). And, err, I think that’s about it.</p>
+
+<p>It’s time to ditch HTML based templates. Embrace the DOM, and enjoy your
+powerful, fast and readable new way to render pages.</p>
+
+<p>Written by <a href="http://nmjenkins.com/">Neil Jenkins</a></p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2012/01/24/new-file-storage-backend/">New File Storage backend</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2012/04/17/changing-password-or-disabling-imappop-logins-now-closes-any-existing-imappop-connections/">Changing password or disabling IMAP/POP logins now closes any existing IMAP/POP connections</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

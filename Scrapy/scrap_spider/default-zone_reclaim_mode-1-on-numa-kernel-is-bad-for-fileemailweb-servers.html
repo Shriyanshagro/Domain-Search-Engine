@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="This is a technical post. Regular Fastmail users subscribed to receive email updates from the Fastmail blog can just ignore this post.">
+<title>Default zone_reclaim_mode = 1 on NUMA kernel is bad for file/email/web servers | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Default zone_reclaim_mode = 1 on NUMA kernel is bad for file/email/web servers">
+<meta property="og:description" content="This is a technical post. Regular Fastmail users subscribed to receive email updates from the Fastmail blog can just ignore this post.">
+<meta property="og:url" content="https://blog.fastmail.com/2010/09/15/default-zone_reclaim_mode-1-on-numa-kernel-is-bad-for-fileemailweb-servers/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2010/09/15/default-zone_reclaim_mode-1-on-numa-kernel-is-bad-for-fileemailweb-servers/">
+<meta name="twitter:title" content="Default zone_reclaim_mode = 1 on NUMA kernel is bad for file/email/web servers">
+<meta name="twitter:description" content="This is a technical post. Regular Fastmail users subscribed to receive email updates from the Fastmail blog can just ignore this post.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2010/09/15/default-zone_reclaim_mode-1-on-numa-kernel-is-bad-for-fileemailweb-servers/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2010/09/15/default-zone_reclaim_mode-1-on-numa-kernel-is-bad-for-fileemailweb-servers/'>Default zone_reclaim_mode = 1 on NUMA kernel is bad for file/email/web servers</a></h1>
+<p class="blog-author">Rob Mueller &ndash; 14 September 2010</p>
+<p>This is a technical post. Regular Fastmail users subscribed to receive
+email updates from the Fastmail blog can just ignore this post.</p>
+
+<p>So over the last couple of weeks we noticed that our new IMAP servers
+with 48G of RAM haven't been performing as well as expected, and there
+were some oddities. Namely two things stuck out:</p>
+
+<ol>
+<li>There was free memory. There's 20T of data on these machines. The
+kernel should have used lots of memory for caching, but for some
+reason, it wasn't. cache ~ 2G, buffers ~ 25G, unused ~ 5G</li>
+<li>The machine has an SSDs for very hot data. In total, there's about
+16G of data on the SSDs. Almost all of that 16G of data should end
+up being cached, so there should be little reading from the SSDs at
+all. Instead we saw at peak times 2k+ blocks read/s from the SSDs.
+Again a sign that caching wasn't working.</li>
+</ol>
+
+<p>After doing some searching, we found this thread in the Linux kernel
+mailing list.</p>
+
+<p><a href="http://lkml.org/lkml/2009/5/12/586">http://lkml.org/lkml/2009/5/12/586</a></p>
+
+<p>It appears that patch never went anywhere, and zone_reclaim_mode is
+still defaulting to 1 on our pretty standard file/email/web server type
+machine with a NUMA kernel.</p>
+
+<p>By changing it to 0, we saw an immediate massive change in caching
+behaviour. Now cache ~ 27G, buffers ~ 7G and unused ~ 0.2G, and IO reads
+from the SSD dropped to 100/s instead of 2000/s.</p>
+
+<p>So if you’re using newer AMD/Intel processors with a NUMA kernel in a
+web server/file server/email server setup, you should make sure you set
+/proc/sys/vm/zone_reclaim_mode to 0. I’ve <a href="http://lkml.indiana.edu/hypermail//linux/kernel/1009.1/01893.html">posted to the LKML about
+this</a>,
+but haven’t heard anything, so I have no idea if anyone regards this
+default value as a bug or not.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2010/08/30/ebay-and-paypal-emails-now-with-truedomain/">eBay and PayPal emails now with Truedomain</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2010/10/03/improvements-after-outage-last-week/">Improvements after outage last week</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

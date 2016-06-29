@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="There&#39;s often quite a bit of confusion around the different terms **SSL**, **TLS** and **STARTTLS**.">
+<title>SSL vs TLS vs STARTTLS | FastMail</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Help &amp; Support">
+<meta property="og:title" content="SSL vs TLS vs STARTTLS">
+<meta property="og:description" content="There&#39;s often quite a bit of confusion around the different terms **SSL**, **TLS** and **STARTTLS**.">
+<meta property="og:url" content="/help/technical/ssltlsstarttls.html">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="/help/technical/ssltlsstarttls.html">
+<meta name="twitter:title" content="SSL vs TLS vs STARTTLS">
+<meta name="twitter:description" content="There&#39;s often quite a bit of confusion around the different terms **SSL**, **TLS** and **STARTTLS**.">
+
+<link rel="canonical" href="/help/technical/ssltlsstarttls.html">
+
+<link rel="apple-touch-icon" sizes="152x152" href="/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="/"><img src="/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><a href="https://blog.fastmail.com/">Blog</a></li>
+<li><b>Support</b></li>
+<li><a href="/signup/">Sign up</a></li>
+<li><a href="/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+<div class="article">
+<h1>SSL vs TLS vs STARTTLS</h1>
+
+<p>There's often quite a bit of confusion around the different terms <strong>SSL</strong>, <strong>TLS</strong> and <strong>STARTTLS</strong>.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">SSL and TLS</a> both provide a way to encrypt a communication channel between two computers (e.g. your computer and our server). TLS is the successor to SSL and the terms SSL and TLS are used interchangeably unless you're referring to a specific version of the protocol.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Starttls">STARTTLS</a> is a way to take an existing insecure connection and upgrade it to a secure connection using SSL/TLS. Note that despite having TLS in the name, STARTTLS doesn't mean you have to use TLS, you can use SSL.</p>
+
+<h2>SSL/TLS version numbers</h2>
+
+<p>Version numbering is inconsistent between SSL and TLS versions. When TLS took over from SSL as the preferred protocol name, it began a new version number, and also began using sub-versions. So the ordering of protocols in terms of oldest to newest is: SSL v2, SSL v3, TLS v1.0, TLS v1.1, TLS v1.2.</p>
+
+<p>When you connect to an SSL/TLS encrypted port, or use STARTTLS to upgrade an existing connection, both sides will negotiate which protocol and which version to use based on what has been configured in the software and what each side supports.</p>
+
+<p>Support for SSL/TLS is virtually universal these days, however which versions are supported is variable. Pretty much everything supports SSL v3 (except a few very old Palm Treo devices <a href="https://blog.fastmail.com/2009/11/18/special-ssl-hostname-for-old-clients/">as we discovered</a>). Most things support TLS v1.0. As at May 2012, <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security#Web_browsers">support for TLS v1.1 and TLS v1.2 is more limited</a>.</p>
+
+<h2>TLS vs STARTTLS naming problem</h2>
+
+<p>One significant complicating factor is that some email software <strong>incorrectly</strong> uses the term TLS when they should have used STARTTLS. Older versions of Thunderbird in particular used "TLS" to mean "enforce use of STARTTLS to upgrade the connection, and fail if STARTTLS is not supported" and "TLS, if available" to mean "use STARTTLS to upgrade the connection if the server advertises support for it, otherwise just use an insecure connection".</p>
+
+<h2>SSL/TLS vs plaintext/STARTTLS port numbers</h2>
+
+<p>The above is particularly problematic when combined with having to configure a port number for each protocol.</p>
+
+<p>To add security to some existing protocols (e.g. IMAP, POP, etc.), it was decided to just add SSL/TLS encryption as a layer underneath the existing protocol. However, to distinguish that software should talk the SSL/TLS encrypted version of the protocol rather than the plaintext one, a different port number was used for each protocol. So you have:</p>
+
+<ul>
+<li>IMAP uses port <code>143</code>, but SSL/TLS encrypted IMAP uses port <code>993</code>.</li>
+<li>POP uses port <code>110</code>, but SSL/TLS encrypted POP uses port <code>995</code>.</li>
+<li>SMTP uses port <code>25</code>, but SSL/TLS encrypted SMTP uses port <code>465</code>.</li>
+</ul>
+
+<p>At some point, it was decided that having 2 ports for every protocol was wasteful, and instead you should have 1 port that starts off as plaintext, but the client can upgrade the connection to an SSL/TLS encrypted one. This is what STARTTLS was created to do.</p>
+
+<p>There were a few problems with this though. There was already existing software that used the alternate port numbers with pure SSL/TLS connections. Client software can be very long lived, so you can't just disable the encrypted ports until all software has been upgraded.</p>
+
+<p>Mechanisms were added to each protocol to tell clients that the plaintext protocol supported upgrading to SSL/TLS (i.e. STARTTLS), and that they should not attempt to log in without doing the STARTTLS upgrade. This created two unfortunate situations:</p>
+
+<ol>
+<li>Some software just ignored the "login disabled until upgraded"announcement and just tried to log in anyway, sending the username and password over plaintext. Even if the server then rejected the login, the details had already been sent over the Internet in plaintext.</li>
+<li>Other software saw the "login disabled until upgraded" announcement, but then wouldn't upgrade the connection automatically, and thus reported login errors back to the user, which caused confusion about what was wrong.</li>
+</ol>
+
+<p>Both of these problems resulted in significant compatibility issues with existing clients, and so most system administrators continued to just use plaintext connections on one port number, and encrypted connections on a separate port number.</p>
+
+<p>This has now basically become the de facto standard that everyone uses. IMAP SSL/TLS encrypted over port <code>993</code> or POP SSL/TLS encrypted over port <code>995</code>. Many sites (including FastMail) now disable plain IMAP (port <code>143</code>) and plain POP (port <code>110</code>) altogether so people <strong>must</strong> use an SSL/TLS encrypted connection. By disabling ports <code>143</code> and <code>110</code>, this removes completely STARTTLS as even an option for IMAP/POP connections.</p>
+
+<h2>SMTP STARTTLS as an exception</h2>
+
+<p>The one real exception to the above is SMTP. However that's for a different reason again. Most email software used SMTP on port <code>25</code> to submit messages to the email server for onward transmission to the destination.  However, SMTP was originally designed for transfer, not submission. So yet another port (<code>587</code>) was <a href="https://tools.ietf.org/html/rfc2476">defined for message submission</a>. Although port <code>587</code> doesn't mandate requiring STARTTLS, the use of port <code>587</code> became popular around the same time as the realisation that SSL/TLS encryption of communications between clients and servers was an important security and privacy issue.</p>
+
+<p>The result is that in most cases, systems that offer message submission over port <code>587</code> <strong>require</strong> clients to use STARTLS to upgrade the connection and also require a username and password to authenticate. There has been an added benefit to this approach as well. By moving users away from using port <code>25</code> for email submission, ISPs are now able to block outgoing port <code>25</code> connections from users' computers, which were a significant source of spam due to infection with spam-sending viruses.</p>
+
+<p>Currently, things seem relatively randomly split between people using SMTP SSL/TLS encrypted over port <code>465</code>, and people using SMTP with STARTTLS upgrading over port <code>587</code>.</p>
+
+<div id="breadcrumbs">
+    <a href="../" class="optional">Help &amp; Support</a>
+    <span class="divider optional"></span>
+    <a href="../#technical">Technical Information</a>
+    <span class="divider"></span>
+    <b>SSL vs TLS vs STARTTLS</b>
+</div>
+
+</div> <!-- End div.article -->
+</div> <!-- End div#page -->
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="/help/legal/privacy.html">Privacy policy</a> <a href="/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+<script type="text/javascript" src="/static/scripts/smoothscroll.js"></script>
+</body>
+</html>

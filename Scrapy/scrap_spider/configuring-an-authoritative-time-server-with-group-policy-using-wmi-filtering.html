@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>Configuring an Authoritative Time Server with Group Policy Using WMI Filtering | Ask the Directory Services Team</title>
+
+	<meta name="description" content="Microsoft&#039;s official enterprise support blog for AD DS and more">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Feed" href="https://blogs.technet.microsoft.com/askds/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/askds/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Configuring an Authoritative Time Server with Group Policy Using WMI Filtering Comments Feed" href="https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Configuring an Authoritative Time Server with Group Policy Using WMI Filtering" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Configuring an Authoritative Time Server with Group Policy Using WMI Filtering" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/" />
+<meta name="twitter:description" content="" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/social-counts.min.js?ver=4.1.5'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/askds/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/askds/?p=6362' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.entry-content blockquote {
+    border: 0;
+    padding: 0 0 0 0px;
+    margin: 0 0 15px 20px;
+}
+.entry-content blockquote p {
+    font-size: 14px;
+    line-height: 1.5;
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="single single-post postid-6362 single-format-standard msdn-2188 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.technet.microsoft.com/server-management">Server &amp; Management Blogs</a> > Ask the Directory Services Team</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.technet.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-server-and-management-blogs-main-menu-container"><ul id="menu-server-and-management-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-33"><a href="#">All About Windows Server</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113"><a href="https://blogs.technet.microsoft.com/windowsserver/">Windows Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="https://blogs.technet.microsoft.com/sbs/">Windows Server Essentials</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="https://blogs.technet.microsoft.com/askperf/">Ask the Performance Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="https://blogs.technet.microsoft.com/askpfeplat/">Ask Premier Field Engineering (PFE) Platforms</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-652"><a href="https://blogs.technet.microsoft.com/askcore/">Ask the Core Team</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Cloud Platform Blogs</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-223"><a href="https://blogs.technet.microsoft.com/server-cloud/">Server &amp; Cloud</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-661"><a href="https://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-214"><a href="https://blogs.technet.microsoft.com/privatecloud/">Building Clouds</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-204"><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson &#8211; In the Cloud</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Datacenter Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-233"><a href="https://blogs.technet.microsoft.com/systemcenter/">Hybrid Cloud IT Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-653"><a href="https://blogs.technet.microsoft.com/msoms/">Operations Management Suite (OMS)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.technet.microsoft.com/scvmm/">System Center Virtual Machine Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-253"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="https://blogs.technet.microsoft.com/momteam/">System Center Operations Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-283"><a href="https://blogs.technet.microsoft.com/orchestrator/">System Center Orchestrator</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Client Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-293"><a href="https://blogs.technet.microsoft.com/configurationmgr/">System Center Configuration Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-303"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-313"><a href="https://blogs.technet.microsoft.com/mmpc/">Malware Protection Center</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-323"><a href="https://blogs.technet.microsoft.com/microsoftintune/">Microsoft Intune</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-333"><a href="https://blogs.technet.microsoft.com/sus/">Server Update Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-343"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Virtualization, VDI &amp; Remote Desktop</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-353"><a href="https://blogs.technet.microsoft.com/virtualization/">Virtualization Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-363"><a href="http://blogs.msdn.microsoft.com/virtual_pc_guy/">Ben Armstrong&#8217;s Virtualization</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-364"><a href="https://blogs.technet.microsoft.com/josebda/tag/hyper-v/">Jose Barreto on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-374"><a href="http://blogs.msdn.microsoft.com/rds/">Remote Desktop Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-394"><a href="https://blogs.technet.microsoft.com/askcore/tag/hyper-v/">Ask the Core Team on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">File &amp; Storage &amp; High Availability</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-404"><a href="https://blogs.technet.microsoft.com/filecab/">File &amp; Storage</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="https://blogs.technet.microsoft.com/josebda/">Jose Barreto</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-414"><a href="https://blogs.technet.microsoft.com/askcore/tag/failover-cluster/">Ask the Core Team on Failover Cluster</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="http://blogs.msdn.microsoft.com/clustering/">Clustering &amp; High Availability</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Windows Server Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-433"><a href="http://blogs.msdn.microsoft.com/powershell/">PowerShell</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-443"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/">Hey Scripting Guy (PowerShell)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="https://blogs.technet.microsoft.com/networking/">Networking</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-103"><a href="#">Identity, Access &amp; Security</a>
+<ul class="sub-menu">
+	<li id="menu-item-666" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666"><a href="https://blogs.technet.microsoft.com/datacentersecurity/">Datacenter and Private Cloud Security</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.technet.microsoft.com/askds/">Ask Directory Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="https://blogs.technet.microsoft.com/ad/">Active Directory</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-493"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+					</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.technet.microsoft.com/askds">Ask the Directory Services Team</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description">Microsoft&#039;s official enterprise support blog for AD DS and more </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+									</div>
+
+			</div>
+
+			
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Feed" href="https://blogs.technet.microsoft.com/askds/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/askds/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Ask the Directory Services Team &raquo; Configuring an Authoritative Time Server with Group Policy Using WMI Filtering Comments Feed" href="https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Configuring an Authoritative Time Server with Group Policy Using WMI Filtering" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Configuring an Authoritative Time Server with Group Policy Using WMI Filtering" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/" />
+<meta name="twitter:description" content="" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/askds/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/askds/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/askds/?p=6362' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.entry-content blockquote {
+    border: 0;
+    padding: 0 0 0 0px;
+    margin: 0 0 15px 20px;
+}
+.entry-content blockquote p {
+    font-size: 14px;
+    line-height: 1.5;
+}.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/askds/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+				
+				<article id="post-6362" class="post-6362 post type-post status-publish format-standard hentry category-uncategorized tag-group-policy tag-time tag-w32time tag-wmi">
+	<header class="entry-header">
+		<h1 class="entry-title">Configuring an Authoritative Time Server with Group Policy Using WMI Filtering</h1>
+		<div class="rating-wrap">
+		<div id="star-rating-6362" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="6362">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>	</header><!-- .entry-header -->
+
+	<div class="entry-meta row">
+		<div class="post-info">
+			<span class="posted-on"><time class="entry-date published" datetime="2008-11-13T15:43:19+00:00">November 13, 2008</time><time class="updated" datetime="2015-06-26T01:05:09+00:00">June 26, 2015</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="112bb413837341819cfe95c7d5d1f3c6" href="https://social.technet.microsoft.com/profile/Craig+Landis">Craig Landis</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/#comments">13 Comments</a>		</div>
+
+		<div class="row">
+			<div class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/", "text": "Configuring an Authoritative Time Server with Group Policy Using WMI Filtering"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/", "text": "Configuring an Authoritative Time Server with Group Policy Using WMI Filtering"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.technet.microsoft.com/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/", "text": "Configuring an Authoritative Time Server with Group Policy Using WMI Filtering"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</div><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+	</div><!-- .entry-meta -->
+
+	
+	<div class="entry-content">
+		<p>Hello everyone, Brian Singleton here. Here’s a question I often get from customer regarding Windows Time:</p>
+<p>“Is there a way I can configure the Windows Time settings via Group Policy and have it only apply to the domain controller that holds the PDC FSMO role?”</p>
+<p>This is a wonderful question to pose and there are very good reasons why this should be done:</p>
+<ol>
+<li>If you decide to move the PDC emulator role to another domain controller, you do not want to have to go through the trouble of making all of the registry changes again.      </li>
+<li>If the PDC emulator fails, and you have to bring up a new server, you may forget to add the settings back, resulting in a time sync issue in your domain. </li>
+</ol>
+<p>We have a feature in Group Policy to help us that you may have read about on this <a href="http://blogs.technet.com/askds/archive/tags/WMI/default.aspx">blog</a>, and that is WMI filtering. </p>
+<p><a href="http://msdn.microsoft.com/en-us/library/aa394582(VS.85).aspx">Windows Management Instrumentation</a> (WMI) is a powerful feature in Windows that we can leverage to provide us very detailed information about computers in our environment. We can use WMI via a script to remotely manage machines, as well as gather information about machines in our domain for inventory purposes.</p>
+<p>The main reason why I have brought this feature up is that we can provide an additional layer of filtering for Group Policy application using WMI. </p>
+<p>We can configure a GPO on the domain controller OU for our W32Time settings to configure the authoritative time server, but instead of using security filtering and explicitly securing it for the domain controller that has the PDC emulator role; WMI filtering can be used instead. It is important to state here before continuing is that WMI filtering will only work with computers running Windows XP/Windows Server 2003 and later. That means that you cannot use WMI filtering with Windows 2000.</p>
+<p>Below is an example:</p>
+<p>The domain I configure this policy on is Windows Server 2003, but the same applies to Windows Server 2008 as well. I am also using Group Policy Management Console (GPMC) which can be downloaded from <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0a6d4c24-8cbd-4b35-9272-dd3cbfc81887&amp;DisplayLang=en">here</a>. For those of you who are using Windows Vista you can get GPMC by downloading the Microsoft Remote Server Administration Tools (<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=9ff6e897-23ce-4a36-b7fc-d52065de9960&amp;DisplayLang=en">RSAT</a>). </p>
+<p>First I will create my WMI filter:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/BlogFileStorage/blogs_technet/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image002_2.jpg" original-url="http://blogs.technet.com/blogfiles/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image002_2.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="clip_image002" border="0" alt="clip_image002" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/BlogFileStorage/blogs_technet/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image002_thumb.jpg" original-url="http://blogs.technet.com/blogfiles/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image002_thumb.jpg" width="521" height="372" /></a></p>
+<p>The next part is me adding my query:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/BlogFileStorage/blogs_technet/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image004_2.jpg" original-url="http://blogs.technet.com/blogfiles/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image004_2.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="clip_image004" border="0" alt="clip_image004" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/BlogFileStorage/blogs_technet/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image004_thumb.jpg" original-url="http://blogs.technet.com/blogfiles/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image004_thumb.jpg" width="521" height="373" /></a></p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/BlogFileStorage/blogs_technet/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image006_2.jpg" original-url="http://blogs.technet.com/blogfiles/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image006_2.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="clip_image006" border="0" alt="clip_image006" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/BlogFileStorage/blogs_technet/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image006_thumb.jpg" original-url="http://blogs.technet.com/blogfiles/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image006_thumb.jpg" width="479" height="343" /></a></p>
+<p>In the above image I added the following query:</p>
+<p><font size="2" face="consolas">Select * from Win32_ComputerSystem where DomainRole = 5</font></p>
+<p>You can use WMIC to verify the current value of the DomainRole property. This can be a helpful way to get a sanity check on the value to make sure the filtering will achieve the desired result.</p>
+<p>To view the DomainRole value locally:</p>
+<p><font size="2" face="Consolas">wmic computersystem get domainrole</font></p>
+<p>To view the DomainRole value remotely (where M1 is the remote computer):</p>
+<p><font size="2" face="Consolas">wmic /node:”M1” computersystem get domainrole</font></p>
+<p>In WMI we break up the various components of the OS and actual machine into classes. The <a href="http://msdn.microsoft.com/en-us/library/aa394102(VS.85).aspx">Win32_ComputerSystem</a> class is for computers running a Windows OS. Have a look at the following MSDN link for this class as well as other WMI classes:</p>
+<p><b>WMI Classes      <br /></b><a href="http://msdn.microsoft.com/en-us/library/aa394554(VS.85).aspx">http://msdn.microsoft.com/en-us/library/aa394554(VS.85).aspx</a></p>
+<p>The Win32_ComputerSystem class has a lot of methods that can used in scripting as well as filtering for Group Policy but for the purposes of this post we will focus on the DomainRole:</p>
+<p>From the MSDN website:</p>
+<p><b>DomainRole</b></p>
+<p><b></b></p>
+<p>Role of a computer in an assigned domain workgroup. A domain workgroup is a collection of computers on the same network. For example, a <b>DomainRole</b> property may show that a computer is a member workstation. This property is inherited from <b>CIM_ManagedSystemElement</b>.</p>
+<p>
+<table border="0" cellspacing="0" cellpadding="0" width="219">
+<tbody>
+<tr>
+<td valign="bottom" width="45">
+<p><b>Value</b></p>
+</td>
+<td valign="bottom" width="172">
+<p><b>Meaning</b></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="45">
+<p>0</p>
+</td>
+<td valign="top" width="172">
+<p>Standalone Workstation</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="45">
+<p>1</p>
+</td>
+<td valign="top" width="172">
+<p>Member Workstation</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="45">
+<p>2</p>
+</td>
+<td valign="top" width="172">
+<p>Standalone Server</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="45">
+<p>3</p>
+</td>
+<td valign="top" width="172">
+<p>Member Server</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="45">
+<p>4</p>
+</td>
+<td valign="top" width="172">
+<p>Backup Domain Controller</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="45">
+<p>5</p>
+</td>
+<td valign="top" width="172">
+<p>Primary Domain Controller</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see from the above chart 5 means Primary Domain Controller. So the query, <b>Select * from Win32_ComputerSystem where DomainRole = 5</b>, means select a machine whose DomainRole is 5, Primary Domain Controller. For those of you who would like to create a Windows Time GPO for all the other domain controllers you would just change it to DomainRole=4.</p>
+<p>Now I am going to link my WMI filter to my already configured Authoritative Time Server GPO:</p>
+<p><a href="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/BlogFileStorage/blogs_technet/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image008_2.jpg" original-url="http://blogs.technet.com/blogfiles/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image008_2.jpg"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="clip_image008" border="0" alt="clip_image008" src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/BlogFileStorage/blogs_technet/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image008_thumb.jpg" original-url="http://blogs.technet.com/blogfiles/askds/WindowsLiveWriter/ConfiguringanAuthoritativeTimeServerwith_DD12/clip_image008_thumb.jpg" width="527" height="376" /></a></p>
+<p>At the end what I have just accomplished is that the Authoritative Time Server GPO will only apply to the domain controller who holds the PDC emulator FSMO role. By configuring the policy in this fashion, I can transfer the PDC role to any domain controller and the policy will follow the role. Also, if the PDC fails and I bring up a new domain controller and seize the PDC emulator role to the new domain controller, the policy will apply on the next policy refresh or by forcing a group policy refresh.</p>
+<p>I hope that you have learned a little more on how powerful WMI Filters are and how they can be leveraged to apply Group Policies based on a WMI Filter.</p>
+<p><b>Additional Resources</b></p>
+<p><b></b></p>
+<p><b>Windows Management Instrumentation      <br /></b><a href="http://msdn.microsoft.com/en-us/library/aa394582(VS.85).aspx">http://msdn.microsoft.com/en-us/library/aa394582(VS.85).aspx</a></p>
+<p><b></b></p>
+<p><b>WMI Classes      <br /></b><a href="http://msdn.microsoft.com/en-us/library/aa394554(VS.85).aspx">http://msdn.microsoft.com/en-us/library/aa394554(VS.85).aspx</a></p>
+<p><b></b></p>
+<p><b>WMI filtering using GPMC      <br /></b><a href="http://technet.microsoft.com/en-us/library/cc779036.aspx">http://technet.microsoft.com/en-us/library/cc779036.aspx</a></p>
+<p><b>Windows Management Instrumentation Command-line      <br /></b><a href="http://technet.microsoft.com/en-us/library/cc784189.aspx">http://technet.microsoft.com/en-us/library/cc784189.aspx</a></p>
+<p>- Brian Singleton</p>
+				<div class="back-to-top-wrap"><a href="#top-link" class="back-to-top">Back to<br>top</a></div>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+				
+			
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="msdn_bing_social_search-5" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=Ask%2Bthe%2BDirectory%2BServices%2BTeam&rq=site%3Ahttp%3A%2F%2Fblogs.technet.com%2Fb%2Faskds" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="text-3" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Top Server &amp; Tools Blogs</h2>			<div class="textwidget"><div class="widget-rss-link">
+	<a href="http://sxp.microsoft.com/feeds/3.0/ServerTools/ServerToolsTopPosts" target="_blank"><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png" /></a></div>
+
+<ul class="widget-link-list">
+    <li><a href="http://weblogs.asp.net/scottgu">ScottGu's Blog</a></li>
+    <li><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson&rsquo;s "In the Cloud" Blog</a></li>
+    <li><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry's Blog</a></li>
+    <li><a href="https://blogs.msdn.microsoft.com/stevengu/">Steve "Guggs" Guggenheimer's Blog</a></li>
+</ul></div>
+		</aside><aside id="msdn-sharing-3" class="widget msdn-sharing"><h2 class="widget-title color-highlight-bg">Share This Post</h2><div class='social-share-icons-wrap'><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-facebook facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2008%2F11%2F13%2Fconfiguring-an-authoritative-time-server-with-group-policy-using-wmi-filtering%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-twitter twitter" href="https://twitter.com/intent/tweet/?text=Configuring+an+Authoritative+Time+Server+with+Group+Policy+Using+WMI+Filtering&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2008%2F11%2F13%2Fconfiguring-an-authoritative-time-server-with-group-policy-using-wmi-filtering%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-linkedin linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2008%2F11%2F13%2Fconfiguring-an-authoritative-time-server-with-group-policy-using-wmi-filtering%2F&title=Configuring+an+Authoritative+Time+Server+with+Group+Policy+Using+WMI+Filtering&source=https://blogs.technet.microsoft.com/askds">Share</a><a onclick="" class="social-sharing social-sharing-email email" href="mailto:?subject=Configuring an Authoritative Time Server with Group Policy Using WMI Filtering&body=Configuring an Authoritative Time Server with Group Policy Using WMI Filtering https%3A%2F%2Fblogs.technet.microsoft.com%2Faskds%2F2008%2F11%2F13%2Fconfiguring-an-authoritative-time-server-with-group-policy-using-wmi-filtering%2F">Share</a><a onclick="" class="social-sharing social-sharing-rss rss" href="https://blogs.technet.microsoft.com/askds/feed/">Share</a></div></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title color-highlight-bg">Recent Posts</h2>		<ul>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/04/14/are-your-dcs-too-busy-to-be-monitored-ad-data-collector-set-solutions-for-long-report-compile-times-or-report-data-deletion/">Are your DCs too busy to be monitored?: AD Data Collector Set solutions for long report compile times or report data deletion</a>
+							<span class="post-date">April 14, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/03/09/previewing-server-2016-tp4-temporary-group-memberships/">Previewing Server 2016 TP4: Temporary Group Memberships</a>
+							<span class="post-date">March 9, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2016/01/11/does-your-logon-hang-after-a-password-change-on-win-8-1-2012-r2win10/">Does your logon hang after a password change on win 8.1 /2012 R2/win10?</a>
+							<span class="post-date">January 11, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/askds/2015/12/08/speaking-in-ciphers-and-other-enigmatic-tonguesupdate/">Speaking in Ciphers and other Enigmatic tongues&hellip;update!</a>
+							<span class="post-date">December 8, 2015</span>
+						</li>
+				</ul>
+		</aside><aside id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.technet.microsoft.com/askds/tag/adfs/' class='tag-link-4' title='15 topics' style='font-size: 9pt;'>ADFS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ad-lds/' class='tag-link-37' title='16 topics' style='font-size: 9.2954545454545pt;'>AD LDS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ad-replication/' class='tag-link-35' title='28 topics' style='font-size: 11.560606060606pt;'>AD Replication</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/audit/' class='tag-link-177' title='21 topics' style='font-size: 10.378787878788pt;'>audit</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/authentication/' class='tag-link-55' title='34 topics' style='font-size: 12.348484848485pt;'>Authentication</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/authorization/' class='tag-link-57' title='30 topics' style='font-size: 11.856060606061pt;'>Authorization</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/certificates/' class='tag-link-73' title='48 topics' style='font-size: 13.825757575758pt;'>Certificates</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsn/' class='tag-link-33' title='45 topics' style='font-size: 13.530303030303pt;'>DFSN</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr/' class='tag-link-9' title='128 topics' style='font-size: 17.962121212121pt;'>DFSR</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-debug-logging/' class='tag-link-84' title='29 topics' style='font-size: 11.757575757576pt;'>DFSR Debug Logging</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-migration-or-upgrade/' class='tag-link-92' title='16 topics' style='font-size: 9.2954545454545pt;'>DFSR Migration or Upgrade</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dfsr-performance/' class='tag-link-81' title='27 topics' style='font-size: 11.462121212121pt;'>DFSR Performance</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/disaster-recovery/' class='tag-link-26' title='22 topics' style='font-size: 10.575757575758pt;'>Disaster Recovery</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/dns/' class='tag-link-95' title='17 topics' style='font-size: 9.5909090909091pt;'>DNS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/frs/' class='tag-link-108' title='21 topics' style='font-size: 10.378787878788pt;'>FRS</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/group-policy/' class='tag-link-30' title='70 topics' style='font-size: 15.401515151515pt;'>group policy</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/group-policy-preferences/' class='tag-link-91' title='22 topics' style='font-size: 10.575757575758pt;'>Group Policy Preferences</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/infrastructure/' class='tag-link-69' title='74 topics' style='font-size: 15.69696969697pt;'>infrastructure</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/jonathan-stephens/' class='tag-link-42' title='26 topics' style='font-size: 11.265151515152pt;'>Jonathan Stephens</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/kb-articles/' class='tag-link-74' title='104 topics' style='font-size: 17.075757575758pt;'>KB Articles</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/kerberos/' class='tag-link-19' title='39 topics' style='font-size: 12.939393939394pt;'>Kerberos</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ldap/' class='tag-link-20' title='19 topics' style='font-size: 9.9848484848485pt;'>LDAP</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/mail-sack/' class='tag-link-49' title='60 topics' style='font-size: 14.810606060606pt;'>Mail Sack</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/mike-stephens/' class='tag-link-43' title='44 topics' style='font-size: 13.431818181818pt;'>Mike Stephens</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/ned-pyle/' class='tag-link-10' title='328 topics' style='font-size: 22pt;'>Ned Pyle</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/network/' class='tag-link-104' title='39 topics' style='font-size: 12.939393939394pt;'>network</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/other-blogs/' class='tag-link-40' title='93 topics' style='font-size: 16.583333333333pt;'>Other Blogs</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/passwords/' class='tag-link-39' title='18 topics' style='font-size: 9.7878787878788pt;'>Passwords</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/pki/' class='tag-link-6' title='49 topics' style='font-size: 13.924242424242pt;'>PKI</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/powershell/' class='tag-link-47' title='29 topics' style='font-size: 11.757575757576pt;'>PowerShell</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/profiles/' class='tag-link-13' title='17 topics' style='font-size: 9.5909090909091pt;'>Profiles</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/rob-greene/' class='tag-link-75' title='29 topics' style='font-size: 11.757575757576pt;'>Rob Greene</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/security/' class='tag-link-7' title='58 topics' style='font-size: 14.613636363636pt;'>Security</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/silly-rabbit/' class='tag-link-32' title='88 topics' style='font-size: 16.386363636364pt;'>Silly Rabbit</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/sysvol/' class='tag-link-38' title='15 topics' style='font-size: 9pt;'>SYSVOL</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt/' class='tag-link-48' title='73 topics' style='font-size: 15.598484848485pt;'>USMT</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt-behaviors/' class='tag-link-53' title='26 topics' style='font-size: 11.265151515152pt;'>USMT Behaviors</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/usmt-component-manifest-reference/' class='tag-link-160' title='20 topics' style='font-size: 10.181818181818pt;'>USMT Component Manifest Reference</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-7/' class='tag-link-14' title='46 topics' style='font-size: 13.628787878788pt;'>Windows 7</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-8/' class='tag-link-15' title='25 topics' style='font-size: 11.068181818182pt;'>Windows 8</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2008/' class='tag-link-134' title='45 topics' style='font-size: 13.530303030303pt;'>Windows Server 2008</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2008-r2/' class='tag-link-21' title='65 topics' style='font-size: 15.106060606061pt;'>Windows Server 2008 R2</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-server-2012/' class='tag-link-23' title='19 topics' style='font-size: 9.9848484848485pt;'>windows server 2012</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-vista/' class='tag-link-159' title='51 topics' style='font-size: 14.121212121212pt;'>Windows Vista</a>
+<a href='https://blogs.technet.microsoft.com/askds/tag/windows-xp/' class='tag-link-96' title='25 topics' style='font-size: 11.068181818182pt;'>Windows XP</a></div>
+</aside><aside id="msdn-archive-widget-3" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.technet.microsoft.com/askds/2016/04/'>April 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/03/'>March 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/01/'>January 2016</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/12/'>December 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/11/'>November 2015</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2016/'>All of 2016</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2015/'>All of 2015</a>&nbsp;(10)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2014/'>All of 2014</a>&nbsp;(9)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2013/'>All of 2013</a>&nbsp;(18)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2012/'>All of 2012</a>&nbsp;(62)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2011/'>All of 2011</a>&nbsp;(132)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2010/'>All of 2010</a>&nbsp;(150)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2009/'>All of 2009</a>&nbsp;(215)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2008/'>All of 2008</a>&nbsp;(122)</li>
+	<li><a href='https://blogs.technet.microsoft.com/askds/2007/'>All of 2007</a>&nbsp;(19)</li>
+</aside>
+	</div><!-- #secondary -->
+
+	<div id="tag-wrap"><h2 class="color-highlight-bg">Tags</h2><ul class="tag-list"><li><a href="https://blogs.technet.microsoft.com/askds/tag/group-policy/">group policy</a></li><li><a href="https://blogs.technet.microsoft.com/askds/tag/time/">time</a></li><li><a href="https://blogs.technet.microsoft.com/askds/tag/w32time/">w32time</a></li><li><a href="https://blogs.technet.microsoft.com/askds/tag/wmi/">WMI</a></li></ul></div>
+	
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+			</div>
+			
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-8" class="comment byuser comment-author-anonymouscommenter even thread-even depth-1">
+			<article id="div-comment-8" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2008-11-14T04:40:07+00:00">
+							7 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>PingBack from <a rel="nofollow" target="_new" href="http://mstechnews.info/2008/11/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/" rel="nofollow">http://mstechnews.info/2008/11/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-715" class="comment byuser comment-author-dsmvp odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-715" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2008-11-14T19:03:41+00:00">
+							7 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0202769b2240aa76c3472d036578fe63?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">dsmvp</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Brian, great post here. &nbsp;I have recently posted about W32tm and this is something that can help out a lot of customers. &nbsp;In my opinion this is a must have group policy setting.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-117" class="comment byuser comment-author-anonymouscommenter even thread-even depth-1">
+			<article id="div-comment-117" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2008-11-14T22:36:22+00:00">
+							7 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I recently blogged about time and how critical it is in a domain environment. Just this morning I read</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-350" class="comment byuser comment-author-anonymouscommenter odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-350" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2008-11-17T18:29:43+00:00">
+							7 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>203 Microsoft Team blogs searched, 94 blogs have new articles in the past 7 days. 223 new articles found</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-50" class="comment byuser comment-author-anonymouscommenter even thread-even depth-1">
+			<article id="div-comment-50" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2008-12-06T02:47:47+00:00">
+							7 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Brian Singleton has posted on article on configuring w32time via Group Policy using WMI on the AskDS</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-1230" class="comment byuser comment-author-cjh odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-1230" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2009-01-12T20:57:48+00:00">
+							7 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/7605ee084bf11e01550743cc81e259e3?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">CJH</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I have a question about this:</p>
+<p>If this GPO applies the appropriate time settings (type=NTP, NtpServer=yourtimeserver) if/when the PDCe role is moved, what about the DC the role was moved from?</p>
+<p>Doesn&#8217;t there need to be a GPO in place that will change the Windows Time Service settings back to those appropriate for a non-PDCe? &nbsp;</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-3092" class="comment byuser comment-author-broonie27 even thread-even depth-1">
+			<article id="div-comment-3092" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2009-05-01T04:12:19+00:00">
+							7 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/d71329c9523125ec18ab9bff0482a478?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">broonie27</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I have a GPO which forces my clients and member servers to use my PDC emulator as I time source with the NTP method. I have then configured my PDC to look to an external time source. </p>
+<p>I have been told that I don&#8217;t have to create and apply the GPO at all and that simply pointing the PDC to an external source will work. Is this so as the default behaviour did not seem to be working?</p>
+<p>If I don&#8217;t need the GPO and simply remove it will the clients and member servers then fall back to the default MS method or is there somethng else I should do. Someone mentioned I may need to do a &quot;w32tm /config /syncfromflags:domhier /update&quot; all the non-DC machines. &nbsp;</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-995" class="comment byuser comment-author-bobdrake odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-995" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2009-05-01T18:00:32+00:00">
+							7 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/9af024c414077ef856a8164a9ebcf0a8?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">bobdrake</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hello CJH and Broonie27&#8230;..</p>
+<p>Let me first address the question posed by CJH:</p>
+<p>If you configured the settings for the PDC role according to the above article WITHOUT manually configuring the settings, then no you do not have to do anything when the PDC role moves to another DC. &nbsp;The old PDC will revert back to the NT5DS settings as normal.</p>
+<p>SEE BELOW FOR ADDITIONAL INFO TO ANSWER BROONIE27</p>
+<p>Now your question Broonie:</p>
+<p>If you have configured a GPO to configure your client machines for NTP settings (pointing them to your PDC) and you have NOT manually configured your clients, then when the policy is removed the client machines will revert back to the normal domain hierarchy settings and you do not have to configure anything.</p>
+<p>Why would you not have to change anything?</p>
+<p>When you create a policy, the settings are configured in the following location (which does take precendece over the next location):</p>
+<p>HKLM/Software/Policies/Microsoft/Windows/W32time &nbsp;(the W32time key is created with the policy)</p>
+<p>When the policy is removed, then this key is also removed</p>
+<p>The other location that is the default is:</p>
+<p>HKLM/System/CurrentControlSet/Services/W32time</p>
+<p>Providing that you both have not changed the default settings in the location above (under the services key), simply removing the policy, or leaving the old PDC alone will be fine. &nbsp;The defaults will take place again in both scenarios.</p>
+<p>Hope this helps.</p>
+<p>Bob Drake</p>
+<p>Sr Technical Lead</p>
+<p>Directory Services</p>
+<p>Microsoft</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-1896" class="comment byuser comment-author-outosend even thread-even depth-1">
+			<article id="div-comment-1896" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2010-05-10T09:15:35+00:00">
+							6 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/cb080ffc4ce8b714275b98a80050caa4?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">outosend</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>great Brian , </p>
+<p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;please correct me if iam wrong ,simply if i had 2008 DC and i need to make all PCs in all branches update the time from the DC just i need to configure NTP policy ? or i need additional configuration ?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-7321" class="comment byuser comment-author-anonymouscommenter odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-7321" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-01-09T17:41:50+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Pingback from  Script to Create Group Policy Objects and WMI Filters to Manage the Time Server Hierarchy</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-7311" class="comment byuser comment-author-anonymouscommenter even thread-even depth-1">
+			<article id="div-comment-7311" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-01-09T17:49:12+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Pingback from  Script to Create Group Policy Objects and WMI Filters to Manage the Time Server Hierarchy</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-7301" class="comment byuser comment-author-anonymouscommenter odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-7301" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2014-01-09T17:54:40+00:00">
+							2 years ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3651e719491c63d4424134d66fe53db9?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Anonymous</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Pingback from  Script to Create Group Policy Objects and WMI Filters to Manage the Time Server Hierarchy</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-8201" class="comment byuser comment-author-rizwan-ite even thread-even depth-1">
+			<article id="div-comment-8201" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2015-08-02T15:28:44+00:00">
+							9 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/d22efd0b5b70c90d66283ad2eda306da?s=40&amp;d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Rizwan.ite</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Craig<br />
+I have a scenario where I have a single domain controller server and the network is not connected to internet and it cannot be connected ever. The BPA gives error about time synchronization. What is the solution in this case.<br />
+Thanks</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+				<p class="no-comments">Comments are closed.</p>
+	
+</div><!-- #comments -->
+
+
+	
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-15303" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15303"><a href="http://technet.microsoft.com/en-US/cc300389.aspx">Terms of Use</a></li>
+<li id="menu-item-15313" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15313"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-15323" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15323"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/' );
+			$.cookie( 'aadsso-redirect', '/askds/2008/11/13/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='2188' post-id='6362'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.technet.microsoft.com/askds/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/askds\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":"1"};
+var msdnparent = {"is_search":"","is_singular":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/askds/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"VQYHWVdQDBAJVFRQBwEO"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(t){try{s.console&&console.log(t)}catch(e){}}var o,i=t("ee"),a=t(14),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,-1!==o.indexOf("dev")&&(s.dev=!0),-1!==o.indexOf("nr_dev")&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,e,n){r(n.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,e){return t}).join(", ")))},{}],2:[function(t,e,n){function r(t,e,n,r,o){try{d?d-=1:i("err",[o||new UncaughtException(t,e,n)])}catch(s){try{i("ierr",[s,(new Date).getTime(),!0])}catch(c){}}return"function"==typeof f?f.apply(this,a(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function o(t){i("err",[t,(new Date).getTime()])}var i=t("handle"),a=t(15),s=t("ee"),c=t("loader"),f=window.onerror,u=!1,d=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(l){"stack"in l&&(t(8),t(7),"addEventListener"in window&&t(5),c.xhrWrappable&&t(9),u=!0)}s.on("fn-start",function(t,e,n){u&&(d+=1)}),s.on("fn-err",function(t,e,n){u&&(this.thrown=!0,o(n))}),s.on("fn-end",function(){u&&!this.thrown&&d>0&&(d-=1)}),s.on("internal-error",function(t){i("ierr",[t,(new Date).getTime(),!0])})},{}],3:[function(t,e,n){t("loader").features.ins=!0},{}],4:[function(t,e,n){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(8),s=t(7);t("loader").features.stn=!0,t(6);var c=NREUM.o.EV;o.on("fn-start",function(t,e){var n=t[0];n instanceof c&&(this.bstStart=Date.now())}),o.on("fn-end",function(t,e){var n=t[0];n instanceof c&&i("bst",[n,e,this.bstStart,Date.now()])}),a.on("fn-start",function(t,e,n){this.bstStart=Date.now(),this.bstType=n}),a.on("fn-end",function(t,e){i("bstTimer",[e,this.bstStart,Date.now(),this.bstType])}),s.on("fn-start",function(){this.bstStart=Date.now()}),s.on("fn-end",function(t,e){i("bstTimer",[e,this.bstStart,Date.now(),"requestAnimationFrame"])}),o.on("pushState-start",function(t){this.time=Date.now(),this.startPath=location.pathname+location.hash}),o.on("pushState-end",function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),"addEventListener"in window.performance&&(window.performance.clearResourceTimings?window.performance.addEventListener("resourcetimingbufferfull",function(t){i("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1):window.performance.addEventListener("webkitresourcetimingbufferfull",function(t){i("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.webkitClearResourceTimings()},!1)),document.addEventListener("scroll",r,!1),document.addEventListener("keypress",r,!1),document.addEventListener("click",r,!1)}},{}],5:[function(t,e,n){function r(t){for(var e=t;e&&!e.hasOwnProperty(u);)e=Object.getPrototypeOf(e);e&&o(e)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,e){return t[1]}var a=t("ee").get("events"),s=t(16)(a),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";e.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,e){if(t[1]){var n=t[1];if("function"==typeof n){var r=c(n,"nr@wrapped",function(){return s(n,"fn-",null,n.name||"anonymous")});this.wrapped=t[1]=r}else"function"==typeof n.handleEvent&&s.inPlace(n,["handleEvent"],"fn-")}}),a.on(d+"-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{}],6:[function(t,e,n){var r=t("ee").get("history"),o=t(16)(r);e.exports=r,o.inPlace(window.history,["pushState","replaceState"],"-")},{}],7:[function(t,e,n){var r=t("ee").get("raf"),o=t(16)(r);e.exports=r,o.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],8:[function(t,e,n){function r(t,e,n){t[0]=a(t[0],"fn-",null,n)}function o(t,e,n){this.method=n,this.timerDuration="number"==typeof t[1]?t[1]:0,t[0]=a(t[0],"fn-",this,n)}var i=t("ee").get("timer"),a=t(16)(i);e.exports=i,a.inPlace(window,["setTimeout","setImmediate"],"setTimer-"),a.inPlace(window,["setInterval"],"setInterval-"),a.inPlace(window,["clearTimeout","clearImmediate"],"clearTimeout-"),i.on("setInterval-start",r),i.on("setTimer-start",o)},{}],9:[function(t,e,n){function r(t,e){d.inPlace(e,["onreadystatechange"],"fn-",s)}function o(){var t=this,e=u.context(t);t.readyState>3&&!e.resolved&&(e.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,v,"fn-",s)}function i(t){w.push(t),h&&(g=-g,b.data=g)}function a(){for(var t=0;t<w.length;t++)r([],w[t]);w.length&&(w=[])}function s(t,e){return e}function c(t,e){for(var n in t)e[n]=t[n];return e}t(5);var f=t("ee"),u=f.get("xhr"),d=t(16)(u),l=NREUM.o,p=l.XHR,h=l.MO,m="readystatechange",v=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],w=[];e.exports=u;var y=window.XMLHttpRequest=function(t){var e=new p(t);try{u.emit("new-xhr",[e],e),e.addEventListener(m,o,!1)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}return e};if(c(p,y),y.prototype=p.prototype,d.inPlace(y.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,e){r(t,e),i(e)}),u.on("open-xhr-start",r),h){var g=1,b=document.createTextNode(g);new h(a).observe(b,{characterData:!0})}else f.on("fn-end",function(t){t[0]&&t[0].type===m||a()})},{}],10:[function(t,e,n){function r(t){var e=this.params,n=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;l>r;r++)t.removeEventListener(d[r],this.listener,!1);if(!e.aborted){if(n.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var i=o(t,this.lastSize);if(i&&(n.rxSize=i),this.sameOrigin){var a=t.getResponseHeader("X-NewRelic-App-Data");a&&(e.cat=a.split(", ").pop())}}else e.status=0;n.cbTime=this.cbTime,u.emit("xhr-done",[t],t),c("xhr",[e,n,this.startTime])}}}function o(t,e){var n=t.responseType;if("json"===n&&null!==e)return e;var r="arraybuffer"===n||"blob"===n||"json"===n?t.response:t.responseText;return i(r)}function i(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(e){return}}}function a(t,e){var n=f(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}var s=t("loader");if(s.xhrWrappable){var c=t("handle"),f=t(11),u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(13),m=window.XMLHttpRequest;s.features.xhr=!0,t(9),u.on("new-xhr",function(t){var e=this;e.totalCbs=0,e.called=0,e.cbTime=0,e.end=r,e.ended=!1,e.xhrGuids={},e.lastSize=null,h&&(h>34||10>h)||window.opera||t.addEventListener("progress",function(t){e.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},a(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),u.on("send-xhr-start",function(t,e){var n=this.metrics,r=t[0],o=this;if(n&&r){var a=i(r);a&&(n.txSize=a)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof e.onload))&&o.end(e)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}};for(var s=0;l>s;s++)e.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),u.on("xhr-load-added",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,e){e instanceof m&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],e)}),u.on("removeEventListener-end",function(t,e){e instanceof m&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],e)}),u.on("fn-start",function(t,e,n){e instanceof m&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),u.on("fn-end",function(t,e){this.xhrCbStart&&u.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{}],11:[function(t,e,n){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!e.protocol||":"===e.protocol||e.protocol===n.protocol,a=e.hostname===document.domain&&e.port===n.port;return r.sameOrigin=i&&(!e.hostname||a),r}},{}],12:[function(t,e,n){function r(t,e){return function(){o(t,[(new Date).getTime()].concat(a(arguments)),null,e)}}var o=t("handle"),i=t(14),a=t(15);"undefined"==typeof window.newrelic&&(newrelic=NREUM);var s=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit"],c=["addPageAction"],f="api-";i(s,function(t,e){newrelic[e]=r(f+e,"api")}),i(c,function(t,e){newrelic[e]=r(f+e)}),e.exports=newrelic,newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),o("err",[t,(new Date).getTime()])}},{}],13:[function(t,e,n){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),e.exports=r},{}],14:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],15:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],16:[function(t,e,n){function r(t){return!(t&&"function"==typeof t&&t.apply&&!t[a])}var o=t("ee"),i=t(15),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;e.exports=function(t){function e(t,e,n,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof n?n(r,a):n||{}}catch(u){d([u,"",[r,a,o],s])}f(e+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(l){throw f(e+"err",[r,a,l],s),l}finally{f(e+"end",[r,a,c],s)}}return r(t)?t:(e||(e=""),nrWrapper[a]=t,u(t,nrWrapper),nrWrapper)}function n(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function f(e,n,r){if(!c){c=!0;try{t.emit(e,n,r)}catch(o){d([o,e,n,r])}c=!1}}function u(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){d([r])}for(var o in t)s.call(t,o)&&(e[o]=t[o]);return e}function d(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=o),e.inPlace=n,e.flag=a,e}},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?s(t,a,i):i()}function n(n,r,o){t&&t(n,r,o);for(var i=e(o),a=l(n),s=a.length,c=0;s>c;c++)a[c].apply(i,r);var u=f[v[n]];return u&&u.push([w,n,r,i]),i}function d(t,e){m[t]=l(t).concat(e)}function l(t){return m[t]||[]}function p(t){return u[t]=u[t]||o(n)}function h(t,e){c(t,function(t,n){e=e||"feature",v[n]=e,e in f||(f[e]=[])})}var m={},v={},w={on:d,emit:n,get:p,listeners:l,context:e,buffer:h};return w}function i(){return new r}var a="nr@context",s=t("gos"),c=t(14),f={},u={},d=e.exports=o();d.backlog=f},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!m++){var t=h.info=NREUM.info,e=u.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){c(l,function(e,n){t[e]||(t[e]=n)});var n="https"===d.split(":")[0]||t.sslForHttp;h.proto=n?"https://":"http://",s("mark",["onload",a()],null,"api");var r=u.createElement("script");r.src=h.proto+t.agent,e.parentNode.insertBefore(r,e)}}}function o(){"complete"===u.readyState&&i()}function i(){s("mark",["domContent",a()],null,"api")}function a(){return(new Date).getTime()}var s=t("handle"),c=t(14),f=window,u=f.document;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:f.XMLHttpRequest,REQ:f.Request,EV:f.Event,PR:f.Promise,MO:f.MutationObserver},t(12);var d=""+location,l={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-918.min.js"},p=window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent),h=e.exports={offset:a(),origin:d,features:{},xhrWrappable:p};u.addEventListener?(u.addEventListener("DOMContentLoaded",i,!1),f.addEventListener("load",r,!1)):(u.attachEvent("onreadystatechange",o),f.attachEvent("onload",r)),s("mark",["firstbyte",a()],null,"api");var m=0},{}]},{},["loader",2,10,4,3]);</script>
+<title>KOBE: The Storied Career of a Lakers Icon | LA Times Store</title>
+<meta name="description" content="'KOBE: The Storied Career of a Lakers Icon' chronicles the excitement of Kobe Bryant's career with this hardcover book filled with his incredible moments." />
+<meta name="robots" content="NOINDEX, FOLLOW" />
+<link rel="icon" href="http://latimes.chictrib.netdna-cdn.com/media/favicon/stores/5/favicon.jpg" type="image/x-icon" />
+<link rel="shortcut icon" href="http://latimes.chictrib.netdna-cdn.com/media/favicon/stores/5/favicon.jpg" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/js/calendar/calendar-win2k-1.css" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/font-style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/styles.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/base/default/css/widgets.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/mirasvit_searchindex.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/grid_responsive.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/font-awesome.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/la_times/css/retina.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/la_times/css/skin.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/la_times/css/custom.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/fancybox.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/print.css" media="print" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,300" />
+<link href="http://store.latimes.com/rss/la_times/@new" title="New Products" rel="alternate" type="application/rss+xml" />
+<link href="http://store.latimes.com/rss/la_times/@specials/0" title="Special/Discount Products" rel="alternate" type="application/rss+xml" />
+<link href="http://store.latimes.com/rss/la_times/@discounts/0" title="Coupons/Discounts" rel="alternate" type="application/rss+xml" />
+<link rel="canonical" href="http://store.latimes.com/kobe-bryant-book-lakers-icon.html" />
+<!--[if lt IE 8]>
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/styles-ie.css" media="all" />
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" href="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/css/styles-ie-8.css" media="all" />
+<![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /><link href="//fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800" rel="stylesheet" type="text/css">	
+<meta name="google-site-verification" content="PHJCJa_yniHpqPv-BrDyUECNAOqKUtyKY5Ifip6kwtA" />
+<meta name="msvalidate.01" content="89D4FCDEFB2819A19936DF5FE7D0A701" />
+<!-- Facebook Pixel Code -->
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=134014900278493&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+<meta name="google-site-verification" content="j8Ukx_n7ffVHZs8x0dnT-07vym_lO5WUCneHGH9rPio" /></head>
+<body class=" catalog-product-view retina-ready floating-header hover-effect hover-scale none sidebar-left catalog-product-view product-kobe-bryant-book-lakers-icon">
+    <noscript>
+        <div class="global-site-notice noscript">
+            <div class="notice-inner">
+                <p>
+                    <strong>JavaScript seems to be disabled in your browser.</strong><br />
+                    You must have JavaScript enabled in your browser to utilize the functionality of this website.                </p>
+            </div>
+        </div>
+    </noscript>
+<div class="header-wrapper sticky-logo sticky-nav sticky-search ">
+	<header id="header">
+		<div class="topline">
+			<div class="container_12">
+				<div class="grid_12">
+																 <h2 class="logo"><strong>Los Angeles Times</strong><a href="http://store.latimes.com/" title="Los Angeles Times" class="logo"><img src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/la_times/images/logo.png" data-srcX2="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/la_times/images/@x2/logo@x2.png" alt="Los Angeles Times" /></a> </h2>											<div class="quick-access">
+						<form id="search_mini_form" action="http://store.latimes.com/catalogsearch/result/" method="get" onsubmit="searchSubmit()">
+    <div class="form-search">
+        <div class="indent">
+            <label for="search">Search:</label>
+            <input id="search" type="text" name="q" value="" class="input-text" maxlength="128" />
+            <button type="submit" title="Search" class="button"><span><i class="fa fa-search"></i><i class="fa fa-caret-right"></i><span>Search</span></span></button>
+            <div id="search_autocomplete" class="search-autocomplete"></div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</form>					</div>
+					<div class="header-right loginlink accountlink">
+						<!--{CART_SIDEBAR_dfed13fe3b0c042252ca79477def1fd5}--><div class="top-cart">
+<div class="block-title no-items">
+	<a id="cartHeader" href="javascript:void(0);">
+		<span class="title-cart">
+			<span class="top-cart-label">Cart</span><i class="fa fa-shopping-cart"></i><span class="top-cart-divider"> - </span><span class="subtotal"><span class="price">$0.00</span></span><span class="cart-qty">0 item(s) in cart</span>		</span>
+	</a>
+</div>
+<div id="topCartContent" class="block-content" style="display:none;">
+	<div class="inner-wrapper">				<p class="cart-empty">
+			<i class="fa fa-shopping-cart"></i>			<span>You have no items in your shopping cart.</span>
+			<span class="small-label">Add some to cart or <a href="https://store.latimes.com/customer/account/login/" class="link-login">login</a></span>
+		</p>
+			</div>
+</div>
+</div><!--/{CART_SIDEBAR_dfed13fe3b0c042252ca79477def1fd5}-->												<ul class="links">
+                        <li class="first" >				<a href="https://store.latimes.com/customer/account/" title="My Account" class="top-link-account">My Account</a>
+			</li>
+                                <li >				<a href="http://store.latimes.com/checkout/cart/" title="My Cart" class="top-link-cart">My Cart</a>
+			</li>
+                                <li >				<a href="https://store.latimes.com/onepage/" title="Checkout" class="top-link-checkout">Checkout</a>
+			</li>
+                                <li >				<a href="https://store.latimes.com/customer/account/login/" title="Log In" class="top-link-login"><i class="fa fa-key"></i>Log In</a>
+			</li>
+                                <li class=" last" >				<a href="https://store.latimes.com/wishlist/" title="My Wishlist" class="top-link-wishlist"><i class="fa fa-star"></i>My Wishlist</a>
+			</li>
+            </ul>
+						<span class="wishlist-items">0</span>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="menu-line">
+			<div class="container_12">
+				<div class="grid_12">
+											<h2 class="small-logo"><strong>Los Angeles Times</strong><a href="http://store.latimes.com/" title="Los Angeles Times" class="logo"><img src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/la_times/images/small_logo.png" data-srcX2="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/la_times/images/@x2/small_logo@x2.png" alt="Los Angeles Times" /></a></h2>
+											<!--{TOPMENU_258c7b95160e2b679ca7c0b138379533}--><nav class="nav-container">
+    <ul class="nav" id="nav">
+	<li  class="level0 nav-1 first level-top"><a href="http://store.latimes.com/new-arrivals.html"  class="level-top" ><span>New Arrivals</span></a></li><li  class="level0 nav-2 level-top parent"><a href="http://store.latimes.com/newspaper-archives.html"  class="level-top" ><span>Newspaper Archives</span></a><ul class="level0"><li  class="level1 nav-2-1 first"><a href="http://store.latimes.com/newspaper-archives/back-issues.html" ><span>Back Issues</span></a></li><li  class="level1 nav-2-2"><a href="http://store.latimes.com/newspaper-archives/commemorative-pages.html" ><span>Commemorative Pages</span></a></li><li  class="level1 nav-2-3"><a href="http://store.latimes.com/newspaper-archives/newspaper-books.html" ><span>Newspaper Books</span></a></li><li  class="level1 nav-2-4 parent"><a href="http://store.latimes.com/newspaper-archives/press-plates.html" ><span>Press Plates</span></a><ul class="level1"><li  class="level2 nav-2-4-1 first last"><a href="http://store.latimes.com/newspaper-archives/press-plates/actual-printing-plate-sets.html" ><span>Used Plate Sets</span></a></li></ul></li><li  class="level1 nav-2-5 last"><a href="http://store.latimes.com/newspaper-archives/photos.html" ><span>Photos</span></a></li></ul></li><li  class="level0 nav-3 level-top parent"><a href="http://store.latimes.com/apparel.html"  class="level-top" ><span>Apparel</span></a><ul class="level0"><li  class="level1 nav-3-1 first"><a href="http://store.latimes.com/apparel/men.html" ><span>Men</span></a></li><li  class="level1 nav-3-2"><a href="http://store.latimes.com/apparel/women.html" ><span>Women</span></a></li><li  class="level1 nav-3-3"><a href="http://store.latimes.com/apparel/youth.html" ><span>Youth</span></a></li><li  class="level1 nav-3-4 parent"><a href="http://store.latimes.com/apparel/accessories.html" ><span>Accessories</span></a><ul class="level1"><li  class="level2 nav-3-4-1 first"><a href="http://store.latimes.com/apparel/accessories/men.html" ><span>Men</span></a></li><li  class="level2 nav-3-4-2"><a href="http://store.latimes.com/apparel/accessories/women.html" ><span>Women</span></a></li><li  class="level2 nav-3-4-3"><a href="http://store.latimes.com/apparel/accessories/youth.html" ><span>Youth</span></a></li><li  class="level2 nav-3-4-4 last"><a href="http://store.latimes.com/apparel/accessories/la-made.html" ><span>LA-Made Accessories</span></a></li></ul></li><li  class="level1 nav-3-5 parent"><a href="http://store.latimes.com/apparel/la-times-apparel.html" ><span>L.A. Times Apparel</span></a><ul class="level1"><li  class="level2 nav-3-5-1 first"><a href="http://store.latimes.com/apparel/la-times-apparel/men.html" ><span>Men</span></a></li><li  class="level2 nav-3-5-2 last"><a href="http://store.latimes.com/apparel/la-times-apparel/women.html" ><span>Women</span></a></li></ul></li><li  class="level1 nav-3-6 parent"><a href="http://store.latimes.com/apparel/hero-complex.html" ><span>Hero Complex</span></a><ul class="level1"><li  class="level2 nav-3-6-1 first"><a href="http://store.latimes.com/apparel/hero-complex/men.html" ><span>Men</span></a></li><li  class="level2 nav-3-6-2"><a href="http://store.latimes.com/apparel/hero-complex/women.html" ><span>Women</span></a></li><li  class="level2 nav-3-6-3 last"><a href="http://store.latimes.com/apparel/hero-complex/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level1 nav-3-7 parent"><a href="http://store.latimes.com/apparel/la-made.html" ><span>L.A.-Made Apparel</span></a><ul class="level1"><li  class="level2 nav-3-7-1 first"><a href="http://store.latimes.com/apparel/la-made/men.html" ><span>Men</span></a></li><li  class="level2 nav-3-7-2 last"><a href="http://store.latimes.com/apparel/la-made/women.html" ><span>Women</span></a></li></ul></li><li  class="level1 nav-3-8 last parent"><a href="http://store.latimes.com/apparel/sports-apparel.html" ><span>California Sports Apparel</span></a><ul class="level1"><li  class="level2 nav-3-8-1 first"><a href="http://store.latimes.com/apparel/sports-apparel/men.html" ><span>Men</span></a></li><li  class="level2 nav-3-8-2"><a href="http://store.latimes.com/apparel/sports-apparel/women.html" ><span>Women</span></a></li><li  class="level2 nav-3-8-3 last"><a href="http://store.latimes.com/apparel/sports-apparel/youth.html" ><span>Youth</span></a></li></ul></li></ul></li><li  class="level0 nav-4 level-top parent"><a href="http://store.latimes.com/books.html"  class="level-top" ><span>Books</span></a><ul class="level0"><li  class="level1 nav-4-1 first"><a href="http://store.latimes.com/books/la-authors.html" ><span>LA Authors</span></a></li><li  class="level1 nav-4-2"><a href="http://store.latimes.com/books/los-angeles-times-book-club.html" ><span>Publisher's Book Club</span></a></li><li  class="level1 nav-4-3 parent"><a href="http://store.latimes.com/books/arts-culture.html" ><span>Arts &amp; Culture</span></a><ul class="level1"><li  class="level2 nav-4-3-1 first"><a href="http://store.latimes.com/books/arts-culture/garden.html" ><span>Garden</span></a></li><li  class="level2 nav-4-3-2"><a href="http://store.latimes.com/books/arts-culture/history.html" ><span>History</span></a></li><li  class="level2 nav-4-3-3"><a href="http://store.latimes.com/books/arts-culture/photography.html" ><span>Photography</span></a></li><li  class="level2 nav-4-3-4 last"><a href="http://store.latimes.com/books/arts-culture/travel.html" ><span>Travel</span></a></li></ul></li><li  class="level1 nav-4-4"><a href="http://store.latimes.com/books/newspaper-books.html" ><span>Newspaper Books</span></a></li><li  class="level1 nav-4-5"><a href="http://store.latimes.com/books/food-cookbooks.html" ><span>Food &amp; Cookbooks</span></a></li><li  class="level1 nav-4-6 last"><a href="http://store.latimes.com/books/sports.html" ><span>Sports</span></a></li></ul></li><li  class="level0 nav-5 level-top parent"><a href="http://store.latimes.com/photos.html"  class="level-top" ><span>Photos</span></a><ul class="level0"><li  class="level1 nav-5-1 first"><a href="http://store.latimes.com/photos/year-in-focus-2014.html" ><span>A Year in Focus - 2014</span></a></li><li  class="level1 nav-5-2"><a href="http://store.latimes.com/photos/california-coast.html" ><span>California Coast</span></a></li><li  class="level1 nav-5-3"><a href="http://store.latimes.com/photos/historical-photos.html" ><span>Historical Photos</span></a></li><li  class="level1 nav-5-4"><a href="http://store.latimes.com/photos/la-scenes.html" ><span>L.A. Scenes</span></a></li><li  class="level1 nav-5-5"><a href="http://store.latimes.com/photos/nature-wildlife.html" ><span>Nature &amp; Wildlife</span></a></li><li  class="level1 nav-5-6"><a href="http://store.latimes.com/photos/sunrises-sunsets.html" ><span>Sunrises &amp; Sunsets</span></a></li><li  class="level1 nav-5-7 last"><a href="http://store.latimes.com/photos/photo-request.html" ><span>Photo Request</span></a></li></ul></li><li  class="level0 nav-6 level-top parent"><a href="http://store.latimes.com/sports.html"  class="level-top" ><span>Sports</span></a><ul class="level0"><li  class="level1 nav-6-1 first parent"><a href="http://store.latimes.com/sports/nfl.html" ><span>NFL</span></a><ul class="level1"><li  class="level2 nav-6-1-1 first parent"><a href="http://store.latimes.com/sports/nfl/oakland-raiders.html" ><span>Oakland Raiders</span></a><ul class="level2"><li  class="level3 nav-6-1-1-1 first parent"><a href="http://store.latimes.com/sports/nfl/oakland-raiders/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-1-1-1-1 first"><a href="http://store.latimes.com/sports/nfl/oakland-raiders/apparel/men.html" ><span>Men</span></a></li><li  class="level4 nav-6-1-1-1-2"><a href="http://store.latimes.com/sports/nfl/oakland-raiders/apparel/women.html" ><span>Women</span></a></li><li  class="level4 nav-6-1-1-1-3 last"><a href="http://store.latimes.com/sports/nfl/oakland-raiders/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-1-1-2"><a href="http://store.latimes.com/sports/nfl/oakland-raiders/accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-1-1-3"><a href="http://store.latimes.com/sports/nfl/oakland-raiders/books.html" ><span>Books</span></a></li><li  class="level3 nav-6-1-1-4 last"><a href="http://store.latimes.com/sports/nfl/oakland-raiders/home-memorabilia.html" ><span>Home &amp; Memorabilia</span></a></li></ul></li><li  class="level2 nav-6-1-2 parent"><a href="http://store.latimes.com/sports/nfl/san-diego-chargers.html" ><span>San Diego Chargers</span></a><ul class="level2"><li  class="level3 nav-6-1-2-1 first parent"><a href="http://store.latimes.com/sports/nfl/san-diego-chargers/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-1-2-1-1 first"><a href="http://store.latimes.com/sports/nfl/san-diego-chargers/apparel/men.html" ><span>Men</span></a></li><li  class="level4 nav-6-1-2-1-2"><a href="http://store.latimes.com/sports/nfl/san-diego-chargers/apparel/women.html" ><span>Women</span></a></li><li  class="level4 nav-6-1-2-1-3 last"><a href="http://store.latimes.com/sports/nfl/san-diego-chargers/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-1-2-2"><a href="http://store.latimes.com/sports/nfl/san-diego-chargers/accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-1-2-3"><a href="http://store.latimes.com/sports/nfl/san-diego-chargers/books.html" ><span>Books</span></a></li><li  class="level3 nav-6-1-2-4 last"><a href="http://store.latimes.com/sports/nfl/san-diego-chargers/home-memorabilia.html" ><span>Home &amp; Memorabilia</span></a></li></ul></li><li  class="level2 nav-6-1-3 parent"><a href="http://store.latimes.com/sports/nfl/san-francisco-49ers.html" ><span>San Francisco 49ers</span></a><ul class="level2"><li  class="level3 nav-6-1-3-1 first parent"><a href="http://store.latimes.com/sports/nfl/san-francisco-49ers/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-1-3-1-1 first"><a href="http://store.latimes.com/sports/nfl/san-francisco-49ers/apparel/men.html" ><span>Men</span></a></li><li  class="level4 nav-6-1-3-1-2"><a href="http://store.latimes.com/sports/nfl/san-francisco-49ers/apparel/women.html" ><span>Women</span></a></li><li  class="level4 nav-6-1-3-1-3 last"><a href="http://store.latimes.com/sports/nfl/san-francisco-49ers/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-1-3-2"><a href="http://store.latimes.com/sports/nfl/san-francisco-49ers/accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-1-3-3"><a href="http://store.latimes.com/sports/nfl/san-francisco-49ers/books.html" ><span>Books</span></a></li><li  class="level3 nav-6-1-3-4 last"><a href="http://store.latimes.com/sports/nfl/san-francisco-49ers/home-memorabilia.html" ><span>Home &amp; Memorabilia</span></a></li></ul></li><li  class="level2 nav-6-1-4 last"><a href="http://store.latimes.com/sports/nfl/other-teams.html" ><span>Others</span></a></li></ul></li><li  class="level1 nav-6-2 parent"><a href="http://store.latimes.com/sports/nba.html" ><span>NBA</span></a><ul class="level1"><li  class="level2 nav-6-2-1 first parent"><a href="http://store.latimes.com/sports/nba/los-angeles-lakers.html" ><span>Los Angeles Lakers</span></a><ul class="level2"><li  class="level3 nav-6-2-1-1 first parent"><a href="http://store.latimes.com/sports/nba/los-angeles-lakers/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-2-1-1-1 first"><a href="http://store.latimes.com/sports/nba/los-angeles-lakers/apparel/men.html" ><span>Men</span></a></li><li  class="level4 nav-6-2-1-1-2"><a href="http://store.latimes.com/sports/nba/los-angeles-lakers/apparel/women.html" ><span>Women</span></a></li><li  class="level4 nav-6-2-1-1-3 last"><a href="http://store.latimes.com/sports/nba/los-angeles-lakers/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-2-1-2"><a href="http://store.latimes.com/sports/nba/los-angeles-lakers/accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-2-1-3"><a href="http://store.latimes.com/sports/nba/los-angeles-lakers/home-memorabilia.html" ><span>Home Goods</span></a></li><li  class="level3 nav-6-2-1-4 last"><a href="http://store.latimes.com/sports/nba/los-angeles-lakers/kobe-bryant.html" ><span>Kobe Bryant</span></a></li></ul></li><li  class="level2 nav-6-2-2 last parent"><a href="http://store.latimes.com/sports/nba/los-angeles-clippers.html" ><span>Los Angeles Clippers</span></a><ul class="level2"><li  class="level3 nav-6-2-2-1 first last parent"><a href="http://store.latimes.com/sports/nba/los-angeles-clippers/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-2-2-1-1 first"><a href="http://store.latimes.com/sports/nba/los-angeles-clippers/apparel/men.html" ><span>Men</span></a></li><li  class="level4 nav-6-2-2-1-2"><a href="http://store.latimes.com/sports/nba/los-angeles-clippers/apparel/women.html" ><span>Women</span></a></li><li  class="level4 nav-6-2-2-1-3 last"><a href="http://store.latimes.com/sports/nba/los-angeles-clippers/apparel/clippers-apparel-youth.html" ><span>Youth</span></a></li></ul></li></ul></li></ul></li><li  class="level1 nav-6-3 parent"><a href="http://store.latimes.com/sports/mlb.html" ><span>MLB</span></a><ul class="level1"><li  class="level2 nav-6-3-1 first parent"><a href="http://store.latimes.com/sports/mlb/los-angeles-dodgers.html" ><span>Los Angeles Dodgers</span></a><ul class="level2"><li  class="level3 nav-6-3-1-1 first parent"><a href="http://store.latimes.com/sports/mlb/los-angeles-dodgers/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-3-1-1-1 first"><a href="http://store.latimes.com/sports/mlb/los-angeles-dodgers/apparel/men.html" ><span>Men</span></a></li><li  class="level4 nav-6-3-1-1-2"><a href="http://store.latimes.com/sports/mlb/los-angeles-dodgers/apparel/women.html" ><span>Women</span></a></li><li  class="level4 nav-6-3-1-1-3 last"><a href="http://store.latimes.com/sports/mlb/los-angeles-dodgers/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-3-1-2"><a href="http://store.latimes.com/sports/mlb/los-angeles-dodgers/accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-3-1-3"><a href="http://store.latimes.com/sports/mlb/los-angeles-dodgers/books.html" ><span>Books</span></a></li><li  class="level3 nav-6-3-1-4 last"><a href="http://store.latimes.com/sports/mlb/los-angeles-dodgers/home-memorabilia.html" ><span>Home &amp; Memorabilia</span></a></li></ul></li><li  class="level2 nav-6-3-2 parent"><a href="http://store.latimes.com/sports/mlb/anaheim-angels.html" ><span>Los Angeles Angels of Anaheim</span></a><ul class="level2"><li  class="level3 nav-6-3-2-1 first parent"><a href="http://store.latimes.com/sports/mlb/anaheim-angels/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-3-2-1-1 first"><a href="http://store.latimes.com/sports/mlb/anaheim-angels/apparel/men.html" ><span>Men</span></a></li><li  class="level4 nav-6-3-2-1-2"><a href="http://store.latimes.com/sports/mlb/anaheim-angels/apparel/women.html" ><span>Women</span></a></li><li  class="level4 nav-6-3-2-1-3 last"><a href="http://store.latimes.com/sports/mlb/anaheim-angels/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-3-2-2"><a href="http://store.latimes.com/sports/mlb/anaheim-angels/accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-3-2-3"><a href="http://store.latimes.com/sports/mlb/anaheim-angels/books.html" ><span>Books</span></a></li><li  class="level3 nav-6-3-2-4 last"><a href="http://store.latimes.com/sports/mlb/anaheim-angels/home-memorabilia.html" ><span>Home &amp; Memorabilia</span></a></li></ul></li><li  class="level2 nav-6-3-3 last"><a href="http://store.latimes.com/sports/mlb/other-teams.html" ><span>Others</span></a></li></ul></li><li  class="level1 nav-6-4 parent"><a href="http://store.latimes.com/sports/nhl.html" ><span>NHL</span></a><ul class="level1"><li  class="level2 nav-6-4-1 first last parent"><a href="http://store.latimes.com/sports/nhl/los-angeles-kings.html" ><span>Los Angeles Kings</span></a><ul class="level2"><li  class="level3 nav-6-4-1-1 first parent"><a href="http://store.latimes.com/sports/nhl/los-angeles-kings/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-4-1-1-1 first"><a href="http://store.latimes.com/sports/nhl/los-angeles-kings/apparel/men.html" ><span>Men</span></a></li><li  class="level4 nav-6-4-1-1-2"><a href="http://store.latimes.com/sports/nhl/los-angeles-kings/apparel/women.html" ><span>Women</span></a></li><li  class="level4 nav-6-4-1-1-3 last"><a href="http://store.latimes.com/sports/nhl/los-angeles-kings/apparel/kings-apparel-youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-4-1-2"><a href="http://store.latimes.com/sports/nhl/los-angeles-kings/accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-4-1-3 last"><a href="http://store.latimes.com/sports/nhl/los-angeles-kings/home-memorabilia.html" ><span>Home &amp; Memorabilia</span></a></li></ul></li></ul></li><li  class="level1 nav-6-5 parent"><a href="http://store.latimes.com/sports/sports-mls.html" ><span>MLS</span></a><ul class="level1"><li  class="level2 nav-6-5-1 first last"><a href="http://store.latimes.com/sports/sports-mls/la-galaxy.html" ><span>LA Galaxy</span></a></li></ul></li><li  class="level1 nav-6-6 parent"><a href="http://store.latimes.com/sports/college.html" ><span>College</span></a><ul class="level1"><li  class="level2 nav-6-6-1 first parent"><a href="http://store.latimes.com/sports/college/usc-trojans.html" ><span>USC</span></a><ul class="level2"><li  class="level3 nav-6-6-1-1 first parent"><a href="http://store.latimes.com/sports/college/usc-trojans/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-6-1-1-1 first"><a href="http://store.latimes.com/sports/college/usc-trojans/apparel/usc-apparel-men.html" ><span>Men</span></a></li><li  class="level4 nav-6-6-1-1-2"><a href="http://store.latimes.com/sports/college/usc-trojans/apparel/usc-apparel-womens.html" ><span>Women</span></a></li><li  class="level4 nav-6-6-1-1-3 last"><a href="http://store.latimes.com/sports/college/usc-trojans/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-6-1-2"><a href="http://store.latimes.com/sports/college/usc-trojans/usc-accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-6-1-3"><a href="http://store.latimes.com/sports/college/usc-trojans/books.html" ><span>Books</span></a></li><li  class="level3 nav-6-6-1-4 last"><a href="http://store.latimes.com/sports/college/usc-trojans/home-memorabilia.html" ><span>Home &amp; Memorabilia</span></a></li></ul></li><li  class="level2 nav-6-6-2 last parent"><a href="http://store.latimes.com/sports/college/ucla-bruins.html" ><span>UCLA</span></a><ul class="level2"><li  class="level3 nav-6-6-2-1 first parent"><a href="http://store.latimes.com/sports/college/ucla-bruins/apparel.html" ><span>Apparel</span></a><ul class="level3"><li  class="level4 nav-6-6-2-1-1 first"><a href="http://store.latimes.com/sports/college/ucla-bruins/apparel/ucla-apparel-men.html" ><span>Men</span></a></li><li  class="level4 nav-6-6-2-1-2"><a href="http://store.latimes.com/sports/college/ucla-bruins/apparel/ucla-apparel-womens.html" ><span>Women</span></a></li><li  class="level4 nav-6-6-2-1-3 last"><a href="http://store.latimes.com/sports/college/ucla-bruins/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level3 nav-6-6-2-2"><a href="http://store.latimes.com/sports/college/ucla-bruins/ucla-accessories.html" ><span>Accessories</span></a></li><li  class="level3 nav-6-6-2-3"><a href="http://store.latimes.com/sports/college/ucla-bruins/books.html" ><span>Books</span></a></li><li  class="level3 nav-6-6-2-4 last"><a href="http://store.latimes.com/sports/college/ucla-bruins/home-memorabilia.html" ><span>Home &amp; Memorabilia</span></a></li></ul></li></ul></li><li  class="level1 nav-6-7 last"><a href="http://store.latimes.com/sports/throwback-teams.html" ><span>Throwback Teams</span></a></li></ul></li><li  class="level0 nav-7 level-top parent"><a href="http://store.latimes.com/home-goods.html"  class="level-top" ><span>Home Goods</span></a><ul class="level0"><li  class="level1 nav-7-1 first"><a href="http://store.latimes.com/home-goods/tabletop.html" ><span>Tabletop</span></a></li><li  class="level1 nav-7-2"><a href="http://store.latimes.com/home-goods/decorative-accents.html" ><span>Decorative Accents</span></a></li><li  class="level1 nav-7-3"><a href="http://store.latimes.com/home-goods/wall-decor.html" ><span>Wall Décor</span></a></li><li  class="level1 nav-7-4 last"><a href="http://store.latimes.com/home-goods/tech-accessories.html" ><span>Tech</span></a></li></ul></li><li  class="level0 nav-8 level-top parent"><a href="http://store.latimes.com/gifts.html"  class="level-top" ><span>Gifts</span></a><ul class="level0"><li  class="level1 nav-8-1 first"><a href="http://store.latimes.com/gifts/mothers-day-gifts.html" ><span>Mother's Day</span></a></li><li  class="level1 nav-8-2"><a href="http://store.latimes.com/gifts/for-her.html" ><span>For Her</span></a></li><li  class="level1 nav-8-3"><a href="http://store.latimes.com/gifts/for-him.html" ><span>For Him</span></a></li><li  class="level1 nav-8-4"><a href="http://store.latimes.com/gifts/for-the-hostess.html" ><span>For the Hostess</span></a></li><li  class="level1 nav-8-5"><a href="http://store.latimes.com/gifts/sports-fan.html" ><span>For the Sports Fan</span></a></li><li  class="level1 nav-8-6"><a href="http://store.latimes.com/gifts/under-50.html" ><span>Under $50</span></a></li><li  class="level1 nav-8-7 last"><a href="http://store.latimes.com/gifts/under-100.html" ><span>Under $100</span></a></li></ul></li><li  class="level0 nav-9 last level-top parent"><a href="http://store.latimes.com/hero-complex.html"  class="level-top" ><span>Hero Complex</span></a><ul class="level0"><li  class="level1 nav-9-1 first parent"><a href="http://store.latimes.com/hero-complex/apparel.html" ><span>Apparel</span></a><ul class="level1"><li  class="level2 nav-9-1-1 first"><a href="http://store.latimes.com/hero-complex/apparel/men.html" ><span>Men</span></a></li><li  class="level2 nav-9-1-2"><a href="http://store.latimes.com/hero-complex/apparel/women.html" ><span>Women</span></a></li><li  class="level2 nav-9-1-3 last"><a href="http://store.latimes.com/hero-complex/apparel/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level1 nav-9-2 parent"><a href="http://store.latimes.com/hero-complex/accessories.html" ><span>Accessories</span></a><ul class="level1"><li  class="level2 nav-9-2-1 first"><a href="http://store.latimes.com/hero-complex/accessories/men.html" ><span>Men</span></a></li><li  class="level2 nav-9-2-2"><a href="http://store.latimes.com/hero-complex/accessories/women.html" ><span>Women</span></a></li><li  class="level2 nav-9-2-3 last"><a href="http://store.latimes.com/hero-complex/accessories/youth.html" ><span>Youth</span></a></li></ul></li><li  class="level1 nav-9-3"><a href="http://store.latimes.com/hero-complex/hero-complex-home-goods.html" ><span>Home Goods</span></a></li><li  class="level1 nav-9-4 parent"><a href="http://store.latimes.com/hero-complex/superhero.html" ><span>Superhero</span></a><ul class="level1"><li  class="level2 nav-9-4-1 first"><a href="http://store.latimes.com/hero-complex/superhero/dc-comics.html" ><span>DC Comics</span></a></li><li  class="level2 nav-9-4-2"><a href="http://store.latimes.com/hero-complex/superhero/marvel-comics.html" ><span>Marvel</span></a></li><li  class="level2 nav-9-4-3 last"><a href="http://store.latimes.com/hero-complex/superhero/captain-america.html" ><span>Captain America</span></a></li></ul></li><li  class="level1 nav-9-5 parent"><a href="http://store.latimes.com/hero-complex/sci-fi.html" ><span>Sci-Fi</span></a><ul class="level1"><li  class="level2 nav-9-5-1 first last"><a href="http://store.latimes.com/hero-complex/sci-fi/star-wars.html" ><span>Star Wars</span></a></li></ul></li><li  class="level1 nav-9-6"><a href="http://store.latimes.com/hero-complex/horror.html" ><span>Horror</span></a></li><li  class="level1 nav-9-7 last"><a href="http://store.latimes.com/hero-complex/fantasy.html" ><span>Fantasy</span></a></li></ul></li>    </ul>
+</nav><!--/{TOPMENU_258c7b95160e2b679ca7c0b138379533}-->					<div class="menu-button"><span><i class="fa fa-bars"></i>Menu</span></div>
+					<div class="search-button">
+						<i class="fa fa-search"></i>					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</header>
+</div>
+<div class="breadcrumbs-wrapper">
+	<div class="container_12">
+		<div class="grid_12">
+				<nav class="breadcrumbs">
+		<ul>
+							<li class="home" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<a href="http://store.latimes.com/" title="Go to Home Page" itemprop="url"><span itemprop="title">Home</span></a>
+													<span>&bull;</span>
+								</li>
+							<li class="product" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+									<strong>KOBE: The Storied Career of a Lakers Icon</strong>
+												</li>
+					</ul>
+	</nav>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="content-wrapper">
+    <div class="container_12">
+        <div class="main-container col1-layout">
+            <div class="grid_12 col-main">
+                <!--{GLOBAL_MESSAGES_aae3749ba9c2e308ffa9c240ac185959}--><!--/{GLOBAL_MESSAGES_aae3749ba9c2e308ffa9c240ac185959}-->                
+<div id="messages_product_view"></div>
+<div class="product-view" itemscope itemtype="http://schema.org/Product">
+				<div class="grid_9 alpha">
+			<div class="product-essential productpage_medium">
+			<div class="grid_5 productpage_medium alpha  product-img-box">
+               <div class="product-image label-type-1 top">
+	<div class="img-holder labels-new-sale">
+				<a id='zoom' class="cloud-zoom" data-zoom="showTitle: false, adjustX: -5, adjustY:-5, tint: '#fff', tintOpacity:0.6, position:'inside'" href="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/image/9df78eab33525d08d6e5fb8d27136e95/k/o/kobe-cover_mockup.jpg"><img id="image" src="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/image/510x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe-cover_mockup.jpg" alt="KOBE: The Storied Career of a Lakers Icon" title="KOBE: The Storied Career of a Lakers Icon" /></a>
+		<span class="label-new"><strong>New</strong></span>		<div class="label-sale percentage">25% <span>off</span></div>	</div>
+	<div class="more-views-container">
+	<div class="more-views">
+		<h2>More Views</h2>
+				<ul class="no-slider">
+							<li>
+					<a class='cloud-zoom-gallery' data-zoom="useZoom: 'zoom', smallImage: 'http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/510x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe-cover_mockup-thick.jpg' " href="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/9df78eab33525d08d6e5fb8d27136e95/k/o/kobe-cover_mockup-thick.jpg" title="Kobe Bryant book - The Storied Career of a Lakers Icon"><img src="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/200x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe-cover_mockup-thick.jpg" data-srcX2="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/400x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe-cover_mockup-thick.jpg" alt="Kobe Bryant book - The Storied Career of a Lakers Icon" /></a>
+				</li>
+							<li>
+					<a class='cloud-zoom-gallery' data-zoom="useZoom: 'zoom', smallImage: 'http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/510x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe-cover_mockup.jpg' " href="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/9df78eab33525d08d6e5fb8d27136e95/k/o/kobe-cover_mockup.jpg" title="KOBE: The Storied Career of a Lakers Icon"><img src="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/200x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe-cover_mockup.jpg" data-srcX2="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/400x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe-cover_mockup.jpg" alt="KOBE: The Storied Career of a Lakers Icon" /></a>
+				</li>
+					</ul>
+			</div>
+</div>
+</div>
+            </div>
+			<div class="grid_4  omega product-shop">
+			<div class="product-name no-rel">
+					<h1 itemprop="name">KOBE: The Storied Career of a Lakers Icon</h1>
+																	   <p class="availability in-stock"><i class="fa fa-check-circle-o"></i>In stock</p>
+																							<div class="sku">SKU:<span>9781597256384</span></div>
+														</div>
+				<div class="product-buttons"></div>
+								<form action="http://store.latimes.com/checkout/cart/add/uenc/aHR0cDovL3N0b3JlLmxhdGltZXMuY29tL2tvYmUtbGFrZXJzLWljb24uaHRtbD91dG1fY2FtcGFpZ249a29iZS1ib29rLXBoYXNlLTEmdXRtX2NvbnRlbnQ9JnV0bV9tZWRpdW09cmVmZXJyYWwmdXRtX3NvdXJjZT1zcG9ydHMtYmFya2VyJnV0bV90ZXJtPQ,,/product/32057/form_key/CusljHCvHkxYK8GL/" method="post" id="product_addtocart_form">
+				<div class="no-display">
+					<input type="hidden" name="product" value="32057" />
+					<input type="hidden" name="related_product" id="related-products-field" value="" />
+				</div>
+									        <!--<p class="no-rating"><a href="#review-point">Be the first to review this product</a></p>-->
+																			<div class="price-block" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <div class="price-box">
+                    <p class="old-price">
+                <span class="price-label">Regular Price:</span>
+                <span class="price" id="old-price-32057">
+                    $59.95                </span>
+            </p>
+                            <p class="special-price 8">
+                    <span class="price-label">Special Price</span>
+                <span class="price" id="product-price-32057" itemprop="price">
+                    $44.95					
+                </span>
+				<span class="base-custom-price" style="display:none"> $44.95</span>
+                </p>
+        </div>
+																							</div>
+							<div class="clear "></div>
+					   						   <div class="short-description">
+							   <div class="std" itemprop="description"><h2>Quick Overview:</h2>Relive the excitement of Kobe Bryant's legendary career with this hardcover commemorative book filled with his incredible championships, all-star games and unsurpassed moments as chronicled by the LA Times staff. This book includes 20 years of original stories, full color images and more.<br />
+<br />
+* Pre-sale price valid through 10/26/2016 @11:59pm PDT and does not include tax or shipping charges. Cover is subject to change. This item is currently available for <b>pre-sale</b> only. Delivery will begin on 10/28/2016. </div>
+						   </div>
+                       					   					   <div class="product-type-block">
+							<div class="add-to-box">
+																	    <div class="add-to-cart">
+        		<label for="qty">Qty:</label>
+        <div class="quantity-decrease" onclick="qtyDown()"><i class="fa fa-minus-square-o"></i></div>
+		<input type="text" name="qty" id="qty" maxlength="12" value="0" title="Qty" class="input-text qty" />
+        <div class="quantity-increase" onclick="qtyUp()"><i class="fa fa-plus-square-o"></i></div>
+		        <button type="button" title="Add to Cart" id="product-addtocart-button" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span>Add to Cart</span></span></button>
+        <span id='ajax_loader' style='display:none'><img src='http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/images/opc-ajax-loader.gif' alt='' /></span>
+            </div>
+							   							</div>
+							<div class="add-to-links-box">
+<ul class="add-to-links">
+			<li>
+			<a href="#" onclick="wishlistForm.submitAjaxWishlist(this, 'https://store.latimes.com/wishlist/index/add/product/32057/form_key/CusljHCvHkxYK8GL/','32057'); return false;" class="link-wishlist"><i class="fa fa-star"></i><span class="add-to-loader" id='ajax_wishlist_loading32057' style='display:none'><img src='http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/images/opc-ajax-loader.gif' alt='' /></span></a>
+<!--            <a href="#" onclick="ajaxWishlist("https://store.latimes.com/wishlist/index/add/product/32057/form_key/CusljHCvHkxYK8GL/","32057522");return false;" class="link-wishlist"><i class="fa fa-star"></i><span class="add-to-loader" id='ajax_wishlist_loading32057' style='display:none'><img src='http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/images/opc-ajax-loader.gif' alt='' /></span></a>-->
+		</li>
+				</ul>
+	<p class="email-friend"><a href="http://store.latimes.com/sendfriend/product/send/id/32057/"><i class="fa fa-envelope-o"></i></a></p>
+							</div>
+							<div class="clear"></div>
+												   </div>
+						<div class="product-custom"><div id="fb-root">&nbsp;</div>
+<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false">&nbsp;</div>
+<p class="tweet-print"><a class="twitter-share-button" href="https://twitter.com/share" data-via="meigeeteam">Tweet</a></p>
+                            <div class="pinterest"><a href="http://pinterest.com/pin/create/button/?media=http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/small_image/9df78eab33525d08d6e5fb8d27136e95/k/o/kobe-cover_mockup.jpg&description=$44.95 KOBE: The Storied Career of a Lakers Icon&url=http://store.latimes.com/kobe-bryant-book-lakers-icon.html" class="pin-it-button" count-layout="none" style="margin-top:-2px">Pin It</a></div> </div>
+                            										</form>
+				           </div>
+		              <div class="clear"></div>
+		</div>
+	</div>
+			<aside class="grid_3 omega">
+			<!--{CATALOG_PRODUCT_LIST_RELATED_1405953ee97d54af87c4fff53a670d1d}--><!--/{CATALOG_PRODUCT_LIST_RELATED_1405953ee97d54af87c4fff53a670d1d}--><div class="product-sibebar-banner"><p><a href="http://store.latimes.com/kobe-lakers-icon.html"><img src="http://latimes.chictrib.netdna-cdn.com/media/wysiwyg/LA-KobeBook-ROS-300x250.jpg" alt="" /></a></p></div>		</aside>
+		<div class="clear"></div>
+		<div class="product-collateral">
+				<ul class="meigee-tabs">
+												<li id="product_tabs_description" class=" active first"><a href="#">Description</a></li>
+					</ul>
+									<div class="meigee-tabs-content" id="product_tabs_description_contents">    <h2>Details</h2>
+    <div class="box-collateral">
+        Relive the excitement of Kobe Bryant's legendary career with this hardcover commemorative book filled with his incredible championships, all-star games and unsurpassed moments as chronicled by the LA Times staff. This definitive Kobe Bryant book covers his entire career with the Los Angeles Lakers, including 20 years of original stories, full color images and more.    </div>
+        </div>
+        </div>
+<div class="related-wrapper-bottom">
+	<div class="block block-related">
+		<div class="block-title">
+			<strong><span>Related Products</span></strong>
+			<p class="block-subtitle"><a href="#" onclick="selectAllRelated(this); return false;"></a></p>
+		</div>
+		<div class="block-content">
+			<div  class="no-slider" >
+				<ul class="carousel-ul">
+									<li class="item">
+						<div class="product">
+							<div class="grid-indent">
+								<a href="http://store.latimes.com/lakers-kobe-bryant-womens-jersey.html" title="Los Angeles Lakers Kobe Bryant Women's Alternate Replica Jersey" class="product-image"><img src="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/480x/472321edac810f9b2465a359d8cdc0b5/l/o/los_angeles_lakers_women_s_kobe_bryant_alternate_replica_jersey_front.jpg" data-srcX2="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/960x/472321edac810f9b2465a359d8cdc0b5/l/o/los_angeles_lakers_women_s_kobe_bryant_alternate_replica_jersey_front.jpg" alt="Los Angeles Lakers Kobe Bryant Women's Alternate Replica Jersey" /></a>
+									<div class="product-details">
+										<p class="product-name"><a href="http://store.latimes.com/lakers-kobe-bryant-womens-jersey.html">Los Angeles Lakers Kobe Bryant Women's Alternate Replica Jersey</a></p>
+																			</div>
+    <div class="price-box">
+                                                                <span class="regular-price" id="product-price-31304-related">
+                                            <span class="price" itemprop="price">$82.99</span>						<span class="base-custom-price" style="display:none"> <span class="price">$82.99</span></span>
+                                    </span>
+        </div>
+							</div>
+						</div>
+					</li>
+									<li class="item">
+						<div class="product">
+							<div class="grid-indent">
+								<a href="http://store.latimes.com/kobe-bryant-retirement-announcement-printing-plate.html" title="&quot;One last walk off win&quot; - Kobe Bryant Retirement Announcement Printing Plate" class="product-image"><img src="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/480x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe_announces_1.jpg" data-srcX2="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/960x/472321edac810f9b2465a359d8cdc0b5/k/o/kobe_announces_1.jpg" alt="&quot;One last walk off win&quot; - Kobe Bryant Retirement Announcement Printing Plate" /></a>
+									<div class="product-details">
+										<p class="product-name"><a href="http://store.latimes.com/kobe-bryant-retirement-announcement-printing-plate.html">&quot;One last walk off win&quot; - Kobe Bryant Retirement Announcement Printing Plate</a></p>
+																			</div>
+    <div class="price-box">
+                                                                <span class="regular-price" id="product-price-30026-related">
+                                            <span class="price" itemprop="price">$39.95</span>						<span class="base-custom-price" style="display:none"> <span class="price">$39.95</span></span>
+                                    </span>
+        </div>
+							</div>
+						</div>
+					</li>
+									<li class="item">
+						<div class="product">
+							<div class="grid-indent">
+								<a href="http://store.latimes.com/lakers-kobe-20th-season-t-shirt.html" title="Los Angeles Lakers Kobe Bryant HV 20th Season T-Shirt" class="product-image"><img src="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/480x/472321edac810f9b2465a359d8cdc0b5/l/o/los_angeles_lakers_kobe_bryant_hv_20th_season_t-shirt_front.png" data-srcX2="http://latimes.chictrib.netdna-cdn.com/media/catalog/product/cache/5/thumbnail/960x/472321edac810f9b2465a359d8cdc0b5/l/o/los_angeles_lakers_kobe_bryant_hv_20th_season_t-shirt_front.png" alt="Los Angeles Lakers Kobe Bryant HV 20th Season T-Shirt" /></a>
+									<div class="product-details">
+										<p class="product-name"><a href="http://store.latimes.com/lakers-kobe-20th-season-t-shirt.html">Los Angeles Lakers Kobe Bryant HV 20th Season T-Shirt</a></p>
+																			</div>
+    <div class="price-box">
+                                                                <span class="regular-price" id="product-price-31280-related">
+                                            <span class="price" itemprop="price">$32.99</span>						<span class="base-custom-price" style="display:none"> <span class="price">$32.99</span></span>
+                                    </span>
+        </div>
+							</div>
+						</div>
+					</li>
+								</ul>
+			</div>
+		</div>
+	</div>
+</div>
+    </div>            </div>
+            <div class="clear"></div>
+        </div>    
+    </div>
+</div>
+<footer id="footer">
+			<div class="footer-topline">
+<div class="container_12">
+<div class="grid_12"><ul class="social-links"><li><a class="twitter"  target="_blank" href="https://twitter.com/hellolatimes"><i class="fa fa-twitter"></i></a></li><li><a class="instagram"  target="_blank" href="http://instagram.com/hellolatimes"><i class="fa fa-instagram"></i></a></li><li><a class="facebook"  target="_blank" href="https://www.facebook.com/helloLATimes"><i class="fa fa-facebook"></i></a></li></ul>
+<div class="footer-links"><span>Footer links<em class="fa fa-bars"></em></span>
+<ul>
+<li><a href="http://store.latimes.com/about-us">About Us</a></li>
+<li><a href="http://store.latimes.com/contacts">Contact Us</a></li>
+<li><a href="http://www.tribpub.com/privacy-policy-and-your-privacy-rights/" target="_blank">Privacy Policy</a></li>
+<li><a href="http://store.latimes.com/terms">Terms</a></li>
+<li><a href="http://store.latimes.com/shipping-returns">Shipping &amp; Returns</a></li>
+<li class="last"><a href="http://store.latimes.com/sitemap">Site Map </a></li>
+<li class="remover"><em class="fa fa-times"></em></li>
+</ul>
+</div>
+</div>
+<div class="clear">&nbsp;</div>
+</div>
+</div>
+<div class="footer-second-line">
+<div class="container_12">
+<div class="grid_12">
+<div class="grid_3 alpha">
+<div class="footer-logo-wrapper"><a class="footer-logo" href="#"><img src="http://latimes.chictrib.netdna-cdn.com/media/wysiwyg/la_footer_logo.png" alt="" data-scrx2="http://latimes.chictrib.netdna-cdn.com/media/wysiwyg/la_footer_logo@x2.png" /></a></div>
+</div>
+</div>
+<div class="clear">&nbsp;</div>
+</div>
+</div>	 	<div class="footer-bottom">
+		<div class="container_12">
+				<div class="grid_12">
+										<address>Meigee &copy; 2015 <a href="http://meigeeteam.com" >Premium Magento Themes</a></address>
+				</div>
+				<div class="clear"></div>
+		</div>
+	</div>
+</footer><!--{BONGOINTERNATIONAL_CURRENCY_SELECTOR_LIGHTBOX_8baf2aacbc175298c23270d47fe48914}--><!--/{BONGOINTERNATIONAL_CURRENCY_SELECTOR_LIGHTBOX_8baf2aacbc175298c23270d47fe48914}-->
+    <!--Aromicon Google Universal Analytics Section start -->
+        <!--Aromicon Google Universal Analytics Section end -->
+<!-- Start of Zendesk Widget script -->
+<!-- End of Zendesk Widget script -->
+<!-- Anaraky GDRT v.1.0.9 script begin -->
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/961926981/?value=0&amp;guid=ON&amp;script=0&amp;data=ecomm_prodid%3D32057%3Becomm_pagetype%3Dproduct%3Becomm_totalvalue%3D44.95"/>
+</div>
+</noscript>
+<!-- Anaraky GDRT script end -->
+<!--[if lt IE 7]>
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = 'http://latimes.chictrib.netdna-cdn.com/js/blank.html';
+    var BLANK_IMG = 'http://latimes.chictrib.netdna-cdn.com/js/spacer.gif';
+//]]>
+</script>
+<![endif]--><!--[if lt IE 10]>
+<script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/script_ie.js"></script>
+<![endif]--><!--[if lt IE 9]>
+<script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/html5.js"></script>
+<script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/css3-mediaqueries.js"></script>
+<script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/selectivizr-min.js"></script>
+<![endif]--><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/prototype/prototype.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/lib/ccard.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/prototype/validation.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/scriptaculous/builder.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/scriptaculous/effects.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/scriptaculous/dragdrop.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/scriptaculous/controls.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/scriptaculous/slider.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/varien/js.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/varien/form.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/varien/menu.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/mage/translate.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/mage/cookies.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/customdelivery/script_admin.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/meigee/jquery.min.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/varien/product.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/varien/configurable.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/calendar/calendar.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/js/calendar/calendar-setup.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/jquery.easing.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/jquery.selectbox-0.2.min.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/script.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/jquery.iosslider.min.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/jquery.ui.totop.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/ajaxwishlist.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/jquery.fancybox.pack.js"></script><script type="text/javascript" src="http://latimes.chictrib.netdna-cdn.com/skin/frontend/chicagotribuneshops/default/js/cloud-zoom.1.0.2.min.js"></script><script type="text/javascript">
+//<![CDATA[
+Mage.Cookies.path     = '/';
+Mage.Cookies.domain   = '.store.latimes.com';
+//]]>
+</script><script type="text/javascript">
+//<![CDATA[
+optionalZipCountries = ["HK","IE","MO","PA"];
+//]]>
+</script><script type="text/javascript">
+		jQuery(window).load(function() {
+			if(!((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/Android/i)))){
+				jQuery().UItoTop({
+					text: "Top"
+				});
+			}
+		});
+	</script><script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script><script type="text/javascript">//<![CDATA[
+        var Translator = new Translate([]);
+        //]]></script><script src="//cdn.optimizely.com/js/3382002025.js"></script><script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '134014900278493');
+fbq('track', 'PageView');
+</script><script type="text/javascript">
+            //<![CDATA[
+                var searchForm = new Varien.searchForm('search_mini_form', 'search', 'Search entire store here...');
+                searchForm.initAutocomplete('http://store.latimes.com/catalogsearch/ajax/suggest/', 'search_autocomplete');
+            //]]>
+			
+			function searchSubmit(){
+				ga('send', 'event', { eventCategory: 'Site Search', eventAction: document.location, eventLabel: document.getElementById('search').value});
+			}
+            </script><script type="text/javascript">
+	/* Top Cart */
+			topCart();
+		jQuery('#mini-cart li:nth-child(2)').addClass('second');
+	jQuery('#mini-cart li:nth-child(3)').addClass('last');
+</script><script type="text/javascript">
+		/* Login ajax */
+		 			var URL = 'http://store.latimes.com/meigeeactions/login/';
+					jQuery('.top-link-login').on('click', function(){	
+			ajaxLogin(URL, false);
+			return false;
+		});
+	</script><script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice([]);
+</script><script>
+jQuery(document).ready(function(){
+	jQuery('.cloud-zoom-gallery').bind('click', false);
+});
+</script><script type="text/javascript">
+		function qtyDown(){
+			qty_el = document.getElementById('qty');
+			qty = qty_el.value;
+			if( !isNaN( qty ) && qty > 1 ){
+				qty_el.value = parseInt(qty_el.value)-1			}
+			return false;
+		}
+		function qtyUp(){
+			qty_el = document.getElementById('qty');
+			qty = qty_el.value;
+			if( !isNaN( qty )) {
+				qty_el.value = parseInt(qty_el.value)+1			}
+			return false;
+		}
+    </script><script type="text/javascript">
+var wishlistForm = new VarienForm('product_addtocart_form');
+wishlistForm.submitAjaxWishlist = function(button, url,id){
+    if(this.validator) {
+        var nv = Validation.methods;
+        delete Validation.methods['required-entry'];
+        delete Validation.methods['validate-one-required'];
+        delete Validation.methods['validate-one-required-by-name'];
+        if (this.validator.validate()) {
+        	url = url.replace("wishlist/index","ajax/whishlist");
+			if (window.location.protocol == "https:") {
+				url=url;    
+			}else{
+				url=url.replace("https://","http://");  
+			}
+        	var data = jQuery('#product_addtocart_form').serialize();
+			data += '&isAjax=1';
+			jQuery('#ajax_wishlist_loading'+id).show();
+			jQuery.ajax( {
+				url : url,
+				dataType : 'json',
+				type : 'post',
+				data : data,
+				success : function(data) {
+					jQuery('#ajax_wishlist_loading'+id).hide();
+					if(data.status == 'ERROR'){
+						if(data.message == 'Please Login First'){
+							ajaxLogin(data.baseurl+"meigeeactions/login/", false);
+							return false;
+						}
+						else{
+							popUpMessage(data);
+						}
+					}else{
+						alert(data.message);
+						if(jQuery('.block-wishlist').length){
+                            jQuery('.block-wishlist').replaceWith(data.sidebar);
+                        }else{
+                            if(jQuery('.col-right').length){
+                            	jQuery('.col-right').prepend(data.sidebar);
+                            }
+                        }
+                        if(jQuery('.header .links').length){
+                            jQuery('.header .links').replaceWith(data.toplink);
+                        }
+						/* Top Link Wishlist Quantity */
+						getWishlistCount();
+					}
+				}
+			});
+        }
+        Object.extend(Validation.methods, nv);
+    }
+}.bind(wishlistForm);
+</script><script type="text/javascript">// <![CDATA[
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+// ]]></script><script type="text/javascript">// <![CDATA[
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+// ]]></script><script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script><script type="text/javascript">
+				//<![CDATA[
+					var productAddToCartForm = new VarienForm('product_addtocart_form');
+					productAddToCartForm.submit = function(button, url) {
+					if (this.validator.validate()) {
+						var form = this.form;
+						var oldUrl = form.action;
+						if (url) {
+							form.action = url;
+						}
+						var e = null;
+						// Start of our new ajax code
+						if (!url) {
+							url = jQuery('#product_addtocart_form').attr('action');
+						}
+						
+						url = url.replace("checkout/cart","ajax/index"); // New Code
+						var data = jQuery('#product_addtocart_form').serialize();
+						data += '&isAjax=1';
+						jQuery('#ajax_loader').show();
+						try {
+							jQuery.ajax( {
+								url : url,
+								dataType : 'json',
+								type : 'post',
+								data : data,
+								complete: function(){
+									if(jQuery('body').hasClass('product-edit') || jQuery('body').hasClass('wishlist-index-configure')){
+										jQuery.ajax({
+											url: "http://store.latimes.com/meigeeactions/updatecart/",
+											cache: false
+										}).done(function(html){
+											jQuery('header#header .top-cart').replaceWith(html);
+										});
+										jQuery('#ajax_loader').hide();
+										jQuery('body').append('<div class="add-to-cart-success"> Updated<br/><a href="http://store.latimes.com/checkout/cart/"><span><span>View Cart</span></span></a><a href="#" class="btn-remove"><i class="icon-remove"></i></a></div>');
+										setTimeout(function () {jQuery('.add-to-cart-success').slideUp(500)}, 5000);
+										jQuery('.add-to-cart-success a.btn-remove').click(function(){
+											jQuery(this).parent().slideUp(500);
+											return false;
+										})
+									}
+								},
+								success : function(data) {
+									jQuery('#ajax_loader').hide();
+									if(data.status == 'ERROR'){
+										var str1 = data.message;
+										if(str1.indexOf("The maximum quantity allowed for purchase") == -1){
+											alert(data.message);
+										}
+										
+									}else{
+										if(jQuery('.top-cart')){
+											jQuery('.top-cart').replaceWith(data.sidebar);
+										}
+									}
+									jQuery('body').append('<div class="add-to-cart-success">' + data.message +' <br /><a href="http://store.latimes.com/checkout/cart/"><span>View Cart</span></a><a href="#" class="btn-remove"><i class="fa fa-times" /></a></div>');
+									setTimeout(function () {jQuery('.add-to-cart-success').slideUp(500)}, 5000);
+									jQuery('.add-to-cart-success a.btn-remove').click(function(){
+										jQuery(this).parent().slideUp(500);
+										return false;
+									})
+								}
+							});
+						} catch (e) {
+						}
+						// End of our new ajax code
+						this.form.action = oldUrl;
+						if (e) {
+							throw e;
+						}
+					}
+				}.bind(productAddToCartForm);
+				
+				productAddToCartForm.submitLight = function(button, url){
+						if(this.validator) {
+							var nv = Validation.methods;
+							delete Validation.methods['required-entry'];
+							delete Validation.methods['validate-one-required'];
+							delete Validation.methods['validate-one-required-by-name'];
+							if (this.validator.validate()) {
+								if (url) {
+									this.form.action = url;
+								}
+								this.form.submit();
+							}
+							Object.extend(Validation.methods, nv);
+						}
+					}.bind(productAddToCartForm);
+				//]]>
+			</script><script type="text/javascript">
+//<![CDATA[
+Varien.Tabs = Class.create();
+Varien.Tabs.prototype = {
+  initialize: function(selector) {
+    var self=this;
+    $$(selector+' a').each(this.initTab.bind(this));
+  },
+
+  initTab: function(el) {
+      el.href = 'javascript:void(0)';
+      if ($(el.parentNode).hasClassName('active')) {
+        this.showContent(el);
+      }
+      el.observe('click', this.showContent.bind(this, el));
+  },
+
+  showContent: function(a) {
+    var li = $(a.parentNode), ul = $(li.parentNode);
+    ul.select('li', 'ol').each(function(el){
+      var contents = $(el.id+'_contents');
+      if (el==li) {
+        el.addClassName('active');
+        contents.show();
+      } else {
+        el.removeClassName('active');
+        contents.hide();
+      }
+    });
+  }
+}
+new Varien.Tabs('.meigee-tabs');
+//]]>
+
+$$('.meigee-tabs > li:last')[0].addClassName('last');
+</script><script type="text/javascript">
+			//<![CDATA[
+			$$('.related-checkbox').each(function(elem){
+				Event.observe(elem, 'click', addRelatedToProduct)
+			});
+
+			var relatedProductsCheckFlag = false;
+			function selectAllRelated(txt){
+				if (relatedProductsCheckFlag == false) {
+					$$('.related-checkbox').each(function(elem){
+						elem.checked = true;
+					});
+					relatedProductsCheckFlag = true;
+					txt.innerHTML="deselect all";
+					txt.addClassName('selected');
+				} else {
+					$$('.related-checkbox').each(function(elem){
+						elem.checked = false;
+					});
+					relatedProductsCheckFlag = false;
+					txt.innerHTML="select all";
+					txt.removeClassName('selected');
+				}
+				addRelatedToProduct();
+			}
+
+			function addRelatedToProduct(){
+				var checkboxes = $$('.related-checkbox');
+				var values = [];
+				for(var i=0;i<checkboxes.length;i++){
+					if(checkboxes[i].checked) values.push(checkboxes[i].value);
+				}
+				if($('related-products-field')){
+					$('related-products-field').value = values.join(',');
+				}
+			}
+			//]]>
+			jQuery(window).load(function(){
+				function relatedButtonsTop() {
+					if(jQuery('.related-wrapper-bottom').length){
+						var maxHeight = 0;
+						var titleHeight = jQuery('.related-wrapper-bottom .block-title').outerHeight();
+						jQuery('.related-wrapper-bottom li.item .product-image img').each(function() {
+							if (jQuery(this).height() > maxHeight){
+								maxHeight = jQuery(this).height();
+							}
+							jQuery('.block-related .next, .block-related .prev').css('top', (maxHeight/2) + titleHeight);
+						});
+					}
+				}
+				relatedButtonsTop();
+				jQuery(window).resize(function(){relatedButtonsTop()});
+			});
+		</script><script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-39217385-1', 'store.latimes.com');
+		
+		window.optimizely = window.optimizely || [];
+		window.optimizely.push("activateUniversalAnalytics");
+		
+        ga('set', 'anonymizeIp', true);
+                ga('require', 'displayfeatures');
+                                                                                        ga('send', 'pageview');
+                    </script><script>/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("https://assets.zendesk.com/embeddable_framework/main.js","tribunepublishing.zendesk.com");/*]]>*/</script><script type="text/javascript">
+/* <![CDATA[ */
+var google_tag_params = {
+	ecomm_prodid: "32057",
+	ecomm_pagetype: "product",
+	ecomm_totalvalue: 44.95
+};
+var google_conversion_id = 961926981;
+var google_custom_params = google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script><script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"375db550e8","applicationID":"9052009","transactionName":"Z1xTZEcCVxBVVEwNXV4WcFNBClYNG1RZEFNcVlYfRRFWB0FUTEtEWVxG","queueTime":0,"applicationTime":1056,"atts":"SxtQEg8YRB4=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html><!--{BONGOINTERNATIONAL_CURRENCY_SELECTOR_LIGHTBOX_8baf2aacbc175298c23270d47fe48914}--><!--/{BONGOINTERNATIONAL_CURRENCY_SELECTOR_LIGHTBOX_8baf2aacbc175298c23270d47fe48914}-->

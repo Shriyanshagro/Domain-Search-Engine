@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Web Services Policy Attachment for Endpoint Reference
+(WS-PAEPR)</title>
+  <style type="text/css">
+code           { font-family: monospace; }
+
+div.constraint,
+div.issue,
+div.note,
+div.notice     { margin-left: 2em; }
+
+ol.enumar      { list-style-type: decimal; }
+ol.enumla      { list-style-type: lower-alpha; }
+ol.enumlr      { list-style-type: lower-roman; }
+ol.enumua      { list-style-type: upper-alpha; }
+ol.enumur      { list-style-type: upper-roman; }
+
+
+div.exampleInner pre { margin-left: 1em;
+                       margin-top: 0em; margin-bottom: 0em}
+div.exampleOuter {border: 4px double gray;
+                  margin: 0em; padding: 0em}
+div.exampleInner { background-color: #d5dee3;
+                   border-top-width: 4px;
+                   border-top-style: double;
+                   border-top-color: #d3d3d3;
+                   border-bottom-width: 4px;
+                   border-bottom-style: double;
+                   border-bottom-color: #d3d3d3;
+                   padding: 4px; margin: 0em }
+div.exampleWrapper { margin: 4px }
+div.exampleHeader { font-weight: bold;
+                    margin: 4px}
+  </style>
+  <link type="text/css" rel="stylesheet"
+ href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM.css">
+</head>
+<body>
+<div class="head">
+<p><a href="http://www.w3.org/"><img alt="W3C"
+ src="http://www.w3.org/Icons/w3c_home" height="48" width="72"></a><a
+ href="http://www.w3.org/Submission/"><img
+ src="http://www.w3.org/Icons/member_subm" alt="W3C Member Submission"
+ height="48" width="211"></a></p>
+<h1><a id="title" name="title"></a>Web Services Policy Attachment for
+Endpoint Reference (WS-PAEPR)</h1>
+<h2><a id="w3c-doctype" name="w3c-doctype"></a>W3C Member Submission 20
+July 2007</h2>
+<dl>
+  <dt>This version:</dt>
+  <dd> <a
+ href="http://www.w3.org/Submission/2007/SUBM-WS-PAEPR-20070720">http://www.w3.org/Submission/2007/SUBM-WS-PAEPR-20070720</a>
+  </dd>
+  <dt>Latest version:</dt>
+  <dd> <a href="http://www.w3.org/Submission/WS-PAEPR">http://www.w3.org/Submission/WS-PAEPR</a>
+  </dd>
+  <dt>Authors:</dt>
+  <dd>Glen Daniels, Progress Software Corporation</dd>
+  <dd>Frederick Hirsch, Nokia</dd>
+  <dd>Anish Karmarkar, Oracle</dd>
+  <dd>Mark Little, JBoss</dd>
+  <dd>Ashok Malhotra (editor), Oracle</dd>
+  <dd>Gilbert Pilz, BEA Systems, Inc.</dd>
+</dl>
+Copyright © 2007 <a href="http://www.bea.com">BEA Systems, Inc.</a>, <a
+ href="http://www.nokia.com">Nokia</a>, <a href="http://www.oracle.com">Oracle</a>,
+<a href="http://www.progresssoftware.com">Progress Software Corporation</a>,
+<a href="http://www.jboss.com">JBoss</a>. All rights reserved. This
+document is available under the <a
+ href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C
+Document License</a>. See the <a
+ href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C
+Intellectual Rights Notice and Legal Disclaimers</a> for additional
+information. </div>
+<hr>
+<div>
+<h2><a id="abstract" name="abstract"></a>Abstract</h2>
+<p> The <a href="#WS-Addressing">[WS-Addressing]</a> recommendation
+defines a mechanism for associating metadata with an endpoint
+reference. This metadata can be used to define the "the behavior,
+policies and capabilities of the endpoint." This note defines the
+semantics of including Policies and Policy References as defined by
+<a href="#WS-Policy-Framework">[WS-Policy Framework]</a> within the
+metadata property of an endpoint reference.</p>
+</div>
+<div>
+<h2><a id="status" name="status"></a>Status of this Document</h2>
+<p> <em>This section describes the status of this document at the time
+of its publication. Other documents may supersede this document. A list
+of current W3C publications can be found in the <a
+ href="http://www.w3.org/TR/">W3C technical reports index</a> at
+http://www.w3.org/TR/.</em> </p>
+<p>By publishing this document, W3C acknowledges that the <a
+ href="http://www.w3.org/Submission/2007/03">Submitting Members</a>
+have made a formal Submission request to W3C for discussion.
+Publication of this document by W3C indicates no endorsement of its
+content by W3C, nor that W3C has, is, or will be allocating any
+resources to the issues addressed by it. This document is not the
+product of a chartered W3C group, but is published as potential input
+to the <a href="http://www.w3.org/2005/10/Process-20051014/">W3C
+Process</a>. A <a href="http://www.w3.org/Submission/2007/03/Comment">W3C
+Team Comment</a> has been published in conjunction with this Member
+Submission. Publication of acknowledged Member Submissions at the W3C
+site is one of the benefits of <a
+ href="http://www.w3.org/Consortium/join">W3C Membership</a>. Please
+consult the requirements associated with Member Submissions of <a
+ href="http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">section
+3.3 of the W3C Patent Policy</a>. Please consult the complete list of
+acknowledged <a href="http://www.w3.org/Submission">W3C Member
+Submissions</a>. </p>
+</div>
+<div class="toc">
+<h2><a id="contents" name="contents"></a>Table of Contents</h2>
+<p class="toc">1 <a href="#introduction">Introduction</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.1 <a href="#notational">Notational
+Conventions</a><br>
+2 <a href="#Associating">Associating Policies with Endpoint References</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;2.1 <a href="#syntax">Syntax</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;2.2 <a href="#PolicyScope">Scope of Effective
+Policy</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;2.3 <a href="#OtherScopes">Calculating
+Effective Policy for Other Policy Scopes</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;2.4 <a href="#MetadataInfoValidity">Validity
+of Metadata Information</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;2.5 <a href="#SecurityConsiderations">Security
+Considerations</a><br>
+3 <a href="#References">References</a><br>
+</p>
+</div>
+<hr>
+<div class="body">
+<div class="div1">
+<h2><a id="introduction" name="introduction"></a>1 Introduction</h2>
+<p> The <a href="#WS-Addressing">[WS-Addressing]</a> Recommendation
+defines an XML Infoset-based representation for specifying endpoint
+references. The XML syntax is as below: </p>
+<div class="exampleInner">
+<pre>&lt;wsa:EndpointReference&gt;<br>    &lt;wsa:Address&gt;xs:anyURI&lt;/wsa:Address&gt;<br>    &lt;wsa:ReferenceParameters&gt;xs:any*&lt;/wsa:ReferenceParameters&gt;?<br>    &lt;wsa:Metadata&gt;xs:any*&lt;/wsa:Metadata&gt;?<br>&lt;/wsa:EndpointReference&gt;</pre>
+</div>
+<p>Note that the Metadata element allows child elements from any
+namespace. Typically, these are used to include WSDL definitions that
+apply to that endpoint as well as Policies or Policy References that
+apply to that endpoint. The <a href="#WS-Addressing-Metadata">[WS-Addressing
+Metadata]</a> specification defines how to include WSDL metadata in an
+EPR's metadata section.</p>
+<p>This document defines how to include Policies and Policy References
+within the Metadata element as well as the semantics of such inclusion.
+We also discuss the semantics of Policies and Policy References
+directly included within the Metadata element in combination with
+Policies and Policy References included within WSDL definitions that
+are also included in the Metadata element.
+</p>
+<p>This specification discusses how to associate Policies with
+endpoints. It does not discuss how such Policies can be used. The <a
+ href="http://www.w3.org/2002/ws/policy/"> WS-Policy Working Group</a>
+has published several documents (<a href="#WS-Policy-Attachment">[WS-Policy
+Attachment]</a>, <a href="#WS-Policy-Primer">[WS-Policy Primer]</a>, <a
+ href="#WS-Policy-Guidelines">[WS-Policy Guidelines]</a>) that describe
+how Policies can be used.</p>
+<div class="div2">
+<h3><a id="notational" name="notational"></a>1.1 Notational Conventions</h3>
+<p>The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are to be interpreted as described in <a href="#rfc2119">[IETF
+RFC 2119]</a>. </p>
+<p>This specification uses namespace prefixes that are listed in Table
+1. Note that the choice of any namespace prefix is arbitrary and not
+semantically significant (see <a href="#XMLInfoSet">[XML Information
+Set]</a>). </p>
+<a id="tabnsprefixes" name="tabnsprefixes"></a>
+<table
+ summary="Mapping of prefixes used in this document to their associated       namespace name"
+ border="1">
+  <caption>Table 1. Prefixes and Namespaces used in this specification</caption><tbody>
+    <tr>
+      <th>Prefix</th>
+      <th>Namespace</th>
+      <th>Definition</th>
+    </tr>
+    <tr>
+      <td>wsa</td>
+      <td>http://www.w3.org/2005/08/addressing</td>
+      <td>WS-Addressing</td>
+    </tr>
+    <tr>
+      <td>wsp</td>
+      <td>http://www.w3.org/ns/ws-policy
+      </td>
+      <td>WS-Policy</td>
+    </tr>
+    <tr>
+      <td>xs</td>
+      <td>http://www.w3.org/2001/XMLSchema</td>
+      <td>XML Schema - Structures</td>
+    </tr>
+  </tbody>
+</table>
+<p>Namespace names of the general form "http://example.org/..." and
+"http://example.com/..." represent application or context-dependent
+URIs (see <a href="#rfc3986">[IETF RFC 3986]</a>). </p>
+<p>All parts of this specification are normative, with the exception of
+examples and sections explicitly marked as "Non-Normative". </p>
+<p>This specification uses XML syntax. Translation to the Infoset Model
+is straightforward.
+</p>
+<p>This specification uses BNF-style conventions for specifying syntax:
+"?" denotes zero or one occurrence , "*" denotes zero or more
+occurrences, "+" one or more occurrences, "(" and ")" are used to form
+groups, and "|" represents choice.
+</p>
+</div>
+</div>
+<div class="div1">
+<h2><a id="Associating" name="Associating"></a>2 Associating Policies
+with Endpoint References</h2>
+<div class="div2">
+<h3><a id="syntax" name="syntax"></a>2.1 Syntax</h3>
+<p>Policy or Policy Reference MAY appear as direct children of the
+Metadata element.</p>
+<div class="exampleInner">
+<pre>&lt;wsa:EndpointReference&gt;<br>    &lt;wsa:Address&gt;xs:anyURI&lt;/wsa:Address&gt;<br>    &lt;wsa:ReferenceParameters&gt;xs:any*&lt;/wsa:ReferenceParameters&gt;<br>    &lt;wsa:Metadata&gt;<br>      <strong>( &lt;wsp:Policy ...&gt; ... &lt;/wsp:Policy&gt; |<br>          &lt;wsp:PolicyReference ...&gt; ... &lt;/wsp:PolicyReference&gt; )?</strong>
+        ...
+    &lt;/wsa:Metadata&gt;
+&lt;/wsa:EndpointReference&gt;</pre>
+</div>
+<p>If multiple alternatives are desired as part of this single Policy,
+the
+operators defined in <a href="#WS-Policy-Framework">[WS-Policy
+Framework]</a> can be used to specify such a structure.
+</p>
+</div>
+<div class="div2">
+<h3><a id="PolicyScope" name="PolicyScope"></a>2.2 Scope of Effective
+Policy</h3>
+<p>The scope of the Effective Policy calculated above is the endpoint
+referenced by the endpoint reference. Policy scope is defined in <a
+ href="#WS-Policy-Attachment">[WS-Policy Attachment]</a>.</p>
+</div>
+<div class="div2">
+<h3><a id="OtherScopes" name="OtherScopes"></a>2.3 Calculating
+Effective Policy for Other Policy Scopes</h3>
+<p>As mentioned above, the Metadata element within an endpoint
+reference can contain, as children, WSDL (1.1 and 2.0) definitions in
+addition to Policies and Policy References. Details are discussed in
+Section 2.1 of <a href="#WS-Addressing-Metadata">[WS-Addressing
+Metadata]</a>. These definitions can, in turn, have Policies and Policy
+References associated with them. Specifically, WSDL 2.0 Service and
+Interface and WSDL 1.1 Port Type and Service definitions can appear
+within the Metadata element of an Endpoint. The Effective Policy for
+the endpoint must be computed by combining the Policies and Policy
+References that appear as direct children of the Metadata element with
+the Policies an Policies References that are associated with WSDL
+definitions that appear within the Metadata element. The algorithms for
+computing the Effective Policy in such situations is discussed in
+<a
+ href="http://www.w3.org/TR/2007/CR-ws-policy-attach-20070330/#AttachingPolicyUsingWSDL1.1">Section
+4</a> and
+<a
+ href="http://www.w3.org/TR/2007/CR-ws-policy-attach-20070330/#ws-policy-attachment-for-wsdl20">Section
+5</a> of
+<a href="#WS-Policy-Attachment">[WS-Policy Attachment]</a>
+</p>
+</div>
+<div class="div2">
+<h3><a id="MetadataInfoValidity" name="MetadataInfoValidity"></a>2.4
+Validity of Metadata Information</h3>
+<p>The <a href="#WS-Addressing">[WS-Addressing]</a> specification
+discusses caveats to the validity of Metadata information. These apply
+to Policies embedded within the Metadata element as discussed in this
+document and bear repeating in full:
+</p>
+<blockquote>
+  <p><em>
+  <p>The metadata embedded in an EPR is not necessarily a complete
+statement of the metadata pertaining to the endpoint. Moreover, while
+embedded metadata is necessarily valid at the time the EPR is initially
+created it may become stale at a later point in time.</p>
+  <p>
+To deal with conflicts between the embedded metadata of two EPRs that
+have the same [address], or between embedded metadata and metadata
+obtained from a different source, or to ascertain the current validity
+of embedded metadata, mechanisms that are outside of the scope of this
+specification, such as EPR life cycle information ... or retrieval of
+metadata from an authoritative source, SHOULD be used.
+  </p>
+  </em></p>
+</blockquote>
+</div>
+<div class="div2">
+<h3><a id="SecurityConsiderations" name="SecurityConsiderations"></a>2.5
+Security Considerations</h3>
+<p>Section 5 of the <a href="#WS-Policy-Framework">[WS-Policy
+Framework]</a> specification spells out in detail security
+considerations when using Policies. These apply equally to Policies
+specified within the Metadata element of an Endpoint Reference as
+discussed in this document.</p>
+<p>Section 4 of the <a href="#WS-Addressing">[WS-Addressing]</a>
+specification spells out in detail security considerations when using
+endpoint references. These apply equally to Policies specified within
+the Metadata element of an endpoint reference as discussed in this
+document.</p>
+</div>
+</div>
+<div class="div1">
+<h2><a id="References" name="References"></a>3 References</h2>
+<dl>
+  <dt class="label"><a id="rfc3986" name="rfc3986"></a>IETF RFC 3986</dt>
+  <dd> <a href="http://www.ietf.org/rfc/rfc3986.txt"><cite>Uniform
+Resource Identifiers (URI): Generic Syntax</cite></a>, T. Berners-Lee,
+R. Fielding, L. Masinter. Network Working Group, January 2005. (See
+http://www.ietf.org/rfc/rfc3986.txt.)</dd>
+  <dt class="label"><a id="rfc2119" name="rfc2119"></a>IETF RFC 2119</dt>
+  <dd> <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words
+for use in RFCs to Indicate Requirement Levels</cite></a>, S. Bradner,
+Author. Internet Engineering Task Force, June 1999. (See
+http://www.ietf.org/rfc/rfc2119.txt.)</dd>
+  <dt class="label"><a id="WS-Addressing" name="WS-Addressing"></a>WS-Addressing</dt>
+  <dd> <a href="http://www.w3.org/TR/2006/REC-ws-addr-core-20060509/"><cite>WS-Addressing
+1.0 - Core</cite></a>, Martin Gudgin, Marc Hadley, Tony Rogers. W3C
+Recommendation, 9 May 2006. (See
+http://www.w3.org/TR/2006/REC-ws-addr-core-20060509/.)</dd>
+  <dt class="label"><a id="WS-Addressing-Metadata"
+ name="WS-Addressing-Metadata"></a>WS-Addressing Metadata</dt>
+  <dd> <a
+ href="http://www.w3.org/TR/2007/WD-ws-addr-metadata-20070627/"><cite>WS-Addressing
+1.0 - Metadata</cite></a>, Martin Gudgin et al, W3C Working Draft, 27
+June 2007. (See
+http://www.w3.org/TR/2007/WD-ws-addr-metadata-20070627/.)</dd>
+  <dt class="label"><a id="WS-Policy-Framework"
+ name="WS-Policy-Framework"></a>WS-Policy Framework</dt>
+  <dd> <a href="http://www.w3.org/TR/2007/PR-ws-policy-20070706/"><cite>Web
+Services Policy 1.5 - Framework</cite></a>, Asir Vedamuthu et al, W3C
+Proposed Recommendation, July 06, 2007. (See
+http://www.w3.org/TR/2007/PR-ws-policy-20070706/.)</dd>
+  <dt class="label"><a id="WS-Policy-Attachment"
+ name="WS-Policy-Attachment"></a>WS-Policy Attachment</dt>
+  <dd> <a
+ href="http://www.w3.org/TR/2007/PR-ws-policy-attach-20070706/"><cite>Web
+Services Policy 1.5 - Attachment</cite></a>, Asir Vedamuthu et al, W3C
+Proposed Recommendation, July 06, 2007. (See
+http://www.w3.org/TR/2007/PR-ws-policy-attach-20070706/.)</dd>
+  <dt class="label"><a id="WS-Policy-Primer" name="WS-Policy-Primer"></a>WS-Policy
+Primer</dt>
+  <dd> <a
+ href="http://www.w3.org/TR/2007/WD-ws-policy-primer-20070605/"><cite>Web
+Services Policy 1.5 - Primer</cite></a>, Asir Vedamuthu et al, W3C
+Working Draft, June 05, 2007. (See
+http://www.w3.org/TR/2007/WD-ws-policy-primer-20070605/.)</dd>
+  <dt class="label"><a id="WS-Policy-Guidelines"
+ name="WS-Policy-Guidelines"></a>WS-Policy Guidelines</dt>
+  <dd> <a
+ href="http://www.w3.org/TR/2007/WD-ws-policy-guidelines-20070330/"><cite>Web
+Services Policy 1.5 - Guidelines for Policy Assertion Authors</cite></a>,
+Asir Vedamuthu et al, W3C Working Draft, March 30, 2007. (See
+http://www.w3.org/TR/2007/WD-ws-policy-guidelines-20070330/.)</dd>
+  <dt class="label"><a id="XMLInfoSet" name="XMLInfoSet"></a>XML
+Information Set</dt>
+  <dd> <a href="http://www.w3.org/TR/2004/REC-xml-infoset-20040204/"><cite>XML
+Information Set (Second Edition)</cite></a>, J. Cowan and R. Tobin, W3C
+Recommendation, February 04, 2004, revised October 24. (See
+http://www.w3.org/TR/2004/REC-xml-infoset-20040204/.)</dd>
+</dl>
+</div>
+</div>
+</body>
+</html>

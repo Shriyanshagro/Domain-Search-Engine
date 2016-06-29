@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="http://developerblog.redhat.com/xmlrpc.php">
+<link rel="shortcut icon" href="https://s0.wp.com/wp-content/themes/vip/rh-parent/favicon.ico">
+<title>Beyond Microbenchmarks: breakthrough container performance with Tesla efficiency &#8211; Red Hat Developer Blog</title>
+<meta name="google-site-verification" content="Ocoat8blfz5Jot2ko7o8Ya8nwQ0w93U2TXYgbYAN6ss" />
+		<script src='https://r-login.wordpress.com/remote-login.php?action=js&amp;host=developerblog.redhat.com&amp;id=43520001&amp;t=1462468296&amp;back=http%3A%2F%2Fdeveloperblog.redhat.com%2F2014%2F10%2F21%2Fbeyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency%2F' type="text/javascript"></script>
+		<script type="text/javascript">
+		/* <![CDATA[ */
+			if ( 'function' === typeof WPRemoteLogin ) {
+				document.cookie = "wordpress_test_cookie=test; path=/";
+				if ( document.cookie.match( /(;|^)\s*wordpress_test_cookie\=/ ) ) {
+					WPRemoteLogin();
+				}
+			}
+		/* ]]> */
+		</script>
+		<link rel="dns-prefetch" href="//connect.facebook.net" />
+<link rel="alternate" type="application/rss+xml" title="Red Hat Developer Blog &raquo; Feed" href="http://developers.redhat.com/blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Red Hat Developer Blog &raquo; Comments Feed" href="http://developers.redhat.com/blog/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Red Hat Developer Blog &raquo; Beyond Microbenchmarks: breakthrough container performance with Tesla&nbsp;efficiency Comments Feed" href="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+	<link rel='stylesheet' id='all-css-0' href='https://s0.wp.com/_static/??-eJx9j9FOwzAMRX+IzBoMxB4Q39KmXuotjq3apdrfk1ANBEN9seyre2xfWDREKY7FgeegeU5UDBaNwsGYMl7/TLto9gD/Y5kuaHBG1y5ewtd0Z++zpB9AUsJBZg8nyVkWWGhI6Fs3okxYddbOm4NxoA4zcrVtYawvN6q1Y31wM8qaue91QrNQK9PMwcd6aJOrVHtlDQ/V+FtZUYIiTpW27+Zu53oKPkhhGoN2UxPbPvNrxh1Tacg7v+0Pz8fHw/749Hr+BLOYrUM=' type='text/css' media='all' />
+<link rel='stylesheet' id='static-red-hat-css'  href='https://static.jboss.org/rhd/1.2-build-1865/stylesheets/app.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rh-fontawesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css?ver=4.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='all-css-4' href='https://s2.wp.com/_static/??-eJx9kNEOgjAMRX/I0YiovBi/Zcy5jXTrsg6Mfy8TEoMJvLS9zT1NW3hFoShkHTJkq71mGF2EZEWUqTQVM3B+o668C9WkDrCJPPQoOiSzAP9mP4iIg3GBQXvq3Rz3bEaTQFIyOworIZ4oXdpDky6bTKX5nvCTe1AkzvNoYCtTgZe8RzEpJ3HazdBabL3LNmCQOonFcPe3Y3Op6/Z6PrX9B9lTlMc=' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyNkGFOwzAMhS9EmhWNiT+Is6Sp57k4cUicdeP0SzUmwagAyVKs589PL7ZzMhQ91xGKnVq9V8jnz6ebyoP9DTCBMDuFLlC8wV6iQtSFDTIQg6kFssOmNaO9rHBJigYopUEr0++RKB4J5j+xCTQ5/2YyFPr44TqwoElckWKxrUcYparZC7PMdqYRQe939AAtoz1SsrfNNkURbF900fFZya9q/3BiwoMOclpCfTlz54UlL/r1wK/hpd/u+s1z/7h7mi5poacu'></script>
+<script type='text/javascript' src='http://static.jboss.org/rhd/1.2-build-1865/javascripts/vendor/modernizr-custom.js?ver=4.5.1'></script>
+<link rel='stylesheet' id='all-css-0' href='https://s1.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1377793621h' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s1.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://rhdevelopers.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/" />
+<link rel='shortlink' href='http://wp.me/p2WBxv-1JKT' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=json&amp;url=http%3A%2F%2Fdevelopers.redhat.com%2Fblog%2F2014%2F10%2F21%2Fbeyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=xml&amp;url=http%3A%2F%2Fdevelopers.redhat.com%2Fblog%2F2014%2F10%2F21%2Fbeyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Beyond Microbenchmarks: breakthrough container performance with Tesla efficiency" />
+<meta property="og:url" content="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/" />
+<meta property="og:description" content="Back story As virtualization was beginning it&#8217;s march to prominence, we saw a phased approach to adoption.  This is common with any sort of game changing technology&#8230;.let&#8217;s take el…" />
+<meta property="article:published_time" content="2014-10-21T12:48:06+00:00" />
+<meta property="article:modified_time" content="2014-10-21T14:54:08+00:00" />
+<meta property="og:site_name" content="Red Hat Developer Blog" />
+<meta property="og:image" content="https://rhdevelopers.files.wordpress.com/2014/10/multiple-workloads.png" />
+<meta property="og:image:width" content="831" />
+<meta property="og:image:height" content="622" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@rhdevelopers" />
+<meta name="twitter:image" content="https://rhdevelopers.files.wordpress.com/2014/10/tesla.jpg?w=240" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@rhdevelopers" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+<link rel='openid.server' href='http://rhdevelopers.wordpress.com/?openidserver=1' />
+<link rel='openid.delegate' href='http://rhdevelopers.wordpress.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="http://developerblog.redhat.com/osd.xml" title="Red Hat Developer Blog" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<script type="text/javascript">
+jQuery(function($){
+  $.fn.colorbox.settings.transition = "elastic";
+  $.fn.colorbox.settings.speed = 350;
+  $.fn.colorbox.settings.maxWidth = "45%";
+  $.fn.colorbox.settings.maxHeight = "false";
+  $.fn.colorbox.settings.resize = true;
+  $.fn.colorbox.settings.opacity = 0.8;
+  $.fn.colorbox.settings.preloading = true;
+  $.fn.colorbox.settings.current = "Image {current} of {total}";
+  $.fn.colorbox.settings.previous = "previous";
+  $.fn.colorbox.settings.next = "next";
+  $.fn.colorbox.settings.close = "close";
+  $.fn.colorbox.settings.overlayClose = true;
+  $.fn.colorbox.settings.slideshow = false;
+  $.fn.colorbox.settings.slideshowAuto = true;
+  $.fn.colorbox.settings.slideshowSpeed = 2500;
+  $.fn.colorbox.settings.slideshowStart =  "start";
+  $.fn.colorbox.settings.slideshowStop = "stop";
+  $("a[rel*='lightbox']").colorbox();
+});
+</script>
+<link rel="stylesheet" type="text/css" href="https://s0.wp.com/wp-content/themes/vip/plugins/lightbox-plus//css/shadowed/colorbox.css" media="screen" />
+<!--[if IE]>
+     <link type="text/css" media="screen" rel="stylesheet" href="https://s0.wp.com/wp-content/themes/vip/plugins/lightbox-plus//css/shadowed/colorbox-ie.css" title="IE fixes" />
+<![endif]-->
+		<style type="text/css" media="screen">
+			.widget_author_grid ul { overflow: hidden; }
+			.widget_author_grid ul li { background: none !important; clear: none !important; float: left !important; margin: 0 -5px -3px 0 !important; padding: 0 8px 6px 0 !important; border: none !important; list-style: none !important; }
+			.widget_author_grid ul li a { background: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
+			.widget_author_grid .avatar { vertical-align: middle; }
+		</style>
+				<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Red Hat Developer Blog" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Insights and news on Red Hat developer tools, platforms and more" /><meta name="msapplication-task" content="name=Subscribe;action-uri=http://developers.redhat.com/blog/feed/;icon-uri=http://0.gravatar.com/blavatar/2c55814562d7bc9c275292b4e4f4eb81?s=16" /><link rel="amphtml" href="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/amp/" /><style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+</script>
+</head>
+
+<body class="single single-post postid-414215 single-format-standard mp6 customizer-styles-applied group-blog highlander-enabled highlander-light">
+<header class="main clearfix"><div class="row header-wrap">
+<nav class="accounts"><ul>
+<li class="login"><a>Log In</a></li>
+<li class="register"><a>Register</a></li>
+<li class="logged-in"><a class="logged-in-name" href="#"></a></li>
+<li class="logged-in"><a class="logout" href="http://developers.redhat.com">Logout</a></li>
+</ul></nav><div class="logo-wrap">
+<h1 class="logo"><a href="http://developers.redhat.com" title="Red Hat Developers"><img src="//static.jboss.org/rhd/fonts/images_design_RHD-logo-2.svg" alt="Red Hat Developers"></a></h1>
+<a class="nav-toggle" href="#">Menu<i class="fa fa-angle-down"></i></a>
+</div>
+<nav class="mega-menu"><ul>
+<li class="has-sub-nav">
+<a href="#">Topics<i class="fa fa-angle-down"></i></a><div class="sub-nav" id="sub-nav-topics">
+<a href="http://developers.redhat.com/containers">Containers</a><a href="http://developers.redhat.com/mobile">Mobile</a><a href="http://developers.redhat.com/devops">DevOps</a><a href="http://developers.redhat.com/web-and-api-development">Web and API Development</a><a href="http://developers.redhat.com/enterprise-java">Enterprise Java</a><a href="http://developers.redhat.com/dotnet">.NET</a>
+</div>
+</li>
+<li class="has-sub-nav">
+<a href="#">Technologies<i class="fa fa-angle-down"></i></a><div class="sub-nav" id="sub-nav-technologies">
+<div class="sub-nav-group">
+<a class="heading" href="http://developers.redhat.com/products#infrastructure_management">Infrastructure</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/rhel/overview/">Red Hat Enterprise Linux</a><a class="hide-on-mobile indent" href="http://developers.redhat.com/products/developertoolset/overview/">Red Hat Developer Toolset</a><a class="hide-on-mobile indent" href="http://developers.redhat.com/products/softwarecollections/overview/">Red Hat Software Collections</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/cdk/overview/">Red Hat Container Development Kit</a>
+</div>
+<div class="sub-nav-group">
+<a class="heading" href="http://developers.redhat.com/products#cloud_products">Cloud</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/openshift/overview/">OpenShift Enterprise by Red Hat</a>
+</div>
+<div class="sub-nav-group">
+<a class="heading" href="http://developers.redhat.com/products#mobile">Mobile</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/mobileplatform/overview/">Red Hat Mobile Application Platform</a>
+</div>
+<div class="sub-nav-group">
+<a class="heading" href="http://developers.redhat.com/products#jboss_development_and_management">Middleware</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/devstudio/overview/">Red Hat JBoss Developer Studio</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/eap/overview/">Red Hat JBoss Enterprise Application Platform</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/fuse/overview/">Red Hat JBoss Fuse</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/webserver/overview/">Red Hat JBoss Web Server</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/bpmsuite/overview/">Red Hat JBoss BPM Suite</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/brms/overview/">Red Hat JBoss BRMS</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/datagrid/overview/">Red Hat JBoss Data Grid</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/amq/overview/">Red Hat JBoss A-MQ</a><a class="hide-on-mobile" href="http://developers.redhat.com/products/datavirt/overview/">Red Hat JBoss Data Virtualization</a>
+</div>
+</div>
+</li>
+<li class="has-sub-nav">
+<a href="#">Community<i class="fa fa-angle-down"></i></a><div class="sub-nav pull-right" id="sub-nav-community">
+<a href="http://developers.redhat.com/blog">Developers Blog<span class="page-description">Insights &amp; news on Red Hat developer tools, platforms and more</span></a><a href="http://developers.redhat.com/events">Events<span class="page-description">Find the latest conferences, meetups, and virtual seminars</span></a><div class="sub-nav-group"><a href="http://developers.redhat.com/projects">Open Source Communities<span class="page-description">Community Projects that Red Hat participates in</span></a></div>
+<a href="http://developers.redhat.com/community/contributor/">Content Contributors<span class="page-description">Share your knowledge. Contribute content to Red Hat Developers.</span></a>
+</div>
+</li>
+<li><a href="http://developers.redhat.com/resources/">Resources</a></li>
+<li><a href="http://developers.redhat.com/downloads/">Downloads</a></li>
+</ul></nav>
+</div></header><div id="page" class="hfeed site">
+	<a class="skip-link visuallyhidden" href="#content">Skip to content</a>
+  
+ <!-- RED HAT BLOG MARQUEE -->
+  <div class="row blog-header">
+    <div class=" blog-marquee">
+        <h1>Blog</h1>
+        <h2>Insights and news on Red Hat developer tools, platforms and more</h2>
+    </div>
+  </div>
+    <!-- /RED HAT BLOG MARQUEE -->
+  
+  	<nav id="site-navigation" class="main-navigation" role="navigation">
+		<div class="container">
+			<div class="menu-primary-container"><ul id="primary-menu" class="primary-nav"><li id="menu-item-415820" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-415820"><a href="http://developerblog.redhat.com">Home</a></li>
+<li id="menu-item-421642" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-421642"><a href="#">Articles &amp; Topics</a>
+<ul class="sub-menu">
+	<li id="menu-item-420733" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-420733"><a href="http://developers.redhat.com/blog/category/red-hat-enterprise-linux/">RHEL</a></li>
+	<li id="menu-item-420734" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420734"><a href="http://developers.redhat.com/blog/category/jboss/">JBoss</a></li>
+	<li id="menu-item-420736" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420736"><a href="http://developers.redhat.com/blog/category/openshift/">OpenShift</a></li>
+	<li id="menu-item-421831" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-421831"><a href="http://developers.redhat.com/blog/category/mobile/">Mobile</a></li>
+	<li id="menu-item-421022" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-421022"><a href="http://developers.redhat.com/blog/category/java/">Java</a></li>
+	<li id="menu-item-420738" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420738"><a href="http://developers.redhat.com/blog/category/net/">.NET</a></li>
+	<li id="menu-item-420737" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-420737"><a href="http://developers.redhat.com/blog/category/containers/">Containers</a></li>
+	<li id="menu-item-420739" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420739"><a href="http://developers.redhat.com/blog/category/devops/">DevOps</a></li>
+	<li id="menu-item-420741" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-420741"><a href="http://developers.redhat.com/blog/category/performance-2/">Performance</a></li>
+</ul>
+</li>
+</ul></div>		</div>
+	</nav><!-- #site-navigation -->
+
+    <div id="navDropdownContainer" class="blog-nav-dropdown">
+
+    </div><!-- / .blog-nav-dropdown -->
+  
+	<div id="content" class="site-content">
+		<div class="container main-body-container">
+			<div class="row">
+	<div id="primary" class="content-area col-sm-12 col-md-8">
+		<main id="main" class="site-main" role="main">
+
+		
+			
+<article id="post-414215" class="post-414215 post type-post status-publish format-standard hentry category-containers category-performance-2 category-red-hat-enterprise-linux tag-containers tag-performance tag-rhel">
+    <div class="entry-content">
+        
+		<h1 class="entry-title">Beyond Microbenchmarks: breakthrough container performance with Tesla&nbsp;efficiency</h1>
+		<div class="entry-meta">
+			<div class="posted-on">Posted  by <a href="http://developers.redhat.com/blog/author/jeremyeder/">Jeremy Eder</a> on <time class="entry-date published" datetime="2014-10-21T08:48:06+00:00">October 21, 2014</time><time class="updated" datetime="2014-10-21T10:54:08+00:00">October 21, 2014</time></div>		</div><!-- .entry-meta -->
+
+
+		<h1><b>Back story</b></h1>
+<p>As virtualization was beginning it&#8217;s march to prominence, we saw a phased approach to adoption.  This is common with any sort of game changing technology&#8230;.let&#8217;s take electric cars as an example.  Early adopters are willing to make certain trade-offs (short range) to gain new capabilities (saving money at the gas station).</p>
+<p><a href="https://rhdevelopers.files.wordpress.com/2014/10/tesla.jpg"><img class="size-medium wp-image-414304 aligncenter" src="https://rhdevelopers.files.wordpress.com/2014/10/tesla.jpg?w=300&#038;h=200" alt="tesla" width="300" height="200" /></a>In the meantime, engineers are off in the lab working hard to increase the possible consumer-base for electric cars by increasing range, decreasing charging cycle times, and improving performance.  Taken in aggregate, those changes are meant to address objections to the first-cut of the technology.</p>
+<h1><b>Virtualization is to Linux containers is to&#8230;</b></h1>
+<p><span id="more-414215"></span></p>
+<p>Much like the electric car, Linux container technology is working its way through some of the same early adoption phases that virtualization technology underwent.  We have an easy-to-use implementation of Linux containers via the Docker tooling, so the on-ramp is fairly painless.  If you recall the early days of virtualization (before CPUs added hardware-assist), performance was fairly slow.  Things have changed significantly since then, with RHEL and KVM <a href="http://rhelblog.redhat.com/2014/09/09/red-hat-enterprise-linux-the-leading-platform-for-top-tier-performance/">performance leadership</a> proven through many industry benchmarks. Hardware has gotten faster, software has gotten smarter, and that has allowed virtualization to address many objections.  Virtualization grew from low risk workloads such as dev and test, to more difficult (but still out of the critical path) disaster-recovery site consolidation, to now running systems-of-record, including some of the most mission-critical workloads in the enterprise.  We expect this same pattern from Linux container technology, and that’s why we’re working hard to make sure it is not only <a href="https://opensource.com/business/14/9/security-for-docker">secure</a>, but also that it performs and scales well.</p>
+<h1><b>What more can we do?</b></h1>
+<p>As mentioned in previous <a href="https://developerblog.redhat.com/2014/08/19/performance-analysis-docker-red-hat-enterprise-linux-7/">blog posts</a>, the Performance Engineering Group at Red Hat is busy getting all sorts of workloads running in containers.  From all phases in the adoption cycle, we’re looking far ahead to ensure we&#8217;ve mine-swept major issues on our customer&#8217;s behalf.</p>
+<p><i>We&#8217;re readying the path to systems-of-record in containers.</i></p>
+<p>By solving for the toughest workloads, we indirectly address the less difficult ones.  This effort provides advanced capabilities, improved performance, and scalability to all&#8230;whether scaling vertically or horizontally.</p>
+<h1><b>The Bake-off</b></h1>
+<p>You may have seen performance results from <a href="http://en.m.wikipedia.org/wiki/Benchmark_%28computing%29#Types_of_benchmarks">micro-benchmarks</a> and early candidate apps for virtualization (web apps).  We wanted to share results from some of the toughest workloads&#8230;  the ones that can consume all of a system’s cores, memory, and bandwidth, and make storage beg for mercy.</p>
+<p>Here&#8217;s a normalized comparison of three workloads that are particularly demanding on one or more subsystems.  Bare metal is normalized to 100%, then compared to containerized results.</p>
+<p><a href="https://rhdevelopers.files.wordpress.com/2014/10/multiple-workloads.png"><img class="aligncenter size-full wp-image-414267" src="https://rhdevelopers.files.wordpress.com/2014/10/multiple-workloads.png?w=640" alt="multiple-workloads"   /></a></p>
+<ul>
+<li><b>Calculate primes:</b>  this is sysbench cpu, and the code for it is <a href="https://github.com/jeremyeder/docker-performance">here</a>.  This sits on the CPU.  I like to call this &#8220;straight line wind&#8221; performance, in that it is completely bound by individual CPU core performance.
+<ul>
+<li>The fact that this is dead-on with bare metal indicates that there is no measurable overhead for straight line wind mathematical workloads found in financial services or high performance computing industries.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><b>OLTP workload:</b>  this is a well-known transactional database.  Stresses a number of subsystems, including kernel memory management, block I/O and CPU.
+<ul>
+<li>This was frankly the most impressive result of the bunch: only 3% off bare metal is a testament to the Linux kernel namespace implementation.  This required volume storage, passed through to the container.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><b>Analytics App:</b>  this is a well-known business analytics application.
+<ul>
+<li>This workload runs for half a day, and is particularly brutal on the storage subsystem.  This again required passthrough volume storage, no surprise there as the data set and total I/O is hundreds of terabytes.</li>
+</ul>
+</li>
+</ul>
+<p>These tests were ran by our highly skilled performance engineers exercising precise attention to detail (no corners cut) to provide the most up-to-date data possible to our engineering teams. But for the record, the same equipment was used in the bare metal vs container cases.  The same storage devices were used in the bare metal case, then passed into containers for those permutations.</p>
+<h1><b>In summary&#8230;</b></h1>
+<p>Red Hat’s track record of hammering open source bits into secure, performant and reliable enterprise software is unmatched.  Applying that playbook to containers just makes sense, and the early performance data proves this a worthy goal.</p>
+<div class="category-template-wrap">
+<hr>
+<span style="color:#999999;"><strong>Join <a href="http://developers.redhat.com/products/rhel/overview/">Red Hat Developers</a>, a developer program for you to learn, share, and code faster – and get access to Red Hat software for your development.  The developer program and software are both free!</strong></span>
+</div>
+<p></p>
+<div class="category-template-wrap">
+<span style="color:#999999;padding-top:10px;"><strong>Take advantage of  your Red Hat Developers membership and <a href="http://developers.redhat.com/products/rhel/download/" target="_blank">download RHEL</a> today at no cost.</strong></span>
+</div>
+<p></p>
+<div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Rate this:</h3><div class="pd-rating" id="pd_rating_holder_6530569_post_414215"></div></div><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-414215" class="share-twitter sd-button share-icon" href="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-414215" class="share-facebook sd-button share-icon" href="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-reddit"><a rel="nofollow" data-shared="" class="share-reddit sd-button share-icon" href="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/?share=reddit" target="_blank" title="Click to share on Reddit"><span>Reddit</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-414215" class="share-google-plus-1 sd-button share-icon" href="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-linkedin"><a rel="nofollow" data-shared="sharing-linkedin-414215" class="share-linkedin sd-button share-icon" href="http://developers.redhat.com/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-43520001-414215-572b7ec81809d' data-src='//widgets.wp.com/likes/#blog_id=43520001&amp;post_id=414215&amp;origin=rhdevelopers.wordpress.com&amp;obj_id=43520001-414215-572b7ec81809d' data-name='like-post-frame-43520001-414215-572b7ec81809d'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+		<span class="cat-links">Posted in <a href="http://developers.redhat.com/blog/category/containers/" rel="category tag">Containers</a> <a href="http://developers.redhat.com/blog/category/performance-2/" rel="category tag">Performance</a> <a href="http://developers.redhat.com/blog/category/red-hat-enterprise-linux/" rel="category tag">Red Hat Enterprise Linux</a></span><span class="tags-links"><a href="http://developers.redhat.com/blog/tag/containers/" rel="tag">containers</a> <a href="http://developers.redhat.com/blog/tag/performance/" rel="tag">performance</a> <a href="http://developers.redhat.com/blog/tag/rhel/" rel="tag">RHEL</a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+			
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+					</h2>
+
+		
+		<ol class="comment-list">
+					<li id="comment-49970" class="pingback even thread-even depth-1 highlander-comment">
+			<div class="comment-body">
+				Pingback: <a href='http://rhelblog.redhat.com/2014/10/29/containerizing-databases-with-red-hat-enterprise-linux/' rel='external nofollow' class='url'>Containerizing Databases with Red Hat Enterprise Linux | Red Hat Enterprise Linux Blog</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-51694" class="pingback odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<div class="comment-body">
+				Pingback: <a href='http://www.btechinternship.in/containerizing-databases-red-hat-enterprise-linux/' rel='external nofollow' class='url'>BE/B.Tech Summer Internship in Jaipur India</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-72723" class="pingback even thread-even depth-1 highlander-comment">
+			<div class="comment-body">
+				Pingback: <a href='https://blog.openshift.com/the-os-behind-the-curtain/' rel='external nofollow' class='url'>The OS Behind the Curtain &ndash; OpenShift Blog</a> 			</div>
+</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+					<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/blog/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/#respond" style="display:none;">Cancel reply</a></small></h3>				<form action="http://developerblog.redhat.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+					<input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="bcad7eec20" /><input type="hidden" name="_wp_http_referer" value="/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" title="Guest">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+			<li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://s0.wp.com/wp-content/themes/vip/rh-parent/img/rh-default-avatar.png" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="text" value="" /></div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/wp-content/themes/vip/rh-parent/img/rh-default-avatar.png" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your WordPress.com account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/wp-content/themes/vip/rh-parent/img/rh-default-avatar.png" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/wp-content/themes/vip/rh-parent/img/rh-default-avatar.png" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/wp-content/themes/vip/rh-parent/img/rh-default-avatar.png" alt="Google+ photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+				<p class="comment-form-posting-as pa-googleplus"><strong></strong> You are commenting using your Google+ account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;" tabindex="7"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='414215' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="3d246e7e4c" /></p>
+<input type="hidden" name="genseq" value="1462468296" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="100"/></p>				</form>
+					</div><!-- #respond -->
+		<div style="clear: both"></div>
+</div><!-- #comments -->
+			
+				<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links row">
+			<div class="nav-previous col-sm-6"><a href="http://developers.redhat.com/blog/2014/10/20/repost-from-opensource-com-front-and-back-end-developers-should-make-friends/" rel="prev">repost from opensource.com &#8211; Front and back-end developers should make&nbsp;friends</a></div><div class="nav-next col-sm-6"><a href="http://developers.redhat.com/blog/2014/10/22/nginx-1-4-on-red-hat-enterprise-linux-7/" rel="next">nginx 1.4 on Red Hat Enterprise Linux&nbsp;7</a></div>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="widget-area col-sm-12 col-md-4" role="complementary">
+	<aside id="search-12" class="widget widget_search"><form class="search-form" role="search" method="get" id="searchform" action="http://developerblog.redhat.com/">
+    <div class="form-group">
+    	<label class="sr-only" for="s">Search Blog</label>
+        <input type="text" placeholder="Search Blog" name="s" id="s" />
+    </div>
+        <button type="submit" class="btn">Search</button>
+</form></aside><aside id="text-2" class="widget widget_text">			<div class="textwidget"><p style="font-size:1.2em;font-weight:bold;margin-bottom:1em;">Follow us:</p>
+<ul style="list-style:none outside none;padding-bottom:30px;">
+	<li style="float:left;"><a href="https://twitter.com/#!/rheldevelop"><img src="http://rhdevelopers.files.wordpress.com/2012/12/twitter-24x24.png" alt="Twitter"></a></li>
+	<li style="float:left;"><a href="http://www.facebook.com/rheldevelop"><img style="padding-left:15px;" src="http://rhdevelopers.files.wordpress.com/2012/12/facebook-24x24.png" alt="Facebook"></a></li>
+	<li style="float:left;"><a href="https://www.linkedin.com/in/rheldevelop"><img style="padding-left:15px;" src="http://rhdevelopers.files.wordpress.com/2012/12/linkedin-24x24.png" alt="LinkedIn"></a></li>
+	<li style="float:left;"><a href="http://rhdevelopers.wordpress.com/feed/"><img style="padding-left:15px;" src="http://rhdevelopers.files.wordpress.com/2013/01/rss-02-24x24.png" alt="RSS"></a></li>
+       <li style="float:left;"><a href="https://plus.google.com/s/rhel%20develop"><img style="padding-left:15px;" src="http://rhdevelopers.files.wordpress.com/2014/02/g24x24b.png" alt="Google+"></a></li>
+</ul></div>
+		</aside><aside id="text-3" class="widget widget_text">			<div class="textwidget"><a target="_blank" class="dev-newsletter" href="https://developers.redhat.com/register"><img src="https://rhdevelopers.files.wordpress.com/2016/02/rhdev_registration_2016_310x140.png" alt="Sign up for the Developer newsletter"></a></div>
+		</aside><aside id="twitter_timeline-2" class="widget widget_twitter_timeline"><a class="twitter-timeline" data-widget-id="717445754370060288" data-theme="light" data-link-color="#f96e5b" data-border-color="#e8e8e8" data-tweet-limit="5" height="400" lang="EN">My Tweets</a></aside><aside id="linkcat-1356" class="widget widget_links"><h1 class="widget-title">Other Red Hat Blogs</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://cloudformsblog.redhat.com"><img src="https://cloudformsredhat.files.wordpress.com/2016/02/cloudforms.jpg"  alt="Cloudforms Blog"  /> Cloudforms Blog</a></li>
+<li><a href="http://middlewareblog.redhat.com"><img src="https://redhatmiddleware.files.wordpress.com/2016/02/middleware.jpg"  alt="Middleware Blog"  /> Middleware Blog</a></li>
+<li><a href="http://redhat.com/blog/mobile"><img src="https://redhatmobile.files.wordpress.com/2016/02/mobile.jpg"  alt="Mobile Blog"  /> Mobile Blog</a></li>
+<li><a href="http://redhatstackblog.redhat.com/"><img src="https://redhatstackblog.files.wordpress.com/2016/02/rhstackblog.jpg"  alt="Red Hat Stack Blog"  /> Red Hat Stack Blog</a></li>
+<li><a href="http://rhelblog.wordpress.com"><img src="https://rhelblog.files.wordpress.com/2016/02/rhel.jpg"  alt="RHEL Blog"  /> RHEL Blog</a></li>
+<li><a href="http://servicesblog.redhat.com"><img src="https://rhservices.files.wordpress.com/2016/02/services.jpg"  alt="Services Speak"  /> Services Speak</a></li>
+<li><a href="http://redhatstorage.redhat.com"><img src="https://rhstorage.files.wordpress.com/2016/02/storage.jpg"  alt="Storage Blog"  /> Storage Blog</a></li>
+<li><a href="http://redhat.com/blog/verticalindustries"><img src="https://rhverticalindustries.files.wordpress.com/2016/02/vertical-industries.jpg"  alt="Vertical Industries Blog"  /> Vertical Industries Blog</a></li>
+
+	</ul>
+</aside>
+<aside id="wp_tag_cloud-3" class="widget wp_widget_tag_cloud"><h1 class="widget-title">Popular Tags</h1><div style="overflow:hidden"><ul class='wp-tag-cloud'>
+	<li><a href='http://developers.redhat.com/blog/tag/containers/' class='tag-link-182564 tag-link-position-1' title='60 topics' style='font-size: 1em;'>containers</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/developer-toolset/' class='tag-link-163281025 tag-link-position-2' title='38 topics' style='font-size: 1em;'>developer toolset</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/devnation/' class='tag-link-141044838 tag-link-position-3' title='40 topics' style='font-size: 1em;'>DevNation</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/devops/' class='tag-link-28070474 tag-link-position-4' title='74 topics' style='font-size: 1em;'>DevOps</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/docker/' class='tag-link-4504191 tag-link-position-5' title='41 topics' style='font-size: 1em;'>Docker</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/gcc/' class='tag-link-185469 tag-link-position-6' title='47 topics' style='font-size: 1em;'>gcc</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/openshift/' class='tag-link-56495631 tag-link-position-7' title='47 topics' style='font-size: 1em;'>OpenShift</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/python/' class='tag-link-832 tag-link-position-8' title='39 topics' style='font-size: 1em;'>python</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/rhel/' class='tag-link-566306 tag-link-position-9' title='62 topics' style='font-size: 1em;'>RHEL</a></li>
+	<li><a href='http://developers.redhat.com/blog/tag/software-collections/' class='tag-link-3111206 tag-link-position-10' title='79 topics' style='font-size: 1em;'>software collections</a></li>
+</ul>
+</div></aside><aside id="author_grid-3" class="widget widget_author_grid"><h1 class="widget-title">Contributors</h1><ul><li><a href="http://developers.redhat.com/blog/author/abonas2014/"> <img alt='' src='http://2.gravatar.com/avatar/848a2c849a1826512f9f7970cf891d7a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/aldyh/"> <img alt='' src='http://1.gravatar.com/avatar/7010a53d59b7a361dfaaa566f869fef8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/am1tshah/"> <img alt='' src='http://1.gravatar.com/avatar/45c31b7256e3a6c9a6da8d1d846dcaeb?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/andrewdinn/"> <img alt='' src='http://0.gravatar.com/avatar/3e70cdde8644d2a2053db24a642ce36d?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/andrewphaley/"> <img alt='' src='http://2.gravatar.com/avatar/5518cce22ff81bc78092b2c8d8ab9092?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/aphredhat/"> <img alt='' src='http://2.gravatar.com/avatar/265128b5ae2022512da16832a1eaf3d8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/atwong/"> <img alt='' src='http://0.gravatar.com/avatar/c63c138b43f03d630a43d50744f424a9?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/bbaude/"> <img alt='' src='http://0.gravatar.com/avatar/380abcf63cb23393e8374b0f39f07af5?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/bconoboy/"> <img alt='' src='http://2.gravatar.com/avatar/b69c8e37d455818dc105f4902d908fe1?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/bean2k14/"> <img alt='' src='http://0.gravatar.com/avatar/61906a9cf42a94a212b70bb842571b2b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/billvt/"> <img alt='' src='http://2.gravatar.com/avatar/ea1ac5bbf4562a2316a76e78fe5d839a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/bkabrda/"> <img alt='' src='http://0.gravatar.com/avatar/60d06f7560160f3ce7aa3877596da63f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/brianatkisson/"> <img alt='' src='http://0.gravatar.com/avatar/004e1e260e9bb66eff7a26d728b5ee24?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/burrsutter/"> <img alt='' src='http://1.gravatar.com/avatar/4f91e291208ba2a4940d7849bf98c601?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/christianhoge/"> <img alt='' src='http://1.gravatar.com/avatar/4a4242ef535bd01441fa03b9cbb9dd2b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/christineflood/"> <img alt='' src='http://1.gravatar.com/avatar/dd84c39606a10cb3584ff11da4c3d209?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/chugrolke/"> <img alt='' src='http://0.gravatar.com/avatar/0de3a6da69eed4baa902533ec3bcbd5c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/cianclarke/"> <img alt='' src='http://0.gravatar.com/avatar/017e4d47ca2362f17f7fe50e4a45422b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/codonell/"> <img alt='' src='http://1.gravatar.com/avatar/db6432077c16aa59f1e061a9356be2aa?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/coneillredhat/"> <img alt='' src='http://1.gravatar.com/avatar/423c95cf9b27ded18f244d5a4a8b5eb2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/cooktheryan/"> <img alt='' src='http://0.gravatar.com/avatar/95bdd88591e977e265804ee974a93a24?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/dankenigsberg/"> <img alt='' src='http://1.gravatar.com/avatar/13da8a91de2c06db4dbec962d9f97411?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/dbhole/"> <img alt='' src='http://0.gravatar.com/avatar/3ca2b11035ba3b5d41e870a2e2bc645c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/djdelorie/"> <img alt='' src='http://1.gravatar.com/avatar/1c35b9e837e7a0266d14da7a5c36e85b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/doelcam/"> <img alt='' src='http://0.gravatar.com/avatar/ca7fc96c68309e057238d7d83a43e088?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/dseketeli/"> <img alt='' src='http://0.gravatar.com/avatar/ccd7b8ade8dc6a84d1b1a019eca54d73?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/dzickus/"> <img alt='' src='http://0.gravatar.com/avatar/0c66dddc78a5db753c8b7e9b0ddb1653?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/ecurleyredhat/"> <img alt='' src='http://1.gravatar.com/avatar/aba89c66cec5593532b74e47a95387f1?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/eiselem/"> <img alt='' src='http://1.gravatar.com/avatar/a8b195bb2287928a48b364974187216c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/eschabell/"> <img alt='' src='http://1.gravatar.com/avatar/4d9c8fd5af7fb084d948ab81ba561572?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/estrenger/"> <img alt='' src='http://1.gravatar.com/avatar/dfc34dd899ce4473cef0bb7cae9efc60?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/evanshortiss/"> <img alt='' src='http://0.gravatar.com/avatar/67b27a125974039ed8446178ff0d0c7e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/fatherlinux/"> <img alt='' src='http://0.gravatar.com/avatar/983b48fd25d27360ee91ead46c0c912e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/fgiloux/"> <img alt='' src='http://2.gravatar.com/avatar/ea7e2d4b4828b2afd6a18f8740aa4ed1?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/florianweimer/"> <img alt='' src='http://1.gravatar.com/avatar/4ece77be874172309e7b5c44ff0281e2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/fozzmoo/"> <img alt='' src='http://2.gravatar.com/avatar/bbe930847faba79706eaa6e358a1fbb2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/gjbianco/"> <img alt='' src='http://1.gravatar.com/avatar/77a1a37d2146221dbbc45aed9f0b68e9?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/gladiac/"> <img alt='' src='http://0.gravatar.com/avatar/ff2f1e3c638391229f288e9449c387f3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/gvijayar/"> <img alt='' src='http://1.gravatar.com/avatar/47f38abec07342a73d1afc6d85885ad8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/harrymower/"> <img alt='' src='http://2.gravatar.com/avatar/2f86eb1186fc3c29c15bf0aed1cea26e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/honzahorakrh/"> <img alt='' src='http://1.gravatar.com/avatar/1caabb383d82f627eb427cc6c3231431?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/hruppredhat/"> <img alt='' src='http://0.gravatar.com/avatar/f38e7120585ab71eb3e63c1552e9463b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jamesfalkner0/"> <img alt='' src='http://0.gravatar.com/avatar/0295b91cac6981b8bb87bf0d73dc0621?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/japerezredhatcom/"> <img alt='' src='http://0.gravatar.com/avatar/6bdaeaeb098a22605c225a6ba46dd040?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jasonmarley/"> <img alt='' src='http://1.gravatar.com/avatar/daac41372925bcc7fa2d7d40603a2433?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jayunit100/"> <img alt='' src='http://0.gravatar.com/avatar/024d1da9fad214ca44af8fcc649ebb86?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jbressers/"> <img alt='' src='http://1.gravatar.com/avatar/add013cf591925737c3e8d7e17853574?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jcajka/"> <img alt='' src='http://1.gravatar.com/avatar/d3995dac164e1a2ca68f4a821cf6b072?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jdoyleoss/"> <img alt='' src='http://1.gravatar.com/avatar/a958b14de092fbd053c43d4cb8d4da9d?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jeffreyalaw/"> <img alt='' src='http://0.gravatar.com/avatar/fd457b0cdf04552cdb5a19ffb225bda7?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jeremyeder/"> <img alt='' src='http://2.gravatar.com/avatar/ef9a8dd74813696f53a543ae7cb590b5?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jgalar/"> <img alt='' src='http://2.gravatar.com/avatar/8689763327e5bbda7dec9f18846b60ae?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jkrieger550/"> <img alt='' src='http://2.gravatar.com/avatar/e8d912ff2f130eb18a8c4d6da3045311?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/joemario4/"> <img alt='' src='http://0.gravatar.com/avatar/0471f362b2675110465e32382bbdf814?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jonmasters/"> <img alt='' src='http://2.gravatar.com/avatar/e50536dd234dab5418c2b273d862ef7a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jorton42/"> <img alt='' src='http://2.gravatar.com/avatar/29803e00bd984c00b620240c9aa8aad3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jplesnik/"> <img alt='' src='http://2.gravatar.com/avatar/2b2d7f9b88b5228d6dc257c4e855a023?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jsomara/"> <img alt='' src='http://0.gravatar.com/avatar/0ea48d01a9fbb9df0d198be357c381a4?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jstribny/"> <img alt='' src='http://1.gravatar.com/avatar/105003fa131519686e59e7d4ad54bef3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jtclark48/"> <img alt='' src='http://2.gravatar.com/avatar/545ec662f1c34118bc5c07e1b9ab646d?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/jwakely/"> <img alt='' src='http://2.gravatar.com/avatar/8ef724d341328072bcc7bdee90e7e78c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/kirk10kirk/"> <img alt='' src='http://1.gravatar.com/avatar/dfda0a7a4705745e5ba50c6ec5d927cc?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/kovariadam/"> <img alt='' src='http://2.gravatar.com/avatar/27ef7990cbd7e97294aee03226b9d6ef?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/langdonwhite/"> <img alt='' src='http://1.gravatar.com/avatar/a18d075e58019278eec247656fd1f208?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/licortes/"> <img alt='' src='http://0.gravatar.com/avatar/042c13bea785621bce87c2b1f3248d64?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lincolnredhat/"> <img alt='' src='http://0.gravatar.com/avatar/07baa725cf5b72160fb65370cd226be6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lufimtse/"> <img alt='' src='http://2.gravatar.com/avatar/b40b8648f8508172c5254a5e054e8c1a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lukasberk/"> <img alt='' src='http://1.gravatar.com/avatar/d42d057846165c3ae255a4d3d30f081d?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lulinqing/"> <img alt='' src='http://0.gravatar.com/avatar/0fcbb48dcc141cbf1444480eefc09a99?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lwang8redhat/"> <img alt='' src='http://2.gravatar.com/avatar/573dfe5470c93453c42080bffe9939d6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/lxoliva/"> <img alt='' src='http://0.gravatar.com/avatar/c667f0bdadc7f47e0b0e573af4d3cecc?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mairin/"> <img alt='' src='http://0.gravatar.com/avatar/6538a2e21a4f5358c628382dd63e5be5?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/matbooth/"> <img alt='' src='http://2.gravatar.com/avatar/2c95afb6d7a2f20a997de29fba615ccb?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mikeguerette/"> <img alt='' src='http://2.gravatar.com/avatar/5620321ddd2a92bb260e052eeb01130f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mkcochran/"> <img alt='' src='http://1.gravatar.com/avatar/45a16f05307222d2cb5be148bff34ffb?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mlichvar/"> <img alt='' src='http://0.gravatar.com/avatar/64a706b299e8307793da5be8786d667f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mmaslano/"> <img alt='' src='http://0.gravatar.com/avatar/99cc6e73344194234ce7b7c498187a98?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mmcgrath2015/"> <img alt='' src='http://1.gravatar.com/avatar/dd3d70c4727fd84b9aa2fdb7cc4b5647?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mrgarybenson/"> <img alt='' src='http://2.gravatar.com/avatar/b840fdff833fab9b0454f85c31ea4d83?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/msebor/"> <img alt='' src='http://2.gravatar.com/avatar/e3e950b2ba2c27e5142995a6eeff9751?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mskalick/"> <img alt='' src='http://2.gravatar.com/avatar/e3a0334d457fb4c2fc67b6e6cdc86b7f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/msuchyredhat/"> <img alt='' src='http://0.gravatar.com/avatar/02ac1dfec0751143ab861d47ae5a69e0?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mwernerrht/"> <img alt='' src='http://0.gravatar.com/avatar/fef31627dfab28f70b0849c79feb391b?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/mykrandal/"> <img alt='' src='http://0.gravatar.com/avatar/6a4497d7be826bde6f7b79e1dd19d51e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/natoscott/"> <img alt='' src='http://1.gravatar.com/avatar/71410ab7ab8279092a34e0acc0806397?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/ncoghlandev/"> <img alt='' src='http://0.gravatar.com/avatar/31dcffc1c493b18e971f5136aede06e3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/nickclifton/"> <img alt='' src='http://0.gravatar.com/avatar/cd16507dadba18594aa5b348cd21748a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/nmcl2001/"> <img alt='' src='http://2.gravatar.com/avatar/80e992afe5349ceb8ea6718ff238f276?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/oourfali/"> <img alt='' src='http://1.gravatar.com/avatar/70d78f78478c9fa3a757f369abe22792?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/patsyfranklin/"> <img alt='' src='http://1.gravatar.com/avatar/76ce3018272a0c537d21c57bde491f8e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/peterpawelski/"> <img alt='' src='http://1.gravatar.com/avatar/42a2712e60b73a0430f34e6b215874ba?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/phracek/"> <img alt='' src='http://2.gravatar.com/avatar/b5ef1fd94cd03dd9a962dac0e9c44b88?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/plmuir/"> <img alt='' src='http://1.gravatar.com/avatar/4ebf34d2cbe74a29138a6d1e477ab4c8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/pmachata/"> <img alt='' src='http://2.gravatar.com/avatar/b32dc242d69b599e26d95ac64ad35898?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/ppisar/"> <img alt='' src='http://2.gravatar.com/avatar/8b1adcd7b129abb30ee50ba70ff24774?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rafabene/"> <img alt='' src='http://0.gravatar.com/avatar/087b923821c70dc1f8965b036d6aa6e2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rayploski/"> <img alt='' src='http://2.gravatar.com/avatar/ec95e60c6326a66b7f6129541703356c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/realgenekim/"> <img alt='' src='http://0.gravatar.com/avatar/9d4d49daf55896d961bb4dcf380ec7c0?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/redhattoolchainblog/"> <img alt='' src='http://0.gravatar.com/avatar/06a9cd8cf496732f507c405e144a248e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/remicollet/"> <img alt='' src='http://2.gravatar.com/avatar/5be85c2ed440ab3a9be900a2def9bb82?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rgrunber/"> <img alt='' src='http://2.gravatar.com/avatar/2c974ec82ee265ab6f65ec36f2790a11?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhatdan/"> <img alt='' src='http://1.gravatar.com/avatar/75d88487c07b14b6c7aa0599fce600bf?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhcrob/"> <img alt='' src='http://1.gravatar.com/avatar/df09397edec40d5ef9072ad25590b299?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhdmalcolm/"> <img alt='' src='http://0.gravatar.com/avatar/07409edb3a1ad06230bdd725369ed675?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhenness/"> <img alt='' src='http://1.gravatar.com/avatar/a31a9c961e4374050a90fa0c34f59a09?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhjakub/"> <img alt='' src='http://0.gravatar.com/avatar/9585d34bb20a1b352761442eb6ea824e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhjason/"> <img alt='' src='http://0.gravatar.com/avatar/fcd9519b99b0fce399db68d2acc024d7?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhpolacek/"> <img alt='' src='http://2.gravatar.com/avatar/8037e14855b9bacea1d52274f396bd59?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rhtghoelzer/"> <img alt='' src='http://2.gravatar.com/avatar/2c49c26fca754224c3aa68b42c6615a3?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rickjwagner/"> <img alt='' src='http://2.gravatar.com/avatar/583441bede37dda7dd62eff35dfe536c?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rkratky/"> <img alt='' src='http://1.gravatar.com/avatar/af3cfad6c50ea4fc0cc2912f42d5f10e?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rpelisse/"> <img alt='' src='http://0.gravatar.com/avatar/689ae751348d260f7b19d7320df96507?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/rth99/"> <img alt='' src='http://2.gravatar.com/avatar/b95a00a6a8c7316f8ee7580d21c53553?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/ryry/"> <img alt='' src='http://2.gravatar.com/avatar/b5a7007067c6ba69ca1b0c7d57b2760a?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/sabre1041/"> <img alt='' src='http://1.gravatar.com/avatar/4f3fb70381ae0f60e68c9412a4d62e81?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/scollierrh/"> <img alt='' src='http://1.gravatar.com/avatar/45904edfc18589f747d87dcd3553af7f?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/shadowman2016/"> <img alt='' src='http://2.gravatar.com/avatar/277d74c88d896f4aeb5b43c1e78c0fa7?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/sjclark2/"> <img alt='' src='http://2.gravatar.com/avatar/b923f53c2629fad3dec57bf31a381bc6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/smilnerrh/"> <img alt='' src='http://1.gravatar.com/avatar/a4a025afd6d295bf173b8fa43d864869?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/sosiouxme/"> <img alt='' src='http://0.gravatar.com/avatar/c06920ae028c4a242ef7102ddc9aa9e6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/spoyarek/"> <img alt='' src='http://0.gravatar.com/avatar/0ef703927cf85f436f8e73b9fb919554?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/stianth/"> <img alt='' src='http://0.gravatar.com/avatar/cbdd5a0ed9f8a18af9e777a2fa7d4680?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/strategymatt/"> <img alt='' src='http://2.gravatar.com/avatar/ee7437a537275164a9369bc8ccc3e628?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/sumantrorht/"> <img alt='' src='http://1.gravatar.com/avatar/a4190156da1283ee25557a89e7c1e9c0?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/swengineersamuel/"> <img alt='' src='http://1.gravatar.com/avatar/d614b7a37a87a897488cc6b8442398d6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/tbielawa/"> <img alt='' src='http://0.gravatar.com/avatar/0f8b523b3f9aa79dea4ded65d470d758?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/thesteve0/"> <img alt='' src='http://0.gravatar.com/avatar/f74c021b6f76e58e44cab9d426e30985?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/thildred/"> <img alt='' src='http://0.gravatar.com/avatar/0c42bffa0705ab2673c0bbcb844cb4a6?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/thozza88/"> <img alt='' src='http://1.gravatar.com/avatar/1a565958723ca056322820ccdd2d8817?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/tomastomecek/"> <img alt='' src='http://2.gravatar.com/avatar/86a332a848dc6260af0575f55ce1f499?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/tqvarnst/"> <img alt='' src='http://1.gravatar.com/avatar/d1e436103d0ce4dcecc798ea19f540e8?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/triegelrh/"> <img alt='' src='http://2.gravatar.com/avatar/ba2d2d94a22b3e455c6fccdc98ecfb83?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/w4otn/"> <img alt='' src='http://0.gravatar.com/avatar/6e86fd3a4b63c34a73bbb08740a6e7b0?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/wcohen2013/"> <img alt='' src='http://1.gravatar.com/avatar/d1413fade5f6d17a9fb054abb3fe26f2?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li><li><a href="http://developers.redhat.com/blog/author/yf2014/"> <img alt='' src='http://0.gravatar.com/avatar/3eeb72f6677dbe523ff396f4980c5608?s=32&#038;d=https%3A%2F%2Fs0.wp.com%2Fwp-content%2Fthemes%2Fvip%2Frh-parent%2Fimg%2Frh-default-avatar.png&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></li></ul></aside><aside id="follow_button_widget-2" class="widget widget_follow_button_widget">
+		<a class="wordpress-follow-button" href="http://developerblog.redhat.com" data-blog="http://developerblog.redhat.com" data-lang="en" data-show-follower-count="true">Follow Red Hat Developer Blog on WordPress.com</a>
+		<script type="text/javascript">(function(d){var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');p.type = 'text/javascript';p.async = true;p.src = '//widgets.wp.com/platform.js';f.parentNode.insertBefore(p,f);}(document));</script>
+
+		</aside></div><!-- #secondary --><script type='text/javascript'>
+								var _gaq = _gaq || [];
+								_gaq.push(['_setAccount', 'UA-43021562-1']);
+_gaq.push(['_setCustomVar', 1, 'author', 'Jeremy Eder']);
+_gaq.push(['_setCustomVar', 2, 'category', 'Containers, Performance, Red Hat Enterprise Linux']);
+_gaq.push(['_setCustomVar', 3, 'context', 'post']);
+_gaq.push(['_setCustomVar', 4, 'pub-date', 'October 21, 2014']);
+_gaq.push(['_setCustomVar', 5, 'tags', 'containers, performance, RHEL']);
+_gaq.push(['_trackPageview']);
+
+								(function() {
+									var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+									ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+									var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+								})();
+							</script>
+			</div><!-- .row -->
+		</div><!-- .container.main-body-container -->
+	</div><!-- #content -->
+
+<footer class="bottom"><div class="row">
+<div class="large-5 columns"><a href="https://www.redhat.com" target="_blank"><img src="//static.jboss.org/rhd/fonts/images_branding_RHLogo_white-5.svg" class="rh-logo" alt="Red Hat"></a></div>
+<div class="large-5 columns">
+<h3>Helpful Links</h3>
+<ul class="quick-links">
+<li><a href="https://access.redhat.com/security/team/contact/" target="_blank">Report a security problem<i class="fa fa-external-link"></i></a></li>
+<li><a href="http://www.redhat.com/en/services/consulting" target="_blank">Consulting solutions<i class="fa fa-external-link"></i></a></li>
+<li><a href="http://www.redhat.com/en/services/training" target="_blank">Training<i class="fa fa-external-link"></i></a></li>
+</ul>
+</div>
+<div class="large-5 columns">
+<h3>Related Sites</h3>
+<ul class="quick-links">
+<li><a href="https://www.redhat.com" target="_blank">Red Hat Corporate<i class="fa fa-external-link"></i></a></li>
+<li><a href="https://access.redhat.com/" target="_blank">Customer Portal<i class="fa fa-external-link"></i></a></li>
+<li><a href="https://www.openshift.com/" target="_blank">OpenShift<i class="fa fa-external-link"></i></a></li>
+</ul>
+</div>
+<div class="large-9 columns">
+<h3>Red Hat Developers</h3>
+<p>We provide a complete experience to enable enterprise developers and software builders to envision, create and maintain high-value enterprise software.</p>
+<div class="row">
+<div class="large-12 columns"><ul class="inline-list">
+<li><a href="http://developers.redhat.com/about">About us</a></li>
+<li><a href="mailto:developer@redhat.com">Contact us</a></li>
+</ul></div>
+<div class="large-12 columns"><ul class="social-nav">
+<li><a href="https://plus.google.com/103877536668756379905/posts" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+<li><a href="https://www.youtube.com/channel/UC7noUdfWp-ukXUlAsJnSm-Q" target="_blank"><i class="fa fa-youtube"></i></a></li>
+<li><a href="https://www.facebook.com/RedHatDeveloperProgram" target="_blank"><i class="fa fa-facebook"></i></a></li>
+<li><a href="https://twitter.com/rhdevelopers" target="_blank"><i class="fa fa-twitter"></i></a></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="row legal">
+<div class="large-5 medium-24 right columns">
+<a class="devnation-logo" href="http://www.devnation.org/" target="_blank"><img src="//static.jboss.org/rhd/images/images_design_logo_devnation_footer-5.png" alt="Red Hat Summit"></a><a class="summit-logo" href="http://www.redhat.com/summit/" target="_blank"><img src="//static.jboss.org/rhd/images/images_design_logo-summit-4.png" alt="Red Hat Summit"></a>
+</div>
+<div class="large-19 columns"><ul class="inline-list">
+<li><a class="copyright">Copyright © 2016 Red Hat Inc.</a></li>
+<li><a href="http://www.redhat.com/en/about/privacy-policy" target="_blank">Privacy statement    |</a></li>
+<li><a href="http://www.redhat.com/en/about/terms-use" target="_blank">Terms of use    |</a></li>
+<li><a href="http://www.redhat.com/en/about/all-policies-guidelines" target="_blank">All policies and guidelines</a></li>
+</ul></div>
+</div></footer>
+</div><!-- #page -->
+
+
+
+
+<!-- SiteCatalyst code version: H.21.
+Copyright 1996-2010 Adobe, Inc. All Rights Reserved
+More info available at http://www.omniture.com -->
+ 
+<div id="oTags">
+	<script type="text/javascript" src="http://www.redhat.com/assets/js/noncms_s_code.js"></script>
+	<script type="text/javascript"><!--
+	//get php vars
+		 
+	var omniPageName = '"rh | blog | rhdevelopers | Beyond Microbenchmarks: breakthrough container performance with  | 414215"';
+	var omniFMS = '"blog posts"';
+	var omniContentType = '"blog"';
+
+        //then get js vars
+	var wlh = window.location.href;
+	var sectionName = ["","",""];
+	if (omniFMS.length > 0) {
+	sectionName[0] = omniFMS;
+	} else {
+	sectionName = wlh.slice(wlh.indexOf('.com/')).replace('.com/','');
+	sectionName = sectionName.slice(0,sectionName.lastIndexOf('/')).split('/');
+	if (sectionName[1] == undefined) { sectionName[1] = ""; }
+	if (sectionName[2] == undefined) { sectionName[2] = ""; }
+	}
+	if (wlh.indexOf('?') > -1) {
+	    ev18=wlh.slice(0,wlh.indexOf('?'));
+	    pp21=wlh.slice(0,wlh.indexOf('?'));
+	} else {
+	    ev18=wlh;
+	    pp21=wlh;
+	};
+	/* You may give each page an identifying name, server, and channel on
+	the next lines. */
+	var wlh = window.location.href;
+	s.pageName=omniPageName
+	s.server=""
+	s.channel=omniContentType
+	s.pageType=""
+	s.prop1=""
+	s.prop2="en"
+	s.prop3="us"
+	s.prop4=wlh
+	s.prop21=pp21
+	s.prop14=sectionName[0]
+	s.prop15=sectionName[1]
+	s.prop16=sectionName[2]
+	/* E-commerce Variables */
+	s.campaign=""
+	s.eVar1=""
+	s.eVar3=""
+	s.eVar18=ev18
+	s.eVar19="us"
+	s.eVar22="en"
+	s.eVar23=wlh
+	s.eVar27=sectionName[0]
+	s.eVar28=sectionName[1]
+	s.eVar29=sectionName[2]
+	s.events=""
+	s.products=""
+	s.state=""
+	s.zip=""
+	s.purchaseID=""
+	--></script>
+	 
+	<script type="text/javascript" src="http://www.redhat.com/j/rh_omni_footer.js"></script>
+	<script language="JavaScript" type="text/javascript"><!--
+	if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+	//--></script><noscript><a href="http://www.omniture.com" title="Web Analytics"><img
+	src="https://smtrcs.redhat.com/b/ss/redhatcom,redhatglobal/1/H.21--NS/0?[AQB]&cdp=3&[AQE]"
+	height="1" width="1" border="0" alt="" /></a></noscript><!--/DO NOT REMOVE/-->
+	<!-- End SiteCatalyst code version: H.21. -->
+</div>   
+
+<!-- wpcom_wp_footer -->
+		<script type="text/javascript">
+			!function(d,s,id){
+				var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+				if(!d.getElementById(id)){
+					js=d.createElement(s);
+					js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+					fjs.parentNode.insertBefore(js,fjs);
+				}
+			}(document,"script","twitter-wjs");
+		</script>
+			<div style="display:none">
+	</div>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/rhdevelopers.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/rhdevelopers.wordpress.com\/wp-login.php?action=logout&_wpnonce=4e9dfb1875","homeURL":"http:\/\/developerblog.redhat.com\/","postID":"414215","gravDefault":"https:\/\/s0.wp.com\/wp-content\/themes\/vip\/rh-parent\/img\/rh-default-avatar.png","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"0","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1462457903j'></script>
+
+	<div id="bit" class="loggedout-follow-normal">
+		<a class="bsub" href="javascript:void(0)"><span id='bsub-text'>Follow</span></a>
+		<div id="bitsubscribe">
+
+					<h3><label for="loggedout-follow-field">Follow &ldquo;Red Hat Developer Blog&rdquo;</label></h3>
+
+			<form action="https://subscribe.wordpress.com" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Get every new post delivered to your Inbox.</p>
+
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+						<p class="bit-follow-count">Join 6,624 other followers</p>
+			<p><input type="email" name="email" placeholder="Enter your email address" id="loggedout-follow-field"/></p>
+
+			<input type="hidden" name="action" value="subscribe"/>
+			<input type="hidden" name="blog_id" value="43520001"/>
+			<input type="hidden" name="source" value="http://developerblog.redhat.com/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/"/>
+			<input type="hidden" name="sub-type" value="loggedout-follow"/>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="efae6fc368" /><input type="hidden" name="_wp_http_referer" value="/2014/10/21/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency/" />
+			<p id='bsub-subscribe-button'><input type="submit" value="Sign me up" /></p>
+			</form>
+					<div id='bsub-credit'><a href="https://wordpress.com/?ref=lof">Build a website with WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+<script type='text/javascript' charset='UTF-8' id='polldaddyRatings'><!--//--><![CDATA[//><!--
+PDRTJS_settings_6530569_post_414215={"id":6530569,"unique_id":"wp-post-414215","title":"Beyond%20Microbenchmarks%3A%20breakthrough%20container%20performance%20with%20Tesla%26nbsp%3Befficiency","permalink":"http:\/\/developers.redhat.com\/blog\/2014\/10\/21\/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency\/","item_id":"_post_414215"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_6530569_post_414215 == 'undefined' ){PDRTJS_6530569_post_414215 = new PDRTJS_RATING( PDRTJS_settings_6530569_post_414215 );}}
+//--><!]]></script><script type='text/javascript' charset='UTF-8' src='http://i0.poll.fm/js/rating/rating.js'></script>
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/developers.redhat.com\/blog\/2014\/10\/21\/beyond-microbenchmarks-breakthrough-container-performance-with-tesla-efficiency\/":414215};
+	</script>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-linkedin' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+		});
+		</script>
+		<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/akismet-3.0/_inc/form.js?m=1404442431h'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var comment_like_text = {"loading":"Loading..."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVkFEKwjAQRC9kuiil5Ec8S02XdmM3XbNJ2+MbUUFFCv7OzGOGgUWMm0LCkMArdDiTQ1krrzt4szgbGXNPQWGkCypcM2Yc2tCNGL/DaUAukZkEXlBElSkozWiI2764/oe40eom5iKZR7u/zziDLiT4D/QhbMyOg5E2Pj9RF0mSVkyhICc+7uva1k1j7cHfALiVdyc='></script>
+<script type='text/javascript' src='http://static.jboss.org/rhd/1.2-build-1865/javascripts/foundation/foundation.js?ver=4.5.1'></script>
+<script type='text/javascript' src='https://developers.redhat.com/auth/js/keycloak.js?ver=4.5.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wpcomVipAnalytics = {"is_404":"0","is_home":"0","is_single":"1","is_front_page":"0","is_archive":"0","percentToTrack":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var JetpackEmojiSettings = {"base_url":"http:\/\/s0.wp.com\/wp-content\/mu-plugins\/emoji\/twemoji\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyNjdsOgjAMQH/I0og3XozfgqOBzXWb6wbh7x0mPOiD8tS0OacHpwDKu0QuYRqISXDUAeMAHY1wt75HIyjiKyM73ATHoWxkfaC4nMA8M8V59bVTNnfFLKTyzOUXRAp2rli77whnCDb32gnWsKTMuwita+2ctJIfArE3GtP0Mf/yhlJo1QO20St14+v+eK7r5nI6NOYFktZ9og=='></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var FB_WP=FB_WP||{};FB_WP.queue={_methods:[],flushed:false,add:function(fn){FB_WP.queue.flushed?fn():FB_WP.queue._methods.push(fn)},flush:function(){for(var fn;fn=FB_WP.queue._methods.shift();){fn()}FB_WP.queue.flushed=true}};window.fbAsyncInit=function(){FB.init({"channelUrl":"https:\/\/rhdevelopers.wordpress.com\/wp-content\/themes\/vip\/plugins\/facebook\/channel.php","xfbml":true,"appId":"1099297616762136"});if(FB_WP && FB_WP.queue && FB_WP.queue.flush){FB_WP.queue.flush()}}
+/* ]]> */
+</script>
+<div id="fb-root"></div><script type="text/javascript">(function(d){var id="facebook-jssdk";if(!d.getElementById(id)){var js=d.createElement("script"),ref=d.getElementsByTagName("script")[0];js.id=id,js.async=true,js.src="http:\/\/connect.facebook.net\/en_US\/all.js",ref.parentNode.insertBefore(js,ref)}})(document)</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/post-flair/sharing/sharing.js?m=1452718409h'></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='http://widgets.wp.com/likes/master.html?ver=20160429#ver=20160429' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?52" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'43520001','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'43520001','v':'wpcom','tz':'-4','user_id':'0','post':'414215','subd':'rhdevelopers'}]);
+function st_vt() {var x=document.createElement("img");x.src="http://pixel.wp.com/g.gif?blog=43520001&v=wpcomvt&tz=-4&user_id=0&post=414215&subd=rhdevelopers&rand="+Math.random();}
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1BNmNJfGhxNCVxUDExYmtib2E/SzdEJm0lUEtbdFU0fFk4cHZvcUFrZT90Tn4yQm1+R3NyNTdZfjdGMHRbZTlRa1s5WV0/L2xwOEs1JmIsSl00TFdjUE9rYnFQdGt3MGlLd0M5UTBhVVZTOXl+PWhSRz1sUiVsMW1NM2MzZzJuaDV6dzBzWnU2QWx6RzddSFUrfE9DJkNqejVnMWYwZEJwYm5bZ3FGRVVdRVg5bjFEP25OOThZW0FxNEx+cWsrRy4yNE5KWXFSSD8rNyZpJnJyP0xidUtsbHBONi56RllMM2RUTUxCbHdqLG5Eai1lejFwLXB8dS0tXzNGYXdMdDh1eTdUa3FFK0tbdWRhP1NyMQ=='}]);
+_stq.push([ 'clickTrackerInit', '43520001', '414215' ]);
+	</script>
+<noscript><img src="http://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<!-- Red Hat Developers JS -->
+  <script>
+  $(document).foundation();
+  </script>
+
+  <script>
+  
+  mobileNav = function() {
+    $('.nav-toggle').on('click touchend',function(e) {
+        e.preventDefault(),$('body').toggleClass('nav-open');
+    });
+    $(".has-sub-nav > a").on("click", function(e) {
+           if(920 >= window.innerWidth) {
+               e.preventDefault(),
+               $(".sub-nav-open").not($(this).parent()).removeClass("sub-nav-open"),
+               $(this).parent().toggleClass("sub-nav-open");
+           }
+    });
+    };
+
+
+    mobileNav();
+  
+  </script>
+<!-- End Red Hat Developers JS -->
+</body>
+</html>

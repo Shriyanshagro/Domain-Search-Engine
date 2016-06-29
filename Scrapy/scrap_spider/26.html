@@ -1,0 +1,790 @@
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head profile="http://gmpg.org/xfn/11">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="content-language" content="en"/>
+        <meta content="en-US" scheme="rfc1766" name="DC.Language"/>
+        <meta content="2010-06-09" scheme="iso8601" name="DC.Date"/>
+        <meta content="©2014 The Farber Consulting Group, Inc." name="DC.Rights"/>
+        <meta name="geo.placename" content="Marlboro, New Jersey, USA"/>
+        <meta name="geo.placename" content="Marlboro, NJ, USA"/>   
+        <meta name="Copyright" content="2014 copyright"/>
+        <meta name="MSSmartTagsPreventParsing" content="TRUE"/>
+        <meta name="distribution" content="Global"/>
+        <meta name="city" content="Marlboro"/>
+        <meta name="state" content="NJ"/>
+        <meta name="publisher" content="The Farber Consulting Group, Inc."/>
+        <meta name="Author" content="https://plus.google.com/u/0/b/111730743902452309675/"/>
+        <meta name="Publisher" content="https://plus.google.com/u/0/b/111730743902452309675/"/>
+        <meta name="country" content="United States">
+        <meta name="copyright" content="The Farber Consulting Group , inc.">
+        <meta name="robots" content="All">
+        <meta name="googlebot" content="index, follow">
+        <meta name="rating" content="General">
+                  
+        <meta name="generator" content="umbraco" />
+            
+        <link rel="EditURI" type="application/rsd+xml" href="http://www.dfarber.com/umbraco/channels/rsd.aspx" /><link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.dfarber.com/umbraco/channels/wlwmanifest.aspx" />
+        <link href="/computer-consulting-blog/rss.aspx" rel="alternate" type="application/rss+xml" title="RSS Feed" /><link href="/computer-consulting-blog/commentrss.aspx" rel="alternate" type="application/rss+xml" title="Comments RSS Feed" /><link href="/computer-consulting-blog/2011/12/26/remove-duplicate-records-in-sql/commentrss.aspx" rel="alternate" type="application/rss+xml" title="Comments RSS Feed for Remove duplicate records in sql" />
+        <title>
+              Delete duplicate rows in sql server
+        </title>
+        <meta name='description' content='Remove duplicate records sql while merging data from different records into one record, delete duplicate records in sql' />
+        <meta name='keywords' content='Delete duplicate records sql, Remove duplicate records sql, DeDupe Data sql, deduplication rows sql, dedupe data sql, matching, duplicates sql, Sql Consulting' />
+        
+        <link rel="stylesheet" href="/css/skin_Blue_Velvet/style.css" type="text/css" media="screen"/>
+
+        <script type="text/javascript" src="/gallery/js/jquery.js"></script>
+
+        <script type="text/javascript" src="/Scripts/Blog4Umbraco/blog4umbraco.js"></script>
+
+        <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.5.5/jquery.validate.min.js"></script>
+       
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shCore.js"></script>
+      
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushAS3.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushBash.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushColdFusion.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushCpp.js"></script>        
+      
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushCSharp.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushCss.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushDelphi.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushDiff.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushErlang.js"></script>
+      
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushGroovy.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushJava.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushJavaFX.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushPerl.js"></script>        
+      
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushPhp.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushPlain.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushPowerShell.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushRuby.js"></script>
+      
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushSass.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushScala.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushSql.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushVb.js"></script>
+        <script type="text/javascript" src="/SyntaxHighlighter/scripts/shBrushXml.js"></script>
+      
+        <link href="/SyntaxHighlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="/SyntaxHighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+      
+        
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-2660389-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </head>
+    <body class="umbraco blog">
+         <div id="globalBranding" class="htrademark">
+            <div id="GBsecondNav"><div id="logoImagesDiv" onmouseout="UnPadDiv()" onmouseover="PadDiv()" style="display: none"><a href="javascript:void(0);" onclick="maximize();"><img id="interlogicLogo" alt="Farber logo" src="/Img/FarberSmallLogo.png" /></a></div><ul class="socialLinks"><li><a class="linkTwitter" target="_blank" href="http://twitter.com/#!/CustomSoftDev" rel="nofollow">twitter.com</a></li><li><a class="linkFaceBook" target="_blank" href="http://www.facebook.com/CustomSoftwareDevelopment" rel="nofollow">www.facebook.com</a></li></ul><ul><li class="blog"><a href="/computer-consulting-blog.aspx">Blog</a></li><li class="sitemap"><a href="/sitemap.aspx">Site Map</a></li><li class="contactinfo"><a href="/contact-us.aspx">Contact</a></li><li class="home"><a href="/index.aspx">Home</a></li></ul></div>
+            <h1 style="display: none;" class="htrademark-image">
+                The Farber consulting group.inc
+            </h1>
+        </div>
+
+        <form name="aspnetForm" method="post" action="/computer-consulting-blog/2011/12/26/remove-duplicate-records-in-sql.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUENTM4MWRkSVtRAE1ibzwXkhiGpuhLq4dQ5cM=" />
+</div>
+
+        <div id="top-border"></div>
+        <div id="wrapper" class="hfeed">
+        
+            
+            <div id="header">
+                <h1 id="blog-title">
+                    <span><a href="/" title="Theme Preview" rel="home">
+               Delete duplicate rows from a table in sql server and using Row Partition   
+                      </a></span>
+                </h1>
+                <div id="blog-description">
+                    
+                </div>
+            </div>
+            <!--  #header -->
+            
+            
+            
+                <div id="access">
+                    <div class="skip-link">
+                        <a href="#content" title="Skip to content">Skip to content</a></div>
+                    <div id="menu">
+                        <ul><li class="page_item page-item-1478"><a href="/computer-consulting-blog/about-custom-software-development-and-remote-dba-services.aspx">About Custom Software Development and Remote DBA Services</a></li><li class="page_item page-item-1479"><a href="/computer-consulting-blog/tag-cloud.aspx">Tag Cloud</a></li><li class="page_item page-item-1480"><a href="/computer-consulting-blog/archive.aspx">Archive</a></li><li class="page_item page-item-1494"><a href="/computer-consulting-blog/contact-us.aspx">Contact Us</a></li></ul>
+                    </div>
+                </div>
+                <!-- #access -->
+            
+            
+            <div id="container">
+                <div id="content">
+                
+<div class="hentry p1 post publish"> 
+<h1 class="entry-title">Remove duplicate records in sql</h1>
+
+<div class="entry-date">
+    <abbr class="published" title='Monday, December 26, 2011'>
+         Monday, December 26, 2011 
+    </abbr>
+</div>
+
+<div class="entry-content"> 
+<p>In MS SQL 2005 and later editions, a much better way has been provided to remove duplicate records smartly, while having full control of which records to remove. It can be accomplished by using the ROW_NUMBER() which will return a number of row within a partition of a result set. With this code:</p>
+<pre class="brush: sql;">ROW_NUMBER() OVER (PARTITION BY Clause ORDER BY Clause)
+</pre>
+<p>You can have a partition on something like Email or SSN or a combination of several fields like: First, Last, Street Number, Street Name and City.</p>
+<p> </p>
+<p><span style="font-size: medium;">Call us for Free Consultation for <a title="MS SQL Remote DBA Services" href="/microsoft-solutions/mssql-server/ms-sql-remote-dba-services.aspx" target="_blank">Remote DBA</a> services at our <a title="SQL Consulting" href="/computer-consulting-blog/2013/12/13/sql-consulting.aspx" target="_blank">SQL Consulting</a> Firm at: 732-536-4765</span></p>
+<p> </p>
+<p>The idea is to perform data cleansing while removing records where you can control any aspect of it. What's even better is the ability to combine different pieces of data from different records into one record while the rest of the records for that partition (group) are removed with no data being lost. Duplicate data is a problem that exists in many databases and the purpose of removing duplicate records is to improve productivity and increase the performance of your database. The below article will discuss the technique of how to remove duplicate records - rows in MSSQL database.</p>
+<p> </p>
+<p><span style="font-size: medium;">Check our <a title="Convert Access to Web.  Your MS Access database will be up-sized to MS SQL 2014." href="/website-design-development/convert-access-to-web.aspx" target="_blank">Convert Access To Web</a> Services.</span></p>
+<p><span style="font-size: medium;"><br /></span></p>
+<p>Let's create some sample data:</p>
+<pre class="brush: sql;">USE TempDB
+
+-- Check if the table exists and if not then create it. 
+IF NOT EXISTS(SELECT * 
+    FROM Sys.Tables
+    WHERE OBJECT_ID = OBJECT_ID(N'[dbo].[#TableWithDups]'))
+    
+    -- Create temp table
+    BEGIN
+    CREATE TABLE #TableWithDups(
+        [PK]    TINYINT NOT NULL PRIMARY KEY,
+        [EMail] [varchar](40) NULL,
+        [First] [varchar](15) NULL,
+        [Last] [varchar](20) NULL,
+        [Gender] [varchar] (1) NULL, 
+        [DOB] [varchar](8) NULL,
+        [Phone] [varchar](10) NULL,
+        [StreetNumber] [varchar](30) NULL,
+        [StreetName] [varchar](30) NULL
+    ) 
+    END
+-----------------------------------------------------------------
+-- Check if some temp tables exist in the TempDB database -------
+-----------------------------------------------------------------
+ELSE
+BEGIN
+    TRUNCATE TABLE #TableWithDups
+END
+
+IF EXISTS(SELECT * 
+    FROM Sys.Tables
+    WHERE OBJECT_ID = OBJECT_ID(N'[dbo].[#DeDup_Testing]'))
+BEGIN
+    DROP TABLE #DeDup_Testing   
+END
+
+--------------------------------------------------------------------
+--- Insert duplicates records into TableWithDups
+--------------------------------------------------------------------
+INSERT INTO #TableWithDups ([PK],[EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (1,'MSSQL1@RemoveDupRecords.Com','Susan','Smith','F', '19600912','','1100','Main Street')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (2,'MSSQL1@RemoveDupRecords.Com','Susan','Smith','',   '','1113058336','1100','Main Street')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (3,'MSSQL1@RemoveDupRecords.Com','Susan','Smith','F','','1113058336','1100','Main Street')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (4,'MSSQL2@RemoveDupRecords.Com','Joe','Smith','','19640825','2223058336','1100','Main Street')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName])  
+VALUES (5,'MSSQL2@RemoveDupRecords.Com','Joe','Smith','M','19640825','2223058336','1100','Main Street')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName])  
+VALUES (6,'MSSQL3@RemoveDupRecords.Com','Alex','Walker','M','','5553058888','55','KingFisher Road')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (7,'MSSQL3@RemoveDupRecords.Com','Alex','Walker','F','19580912','','55','KingFisher Road')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName])  
+VALUES (8,'MSSQL3@RemoveDupRecords.Com','Alex','Walker','','1952','','55','KingFisher Road')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (9,'MSSQL4@RemoveDupRecords.Com','Uri','Pearl','M','1961','3333054422','110','Robertsville Road')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName])  
+VALUES (10,'MSSQL4@RemoveDupRecords.Com','Uri','Pearl','','19600912','3333054422','110','Robertsville Road')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (11,'MSSQL4@RemoveDupRecords.Com','Uri','Pearl','','','','110','Robertsville Road')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (12,'MSSQL5@RemoveDupRecords.Com','Terry', 'Thurber','M','','4443058377','500','Larkin Street')
+
+INSERT INTO #TableWithDups ([PK], [EMail],[First],[Last],[Gender],[DOB],[Phone],[StreetNumber],[StreetName]) 
+VALUES (13,'MSSQL5@RemoveDupRecords.Com','Terry', 'Thurber','','19600809','','500','Larkin Street')
+</pre>
+<p>Below is some sample code to explain this idea of how to remove duplicates using the MS SQL ROW_NUMBER and partition idea:</p>
+<pre class="brush: sql;">SELECT 
+    [First],
+    [Last], 
+    [Email],
+    [DOB],
+    ROW_NUMBER() OVER (PARTITION BY Email ORDER BY Email,DOB DESC,Gender) AS Rn, 
+    StreetNumber,
+    StreetName
+FROM 
+    #TableWithDups 
+</pre>
+<p>In the above, the Email works as a partition and has a unique value to allow us to create a group of records on that field and also control the order of how the records will show up. In the data below Susan Smith with the record that has the value of Rn = 2 and Rn=3 are considered as duplicate records and should be deleted.</p>
+<p> </p>
+<p>In actuality the only difference compared to the original data that was created in the temp table named: TableWithDups is the additional column named: Rn. Every record in the Rn that is greater than 1 is considered as a duplicate one. Adding the ORDER BY on different fields can change the way the records will show up as Rn=1. See Sample 1 below to get the idea:</p>
+<p> </p>
+<p>Sample 1:</p>
+<p><img src="/media/67222/data-cleansing-remove-duplicate-records-in-sql-database-sample1.png" alt="Data cleansing remove duplicate records In SQL Database" title="Data cleansing remove duplicate records In SQL Database"/></p>
+<p> </p>
+<p>When running the below code as Common Table Expression (CTE) flexibility is increased as shown below and a WHERE clause is added as WHERE Rn = 1. As a side note using the CTE is considered as a temporary result. The CTE can be self-referenced multiple times in the same query. It is similar to a derived table but much more flexible.</p>
+<pre class="brush: sql;">;
+WITH DeDupe
+AS
+(
+SELECT 
+    [PK],
+    [First],
+    [Last], 
+    [Email],
+    [Gender],
+    [DOB],
+    ROW_NUMBER() OVER (PARTITION BY Email ORDER BY Email,DOB DESC) AS Rn, 
+    StreetNumber,
+    StreetName
+FROM 
+    #TableWithDups 
+)   
+SELECT [PK],[First],[Last],[Email], [Gender],[DOB],Rn,StreetNumber,StreetName
+FROM DeDupe WHERE Rn = 1
+ORDER BY [First],[Last]     
+</pre>
+<p>Here is the data as shown below in Sample 2 after running the above code:<br /> <br /> Sample 2:<br /> <img src="/media/67227/find-and-remove-duplicate-records-in-mssql-data-sample2.png" alt="Find and remove duplicate records In MSSQL Data" title="Find and remove duplicate records In MSSQL Data"/></p>
+<p> </p>
+<p>As you see in the above in Sample 2, all duplicate records that have Rn &gt; 1 do not show up anymore. But if you look closely we lost some data that could have been combined in the record with Rn=1. We can increase the partition by adding more fields to make sure there are no duplicate addresses, but that would not change the fact that some data will be lost.</p>
+<p> </p>
+<p>The real power of the above technique is that we can combine several values from different duplicate records in the record that gets the value of Rn=1. Let's examine closely what we have above. If you look at Sample 2 then Joe Smith and Terry Thurber lost the data in the Gender column. Looking at Sample 1 under PK= 5, the Gender is M for Joe and also PK = 13 which is Terry Thurber. The same problem exists also for the Phone number as well. The following code will take care of this problem and incorporate all required pieces of data in one record.</p>
+<pre class="brush: sql;">;
+WITH DeDupe
+AS
+(
+SELECT
+    PK,
+    [First],
+    [Last],
+    [Email],
+    [Gender],
+    [DOB],
+    MAX(Phone) OVER (PARTITION BY Email) AS Phone_Updated ,
+    MAX(CASE WHEN CAST(DOB AS INT) &gt; 0 THEN CAST(DOB AS INT) ELSE DOB END) 
+    OVER (PARTITION BY Email) AS DOB_Updated,
+    MAX(Gender) OVER (PARTITION BY Email) AS Gender_Updated,  
+    ROW_NUMBER() OVER (PARTITION BY Email,First,Last,LTRIM(LEFT(UPPER([StreetNumber]),4)) + LEFT(UPPER([StreetName]),4)  
+    ORDER BY DOB DESC,Phone DESC,Gender DESC,Email,First,Last) AS Rn, 
+    [Phone],
+    [StreetNumber],
+    [StreetName]
+FROM #TableWithDups 
+) 
+SELECT 
+    PK,
+    [First],
+    [Last],
+    [Email],
+    [Gender],
+    [Gender_Updated], 
+    [DOB],
+    CASE WHEN CAST(DOB_Updated AS VARCHAR(10))='0' THEN '' ELSE CAST(DOB_Updated   
+    AS VARCHAR(10)) END DOB_Updated,
+    [Phone],
+    [Phone_Updated],
+    [Rn],
+    [StreetNumber],
+    [StreetName]
+INTO #DeDupe_Testing FROM DeDupe WHERE Rn &gt; 0
+
+-- Let's show some data
+SELECT * FROM #DeDupe_Testing WHERE Rn=1
+</pre>
+<p>The below data is the result of running the above code:</p>
+<p> </p>
+<p>Sample 3:</p>
+<p><img src="/media/67232/remove-duplicate-records-in-sql-sample3a.png" alt="Remove duplicate records in sql server and merge records to one" title="Remove duplicate records in sql server in a smart way"/></p>
+<p>The below is the continuation of the above data.</p>
+<p> </p>
+<p><img src="/media/67237/data-cleansing-find-and remove-duplicate-records-sample3b.png" alt="Data cleansing- find and remove duplicate records in ms sql server" title="Data cleansing-find and remove duplicate records in ms sql in a smart way"/></p>
+<p> </p>
+<p>Using the MAX(Phone) with the partition technique on each field that we don't want to lose data, will make sure to get the data in the row that Rn=1. Having this code on the Phone MAX(Phone) OVER (PARTITION BY Email) AS Phone_Updated and create a new column to show the new data near the original column helps to analyze the data to make sure everything works fine.</p>
+<p> </p>
+<p>In the above code we make sure that no data is lost while we remove all duplicate records. When all partitions are handled then we create ROW_NUMBER() OVER (PARTITION…) on all combinations of fields that create a unique partition. We also ORDER each field that was part of the MAX() as DESC. Order the field as DESC is crucial and is part of the technique of merging all data from different rows into one row of the same partition. In addition, I added code around the DOB (Date of Birth) since in some cases it has only 0 value and clearing the DOB to nothing is a better data for me.</p>
+<p> </p>
+<p>In sample 3 all fields such as: Gender_Updated, DOB_Updated and Phone_Updated are filled with data while all other duplicate records were removed. In Sample 3 Joe Smith and Terry Thurber did not lose any data compared to Sample 2. In addition, the idea is to copy all records to a different table while leaving the original data as UN touched for a backup.</p>
+<p> </p>
+<p>The DOB is a VARCHAR (10), since when import data it is always a character based field that comes in many different formats. For additional info on that matter please see this article at: <a title="String Manipulation on large data using LIKE operator or PATINDEX" href="/computer-consulting-blog/2011/3/28/string-manipulation-on-large-data-using-like-operator-or-patindex.aspx">data cleansing and manipulating date format</a>.</p>
+<p> </p>
+<p><span style="font-size: medium;">Check our <a title="Custom Software Development as web based and for Mobile devices such as: iTab, iPhone Android and more.." href="/microsoft-solutions/custom-software-development.aspx" target="_blank">Custom Software Development</a> Services.</span></p>
+<p><span style="font-size: medium;"><br /></span></p>
+<p>Conclusions:<br /> ==========</p>
+<p>Once you have found your duplicate records, you face the problem of merging multiple records into one without losing any data. Some of the problems you might face when merging records could be that it has a phone or another record could have an email address and you cannot afford to remove these duplicate records when you are taking the risk of losing some important data. The duplicate record remover that was discussed above covers all of these points and provides a solution that safely removes duplicate records from your database. In addition, to use the code above the Sample 3 data is when you know for sure that you may have fields with empty data; otherwise simply use the code above the Sample 2 data.<br /> <br /></p>
+<p> </p>
+<p>Go back to our <span style="font-size: medium;"><a title="Provide SQL Consulting and Remote DBA services. SQL Server database - data cleansing." href="/computer-consulting-blog.aspx" target="_blank">main blog</a></span>. <br /><br /></p>
+</div>
+
+<div class="entry-meta"> 
+This entry was written by <span class="author vcard"><span class="fn n">
+    Doron Farber</span></span>, 
+posted on <abbr class="published" title='Monday, December 26, 2011'>Monday, December 26, 2011</abbr>
+
+Bookmark the <a href='/computer-consulting-blog/2011/12/26/remove-duplicate-records-in-sql.aspx' title="Permalink" rel="bookmark">permalink</a>. 
+
+Follow any comments here with the 
+<a href="/computer-consulting-blog/2011/12/26/remove-duplicate-records-in-sql/commentrss.aspx" title="Comments RSS" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+    You can <a class="comment-link" href="#respond" title="Post a comment">post a comment</a>.
+
+</div>
+
+</div>
+
+<div id="related">
+
+</div>
+
+<div id="comments">
+<h3>6 comments  for  “Remove duplicate records in sql”
+            </h3>
+<ol class="commentlist">
+  <li class="comment alt" id="comment-20">
+    <div class="comment-author vcard"><img class="photo avatar avatar-32 photo" width="32" height="32" src="http://www.gravatar.com/avatar.php?gravatar_id=d624b3947c434a26e25b1c8d435d3034&amp;amp;rating=G&amp;amp;size=40&amp;amp;default=" alt="Gravatar of Gabriel Weinstein"><span class="fn n"><a class="url url" rel="external nofollow" href="http://www.virtualmind.com.ar">Gabriel Weinstein</a></span></div>
+    <div class="comment-meta">
+                            Posted Wednesday, December 28, 2011 at 10:25:28 AM</div>
+    <p>That's an interesting idea how you merged data from different fields and remove duplicate records.</p>
+  </li>
+  <li class="comment alt" id="comment-21">
+    <div class="comment-author vcard"><img class="photo avatar avatar-32 photo" width="32" height="32" src="http://www.gravatar.com/avatar.php?gravatar_id=554e8bd6af869111a6efb9895bb37072&amp;amp;rating=G&amp;amp;size=40&amp;amp;default=" alt="Gravatar of Vishal Vivek"><span class="fn n"><a class="url url" rel="external nofollow" href="http://www.seocorporation.net/">Vishal Vivek</a></span></div>
+    <div class="comment-meta">
+                            Posted Wednesday, December 28, 2011 at 12:18:10 PM</div>
+    <p>That’s a great idea to remove duplicate records and I always look for a good source for my CRM data cleansing.</p>
+  </li>
+  <li class="comment alt" id="comment-22">
+    <div class="comment-author vcard"><img class="photo avatar avatar-32 photo" width="32" height="32" src="http://www.gravatar.com/avatar.php?gravatar_id=146ff36b313dd8cf3dc8531268449902&amp;amp;rating=G&amp;amp;size=40&amp;amp;default=" alt="Gravatar of tony Basir"><span class="fn n">tony Basir</span></div>
+    <div class="comment-meta">
+                            Posted Monday, January 2, 2012 at 7:41:30 PM</div>
+    <p>This is a problem that I have struggled with over time and created more than one solution for in various languages.  You solution to use the RowNumber and Partition clauses of SQL Server is a straight forward, easy to understand and implement.<br/>
+Thanks for the copous examples and detailed notes.  I will be starting a cleansing project soon and this will save me a lot of time and agony</p>
+  </li>
+  <li class="comment alt" id="comment-23">
+    <div class="comment-author vcard"><img class="photo avatar avatar-32 photo" width="32" height="32" src="http://www.gravatar.com/avatar.php?gravatar_id=13256d19ff332847f887dc9686701202&amp;amp;rating=G&amp;amp;size=40&amp;amp;default=" alt="Gravatar of Jeffrey Peltz"><span class="fn n"><a class="url url" rel="external nofollow" href="http://aaalawyer.com">Jeffrey Peltz</a></span></div>
+    <div class="comment-meta">
+                            Posted Tuesday, January 10, 2012 at 3:01:29 PM</div>
+    <p>Hi,<br/>
+<br/>
+That’s a great idea to remove duplicate records while merging data from different records. I will definitely keep you in mind for any new data cleansing that I may need.<br/>
+<br/>
+Thanks,<br/>
+<br/>
+Jeff<br/>
+</p>
+  </li>
+  <li class="comment alt" id="comment-402">
+    <div class="comment-author vcard"><img class="photo avatar avatar-32 photo" width="32" height="32" src="http://www.gravatar.com/avatar.php?gravatar_id=cd3057ea53cccfcab8b7ef18baa9faa9&amp;amp;rating=G&amp;amp;size=40&amp;amp;default=" alt="Gravatar of Eralper"><span class="fn n"><a class="url url" rel="external nofollow" href="http://www.kodyaz.com">Eralper</a></span></div>
+    <div class="comment-meta">
+                            Posted Thursday, March 6, 2014 at 6:45:39 AM</div>
+    <p>Besides using Row_Number() with Partition By ( http://www.kodyaz.com/articles/delete-duplicate-rows-using-row-number-partition-by-order-by.aspx ) on SQL Server 2005 and later, for previous versions of SQL Server developers can use other methods noted at http://www.kodyaz.com/articles/delete-duplicate-records-rows-in-a-table.aspx like using SET ROWCOUNT, TOP or using an IDENTITY column, etc.</p>
+  </li>
+  <li class="comment alt" id="comment-422">
+    <div class="comment-author vcard"><img class="photo avatar avatar-32 photo" width="32" height="32" src="http://www.gravatar.com/avatar.php?gravatar_id=e79f6e56ff8863907803bc59027df10c&amp;amp;rating=G&amp;amp;size=40&amp;amp;default=" alt="Gravatar of Vlad"><span class="fn n">Vlad</span></div>
+    <div class="comment-meta">
+                            Posted Saturday, May 10, 2014 at 11:10:27 AM</div>
+    <p>Great article!!!<br/>
+It goes beyond just removing duplicated PK from a table.<br/>
+The technique is very valuable and extended my knowledge.</p>
+  </li>
+</ol>
+
+<div id="respond">
+<h3>Post a comment</h3>
+
+
+<div class="formcontainer">
+
+
+<div id="commentform" class="post-comment">
+
+<div id="gravatar" style="display: none; height: 80px; width:80px;"></div>
+
+
+    <div class="form-label">
+    <label for="author" class="fieldLabel">
+       Your name:
+    </label>
+    </div>
+    <div class="form-input">
+    <input type="text" id="author" name="name" class="input-text required" />
+    </div>
+
+
+    <div class="form-label">
+    <label for="email" class="fieldLabel">
+        Email address:
+    </label>
+    </div>
+    <div class="form-input">
+    <input type="text" id="email" name="email" class="input-text required email" />
+    </div>
+
+    <div class="form-label">
+    <label for="url" class="fieldLabel">
+        Website url:
+    </label>
+    </div>
+    <div class="form-input">
+    <input type="text" id="url" name="website"  class="input-text url" />
+    </div>
+    
+    <div class="form-label">
+    <label for="comment" class="fieldLabel">
+       Your message:
+    </label>
+    </div>
+    <div class="form-input">
+    <textarea id="comment" cols="20" name="comment" rows="7" class="required"></textarea>
+    </div>
+
+    <div class="form-submit">
+    <input type="submit" id="submit" class="submit" value="Post Comment" />
+    </div>
+</div>
+
+<div id="commentLoading" style="display: none">
+    Your comment is being submitted, please wait
+</div>
+
+<div id="commentPosted" style="display: none">
+    Your comment has been posted, thank you very much
+</div>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+          
+          
+          jQuery("#commentform #email").blur(function(){
+                var email = jQuery("#commentform #email").val();
+                                
+                if(email != ""){
+                    var url = "/base/Blog4Umbraco/GetGravatarImage/" + email + "/80.aspx";
+                    jQuery.get(url, function(data){
+                        if(data != ""){
+                             jQuery("#gravatar").css( "background-image","url(" + data + ")" ).show();
+                        }else{
+                            jQuery("#gravatar").hide();
+                        }
+                    });
+                }
+          });
+            
+          jQuery("form").validate({
+          	submitHandler: function(form) {
+			    jQuery("#commentform").hide();
+			    jQuery("#commentLoading").show();
+			    jQuery("#commentform #submit").attr("enabled", false);
+			    
+			    var url = "/base/Blog4Umbraco/CreateComment/1582.aspx";
+			    
+				jQuery.post(url, { author: jQuery("#commentform #author").val(), email: jQuery("#commentform #email").val(), url: jQuery("#commentform #url").val(), comment: jQuery("#commentform #comment").val() },
+                   function(data){
+                   
+                   jQuery("#commentLoading").hide();
+                   jQuery("#commentPosted").show().removeClass("error");
+                   location.reload(true);
+
+                    if(data == 0){
+                          jQuery("#commentPosted").addClass("error").html(" Your comment could not be posted, we're very sorry for the inconvenience ");
+                          jQuery("#commentform").show();
+                          jQuery("#commentform #submit").attr("enabled", true);
+                    }
+                    
+                   });
+			}
+			});
+    });
+</script>
+</div>
+
+
+
+</div>
+</div>
+
+
+                </div>
+                <!-- #content -->
+            </div>
+            <!-- #container -->
+            
+            
+                <div id="primary" class="sidebar">
+                    <ul class="xoxo">
+                        <li id="pages">
+                            <h3>
+                                Pages</h3>
+                            <ul><li class="page_item page-item-1478"><a href="/computer-consulting-blog/about-custom-software-development-and-remote-dba-services.aspx">About Custom Software Development and Remote DBA Services</a></li><li class="page_item page-item-1479"><a href="/computer-consulting-blog/tag-cloud.aspx">Tag Cloud</a></li><li class="page_item page-item-1480"><a href="/computer-consulting-blog/archive.aspx">Archive</a></li><li class="page_item page-item-1494"><a href="/computer-consulting-blog/contact-us.aspx">Contact Us</a></li></ul>
+                        </li>
+                        <li id="categories">
+                            <h3>
+                                Tags</h3>
+                            <ul>
+  <li class="cat-item"><a href="/computer-consulting-blog.aspx">All</a><span> (24)</span></li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Batch processing records in MS SQL">Batch processing records in MS SQL</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=ms sql data conversion">ms sql data conversion</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=perform data cleansing">perform data cleansing</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=ms sql string manipulation on large data">ms sql string manipulation on large data</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Smart data dedupping">Smart data dedupping</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Secure ms sql server">Secure ms sql server</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Prevent attacks on MS SQL server">Prevent attacks on MS SQL server</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Custom ERP">Custom ERP</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Affordable Business Applications">Affordable Business Applications</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Data compression in MS SQL server">Data compression in MS SQL server</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=ms sql data cleansing">ms sql data cleansing</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=MS SQL database administrator">MS SQL database administrator</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=QuickBooks replacement">QuickBooks replacement</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Increase query performance in ms sql server">Increase query performance in ms sql server</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Small business software">Small business software</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Merge duplicate records from different fields">Merge duplicate records from different fields</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Split Address to Street Number and Street Name in sql">Split Address to Street Number and Street Name in sql</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Delete duplicate records in sql">Delete duplicate records in sql</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Big data">Big data</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Remote database administration">Remote database administration</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Remote DBA">Remote DBA</a> (6)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=MS SQL Remote DBA">MS SQL Remote DBA</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Data Cleansing Experts">Data Cleansing Experts</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=MS SQL Consulting Services">MS SQL Consulting Services</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=MS SQL Big Data">MS SQL Big Data</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Database Administrator">Database Administrator</a> (2)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=SQL consulting">SQL consulting</a> (4)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Microsoft SQL server">Microsoft SQL server</a> (2)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Always On">Always On</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Database Administartor">Database Administartor</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=MySQL Administrator">MySQL Administrator</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Access Web databases">Access Web databases</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Access Database Online">Access Database Online</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Convert Access to Web">Convert Access to Web</a> (2)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Alpha Five Report">Alpha Five Report</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Alpha Anywhere Report">Alpha Anywhere Report</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Create report in Alpha Anywhere">Create report in Alpha Anywhere</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Create report in Alpha Five">Create report in Alpha Five</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Alpha Anywhere developer">Alpha Anywhere developer</a> (3)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Custom Software Development">Custom Software Development</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Sql Server Consultants USA">Sql Server Consultants USA</a> (3)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Sql Server Consultant USA">Sql Server Consultant USA</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Database Design">Database Design</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Reverse Database Engineering">Reverse Database Engineering</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Alpha 5 Database">Alpha 5 Database</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Alpha five software">Alpha five software</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=SQL Consulting USA">SQL Consulting USA</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Alpha Five Developers">Alpha Five Developers</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=MS Access Developers">MS Access Developers</a> (1)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Custom Software Developent">Custom Software Developent</a> (2)
+    		</li>
+  <li class="cat-link"><a href="/computer-consulting-blog.aspx?filterby=Multi-Tenant Database Application">Multi-Tenant Database Application</a> (1)
+    		</li>
+</ul>
+                        </li>
+                        <li id="archives">
+                            <h3>
+                                Archives</h3>
+                            <ul class="archive">
+  <li class="month"><a href="/computer-consulting-blog/2016/1.aspx">January 2016</a> <span>
+              (2)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2015/11.aspx">November 2015</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2015/10.aspx">October 2015</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2015/8.aspx">August 2015</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2015/6.aspx">June 2015</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2015/3.aspx">March 2015</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2015/2.aspx">February 2015</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2014/4.aspx">April 2014</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2014/2.aspx">February 2014</a> <span>
+              (2)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2014/1.aspx">January 2014</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2013/12.aspx">December 2013</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2013/7.aspx">July 2013</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2013/4.aspx">April 2013</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2013/3.aspx">March 2013</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2011/12.aspx">December 2011</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2011/8.aspx">August 2011</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2011/7.aspx">July 2011</a> <span>
+              (2)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2011/5.aspx">May 2011</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2011/3.aspx">March 2011</a> <span>
+              (1)
+            </span></li>
+  <li class="month"><a href="/computer-consulting-blog/2011/1.aspx">January 2011</a> <span>
+              (1)
+            </span></li>
+</ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- #primary .sidebar -->
+            
+            
+            
+                <div id="secondary" class="sidebar">
+                    <ul class="xoxo">
+                        <li id="latest-comments">
+                            <h3>
+                                Latest Comments</h3>
+                                <ul>
+  <li class="comment-item"><a href="/computer-consulting-blog/2011/7/26/data-compression-in-large-tables-in-ms-sql-server.aspx#comment-16">Matthew on Data compression in large tables in MS SQL server</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2015/8/2/the-importance-of-clustered-index-to-improve-database-performance-in-sql.aspx#comment-825">Sotiris Filippidis on The Importance Of Clustered Index To Improve Database Performance In SQL</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2015/8/2/the-importance-of-clustered-index-to-improve-database-performance-in-sql.aspx#comment-824">Brian McKillop on The Importance Of Clustered Index To Improve Database Performance In SQL</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2015/8/2/the-importance-of-clustered-index-to-improve-database-performance-in-sql.aspx#comment-826">Yaroslav Kazmin on The Importance Of Clustered Index To Improve Database Performance In SQL</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2011/7/26/data-compression-in-large-tables-in-ms-sql-server.aspx#comment-15">Naomi  on Data compression in large tables in MS SQL server</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2013/7/22/remote-dba.aspx#comment-204">Doron on Remote DBA</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2013/7/22/remote-dba.aspx#comment-203">Jeff Peltz on Remote DBA</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2015/6/28/reverse-database-engineering-and-database-design.aspx#comment-823">John Willems on Reverse Database Engineering and Database Design</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2015/6/28/reverse-database-engineering-and-database-design.aspx#comment-822">Yaroslav Kazmin on Reverse Database Engineering and Database Design</a></li>
+  <li class="comment-item"><a href="/computer-consulting-blog/2015/6/28/reverse-database-engineering-and-database-design.aspx#comment-821">Alan Sawyer on Reverse Database Engineering and Database Design</a></li>
+</ul>
+                        </li>
+                       
+                        
+
+                    </ul>
+                </div>
+                <!-- #secondary .sidebar -->
+            
+            
+            
+            
+            <div id="footer">
+                <span id="generator-link"><a href="http://www.dfarber.com/" title="Umbraco" rel="generator">
+                    The Farber Consulting Group, Inc.</a></span></div>
+            <!-- #footer -->
+            </asp:ContentPlaceHolder>
+            
+        </div>
+        <div id="contentMainFooter" class="clear">
+                &nbsp;
+        </div>
+        
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+</div></form>
+         <div id="globalFooter">
+            <ul><li id="homeGF"><a href="/index.aspx">
+    Home
+    </a></li><li class="separatorGF">|</li><li id="productsGF"><a href="/products.aspx">
+    Products
+    </a></li><li class="separatorGF">|</li><li id="solutionsGF"><a href="/microsoft-solutions.aspx">
+    MS Solutions
+    </a></li><li class="separatorGF">|</li><li id="contactGF"><a href="/contact-us.aspx">
+      Contact
+    </a></li></ul>
+            <span class="vcard org fn">Copyright © 2010. The Farber Consulting Group, Inc. All Rights Reserved.</span>
+            <br class="clear" />
+        </div>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+        </script>            
+    </body>
+    </html>

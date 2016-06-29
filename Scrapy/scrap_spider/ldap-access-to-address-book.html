@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="You can now access your FastMail address book via LDAP. Many email programs (eg Outlook, Outlook Express, Thunderbird, etc) support LDAP access for address books.">
+<title>LDAP access to address book | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="LDAP access to address book">
+<meta property="og:description" content="You can now access your FastMail address book via LDAP. Many email programs (eg Outlook, Outlook Express, Thunderbird, etc) support LDAP access for address books.">
+<meta property="og:url" content="https://blog.fastmail.com/2008/08/07/ldap-access-to-address-book/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2008/08/07/ldap-access-to-address-book/">
+<meta name="twitter:title" content="LDAP access to address book">
+<meta name="twitter:description" content="You can now access your FastMail address book via LDAP. Many email programs (eg Outlook, Outlook Express, Thunderbird, etc) support LDAP access for address books.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2008/08/07/ldap-access-to-address-book/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2008/08/07/ldap-access-to-address-book/'>LDAP access to address book</a></h1>
+<p class="blog-author">Rob Mueller &ndash;  7 August 2008</p>
+<p>You can now access your FastMail address book via
+<a href="http://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol">LDAP</a>.
+Many email programs (eg Outlook, Outlook Express, Thunderbird, etc)
+support LDAP access for address books.</p>
+
+<p>There are some important caveats with using this:</p>
+
+<ol>
+<li>The address book is <strong>read-only</strong> via LDAP, so you can't make
+changes or add addresses to your address book from your email
+program</li>
+<li>The address book is <strong>not</strong> cached offline (in theory Thunderbird 2
+supports this, but the implementation is <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=316170">currently
+broken</a>, it
+should be fixed in Thunderbird 3), so it will only work while you
+are connected to the Internet</li>
+</ol>
+
+<p>LDAP is most useful for families/businesses that have a large global
+address book. In these cases, the LDAP address lookup will search the
+users private address book &amp; and the global address book.</p>
+
+<p>If you understand these limitations, and want to give LDAP a go, here
+are some quick instructions for setting up LDAP on the most popular
+email clients:</p>
+
+<ul>
+<li><strong>Outlook Express</strong> - Go to <strong>Tools</strong> -> <strong>Accounts</strong>. Click
+<strong>Add</strong> -> <strong>Directory Service</strong>, then see below</li>
+<li><strong>Thunderbird 2</strong> - Go to <strong>Tools</strong> -> <strong>Options</strong>. Click
+<strong>Composition</strong> tab, then <strong>Addressing</strong> sub-tab, click <strong>Edit
+Directories</strong>. Click <strong>Add</strong>, then see below.</li>
+<li><strong>Outlook 2007</strong> - Go to <strong>Tools</strong> -> <strong>Account Settings</strong>. Click
+<strong>Addressbooks</strong> tab. Click <strong>New</strong> then see below.</li>
+</ul>
+
+<p>Once you follow the above steps, you'll be asked for some information
+about the LDAP server. You need to enter the following details:</p>
+
+<ul>
+<li><strong>Server/Host name</strong>: ldap.messagingengine.com</li>
+<li><strong>Port</strong>: 389 (or 636 for SSL)</li>
+<li><strong>Login</strong>: Required (but must be "plain", not "SPA")</li>
+<li><strong>Username/Bind DN</strong>: cn=[your-username]@[your-domain],dc=User</li>
+<li><strong>Search base/Base DN</strong>: dc=AddressBook</li>
+</ul>
+
+<p>Obviously replace [your-username]@[your-domain] with your actual full
+login name in the above settings (and remove the [ and ] brackets as
+well, they're just to make it clearer which bits need some changing),
+but remember the "cn=" part at the start and the ",dc=User" part on the
+end.</p>
+
+<p>Here's some photos for the Outlook Express setup:</p>
+
+<p><img src="/assets/oe-ldap-1.jpg" alt="" /></p>
+
+<p><img src="/assets/oe-ldap-2.jpg" alt="" /></p>
+
+<p>And this is for Thunderbird:</p>
+
+<p><img src="/assets/tb-ldap.jpg" alt="" /></p>
+
+<p>To actually do an address book search via LDAP</p>
+
+<ul>
+<li><strong>Outlook Express</strong> - Go to <strong>Tools</strong> -> <strong>Address Book</strong> (or click
+<strong>Address Book</strong> on the main toolbar), then <strong>Edit</strong> -> <strong>Find
+People</strong> (or click <strong>Find People</strong> on the toolbar). Select the LDAP
+directory from the Look in popup menu. Then use the fields below to
+search. To automatically search the LDAP address book when
+composing, make sure that when you setup the LDAP account, you
+select the <strong>Check names against this server</strong> when sending email
+checkbox on the <strong>General</strong> tab. Note that any local addresses will
+always be matched first. Only names that can't be matched in your
+local address book will use LDAP for the search.</li>
+<li><strong>Thunderbird 2</strong> - Go to <strong>Tools</strong> -> <strong>Address Book</strong> (or click
+<strong>Address Book</strong> on the main toolbar), select the LDAP address book
+from the list at the left. Use the search box at the top right of
+the window to search. To automatically search the LDAP address book
+when composing, go to <strong>Tools</strong> -> <strong>Options</strong>. Click
+<strong>Composition</strong> tab, then <strong>Addressing</strong> sub-tab. In the <strong>Address
+Autocompletion</strong> section, make sure the <strong>Directory Server</strong>
+checkbox is checked, and make sure you select the LDAP account you
+setup above from the popup menu.</li>
+</ul>
+
+<p>If you have any questions, please see our
+<a href="http://forum.fastmail.fm">forum</a> or email me at <a href="&#x6D;&#97;&#x69;&#108;&#116;&#111;:&#114;&#111;&#98;&#x6D;&#64;&#x66;&#97;&#115;&#116;&#x6D;&#x61;&#x69;l.&#x66;&#x6D;">&#114;&#111;&#98;&#x6D;&#64;&#x66;&#97;&#115;&#116;&#x6D;&#x61;&#x69;l.&#x66;&#x6D;</a>.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2008/08/05/new-mailmessagingenginecom-ssl-certificate/">New mail.messagingengine.com SSL certificate</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2008/08/08/network-outage-and-details/">Network outage and details</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>

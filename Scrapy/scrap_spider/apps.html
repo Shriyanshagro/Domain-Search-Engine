@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+
+
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head><link rel="canonical" href="https://msdn.microsoft.com/zh-cn/library/jj157115.aspx" /><script type="text/javascript" src="//c.webtrends.com/acs/account/mx643kesn3/js/wt.js"></script>
+    <title>在多线程环境中使用 Windows 运行时对象</title>
+
+        
+
+
+
+
+
+
+<meta name="DCS.dcsuri" content="/zh-cn/library/windows/apps/jj157115(d=default,l=zh-cn,v=vs.140).aspx" />
+
+<meta name="NormalizedUrl" content="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115(d=default,l=zh-cn,v=vs.140).aspx" />
+
+<meta name="ms.normalizedurl" content="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115(d=default,l=zh-cn,v=vs.140).aspx" />
+
+<meta name="ms.prod" content="windows-client-threshold" />
+
+<meta name="ms.devlang" content="dotnet" />
+
+<meta name="ms.topic" content="article" />
+
+<meta name="AmbientContext" content="{&quot;layout.limit_max_width&quot;:true,&quot;AmbientContextId&quot;:&quot;33EF991B-B9CC-4B54-BE6F-E5068A5F7433&quot;,&quot;display.use_large_font&quot;:false,&quot;insight.perf_timing&quot;:true,&quot;AmbientContextDownstream&quot;:{},&quot;display.high_contrast&quot;:false,&quot;insight.use_wedcs_vnext&quot;:true}" />
+
+<meta name="VotingContextUrl" content="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115(d=default,l=zh-cn,v=vs.140).aspx" />
+
+<meta name="MN" content="BF1CA939-11:19:40 AM" />
+
+<meta name="Search.ShortId" content="jj157115" />
+
+<meta name="ms.shortidmsdn" content="jj157115" />
+
+<meta name="Ms.Locale" content="zh-cn" />
+
+<meta name="ms.prodver" content="VS.140" />
+
+<meta name="ms.contentlang" content="ZH" />
+
+<meta name="ms.lang" content="ZH" />
+
+<meta name="ms.loc" content="CN" />
+
+<meta name="ms.sitever" content="2016.04.30.1" />
+
+<meta name="ms.assetid" content="43ffd28c-c4df-405c-bf5c-29c94e0d142b" />
+
+<meta name="ms.auth" content="0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" data-do-not-move="true">
+        //<![CDATA[
+        var AmbientContext = null;
+
+        (function(){
+            var root = (function(){return this;}).call(null);
+
+            var GetCookie = function(name){
+                var cookies = root.document.cookie ? root.document.cookie.split('; ') : [];
+                for (var i = 0; i < cookies.length; i++) {
+                    var pos = cookies[i].indexOf('=');
+                    if (name === root.decodeURIComponent(cookies[i].slice(0, pos)))
+                    {
+                        var cookie = cookies[i].slice(pos + 1).replace(/\+/g, ' ');
+                        cookie = root.decodeURIComponent(cookie);
+                        return cookie;
+                    }
+                }
+            };
+
+            var JsonDeserialize = function(content) {
+                return root.JSON && root.JSON.parse ? root.JSON.parse(content) : (new Function('return (' + content + ')'))();
+            };
+
+            try {
+                AmbientContext = GetCookie('AmbientContext');
+                AmbientContext = AmbientContext && JsonDeserialize(AmbientContext);
+            } catch(ex) {
+            } finally {
+                AmbientContext = AmbientContext || null;
+            }
+        })();
+        //]]>
+    </script>
+
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js" data-do-not-move="true" data-provides="jQuery"></script>
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/Areas/Epx/Themes/Windows/Content/Winlogo_favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="https://assets.onestore.ms/cdnfiles/onestorerolling-1604-22001/shell/v3/scss/shell.min.css" /><link rel="stylesheet" type="text/css" href="https://i-msdn.sec.s-msft.com/Combined.css?resources=0:ImageSprite,0:TopicResponsive,0:TopicResponsive.MediaQueries,1:CodeSnippet,1:ProgrammingSelector,1:ExpandableCollapsibleArea,0:CommunityContent,1:TopicNotInScope,1:FeedViewerBasic,1:ImageSprite,2:Header,2:sprite,3:Banner.MediaQueries,0:Breadcrumbs,0:Breadcrumbs.MediaQueries,4:breadcrumbs,0:ResponsiveToc,0:ResponsiveToc.MediaQueries,0:TranslationWiki,0:jquery.popup,0:LibraryMemberFilter,2:Footer,5:ImageSprite,6:StandardRating,7:SelectLocaleFromPopUp,8:WindowsAppsResponsive,0:Tables.MediaQueries,1:Locale_zh-cn;/Areas/Library/Content:0,/Areas/Epx/Content/Css:1,/Areas/Epx/Themes/Windows/Content:2,/Areas/Epx/Shared/Content:3,/Areas/Library/Themes/Windows/content:4,/Areas/Epx/Themes/WindowsApps/Content:5,/Areas/Global/Content:6,/Areas/Epx/Themes/Base/Content:7,/Areas/Library/Themes/WindowsApps/Content:8&amp;amp;v=01F956817251626B30151D17E88E42B9" /></head>
+<body class="library ">
+    <div id="page">
+
+        
+
+        
+
+
+    
+
+
+
+
+	      
+        <link rel="stylesheet" type="text/css" href="https://i-msdn.sec.s-msft.com/Areas/Epx/Themes/Windows/Content/UhfHeaderResponsive.css?v=635975733210964868" data-do-not-move="true" />
+    <div id="uhf-header-wrapper">
+         
+
+
+
+
+ 
+
+
+
+        <script data-requires="jQuery" data-provides="uhfHeader" async="true" src="https://mem.gfx.ms/meversion?partner=dev-center-win-apps"></script>
+
+
+
+ 
+
+
+
+<div id="shell-header" class="shell-header shell-responsive " ms.pgarea="header" role="banner">
+    <div class="shell-header-wrapper">
+        <div class="shell-header-top" data-bi-area="HeaderL0" data-bi-view="L0V1">
+
+            <div class="shell-header-brand" ms.cmpgrp="logo">
+                        <a id="srv_shellHeaderMicrosoftLogo" href="https://www.microsoft.com" ms.cmpnm="MicrosoftBrandLogo" ms.title="Microsoft" title="Microsoft" data-bi-name="BrandLogo" tabindex="10">
+            <img src="https://assets.onestore.ms/cdnfiles/onestorerolling-1604-22001/shell/v3/images/logo/microsoft.png" alt="Microsoft" />
+        </a>
+
+            </div>
+
+            <div class="shell-header-nav-wrapper" ms.cmpgrp="nav" role="navigation">
+                <ul class="shell-header-nav" role="menubar" id="srv_shellHeaderNav" data-bi-area="L1" data-bi-view="Hovermenus">
+                        <li class="shell-header-user-mobile-container">
+                        </li>
+                                    <li class="shell-header-dropdown  " data-navcontainer="developer_resources_NavContainer">
+                                        <div id="developer_resources" class="shell-header-dropdown-label">
+                                            <a id="开发人员资源-navigation" href="javascript:void(0)" role="button" aria-labelledby="developer_resources" aria-haspopup="true" aria-expanded="false" ms.title="开发人员资源" data-bi-name="DeveloperResources" data-bi-slot="1" tabindex="20">
+                                                开发人员资源
+                                            </a>
+                                        </div>
+
+
+
+
+
+<div class="shell-header-dropdown-content " aria-hidden="true" role="menu">
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; Microsoft 开发人员">
+
+                            <dt id="dev_tech_ms_developer" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link">
+                                <a href="https://developer.microsoft.com/zh-cn" ms.title="Microsoft 开发人员" tabindex="20" data-bi-name="DeveloperTech_MSDeveloper">Microsoft 开发人员</a>                         
+                            </dt>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; Windows">
+
+                            <dt id="developer_tech_windows" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link-withL3">
+                                <a href="https://developer.microsoft.com/zh-cn/windows" role="menuitem" ms.title="Windows" tabindex="20" data-bi-name="DeveloperTech_Windows">Windows</a>
+                                <i class="shell-icon-dropdown"></i>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_windows_windows_apps">
+                        <a href="https://developer.microsoft.com/zh-cn/windows/windows-apps " class="shell-l3-list-item" ms.title="Windows 应用" tabindex="20" data-bi-name="DeveloperTech_Windows_WindowsApps">
+                            Windows 应用
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_classic_desktop">
+                        <a href="https://developer.microsoft.com/zh-cn/windows/desktop" class="shell-l3-list-item" ms.title="经典桌面" tabindex="20" data-bi-name="DeveloperTech_Windows_ClassicDesktop">
+                            经典桌面
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_IoT">
+                        <a href="https://developer.microsoft.com/zh-cn/windows/iot" class="shell-l3-list-item" ms.title="物联网" tabindex="20" data-bi-name="DeveloperTech_Windows_IoT">
+                            物联网
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_games">
+                        <a href="https://developer.microsoft.com/zh-cn/windows/games" class="shell-l3-list-item" ms.title="游戏" tabindex="20" data-bi-name="DeveloperTech_Games">
+                            游戏
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_holographic">
+                        <a href="https://developer.microsoft.com/zh-cn/windows/holographic" class="shell-l3-list-item" ms.title="Holographic" tabindex="20" data-bi-name="DeveloperTech_Windows_Holographic">
+                            Holographic
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_edge">
+                        <a href="https://developer.microsoft.com/zh-cn/microsoft-edge" class="shell-l3-list-item" ms.title="Microsoft Edge" tabindex="20" data-bi-name="DeveloperTech_Windows_Edge">
+                            Microsoft Edge
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_hardware">
+                        <a href="https://msdn.microsoft.com/windows/hardware/gg236587.aspx" class="shell-l3-list-item" ms.title="硬件" tabindex="20" data-bi-name="DeveloperTech_Hardware">
+                            硬件
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; Azure">
+
+                            <dt id="dev_tech_azure" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link-withL3">
+                                <a href="https://azure.microsoft.com/" role="menuitem" ms.title="Azure" tabindex="20" data-bi-name="DeveloperTech_Azure">Azure</a>
+                                <i class="shell-icon-dropdown"></i>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_windows_web_apps">
+                        <a href="https://azure.microsoft.com/documentation/scenarios/web-app/" class="shell-l3-list-item" ms.title="Web apps" tabindex="20" data-bi-name="DeveloperTech_Windows_WebApps">
+                            Web apps
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_mobile_apps">
+                        <a href="https://azure.microsoft.com/documentation/scenarios/mobile-app/ " class="shell-l3-list-item" ms.title="移动应用" tabindex="20" data-bi-name="DeveloperTech_Windows_MobileApps">
+                            移动应用
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_api_apps">
+                        <a href="https://azure.microsoft.com/services/app-service/api/" class="shell-l3-list-item" ms.title="API 应用" tabindex="20" data-bi-name="DeveloperTech_Windows_APIapps">
+                            API 应用
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_service_fabric">
+                        <a href="https://azure.microsoft.com/services/service-fabric/" class="shell-l3-list-item" ms.title="Service Fabric" tabindex="20" data-bi-name="DeveloperTech_Windows_ServiceFabric">
+                            Service Fabric
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; Visual Studio">
+
+                            <dt id="developer_tech_visual_studio" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link-withL3">
+                                <a href="https://www.visualstudio.com/" role="menuitem" ms.title="Visual Studio" tabindex="20" data-bi-name="DeveloperTech_VisualStudio">Visual Studio</a>
+                                <i class="shell-icon-dropdown"></i>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_vs_visual_studio_2015_products">
+                        <a href="https://visualstudio.com/products/vs-2015-product-editions" class="shell-l3-list-item" ms.title="Visual Studio 2015 产品" tabindex="20" data-bi-name="DeveloperTech_VS_VisualStudio2015Products">
+                            Visual Studio 2015 产品
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_visual_studio_team_services">
+                        <a href="https://visualstudio.com/products/visual-studio-team-services-vs" class="shell-l3-list-item" ms.title="Visual Studio 团队服务" tabindex="20" data-bi-name="DeveloperTech_Windows_VisualStudioTeamServices">
+                            Visual Studio 团队服务
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_visual_studio_code">
+                        <a href="https://www.visualstudio.com/products/code-vs.aspx" class="shell-l3-list-item" ms.title="Visual Studio Code" tabindex="20" data-bi-name="DeveloperTech_Windows_VisualStudioCode">
+                            Visual Studio Code
+                        </a>
+                    </li>
+                    <li id="developer_tech_vs_visual_studio_dev_essentials">
+                        <a href="https://visualstudio.com/visual-studio-dev-essentials-vs" class="shell-l3-list-item" ms.title="Visual Studio Dev Essentials" tabindex="20" data-bi-name="DeveloperTech_VS_VisualStudioDevEssentials">
+                            Visual Studio Dev Essentials
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; Office">
+
+                            <dt id="developer_tech_office" class="shell-header-dropdown-tab-label shell-header-L2menu-direct-link-withL3">
+                                <a href="https://dev.office.com/" role="menuitem" ms.title="Office" tabindex="20" data-bi-name="DeveloperTech_Office">Office</a>
+                                <i class="shell-icon-dropdown"></i>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_windows_word_excel_powerpoint">
+                        <a href="https://dev.office.com/getting-started/addins" class="shell-l3-list-item" ms.title="Word/Excel/PowerPoint" tabindex="20" data-bi-name="DeveloperTech_Windows_WordExcelPowerPoint">
+                            Word/Excel/PowerPoint
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_microsoft_graph">
+                        <a href="http://graph.microsoft.io" class="shell-l3-list-item" ms.title="Microsoft Graph" tabindex="20" data-bi-name="DeveloperTech_Windows_MicrosoftGraph">
+                            Microsoft Graph
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_outlook">
+                        <a href="https://dev.outlook.com/" class="shell-l3-list-item" ms.title="Outlook" tabindex="20" data-bi-name="DeveloperTech_Windows_Outlook">
+                            Outlook
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_one_drive_sharepoint">
+                        <a href="https://dev.onedrive.com/" class="shell-l3-list-item" ms.title="OneDrive/Sharepoint" tabindex="20" data-bi-name="DeveloperTech_Windows_OneDriveSharepoint">
+                            OneDrive/Sharepoint
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_skype">
+                        <a href="https://www.skype.com/developer/ " class="shell-l3-list-item" ms.title="Skype" tabindex="20" data-bi-name="DeveloperTech_Windows_Skype">
+                            Skype
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; 服务">
+
+                            <dt id="developer_tech_services" class="shell-header-dropdown-tab-label">
+                                <a href="javascript:void(0)" role="menuitem" ms.title="服务" ms.interactiontype="14" tabindex="20" data-bi-dnt="">
+                                    服务
+                                    <i class="shell-icon-dropdown facing-right"></i>
+                                </a>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_windows_store">
+                        <a href="https://developer.microsoft.com/zh-cn/store" class="shell-l3-list-item" ms.title="应用商店" tabindex="20" data-bi-name="DeveloperTech_Windows_Store">
+                            应用商店
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_cortana">
+                        <a href="https://developer.microsoft.com/zh-cn/windows-apps/cortana" class="shell-l3-list-item" ms.title="Cortana" tabindex="20" data-bi-name="DeveloperTech_Windows_Cortana">
+                            Cortana
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_bing">
+                        <a href="https://www.bing.com/dev " class="shell-l3-list-item" ms.title="必应" tabindex="20" data-bi-name="DeveloperTech_Windows_Bing">
+                            必应
+                        </a>
+                    </li>
+                    <li id="developer_tech_windows_app_insights">
+                        <a href="https://azure.microsoft.com/services/application-insights/" class="shell-l3-list-item" ms.title="Application Insights" tabindex="20" data-bi-name="DeveloperTech_Windows_AppInsights">
+                            Application Insights
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; 语言和平台">
+
+                            <dt id="dev_tech_lang_platforms" class="shell-header-dropdown-tab-label">
+                                <a href="javascript:void(0)" role="menuitem" ms.title="语言和平台" ms.interactiontype="14" tabindex="20" data-bi-dnt="">
+                                    语言和平台
+                                    <i class="shell-icon-dropdown facing-right"></i>
+                                </a>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_lang_platform_service_fabric">
+                        <a href="https://developer.xamarin.com/" class="shell-l3-list-item" ms.title="Xamarin" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_ServiceFabric">
+                            Xamarin
+                        </a>
+                    </li>
+                    <li id="developer_tech_lang_platform_asp_net">
+                        <a href="https://www.asp.net/" class="shell-l3-list-item" ms.title="ASP.NET" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_ASP.NET">
+                            ASP.NET
+                        </a>
+                    </li>
+                    <li id="developer_tech_lang_platform_c++">
+                        <a href="https://msdn.microsoft.com/library/60k1461a.aspx" class="shell-l3-list-item" ms.title="C++" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_C++">
+                            C++
+                        </a>
+                    </li>
+                    <li id="developer_tech_lang_platform_type_script">
+                        <a href="https://www.typescriptlang.org/" class="shell-l3-list-item" ms.title="TypeScript" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_TypeScript">
+                            TypeScript
+                        </a>
+                    </li>
+                    <li id="developer_tech_lang_platform_net_vb_c#_f#">
+                        <a href="https://msdn.microsoft.com/vstudio/aa496123" class="shell-l3-list-item" ms.title=".NET - VB, C#, F#" tabindex="20" data-bi-name="DeveloperTech_LangPlatform_NET_VB_C#F#">
+                            .NET - VB, C#, F#
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; 服务器">
+
+                            <dt id="dev_tech_server" class="shell-header-dropdown-tab-label">
+                                <a href="javascript:void(0)" role="menuitem" ms.title="服务器" ms.interactiontype="14" tabindex="20" data-bi-dnt="">
+                                    服务器
+                                    <i class="shell-icon-dropdown facing-right"></i>
+                                </a>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_server_windows_server">
+                        <a href="https://msdn.microsoft.com/windowsserver" class="shell-l3-list-item" ms.title="Windows Server" tabindex="20" data-bi-name="DeveloperTech_Server_WindowsServer">
+                            Windows Server
+                        </a>
+                    </li>
+                    <li id="developer_tech_server_sql_server">
+                        <a href="https://msdn.microsoft.com/library/mt590198" class="shell-l3-list-item" ms.title="SQL Server" tabindex="20" data-bi-name="DeveloperTech_Server_SQLServer">
+                            SQL Server
+                        </a>
+                    </li>
+                    <li id="developer_tech_server_biz_talk_server">
+                        <a href="https://msdn.microsoft.com/biztalk/aa937640.aspx" class="shell-l3-list-item" ms.title="BizTalk 服务器" tabindex="20" data-bi-name="DeveloperTech_Server_BizTalkServer">
+                            BizTalk 服务器
+                        </a>
+                    </li>
+                    <li id="developer_tech_server_sharepoint">
+                        <a href="https://msdn.microsoft.com/library/mt674607" class="shell-l3-list-item" ms.title="SharePoint" tabindex="20" data-bi-name="DeveloperTech_Server_SharePoint">
+                            SharePoint
+                        </a>
+                    </li>
+                    <li id="developer_tech_server_dynamics">
+                        <a href="https://msdn.microsoft.com/dynamics" class="shell-l3-list-item" ms.title="Dynamics" tabindex="20" data-bi-name="DeveloperTech_Server_Dynamics">
+                            Dynamics
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+                <dl class="shell-header-dropdown-tab  " ms.cmpnm="开发人员资源; 计划和社区">
+
+                            <dt id="dev_tech_programs_community" class="shell-header-dropdown-tab-label">
+                                <a href="javascript:void(0)" role="menuitem" ms.title="计划和社区" ms.interactiontype="14" tabindex="20" data-bi-dnt="">
+                                    计划和社区
+                                    <i class="shell-icon-dropdown facing-right"></i>
+                                </a>
+                            </dt>
+                            <dd class="shell-header-dropdown-tab-content" data-col="0">
+
+
+
+    <ul class="shell-header-dropdown-tab-list">
+                    <li id="developer_tech_server_programs_community_students">
+                        <a href="https://msdn.microsoft.com/imagine/imagine-home" class="shell-l3-list-item" ms.title="学生" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity_Students">
+                            学生
+                        </a>
+                    </li>
+                    <li id="developer_tech_programs_community_startups">
+                        <a href="https://microsoft.com/bizspark" class="shell-l3-list-item" ms.title="启动" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity_Startups">
+                            启动
+                        </a>
+                    </li>
+                    <li id="developer_tech_programs_community_forums">
+                        <a href="https://social.msdn.microsoft.com/forums/" class="shell-l3-list-item" ms.title="论坛" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity_Forums">
+                            论坛
+                        </a>
+                    </li>
+                    <li id="developer_tech_programs_community _msdn">
+                        <a href="https://msdn.microsoft.com" class="shell-l3-list-item" ms.title="MSDN" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity _MSDN">
+                            MSDN
+                        </a>
+                    </li>
+                    <li id="developer_tech_programs_community _subscriber_downloads">
+                        <a href="https://msdn.microsoft.com/subscriptions/" class="shell-l3-list-item" ms.title="订户下载" tabindex="20" data-bi-name="DeveloperTech_ProgramsCommunity _SubscriberDownloads">
+                            订户下载
+                        </a>
+                    </li>
+
+    </ul>
+
+
+
+                            </dd>
+
+                </dl>
+
+</div>
+                                    </li>
+
+                </ul>
+            </div>
+                <div class="shell-header-user-container">
+                    <dl class="shell-header-user">
+                        <dt>
+                            <span id="meControl">
+                                <div class="msame_Header" tabindex="60" style="display: inline-block; height: 48px; font-size: 14px; border: 1px solid transparent; border-bottom-style: none; width: 100%;">
+                                    <div class="msame_Header_name" style="line-height: 48px; max-width: 160px; display: inline-block; vertical-align: top; font-size: 86%; color: #505050; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; word-break: break-all">登录 </div>
+                                </div>
+                            </span>
+                        </dt>
+                    </dl>
+                </div>
+            
+            <div class="shell-header-nav-toggle " ms.cmpgrp="nav">
+                <button class="shell-header-toggle-menu" ms.cmpnm="mobile global nav toggle button" ms.title="Toggle menu" title="切换菜单" type="button" data-bi-name="Toggle Menu" tabindex="55">
+                    <i class="shell-icon-menu"></i>
+                </button>
+            </div>
+
+            <ul class="shell-header-toggle" ms.cmpgrp="header actions">
+                    <li>
+                        <button class="shell-header-toggle-search" type="button" data-bi-name="Toggle Search Icon" ms.title="search toggle" title="切换搜索" tabindex="45">
+                            <i class="shell-icon-search"></i>
+                        </button>
+                    </li>
+                            </ul>
+
+            <div class="shell-header-actions" ms.cmpgrp="header actions">
+                    <form id="srv_shellHeaderSearchForm" class="shell-search" role="search" action="https://social.msdn.microsoft.com/search/windows" method="GET" autocomplete="off" onsubmit=" return window.msCommonShell.onSearch(this) " ms.cmpnm="search">
+                        <div class="shell-search-wrapper">
+                            <label for="cli_shellHeaderSearchInput" class="sr-only">Search Microsoft</label>
+                            <input id="cli_shellHeaderSearchInput" type="search" title="" name="query" data-bi-dnt="" placeholder="" maxlength="200" tabindex="30" />
+
+                                <input type="hidden" name="Refinement" data-bi-dnt="" value="183" />
+
+                            <button type="submit" title="搜索" data-bi-dnt="" tabindex="40">
+                                <i class="shell-icon-search"></i>
+                                <span class="sr-only">Search</span>
+                            </button>
+                            <div id="cli_searchSuggestionsContainer" class="shell-search-dropdown-container">
+                                <div class="search-dropdown">
+                                    <div class="dropdown-item">
+                                        <ul id="cli_searchSuggestionsResults" data-bi-name="Search Suggestions" data-bi-source="UnifiedSearch" ms.cmpgrp="search suggestions"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="fixed-global-nav-buffer"></div>
+
+
+
+
+
+
+
+
+<div class="shell-category-header cat-theme-blue" ms.pgarea="categoryheader">
+    
+    <div role="navigation" aria-label="Category level navigation" class="shell-category-nav" ms.cmpgrp="cat nav" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="C0">
+        <div class="c-nav-pagination c-nav-pagination-prev">
+            <i class="shell-icon-dropdown facing-left"></i>
+        </div>
+        <ul class="shell-category-top-level shell-category-brand">
+            <li class="c-logo-item">
+                                <a id="shell-cat-header-logo" class="c-logo c-top-nav-link" href="https://developer.microsoft.com/zh-cn/windows" title="" ms.title="Windows Dev Center" data-bi-name="Category logo" tabindex="70">
+                    <span class="logo-text-label">Windows 开发人员中心</span>
+                </a>
+                <a id="shell-cat-header-logo-mobile" class="c-logo-mobile c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Windows Dev Center" ms.interactiontype="14" data-bi-name="Mobile category logo" tabindex="70">
+                    <span class="logo-text-label">Windows 开发人员中心</span>
+                    <i class="shell-icon-dropdown"></i>
+                </a>
+            <ul class="c-nav-dropdown-menu" role="menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="C1">
+
+
+
+            <li class="c-top-nav-item" id="explore-mobilelist">
+                <a id="explore-mobile" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="explore-mobilelist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="浏览" role="button" ms.interactiontype="14" data-bi-name="Explore" data-bi-slot="1" data-show-cta="True">
+                    <span>
+                        浏览
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Explore-C2" ms.cmpnm="浏览" role="menu">
+
+
+
+
+        <li class="c-nav-item ">
+            <a id="explore_whatsnewwin10-mobile" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/getstarted/whats-new-windows-10" ms.title="Windows 10 的新增内容" role="link" data-bi-name="Explore_WhatsNewWin10" data-bi-slot="1" tabindex="70">
+                <span>
+                    Windows 10 的新增内容
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_guideuwpapps-mobile" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/apps/xaml/dn894631.aspx" ms.title="通用 Windows 平台简介" role="link" data-bi-name="Explore_GuideUwpApps" data-bi-slot="2" tabindex="70">
+                <span>
+                    通用 Windows 平台简介
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_windowstrainingseries-mobile" class="c-nav-dropdown-item c-nav-link " href="http://go.microsoft.com/fwlink/p/?LinkId=626455" ms.title="Windows 10 培训系列" role="link" data-bi-name="Explore_WindowsTrainingSeries" data-bi-slot="3" tabindex="70">
+                <span>
+                    Windows 10 培训系列
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_winandstoretrends-mobile" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/windows-trends" ms.title="Windows 和应用商店趋势" role="link" data-bi-name="Explore_WinAndStoreTrends" data-bi-slot="4" tabindex="70">
+                <span>
+                    Windows 和应用商店趋势
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_cortana-mobile" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/cortana" ms.title="面向开发人员的 Cortana" role="link" data-bi-name="Explore_Cortana" data-bi-slot="5" tabindex="70">
+                <span>
+                    面向开发人员的 Cortana
+                </span>
+            </a>
+
+
+
+        </li>
+
+
+                </ul>
+            </li>
+            <li class="c-top-nav-item" id="Docs-mobilelist">
+                <a id="Docs-mobile" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="Docs-mobilelist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="文档" role="button" ms.interactiontype="14" data-bi-name="Docs" data-bi-slot="2" data-show-cta="True">
+                    <span>
+                        文档
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs-C2" ms.cmpnm="文档" role="menu">
+
+
+
+
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_windowsapps-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Windows 应用" role="button" data-bi-name="Docs_WindowsApps" data-bi-slot="1" tabindex="70">
+                <span>
+                    Windows 应用
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs_WindowsApps-C3" ms.cmpnm="Windows 应用" role="menu">
+
+
+
+        <li>
+            <a id="docs_windows-apps_getstarted" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/getstarted" ms.title="入门" role="link" data-bi-name="DocsWindowsAppsGetstarted" data-bi-slot="1" tabindex="70">
+                <span>
+                    入门
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_designUI" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/design" ms.title="设计和 UI" role="link" data-bi-name="DocsWindowsAppsDesignUI" data-bi-slot="2" tabindex="70">
+                <span>
+                    设计和 UI
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_develop" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/develop" ms.title="开发" role="link" data-bi-name="DocsWindowsAppsDevelop" data-bi-slot="3" tabindex="70">
+                <span>
+                    开发
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_api-reference" class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/apps/bg124285.aspx" ms.title="API 参考" role="link" data-bi-name="DocsWindowsAppsAPIreference" data-bi-slot="4" tabindex="70">
+                <span>
+                    API 参考
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_publish" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/publish" ms.title="发布" role="link" data-bi-name="DocsWindowsAppsPublish" data-bi-slot="5" tabindex="70">
+                <span>
+                    发布
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_monetize" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/monetize" ms.title="盈利" role="link" data-bi-name="DocsWindowsAppsMonetize" data-bi-slot="6" tabindex="70">
+                <span>
+                    盈利
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_promote" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/store-promotion" ms.title="推广" role="link" data-bi-name="DocsWindowsAppsPromote" data-bi-slot="7" tabindex="70">
+                <span>
+                    推广
+                </span>
+            </a>
+        </li>
+
+
+ 
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_Games-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="游戏" role="button" data-bi-name="Docs_Games" data-bi-slot="2" tabindex="70">
+                <span>
+                    游戏
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs_Games-C3" ms.cmpnm="游戏" role="menu">
+
+
+
+        <li>
+            <a id="docs_games_getstarted" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/games/getstarted" ms.title="入门" role="link" data-bi-name="DocsGamesGetstarted" data-bi-slot="1" tabindex="70">
+                <span>
+                    入门
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_games_uidesign" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/games/design" ms.title="UI 设计" role="link" data-bi-name="DocsGamesUIdesign" data-bi-slot="2" tabindex="70">
+                <span>
+                    UI 设计
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_games_develop" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/games/develop" ms.title="开发" role="link" data-bi-name="DocsGamesDevelop" data-bi-slot="3" tabindex="70">
+                <span>
+                    开发
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_games_publish" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/games/publish" ms.title="发布" role="link" data-bi-name="DocsGamesPublish" data-bi-slot="4" tabindex="70">
+                <span>
+                    发布
+                </span>
+            </a>
+        </li>
+
+
+ 
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_desktop-apps-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="经典桌面" role="button" data-bi-name="Docs_DesktopApps" data-bi-slot="3" tabindex="70">
+                <span>
+                    经典桌面
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs_DesktopApps-C3" ms.cmpnm="经典桌面" role="menu">
+
+
+
+        <li>
+            <a id="docs_desktop_getstarted" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/desktop/getstarted" ms.title="入门" role="link" data-bi-name="DocsDesktopGetstarted" data-bi-slot="1" tabindex="70">
+                <span>
+                    入门
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_desktop_design" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/desktop/design" ms.title="设计" role="link" data-bi-name="DocsDesktopDesign" data-bi-slot="2" tabindex="70">
+                <span>
+                    设计
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_desktop_develop" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/desktop/develop" ms.title="开发" role="link" data-bi-name="DocsDesktopDevelop" data-bi-slot="3" tabindex="70">
+                <span>
+                    开发
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_desktop_apief" class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/desktop/hh920508.aspx" ms.title="API 参考" role="link" data-bi-name="DocsDesktopAPIref" data-bi-slot="4" tabindex="70">
+                <span>
+                    API 参考
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_desktop_TestDeploy" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/desktop/test-deploy" ms.title="测试和部署" role="link" data-bi-name="DocsDesktopTestDeploy" data-bi-slot="5" tabindex="70">
+                <span>
+                    测试和部署
+                </span>
+            </a>
+        </li>
+
+
+ 
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item c-nav-link-with-dropdown">
+            <a id="docs_win-iot-mobile" class="c-nav-dropdown-item c-nav-link c-top-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="Windows IoT" role="button" data-bi-name="Docs_WinIoT" data-bi-slot="4" tabindex="70">
+                <span>
+                    Windows IoT
+                        <i class="shell-icon-dropdown"></i>
+                </span>
+            </a>
+
+
+
+                    <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs_WinIoT-C3" ms.cmpnm="Windows IoT" role="menu">
+
+
+
+            <li class="c-nav-item">
+                    <a class="c-nav-dropdown-item c-nav-link" href="http://go.microsoft.com/fwlink/p/?linkid=532957" ms.title="入门" role="link" data-bi-name="Docs_WinIoT_GetStarted" data-bi-slot="1">
+                        <span>
+                            入门
+                        </span>
+                    </a>
+            </li>
+            <li class="c-nav-item">
+                    <a class="c-nav-dropdown-item c-nav-link" href="http://go.microsoft.com/fwlink/p/?linkid=532961" ms.title="开发" role="link" data-bi-name="Docs_WinIoT_Develop" data-bi-slot="2">
+                        <span>
+                            开发
+                        </span>
+                    </a>
+            </li>
+            <li class="c-nav-item">
+                        <a class="c-nav-dropdown-item c-nav-link" href="http://go.microsoft.com/fwlink/p/?linkid=532977" ms.title="项目库" role="link" data-bi-name="Docs_WinIoT_LearnMore_IoTProjectGallery" data-bi-slot="3">
+                            <span>
+                                项目库
+                            </span>
+                        </a>
+            </li>
+
+
+
+                    </ul>
+        </li>
+        <li class="c-nav-item ">
+            <a id="docs_edge-mobile" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/microsoft-edge" ms.title="Microsoft Edge" role="link" data-bi-name="Docs_Edge" data-bi-slot="5" tabindex="70">
+                <span>
+                    Microsoft Edge
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="docs_holographic-mobile" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/holographic" ms.title="全息" role="link" data-bi-name="Docs_Holographic" data-bi-slot="6" tabindex="70">
+                <span>
+                    全息
+                </span>
+            </a>
+
+
+
+        </li>
+
+
+                </ul>
+            </li>
+                <li class="c-top-nav-item" id="downloads-mobilelist">
+                    <a id="downloads-mobile" tabindex="70" aria-labelledby="downloads-mobilelist" class="c-top-nav-link c-nav-link" href="https://dev.windows.com/zh-cn/downloads" ms.title="下载" role="menuitem" data-bi-name="Downloads" data-bi-slot="3" data-show-cta="True">
+                        <span>
+                            下载
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="samples-mobilelist">
+                    <a id="samples-mobile" tabindex="70" aria-labelledby="samples-mobilelist" class="c-top-nav-link c-nav-link" href="https://dev.windows.com/zh-cn/samples" ms.title="示例" role="menuitem" data-bi-name="Samples" data-bi-slot="4" data-show-cta="True">
+                        <span>
+                            示例
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="support-mobilelist">
+                    <a id="support-mobile" tabindex="70" aria-labelledby="support-mobilelist" class="c-top-nav-link c-nav-link" href="https://dev.windows.com/zh-cn/support" ms.title="支持" role="menuitem" data-bi-name="Support" data-bi-slot="5" data-show-cta="True">
+                        <span>
+                            支持
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="why_win-mobilelist">
+                    <a id="why_win-mobile" tabindex="70" aria-labelledby="why_win-mobilelist" class="c-top-nav-link c-nav-link" href="https://developer.microsoft.com/zh-cn/windows/why-build-for-uwp" ms.title="为什么选择 Windows" role="menuitem" data-bi-name="WhyWin" data-bi-slot="6" data-show-cta="True">
+                        <span>
+                            为什么选择 Windows
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="dashboard-mobilelist">
+                    <a id="dashboard-mobile" tabindex="70" aria-labelledby="dashboard-mobilelist" class="c-top-nav-link c-nav-link" href="https://dev.windows.com/overview?from=UHF" ms.title="仪表板" role="menuitem" data-bi-name="Dashboard" data-bi-slot="7" data-show-cta="True">
+                        <span>
+                            仪表板
+                        </span>
+                    </a>
+                </li>
+
+            </ul>
+
+            </li>
+
+        </ul>
+
+        
+        <ul class="c-menu-container shell-category-top-level shell-category-nav-wrapper" role="menu" data-bi-area="CategoryMenuItems-Windows Dev Center" data-bi-view="C1">
+
+
+
+            <li class="c-top-nav-item" id="explorelist">
+                <a id="explore" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="explorelist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="浏览" role="button" ms.interactiontype="14" data-bi-name="Explore" data-bi-slot="1" data-show-cta="True">
+                    <span>
+                        浏览
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Explore-C2" ms.cmpnm="浏览" role="menu">
+
+
+
+
+        <li class="c-nav-item ">
+            <a id="explore_whatsnewwin10" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/getstarted/whats-new-windows-10" ms.title="Windows 10 的新增内容" role="link" data-bi-name="Explore_WhatsNewWin10" data-bi-slot="1" tabindex="70">
+                <span>
+                    Windows 10 的新增内容
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_guideuwpapps" class="c-nav-dropdown-item c-nav-link " href="https://msdn.microsoft.com/library/windows/apps/xaml/dn894631.aspx" ms.title="通用 Windows 平台简介" role="link" data-bi-name="Explore_GuideUwpApps" data-bi-slot="2" tabindex="70">
+                <span>
+                    通用 Windows 平台简介
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_windowstrainingseries" class="c-nav-dropdown-item c-nav-link " href="http://go.microsoft.com/fwlink/p/?LinkId=626455" ms.title="Windows 10 培训系列" role="link" data-bi-name="Explore_WindowsTrainingSeries" data-bi-slot="3" tabindex="70">
+                <span>
+                    Windows 10 培训系列
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_winandstoretrends" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/windows-trends" ms.title="Windows 和应用商店趋势" role="link" data-bi-name="Explore_WinAndStoreTrends" data-bi-slot="4" tabindex="70">
+                <span>
+                    Windows 和应用商店趋势
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="explore_cortana" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/cortana" ms.title="面向开发人员的 Cortana" role="link" data-bi-name="Explore_Cortana" data-bi-slot="5" tabindex="70">
+                <span>
+                    面向开发人员的 Cortana
+                </span>
+            </a>
+
+
+
+        </li>
+
+
+                </ul>
+            </li>
+            <li class="c-top-nav-item" id="Docslist">
+                <a id="Docs" tabindex="70" aria-haspopup="true" aria-expanded="false" aria-labelledby="Docslist" class="c-top-nav-link c-nav-link c-nav-dropdown" href="javascript:void(0);" ms.title="文档" role="button" ms.interactiontype="14" data-bi-name="Docs" data-bi-slot="2" data-show-cta="True">
+                    <span>
+                        文档
+                        <i class="shell-icon-dropdown"></i>
+                    </span>
+                </a>
+                <ul aria-hidden="true" class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs-C2" ms.cmpnm="文档" role="menu">
+
+
+
+
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_windowsapps" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/windows-apps" ms.title="Windows 应用" role="button" data-bi-name="Docs_WindowsApps" data-bi-slot="1" tabindex="70">
+                <span>
+                    Windows 应用
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content" data-col="1">
+                        <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs_WindowsApps-C3" ms.cmpnm="Windows 应用" role="menu">
+
+
+
+        <li>
+            <a id="docs_windows-apps_getstarted" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/getstarted" ms.title="入门" role="link" data-bi-name="DocsWindowsAppsGetstarted" data-bi-slot="1" tabindex="70">
+                <span>
+                    入门
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_designUI" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/design" ms.title="设计和 UI" role="link" data-bi-name="DocsWindowsAppsDesignUI" data-bi-slot="2" tabindex="70">
+                <span>
+                    设计和 UI
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_develop" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/develop" ms.title="开发" role="link" data-bi-name="DocsWindowsAppsDevelop" data-bi-slot="3" tabindex="70">
+                <span>
+                    开发
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_api-reference" class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/apps/bg124285.aspx" ms.title="API 参考" role="link" data-bi-name="DocsWindowsAppsAPIreference" data-bi-slot="4" tabindex="70">
+                <span>
+                    API 参考
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_publish" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/publish" ms.title="发布" role="link" data-bi-name="DocsWindowsAppsPublish" data-bi-slot="5" tabindex="70">
+                <span>
+                    发布
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_monetize" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/monetize" ms.title="盈利" role="link" data-bi-name="DocsWindowsAppsMonetize" data-bi-slot="6" tabindex="70">
+                <span>
+                    盈利
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_windows-apps_promote" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/store-promotion" ms.title="推广" role="link" data-bi-name="DocsWindowsAppsPromote" data-bi-slot="7" tabindex="70">
+                <span>
+                    推广
+                </span>
+            </a>
+        </li>
+
+
+ 
+
+
+                        </ul>
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_Games" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/games" ms.title="游戏" role="button" data-bi-name="Docs_Games" data-bi-slot="2" tabindex="70">
+                <span>
+                    游戏
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content" data-col="1">
+                        <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs_Games-C3" ms.cmpnm="游戏" role="menu">
+
+
+
+        <li>
+            <a id="docs_games_getstarted" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/games/getstarted" ms.title="入门" role="link" data-bi-name="DocsGamesGetstarted" data-bi-slot="1" tabindex="70">
+                <span>
+                    入门
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_games_uidesign" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/games/design" ms.title="UI 设计" role="link" data-bi-name="DocsGamesUIdesign" data-bi-slot="2" tabindex="70">
+                <span>
+                    UI 设计
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_games_develop" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/games/develop" ms.title="开发" role="link" data-bi-name="DocsGamesDevelop" data-bi-slot="3" tabindex="70">
+                <span>
+                    开发
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_games_publish" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/games/publish" ms.title="发布" role="link" data-bi-name="DocsGamesPublish" data-bi-slot="4" tabindex="70">
+                <span>
+                    发布
+                </span>
+            </a>
+        </li>
+
+
+ 
+
+
+                        </ul>
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_desktop-apps" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/desktop" ms.title="经典桌面" role="button" data-bi-name="Docs_DesktopApps" data-bi-slot="3" tabindex="70">
+                <span>
+                    经典桌面
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content" data-col="1">
+                        <ul class="c-nav-dropdown-menu" data-bi-area="CategoryHeader-Windows Dev Center" data-bi-view="Docs_DesktopApps-C3" ms.cmpnm="经典桌面" role="menu">
+
+
+
+        <li>
+            <a id="docs_desktop_getstarted" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/desktop/getstarted" ms.title="入门" role="link" data-bi-name="DocsDesktopGetstarted" data-bi-slot="1" tabindex="70">
+                <span>
+                    入门
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_desktop_design" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/desktop/design" ms.title="设计" role="link" data-bi-name="DocsDesktopDesign" data-bi-slot="2" tabindex="70">
+                <span>
+                    设计
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_desktop_develop" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/desktop/develop" ms.title="开发" role="link" data-bi-name="DocsDesktopDevelop" data-bi-slot="3" tabindex="70">
+                <span>
+                    开发
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_desktop_apief" class="c-nav-dropdown-item c-nav-link" href="https://msdn.microsoft.com/library/windows/desktop/hh920508.aspx" ms.title="API 参考" role="link" data-bi-name="DocsDesktopAPIref" data-bi-slot="4" tabindex="70">
+                <span>
+                    API 参考
+                </span>
+            </a>
+        </li>
+        <li>
+            <a id="docs_desktop_TestDeploy" class="c-nav-dropdown-item c-nav-link" href="https://dev.windows.com/zh-cn/desktop/test-deploy" ms.title="测试和部署" role="link" data-bi-name="DocsDesktopTestDeploy" data-bi-slot="5" tabindex="70">
+                <span>
+                    测试和部署
+                </span>
+            </a>
+        </li>
+
+
+ 
+
+
+                        </ul>
+                    </div>
+        </li>
+        <li class="c-nav-item-with-dropdown c-nav-link-with-dropdown">
+            <a id="docs_win-iot" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/iot" ms.title="Windows IoT" role="button" data-bi-name="Docs_WinIoT" data-bi-slot="4" tabindex="70">
+                <span>
+                    Windows IoT
+                </span>
+            </a>
+
+                <i class="shell-icon-dropdown"></i>
+
+
+                    <div class="c-nav-dropdown-tab-content c-nav-multicolumn" data-col="4">
+
+
+
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                <a href="http://go.microsoft.com/fwlink/p/?linkid=532957" role="menuitem" ms.title="入门" data-bi-name="Docs_WinIoT_GetStarted">
+                                    入门
+                                </a>
+                            </h3>
+                    </li>
+                        <li id="docs_winiot_get_started_platform_overview">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532975" role="menuitem" ms.title="平台概述" data-bi-name="Docs_WinIoT_GetStarted_PlatformOverview ">
+                                平台概述
+                            </a>
+                        </li>
+                        <li id="docs_winiot_get_started_register">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532947" role="menuitem" ms.title="注册" data-bi-name="Docs_WinIoT_GetStarted_Register ">
+                                注册
+                            </a>
+                        </li>
+                        <li id="docs_winiot_get_started_hardware">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532948" role="menuitem" ms.title="硬件" data-bi-name="Docs_WinIoT_GetStarted_Hardware">
+                                硬件
+                            </a>
+                        </li>
+                        <li id="docs_winiot_get_started_setupyourdevice">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532974" role="menuitem" ms.title="设置你的设备" data-bi-name="Docs_WinIoT_GetStarted_SetupYourDevice">
+                                设置你的设备
+                            </a>
+                        </li>
+                        <li id="docs_winiot_get_started_writefirstapp">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532945" role="menuitem" ms.title="编写你的第一个应用" data-bi-name="Docs_WinIoT_GetStarted_WriteFirstApp">
+                                编写你的第一个应用
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                <a href="http://go.microsoft.com/fwlink/p/?linkid=532961" role="menuitem" ms.title="开发" data-bi-name="Docs_WinIoT_Develop">
+                                    开发
+                                </a>
+                            </h3>
+                    </li>
+                        <li id="docs_winiot_develop_win-iot-build2015">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532963" role="menuitem" ms.title="Build 2015 上的 Windows IoT" data-bi-name="Docs_WinIoT_develop_WinIoTBuild2015">
+                                Build 2015 上的 Windows IoT
+                            </a>
+                        </li>
+                        <li id="docs_winiot_develop_code">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532976" role="menuitem" ms.title="代码示例" data-bi-name="Docs_WinIoT_Develop_Code">
+                                代码示例
+                            </a>
+                        </li>
+                        <li id="docs_winiot_develop_faq">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532965" role="menuitem" ms.title="常见问题" data-bi-name="Docs_WinIoT_develop_FAQ ">
+                                常见问题
+                            </a>
+                        </li>
+
+            </ul>
+            <ul class="c-nav-dropdown-tab-list shell-c3-group">
+                    <li>
+                            <h3>
+                                了解详细信息
+                            </h3>
+                    </li>
+                        <li id="docs_winiot_learnmore_iot_project_gallery">
+                            <a href="http://go.microsoft.com/fwlink/p/?linkid=532977" role="menuitem" ms.title="项目库" data-bi-name="Docs_WinIoT_LearnMore_IoTProjectGallery">
+                                项目库
+                            </a>
+                        </li>
+                        <li id="docs_winiot_learnmore_iot_downloads">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkID=532967" role="menuitem" ms.title="下载" data-bi-name="Docs_WinIoT_LearnMore_Downloads">
+                                下载
+                            </a>
+                        </li>
+                        <li id="docs_winiot_learnmore_community">
+                            <a href="http://go.microsoft.com/fwlink/p/?LinkID=532968" role="menuitem" ms.title="社区" data-bi-name="Docs_WinIoT_LearnMore_Community">
+                                社区
+                            </a>
+                        </li>
+
+            </ul>
+
+
+
+                    </div>
+        </li>
+        <li class="c-nav-item ">
+            <a id="docs_edge" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/microsoft-edge" ms.title="Microsoft Edge" role="link" data-bi-name="Docs_Edge" data-bi-slot="5" tabindex="70">
+                <span>
+                    Microsoft Edge
+                </span>
+            </a>
+
+
+
+        </li>
+        <li class="c-nav-item ">
+            <a id="docs_holographic" class="c-nav-dropdown-item c-nav-link " href="https://dev.windows.com/zh-cn/holographic" ms.title="全息" role="link" data-bi-name="Docs_Holographic" data-bi-slot="6" tabindex="70">
+                <span>
+                    全息
+                </span>
+            </a>
+
+
+
+        </li>
+
+
+                </ul>
+            </li>
+                <li class="c-top-nav-item" id="downloadslist">
+                    <a id="downloads" tabindex="70" aria-labelledby="downloadslist" class="c-top-nav-link c-nav-link" href="https://dev.windows.com/zh-cn/downloads" ms.title="下载" role="menuitem" data-bi-name="Downloads" data-bi-slot="3" data-show-cta="True">
+                        <span>
+                            下载
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="sampleslist">
+                    <a id="samples" tabindex="70" aria-labelledby="sampleslist" class="c-top-nav-link c-nav-link" href="https://dev.windows.com/zh-cn/samples" ms.title="示例" role="menuitem" data-bi-name="Samples" data-bi-slot="4" data-show-cta="True">
+                        <span>
+                            示例
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="supportlist">
+                    <a id="support" tabindex="70" aria-labelledby="supportlist" class="c-top-nav-link c-nav-link" href="https://dev.windows.com/zh-cn/support" ms.title="支持" role="menuitem" data-bi-name="Support" data-bi-slot="5" data-show-cta="True">
+                        <span>
+                            支持
+                        </span>
+                    </a>
+                </li>
+                <li class="c-top-nav-item" id="why_winlist">
+                    <a id="why_win" tabindex="70" aria-labelledby="why_winlist" class="c-top-nav-link c-nav-link" href="https://developer.microsoft.com/zh-cn/windows/why-build-for-uwp" ms.title="为什么选择 Windows" role="menuitem" data-bi-name="WhyWin" data-bi-slot="6" data-show-cta="True">
+                        <span>
+                            为什么选择 Windows
+                        </span>
+                    </a>
+                </li>
+
+        </ul>
+                <div class="shell-category-nav-featured">
+                    <a id="dashboard" class="c-nav-link c-top-nav-link" ms.title="仪表板" href="https://dev.windows.com/overview?from=UHF" role="menuitem" data-bi-name="Dashboard" data-bi-slot="7">
+                        <span tabindex="70">
+                            仪表板
+                        </span>
+                    </a>
+                </div>
+
+        <div class="c-nav-pagination c-nav-pagination-next">
+            <i class="shell-icon-dropdown facing-right"></i>
+        </div>
+    </div>
+
+</div>
+<div class="fixed-category-nav-buffer"></div>
+
+
+
+
+
+
+<script data-do-not-move="true" type="text/javascript">
+
+    var shellInitOptions = {
+        lcaDisclaimerEnabled: false,
+        suggestedProductTitle : '建议的产品'
+    };
+
+    
+    var meControlInitOptions = {
+        containerId: 'meControl',
+            enabled: true,
+        headerHeight: 48,
+        custom: {chevHtml:'<i class="msame_chev_uhf shell-icon-dropdown"></i>'},
+        
+            
+        market: 'zh-CN',
+        
+
+        mobileBreakpoints: {
+            shortHeader: 1084
+            },
+
+        rpData:
+    {
+        msaInfo:
+            {
+                        
+                signInUrl: '/zh-cn/store/signin',
+                signOutUrl: '/zh-cn/store/signout',
+                accountSettingsUrl: 'https://account.microsoft.com/',
+                switchUrl: '',
+                meUrl: 'https://login.live.com/me.srf?wa=wsignin1.0',
+                isSupported: true
+                
+            },
+        aadInfo:
+            {
+            },
+        preferredIdp: 'msa',
+    },
+        signInStr: '登录',
+        signOutStr: '注销'
+    };
+</script>
+ 
+    </div>
+    <input type="hidden" id="UhfSignInOutLink" value="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=12&amp;ct=1462472380&amp;rver=6.0.5276.0&amp;wp=MCMBI&amp;wlcxt=MSDN%24MSDN%24MSDN&amp;wreply=https%3a%2f%2fmsdn.microsoft.com%2fzh-cn%2flibrary%2fwindows%2fapps%2fjj157115.aspx&amp;lc=2052&amp;id=254354&amp;mkt=zh-CN" />
+    
+    
+
+
+
+
+
+
+
+
+    <div id="breadcrumbs">
+        <div id="breadcrumbDesktop" class="breadCrumb">
+        </div>
+        <div id="breadcrumbDropDownMenu"></div>
+        <div id="tocDropDownMenu"></div>
+
+        <div id="breadcrumbTablet" class="breadCrumb">
+                <span class="breadcrumbDropSmall"><a id="tocDropDownButton" href="#" title="Windows 应用"><span>Windows 应用</span></a></span>
+        </div>
+        <div id="breadcrumbMobile" class="breadCrumb">
+            <span class="breadcrumbDropSmall"><a id="tocPopupButton" href="#" title="Windows 应用"><span>Windows 应用</span></a></span>
+        </div>
+    </div>
+    <div id="tocPopupMenu">
+        <div id="tocPopMenuClose" class="tocCloseLarge"></div>
+        <div id="tocTitle">Windows 应用</div>
+    </div>
+
+
+
+        <div id="body" ms.pgarea="body">
+            <span id="tabletView_large"></span>
+            <span id="tabletView_small"></span>
+            <span id="mobileView"></span>
+            
+
+
+
+
+
+
+
+    <div id="leftNav">
+
+
+
+
+
+<div id="tocnav" class="hide-archive ">
+
+
+    <div class="tocunselected">
+        <div id="tocExpandArea">
+            <span class="toc_empty"></span>
+            <span id="tocExpandButton"><a href="#"></a></span>
+        </div>
+        <div id="tocExpand"></div>
+    </div>
+    <div class="tocselected"></div>
+    <div class="tocunselected">
+                <div class="toclevel current" data-toclevel="1">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/zh-cn/library/windows/apps/hh703192.aspx" id="hh703192_Win.10_zh-cn" mtpsaliasid="" mtpsassetid="" mtpsshortid="hh703192_Win.10_zh-cn" title="Windows 应用">Windows 应用</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/zh-cn/library/windows/apps/br211386.aspx" id="bg126367_WIN.10_zh-cn" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="开始使用">开始使用</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/zh-cn/library/windows/apps/hh779072.aspx" id="hh781145_WIN.10_zh-cn" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="设计">设计</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/zh-cn/library/windows/apps/br229519.aspx" id="hh847914_WIN.10_zh-cn" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="开发">开发</a>                </div>
+                <div class="toclevel " data-toclevel="2">
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/zh-cn/library/windows/apps/dn708631.aspx" id="bg126368_WIN.10_zh-cn" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="发布">发布</a>                </div>
+    </div>
+    <a id="tocMenuToggler" href="#">
+        <span id="tocMenuTogglerIcon" class="tocMenuCollapse"></span>
+        <div id="tocMenuTogglerLabel">TOC</div>
+    </a>
+</div>            <div style="display:none">
+                <div id="CollapseLocalizeString">折叠目录</div>
+                <div id="ExpandLocalizeString">展开目录</div>
+            </div>
+        <div>
+            <a id="isd_archiveControlResponsive" style="display:none;" data-include-archive="包含旧版本" data-exclude-archive="不包含旧版本">
+            </a>
+        </div>
+    </div>
+    <div id="content" class="content">
+
+
+
+<div id="MTPSTranslator" class="MTPSTranslator">
+    <table class="MTPSTranslatorTable" style="width: 100%">
+        <tr>
+            <td class="TranslationAlertBox">
+                <div>此文章由人工翻译。 将光标移到文章的句子上，以查看原文。 <a href="/translate/hh856053">更多信息。</a></div>
+            </td>
+                <td class="TranslationViewSwitcher">
+                    <div>
+                        <input title="显示译文" value="0" name="TrnaslatorView" type="radio" class="translatechoice" checked="checked" /><span>译文</span>
+                    </div>
+                    <div>
+                        <input title="显示英文" value="1" name="TrnaslatorView" type="radio" class="translatechoice" /><span>原文</span>
+                    </div>
+                </td>
+        </tr>
+    </table>
+</div>
+    
+    
+    
+     
+
+
+
+
+
+
+
+
+
+
+<div xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="topic">
+    <h1 class="title">在多线程环境中使用 Windows 运行时对象</h1>
+    <div id="mainSection">
+      <div id="mainBody"> <div class="introduction"><p><span id="mt1" class="sentence" data-guid="05d456b5221d32723b4070a3f19ac553" data-source="This article discusses the way the .NET Framework handles calls from C# and Visual Basic code to objects that are provided by the Windows Runtime or by Windows Runtime Components." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">本文讨论了 .NET Framework 处理从 C# 和 Visual Basic 代码调用到 Windows 运行时 或 Windows 运行时 组件提供的对象的方法。</sentenceText></span></p><p><span id="mt2" class="sentence" data-guid="ade7e27f6539b3b8dcd440a08ac6649c" data-source="In the .NET Framework, you can access any object from multiple threads by default, without special handling." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">在.NET Framework 中，默认情况下，无需特殊处理，即可从多个线程访问任何对象。</sentenceText></span><span id="mt3" class="sentence" data-guid="651fed33ce45309f9584741a9f9d6bea" data-source=" All you need is a reference to the object." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 你只需对该对象的引用。</sentenceText></span><span id="mt4" class="sentence" data-guid="1dbd0cb2e305750c062662583a0d237b" data-source=" In the Windows Runtime, such objects are called &lt;em&gt;agile&lt;/em&gt;." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 在 Windows 运行时 中，此类对象称为<em xmlns="http://www.w3.org/1999/xhtml">敏捷</em>。</sentenceText></span><span id="mt5" class="sentence" data-guid="865d301b458564e84f4d6c65f4b22832" data-source=" Most Windows Runtime classes are agile, but a few classes are not, and even agile classes may require special handling." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 大多数 Windows 运行时 类为敏捷，但某些类不是，甚至敏捷类需要特殊处理。</sentenceText></span></p><p><span id="mt6" class="sentence" data-guid="fcb799a5befddf7ed6ee494413b27580" data-source="Wherever possible, the common language runtime (CLR) treats objects from other sources, such as the Windows Runtime, as if they were .NET Framework objects: " xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">只要有可能，公共语言运行时 (CLR) 都会处理其他资源的对象（如 Windows 运行时），就像它们是 .NET Framework 对象一样： </sentenceText></span></p><ul class="unordered"><li><p><span id="mt7" class="sentence" data-guid="1d1f247a161f898bf61bbfda337df0b2" data-source="If the object implements the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;IAgileObject&lt;/span&gt;&lt;/span&gt; interface, or has the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;MarshalingBehaviorAttribute&lt;/span&gt;&lt;/span&gt; attribute with &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;MarshalingType.Agile&lt;/span&gt;&lt;/span&gt;, the CLR treats it as agile." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">如果对象实现 <a href="https://msdn.microsoft.com/library/hh802476.aspx">IAgileObject</a> 接口，或具有 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256022">MarshalingBehaviorAttribute</a> 特性与 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256023">MarshalingType.Agile</a>，则 CLR 会将其视为敏捷。</sentenceText></span></p></li><li><p><span id="mt8" class="sentence" data-guid="49f5c5ac3c8f8dfaf2414616af0dde1c" data-source="If CLR can marshal a call from the thread where it was made to the threading context of the target object, it does so transparently." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">如果 CLR 可以将来自线程的调用封送至目标对象的线程上下文中，则它会以透明的方式执行。</sentenceText></span></p></li><li><p><span id="mt9" class="sentence" data-guid="b81080ffea3335d0152e85a3e4f5dd40" data-source="If the object has the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;MarshalingBehaviorAttribute&lt;/span&gt;&lt;/span&gt; attribute with &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;MarshalingType.None&lt;/span&gt;&lt;/span&gt;, the class does not provide marshaling information." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">如果对象具有 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256022">MarshalingBehaviorAttribute</a> 特性和 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256023">MarshalingType.None</a>，则该类不提供封送处理信息。</sentenceText></span><span id="mt10" class="sentence" data-guid="cce62b727166d8c743fff6460d009a36" data-source=" The CLR cannot marshal the call, so it throws an &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;InvalidCastException&lt;/span&gt;&lt;/span&gt; exception with a message indicating that the object can be used only in the threading context where it was created." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> CLR 不能封送调用，因而它将引发 <a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/system.invalidcastexception.aspx">InvalidCastException</a> 异常，并附带一条消息，指示该对象只可在被创建时所在的线程上下文中使用。</sentenceText></span></p></li></ul><p><span id="mt11" class="sentence" data-guid="cfb57a64096c9e0f19510716a985080b" data-source="The following sections describe the effects of this behavior on objects from various sources." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">以下部分介绍了此行为对来自各种源的对象的影响。</sentenceText></span></p></div><div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="折叠" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">采用 C# 或 Visual Basic 编写的 Windows 运行时 组件中的对象</span></a><div id="Anchor_0" class="LW_CollapsibleArea_Anchor_Div"><a href="/zh-cn/library/windows/apps/jj157115.aspx#Anchor_0" class="LW_CollapsibleArea_Anchor_Img" title="右键单击以复制并共享此部分的链接"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock"><div class="section"><p><span id="mt13" class="sentence" data-guid="fd23ebb254ffa21a99d7652a0a07a419" data-source="All the types in the component that can be activated are agile by default." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">可激活的组件中的所有类型在默认情况下都是敏捷的。</sentenceText></span></p><div class="alert"><table><tr><th align="left"><span><img id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-note" alt="System_CAPS_note" src="https://i-msdn.sec.s-msft.com/dynimg/IC101471.jpeg" title="System_CAPS_note" xmlns="" /></span><span class="alertTitle">注意</span></th></tr><tr><td><p><span id="mt14" class="sentence" data-guid="065e2008c801829e10a87e160ff71fdc" data-source="Agility doesn't imply thread safety." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">敏捷并不意味着线程安全。</sentenceText></span><span id="mt15" class="sentence" data-guid="a18556844c248d011bbf332356e59833" data-source=" In both the Windows Runtime and the .NET Framework, most classes are not thread safe because thread safety has a performance cost, and most objects are never accessed by multiple threads." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 在 Windows 运行时 和.NET Framework 中，大多数类不是线程安全，因为线程安全性具有性能成本，并且多个线程从不访问大多数对象。</sentenceText></span><span id="mt16" class="sentence" data-guid="beea3aa15290a218234f12ddd74f0595" data-source=" It's more efficient to synchronize access to individual objects (or to use thread-safe classes) only as necessary." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 仅在必要时同步到单个对象（或到使用线程安全类）的访问，效率会更高。</sentenceText></span></p></td></tr></table></div><p><span id="mt17" class="sentence" data-guid="921871defe329bf9ec36ed428517dcbd" data-source="When you author a Windows Runtime component, you can override the default." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">在创建 Windows 运行时 组件时，可以覆盖默认值。</sentenceText></span><span id="mt18" class="sentence" data-guid="7c581ea81685b189a858f7572c74dd6f" data-source=" See the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;ICustomQueryInterface&lt;/span&gt;&lt;/span&gt; interface and the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;IAgileObject&lt;/span&gt;&lt;/span&gt; interface." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 请参阅 <a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/system.runtime.interopservices.icustomqueryinterface.aspx">ICustomQueryInterface</a> 接口和 <a href="https://msdn.microsoft.com/library/hh802476.aspx">IAgileObject</a> 接口。</sentenceText></span> </p></div></div></div><div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="折叠" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">来自 Windows 运行时 的对象</span></a><div id="Anchor_1" class="LW_CollapsibleArea_Anchor_Div"><a href="/zh-cn/library/windows/apps/jj157115.aspx#Anchor_1" class="LW_CollapsibleArea_Anchor_Img" title="右键单击以复制并共享此部分的链接"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock"><div class="section"><p><span id="mt20" class="sentence" data-guid="63452268e14afbbf364c57f2b15cc94f" data-source="Most classes in the Windows Runtime are agile, and the CLR treats them as agile." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">Windows 运行时 中的大多数类都是敏捷，并且 CLR 将它们视为敏捷。</sentenceText></span><span id="mt21" class="sentence" data-guid="a47ee76967b563b9eabb11c73dd896d5" data-source=" The documentation for these classes lists &quot;MarshalingBehaviorAttribute(Agile)&quot; among the class attributes." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 这些类的文档列出了在类属性之间的“MarshalingBehaviorAttribute(Agile)”。</sentenceText></span><span id="mt22" class="sentence" data-guid="280fe2897d58442bd77b1c1d03887bb4" data-source=" However, the members of some of these agile classes, such as XAML controls, throw exceptions if they aren't called on the UI thread." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 但是，如果这些敏捷类中的一部分的成员（如 XAML 控件）不在 UI 线程上调用，则引发异常。</sentenceText></span><span id="mt23" class="sentence" data-guid="ecfdf0aec83b8060108577e9586f6119" data-source=" For example, the following code tries to use a background thread to set a property of the button that was clicked." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 例如，下面的代码尝试使用后台线程设置被单击的按钮的属性。</sentenceText></span><span id="mt24" class="sentence" data-guid="eccbf5471f78f274cc378ae1c552efa9" data-source=" The button's &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;Content&lt;/span&gt;&lt;/span&gt; property throws an exception." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 该按钮的 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256025">Content</a> 属性引发异常。</sentenceText></span></p>
+<div id="code-snippet-1" class="codeSnippetContainer" xmlns="">
+    <div class="codeSnippetContainerTabs">
+        <div class="codeSnippetContainerTabActive" dir="ltr"><a>C#</a></div><div class="codeSnippetContainerTab" dir="ltr"><a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115.aspx?cs-save-lang=1&amp;cs-lang=vb#code-snippet-1">VB</a></div>
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" style="display: none;" title="复制到剪贴板。" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_71803e1f-48e3-438b-988b-9243bafdf07b');" ms.cmptyp="CodeSnippet">复制</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_71803e1f-48e3-438b-988b-9243bafdf07b" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>
+
+<span style="color:Blue;">private</span> <span style="color:Blue;">async</span> <span style="color:Blue;">void</span> Button_Click_2(<span style="color:Blue;">object</span> sender, RoutedEventArgs e)
+{
+    Button b = (Button) sender;
+    <span style="color:Blue;">await</span> Task.Run(() =&gt; { 
+        b.Content += <span style="color:#A31515;">"."</span>; 
+    });
+}
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+<p><span id="mt25" class="sentence" data-guid="207f16a68d3cb9446d5f330ac866df7f" data-source="You can access the button safely by using its &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;Dispatcher&lt;/span&gt;&lt;/span&gt; property, or the &lt;strong&gt;Dispatcher&lt;/strong&gt; property of any object that exists in the context of the UI thread (such as the page the button is on)." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">你可以通过使用其 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256026">Dispatcher</a> 属性，或存在于 UI 线程上下文中的任何对象的 <strong xmlns="http://www.w3.org/1999/xhtml">Dispatcher</strong> 属性，安全访问按钮（例如页面按钮为打开状态）。</sentenceText></span><span id="mt26" class="sentence" data-guid="d7901538bf22669a45d36d6443cf8755" data-source=" The following code uses the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;CoreDispatcher&lt;/span&gt;&lt;/span&gt; object's &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;RunAsync&lt;/span&gt;&lt;/span&gt; method to dispatch the call on the UI thread." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 以下代码使用 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256029">CoreDispatcher</a> 对象的 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256030">RunAsync</a> 方法来调度 UI 线程上的调用。</sentenceText></span></p>
+<div id="code-snippet-2" class="codeSnippetContainer" xmlns="">
+    <div class="codeSnippetContainerTabs">
+        <div class="codeSnippetContainerTabActive" dir="ltr"><a>C#</a></div><div class="codeSnippetContainerTab" dir="ltr"><a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115.aspx?cs-save-lang=1&amp;cs-lang=vb#code-snippet-2">VB</a></div>
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" style="display: none;" title="复制到剪贴板。" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_6771efcf-6fd2-4fb3-8584-e9113645df1a');" ms.cmptyp="CodeSnippet">复制</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_6771efcf-6fd2-4fb3-8584-e9113645df1a" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>
+
+<span style="color:Blue;">private</span> <span style="color:Blue;">async</span> <span style="color:Blue;">void</span> Button_Click_2(<span style="color:Blue;">object</span> sender, RoutedEventArgs e)
+{
+    Button b = (Button) sender;
+    <span style="color:Blue;">await</span> b.Dispatcher.RunAsync(
+        Windows.UI.Core.CoreDispatcherPriority.Normal, 
+        () =&gt; { 
+            b.Content += <span style="color:#A31515;">"."</span>; 
+    });
+}
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+<div class="alert"><table><tr><th align="left"><span><img id="s-e6f6a65cf14f462597b64ac058dbe1d0-system-media-system-caps-note" alt="System_CAPS_note" src="https://i-msdn.sec.s-msft.com/dynimg/IC101471.jpeg" title="System_CAPS_note" xmlns="" /></span><span class="alertTitle">注意</span></th></tr><tr><td><p><span id="mt27" class="sentence" data-guid="32724e17d3092b55fd323bef1ee2b840" data-source="The &lt;strong&gt;Dispatcher&lt;/strong&gt; property does not throw an exception when it's called from another thread." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">
+  <strong xmlns="http://www.w3.org/1999/xhtml">Dispatcher</strong> 属性从其他线程调用时不会引发异常。</sentenceText></span></p></td></tr></table></div><p><span id="mt28" class="sentence" data-guid="1249f71239cf0f0936dec2e0dded254f" data-source="The lifetime of a Windows Runtime object that is created on the UI thread is bounded by the lifetime of the thread." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">在 UI 线程上创建的 Windows 运行时 对象的生存期受线程生存期的限制。</sentenceText></span><span id="mt29" class="sentence" data-guid="141c567743a9f715f5a34ddd9679b7cc" data-source=" Do not try to access objects on a UI thread after the window has closed." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 请勿在窗口关闭后尝试访问 UI 线程上的对象。</sentenceText></span></p><p><span id="mt30" class="sentence" data-guid="3072612ea0e4b5ce034c0c64fdee119a" data-source="If you create your own control by inheriting a XAML control, or by composing a set of XAML controls, your control is agile because it's a .NET Framework object." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">如果你通过继承 XAML 控件，或通过编写一套 XAML 控件来创建自己的控件，则你的控件是敏捷的，因为它是.NET Framework 对象。</sentenceText></span><span id="mt31" class="sentence" data-guid="ce1e0b4c20089c45c01475afb56f3dc7" data-source=" However, if it calls members of its base class or constituent classes, or if you call inherited members, those members will throw exceptions when they are called from any thread except the UI thread." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 但是，如果它调用其基类或构成类的成员，或者调用继承的成员，当从 UI 线程以外的任何线程调用这些成员时，它们将引发异常。</sentenceText></span></p><p /></div><div><h3 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="折叠" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">不能进行封送处理的类</span></a><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h3><div class="sectionblock"><div class="section"><p><span id="mt33" class="sentence" data-guid="5aa805cf794b033593bbb5241fd25987" data-source="Windows Runtime classes that do not provide marshaling information have the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;MarshalingBehaviorAttribute&lt;/span&gt;&lt;/span&gt; attribute with &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;MarshalingType.None&lt;/span&gt;&lt;/span&gt;." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">不提供封送处理信息的 Windows 运行时 类具有 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256022">MarshalingBehaviorAttribute</a> 特性和 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256023">MarshalingType.None</a>。</sentenceText></span><span id="mt34" class="sentence" data-guid="48c39aa2c1137daeb75588b83dc42468" data-source=" The documentation for such a class lists &quot;MarshalingBehaviorAttribute(None)&quot; among its attributes." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 此类的文档将“MarshalingBehaviorAttribute(None)”列在其属性之间。</sentenceText></span></p><p><span id="mt35" class="sentence" data-guid="ca73fdda52553f16a75a7b708f172b38" data-source="The following code creates a &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;CameraCaptureUI&lt;/span&gt;&lt;/span&gt; object on the UI thread, and then tries to set a property of the object from a thread pool thread." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">下面的代码在 UI 线程上创建了 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256027">CameraCaptureUI</a> 对象，然后尝试从一个线程池线程设置对象的属性。</sentenceText></span><span id="mt36" class="sentence" data-guid="0f1b4f874ba44f3ffa64b84e1d16e43a" data-source=" The CLR is unable to marshal the call, and throws an &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;InvalidCastException&lt;/span&gt;&lt;/span&gt; exception with a message indicating that the object can be used only in the threading context where it was created." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> CLR 不能封送调用并且会引发 <a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/system.invalidcastexception.aspx">InvalidCastException</a> 异常，并附带一条消息，指示该对象只可在被创建时所在的线程上下文中使用。</sentenceText></span></p>
+<div id="code-snippet-3" class="codeSnippetContainer" xmlns="">
+    <div class="codeSnippetContainerTabs">
+        <div class="codeSnippetContainerTabActive" dir="ltr"><a>C#</a></div><div class="codeSnippetContainerTab" dir="ltr"><a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115.aspx?cs-save-lang=1&amp;cs-lang=vb#code-snippet-3">VB</a></div>
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" style="display: none;" title="复制到剪贴板。" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_18c2c720-8579-4ed2-b65a-460dd65f1c44');" ms.cmptyp="CodeSnippet">复制</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_18c2c720-8579-4ed2-b65a-460dd65f1c44" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>
+
+Windows.Media.Capture.CameraCaptureUI ccui;
+
+<span style="color:Blue;">private</span> <span style="color:Blue;">async</span> <span style="color:Blue;">void</span> Button_Click_1(<span style="color:Blue;">object</span> sender, RoutedEventArgs e)
+{
+    ccui = <span style="color:Blue;">new</span> Windows.Media.Capture.CameraCaptureUI();
+
+    <span style="color:Blue;">await</span> Task.Run(() =&gt; { 
+        ccui.PhotoSettings.AllowCropping = <span style="color:Blue;">true</span>; 
+    });
+}
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+<p><span id="mt37" class="sentence" data-guid="d830855c5b42c83a2a7281aa4b859355" data-source="The documentation for &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;CameraCaptureUI&lt;/span&gt;&lt;/span&gt; also lists &quot;ThreadingAttribute(STA)&quot; among the class's attributes, because it must be created in a single-threaded context such as the UI thread." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">
+  <a href="http://go.microsoft.com/fwlink/p/?LinkId=256027">CameraCaptureUI</a> 的文档也在类的属性之间列出“ThreadingAttribute(STA)”，因为它必须在单线程（如 UI 线程）上下文中创建。</sentenceText></span></p><p><span id="mt38" class="sentence" data-guid="838fac27a3a9e5c2fb5740a62297de15" data-source="If you want to access the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;CameraCaptureUI&lt;/span&gt;&lt;/span&gt; object from another thread, you can cache the &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;CoreDispatcher&lt;/span&gt;&lt;/span&gt; object for the UI thread and use it later to dispatch the call on that thread." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">如果你想要从另一个线程访问 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256027">CameraCaptureUI</a> 对象，你可以缓存 UI 线程的 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256029">CoreDispatcher</a> 对象，并稍后将其用于调度该线程上的调用。</sentenceText></span><span id="mt39" class="sentence" data-guid="d44e9b99d90006ae1266ca0364688527" data-source=" Or you can obtain the dispatcher from a XAML object such as the page, as shown in the following code." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 或者，你可以从一个 XAML 对象（如页面）获得调度程序，如下面的代码中所示。</sentenceText></span></p>
+<div id="code-snippet-4" class="codeSnippetContainer" xmlns="">
+    <div class="codeSnippetContainerTabs">
+        <div class="codeSnippetContainerTabActive" dir="ltr"><a>C#</a></div><div class="codeSnippetContainerTab" dir="ltr"><a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115.aspx?cs-save-lang=1&amp;cs-lang=vb#code-snippet-4">VB</a></div>
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" style="display: none;" title="复制到剪贴板。" href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_bb982b99-74f5-4965-8792-798ad01e6a68');" ms.cmptyp="CodeSnippet">复制</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_bb982b99-74f5-4965-8792-798ad01e6a68" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>
+
+Windows.Media.Capture.CameraCaptureUI ccui;
+
+<span style="color:Blue;">private</span> <span style="color:Blue;">async</span> <span style="color:Blue;">void</span> Button_Click_3(<span style="color:Blue;">object</span> sender, RoutedEventArgs e)
+{
+    ccui = <span style="color:Blue;">new</span> Windows.Media.Capture.CameraCaptureUI();
+
+    <span style="color:Blue;">await</span> Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+        () =&gt; {
+            ccui.PhotoSettings.AllowCropping = <span style="color:Blue;">true</span>;
+        });
+}
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+</div></div></div></div></div><div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="折叠" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">采用 C++ 编写的 Windows 运行时 组件中的对象</span></a><div id="Anchor_2" class="LW_CollapsibleArea_Anchor_Div"><a href="/zh-cn/library/windows/apps/jj157115.aspx#Anchor_2" class="LW_CollapsibleArea_Anchor_Img" title="右键单击以复制并共享此部分的链接"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock"><div class="section"><p><span id="mt41" class="sentence" data-guid="27ee2be028c4947f46837177424781ac" data-source="By default, classes in the component that can be activated are agile." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">默认情况下，可激活的组件中的类是敏捷的。</sentenceText></span><span id="mt42" class="sentence" data-guid="129c3cf83ec63d3313878d867a71f79a" data-source=" However, C++ allows a significant amount of control over threading models and marshaling behavior." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 但是，C++ 允许大量控制线程处理模型和封送处理行为。</sentenceText></span><span id="mt43" class="sentence" data-guid="3f9b48e671802f3267bf89920b8cd615" data-source=" As described earlier in this article, the CLR recognizes agile classes, tries to marshal calls when classes are not agile, and throws an &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;InvalidCastException&lt;/span&gt;&lt;/span&gt; exception when a class has no marshaling information." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml"> 如本文前面部分所述，CLR 将识别敏捷类，在类不是敏捷时，尝试封送调用，当类没有封送处理信息时，引发 <a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/system.invalidcastexception.aspx">InvalidCastException</a> 异常。</sentenceText></span></p><p><span id="mt44" class="sentence" data-guid="787f8156e03517a42f5d6a8f3c43a246" data-source="For objects that run on the UI thread and throw exceptions when they are called from a thread other than the UI thread, you can use the UI thread’s &lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;CoreDispatcher&lt;/span&gt;&lt;/span&gt; object to dispatch the call." xml:space="preserve"><sentenceText xmlns="http://www.w3.org/1999/xhtml">对于在 UI 线程上运行并且从 UI 线程外的线程调用时会引发异常的对象，你可以使用 UI 线程的 <a href="http://go.microsoft.com/fwlink/p/?LinkId=256029">CoreDispatcher</a> 对象来调度此调用。</sentenceText></span></p></div></div></div><div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a href="javascript:void(0)" class="LW_CollapsibleArea_TitleAhref" title="折叠" role="button"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">请参阅</span></a><div id="Anchor_3" class="LW_CollapsibleArea_Anchor_Div"><a href="/zh-cn/library/windows/apps/jj157115.aspx#Anchor_3" class="LW_CollapsibleArea_Anchor_Img" title="右键单击以复制并共享此部分的链接"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock"><p><a href="https://msdn.microsoft.com/zh-cn/library/windows/apps/br212458.aspx">Visual Basic 和 C# 语言参考</a><br /></p></div></div></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="libraryMemberFilter">
+    <div class="filterContainer">
+        <span>显示:</span>
+        <label>
+            <input type="checkbox" class="libraryFilterInherited" checked="checked" value="Inherit" />继承
+        </label>
+        <label>
+            <input type="checkbox" class="libraryFilterProtected" checked="checked" value="Protected" />保护
+        </label>
+    </div>
+</div>
+    
+<input type="hidden" id="libraryMemberFilterEmptyWarning" value="您当前的筛选设置无成员可用。" />
+
+
+
+    </div>
+<div id="rightNavigationMenu" ms.cmpgrp="right nav">
+    <div id="mobileButtons">
+        <div id="navigationButtons">
+            <a id="isd_print" href="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115(d=printer).aspx" rel="nofollow"><ins class="print"></ins>打印</a>
+            <a id="isd_printABook" href="/zh-cn/library/export/help/?returnurl=%2fzh-cn%2flibrary%2fwindows%2fapps%2fjj157115.aspx">
+                <ins class="export"></ins>导出 (<span class="count">0</span>)
+            </a>
+        </div>
+    </div>
+    <div id="navMain">
+        <div id="closeNavigation">
+            <a class="tocCloseSmall" id="closeButton"></a>
+        </div>
+        <div id="navigationButtons">
+            <a id="isd_print" href="https://msdn.microsoft.com/zh-cn/library/windows/apps/jj157115(d=printer).aspx" rel="nofollow"><ins class="print"></ins>打印</a>
+            <a id="isd_printABook2" href="/zh-cn/library/export/help/?returnurl=%2fzh-cn%2flibrary%2fwindows%2fapps%2fjj157115.aspx">
+                <ins class="export"></ins>导出 (<span class="count">0</span>)
+            </a>
+            <a id="isdShare" href="#">
+                <ins class="share"></ins>共享
+            </a>
+            <div id="socials" style="display: none">
+                <a class="isdFacebook" href="#">
+                    <ins class="facebook"></ins>
+                </a>
+                <a class="isdTwitter" href="#">
+                    <ins class="twitter"></ins>
+                </a>
+                <a class="isdGooglePlus" href="#">
+                    <ins class="googlePlus"></ins>
+                </a>
+            </div>
+        </div>
+        <div id="indoc_toc" style="display: none" ms.cmpgrp="indoc toc">
+            <div id="indoc_title">本文内容</div>
+            <ul id="indoc_toclist"></ul>
+        </div>
+    </div>
+</div>
+<div id="rightNavigationMenuThumbnail" class="rightNavigationMenuThumbnail">
+</div>
+
+
+
+
+
+
+<input id="tocPaddingPerLevel" type="hidden" value="17" />
+
+
+        </div>
+        <div class="clear"></div>
+
+        
+    <div style="clear: both;"></div>
+
+<input name="__RequestVerificationToken" type="hidden" value="0xK-ChbuODISO1X2Yr0iShtjNvJp_bEMDztzbfKbATDQTisfGTladugacVdb0cGDxjFEt-Oy-DaKSP9im8RduX2c4Co1" />
+<input id="ratingValueSubmitUrl" type="hidden" value="https://msdn.microsoft.com/zh-cn/library/feedback/rate/jj157115.aspx" />
+<input id="ratingAdditionalSubmitUrl" type="hidden" value="https://msdn.microsoft.com/zh-cn/library/feedback/additional/jj157115.aspx" />
+<input id="isTopicRated" type="hidden" value="false" />
+
+
+
+    
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://i-msdn.sec.s-msft.com/Areas/Epx/Themes/Windows/Content/UhfFooterResponsive.css?v=635975733210808605" data-do-not-move="true" />
+    
+    <div id="ux-footer" class="ltr">
+        
+
+
+    <div id="standardRatingBefore" class="clear stdr-container-before"></div>
+    <div id="standardRating" class="stdr-container" ms.pgarea="body">
+        <div class="stdr-close"></div>
+        <div class="stdr-vote stdr-content">
+            <div class="stdr-content">
+                <span class="stdr-votetitle">此页面有用吗？</span>
+                <button class="stdr-yes" aria-label="是，此页面很有帮助">是</button>
+                <button class="stdr-no" aria-label="不，此页面没有任何帮助">否</button>
+                <input id="s_ratingValue" type="hidden" value="" />
+            </div>
+        </div>
+        <div class="stdr-feedback" style="display: none">
+            <div class="stdr-form">
+                <div class="stdr-fieldtitle">更多反馈？</div>
+                <textarea class="stdr-detail" rows="6" maxlength="1500"></textarea>
+                <div>
+                    <span class="stdr-count"><span class="stdr-charcnt">1500</span> 个剩余字符</span>
+                    <div class="stdr-buttons">
+                        <button class="stdr-provide" aria-label="提交我的其他反馈">提交</button>
+                        <button class="stdr-skip" aria-label="跳过其他反馈">跳过此步</button>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="stdr-thanks" style="display: none">
+            <div class="stdr-content">
+                <span class="stdr-thankyou">谢谢！</span>
+                <span class="stdr-appreciate">我们非常感谢您的反馈。</span>
+            </div>
+        </div>
+
+        
+        <div id="contentFeedbackQAContainer" style="display: none;"></div>
+    </div>
+    
+        <div id="footerContainer">
+            <div id="baseFooter">
+                 
+
+
+<div class="shell-footer" role="contentinfo" ms.pgarea="uhffooter" data-bi-area="Footer" data-bi-view="3xLinks">
+    <div class="shell-footer-wrapper">
+
+            <div class="shell-footer-menugroups" ms.cmpgrp="footer nav">
+                    <div class="sfm-group" ms.cmpnm="Footer_Tools">
+                        <div class="grp-title">
+                            下载和工具 <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?linkid=280676" ms.title="Windows 10 开发工具" data-bi-name="footer_DownloadsAndTools_Win10DevTools" data-bi-slot="1" data-bi-source="Compass">
+                                            Windows 10 开发工具
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=618475" ms.title="Visual Studio" data-bi-name="Footer_DownloadsAndTools_VS" data-bi-slot="2" data-bi-source="Compass">
+                                            Visual Studio
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?linkid=616887" ms.title="Windows SDK" data-bi-name="Footer_DownloadsAndTools_WinSDK" data-bi-slot="3" data-bi-source="Compass">
+                                            Windows SDK
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=534236" ms.title="Windows 应用商店锁屏提醒" data-bi-name="Footer_DownloadsAndTools_Badges" data-bi-slot="4" data-bi-source="Compass">
+                                            Windows 应用商店锁屏提醒
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+                    <div class="sfm-group" ms.cmpnm="Footer_Essentials">
+                        <div class="grp-title">
+                            基础知识 <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=534192" ms.title="API 参考（Windows 应用）" data-bi-name="Footer_Essentials_WinAppsAPIRef" data-bi-slot="1" data-bi-source="Compass">
+                                            API 参考（Windows 应用）
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?linkid=285627" ms.title="API 参考（桌面应用）" data-bi-name="Footer_Essentials_DesktopAppsAPIRef" data-bi-slot="2" data-bi-source="Compass">
+                                            API 参考（桌面应用）
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/?LinkID=280677" ms.title="代码示例" data-bi-name="FooterEssentialsCodeSamples" data-bi-slot="3" data-bi-source="Compass">
+                                            代码示例
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://msdn.microsoft.com/library/windows/apps/xaml/mt244352.aspx" ms.title="操作方法指南（Windows 应用）" data-bi-name="Footer_Essentials_HowToWinApps" data-bi-slot="4" data-bi-source="Compass">
+                                            操作方法指南（Windows 应用）
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+                    <div class="sfm-group" ms.cmpnm="Footer_LearningResources">
+                        <div class="grp-title">
+                            学习资源 <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="http://www.microsoftvirtualacademy.com/" ms.title="Microsoft Virtual Academy" data-bi-name="Footer_MS_Virtual_Academy" data-bi-slot="1" data-bi-source="Compass">
+                                            Microsoft Virtual Academy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://channel9.msdn.com/" ms.title="频道 9" data-bi-name="Footer_Ch9" data-bi-slot="2" data-bi-source="Compass">
+                                            频道 9
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=534190" ms.title="视频库" data-bi-name="Footer_VidGallery" data-bi-slot="3" data-bi-source="Compass">
+                                            视频库
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://blogs.windows.com/buildingapps/2015/08/05/build-better-apps-windows-10-by-10-development-series/" ms.title="Windows 10 by 10 博客系列" data-bi-name="Footer_LearningResources_WIN10x10blog" data-bi-slot="4" data-bi-source="Compass">
+                                            Windows 10 by 10 博客系列
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+                    <div class="sfm-group" ms.cmpnm="Footer_Programs">
+                        <div class="grp-title">
+                            程序 <i class="shell-icon-dropdown"></i>
+                        </div>
+                        <ul>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkId=534191" ms.title="获取开发人员帐户" data-bi-name="Footer_Programs_DevAcct" data-bi-slot="1" data-bi-source="Compass">
+                                            获取开发人员帐户
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://go.microsoft.com/fwlink/p/?LinkID=246847" ms.title="应用开发人员协议" data-bi-name="Footer_Programs_DevAgreement" data-bi-slot="2" data-bi-source="Compass">
+                                            应用开发人员协议
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://insider.windows.com/" ms.title="Windows 预览体验计划" data-bi-name="Footer_Programs_WinInsider" data-bi-slot="3" data-bi-source="Compass">
+                                            Windows 预览体验计划
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://go.microsoft.com/fwlink/p/?LinkId=529768" ms.title="Microsoft 联盟计划" data-bi-name="Footer_Programs_MsftAffliatePgrm" data-bi-slot="4" data-bi-source="Compass">
+                                            Microsoft 联盟计划
+                                        </a>
+                                    </li>
+
+                        </ul>
+                    </div>
+
+            </div>
+
+        <div class="shell-footer-lang" ms.cmpgrp="loc picker" ms.cmpnm="loc picker">
+                <ul>
+                    <li>
+                        <i class="shell-icon-globe"></i>
+                    </li><li>
+                        <a id="locale-picker-link" ms.title="中文(中华人民共和国)" href="https://dev.windows.com/locale" data-bi-name="LocalePicker">
+                            中文(中华人民共和国)‎
+                        </a>
+                    </li>
+                </ul>
+        </div>
+        <div class="shell-footer-copyright" ms.cmpgrp="corp links" ms.cmpnm="corp">
+            <ul>
+                            <li>
+                                <a id="privacyandcookies" href="//go.microsoft.com/fwlink/p/?linkid=521839" ms.title="隐私和 Cookie" class="ctl_footerNavLink" data-bi-name="PrivacyAndCookies" data-bi-slot="1">
+                                    隐私和 Cookie
+                                </a>
+                            </li>
+                            <li>
+                                <a id="termsofuse" href="//go.microsoft.com/fwlink/p/?linkid=248155" ms.title="使用条款" class="ctl_footerNavLink" data-bi-name="TermsOfUse" data-bi-slot="2">
+                                    使用条款
+                                </a>
+                            </li>
+                            <li>
+                                <a id="trademarks" href="//go.microsoft.com/fwlink/p/?linkid=248154" ms.title="商标" class="ctl_footerNavLink" data-bi-name="Trademarks" data-bi-slot="3">
+                                    商标
+                                </a>
+                            </li>
+
+                <li class="ctl_footerCopyright">
+                    © 2016 Microsoft
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+                        
+    
+    <span id="selectLocaleFromPopUp">
+        <div class="locale-selector" style="position: relative">
+            <a class="current-locale" href="javascript:void(0)">
+                <span class="text">简体中文</span>
+                <span class="gear"></span>
+            </a>
+            <div class="locale-selection-panel site-flag site-flag-lang" style="top: -245px; display: none;">
+                <div class="content">
+                    <table class="all-locales" cellspacing="0" autogeneratecolumns="false" allowpaging="false" allowsorting="false" style="border-collapse: collapse;">
+                        <tbody>
+                            <tr>
+
+
+                                    <td><a title="Deutsch" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=de-de&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">Deutsch</a></td>
+                                    <td><a title="English" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=en-us&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">English</a></td>
+                                    <td><a title="Español" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=es-es&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">Español</a></td>
+                                    <td><a title="Français" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=fr-fr&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">Français</a></td>
+                                        </tr><tr>
+                                    <td><a title="Italiano" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=it-it&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">Italiano</a></td>
+                                    <td><a title="日本語" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=ja-jp&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">日本語</a></td>
+                                    <td><a title="한국어" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=ko-kr&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">한국어</a></td>
+                                    <td><a title="Português" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=pt-br&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">Português</a></td>
+                                        </tr><tr>
+                                    <td><a title="Pусский" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=ru-ru&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">Pусский</a></td>
+                                    <td><a title="简体中文" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=zh-cn&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link selected">简体中文</a></td>
+                                    <td><a title="繁體中文" href="https://msdn.microsoft.com/zh-cn/?action=selectlocale&amp;currentlocale=zh-cn&amp;newlocale=zh-tw&amp;frompage=/zh-cn/library/windows/apps/jj157115.aspx" class="locale-link">繁體中文</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="arrow">
+                         </div>
+                </div>
+            </div>
+        </div>
+    </span>
+
+
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="footerPrintView">
+            <div class="footerCopyrightPrintView">© 2016 Microsoft</div>
+        </div>
+
+        
+        
+        
+        
+
+
+
+        <input id="MtpsDevice" type="hidden" value="Default" />
+
+
+<![CDATA[ Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx. ]]>
+
+        
+        
+        
+            
+        
+
+
+
+
+
+
+<noscript><div><img alt="DCSIMG" id="Img1" width="1" height="1" src="https://m.webtrends.com/dcsmgru7m99k7mqmgrhudo0k8_8c6m/njs.gif?dcsuri=/nojavascript&amp;WT.js=No" /></div></noscript>
+
+
+
+
+
+
+
+
+<div id="globalRequestVerification">
+    <input name="__RequestVerificationToken" type="hidden" value="LUDmPtHHvmPgVDDaVoFX5aFu2H32YarS74P1WXT4cuUIWzk2-jgmc3fs6V3VSbO0RboGuiE3hBqYnxyZREf6JQWM0Zg1" />
+</div>
+
+
+    </div>
+
+    
+    
+
+    
+
+    
+    
+    
+<script type="text/javascript" class="mtps-injected">
+/*<![CDATA[*/
+(function(window,document){"use strict";function preload(scripts){for(var result=[],script,e,i=0;i<scripts.length;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),result.push(script);return result}function inject(scripts,index){var script,elem;if(index>=scripts.length){delete mtps.injectScripts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var isLoaded=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.clearTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete mtps[injectNextFnName],elem.removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectNext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="complete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.src=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectNext,2e3),elem.text="try {\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && MTPS."+injectNextFnName+"(); }");parent.appendChild(elem)}var mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function(scripts){inject(preload(scripts),0)}})(window,document);
+MTPS.injectScripts([
+	{ txt: "/**/\r\n(window.MTPS || (window.MTPS = {})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"js\": \"https://i2-msdn.sec.s-msft.com\", \r\n\t\"css\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"ttf\": \"https://i-msdn.sec.s-msft.com\"\r\n});\r\n/**/" },
+	{ url: "https://assets.onestore.ms/cdnfiles/onestorerolling-1604-22001/shell/generated/shellservice.v3.min.js" },
+	{ url: "https://www.microsoft.com/uniblends/scripts/blender.js" },
+	{ txt: "var isAuthenticated = (false);\n\n        //TODO: Notify all UxService first and add this link back.\n        // Currently we won\u0027t enable AAD, hard-code it to false\n        //var aadEnabled= (false);\n        var aadEnabled = false;\n\n        var ssoProperties = {\n          signedIn: isAuthenticated,\n          aadEnabled: aadEnabled,\n          signInOutUrl: $(\"#UhfSignInOutLink\").val(),\n        };\n\n        if (isAuthenticated) {\n          ssoProperties.userHasProfile = (false);\n          ssoProperties.profileText = \":ProfileText:\";\n          ssoProperties.createViewProfileText = \":CreateViewMSDNProfileText:\";\n          ssoProperties.createViewProfileLink = \":ProfileLink:\";\n          ssoProperties.MsaMemberName = \":MsaMemberName:\";\n          ssoProperties.MsaFirstName = \":MsaFirstName:\";\n          ssoProperties.MsaLastName = \":MsaLastName:\";\n          ssoProperties.MsaCID = \":MsaCID:\";\n          ssoProperties.AadDisplayName = \":AadDisplayName:\";\n          ssoProperties.AadMemberName = \":AadMemberName:\";\n          ssoProperties.AadOrgName = \":AadOrgName:\";\n        }" },
+	{ txt: "//\n  var literalNormalizedUrl = \u0027/zh-cn/library/windows/apps/jj157115(l=zh-cn,v=vs.140).aspx\u0027;\n  var wt_nvr_ru = \u0027WT_NVR_RU\u0027;\n  var wt_fpcdom = \u0027.microsoft.com\u0027;\n  var wt_domlist = \u0027msdn.microsoft.com\u0027;\n  var wt_pathlist = \u0027\u0027;\n  var wt_paramlist = \u0027DCSext.mtps_devcenter\u0027;\n  var wt_siteid = \u0027MSDN\u0027;\n  var gDomain = \u0027m.webtrends.com\u0027;\n  var gDcsId = \u0027dcsmgru7m99k7mqmgrhudo0k8_8c6m\u0027;\n  var gFpc = \u0027WT_FPC\u0027;\n\n\n\n  if (document.cookie.indexOf(gFpc + \"=\") == -1) {\n    var wtidJs = document.createElement(\"script\");\n    wtidJs.src = \"//\" + gDomain + \"/\" + gDcsId + \"/wtid.js\";\n    document.getElementsByTagName(\"head\")[0].appendChild(wtidJs);\n  }\n\n\n\n  var detectedLocale = \u0027zh-cn\u0027;\n  var wtsp = \u0027_msdn_\u0027;\n  var gTrackEvents = \u00270\u0027;\n/**/" },
+	{ txt: "//\n\n        window.appInsightsId = \u00275eb1b2eb-c47a-497a-a7ac-a1c230b2882f\u0027;\n        //" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:Utilities,1:UhfHeader,2:Breadcrumbs,3:LibraryRightNavigationMenu,3:PrintExportButton,4:StandardRating,0:Topic,5:webtrendsscript,0:AppInsightsPerf,2:ResponsiveToc,0:ABTestControl,3:WEDCS,0:livefyre,0:Comment,1:TocDropDown;/Areas/Epx/Content/Scripts:0,/Areas/Epx/Themes/Windows/Content:1,/Areas/Library/Content:2,/Areas/Library/Themes/Base/Content:3,/Areas/Global/Content:4,/Areas/Global/Content/Webtrends/resources:5\u0026amp;hashKey=9AC39C82A12E0438D90BCC3CBC2FA82E\u0026amp;v=3FD5C7A2207E21B50BEA7829232E8B1B" },
+	{ txt: "//\n    MTPS = window.MTPS || {};\n    MTPS.Translation = window.MTPS.Translation || {};\n\n    MTPS.Translation.TranslationType =  0;\n    \n    \n        \n        MTPS.Translation.EditorLink = {\n            includeEditor : 0,\n            editLink: \"https://msdn.microsoft.com/zh-cn/library/windows/apps/translation/edit/jj157115.aspx\",\n            editLinkText: \"建议更好的翻译\"\n        };\n        \n    //" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:jquery.popup,0:Translator;/Areas/Library/Content:0\u0026amp;hashKey=16D24150BAC1A18066CEC17E9B28E03E\u0026amp;v=3FD5C7A2207E21B50BEA7829232E8B1B" },
+	{ txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = \u0027展开\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = \u0027折叠\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027单击以展开。双击以全部展开。\u0027; MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027单击以折叠。双击以全部折叠。\u0027; MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027全部展开\u0027; MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027全部折叠\u0027;" },
+	{ txt: "MTPS = window.MTPS || {}; MTPS.LocalizedStrings = window.MTPS.LocalizedStrings || {}; MTPS.LocalizedStrings.ExpandButtonTooltip = \u0027展开\u0027; MTPS.LocalizedStrings.CollapseButtonTooltip = \u0027折叠\u0027; MTPS.LocalizedStrings.EnhancedExpandTooltip = \u0027单击以展开。双击以全部展开。\u0027; MTPS.LocalizedStrings.EnhancedCollapseTooltip = \u0027单击以折叠。双击以全部折叠。\u0027; MTPS.LocalizedStrings.ExpandAllButtonTooltip = \u0027全部展开\u0027; MTPS.LocalizedStrings.CollapseAllButtonTooltip = \u0027全部折叠\u0027;" },
+	{ url: "https://i2-msdn.sec.s-msft.com/Combined.js?resources=0:LibraryMemberFilter,1:Toc_Fixed,2:UhfFooter,3:SelectLocaleFromPopUp,1:CodeSnippet,1:TopicNotInScope,0:ResponsiveSupport,1:VersionSelector,1:SurveyBroker;/Areas/Library/Content:0,/Areas/Epx/Content/Scripts:1,/Areas/Epx/Themes/Windows/Content/:2,/Areas/Epx/Themes/Base/Content:3\u0026amp;hashKey=45817A8913A8E7EFEB6FF9A5E7EE4C0C\u0026amp;v=3FD5C7A2207E21B50BEA7829232E8B1B" },
+	{ txt: "$(document).ready(function() {\n        try {\n            var token = $(\"#globalRequestVerification input[name=\u0027__RequestVerificationToken\u0027]\").clone();\n            $(\"#siteFeedbackForm\").append(token);\n        } catch(err) {\n            \n        }\n    });" }
+]);
+
+/*]]>*/
+</script></body>
+</html>

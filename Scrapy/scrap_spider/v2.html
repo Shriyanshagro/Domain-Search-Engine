@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>NPR Media Player</title>
+<link href="/player/v2/global.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/player/v2/ajax.js"></script>
+<script type="text/javascript" src="/player/v2/swfobject.js"></script>
+<style type="text/css">
+    #flashcontent {
+        border: solid 1px #000;
+        width: 960px;
+        height: 650px;
+        float: left;
+        margin: 15px 20px;
+    }
+
+    #noflashmessage p {
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    h1 {
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 24px;
+    }
+
+</style>
+
+<script type="text/javascript">
+   // <![CDATA[
+
+    var AAMB1 = "";
+    var AAMB2 = "";
+    var AAMB3 = "";
+    var AAMB4 = "";
+    var AAMB5 = "";
+
+    var queryString = "";
+
+    // get our flash movie object
+    var flashMovie;
+    function init() {
+
+       createCookie('playerWindowOpen',Date().toString(),1);
+
+        if (document.getElementById) {
+            flashMovie = document.getElementById("player");
+        }
+
+        fullURL = parent.document.URL;
+        if (fullURL.indexOf('?') != -1)
+        {
+            queryString = fullURL.substring(fullURL.indexOf('?'), fullURL.length);
+        }
+
+
+    }
+
+    function closeApp() {
+        callDeleteCookie();
+        eraseCookie('playerWindowOpen');
+    }
+
+    function checkForData()
+    {
+		if (queryString.length > 0)
+        {
+            addPlaylistItem(queryString);
+        }
+
+    }
+
+    // Correct for display bugs in Safari 1.3
+
+    var agt = navigator.userAgent;
+    var displayBugs = !(agt.indexOf('AppleWebKit/312') == -1);
+
+    //This function is called from Flash Actionscript when the media is selected to be played
+    function callGetAd(a1, a2, a4)
+    {
+        if (!displayBugs) {
+            AAMB1 = unescape(a1);
+            AAMB2 = unescape(a2);
+            AAMB4 = unescape(a4);
+            show300x250Ad();
+            show234x60Ad();
+        }
+    }
+
+	function openNewWindow(URLtoOpen, windowName)
+	{
+		newWindow=window.open(URLtoOpen, windowName, 'height=500,width=650,titlebar=yes,status=yes,resizable=yes,toolbar=yes,scrollbars=yes');
+	}
+
+    //----------- New Function ---------------------------------------
+    function callGetCampAdOnly(a2)
+    {
+        if (!displayBugs) {
+            AAMB2 = unescape(a2);
+            hide300x250Ad();
+            show234x60Ad();
+        }
+    }
+    //----------------------------------------------------------------
+
+    function callDeleteCookie()
+    {
+        eraseCookie('playListItem');
+    }
+
+
+    function addPlaylistItem(x) {
+        //alert(x + "   " + flashMovie);
+        if (flashMovie) {
+            flashMovie.sendPlaylistItemToFlash(unescape(x));
+      eraseCookie('playListItem');
+        }
+    }
+
+	// USER LOGIN
+	// ---------------------------------
+	
+	var loggedIn = false;
+	var loginData = readCookie("at");
+	var loginInterval = loginInterval = setInterval(checkLogin, 1000);
+
+	function checkLogin () {
+		var currentData = readCookie("at");
+		if (currentData != loginData) {
+			if (currentData != undefined) {
+				if (loginUser()) loginData = currentData;
+			} else {
+				if (logoutUser()) loginData = currentData;
+			}
+		}
+	}
+	
+	function loginUser() {
+        if (flashMovie) {
+            flashMovie.loginUser(unescape(readCookie("at")));
+			loggedIn = true;
+			return true;
+		}
+		return false;
+    }
+	
+	function logoutUser() {
+        if (flashMovie) {
+            flashMovie.logoutUser();
+			loggedIn = false;
+			return true;
+		}
+		return false;	
+	}
+	
+	function launchLogin() {
+		if (!loggedIn && window && window.opener) {
+			window.opener.focus();
+			window.opener.location.href = "http://www.npr.org/templates/reg/login.php";
+		}
+	}
+	
+	// ---------------------------------
+	// END USER LOGIN
+
+    // Used to hide the 300x250 Ad.
+    function hide300x250Ad()
+    {
+        var ad300x250 = document.getElementById('adunitl');
+        ad300x250.innerHTML = '';
+        ad300x250.style.visibility = 'hidden';
+    }
+
+    // Used to show the 300x250 Ad.
+    function show300x250Ad()
+    {
+        var ad300x250 = document.getElementById('adunitl');
+        ad300x250.innerHTML = unescape(AAMB1);
+        ad300x250.style.visibility = 'visible';
+    }
+
+    // Used to hide the 234x60 Ad.
+    function hide234x60Ad()
+    {
+        var ad234x60 = document.getElementById('adunit');
+        ad234x60.innerHTML = '';
+        ad234x60.style.visibility = 'hidden';
+    }
+
+    // Used to show the 234x60 Ad.
+    function show234x60Ad()
+    {
+        var ad234x60 = document.getElementById('adunit');
+        ad234x60.innerHTML = unescape(AAMB2);
+        ad234x60.style.visibility = 'visible';
+    }
+
+    function process(x) {
+        //parse the data
+        addPlaylistItem(x);
+        self.focus();
+    }
+
+    function notifyOpener() {
+        try {
+           if(self.opener && (!self.opener.NPR || !self.opener.NPR.Player || !self.opener.NPR.Player.MediaPlayerWindow)) {
+                    if (self.opener.RegisterNamespace) {
+                        self.opener.RegisterNamespace("NPR.Player");
+                    }
+                    self.opener.NPR.Player.MediaPlayerWindow = self;
+            }
+        } catch (e) {  }
+    }
+
+    function useDirectPopUp()
+    {
+        var agt = navigator.userAgent;
+        if (!(agt.indexOf('AppleWebKit') == -1))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    function pingWatched(url)
+    {
+        var myimg = new Image();
+        myimg.src = unescape(url);
+    }
+
+
+    setInterval( notifyOpener, 500 );
+
+    self.focus();
+	
+	var playlistChanged = false;
+	
+	function setPlaylistChanged () {
+
+		playlistChanged = true;
+
+	}
+	
+	function setPlaylistSaved () {
+
+		playlistChanged = false;
+
+	}
+	
+	window.onbeforeunload = function() {
+		closeApp();
+		if (playlistChanged) {
+			flashMovie.saveAndClose();
+			return "Your playlist has changed, so it will be saved to your user profile.  Click OK to close the window.";
+		}
+		
+	}
+
+   // ]]>
+</script>
+</head>
+<!-- <body onload=init(); onbeforeunload=closeApp();> -->
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<div id="adunit" align="center"></div>
+<div id="adunitl"></div>
+
+
+<!-- Media Player Omniture Info -->
+<script type="text/javascript" src="/templates/javascript/legacy/nprjsconstants.js.php"></script>
+<script type="text/javascript" src="/templates/javascript/legacy/jserrorhandling.js" ></script>
+<script type="text/javascript" src="/templates/javascript/legacy/static.js" ></script>
+<script type="text/javascript">
+document.domain="npr.org";
+
+// both flash and document need to be ready in order
+// for the player to start properly, so both need to be checked
+
+var doc_ready = false;
+var flash_ready = false;
+
+$(document).ready(function() {
+	doc_ready = true;
+	begin();
+});
+
+function flashReady () {
+	flash_ready = true;
+	begin();
+}
+
+function begin () {
+	
+	if (doc_ready == true && flash_ready == true) {
+		init();
+		constantPoll("playListItem");
+		checkForData();	
+	}
+}
+
+</script>
+
+
+<div id="homepageFlash">
+    <div id="noflashmessage" style="text-align: center">
+    <p><img src="http://media.npr.org/images/logo_npr_125.gif"></p>
+    <h1> NPR Media Player</h1>
+<div style="width: 500px; text-align: left; margin-left: auto; margin-right: auto;">
+    <p>Thanks for launching the NPR Media Player!</p>
+    <p>The Player requires version 8 or higher of the Adobe Flash Player. <span id="currentPlayerVersion"></span></p>
+
+    <p>Please obtain a free upgrade to the latest version of the
+        <a href="http://www.adobe.com/products/flashplayer/" target="_BLANK">Adobe Flash Player.</a></p>
+
+    <div id="javascriptmessage">
+      <p>It appears that your browser does not support Javascript or it is not enabled. JavaScript is required for the NPR Media Player.</p>
+    </div>
+
+     <p>For more information, please visit our <a href="/help/media.html">Online Help Center</a>.</p>
+
+  </div>
+    </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	// <![CDATA[
+
+	var fo = new SWFObject("/player/v2/audioPlayer.swf", "player", "770", "590", "8", "#ffffff", false, "high", null, "");
+	fo.addVariable("stationLogo", readCookie('station'));
+	fo.addVariable("v1st", readCookie('v1st'));
+	fo.addParam("scale", "noscale");
+	fo.addParam("base", "/player/v2");
+	fo.addParam("wmode", "opaque");
+	fo.addParam("allowFullScreen", "true");
+	fo.addParam("allowScriptAccess", "always");
+	fo.addVariable("useDirectPopUp", useDirectPopUp());
+	fo.addVariable("s_vi", readCookie('s_vi'));
+	
+	if (loginData != undefined) {
+		loggedIn = true;
+		loginData = readCookie('at');
+		fo.addVariable("at", readCookie('at'));
+	}
+
+	if (fo.installedVer.major) {
+		var playerVersionMessage = document.getElementById('currentPlayerVersion');
+		playerVersionMessage.innerHTML = ('You currently have version: ' +
+			fo.installedVer.major + '.' +
+			fo.installedVer.minor + '.' +
+			fo.installedVer.rev + ' installed.');
+	}
+
+	document.getElementById('javascriptmessage').innerHTML = '';
+
+    // ]]>
+</script>
+
+
+<script type="text/javascript">
+    // <![CDATA[
+	fo.write("homepageFlash");
+    // ]]>
+</script>
+
+</body>
+</html>
+

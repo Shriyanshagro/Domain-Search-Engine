@@ -1,0 +1,2853 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=false" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+	<title>Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more! | Active Directory Team Blog</title>
+
+	<meta name="description" content="">
+
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://blogs.technet.microsoft.com/ad/xmlrpc.php">
+	<!-- Move Favicons To Child Theme Functions -->
+	<!--<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/ad/wp-content/themes/cloud-platform/images/favicon.ico" />-->
+	<meta name="msvalidate.01" content="01EEB8C34FE4A6AA047F3FA8A590C583" />
+	<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Feed" href="https://blogs.technet.microsoft.com/ad/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/ad/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more! Comments Feed" href="https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/" />
+<meta name="twitter:description" content="" />
+<link rel='stylesheet' id='sfmsb-style-css'  href='https://blogs.technet.microsoft.com/ad/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/style.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='sfmsb-icons-css'  href='https://blogs.technet.microsoft.com/ad/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/css/icons.css?ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_msdn-parent-style-css'  href='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/style.min.css?ver=06182015' type='text/css' media='all' />
+<link rel='stylesheet' id='wds_cloud_platform-child-style-css'  href='https://blogs.technet.microsoft.com/ad/wp-content/themes/cloud-platform/style.min.css?ver=05262014' type='text/css' media='all' />
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/plugins/simple-follow-me-social-buttons-widget/assets/js/front-widget.js?ver=3.3.3'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/js/social-counts.min.js?ver=4.1.5'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/ad/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/ad/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/ad/?p=7651' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/ad/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+</head>
+
+<body class="single single-post postid-7651 single-format-standard msdn-2189 group-blog">
+	<div id="top-link"></div>
+
+	
+<div class="site-header-wrap">
+	<header id="masthead" class="site-header" role="banner">
+		<div class="top-breadcrumb-wrap-child">
+
+			<div class="top-breadcrumbs"><a href ="https://blogs.technet.microsoft.com/serverandtools">Server & Tools Blogs</a> > <a href ="https://blogs.technet.microsoft.com/server-management">Server &amp; Management Blogs</a> > Active Directory Team Blog</div>
+			<div class="utility-breadcrumbs">
+				<nav id="site-utility-navigation" class="utility-navigation" role="navigation">
+					<div class="menu-utility-nav-container">
+						<ul id="menu-utility-nav" class="menu">
+															<li class="menu-item"><a href="https://blogs.technet.microsoft.com/wp-login.php?aadsso_action=login">Sign in</a></li>
+													</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<a href="#togglemenu" class="header-mobile-dropdown-toggle-child">Menu</a>
+		<div class="header-mobile-dropdown-child-level">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<a class="skip-link screen-reader-text" href="#content">
+					Skip to content				</a>
+								<div class="menu-server-and-management-blogs-main-menu-container"><ul id="menu-server-and-management-blogs-main-menu-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-33"><a href="#">All About Windows Server</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-113"><a href="https://blogs.technet.microsoft.com/windowsserver/">Windows Server</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-123"><a href="https://blogs.technet.microsoft.com/sbs/">Windows Server Essentials</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="https://blogs.technet.microsoft.com/askperf/">Ask the Performance Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-153"><a href="https://blogs.technet.microsoft.com/askpfeplat/">Ask Premier Field Engineering (PFE) Platforms</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-652"><a href="https://blogs.technet.microsoft.com/askcore/">Ask the Core Team</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-43"><a href="#">Cloud Platform Blogs</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-223"><a href="https://blogs.technet.microsoft.com/server-cloud/">Server &amp; Cloud</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-661"><a href="https://azure.microsoft.com/blog/">Microsoft Azure</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-214"><a href="https://blogs.technet.microsoft.com/privatecloud/">Building Clouds</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-204"><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson &#8211; In the Cloud</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-53"><a href="#">Datacenter Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-233"><a href="https://blogs.technet.microsoft.com/systemcenter/">Hybrid Cloud IT Management</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-653"><a href="https://blogs.technet.microsoft.com/msoms/">Operations Management Suite (OMS)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-243"><a href="https://blogs.technet.microsoft.com/scvmm/">System Center Virtual Machine Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-253"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-263"><a href="https://blogs.technet.microsoft.com/momteam/">System Center Operations Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-283"><a href="https://blogs.technet.microsoft.com/orchestrator/">System Center Orchestrator</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-63"><a href="#">Client Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-293"><a href="https://blogs.technet.microsoft.com/configurationmgr/">System Center Configuration Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-303"><a href="https://blogs.technet.microsoft.com/servicemanager/">System Center Service Manager</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-313"><a href="https://blogs.technet.microsoft.com/mmpc/">Malware Protection Center</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-323"><a href="https://blogs.technet.microsoft.com/microsoftintune/">Microsoft Intune</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-333"><a href="https://blogs.technet.microsoft.com/sus/">Server Update Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-343"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Virtualization, VDI &amp; Remote Desktop</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-353"><a href="https://blogs.technet.microsoft.com/virtualization/">Virtualization Team</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-363"><a href="http://blogs.msdn.microsoft.com/virtual_pc_guy/">Ben Armstrong&#8217;s Virtualization</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-364"><a href="https://blogs.technet.microsoft.com/josebda/tag/hyper-v/">Jose Barreto on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-374"><a href="http://blogs.msdn.microsoft.com/rds/">Remote Desktop Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-394"><a href="https://blogs.technet.microsoft.com/askcore/tag/hyper-v/">Ask the Core Team on Hyper-V</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-83"><a href="#">File &amp; Storage &amp; High Availability</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-404"><a href="https://blogs.technet.microsoft.com/filecab/">File &amp; Storage</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-413"><a href="https://blogs.technet.microsoft.com/josebda/">Jose Barreto</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-414"><a href="https://blogs.technet.microsoft.com/askcore/tag/failover-cluster/">Ask the Core Team on Failover Cluster</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-423"><a href="http://blogs.msdn.microsoft.com/clustering/">Clustering &amp; High Availability</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-93"><a href="#">Windows Server Management</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-433"><a href="http://blogs.msdn.microsoft.com/powershell/">PowerShell</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-443"><a href="https://blogs.technet.microsoft.com/heyscriptingguy/">Hey Scripting Guy (PowerShell)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-463"><a href="https://blogs.technet.microsoft.com/networking/">Networking</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-103"><a href="#">Identity, Access &amp; Security</a>
+<ul class="sub-menu">
+	<li id="menu-item-666" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-666"><a href="https://blogs.technet.microsoft.com/datacentersecurity/">Datacenter and Private Cloud Security</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-473"><a href="https://blogs.technet.microsoft.com/askds/">Ask Directory Services</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-483"><a href="https://blogs.technet.microsoft.com/ad/">Active Directory</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-493"><a href="https://blogs.technet.microsoft.com/enterprisemobility/">Enterprise Mobility</a></li>
+</ul>
+</li>
+</ul></div>			</nav> <!-- #site-navigation -->
+					</div>
+
+		<div class="child-level-below-nav">
+
+			<div class="child-below-nav-wrapper">
+
+				<div class="child-below-nav-left">
+
+						<div class="blog-name">
+		<div class="inner-name-wrapper">
+			<h2 class="blog-title"><a href="https://blogs.technet.microsoft.com/ad">Active Directory Team Blog</a></h2>
+					</div>
+	</div>
+
+					<p class="blog-description"> </p>
+
+				</div>
+
+				<div class="child-below-nav-right">
+									</div>
+
+			</div>
+
+			
+		</div>
+		<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Feed" href="https://blogs.technet.microsoft.com/ad/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Comments Feed" href="https://blogs.technet.microsoft.com/ad/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Active Directory Team Blog &raquo; Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more! Comments Feed" href="https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/feed/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!" />
+<meta property="og:url" content="https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/" />
+<meta property="og:description" content="" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!" />
+<meta name="twitter:url" content="https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/" />
+<meta name="twitter:description" content="" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.technet.microsoft.com/ad/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.technet.microsoft.com/ad/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.1.5" />
+<link rel='canonical' href='https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/' />
+<link rel='shortlink' href='https://blogs.technet.microsoft.com/ad/?p=7651' />
+<script type="text/javascript">
+    jQuery( window ).load(
+        function() {
+            if (!document.getElementById("gajs"))
+            {
+                window._gaq = window._gaq || [];
+                                var pluginUrl ='//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+                window._gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+                window._gaq.push(['_setAccount', 'UA-65691138-1']);
+                                window._gaq.push(['_trackPageview']);
+                                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.id = 'gajs';
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            }
+        });
+</script>
+			<!-- Begin Custom CSS --><style type="text/css" id="wds-custom-css">
+			.home .blog-title {
+  margin: 10px 0 20px;
+  font-size: 29px;
+}
+
+.network-home-highlights-wrapper {
+  font-size: 14px;
+  font-family: WOL_Reg, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+.network-home-highlights-wrapper .entry-title {
+  font-size: 16px;
+}
+.network-home-highlights-wrapper .blog-source {
+  font-size: 12px;
+}
+
+.widget .widget-title {
+  color: #2a2a2a;
+  font-size: 16px;
+}
+
+.widget-link-list {
+  list-style-type: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+.widget-link-list li {
+  margin: 0 0 7px 0;
+  padding: 0;
+}
+
+.widget-link-list img {
+	margin: 0; 
+	padding: 0;
+}
+
+.widget .widget-rss-link {
+  position: relative;
+}
+.widget .widget-rss-link a {
+  display: block;
+  position: absolute;
+  top: -39px;
+  right: 0;
+  width: 14px;
+  height: 14px;
+}
+.widget .widget-rss-link a img {
+  padding: 0;
+}
+
+/*Main Navigation*/
+.main-navigation {
+	font-size: 13px;
+}
+.main-navigation ul {
+	/* subnav adjacent item gap - allows subnav to not appear connected to adjacent menu items */
+	display: block;
+	table-layout: auto;
+}
+
+.main-navigation ul li {
+	display: block; /* subnav adjacent item gap */
+}
+
+.main-navigation ul,
+.main-navigation li {
+	background: #00368a;
+	margin: 0;
+}
+.main-navigation ul li {
+	padding: 0;
+}
+.main-navigation li a {
+	height: 60px;
+	padding: 5px 30px 6px 10px;
+}
+
+.main-navigation .menu > .menu-item {
+	border-bottom: 1px solid #fff; /* subnav adjacent item gap */
+}
+.main-navigation .menu > .menu-item.active {
+	background: #01265f;
+	border-bottom-color: #01265f;
+}
+
+.main-navigation li:hover {
+  background: #01265f;
+}
+
+.main-navigation ul .sub-menu {
+	margin-top: 1px; /* subnav adjacent item gap */
+}
+
+.main-navigation li .sub-menu li a {
+	line-height: 1.3em;
+}
+
+.sub-menu.active li {
+	background: #01265f;
+}
+
+.sub-menu.active li:hover{
+  background: #00368a;
+}
+/*End Main Navigation*/
+
+.child-level-below-nav .blog-title a {
+  color: #00368a;
+}
+
+a:visited,
+h2.entry-title a:visited {
+  color: #969696;
+}
+
+a:hover,
+h2.entry-title a:hover {
+  color: #004185;
+}
+
+.child-level-below-nav .blog-title {
+  font-size: 3.9rem;
+}
+
+h1.entry-title {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+h2.entry-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+h2.entry-title a {
+  color: #0072c6;
+}
+
+.entry-meta {
+  margin-bottom: 8px;
+}
+
+.post-info {
+  margin-bottom: 0;
+}
+
+.entry-summary {
+  margin-top: 0;
+}
+
+.social-icons-wrap ul {
+  margin-top: 12px;
+}
+
+.wds-ratings-stars.current-rating,
+.wds-ratings-stars.current-rating.wds-ratings-active,
+.wds-ratings-stars.wds-ratings-active {
+  color: #f4b93f;
+}
+
+/* Begin tabs and container for sxp */
+	.layout-region.content .sxp-title {font-size: 1.333em/*16px*/;}
+	.sxp-feed p.sxp-time-author-comments {margin: 4px 0 -8px;}
+	.sxp-feed {margin-top: 30px;}
+  .right-sidebar .sxp-feed {margin: 0 0 15px 0;}
+	.sxp-feed:first-child {margin-top: 0;}
+	.sxp-feed p {margin: 12px 0 0;}
+  .right-sidebar .sxp-feed p {margin: 0;}
+	.sxp-feed .sxp-time {color: #707070;}
+	.sxp-feed .sxp-comments {margin-left: 21px; padding-left: 16px; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/7282.icon-comments.png') 0 4px no-repeat;}
+	.sxp-container {padding: 0 20px;}
+  .right-sidebar .sxp-container {padding: 0;}
+	#sxp-feed-container-all {}
+	#sxp-feed-container-news {display: none;}  
+	#sxp-feed-container ul {padding: 0 0 0 15px;}
+	#sxp-feed-container-parent {position: relative; border: solid 1px #ccc; border-width: 0 1px 1px; padding: 0 0 20px;}
+	#sxp-tabs {margin: 0 0 30px; width: 100%; background: #00368a; height: 32px; padding: 0 !important; border-bottom: solid 1px #ccc; font-size: 14px;}
+	#sxp-tabs li {list-style-type: none; height: 32px; position: relative; float: left; border: solid #CCC; border-width: 0 1px 1px 0;}
+	#sxp-tabs a {color: #fff; background: #00368a; height: 100%; line-height: 34px; padding: 0 20px; display: block; margin-left: 0;}
+	#sxp-tabs a:hover {text-decoration: none;}
+	#sxp-tabs a:first-child + a {left: -3px;}
+	#sxp-tabs a:hover {background: #01265f;}
+	#sxp-tabs .selected {margin-top: -4px; height: 36px;}
+	#sxp-tabs .selected a, #sxp-tabs .selected a:hover {background: #01265f;}
+	#sxp-tabs .selected span {z-index: 805; position: absolute; bottom: -7px; width: 100%; height: 7px; background: transparent url('https://msdnshared.blob.core.windows.net/media/2015/11/jj157208.server-management-selected-tail(en-us,MSDN.10).png') no-repeat 50% 0;}
+	#all-rss-link {float: right; margin: 0 15px 0 0; padding: 0 15px 0 0; position: relative; top: -21px; }
+	#all-rss-link span {margin: 0 0 0 4px; display: inline-block; background: url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png') 0 0; height: 14px; width: 14px;}
+  #all-rss-link a { font-size: 13px; color: #00749e; }
+  #all-rss-link a:hover { text-decoration: underline; }
+  #all-rss-link a:visited { color: #707070; }
+	.feedPager {border-top: solid 1px #ccc; margin: 30px 0 20px; padding: 12px 0;}
+	.feedPager a.pagerLink.currentPage {font-weight: bold; color: #000;}
+	.feedPager a.pagerLink.currentPage:hover {cursor: default;}
+	.feedPager a.pagerLink {margin-left: 15px;}
+	.feedPager a.pagerLink:first-child {margin-left: 0;}
+	.content-fragment.raw-html:first-child .user-defined-markup {overflow: visible;}
+/* End tabs and container for sxp */
+
+/*Social Tile links*/
+.sidebar-tiles {
+  clear: both;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0
+}
+.sidebar-tiles li {
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0;
+}
+.sidebar-tiles a {
+    background: #424242;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    padding: 54px 10px 0 5px;
+    width: 70px;
+    height: 70px;
+    text-decoration: none;
+    line-height: 13px;
+    width: 65px;
+}
+.sidebar-tiles a.sidebar-tile-subscribe {
+  background: #ea700d url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/0045.icon-tile-rss.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-twitter {
+  background: #55acee url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/twitter-tile.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-facebook {
+  background: #3b5998 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2055.facebook.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-comments {
+  background: #006bc2 url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5415.icon-comments-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-contact {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5340.icon-email-large.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a.sidebar-tile-home {
+  background: #00368a url('https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/5417.home.png') 50% 50% no-repeat;
+}
+.sidebar-tiles a:hover {
+  color: #fff;
+  background-color: #01265f;
+}
+
+@media (min-width:37.5em){ /*medium*/
+  .home .blog-title {
+    margin: -10px 0 20px;
+    font-size: 39px;
+  }
+  .main-navigation ul {
+  	height: 121px;
+  }
+}
+@media (min-width:60em){ /*large*/
+  .main-navigation ul {
+  	height: 58px;
+  }
+}	
+
+/*Child specific styles*/
+
+.child-level-below-nav h2.blog-title {
+  margin: 10px 0 8px;
+  padding: 0;
+  font-size: 29px;
+}
+
+.child-level-below-nav .child-below-nav-right img {
+  float: none;
+  top: auto;
+  margin: 23px 0 0;
+}
+.site-content {
+  margin: 2rem auto 0; /* need space after site logo */
+}
+
+.sidebar-btn {
+  margin: 0 0 13px 0;
+  color: #fff;
+}
+.sidebar-btn-purple {
+  background-color: #68217a;
+}
+.sidebar-btn-green {
+  background-color: #009E49;
+}
+.sidebar-btn-cyan {
+  background-color: #0072C6;
+}
+.sidebar-btn a {
+  line-height: 34px; 
+  font-family: 'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,Sans-Serif;
+  padding: 0 30px 0 35px;
+  display: table-cell;
+  vertical-align: middle;
+  background: url('http://cdn3.visualstudio.com/Areas/VisualStudio/Themes/VStudio/Content/Images/arrowWhite.png') no-repeat right center;
+  border-right: 10px solid transparent; 
+  color: #fff;
+}
+.sidebar-btn a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+
+@media (min-width:37.5em){ 
+  .child-level-below-nav h2.blog-title {
+    margin: 10px 0 8px;
+    padding: 0;
+    font-size: 39px;
+  }
+}
+@media (min-width:48.125em){
+  .child-level-below-nav .child-below-nav-right img {
+    float: none;
+    top: auto;
+    margin: 23px 0 0;
+  }
+  #secondary {
+      float: right;
+      width: 23.5492%;
+  }
+  #tag-wrap,
+  .comments-area {
+      clear: left;
+      width: 74.5164%;
+  }
+  .comments-area .comment-list {
+      clear: left;
+  }
+}
+@media (min-width:60em){ 
+
+}			</style><!-- End Custom CSS -->
+						<link rel="shortcut icon" href="https://blogs.technet.microsoft.com/ad/wp-content/themes/cloud-platform/images/favicon-technet.png" >
+		<meta property="Search.Network" name="Search.Network" content="ceblognetwork" />
+	</header>
+	<!-- #masthead -->
+</div>
+
+<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+				
+				<article id="post-7651" class="post-7651 post type-post status-publish format-standard hentry category-uncategorized tag-authentication tag-azure-active-directory tag-azure-ad-connect tag-ga tag-news tag-sync">
+	<header class="entry-header">
+		<h1 class="entry-title">Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!</h1>
+		<div class="rating-wrap">
+		<div id="star-rating-7651" class="wds-ratings" data-rating="5" data-userrating="0" data-postid="7651">
+			<div class="wds-ratings-inner-wrap">
+				<div>
+					<div class="wds-ratings-stars" data-stars="5"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span><span class="star-5">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="4"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span><span class="star-4">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="3"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span><span class="star-3">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="2"><span class="star-1">&#x2605;</span><span class="star-2">&#x2605;</span></div><div class="wds-ratings-stars" data-stars="1"><span class="star-1">&#x2605;</span></div>
+				</div>
+			</div>
+		</div>
+		</div>	</header><!-- .entry-header -->
+
+	<div class="entry-meta row">
+		<div class="post-info">
+			<span class="posted-on"><time class="entry-date published" datetime="2016-02-18T08:50:13+00:00">February 18, 2016</time><time class="updated" datetime="2016-02-20T13:28:41+00:00">February 20, 2016</time></span> <span class="byline">by <span class="author vcard"><a class="url fn n profile-usercard-hover" data-profile-userid="b04888e523e74cef8bfe83a2a560e8e4" href="https://social.technet.microsoft.com/profile/Alex_SimonsMS">Alex_SimonsMS</a></span></span> <span class="slashes comment-slashes">//</span> <a class="num-comments" href="https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/#comments">47 Comments</a>		</div>
+
+		<div class="row">
+			<div class="social-icons-wrap">
+		<ul class="social-icons">
+			<li class="social-icon facebook"><a data-social='{"type":"facebook", "url":"https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/", "text": "Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!"}' href="#" id="get_post_like_count">0</a></li>
+			<li class="social-icon twitter"><a data-social='{"type":"twitter", "url":"https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/", "text": "Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!"}' href="#" id="post_tweet_count">0</a></li>
+			<li class="social-icon linkedin"><a data-social='{"type":"linkedin", "url":"https://blogs.technet.microsoft.com/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/", "text": "Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!"}' href="#" id="get_post_linkedin_count">0</a></li>
+		</ul>
+	</div><!-- .social-icons-wrap -->
+	<script type="text/javascript">
+		// Get social counts
+		window.msdnsocial.ajax( 'get_post_like_count,post_tweet_count,get_post_linkedin_count' );
+	</script>
+		</div>
+	</div><!-- .entry-meta -->
+
+	
+	<div class="entry-content">
+		<p>Howdy folks,</p>
+<p>Today I&#8217;m psyched to announce a significant update to Azure AD Connect —the simple, &#8220;one stop shop&#8221; for connecting your Windows Server Active Directory and Azure Active Directory. As I mentioned in my <a href="https://blogs.technet.microsoft.com/ad/2016/01/05/best-way-to-connect-to-office-365-and-azure-ad-latest-data-azure-ad-connect-momentum/">blog post</a> earlier this year, we&#8217;ve already seen tremendous excitement and adoption growth of Azure AD connect. And since that blog post, nearly 10K new customers have used Azure AD Connect to integrate the directories across their hybrid enterprise. So it exciting to announce the following set of enhancements to Azure AD Connect that we&#8217;ve released today:</p>
+<ul>
+<li>Reduction in the sync interval to keep your Azure AD in sync with AD on-premises more quickly</li>
+<li>Support for automatic upgrades</li>
+<li>Ability to switch between sign-in methods through the wizard to enable faster pilots</li>
+<li>Support for Domain and OU filtering within the wizard</li>
+</ul>
+<p>In addition, we&#8217;re also announcing the General Availability the device write-back and schema extension support capabilities we announced before. Through the preview period of these features, we&#8217;ve gotten tremendous response and feedback and am thrilled to announce the GA of these features.</p>
+<p>You can download the latest version of the Azure AD Connect tool <a href="http://go.microsoft.com/fwlink/?linkid=615771">here</a>. I&#8217;ve asked Girish Chander to give you a run-down below of all the new capabilities in this release.</p>
+<p>Best regards,</p>
+<p>Alex Simons (Twitter: <a href="https://twitter.com/Alex_A_Simons">@Alex_A_Simons</a>)</p>
+<p>Director of Program Management</p>
+<p>Microsoft Identity Products and Serviced</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-</p>
+<p>Hello everyone,</p>
+<p>For those of you who don&#8217;t know me, I&#8217;ve been with the Azure Active Directory team since its inception and have worked on difference aspects of the service in that time. You may remember me from the posts we did on Cloud App Discovery, which was a service I led to GA. Most recently, I&#8217;ve starting focusing on our Hybrid strategy to help customers get to the cloud faster and derive value from the cloud quickly. Azure AD Connect is a critical component of that strategy and I&#8217;m thrilled to walk you through the enhancements we&#8217;ve made to the tool with this release.</p>
+<h2>Automatic upgrade</h2>
+<p>Being a service, we like to bring you improved capabilities and features across our offering on a periodic basis. As a result, we may update Azure AD Connect on a regular basis to best serve your needs. While in the past, this has required administrators to manually update Azure AD Connect to take advantage of these improvements, we believe we need to make this simpler. To that end, Azure AD Connect configurations that use &#8216;Express Settings&#8217;, will be capable of being auto-updated to future versions of the tool and benefit from improvements and new capabilities with no administrative intervention. With a majority of our customers using &#8216;Express Settings&#8217; a lot of you will be able to take advantage of this feature. Existing customers will need to update their Azure AD Connect server to this version of Azure AD Connect one-time to benefit from this feature. For customers that use &#8216;Express Settings&#8217; this will need to be the last time you&#8217;ll need to manually update Azure AD Connect <span style="font-family: Wingdings">J</span></p>
+<h2>Reduced sync interval</h2>
+<p>Since the early days of our Sync story, we&#8217;ve always kept the default sync interval at 3 hours and changing that frequency has not been supported. Reducing the sync interval has been a big ask from our customers who want to keep their AD and Azure AD directory data &#8216;in-sync&#8217; more frequently. With this new release, we now support sync directory data every 30 minutes.</p>
+<p>Additionally, you can configure the sync interval in a supported way. However, you choosing a value lower than 30 minutes is not supported. For specific steps to do this see the detailed documentation <a href="https://azure.microsoft.com/documentation/articles/active-directory-aadconnectsync-feature-scheduler/">here</a>.</p>
+<p style="text-align: center"><img src="https://msdnshared.blob.core.windows.net/media/2016/02/021816_1651_AzureADConn1.png" alt="" /></p>
+<h2>Modern Authentication</h2>
+<p>It is recommended that all your users who have administrative privileges have strong authentication configured. However, in the past the Azure AD Connect wizard did not natively integrate with the MFA flows in Azure AD. As a result, using an admin account with MFA was difficult. With this release, Azure AD Connect now leverages the Azure AD Authentication library (ADAL) and the Modern Authentication protocols that it supports, for sign-in to Azure AD. You can now specify an admin user that has MFA or PIM configured to connect to Azure AD.</p>
+<p style="text-align: center"><img src="https://msdnshared.blob.core.windows.net/media/2016/02/021816_1651_AzureADConn2.png" alt="" /></p>
+<h2>Domain/OU filtering</h2>
+<p>Some of our customers need the ability to filter specific OUs and Domains when sync&#8217;ing the directory on-premises with Azure AD for a variety of reasons—either because some of these domains/OUs are temporarily unavailable or unreachable or because they don&#8217;t want certain users to sync to the cloud. This capability was not natively supported in the Azure AD Connect wizard before and required a post-install step outside of the Azure AD Connect wizard to configure. With this release, in the &#8216;customize&#8217; path of the Azure AD Connect install, you will now have the option to select domains and OUs which should be synchronized. This option also overcomes a constraint that caused problems for some of our customers&#8212;that all domains and OUs needed to be selected and available at install time, for the wizard to complete.</p>
+<p style="text-align: center"><img src="https://msdnshared.blob.core.windows.net/media/2016/02/021816_1651_AzureADConn3.png" alt="" /></p>
+<p>For example, in the picture above, the R&amp;D domain in Fabrikam&#8217;s environment cannot be reached due to firewall restrictions. Since this is expected and they will not sync this domain with Azure AD, we can continue the installation without this domain.</p>
+<h2>Changing user&#8217;s sign-in method</h2>
+<p>In previous releases of Azure AD Connect, once a particular sign-in method was chosen at the time of install, you could couldn&#8217;t change the chosen method through the wizard without a reinstallation. We&#8217;ve heard from a number of you that this is very restrictive. It is very common for many of our customers to try and pilot Azure AD or O365 using password sync as the sign-in option. And as they grow their usage, some of these customers like to switching to using Federation. Taking this approach just got a lot easier with this release.</p>
+<p>It is now possible to change the method through the Azure AD Connect wizard. Just run the installation wizard again to change the sign-in option.</p>
+<p style="text-align: center"><img src="https://msdnshared.blob.core.windows.net/media/2016/02/021816_1651_AzureADConn4.png" alt="" /></p>
+<p>&nbsp;</p>
+<h1>What&#8217;s Next</h1>
+<p>We hope you will download the latest version of the tool and upgrade to it today. You can find it <a href="http://go.microsoft.com/fwlink/?linkid=615771">here</a>. Alternatively, you can see the full version history of Azure AD connect and install it from <a href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnect-version-history/">here</a>.</p>
+<p>As I mentioned before, Azure AD Connect is a critical component in enabling customers to integrate with and derive value out of Azure AD across their Hybrid enterprise. This is a key area of focus for us and we&#8217;ll continue to work on and deliver improvements in this space to you in as seamless a manner as possible.</p>
+<p>Send us any feedback that you may have. We look forward to hearing it</p>
+<p>Thanks,</p>
+<p>Girish Chander.</p>
+<p><a href="https://twitter.com/chander_girish">@chander_girish</a></p>
+				<div class="back-to-top-wrap"><a href="#top-link" class="back-to-top">Back to<br>top</a></div>
+	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+				
+			
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="msdn_bing_social_search-5" class="widget msdn_bing_social_search">		<div class="-widget-msdn-blogs-social-search msdn-blogs-social-search">
+			<div class="field-item search">
+								<form id="-widget-search-allblogs-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-allblogs" name="search-textbox-allblogs" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="">
+						<input id="-widget-search-button-allblogs" name="search-button-allblogs" type="submit" class="search-submit" title="">
+					</span>
+				</form>
+												<form id="-widget-search-thisblog-container">
+					<span class="field-item-input">
+						<input id="-widget-search-textbox-thisblog" name="search-textbox-thisblog" type="search" class="search-field" maxlength="64" size="45" autocomplete="off" title="Search this blog with Bing">
+						<input id="-widget-search-button-thisblog" name="search-button-thisblog" type="submit" class="search-submit" title="Search this blog with Bing">
+					</span>
+				</form>
+							</div>
+						<div class="bing-social-search-option">
+				<span class="bing-social-search-thisblog">
+				<input type="radio" name="SearchTypeRadio" value="thisblog" id="-widget-thisblog"><label for="-widget-thisblog" id="-widget-thisblog-text">Search this blog</label></span>
+				<span class="bing-social-search-allblogs">
+				<input type="radio" name="SearchTypeRadio" value="allblogs" id="-widget-allblogs" checked="checked"><label for="-widget-allblogs" id="-widget-allblogs-text">Search all blogs</label></span>
+			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function( $ ) {
+				var $elmSearchAll = $('#-widget-search-allblogs-container').hide();
+				var $elmSearchThis = $('#-widget-search-thisblog-container');
+
+				// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach
+
+					$('#-widget-thisblog').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchAll.hide();
+							$elmSearchThis.show();
+						}
+					});
+
+					$('#-widget-allblogs').click(function () {
+						var self = $(this);
+						if (self.is(':checked')) {
+							$elmSearchThis.hide();
+							$elmSearchAll.show();
+						}
+					});
+			});
+			</script>
+			
+			<script type="text/javascript">window.$ = window.jQuery;</script>
+							<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-allblogs&btnid=-widget-search-button-allblogs&brand=msdn&refinement=109&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn&rq" type="text/javascript" language="javascript"></script>
+										<script src="https://i4.services.social.microsoft.com/Search/Widgets/SearchBox.jss?boxid=-widget-search-textbox-thisblog&btnid=-widget-search-button-thisblog&brand=msdn&refinement&resref&addEnglish&watermark&focusOnInit=false&beta=0&iroot&overrideWatermark=false&rn=Active%2BDirectory%2BTeam%2BBlog&rq=site%3Ahttp%3A%2F%2Fblogs.technet.com%2Fb%2Fad" type="text/javascript" language="javascript"></script>
+				
+		</div>
+		</aside><aside id="text-3" class="widget widget_text"><h2 class="widget-title color-highlight-bg">Top Server &amp; Tools Blogs</h2>			<div class="textwidget"><div class="widget-rss-link">
+	<a href="http://sxp.microsoft.com/feeds/3.0/ServerTools/ServerToolsTopPosts" target="_blank"><img src="https://msdnshared.blob.core.windows.net/media/TNBlogsFS/prod.evol.blogs.technet.com/CommunityServer.Blogs.Components.WeblogFiles/00/00/00/94/25/2110.metroRSS.png" /></a></div>
+
+<ul class="widget-link-list">
+    <li><a href="http://weblogs.asp.net/scottgu">ScottGu's Blog</a></li>
+    <li><a href="https://blogs.technet.microsoft.com/in_the_cloud/">Brad Anderson&rsquo;s "In the Cloud" Blog</a></li>
+    <li><a href="http://blogs.msdn.microsoft.com/bharry/">Brian Harry's Blog</a></li>
+    <li><a href="https://blogs.msdn.microsoft.com/stevengu/">Steve "Guggs" Guggenheimer's Blog</a></li>
+</ul></div>
+		</aside><aside id="msdn-sharing-3" class="widget msdn-sharing"><h2 class="widget-title color-highlight-bg">Share This Post</h2><div class='social-share-icons-wrap'><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-facebook facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblogs.technet.microsoft.com%2Fad%2F2016%2F02%2F18%2Fazure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-twitter twitter" href="https://twitter.com/intent/tweet/?text=Azure+AD+Connect+1.1+is+now+GA+%E2%80%93+Faster+sync+times%2C+automatic+upgrades+and+more%21&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Fad%2F2016%2F02%2F18%2Fazure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more%2F">Share</a><a onclick="window.open(this.href, 'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, top=400, left=400, width=600, height=300' ); return false;" class="social-sharing social-sharing-linkedin linkedin" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fblogs.technet.microsoft.com%2Fad%2F2016%2F02%2F18%2Fazure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more%2F&title=Azure+AD+Connect+1.1+is+now+GA+%E2%80%93+Faster+sync+times%2C+automatic+upgrades+and+more%21&source=https://blogs.technet.microsoft.com/ad">Share</a><a onclick="" class="social-sharing social-sharing-email email" href="mailto:?subject=Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more!&body=Azure AD Connect 1.1 is now GA – Faster sync times, automatic upgrades and more! https%3A%2F%2Fblogs.technet.microsoft.com%2Fad%2F2016%2F02%2F18%2Fazure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more%2F">Share</a><a onclick="" class="social-sharing social-sharing-rss rss" href="https://blogs.technet.microsoft.com/ad/feed/">Share</a></div></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title color-highlight-bg">Recent Posts</h2>		<ul>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/ad/2016/05/05/major-coolness-microsoft-security-intelligence-report-20-highlights-azuread-identity-protection/">Major Coolness: Microsoft Security Intelligence Report #20 highlights #AzureAD Identity Protection!</a>
+							<span class="post-date">May 5, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/ad/2016/05/04/check-out-the-new-azuread-enterprise-mobility-suite-documentation-site/">Check out the new #AzureAD / Enterprise Mobility Suite documentation site!</a>
+							<span class="post-date">May 4, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/ad/2016/04/20/more-azuread-mfa-coolness-selectable-verification-methods-and-more-oath/">More #AzureAD MFA Coolness – selectable verification methods and more OATH!</a>
+							<span class="post-date">April 20, 2016</span>
+						</li>
+					<li>
+				<a href="https://blogs.technet.microsoft.com/ad/2016/04/15/azure-ad-mailbag-self-service-password-reset-round-2/">Azure AD Mailbag: Self-Service Password Reset Round 2</a>
+							<span class="post-date">April 15, 2016</span>
+						</li>
+				</ul>
+		</aside><aside id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title color-highlight-bg">Tags</h2><div class="tagcloud"><a href='https://blogs.technet.microsoft.com/ad/tag/adal/' class='tag-link-891' title='11 topics' style='font-size: 14.522123893805pt;'>ADAL</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/adfs/' class='tag-link-173' title='10 topics' style='font-size: 14.061946902655pt;'>ADFS</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/android/' class='tag-link-731' title='11 topics' style='font-size: 14.522123893805pt;'>Android</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/applications/' class='tag-link-461' title='44 topics' style='font-size: 21.079646017699pt;'>Applications</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/authentication/' class='tag-link-821' title='20 topics' style='font-size: 17.283185840708pt;'>authentication</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-active-directory/' class='tag-link-571' title='53 topics' style='font-size: 22pt;'>Azure Active Directory</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-ad-application-proxy/' class='tag-link-451' title='6 topics' style='font-size: 11.87610619469pt;'>Azure AD Application Proxy</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-ad-connect/' class='tag-link-771' title='9 topics' style='font-size: 13.601769911504pt;'>Azure AD Connect</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-ad-connect-health/' class='tag-link-761' title='5 topics' style='font-size: 11.070796460177pt;'>Azure AD Connect Health</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/azure-ad-join/' class='tag-link-581' title='5 topics' style='font-size: 11.070796460177pt;'>Azure AD Join</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/b2b-collaboration/' class='tag-link-551' title='3 topics' style='font-size: 9pt;'>B2B Collaboration</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/cloud-app-discovery/' class='tag-link-981' title='5 topics' style='font-size: 11.070796460177pt;'>Cloud App Discovery</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/conditional-access/' class='tag-link-751' title='6 topics' style='font-size: 11.87610619469pt;'>Conditional Access</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/custom/' class='tag-link-931' title='9 topics' style='font-size: 13.601769911504pt;'>custom</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/customer-success-team/' class='tag-link-601' title='13 topics' style='font-size: 15.327433628319pt;'>Customer Success Team</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/development/' class='tag-link-691' title='38 topics' style='font-size: 20.389380530973pt;'>Development</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/device/' class='tag-link-881' title='5 topics' style='font-size: 11.070796460177pt;'>Device</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/ga/' class='tag-link-441' title='17 topics' style='font-size: 16.592920353982pt;'>GA</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/graphapi/' class='tag-link-801' title='6 topics' style='font-size: 11.87610619469pt;'>GraphAPI</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/group-membership/' class='tag-link-911' title='4 topics' style='font-size: 10.150442477876pt;'>Group Membership</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/industry/' class='tag-link-781' title='8 topics' style='font-size: 13.026548672566pt;'>Industry</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/ios/' class='tag-link-521' title='15 topics' style='font-size: 15.902654867257pt;'>iOS</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/mailbag/' class='tag-link-1071' title='13 topics' style='font-size: 15.327433628319pt;'>Mailbag</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/microsoft-identity-manager/' class='tag-link-701' title='6 topics' style='font-size: 11.87610619469pt;'>Microsoft Identity Manager</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/mobile/' class='tag-link-541' title='11 topics' style='font-size: 14.522123893805pt;'>Mobile</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/multi-factor-authentication/' class='tag-link-651' title='21 topics' style='font-size: 17.513274336283pt;'>multi-factor authentication</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/myapps/' class='tag-link-971' title='6 topics' style='font-size: 11.87610619469pt;'>myApps</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/news/' class='tag-link-501' title='29 topics' style='font-size: 19.12389380531pt;'>News</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/oauth-2-0/' class='tag-link-791' title='8 topics' style='font-size: 13.026548672566pt;'>OAuth 2.0</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/office-365/' class='tag-link-631' title='13 topics' style='font-size: 15.327433628319pt;'>Office 365</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/openid/' class='tag-link-511' title='9 topics' style='font-size: 13.601769911504pt;'>OpenID</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/passwords/' class='tag-link-741' title='7 topics' style='font-size: 12.451327433628pt;'>passwords</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/portal/' class='tag-link-591' title='5 topics' style='font-size: 11.070796460177pt;'>Portal</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/powershell/' class='tag-link-243' title='4 topics' style='font-size: 10.150442477876pt;'>PowerShell</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/public-preview/' class='tag-link-431' title='40 topics' style='font-size: 20.619469026549pt;'>Public Preview</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/reporting/' class='tag-link-711' title='10 topics' style='font-size: 14.061946902655pt;'>Reporting</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/saas/' class='tag-link-851' title='14 topics' style='font-size: 15.672566371681pt;'>SaaS</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/saml/' class='tag-link-831' title='6 topics' style='font-size: 11.87610619469pt;'>SAML</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/security/' class='tag-link-153' title='16 topics' style='font-size: 16.247787610619pt;'>Security</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/self-service/' class='tag-link-1031' title='3 topics' style='font-size: 9pt;'>Self-Service</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/ssgm/' class='tag-link-951' title='4 topics' style='font-size: 10.150442477876pt;'>SSGM</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/sso/' class='tag-link-841' title='14 topics' style='font-size: 15.672566371681pt;'>SSO</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/sspr/' class='tag-link-941' title='9 topics' style='font-size: 13.601769911504pt;'>SSPR</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/sync/' class='tag-link-811' title='12 topics' style='font-size: 14.867256637168pt;'>Sync</a>
+<a href='https://blogs.technet.microsoft.com/ad/tag/windows-10/' class='tag-link-671' title='11 topics' style='font-size: 14.522123893805pt;'>Windows 10</a></div>
+</aside><aside id="msdn-archive-widget-3" class="widget msdn-archive-widget"><h2 class="widget-title color-highlight-bg">Archives</h2>	<li><a href='https://blogs.technet.microsoft.com/ad/2016/05/'>May 2016</a>&nbsp;(2)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/04/'>April 2016</a>&nbsp;(6)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/03/'>March 2016</a>&nbsp;(6)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/02/'>February 2016</a>&nbsp;(8)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/01/'>January 2016</a>&nbsp;(5)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2016/'>All of 2016</a>&nbsp;(27)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2015/'>All of 2015</a>&nbsp;(77)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2014/'>All of 2014</a>&nbsp;(60)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2013/'>All of 2013</a>&nbsp;(41)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2012/'>All of 2012</a>&nbsp;(3)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2011/'>All of 2011</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2010/'>All of 2010</a>&nbsp;(1)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2009/'>All of 2009</a>&nbsp;(18)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2008/'>All of 2008</a>&nbsp;(27)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2007/'>All of 2007</a>&nbsp;(29)</li>
+	<li><a href='https://blogs.technet.microsoft.com/ad/2006/'>All of 2006</a>&nbsp;(14)</li>
+</aside>
+	</div><!-- #secondary -->
+
+	<div id="tag-wrap"><h2 class="color-highlight-bg">Tags</h2><ul class="tag-list"><li><a href="https://blogs.technet.microsoft.com/ad/tag/authentication/">authentication</a></li><li><a href="https://blogs.technet.microsoft.com/ad/tag/azure-active-directory/">Azure Active Directory</a></li><li><a href="https://blogs.technet.microsoft.com/ad/tag/azure-ad-connect/">Azure AD Connect</a></li><li><a href="https://blogs.technet.microsoft.com/ad/tag/ga/">GA</a></li><li><a href="https://blogs.technet.microsoft.com/ad/tag/news/">News</a></li><li><a href="https://blogs.technet.microsoft.com/ad/tag/sync/">Sync</a></li></ul></div>
+	
+<div id="comments" class="comments-area">
+
+		<div class="comments-head">
+			</div>
+			
+		
+			
+			<ol class="comment-list">
+				
+			<li id="comment-17621" class="comment byuser comment-author-scott-brickey even thread-even depth-1 parent">
+			<article id="div-comment-17621" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-18T12:01:17+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0cb8f7ad73c88907cd5ec416588a314c?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Scott Brickey</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>So with OU filtering, is it now possible to AD sync to two tenants, on the assumption that they won&#8217;t have overlapping OUs?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-17711" class="comment byuser comment-author-girish-chander-msft odd alt depth-2 parent">
+			<article id="div-comment-17711" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-19T17:31:29+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6b3ef5622275dd654417952354715384?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Girish Chander (MSFT)</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It is, but you want to make sure that the identities and the domain suffixes do not conflict in the cloud. You cannot have two tenants with the same verified domain in the cloud</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18262" class="comment byuser comment-author-daniel-stefaniak-msft-pfe even depth-3">
+			<article id="div-comment-18262" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-24T07:13:59+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4c6789f309bcc143e112f23792f67723?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Daniel Stefaniak [MSFT-PFE]</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Also remember that having one user represented in multiple directories is unsupported</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-17641" class="comment byuser comment-author-jl_garza odd alt thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-17641" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-18T21:34:32+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/cf2e461516f9fc776ccb2eeca3b56fbc?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Jose_Garza [MSFT]</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>This is VERY exciting!  Cannot wait to share with our customers!  <img src="https://blogs.technet.microsoft.com/ad/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley" /></p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-17722" class="comment byuser comment-author-girish-chander-msft even depth-2">
+			<article id="div-comment-17722" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-19T17:47:34+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6b3ef5622275dd654417952354715384?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Girish Chander (MSFT)</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Please do share this widely Jose! There&#8217;s a lot of cool value in this release, we&#8217;d like to get all our customers on it.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-17642" class="comment odd alt thread-even depth-1 parent">
+			<article id="div-comment-17642" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-18T23:53:23+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/12d18d94ea783ade95be35c66099bb99?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Hans</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, thanks for the article<br />
+how about upgrading form dirsync to this version.</p>
+<p>Should i upgrade and is the process easy or do i have to configure aad connect again?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-17712" class="comment byuser comment-author-girish-chander-msft even depth-2">
+			<article id="div-comment-17712" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-19T17:33:56+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6b3ef5622275dd654417952354715384?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Girish Chander (MSFT)</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hans, I recommend taking a look at this article:<br />
+<a href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnect-dirsync-upgrade-get-started/" rel="nofollow">https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnect-dirsync-upgrade-get-started/</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-17661" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-17661" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-19T07:17:48+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/70ef3e9d48fa98743cdaf2fc0bdc7d76?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Abhishek Mathur</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Excellent!</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17671" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-17671" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-19T09:58:45+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/27fb46599f8d3942fbea9a9ba13001fc?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Cory</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Great update, but it looks like the method for triggering a manual sync via powershell has changed. Used to run DirectorySyncClientCmd.exe delta from the Microsoft Azure AD Sync\Bin directory. That tool no longer exists.</p>
+<p>There are also 2 separate issues with the instructions on configuring Windows 10 device registration here <a href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-azureadjoin-devices-group-policy/" rel="nofollow">https://azure.microsoft.com/en-us/documentation/articles/active-directory-azureadjoin-devices-group-policy/</a><br />
+1. Copy of ADFS claims script removes \|:&#8221; characters<br />
+2. ADSyncPrep requires Dsacls which is only found on Domain Controllers. Isn&#8217;t best practice to install Azure AD Connect on non-DC?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-17732" class="comment byuser comment-author-girish-chander-msft odd alt depth-2">
+			<article id="div-comment-17732" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-19T17:49:58+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6b3ef5622275dd654417952354715384?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Girish Chander (MSFT)</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Yes Cory, your observation is correct. we&#8217;ve switched the way we do scheduling of the sync with this release.<br />
+W.r.t installing on a DC, while it is supported, we do recommend installing on a separate server as a best practice.<br />
+I&#8217;ll pass on the feedback on the documents</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17781" class="comment byuser comment-author-todd_klindt even depth-2">
+			<article id="div-comment-17781" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-20T14:35:06+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/b16aeb98e7709517f1da13d2d068188c?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Todd Klindt</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The way start one now is with the PowerShell cmdlet Start-ADSyncSyncCycle.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17821" class="comment odd alt depth-2 parent">
+			<article id="div-comment-17821" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-21T13:31:40+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/ad6b4a508ff023a660eb70a219b0e142?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Jacob</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Is there a replacement for the DirectorySyncClientCmd.exe tool with this release?  30 minutes is great, except when you want to test, and not having a way to force the sync is really slowing things down.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18472" class="comment even depth-3 parent">
+			<article id="div-comment-18472" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-02T14:36:53+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/e851cb39214b113da4e8e856ac2998e7?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Jamie</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I just go into task scheduler and run the AD sync scheduled task manually from there &#8211; that kicks off a sync straight away. It&#8217;s been possible to do it this way for awhile.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18691" class="comment odd alt depth-4">
+			<article id="div-comment-18691" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-09T12:52:21+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/8c0b163f7ff33e55f3be8d7194259696?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Chris Brown</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Jamie, the scheduled task is no longer there. Please see my other post talking about using PowerShell to initiate a sync.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-18681" class="comment even depth-3">
+			<article id="div-comment-18681" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-09T12:51:36+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/8c0b163f7ff33e55f3be8d7194259696?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Chris Brown</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>You can now run it with PowerShell commands. Full documentation can be found here: <a href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnectsync-feature-scheduler/" rel="nofollow">https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnectsync-feature-scheduler/</a></p>
+<p>To kick off a sync, just run Start-ADSyncSyncCycle in PowerShell. The Scheduled task is no longer there.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-17741" class="comment odd alt thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-17741" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-19T18:05:08+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/984315e89eaeaf439c1f334e5aca76a7?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://www.ima.it' rel='external nofollow' class='url'>JJ</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>after the upgrade I have a few user accounts returning a &#8220;sync generic failure&#8221;. In the stack trace it&#8217;s showing &#8220;The object located by DN is a phantom.&#8221; Do you know why that is happening?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18271" class="comment byuser comment-author-andkjellhotmail-com even depth-2">
+			<article id="div-comment-18271" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-24T08:30:11+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4b7a0087b7a9a8b336b0024359fcf28a?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Andreas Kjellman</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>That message is saying that we have a value in a reference attribute which is referring to a non-existing object. The first thing to try is to run a Full Import on the Connector where you see this error.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-17771" class="comment odd alt thread-even depth-1 parent">
+			<article id="div-comment-17771" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-19T23:22:49+00:00">
+							3 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/c612575281ab7b8f35a56afac3e67c85?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Tim</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#8217;m getting an error after updgrading, IndexOutOfRaneException when starting the tool. Anyone else seeing this?<br />
+In the logfile, I get; Caught an exception while creating the initial page set on the root page.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-17801" class="comment even depth-2">
+			<article id="div-comment-17801" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-20T21:48:26+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/e6bad01dc01bffe0a054ae3701540800?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Avi Carmon (MSFT)</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Tim,<br />
+Pls see this link &#8211; <a href="https://social.msdn.microsoft.com/Forums/azure/en-US/6b94b062-9888-4c15-b9ed-5a9c71c718d7/error-after-update-111050-azure-ad-connect?forum=WindowsAzureAD" rel="nofollow">https://social.msdn.microsoft.com/Forums/azure/en-US/6b94b062-9888-4c15-b9ed-5a9c71c718d7/error-after-update-111050-azure-ad-connect?forum=WindowsAzureAD</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17804" class="comment odd alt depth-2">
+			<article id="div-comment-17804" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-21T03:29:59+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4b687591dd99356421c8d006e8432393?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Adam Hatak</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Got the same problem. Exactly the same.<br />
+@Tim, have you managed to go back to version 1.0?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17811" class="comment even depth-2">
+			<article id="div-comment-17811" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-21T04:19:59+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4b687591dd99356421c8d006e8432393?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Adam Hatak</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>UPDATE: Configuring AAD Connect from scratch works. But that&#8217;s not how the upgrade proces should look, right?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17841" class="comment byuser comment-author-girish-chander-msft odd alt depth-2">
+			<article id="div-comment-17841" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-21T23:28:08+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6b3ef5622275dd654417952354715384?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Girish Chander (MSFT)</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@JJ and Tim, Sorry that you&#8217;re seeing issues with your installs. We&#8217;re investigating on our end and will get back to you.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17873" class="comment byuser comment-author-nerdgear even depth-2">
+			<article id="div-comment-17873" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-22T07:19:49+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/934f51589d869a384acd4a24c0f6f0f4?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">nerdgear</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#8217;m also receiving this same &#8220;IndexOutOfRaneException&#8221; when stepping through the install wizard. This is on Windows Server 2012 R2, currently running v1.0.9125.0 of AAD Connect Sync.</p>
+<p>The log file says: &#8220;[ERROR] Caught an exception while creating the initial page set on the root page</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17892" class="comment odd alt depth-2">
+			<article id="div-comment-17892" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-22T08:12:26+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/da528c3715c9e99ef37ca87bb734fead?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">AAllston</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Trying to upgrade this today myself and I am getting the same error.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17901" class="comment even depth-2">
+			<article id="div-comment-17901" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-22T13:14:23+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/da528c3715c9e99ef37ca87bb734fead?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">AAllston</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>From: <a href="https://social.msdn.microsoft.com/Forums/en-US/6b94b062-9888-4c15-b9ed-5a9c71c718d7/error-after-update-111050-azure-ad-connect?forum=WindowsAzureAD" rel="nofollow">https://social.msdn.microsoft.com/Forums/en-US/6b94b062-9888-4c15-b9ed-5a9c71c718d7/error-after-update-111050-azure-ad-connect?forum=WindowsAzureAD</a> </p>
+<p>For anyone looking for a workaround:</p>
+<p>1. Make sure the AAD Connect wizard is not running.</p>
+<p>2. Open this file: %ProgramData%\AADConnect\PersistedState.xml</p>
+<p>3. Find a section that looks like this:</p>
+<p>       IAdfsContext.TargetForestDomainName<br />
+       contoso.com</p>
+<p>Change the  element to look like this:</p>
+<p>       IAdfsContext.TargetForestDomainName<br />
+       contoso.com,contoso.com</p>
+<p>Save the file and restart the AAD Connect wizard.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17912" class="comment odd alt depth-2">
+			<article id="div-comment-17912" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-22T23:30:17+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/2a9f4b37acd87e0cc6d887d8e092e3eb?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Rim</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#8217;m getting the same error. Current version v 1.0.8641.0</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-17851" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-17851" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-22T00:39:18+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/2a9f4b37acd87e0cc6d887d8e092e3eb?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Rim</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hello,</p>
+<p>I&#8217;ve have AAD Connect v 1.0,8641.0 installed. What would be the proper way to update to v 1.1?<br />
+Thank you.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-17882" class="comment odd alt thread-even depth-1 parent">
+			<article id="div-comment-17882" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-22T07:48:03+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/35ffd95252ea446256a60db13fc9b2b0?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Joachim</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thx fpr Version 1.1 <img src="https://blogs.technet.microsoft.com/ad/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley" /></p>
+<p>Question<br />
+I upgraded to 1.1. Where can the &#8220;Express Settings&#8221; be found? I want to configure the automatic update of the AD Connect.</p>
+<p>Error<br />
+Sync: after changing the sync to 30 minutes I get an error. Every further Set-ADSyncScheduler  or Get-ADSyncScheduler  produces the the same error</p>
+<p>PS C:\Users\dadmin&gt; Set-ADSyncScheduler -CustomizedSyncCycleInterval 00:30:00<br />
+PS C:\Users\dadmin&gt; Get-ADSyncScheduler<br />
+Get-ADSyncScheduler : System.Runtime.Serialization.SerializationException: DateTime values that are greater than<br />
+DateTime.MaxValue or smaller than DateTime.MinValue when converted to UTC cannot be serialized to JSON. &#8212;&gt;<br />
+System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values.<br />
+Parameter name: value<br />
+   &#8212; End of inner exception stack trace &#8212;<br />
+   at System.Runtime.Serialization.Json.JsonWriterDelegator.WriteDateTimeInDefaultFormat(DateTime value)<br />
+   at System.Runtime.Serialization.Json.JsonWriterDelegator.WriteDateTime(DateTime value)<br />
+   at System.Runtime.Serialization.XmlWriterDelegator.WriteDateTime(DateTime value, XmlDictionaryString name,<br />
+XmlDictionaryString ns)<br />
+   at WriteSchedulerSettingsToJson(XmlWriterDelegator , Object , XmlObjectSerializerWriteContextComplexJson ,<br />
+ClassDataContract , XmlDictionaryString[] )<br />
+   at System.Runtime.Serialization.Json.JsonClassDataContract.WriteJsonValueCore(XmlWriterDelegator jsonWriter, Object<br />
+obj, XmlObjectSerializerWriteContextComplexJson context, RuntimeTypeHandle declaredTypeHandle)<br />
+   at System.Runtime.Serialization.Json.JsonDataContract.WriteJsonValue(XmlWriterDelegator jsonWriter, Object obj,<br />
+XmlObjectSerializerWriteContextComplexJson context, RuntimeTypeHandle declaredTypeHandle)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalWriteObjectContent(XmlWriterDelegator<br />
+writer, Object graph)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalWriteObject(XmlWriterDelegator writer,<br />
+Object graph)<br />
+   at System.Runtime.Serialization.XmlObjectSerializer.WriteObjectHandleExceptions(XmlWriterDelegator writer, Object<br />
+graph, DataContractResolver dataContractResolver)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.WriteObject(XmlDictionaryWriter writer, Object<br />
+graph)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.WriteObject(Stream stream, Object graph)<br />
+   at Microsoft.IdentityManagement.PowerShell.ObjectModel.SchedulerSettings.Serialize()<br />
+   at SchedulerUtils.GetCurrentSchedulerSettings(_ConfigAttrNode* pcanList, UInt32 ccanItems, Char**<br />
+syncSettingsSerialized, Char** errorString)<br />
+At line:1 char:1<br />
++ Get-ADSyncScheduler<br />
++ ~~~~~~~~~~~~~~~~~~~<br />
+    + CategoryInfo          : WriteError: (Microsoft.Ident&#8230;ADSyncScheduler:GetADSyncScheduler) [Get-ADSyncScheduler]<br />
+   , PSInvalidOperationException<br />
+    + FullyQualifiedErrorId : System.Runtime.Serialization.SerializationException: DateTime values that are greater th<br />
+   an DateTime.MaxValue or smaller than DateTime.MinValue when converted to UTC cannot be serialized to JSON. &#8212;&gt; Sy<br />
+  stem.ArgumentOutOfRangeException: Specified argument was out of the range of valid values.<br />
+Parameter name: value<br />
+   &#8212; End of inner exception stack trace &#8212;<br />
+   at System.Runtime.Serialization.Json.JsonWriterDelegator.WriteDateTimeInDefaultFormat(DateTime value)<br />
+   at System.Runtime.Serialization.Json.JsonWriterDelegator.WriteDateTime(DateTime value)<br />
+       at System.Runtime.Serialization.XmlWriterDelegator.WriteDateTime(DateTime value, XmlDictionaryString name, XmlD<br />
+   ictionaryString ns)<br />
+       at WriteSchedulerSettingsToJson(XmlWriterDelegator , Object , XmlObjectSerializerWriteContextComplexJson , Clas<br />
+   sDataContract , XmlDictionaryString[] )<br />
+       at System.Runtime.Serialization.Json.JsonClassDataContract.WriteJsonValueCore(XmlWriterDelegator jsonWriter, Ob<br />
+   ject obj, XmlObjectSerializerWriteContextComplexJson context, RuntimeTypeHandle declaredTypeHandle)<br />
+       at System.Runtime.Serialization.Json.JsonDataContract.WriteJsonValue(XmlWriterDelegator jsonWriter, Object obj,<br />
+    XmlObjectSerializerWriteContextComplexJson context, RuntimeTypeHandle declaredTypeHandle)<br />
+       at System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalWriteObjectContent(XmlWriterDelegator w<br />
+   riter, Object graph)<br />
+       at System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalWriteObject(XmlWriterDelegator writer,<br />
+   Object graph)<br />
+       at System.Runtime.Serialization.XmlObjectSerializer.WriteObjectHandleExceptions(XmlWriterDelegator writer, Obje<br />
+   ct graph, DataContractResolver dataContractResolver)<br />
+       at System.Runtime.Serialization.Json.DataContractJsonSerializer.WriteObject(XmlDictionaryWriter writer, Object<br />
+   graph)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.WriteObject(Stream stream, Object graph)<br />
+   at Microsoft.IdentityManagement.PowerShell.ObjectModel.SchedulerSettings.Serialize()<br />
+       at SchedulerUtils.GetCurrentSchedulerSettings(_ConfigAttrNode* pcanList, UInt32 ccanItems, Char** syncSettingsS<br />
+   erialized, Char** errorString),Microsoft.IdentityManagement.PowerShell.Cmdlet.GetADSyncScheduler</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18281" class="comment byuser comment-author-andkjellhotmail-com even depth-2">
+			<article id="div-comment-18281" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-24T08:32:46+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4b7a0087b7a9a8b336b0024359fcf28a?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Andreas Kjellman</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>We are looking into this. It has been reported by other customers as well.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-17933" class="comment odd alt thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-17933" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-23T00:16:45+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/58a6bbc401196c51b24899bd7fbf89ea?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://blog.icewolf.ch' rel='external nofollow' class='url'>Andres Bohren</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi everybody,</p>
+<p>After Enabling SyncCycle with the following Command<br />
+Set-ADSyncScheduler -SyncCycleEnabled $True</p>
+<p>I get Errors for the following Command. Sync is stopped and does not work anymore <img src="https://blogs.technet.microsoft.com/ad/wp-includes/images/smilies/icon_sad.gif" alt=":(" class="wp-smiley" /></p>
+<p>PS C:\&gt; Get-ADSyncScheduler<br />
+Get-ADSyncScheduler : System.Runtime.Serialization.SerializationException:<br />
+DateTime values that are greater than DateTime.MaxValue or smaller than<br />
+DateTime.MinValue when converted to UTC cannot be serialized to JSON. &#8212;&gt;<br />
+System.ArgumentOutOfRangeException: Specified argument was out of the range of<br />
+valid values.<br />
+Parameter name: value<br />
+   &#8212; End of inner exception stack trace &#8212;<br />
+   at System.Runtime.Serialization.Json.JsonWriterDelegator.WriteDateTimeInDefa<br />
+ultFormat(DateTime value)<br />
+   at<br />
+System.Runtime.Serialization.Json.JsonWriterDelegator.WriteDateTime(DateTime<br />
+value)<br />
+   at System.Runtime.Serialization.XmlWriterDelegator.WriteDateTime(DateTime<br />
+value, XmlDictionaryString name, XmlDictionaryString ns)<br />
+   at WriteSchedulerSettingsToJson(XmlWriterDelegator , Object ,<br />
+XmlObjectSerializerWriteContextComplexJson , ClassDataContract ,<br />
+XmlDictionaryString[] )<br />
+   at System.Runtime.Serialization.Json.JsonClassDataContract.WriteJsonValueCor<br />
+e(XmlWriterDelegator jsonWriter, Object obj,<br />
+XmlObjectSerializerWriteContextComplexJson context, RuntimeTypeHandle<br />
+declaredTypeHandle)<br />
+   at System.Runtime.Serialization.Json.JsonDataContract.WriteJsonValue(XmlWrit<br />
+erDelegator jsonWriter, Object obj, XmlObjectSerializerWriteContextComplexJson<br />
+context, RuntimeTypeHandle declaredTypeHandle)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalWrit<br />
+eObjectContent(XmlWriterDelegator writer, Object graph)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalWrit<br />
+eObject(XmlWriterDelegator writer, Object graph)<br />
+   at System.Runtime.Serialization.XmlObjectSerializer.WriteObjectHandleExcepti<br />
+ons(XmlWriterDelegator writer, Object graph, DataContractResolver<br />
+dataContractResolver)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.WriteObject(<br />
+XmlDictionaryWriter writer, Object graph)<br />
+   at System.Runtime.Serialization.Json.DataContractJsonSerializer.WriteObject(<br />
+Stream stream, Object graph)<br />
+   at Microsoft.IdentityManagement.PowerShell.ObjectModel.SchedulerSettings.Ser<br />
+ialize()<br />
+   at SchedulerUtils.GetCurrentSchedulerSettings(_ConfigAttrNode* pcanList,<br />
+UInt32 ccanItems, Char** syncSettingsSerialized, Char** errorString)<br />
+At line:1 char:1<br />
++ Get-ADSyncScheduler<br />
++ ~~~~~~~~~~~~~~~~~~~<br />
+    + CategoryInfo          : WriteError: (Microsoft.Ident&#8230;ADSyncScheduler:G<br />
+   etADSyncScheduler) [Get-ADSyncScheduler], PSInvalidOperationException<br />
+    + FullyQualifiedErrorId : System.Runtime.Serialization.SerializationExcept<br />
+   ion: DateTime values that are greater than DateTime.MaxValue or smaller th<br />
+  an DateTime.MinValue when converted to UTC cannot be serialized to JSON. &#8211;<br />
+ &#8211;&gt; System.ArgumentOutOfRangeException: Specified argument was out of the<br />
+range of valid values.<br />
+Parameter name: value<br />
+   &#8212; End of inner exception stack trace &#8212;<br />
+       at System.Runtime.Serialization.Json.JsonWriterDelegator.WriteDateTimeI<br />
+   nDefaultFormat(DateTime value)<br />
+       at System.Runtime.Serialization.Json.JsonWriterDelegator.WriteDateTime(<br />
+   DateTime value)<br />
+       at System.Runtime.Serialization.XmlWriterDelegator.WriteDateTime(DateTi<br />
+   me value, XmlDictionaryString name, XmlDictionaryString ns)<br />
+       at WriteSchedulerSettingsToJson(XmlWriterDelegator , Object , XmlObject<br />
+   SerializerWriteContextComplexJson , ClassDataContract , XmlDictionaryStrin<br />
+  g[] )<br />
+       at System.Runtime.Serialization.Json.JsonClassDataContract.WriteJsonVal<br />
+   ueCore(XmlWriterDelegator jsonWriter, Object obj, XmlObjectSerializerWrite<br />
+  ContextComplexJson context, RuntimeTypeHandle declaredTypeHandle)<br />
+       at System.Runtime.Serialization.Json.JsonDataContract.WriteJsonValue(Xm<br />
+   lWriterDelegator jsonWriter, Object obj, XmlObjectSerializerWriteContextCo<br />
+  mplexJson context, RuntimeTypeHandle declaredTypeHandle)<br />
+       at System.Runtime.Serialization.Json.DataContractJsonSerializer.Interna<br />
+   lWriteObjectContent(XmlWriterDelegator writer, Object graph)<br />
+       at System.Runtime.Serialization.Json.DataContractJsonSerializer.Interna<br />
+   lWriteObject(XmlWriterDelegator writer, Object graph)<br />
+       at System.Runtime.Serialization.XmlObjectSerializer.WriteObjectHandleEx<br />
+   ceptions(XmlWriterDelegator writer, Object graph, DataContractResolver dat<br />
+  aContractResolver)<br />
+       at System.Runtime.Serialization.Json.DataContractJsonSerializer.WriteOb<br />
+   ject(XmlDictionaryWriter writer, Object graph)<br />
+       at System.Runtime.Serialization.Json.DataContractJsonSerializer.WriteOb<br />
+   ject(Stream stream, Object graph)<br />
+       at Microsoft.IdentityManagement.PowerShell.ObjectModel.SchedulerSetting<br />
+   s.Serialize()<br />
+       at SchedulerUtils.GetCurrentSchedulerSettings(_ConfigAttrNode* pcanList<br />
+   , UInt32 ccanItems, Char** syncSettingsSerialized, Char** errorString),Mic<br />
+  rosoft.IdentityManagement.PowerShell.Cmdlet.GetADSyncScheduler</p>
+<p>Regards<br />
+Andres Bohren</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18252" class="comment even depth-2 parent">
+			<article id="div-comment-18252" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-24T06:05:26+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/7189a5ea2e0af762eae62d4ebdbfb418?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Nigel Grant</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>We also had the issue &#8221; System.Runtime.Serialization.SerializationException:<br />
+ DateTime values that are greater than DateTime.MaxValue or smaller than<br />
+ DateTime.MinValue when converted to UTC cannot be serialized to JSON. —&gt;&#8221;</p>
+<p>This was resolved by running Azure AD Connect and setting the Staging mode.<br />
+After this staging mode can be disabled.</p>
+<p>The synchronization was automatically running afterwards.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18304" class="comment odd alt depth-3">
+			<article id="div-comment-18304" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-25T03:45:14+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/030447e9414fbc33ede8b5954c283cec?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Niels Gibcus</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks Nigel, your workaround helped me a lot.</p>
+<p>Still waiting for Microsoft to fix Offcourse.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-18261" class="comment even depth-2">
+			<article id="div-comment-18261" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-24T06:54:07+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/75e76f88c5a36bc45c1fb25dbb1fa3d4?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Florian Fröhlich</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Same problem here &#8211; seems like it has something to do with the timezone conversion to UTC if you are in GMT+N. Microsoft can you help us out? Is there a fix? .Net is with all updates installed provided through Windows Update.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18352" class="comment odd alt depth-2">
+			<article id="div-comment-18352" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-27T23:40:20+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/58a6bbc401196c51b24899bd7fbf89ea?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name"><a href='http://blog.icewolf.ch' rel='external nofollow' class='url'>Andres Bohren</a></span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Problem is solved with Azure AD Connect 1.1.110<br />
+<a href="https://www.microsoft.com/en-us/download/details.aspx?id=47594" rel="nofollow">https://www.microsoft.com/en-us/download/details.aspx?id=47594</a></p>
+<p>Regards<br />
+Andres</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-18133" class="comment byuser comment-author-ltoddnelsonhotmail-com even thread-even depth-1 parent">
+			<article id="div-comment-18133" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-23T05:55:19+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/28f858c794c2c28c90badd760d6fcf51?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">L. Todd Nelson</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>There must be an option to disable the auto upgrade feature after installing v1.1.  If so, how?  If not, why?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18181" class="comment byuser comment-author-samuel-devasahayam-msft odd alt depth-2">
+			<article id="div-comment-18181" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-23T17:26:09+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/1c6feaadba985d608de4159d6b32b830?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Samuel Devasahayam [MSFT]</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Todd, check out <a href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnect-feature-automatic-upgrade/" rel="nofollow">https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnect-feature-automatic-upgrade/</a></p>
+<p>Thanks<br />
+//Sam</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-18161" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-18161" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-23T14:50:23+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/18e12f92d1fa23b4328b0ab10894ea91?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">RMSmith</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I am currently running the AAD connector, what is the process to upgrade from the current iteration of AAD to AAD 1.1?<br />
+Will I still be able to utilize the MIISclient to modify partitions and view replication status?<br />
+Any and all help is greatly appreciated.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		<ul class="children">
+
+			<li id="comment-18291" class="comment byuser comment-author-andkjellhotmail-com odd alt depth-2">
+			<article id="div-comment-18291" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-24T08:34:27+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4b7a0087b7a9a8b336b0024359fcf28a?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Andreas Kjellman</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>You can do an in-place upgrade from your current deployment to 1.1.<br />
+MIISclient is still there.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+			<li id="comment-18192" class="comment byuser comment-author-girish-chander-msft even thread-even depth-1">
+			<article id="div-comment-18192" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-02-23T20:47:49+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/6b3ef5622275dd654417952354715384?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Girish Chander (MSFT)</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>@Joachim: &#8216;Express Settings&#8217; is the default install option when you run the wizard. Read more here: <a href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnect-get-started-express/" rel="nofollow">https://azure.microsoft.com/en-us/documentation/articles/active-directory-aadconnect-get-started-express/</a><br />
+For customers choosing this option and not customizing the install, automatic upgrade is automatically enabled. </p>
+<p>@Joachim and @Andres: Am following up on the issues you&#8217;re seeing with the cmdlets. One of us will get back.</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18462" class="comment byuser comment-author-joan-bennett odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-18462" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-02T10:42:25+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/fdde7760e093c5cf37c994fa74c3f0a2?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Joan Bennett</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I upgraded in place this morning and am seeing 6313 errors for ADSync in the application log.  Text of the error is: &#8220;The server encountered an unexpected error creating performance counters for management agent &#8220;peregrinecapital.com&#8221;.<br />
+ Performance counters will not be available for this management agent.&#8221; This series of errors occurs with each sync. Any suggestions?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18481" class="comment even thread-even depth-1">
+			<article id="div-comment-18481" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-02T15:53:18+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/7d825e42912912be0606ec24f50b2910?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Dave F</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Currently have Office 365 Enterprise, basic Azure AD that comes with it.<br />
+Microsoft Azure AD Connection Tool   1.0.11   installed 10/20/2014<br />
+Microsoft Azure AD Sync  1.0.419.911          installed 10/20/2014<br />
+syncs every 15 minutes using Task Scheduler<br />
+We use email address for login (does not match any on-prem AD UPN, 3rd party federation,OKTA)<br />
+Will this be an easy in-place upgrade or is something special going to be needed?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18491" class="comment byuser comment-author-eric-skaggs odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-18491" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-02T15:53:30+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/be6d895025edaa36afe9a0ffd6fdfe51?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Eric Skaggs</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Will these new updates allow pushing any additional AD attributes to SharePoint Online user profile properties or are we still limited to those listed here: <a href="https://technet.microsoft.com/en-us/library/hh147510" rel="nofollow">https://technet.microsoft.com/en-us/library/hh147510</a>? Are there any updates regarding this on the roadmap?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18501" class="comment even thread-even depth-1">
+			<article id="div-comment-18501" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-02T22:45:35+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/494f7978bbb721df4a2491f4bab3e8c8?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Bart</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Could it be that I&#8217;m missing the options for soft &#8211; matching (identifying users) ? I used express settings, is it only available with custom settings ?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18511" class="comment byuser comment-author-konstantins-sablukovs odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-18511" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-02T23:19:32+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/254ed41b328f8aecac4839266739d04a?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Konstantins Sablukovs</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Great news! AD filtering, Automatic Upgrades and Sync Intervals &#8211; thats exactly what we need!</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18521" class="comment even thread-even depth-1">
+			<article id="div-comment-18521" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-02T23:56:41+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/541319012d73586be8577a006533a855?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">remco</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#8217;ve got a question that i cannot seem to find the answer for <img src="https://blogs.technet.microsoft.com/ad/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley" /> </p>
+<p>My customer has one forest with 3 domain trees on prem. One of those domains is used as resource for users that the customer uses in a PowerShell script to provision users to Office365 (AzureAD). (aprox 30000 accounts)<br />
+I already told him that we need to change this to a supported method using AADC. When we implement AADC and do a forest wide sync, what happens to the accounts already present in AzureAD? Are they altered in any way? Does their service gets interupted in any way? </p>
+<p>Way cool tool!!! <img src="https://blogs.technet.microsoft.com/ad/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley" /></p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18532" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-18532" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-03T09:40:41+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/780c53c91bdb6e503fa2edc01b6bbb1c?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">Sergey</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hello,<br />
+You might want to update this sentence:<br />
+&#8220;&#8230; at the time of install, you could couldn’t change the&#8230; &#8221;<br />
+to<br />
+&#8220;&#8230; at the time of install, you couldn’t change the&#8230; &#8220;</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+
+			<li id="comment-18552" class="comment even thread-even depth-1">
+			<article id="div-comment-18552" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-right">
+						<time class="comment-time" datetime="2016-03-04T12:29:41+00:00">
+							2 months ago						</time>
+						<div class="comment-actions">
+													</div>
+					</div>
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/f69b406c2a7059f2e5103e0a1d03c7ac?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40 photo' height='40' width='40' />						<div class="author-wrap">
+							<span class="author-name">kevin jacobson</span>						</div>
+					</div><!-- .comment-author -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I have a client who has been planning to switch from ADFS to password sync. I&#8217;ve read that the new version can do just that independent of powershell cmds. Does this have to be done during the install or can I upgrade and then go back and remove ADFS while implementing password sync exclusively?</p>
+				</div><!-- .comment-content -->
+
+				<div class="comment-metadata">
+									</div><!-- .comment-metadata -->
+
+			</article><!-- .comment-body -->
+
+		</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+		
+				<p class="no-comments">Comments are closed.</p>
+	
+</div><!-- #comments -->
+
+
+	
+
+
+	</div><!-- #content -->
+
+	<div class="footer-wrap">
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+
+				<div class="footer-copyright">
+					<p>&copy; 2016 Microsoft Corporation.</p>
+				</div>
+
+				<div class="bottom-footer-menu">
+					<div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="footer-menu"><li id="menu-item-7261" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7261"><a href="http://technet.microsoft.com/en-US/cc300389.aspx">Terms of Use</a></li>
+<li id="menu-item-7271" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7271"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a></li>
+<li id="menu-item-7281" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7281"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a></li>
+</ul></div>				</div>
+
+				<div class="footer-logo">
+					<!--<div class="copyright-logo" role="img" aria-label="Microsoft logo"></div>-->
+				</div><!-- .footer-logo -->
+
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- .footer-wrap -->
+
+</div><!-- #page -->
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$login_link = $( 'a[href*="wp-login.php?"]' );
+				$login_link.on( 'click', function( evt ) {
+			// evt.preventDefault();
+						// console.log( 'cookie-set', '/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/' );
+			$.cookie( 'aadsso-redirect', '/ad/2016/02/18/azure-ad-connect-1-1-is-now-ga-faster-sync-times-automatic-upgrades-and-more/', { expires: 1, path: '/' });
+		});
+	});
+	</script>
+		<!--ADD WEDCS SCRIPT-->
+	<div id="_WEDCSInsertedData" style="display: none;"></div>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function() {
+				window.varSegmentation = 0;
+				window.varClickTracking = 1;
+				window.varCustomerTracking = 1;
+				window.varAutoFirePV = 1;
+				window.Route = ""; // was 23470 in the windows theme framework
+				window.Ctrl = "";
+				var wedcs_script = document.createElement('script');
+				wedcs_script.type = 'text/javascript';
+				wedcs_script.async = true;
+				wedcs_script.src = window.location.protocol + '//blogs.msdn.com/Themes/Shared/js/ms2_blogs.js';
+				document.getElementsByTagName('body')[0].appendChild(wedcs_script);
+			});
+	</script>
+	<!--
+	<script src="//c.microsoft.com/ms.js" type="text/javascript"></script>
+	<noscript><img alt="" width="1" height="1" src="http://c.microsoft.com/trans_pixel.aspx"/></noscript>
+	-->
+
+		<span id='page-view-tracking-info' blog-id='2189' post-id='7651'></span>
+		<script type="text/javascript">
+			// Check for compatibility before IE8
+			if (!Date.now) {
+ 				 Date.now = function() { return new Date().getTime(); };
+			}
+			jQuery( window ).load( function() {
+				jQuery.ajax({
+					url: 'https://blogs.technet.microsoft.com/ad/wp-admin/admin-ajax.php',
+					type: 'get',
+					data: {
+						action: 'track_page_view',
+						track_page_view_post_id: jQuery('#page-view-tracking-info').attr('post-id'),
+						track_page_view_blog_id: jQuery('#page-view-tracking-info').attr('blog-id'),
+						track_page_view_post_url: window.location.href.split('?')[0],
+						timestamp: Date.now()
+						}
+				});
+			});
+		</script>	<script type="text/javascript">
+		var addthis_config =
+		    {
+				data_track_addressbar: false,
+	        	ui_use_css: false,
+	        	ui_508_compliant: true
+	    	}
+	</script>
+	<script type="text/javascript">
+		jQuery( window ).load(
+			function(i) {
+				var n = window,
+					t = document,
+					e = n.console,
+					f, u, r, o;
+				typeof e == "undefined" && (f = function() {}, e = {
+					log: f,
+					warn: f,
+					assert: f,
+					clear: f,
+					dir: f,
+					error: f,
+					info: f,
+					profile: f,
+					profileEnd: f
+				}), u = {
+					appendToHead: function(n) {
+						if (t.getElementsByTagName("head").length > 0) t.getElementsByTagName("head")[0].appendChild(n);
+						else throw "bootstrapper: no head element found.";
+					},
+					appendToBody: function(n) {
+						if (t.getElementsByTagName("body").length > 0) t.getElementsByTagName("body")[0].appendChild(n);
+						else throw "bootstrapper: no body element found.";
+					},
+					addStyleElement: function(n) {
+						var i = t.createElement("link");
+						i.setAttribute("href", n), i.setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), u.appendToHead(i)
+					},
+					loadFiles: function(n, t) {
+						if (t !== i && u.recursiveScriptLoad(0, t), n !== i)
+							for (var r = 0, r = 0; r < n.length; r++) u.addStyleElement(n[r])
+					},
+					recursiveScriptLoad: function(n, t) {
+						t[n] && u.addScriptElement(t[n], function() {
+							u.recursiveScriptLoad(n + 1, t)
+						})
+					},
+					isCompatible: function(n, t) {
+						var r, u, i;
+						return (r = n.split("."), u = t.split("."), i = function(n) {
+							return isNaN(n) ? 0 : n
+						}, i(r[0]) > i(u[0]) || i(r[0]) === i(u[0]) && i(r[1]) > i(u[1]) || i(r[0]) === i(u[0]) && i(r[1]) === i(u[1]) && i(r[2]) >= i(u[2])) ? !0 : !1
+					},
+					addScriptElement: function(i, r) {
+						var f, e;
+						f = t.createElement("script"), f.setAttribute("type", "text/javascript"), f.async = true, f.setAttribute("src", i), f.attachEvent ? (e = function() {
+							setTimeout(function() {
+								typeof n.jQuery != "undefined" && r ? r() : e()
+							}, 10)
+						}, e()) : f.onload = r, u.appendToBody(f)
+					},
+					load: function(n, t) {
+						setTimeout(function() {
+							if (typeof n == "undefined") try {
+								u.addScriptElement(t.defaultPath, function() {
+									u.loadFiles(t.cssFiles, t.jsFiles)
+								});
+								return
+							} catch (i) {
+								e.warn("bootstrapper: failed to load default jQuery")
+							} else if (!u.isCompatible(n.fn.jquery, t.minimumVersion)) {
+								e.warn("bootstrapper: jQuery version is too old to load UserCard. Use v1.4.2 or later.");
+								return
+							}
+							u.loadFiles(t.cssFiles, t.jsFiles)
+						}, 0)
+					}
+				}, r = {
+					host: n.location.host,
+					search: "",
+					protocol: "https"
+				}, r.host = "widgets.services.microsoft.com", r.search = "?brand=msdn&lang=en&ver=4.9.0.0", r.protocol = "https:", o = {
+					minimumVersion: "1.1.2",
+					defaultPath: "https://code.jquery.com/jquery-1.4.2.min.js",
+					cssFiles: [r.protocol + "//" + r.host + "/v1/UnifiedBaseballCard.css" + r.search, r.protocol + "//" + r.host + "/v1/usercard.css" + r.search],
+					jsFiles: ["https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js", r.protocol + "//" + r.host + "/v1/jquery.timeago.js" + r.search, r.protocol + "//" + r.host + "/v1/jquery.textfill.js" + r.search, r.protocol + "//" + r.host + "/v1/widgets.js" + r.search]
+				}, typeof n.jQuery == "undefined" ? u.load(i, o) : u.load(n.jQuery, o)
+			}
+		);
+	</script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/ad\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/ad\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+var wds_ratings_config = {"ajaxurl":"https:\/\/blogs.technet.microsoft.com\/ad\/wp-admin\/admin-ajax.php","user_id":"0","nonce":"016a4567a4","debug":"","no_auth_alert":"You must be logged in to rate an article."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/plugins/wds-ratings/wds-ratings.js?ver=05272015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/js/onclick-menu-cloud.min.js?ver=05262014'></script>
+<script type='text/javascript' src='//s7.addthis.com/js/300/addthis_widget.js?ver=1#pubid=ra-52a23616101dab3e'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var msdnparent = {"is_search":"","is_singular":"1"};
+var msdnparent = {"is_search":"","is_singular":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/js/project.min.js?ver=06182015'></script>
+<script type='text/javascript' src='https://blogs.technet.microsoft.com/ad/wp-content/themes/msdn-network-parent/js/vendor/jquery.cookie.js?ver=06182015'></script>
+
+
+</body>
+</html>

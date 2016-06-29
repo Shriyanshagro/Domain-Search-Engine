@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta id="appname" name="apple-mobile-web-app-title" content="FastMail Blog">
+<meta name="theme-color" content="#44557e">
+<meta name="description" content="Over the past week we have changed how deletion works in our new modern interface. In this blog post I will explain what those changes were, and some actions we have taken to ensure no emails are accidentally lost.">
+<title>Changes to delete behaviour with conversations | FastMail Blog</title>
+
+<meta property="og:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FastMail Blog">
+<meta property="og:title" content="Changes to delete behaviour with conversations">
+<meta property="og:description" content="Over the past week we have changed how deletion works in our new modern interface. In this blog post I will explain what those changes were, and some actions we have taken to ensure no emails are accidentally lost.">
+<meta property="og:url" content="https://blog.fastmail.com/2012/11/07/changes-to-delete-behaviour-with-conversations/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.fastmail.com/static/images/app-icon-256.png">
+<meta name="twitter:site" content="@FastMailFM">
+<meta name="twitter:creator" content="@FastMailFM">
+<meta name="twitter:url" content="https://blog.fastmail.com/2012/11/07/changes-to-delete-behaviour-with-conversations/">
+<meta name="twitter:title" content="Changes to delete behaviour with conversations">
+<meta name="twitter:description" content="Over the past week we have changed how deletion works in our new modern interface. In this blog post I will explain what those changes were, and some actions we have taken to ensure no emails are accidentally lost.">
+
+<link rel="canonical" href="https://blog.fastmail.com/2012/11/07/changes-to-delete-behaviour-with-conversations/">
+<link rel="alternate" type="application/rss+xml" title="FastMail Blog" href="https://blog.fastmail.com/feed/">
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.fastmail.com/static/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.fastmail.com/static/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.fastmail.com/static/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.fastmail.com/static/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.fastmail.com/static/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.fastmail.com/static/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.fastmail.com/static/favicons/apple-touch-icon-57x57.png">
+<link rel="shortcut icon" sizes="196x196" href="https://www.fastmail.com/static/favicons/touch-icon-196x196.png">
+<link rel="shortcut icon" sizes="64x64" href="https://www.fastmail.com/static/favicons/icon-64x64.png">
+<link rel="shortcut icon" sizes="32x32" href="https://www.fastmail.com/static/favicons/icon-32x32.png">
+
+<link rel="stylesheet" type="text/css" href="https://www.fastmail.com/static/styles/main.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700">
+<script type="text/javascript" src="https://www.fastmail.com/static/scripts/fontloaded.js"></script>
+</head>
+<body>
+
+<div id="header" class="fixed">
+<div id="home"><a href="https://www.fastmail.com/"><img src="https://www.fastmail.com/static/images/logo.png" width="176" height="44" alt="FastMail"></a></div>
+<ul id="nav">
+<li><b>Blog</b></li>
+<li><a href="https://www.fastmail.com/help/">Support</a></li>
+<li><a href="https://www.fastmail.com/signup/">Sign up</a></li>
+<li><a href="https://www.fastmail.com/">Our service</a></li>
+</ul>
+</div>
+
+<div id="page">
+<div id="bg"></div>
+
+<div class="article">
+
+<h1><a href='https://blog.fastmail.com/2012/11/07/changes-to-delete-behaviour-with-conversations/'>Changes to delete behaviour with conversations</a></h1>
+<p class="blog-author">Bron Gondwana &ndash;  6 November 2012</p>
+<p>Over the past week we have changed how deletion works in our new modern
+interface. In this blog post I will explain what those changes were, and
+some actions we have taken to ensure no emails are accidentally lost.</p>
+
+<p>This is a technical blog post, so it contains a moderate level of
+technical detail.</p>
+
+<p>I will address how our backup and disaster recovery system works, and
+how we used it this week to recover emails which we suspected to be
+accidentally deleted.</p>
+
+<h2>Some background</h2>
+
+<p>Last week we rolled out the new conversations-enabled interface.
+However, we discovered we had under-estimated the impact of
+conversations on users' existing workflow.</p>
+
+<p>In particular, many users did not realise that when they selected a
+single item in a folder, it represented the entire conversation (all
+related messages, including those the user had sent).</p>
+
+<p>When they pressed 'Delete' with one or more conversations selected, it
+deleted all messages in those conversations, including messages in other
+folders. For example, deleting a conversation in Inbox could also delete
+messages from "Sent Items" and "Important - Keep".</p>
+
+<p>We have altered the 'Delete' action to be safer in these ways:</p>
+
+<ol>
+<li>in a folder: only messages which in the same folder are deleted from
+the selected conversations.</li>
+<li>when viewing search results: only messages which match the search
+query are deleted, messages which are in the conversations but
+outside the search are not.</li>
+<li>when an action will cause more than one message to be deleted from a
+conversation, a warning message is shown to describe what will
+happen. The user must explicitly disable this warning if they don't
+want to see it again.</li>
+</ol>
+
+<h2>What about the time before these changes?</h2>
+
+<p>Rather than leaving users to hunt for which emails were affected, We
+wrote a tool to data-mine our mail server logs. We log every create and
+delete of emails, along with enough data to identify which ones were
+"Delete to Trash". We can also identify if the action came from an IMAP
+client or the web interface.</p>
+
+<p>We found emails which could have been accidentally deleted using the
+following algorithm:</p>
+
+<ol>
+<li>the action came from the web interface.</li>
+<li>more than one message from the same conversation was deleted within
+10 seconds.</li>
+</ol>
+
+<p>All the emails which matched these criteria were restored back into the
+folders they were originally deleted from, with a custom keyword added.
+This makes it easy for users to find them again. Every affected user has
+been emailed with instructions on how to identify the restored emails.</p>
+
+<h2>How we restored data</h2>
+
+<p>When you delete an email on the FastMail servers, it isn't immediately
+removed from disk, even if you manually expunge via IMAP. We do this:</p>
+
+<ol>
+<li>to guarantee that our "Restore from backup" feature can always find
+all your emails, even if they were delivered and then deleted in
+between backup runs.</li>
+<li>to make deletes appear faster to users.</li>
+<li>to reduce the load on our IMAP servers. Removing files is actually
+one of the slowest operations you can run on a modern filesystem.</li>
+</ol>
+
+<p>So we actually batch up all deletes and run them once per week at the
+least busy time for our servers - Saturday night in the USA. It's
+weekend everywhere in the world then.</p>
+
+<p>We also never remove email files within one week after deletion, so that
+our "Restore" feature can work as advertised.</p>
+
+<p>This is, of course, in addition to the safety provided by replication to
+an offsite datacentre, and daily backups to a different server running a
+different operating system.</p>
+
+<h2>Immediate response</h2>
+
+<p>As soon as we realised we may have to restore emails, we disabled the
+automated weekend cleanup job, and started collecting data from our
+servers.</p>
+
+<h2>Discoverability</h2>
+
+<p>The problem is that it is hard to know that an email is not there unless
+you actively look for it. We could disable cleanup temporarily, but not
+forever. Our turnover is about 2% of total email volume per week, so the
+disks would fill up if we never deleted anything ever again.</p>
+
+<p>We decided the safe way forwards was to undo every deletion which had
+even the slightest chance of being by accident.</p>
+
+<p>That way, if no action is taken, a few extra emails sit on disk
+gathering dust. It's possible at any later time to discover them and
+clean them up. There is no requirement to act quickly.</p>
+
+<p>We take your privacy very seriously. No contents of emails were accessed
+during this task, and each user's account was processed separately to
+ensure there was no risk of disclosing data. You can read more about our
+privacy policy here:
+<a href="https://www.fastmail.fm/help/overview_privacy.html">https://www.fastmail.fm/help/overview_privacy.html</a>.</p>
+
+<h2>Data collection</h2>
+
+<p>We log every single time a message is added to or expunged from any
+folder on out backend servers. We collected an initial dataset of nearly
+30 million "Delete to Trash" events from the log files.</p>
+
+<p>The next step was identifying which of these were a single action
+involving more than one message from the same conversation. Every
+message was tagged with a session identifier and timestamp as well as
+the folder and IMAP "UID" which uniquely identifies it, but we were not
+logging the CID (conversation identifier). We do now, but that doesn't
+help with log lines from the past!</p>
+
+<p>Finding the CID involved writing custom code to read the index file on
+disk (which still contains the deleted record) and extract the CID field
+for every deleted message.</p>
+
+<p>Finally of course, there was processing the logs for every single
+connection from the web servers over that time frame and finding which
+deletes were related to each other. There's nothing in the log to show
+that it's the same command, so we applied a heuristic of "within 10
+seconds" to account for the outside case of a busy server and large
+folders being processed.</p>
+
+<h2>Restoring messages</h2>
+
+<p>We use the Cyrus IMAP server. One of the utilities included is called
+'unexpunge', and it can be used to recover deleted emails. This is
+different from our usual restore command, which extracts messages from
+various sources and appends them a new temporary folder.</p>
+
+<p>In this case we want to restore messages permanently, so unexpunge is
+the right tool... except - we want to tag every message with a keyword,
+and we want it to be reliable. Finding the messages afterwards is messy.
+We chose to add a new feature to unexpunge, setting a user-defined
+keyword on each message as it is restored. It is robust, and there's no
+gap where messages appear without the keyword</p>
+
+<p>The chosen keyword is RESTORED-20121107. Our web interface already
+supports global keyword search with "flag:$name", so the email to users
+includes a pre-generated URL which will perform a global search on all
+that user's folders for messages which were restored.</p>
+
+<p>Restores are in progress now. Once they are completed, thousands of
+users will have some messages restored. This is almost certain to
+include messages which were intended to be deleted, but we must err on
+the side of safety here.</p>
+
+<p>We have built a very robust infrastructure because of our strong
+commitment to data safety. These restores are in line with this
+commitment. It is easier to delete unwanted messages again than to
+recover messages which no longer exist.</p>
+
+
+<div class="blog-footer">
+
+<p class="blog-footerPrev">«︎ <a href="https://blog.fastmail.com/2012/10/30/new-interface-and-login-screens-rolled-out/">New interface and login screens rolled out</a></p>
+
+
+<p class="blog-footerNext"><a href="https://blog.fastmail.com/2012/11/09/the-technology-behind-the-classic-and-new-interfaces/">The technology behind the classic and new interfaces</a> »︎</p>
+
+
+<p class="blog-footerThanks">Thanks for reading the FastMail Blog: news, views and the occasional rant from the FastMail team. Want to keep up to date? Subscribe to our <a href="/feed/">RSS feed</a>, or sign up below and weʼll email you every time we post something new.</p>
+
+<form method="post" action="https://www.listbox.com/subscribe/" style="text-align:center">
+    <input type="hidden" name="action" value="subscribe">
+    <input type="hidden" name="list_id" value="273399">
+    <input type="hidden" name="redirect" value="listbox">
+    <input type="text" class="text" name="username" placeholder="Email address" style="margin-bottom:7px;width:250px;">
+    <button type="submit" class="button suggestedAction" style="margin-left:3px;padding: 6px 24px 7px;">Subscribe</button>
+</form>
+
+</div>
+
+<div id="breadcrumbs">
+<div style="float:right">
+    <a href="/">Latest News</a>
+    &nbsp;&nbsp;
+    <a href="/archive/">Archive</a>
+</div>
+</div>
+
+</div> <!-- End div.article -->
+
+</div> <!-- End div#page -->
+
+<div id="footer"><div class="content">
+    <div class="left">Copyright &copy; 1999&ndash;2016 FastMail Pty Ltd.</div>
+    <div class="right"><a href="https://www.fastmail.com/help/legal/privacy.html">Privacy policy</a> <a href="https://www.fastmail.com/help/legal/tos.html">Terms of service</a></div>
+</div></div>
+</body>
+</html>
